@@ -1,0 +1,4418 @@
+/* Extracted from resources/views/seller/products/create.blade.php — original style block 1. */
+.seller-create-page {
+        --sari-gold: #d59617;
+        --sari-gold-strong: #b97805;
+        --sari-gold-soft: #fff8e8;
+        --sari-gold-soft-2: #fffaf2;
+        --sari-ink: #111827;
+        --sari-muted: #6b7280;
+        --sari-line: #e5e7eb;
+        --sari-line-strong: #d7dde5;
+        --sari-soft: #f8fafc;
+        --sari-soft-2: #f3f6fa;
+        --sari-blue-soft: #eff6ff;
+        --sari-blue: #2563eb;
+        --sari-green-soft: #ecfdf3;
+        --sari-green: #15803d;
+        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+        color: var(--sari-ink);
+    }
+
+    .seller-create-topbar {
+        position: relative;
+        overflow: visible;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 72px;
+        margin: 0 0 16px;
+        padding: 2px 2px 16px;
+        border: 0;
+        border-bottom: 1px solid #e7ebf0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+
+    .seller-create-heading {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 0;
+    }
+
+    .seller-create-heading-icon {
+        display: grid;
+        width: 50px;
+        height: 50px;
+        flex: 0 0 50px;
+        place-items: center;
+        border: 1px solid #efd7a3;
+        border-radius: 16px;
+        background: #fff9eb;
+        color: #cf8906;
+        box-shadow: 0 5px 14px rgba(183, 121, 5, .06);
+    }
+
+    .seller-create-heading-icon svg {
+        width: 21px;
+        height: 21px;
+        stroke-width: 1.9;
+    }
+
+    .seller-create-heading-copy {
+        min-width: 0;
+    }
+
+    .seller-create-heading-eyebrow {
+        color: #b87605;
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: .16em;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    .seller-create-heading-title {
+        margin-top: 6px;
+        color: #111827;
+        font-size: clamp(34px, 2.8vw, 44px);
+        font-weight: 750;
+        letter-spacing: -.045em;
+        line-height: .98;
+        white-space: nowrap;
+    }
+
+    .seller-create-heading-title span {
+        color: #d18b08;
+    }
+
+    .seller-create-heading-back {
+        display: inline-flex;
+        min-height: 28px;
+        align-items: center;
+        gap: 5px;
+        margin-top: 7px;
+        color: #7c8592;
+        font-size: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color .12s ease;
+    }
+
+    .seller-create-heading-back:hover {
+        color: #a56b05;
+    }
+
+    .seller-create-heading-back svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .seller-create-grid {
+        display: grid;
+        grid-template-columns: 190px minmax(0,1fr) minmax(230px,270px);
+        gap: 16px;
+        align-items: start;
+        min-width: 0;
+    }
+
+    .seller-create-side,
+    .seller-create-preview {
+        position: sticky;
+        top: 154px;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .seller-create-preview {
+        align-self: start;
+        z-index: 1;
+    }
+
+    .seller-create-side-card,
+    .seller-create-preview-card,
+    .seller-create-section {
+        border: 1px solid var(--sari-line);
+        background: #fff;
+    }
+
+    .seller-create-side-card,
+    .seller-create-preview-card,
+    .seller-create-section {
+        border-radius: 18px;
+        box-shadow: 0 12px 28px rgba(15,23,42,.05);
+    }
+
+    .seller-create-side-card {
+        padding: 12px;
+    }
+
+    .seller-create-side-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 8px 12px;
+        border-bottom: 1px solid #eef2f6;
+        font-size: 12px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .seller-create-nav {
+        display: grid;
+        gap: 6px;
+        margin-top: 10px;
+    }
+
+    .seller-create-nav button {
+        width: 100%;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        background: transparent;
+        padding: 11px 12px;
+        color: #667180;
+        font-size: 11px;
+        font-weight: 600;
+        text-align: left;
+        transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+
+    .seller-create-nav button:hover,
+    .seller-create-nav button.is-active {
+        background: var(--sari-gold-soft-2);
+        border-color: #f4dfad;
+        color: #9b6505;
+    }
+
+    .seller-create-workspace {
+        display: grid;
+        gap: 16px;
+        min-width: 0;
+    }
+
+    .seller-create-section {
+        scroll-margin-top: 160px;
+        min-width: 0;
+        overflow: hidden;
+        padding: 20px;
+    }
+
+    .seller-create-section-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .seller-create-section-head > .seller-create-section-copy:first-child {
+        padding-left: 0;
+    }
+
+    .seller-create-section-icon {
+        display: grid;
+        width: 40px;
+        height: 40px;
+        flex: 0 0 40px;
+        place-items: center;
+        border: 1px solid #efd39a;
+        border-radius: 12px;
+        background: #fff8e8;
+        color: #c88605;
+    }
+
+    .seller-create-section-copy {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .seller-create-section-copy h2 {
+        font-size: 16px;
+        line-height: 1.25;
+        font-weight: 700;
+        letter-spacing: -.02em;
+        color: #111827;
+    }
+
+    .seller-create-section-copy p {
+        margin-top: 4px;
+        color: var(--sari-muted);
+        font-size: 11px;
+        line-height: 1.6;
+    }
+
+    .seller-create-rule {
+        flex: 1;
+        height: 1px;
+        margin-top: 20px;
+        background: #e8edf3;
+    }
+
+    .seller-create-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #344054;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .seller-create-input,
+    .seller-create-select,
+    .seller-create-textarea {
+        width: 100%;
+        border: 1px solid #d7dde5;
+        border-radius: 12px;
+        background: #fff;
+        color: #1f2937;
+        outline: none;
+        transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+
+    .seller-create-input,
+    .seller-create-select {
+        height: 44px;
+        padding: 0 14px;
+        font-size: 12px;
+    }
+
+    .seller-create-textarea {
+        min-height: 146px;
+        resize: vertical;
+        padding: 13px 14px;
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    .seller-create-input:focus,
+    .seller-create-select:focus,
+    .seller-create-textarea:focus,
+    .seller-variant-table input[type="text"]:focus,
+    .seller-variant-table input[type="number"]:focus {
+        border-color: #d49a18;
+        box-shadow: 0 0 0 4px rgba(212,154,24,.10);
+        background: #fff;
+    }
+
+    .seller-create-money-field {
+        display: flex;
+        width: 100%;
+        height: 44px;
+        overflow: hidden;
+        border: 1px solid #d7dde5;
+        border-radius: 12px;
+        background: #ffffff;
+        transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .seller-create-money-field:focus-within {
+        border-color: #d59617;
+        box-shadow: 0 0 0 4px rgba(213,150,23,.10);
+    }
+
+    .seller-create-money-prefix {
+        display: grid;
+        width: 42px;
+        flex: 0 0 42px;
+        place-items: center;
+        border-right: 1px solid #e6eaf0;
+        background: #ffffff;
+        color: #4b5563;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    .seller-create-money-input {
+        min-width: 0;
+        flex: 1;
+        border: 0;
+        background: transparent;
+        padding: 0 13px;
+        color: #1f2937;
+        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        outline: none;
+    }
+
+    .seller-create-money-input::placeholder {
+        color: #9aa3af;
+        opacity: 1;
+    }
+
+
+    .seller-category-picker {
+        position: relative;
+    }
+
+    .seller-category-trigger {
+        display: flex;
+        width: 100%;
+        height: 44px;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #d7dde5;
+        border-radius: 12px;
+        background: #ffffff;
+        padding: 0 12px;
+        color: #1f2937;
+        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+        font-size: 11px;
+        font-weight: 500;
+        text-align: left;
+        outline: none;
+        transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+
+    .seller-category-trigger:hover {
+        border-color: #cfd6df;
+        background: #fcfcfd;
+    }
+
+    .seller-category-trigger[aria-expanded="true"] {
+        border-color: #d59617;
+        box-shadow: 0 0 0 4px rgba(213,150,23,.09);
+    }
+
+    .seller-category-trigger-icon {
+        display: inline-flex;
+        width: 19px;
+        height: 19px;
+        flex: 0 0 19px;
+        align-items: center;
+        justify-content: center;
+        color: #c98505;
+    }
+
+    .seller-category-trigger-icon svg {
+        width: 18px;
+        height: 18px;
+        stroke-width: 1.9;
+    }
+
+    .seller-category-trigger-text {
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .seller-category-trigger-chevron {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+        color: #98a2b3;
+        transition: transform .15s ease;
+    }
+
+    .seller-category-trigger[aria-expanded="true"] .seller-category-trigger-chevron {
+        transform: rotate(180deg);
+    }
+
+    .seller-category-menu {
+        position: relative;
+        z-index: 20;
+        width: 100%;
+        max-height: 248px;
+        margin-top: 7px;
+        overflow-y: auto;
+        border: 1px solid #e0e5eb;
+        border-radius: 14px;
+        background: #ffffff;
+        padding: 6px;
+        box-shadow: 0 12px 28px rgba(15,23,42,.08);
+        animation: sellerCategoryMenuIn 120ms ease both;
+        scrollbar-width: thin;
+        scrollbar-color: #cfd5dd transparent;
+    }
+
+    @keyframes sellerCategoryMenuIn {
+        from { opacity: 0; transform: translateY(-4px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .seller-category-option {
+        display: flex;
+        width: 100%;
+        min-height: 38px;
+        align-items: center;
+        gap: 9px;
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        padding: 8px 10px;
+        color: #475467;
+        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+        font-size: 10px;
+        font-weight: 500;
+        text-align: left;
+        transition: background .12s ease, color .12s ease;
+    }
+
+    .seller-category-option:hover,
+    .seller-category-option.is-selected {
+        background: #fff8e8;
+        color: #9a6708;
+    }
+
+    .seller-category-option svg {
+        width: 15px;
+        height: 15px;
+        flex: 0 0 15px;
+        color: #c98505;
+    }
+
+    .seller-create-field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        gap: 14px;
+    }
+
+    .seller-create-field-grid--3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .seller-create-field-grid--4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .seller-create-span-2 { grid-column: span 2; }
+
+    .seller-create-help {
+        margin-top: 6px;
+        color: #8b96a5;
+        font-size: 10.5px;
+        line-height: 1.55;
+    }
+
+    .seller-create-upload {
+        display: grid;
+        min-height: 162px;
+        cursor: pointer;
+        place-items: center;
+        overflow: hidden;
+        border: 1px dashed #cfd7e2;
+        border-radius: 14px;
+        background: #fafbfc;
+        text-align: center;
+        transition: border-color .15s ease, background .15s ease, transform .15s ease;
+    }
+
+    .seller-create-upload:hover {
+        border-color: #d49a18;
+        background: #fffdf8;
+        transform: translateY(-1px);
+    }
+
+    .seller-create-upload img {
+        width: 100%;
+        height: 100%;
+        min-height: 162px;
+        object-fit: cover;
+    }
+
+    .seller-create-gallery {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0,1fr));
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .seller-create-gallery-thumb {
+        aspect-ratio: 1;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        background: #f8fafc;
+    }
+
+    .seller-create-gallery-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .seller-create-toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 14px;
+        padding: 14px 15px;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        background: #ffffff;
+    }
+
+    .seller-create-setting-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        gap: 12px;
+        margin-top: 14px;
+    }
+
+
+    .seller-create-plain-icon {
+        display: inline-flex;
+        width: 22px;
+        height: 22px;
+        flex: 0 0 22px;
+        align-items: center;
+        justify-content: center;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .seller-create-plain-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke-width: 2;
+    }
+
+    .seller-create-plain-icon--shipping {
+        color: #16a34a;
+    }
+
+    .seller-create-plain-icon--cod {
+        color: #2563eb;
+    }
+
+    .seller-create-plain-icon--flash {
+        color: #ef4444;
+    }
+
+    .seller-create-label-with-icon {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 8px;
+        color: #344054;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .seller-create-setting-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        min-height: 96px;
+        padding: 15px 16px;
+        border: 1px solid #e2e7ed;
+        border-radius: 16px;
+        background: #ffffff;
+        transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+
+    .seller-create-setting-card:hover {
+        border-color: #e2bd67;
+        background: #fffdf8;
+        box-shadow: 0 8px 22px rgba(15,23,42,.035);
+    }
+
+    .seller-create-setting-copy {
+        display: flex;
+        min-width: 0;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .seller-create-setting-copy strong {
+        display: block;
+        font-size: 13px;
+        line-height: 1.35;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .seller-create-setting-copy span {
+        display: block;
+        margin-top: 4px;
+        max-width: 260px;
+        font-size: 10.5px;
+        line-height: 1.6;
+        color: #667085;
+    }
+
+    .seller-create-toggle {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 28px;
+        flex: 0 0 50px;
+        border-radius: 999px;
+        background: #d7dce2;
+        box-shadow: inset 0 1px 2px rgba(15,23,42,.08);
+        transition: background .18s ease;
+    }
+
+    .seller-create-toggle::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 0 2px 8px rgba(15,23,42,.18);
+        transition: transform .18s ease;
+    }
+
+    .peer:checked + .seller-create-toggle {
+        background: #d59617;
+    }
+
+    .peer:checked + .seller-create-toggle::after {
+        transform: translateX(22px);
+    }
+
+    .seller-variant-table-wrap {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 12px;
+        overflow: hidden;
+        border: 1px solid #e2e7ed;
+        border-radius: 14px;
+        background: #ffffff;
+    }
+
+    .seller-variant-table {
+        width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .seller-variant-table th {
+        padding: 9px 7px;
+        background: #f8fafc;
+        color: #667085;
+        font-size: 8.5px;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .seller-variant-table td {
+        min-width: 0;
+        padding: 9px 7px;
+        border-top: 1px solid #edf1f5;
+        vertical-align: middle;
+    }
+
+    .seller-variant-table th:nth-child(1),
+    .seller-variant-table td:nth-child(1) { width: 54px; }
+
+    .seller-variant-table th:nth-child(2),
+    .seller-variant-table td:nth-child(2) { width: 18%; }
+
+    .seller-variant-table th:nth-child(3),
+    .seller-variant-table td:nth-child(3) { width: 18%; }
+
+    .seller-variant-table th:nth-child(4),
+    .seller-variant-table td:nth-child(4) { width: 16%; }
+
+    .seller-variant-table th:nth-child(5),
+    .seller-variant-table td:nth-child(5) { width: 15%; }
+
+    .seller-variant-table th:nth-child(6),
+    .seller-variant-table td:nth-child(6) { width: 13%; }
+
+    .seller-variant-table th:nth-child(7),
+    .seller-variant-table td:nth-child(7) { width: 42px; }
+
+    .seller-variant-table input[type="text"],
+    .seller-variant-table input[type="number"] {
+        width: 100%;
+        min-width: 0;
+        height: 36px;
+        border: 1px solid #d8dee7;
+        border-radius: 9px;
+        background: #fff;
+        padding: 0 8px;
+        color: #344054;
+        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+        font-size: 9px;
+        outline: none;
+    }
+
+    .seller-variant-image-label {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        cursor: pointer;
+        place-items: center;
+        overflow: hidden;
+        border: 1px dashed #cbd2da;
+        border-radius: 11px;
+        background: #fbfcfd;
+        color: #7b8490;
+    }
+
+    .seller-variant-image-label img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .seller-create-button {
+        display: inline-flex;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 1px solid #d7dde5;
+        border-radius: 12px;
+        background: #fff;
+        padding: 0 14px;
+        color: #374151;
+        font-size: 11px;
+        font-weight: 700;
+        transition: background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+    }
+
+    .seller-create-button:hover {
+        background: #f8fafc;
+        transform: translateY(-1px);
+    }
+
+    .seller-create-button--primary {
+        border-color: #d59617;
+        background: #d59617;
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(213,150,23,.16);
+    }
+
+    .seller-create-button--primary:hover {
+        border-color: #c9890f;
+        background: #c9890f;
+    }
+
+    .seller-create-button--soft {
+        border-color: #efd9a7;
+        background: #fffaf0;
+        color: #9b6505;
+    }
+
+    .seller-create-preview-card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .seller-preview-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 16px;
+        border-bottom: 1px solid #eef2f7;
+    }
+
+    .seller-preview-head h3 {
+        font-size: 13px;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .seller-preview-body {
+        min-width: 0;
+        padding: 13px;
+    }
+
+    .seller-preview-image {
+        display: grid;
+        aspect-ratio: 16 / 11;
+        max-height: 190px;
+        place-items: center;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+        border-radius: 13px;
+        background: #f8fafc;
+        color: #9ca3af;
+    }
+
+    .seller-preview-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .seller-preview-title {
+        margin-top: 12px;
+        overflow: hidden;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.45;
+        color: #111827;
+        display: -webkit-box;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .seller-preview-price {
+        margin-top: 8px;
+        color: #b7791f;
+        font-size: 20px;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .seller-preview-old-price {
+        margin-left: 8px;
+        color: #9ca3af;
+        font-size: 11px;
+        text-decoration: line-through;
+    }
+
+    .seller-preview-badges {
+        display: flex;
+        min-width: 0;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+    }
+
+    .seller-preview-badge {
+        display: inline-flex;
+        min-height: 23px;
+        max-width: 100%;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0 8px;
+        font-size: 8px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    .seller-preview-badge--green { background: var(--sari-green-soft); color: var(--sari-green); }
+    .seller-preview-badge--gold { background: #fff6dc; color: #a76d06; }
+    .seller-preview-badge--blue { background: var(--sari-blue-soft); color: #2f6faa; }
+
+    .seller-preview-note {
+        margin-top: 14px;
+        border-top: 1px solid #edf0f3;
+        padding-top: 12px;
+        color: #8b96a5;
+        font-size: 10px;
+        line-height: 1.6;
+    }
+
+    .seller-create-mobile-preview {
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-top: 14px;
+        padding: 12px 14px;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        background: #f8fafc;
+    }
+
+    .seller-create-mobile-preview-copy {
+        min-width: 0;
+    }
+
+    .seller-create-mobile-preview-label {
+        display: block;
+        color: #9b6505;
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .seller-create-mobile-preview-copy strong {
+        display: block;
+        margin-top: 3px;
+        overflow: hidden;
+        color: #111827;
+        font-size: 11px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .seller-create-mobile-preview-copy > span:last-child {
+        display: block;
+        margin-top: 2px;
+        color: #6b7280;
+        font-size: 9px;
+    }
+
+    .seller-create-mobile-preview-badges {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 5px;
+    }
+
+    .seller-promo-preview {
+        margin-top: 14px;
+        border: 1px solid #e4e8ed;
+        border-radius: 16px;
+        background: #ffffff;
+        padding: 14px;
+    }
+
+    .seller-promo-preview-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #eef2f7;
+    }
+
+    .seller-promo-preview-head strong {
+        font-size: 13px;
+        color: #111827;
+    }
+
+    .seller-promo-preview-head span {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: #fff7e6;
+        color: #9a6708;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .seller-promo-preview-price {
+        margin-top: 12px;
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+    }
+
+    .seller-promo-preview-price strong {
+        font-size: 22px;
+        line-height: 1;
+        color: #111827;
+    }
+
+    .seller-promo-preview-price span {
+        color: #9ca3af;
+        font-size: 11px;
+        text-decoration: line-through;
+    }
+
+    .seller-promo-preview-note {
+        margin-top: 8px;
+        font-size: 10.5px;
+        line-height: 1.6;
+        color: #6b7280;
+    }
+
+    .seller-spec-row {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr 100px 42px;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .seller-inline-alert {
+        margin-bottom: 14px;
+        border: 1px solid #fecaca;
+        border-radius: 14px;
+        background: #fff7f7;
+        padding: 12px 14px;
+        color: #a33f3f;
+        font-size: 11px;
+        line-height: 1.65;
+    }
+
+    @media (max-width: 1500px) {
+        .seller-create-grid {
+            grid-template-columns: 175px minmax(0,1fr);
+        }
+
+        .seller-create-preview {
+            display: none;
+        }
+
+        .seller-create-mobile-preview {
+            display: flex;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .seller-create-grid { grid-template-columns: 1fr; }
+        .seller-create-side { display: none; }
+    }
+
+
+    @media (max-width: 760px) {
+        .seller-variant-table,
+        .seller-variant-table tbody,
+        .seller-variant-table tr,
+        .seller-variant-table td {
+            display: block;
+            width: 100%;
+        }
+
+        .seller-variant-table thead {
+            display: none;
+        }
+
+        .seller-variant-table tr {
+            padding: 10px;
+            border-top: 1px solid #edf1f5;
+        }
+
+        .seller-variant-table tr:first-child {
+            border-top: 0;
+        }
+
+        .seller-variant-table td {
+            width: 100% !important;
+            padding: 5px 0;
+            border: 0;
+        }
+
+        .seller-variant-table td:first-child,
+        .seller-variant-table td:last-child {
+            display: inline-flex;
+            width: auto !important;
+            vertical-align: middle;
+        }
+    }
+
+    @media (max-width: 760px) {
+        .seller-create-topbar {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .seller-create-topbar > .flex.items-center.gap-2 {
+            width: 100%;
+        }
+
+        .seller-create-topbar > .flex.items-center.gap-2 > * {
+            flex: 1 1 0;
+        }
+
+        .seller-create-heading-title {
+            font-size: clamp(31px, 9vw, 38px);
+        }
+
+        .seller-create-heading-icon {
+            width: 46px;
+            height: 46px;
+            flex-basis: 46px;
+            border-radius: 14px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .seller-create-field-grid,
+        .seller-create-field-grid--3,
+        .seller-create-field-grid--4,
+        .seller-create-setting-grid { grid-template-columns: 1fr; }
+        .seller-create-span-2 { grid-column: auto; }
+        .seller-create-gallery { grid-template-columns: repeat(3, minmax(0,1fr)); }
+        .seller-spec-row { grid-template-columns: 1fr; }
+        .seller-create-topbar { align-items: flex-start; }
+        .seller-create-toggle-row,
+        .seller-create-setting-card,
+        .seller-promo-preview-head { align-items: flex-start; }
+    }
+
+    /* ============================================================
+       SAVE DRAFT + MULTI IMAGE GALLERY
+       ============================================================ */
+    .seller-draft-status {
+        display: inline-flex;
+        min-height: 28px;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #e3e7ec;
+        border-radius: 999px;
+        background: #ffffff;
+        padding: 0 9px;
+        color: #667085;
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    .seller-draft-status.is-success {
+        border-color: #cfe7d7;
+        background: #f5fbf7;
+        color: #3f7f58;
+    }
+
+    .seller-draft-status.is-error {
+        border-color: #f0d0d0;
+        background: #fff8f8;
+        color: #b54747;
+    }
+
+    .seller-draft-status.is-loading {
+        border-color: #ead8ae;
+        background: #fffaf0;
+        color: #95630b;
+    }
+
+    .seller-gallery-count {
+        display: inline-flex;
+        min-height: 21px;
+        align-items: center;
+        border: 1px solid #e3e7ec;
+        border-radius: 999px;
+        background: #f8fafc;
+        padding: 0 7px;
+        color: #667085;
+        font-size: 7.5px;
+        font-weight: 700;
+    }
+
+    .seller-create-gallery-thumb {
+        position: relative;
+    }
+
+    .seller-create-gallery-thumb::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: inherit;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
+    }
+
+    .seller-gallery-remove {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 2;
+        display: grid;
+        width: 24px;
+        height: 24px;
+        place-items: center;
+        border: 1px solid rgba(255,255,255,.8);
+        border-radius: 999px;
+        background: rgba(17,24,39,.74);
+        color: #ffffff;
+        box-shadow: 0 4px 10px rgba(15,23,42,.12);
+        cursor: pointer;
+        transition: background-color .12s ease, transform .12s ease;
+    }
+
+    .seller-gallery-remove:hover {
+        background: #b84444;
+        transform: scale(1.04);
+    }
+
+    .seller-gallery-remove svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .seller-gallery-saved-badge {
+        position: absolute;
+        left: 5px;
+        bottom: 5px;
+        z-index: 2;
+        display: inline-flex;
+        min-height: 20px;
+        align-items: center;
+        border: 1px solid rgba(255,255,255,.75);
+        border-radius: 999px;
+        background: rgba(255,255,255,.92);
+        padding: 0 6px;
+        color: #667085;
+        font-size: 6.5px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    #saveProductDraft:disabled {
+        cursor: wait;
+        opacity: .72;
+        transform: none;
+    }
+
+
+    .seller-draft-manager {
+        position: relative;
+    }
+
+    .seller-draft-count {
+        display: inline-grid;
+        min-width: 20px;
+        height: 20px;
+        place-items: center;
+        border-radius: 999px;
+        background: #f3f4f6;
+        padding: 0 6px;
+        color: #667085;
+        font-size: 7.5px;
+        font-weight: 800;
+    }
+
+    .seller-draft-chevron {
+        width: 13px;
+        height: 13px;
+        color: #98a2b3;
+        transition: transform .12s ease;
+    }
+
+    .seller-draft-manager.is-open .seller-draft-chevron {
+        transform: rotate(180deg);
+    }
+
+    .seller-draft-menu {
+        position: absolute;
+        top: calc(100% + 7px);
+        right: 0;
+        z-index: 260;
+        width: min(360px, 88vw);
+        overflow: hidden;
+        border: 1px solid #e2e7ed;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 18px 44px rgba(15,23,42,.13);
+        animation: sellerDraftMenuIn 120ms ease both;
+    }
+
+    @keyframes sellerDraftMenuIn {
+        from { opacity: 0; transform: translateY(-5px) scale(.992); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .seller-draft-menu-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 13px 14px;
+        border-bottom: 1px solid #edf1f5;
+    }
+
+    .seller-draft-menu-head strong {
+        display: block;
+        color: #111827;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .seller-draft-menu-head span {
+        display: block;
+        margin-top: 3px;
+        color: #8a94a3;
+        font-size: 7.5px;
+        line-height: 1.45;
+    }
+
+    .seller-draft-new-button {
+        display: inline-flex;
+        height: 31px;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid #e5c477;
+        border-radius: 9px;
+        background: #fffaf0;
+        padding: 0 9px;
+        color: #9a6708;
+        font-size: 8px;
+        font-weight: 700;
+    }
+
+    .seller-draft-new-button svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .seller-draft-list {
+        max-height: 360px;
+        overflow-y: auto;
+        padding: 6px;
+    }
+
+    .seller-draft-empty {
+        padding: 24px 14px;
+        color: #98a2b3;
+        font-size: 8.5px;
+        text-align: center;
+    }
+
+    .seller-draft-item {
+        display: grid;
+        grid-template-columns: minmax(0,1fr) auto;
+        gap: 8px;
+        align-items: center;
+        border: 1px solid transparent;
+        border-radius: 11px;
+        padding: 8px;
+        transition: border-color .1s ease, background-color .1s ease;
+    }
+
+    .seller-draft-item:hover,
+    .seller-draft-item.is-current {
+        border-color: #eed8a7;
+        background: #fffaf1;
+    }
+
+    .seller-draft-open {
+        display: grid;
+        grid-template-columns: 46px minmax(0, 1fr);
+        gap: 10px;
+        min-width: 0;
+        align-items: center;
+        border: 0;
+        background: transparent;
+        padding: 0;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .seller-draft-thumb {
+        display: grid;
+        width: 46px;
+        height: 46px;
+        place-items: center;
+        overflow: hidden;
+        border: 1px solid #e4e8ed;
+        border-radius: 10px;
+        background: #f8fafc;
+        color: #a1aab6;
+    }
+
+    .seller-draft-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .seller-draft-thumb svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .seller-draft-open-copy {
+        min-width: 0;
+    }
+
+    .seller-draft-open strong {
+        display: block;
+        overflow: hidden;
+        color: #344054;
+        font-size: 9px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .seller-draft-open span {
+        display: block;
+        margin-top: 3px;
+        overflow: hidden;
+        color: #98a2b3;
+        font-size: 7px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .seller-draft-delete {
+        display: grid;
+        width: 29px;
+        height: 29px;
+        place-items: center;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #98a2b3;
+        cursor: pointer;
+        transition: border-color .1s ease, color .1s ease, background-color .1s ease;
+    }
+
+    .seller-draft-delete:hover {
+        border-color: #efc9c9;
+        background: #fff8f8;
+        color: #c34b4b;
+    }
+
+    .seller-draft-delete svg {
+        width: 13px;
+        height: 13px;
+    }
+
+
+
+    @keyframes sariDraftGoldSpin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes sariDraftGoldSpinReverse {
+        to { transform: rotate(-360deg); }
+    }
+
+
+    /* Draft save feedback — compact, modern, success-only Lottie */
+    .seller-draft-feedback {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(17,24,39,.14);
+        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+        pointer-events: none;
+    }
+
+    .seller-draft-feedback.is-visible { display: flex; }
+
+    .seller-draft-feedback-card {
+        display: flex;
+        width: min(310px, calc(100vw - 32px));
+        min-height: 108px;
+        align-items: center;
+        gap: 14px;
+        border: 1px solid #e8e2d9;
+        border-radius: 16px;
+        background: #fff;
+        padding: 16px 18px;
+        box-shadow: 0 18px 44px rgba(17,24,39,.13);
+    }
+
+    .seller-draft-feedback-loader {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        place-items: center;
+        border-radius: 12px;
+        background: #fff9ed;
+    }
+
+    .seller-draft-feedback-spinner {
+        width: 21px;
+        height: 21px;
+        border: 2px solid #ead9b3;
+        border-top-color: #d59617;
+        border-radius: 999px;
+        animation: sariDraftGoldSpin .72s linear infinite;
+    }
+
+    .seller-draft-feedback-lottie {
+        display: none;
+        width: 74px;
+        height: 74px;
+        flex: 0 0 74px;
+        border: 0;
+        margin: -7px -6px -7px -8px;
+        padding: 0;
+        background: transparent;
+        pointer-events: none;
+    }
+
+    .seller-draft-feedback-copy {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .seller-draft-feedback-copy strong {
+        display: block;
+        color: #1f2937;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -.015em;
+    }
+
+    .seller-draft-feedback-copy span {
+        display: block;
+        margin-top: 4px;
+        color: #7a8492;
+        font-size: 8.5px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .seller-draft-feedback.is-success .seller-draft-feedback-card {
+        border-color: #d7eadf;
+    }
+
+    .seller-draft-feedback.is-success .seller-draft-feedback-copy strong {
+        color: #197548;
+    }
+
+    .seller-draft-feedback.is-error .seller-draft-feedback-card {
+        border-color: #efd3d3;
+    }
+
+    .seller-draft-feedback.is-error .seller-draft-feedback-copy strong {
+        color: #b54747;
+    }
+
+
+    /* ============================================================
+       DRAFT SAVE FEEDBACK — MINIMAL / NO CARD CONTAINER
+       Animation + text only.
+       ============================================================ */
+    .seller-draft-feedback {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        padding: 20px !important;
+    }
+
+    .seller-draft-feedback-card {
+        display: flex !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: min(360px, calc(100vw - 32px)) !important;
+        min-height: 0 !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .seller-draft-feedback-loader {
+        display: grid;
+        width: 34px !important;
+        height: 34px !important;
+        flex: 0 0 34px !important;
+        place-items: center !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .seller-draft-feedback-spinner {
+        width: 24px !important;
+        height: 24px !important;
+        border-width: 2px !important;
+        border-color: rgba(213, 150, 23, .22) !important;
+        border-top-color: #d59617 !important;
+    }
+
+    .seller-draft-feedback-lottie {
+        width: 112px !important;
+        height: 112px !important;
+        flex: 0 0 112px !important;
+        margin: 0 !important;
+    }
+
+    .seller-draft-feedback-copy {
+        width: min(320px, calc(100vw - 44px)) !important;
+        text-align: center !important;
+    }
+
+    .seller-draft-feedback-copy strong {
+        color: #26221d !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        line-height: 1.3 !important;
+    }
+
+    .seller-draft-feedback-copy span {
+        margin-top: 3px !important;
+        color: #7d756c !important;
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-draft-feedback.is-success .seller-draft-feedback-card,
+    .seller-draft-feedback.is-error .seller-draft-feedback-card {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .seller-draft-feedback.is-success .seller-draft-feedback-copy strong {
+        color: #197548 !important;
+    }
+
+    .seller-draft-feedback.is-error .seller-draft-feedback-copy strong {
+        color: #b54747 !important;
+    }
+
+    @media (max-width: 480px) {
+        .seller-draft-feedback {
+            padding: 16px !important;
+        }
+
+        .seller-draft-feedback-lottie {
+            width: 100px !important;
+            height: 100px !important;
+            flex-basis: 100px !important;
+        }
+    }
+
+
+    /* ============================================================
+       DRAFT SAVE FEEDBACK — CLEAR / TRANSPARENT / HIGH VISIBILITY
+       ============================================================ */
+    .seller-draft-feedback {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    .seller-draft-feedback-card {
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: min(390px, calc(100vw - 32px)) !important;
+        min-height: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .seller-draft-feedback-loader {
+        width: 40px !important;
+        height: 40px !important;
+        flex-basis: 40px !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .seller-draft-feedback-spinner {
+        width: 28px !important;
+        height: 28px !important;
+        border-width: 2.5px !important;
+        border-color: rgba(213,150,23,.24) !important;
+        border-top-color: #d59617 !important;
+        filter: drop-shadow(0 2px 5px rgba(213,150,23,.18));
+    }
+
+    .seller-draft-feedback-lottie {
+        width: 160px !important;
+        height: 160px !important;
+        flex: 0 0 160px !important;
+        margin: -8px 0 -7px !important;
+        border: 0 !important;
+        background: transparent !important;
+        opacity: 1 !important;
+        filter: drop-shadow(0 8px 18px rgba(17,24,39,.10));
+    }
+
+    .seller-draft-feedback-copy {
+        width: min(340px, calc(100vw - 40px)) !important;
+        text-align: center !important;
+    }
+
+    .seller-draft-feedback-copy strong {
+        color: #201c18 !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        line-height: 1.25 !important;
+        text-shadow:
+            0 1px 0 rgba(255,255,255,.95),
+            0 2px 8px rgba(255,255,255,.9) !important;
+    }
+
+    .seller-draft-feedback-copy span {
+        margin-top: 4px !important;
+        color: #61594f !important;
+        font-size: 9px !important;
+        line-height: 1.45 !important;
+        text-shadow:
+            0 1px 0 rgba(255,255,255,.95),
+            0 2px 8px rgba(255,255,255,.9) !important;
+    }
+
+    .seller-draft-feedback.is-success .seller-draft-feedback-copy strong {
+        color: #0f7a46 !important;
+    }
+
+    .seller-draft-feedback.is-success .seller-draft-feedback-copy span {
+        color: #446153 !important;
+    }
+
+    @media (max-width: 480px) {
+        .seller-draft-feedback-lottie {
+            width: 138px !important;
+            height: 138px !important;
+            flex-basis: 138px !important;
+        }
+
+        .seller-draft-feedback-copy strong {
+            font-size: 13px !important;
+        }
+    }
+
+
+
+/* ==========================================================================
+   ADD PRODUCT — FORMAL HEADER + PERFORMANCE PASS
+   ========================================================================== */
+
+.seller-create-heading-icon {
+    display: none !important;
+}
+
+.seller-create-heading {
+    gap: 0 !important;
+}
+
+.seller-create-heading-title {
+    font-size: clamp(34px, 2.8vw, 44px) !important;
+    line-height: .98 !important;
+    font-weight: 750 !important;
+    letter-spacing: -.045em !important;
+}
+
+.seller-create-heading-title span {
+    color: #C9890B !important;
+}
+
+/* Avoid spending paint/layout work on long sections far below the viewport. */
+.seller-create-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 560px;
+}
+
+/* Faster-feeling control feedback. */
+.seller-create-button,
+.seller-create-input,
+.seller-create-select,
+.seller-create-textarea,
+.seller-category-trigger,
+.seller-create-nav button {
+    transition-duration: 120ms !important;
+}
+
+.seller-create-gallery-thumb,
+.seller-preview-image,
+.seller-variant-image-label {
+    contain: paint;
+}
+
+@media (max-width: 760px) {
+    .seller-create-heading-title {
+        font-size: clamp(31px, 9vw, 38px) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .seller-create-page *,
+    .seller-create-page *::before,
+    .seller-create-page *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+
+/* Extracted from resources/views/seller/products/create.blade.php — original style block 2. */
+.seller-create-page { background: transparent !important; }
+    .seller-create-heading-icon { display: none !important; }
+
+    .seller-create-heading-title {
+        font-size: clamp(30px, 2.35vw, 38px) !important;
+        line-height: 1 !important;
+        letter-spacing: -.035em !important;
+        font-weight: 650 !important;
+    }
+
+    @media (max-width: 760px) {
+        .seller-create-heading-title {
+            font-size: clamp(28px, 8vw, 34px) !important;
+            font-weight: 650 !important;
+        }
+    }
+
+
+/* Extracted from resources/views/seller/products/create.blade.php — original style block 3. */
+.seller-draft-feedback-fallback {
+        display: none;
+        width: 104px;
+        height: 104px;
+        place-items: center;
+        opacity: 0;
+        transform: translateY(4px) scale(.94);
+        will-change: opacity, transform;
+        transition:
+            opacity 160ms ease-out,
+            transform 220ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    .seller-draft-feedback-fallback.is-playing {
+        display: grid;
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    .seller-draft-feedback-fallback svg {
+        width: 92px;
+        height: 92px;
+        overflow: visible;
+        filter: drop-shadow(0 8px 18px rgba(15,118,72,.08));
+    }
+
+    .seller-draft-fallback-ring {
+        stroke: #D8EFE1;
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-dasharray: 170;
+        stroke-dashoffset: 170;
+        transform-origin: 36px 36px;
+    }
+
+    .seller-draft-fallback-check {
+        stroke: #1E9A5D;
+        stroke-width: 5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 42;
+        stroke-dashoffset: 42;
+    }
+
+    .seller-draft-feedback-fallback.is-playing .seller-draft-fallback-ring {
+        animation: sariDraftFallbackRing 420ms cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    .seller-draft-feedback-fallback.is-playing .seller-draft-fallback-check {
+        animation: sariDraftFallbackCheck 360ms 240ms cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    @keyframes sariDraftFallbackRing {
+        to {
+            stroke-dashoffset: 0;
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes sariDraftFallbackCheck {
+        to { stroke-dashoffset: 0; }
+    }
+
+
+    /* Main Add Product section headers are intentionally icon-free. */
+    .seller-create-section-head {
+        align-items: center !important;
+    }
+
+    .seller-create-section-copy h2 {
+        margin: 0 !important;
+    }
+
+    /* Smooth Lottie reveal so the success animation is actually visible. */
+    .seller-draft-feedback-lottie {
+        display: none;
+        opacity: 0 !important;
+        transform: translateY(4px) scale(.94);
+        will-change: opacity, transform;
+        transition:
+            opacity 180ms ease-out,
+            transform 220ms cubic-bezier(.2,.8,.2,1) !important;
+    }
+
+    .seller-draft-feedback-lottie.is-playing {
+        opacity: 1 !important;
+        transform: translateY(0) scale(1);
+    }
+
+    .seller-draft-feedback.is-success .seller-draft-feedback-spinner {
+        animation-duration: .62s !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .seller-draft-feedback-lottie,
+        .seller-draft-feedback-fallback {
+            transition: none !important;
+            transform: none !important;
+        }
+
+        .seller-draft-feedback-fallback.is-playing .seller-draft-fallback-ring,
+        .seller-draft-feedback-fallback.is-playing .seller-draft-fallback-check {
+            animation-duration: .01ms !important;
+            animation-delay: 0ms !important;
+        }
+    }
+
+
+/* Extracted from resources/views/seller/products/create.blade.php — original style block 4. */
+/* ============================================================
+       ADD PRODUCT — COMPACT + READABLE FINAL LAYER
+       Preserve all form/draft/gallery/variant behavior; reduce
+       whitespace and component size without making text microscopic.
+       ============================================================ */
+
+    .seller-create-page {
+        max-width: 1440px !important;
+        padding-bottom: 24px;
+    }
+
+    .seller-create-topbar {
+        min-height: 66px !important;
+        margin-bottom: 12px !important;
+        padding: 2px 2px 13px !important;
+        gap: 12px !important;
+    }
+
+    .seller-create-heading-eyebrow {
+        font-size: 8px !important;
+        letter-spacing: .16em !important;
+    }
+
+    .seller-create-heading-title {
+        margin-top: 5px !important;
+        font-size: clamp(29px, 2.2vw, 36px) !important;
+        font-weight: 650 !important;
+        line-height: 1 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .seller-create-heading-back {
+        min-height: 24px !important;
+        margin-top: 5px !important;
+        font-size: 8.5px !important;
+    }
+
+    .seller-create-button {
+        height: 38px !important;
+        border-radius: 10px !important;
+        padding-inline: 12px !important;
+        font-size: 10px !important;
+        gap: 6px !important;
+    }
+
+    .seller-draft-count {
+        min-width: 18px !important;
+        height: 18px !important;
+        font-size: 7.5px !important;
+    }
+
+    .seller-create-grid {
+        grid-template-columns: 168px minmax(0,1fr) minmax(220px,250px) !important;
+        gap: 12px !important;
+    }
+
+    .seller-create-side,
+    .seller-create-preview {
+        top: 138px !important;
+    }
+
+    .seller-create-side-card,
+    .seller-create-preview-card,
+    .seller-create-section {
+        border-radius: 14px !important;
+        box-shadow: 0 6px 18px rgba(15,23,42,.035) !important;
+    }
+
+    .seller-create-side-card {
+        padding: 9px !important;
+    }
+
+    .seller-create-side-title {
+        gap: 7px !important;
+        padding: 6px 7px 9px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-side-card > p {
+        padding-top: 6px !important;
+        font-size: 8px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-create-nav {
+        gap: 4px !important;
+        margin-top: 7px !important;
+    }
+
+    .seller-create-nav button {
+        border-radius: 9px !important;
+        padding: 8px 9px !important;
+        font-size: 9.5px !important;
+    }
+
+    .seller-create-workspace {
+        gap: 11px !important;
+    }
+
+    .seller-create-section {
+        scroll-margin-top: 145px !important;
+        padding: 15px !important;
+    }
+
+    .seller-create-section-head {
+        gap: 9px !important;
+        margin-bottom: 13px !important;
+    }
+
+    .seller-create-section-copy h2 {
+        font-size: 14px !important;
+        line-height: 1.25 !important;
+    }
+
+    .seller-create-section-copy p {
+        margin-top: 3px !important;
+        font-size: 9.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .seller-create-rule {
+        margin-top: 16px !important;
+    }
+
+    .seller-create-field-grid {
+        gap: 10px !important;
+    }
+
+    .seller-create-label,
+    .seller-create-label-with-icon {
+        margin-bottom: 6px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-label-with-icon {
+        gap: 6px !important;
+    }
+
+    .seller-create-input,
+    .seller-create-select,
+    .seller-create-money-field,
+    .seller-category-trigger {
+        height: 40px !important;
+        border-radius: 10px !important;
+    }
+
+    .seller-create-input,
+    .seller-create-select {
+        padding-inline: 11px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-money-prefix {
+        width: 38px !important;
+        flex-basis: 38px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-money-input {
+        padding-inline: 11px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-category-trigger {
+        gap: 8px !important;
+        padding-inline: 10px !important;
+        font-size: 10px !important;
+    }
+
+    .seller-category-trigger-icon {
+        width: 17px !important;
+        height: 17px !important;
+        flex-basis: 17px !important;
+    }
+
+    .seller-category-trigger-icon svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .seller-category-menu {
+        max-height: 220px !important;
+        margin-top: 5px !important;
+        border-radius: 11px !important;
+        padding: 5px !important;
+    }
+
+    .seller-category-option {
+        min-height: 34px !important;
+        gap: 7px !important;
+        border-radius: 8px !important;
+        padding: 6px 8px !important;
+        font-size: 9.5px !important;
+    }
+
+    .seller-create-textarea {
+        min-height: 118px !important;
+        border-radius: 10px !important;
+        padding: 10px 11px !important;
+        font-size: 10.5px !important;
+        line-height: 1.55 !important;
+    }
+
+    .seller-create-help {
+        margin-top: 4px !important;
+        font-size: 9px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-create-upload {
+        min-height: 132px !important;
+        border-radius: 11px !important;
+    }
+
+    .seller-create-upload img {
+        min-height: 132px !important;
+    }
+
+    .seller-create-gallery {
+        gap: 7px !important;
+        margin-top: 9px !important;
+    }
+
+    .seller-create-gallery-thumb {
+        border-radius: 9px !important;
+    }
+
+    .seller-gallery-remove {
+        top: 4px !important;
+        right: 4px !important;
+        width: 21px !important;
+        height: 21px !important;
+    }
+
+    .seller-gallery-saved-badge {
+        left: 4px !important;
+        bottom: 4px !important;
+        min-height: 18px !important;
+        font-size: 6.8px !important;
+    }
+
+    details.mt-4 {
+        margin-top: 11px !important;
+        border-radius: 10px !important;
+    }
+
+    details.mt-4 > summary {
+        padding: 9px 10px !important;
+        font-size: 9px !important;
+    }
+
+    .seller-create-toggle-row {
+        gap: 12px !important;
+        margin-top: 10px !important;
+        padding: 10px 12px !important;
+        border-radius: 11px !important;
+    }
+
+    .seller-create-toggle-row strong {
+        font-size: 10px !important;
+    }
+
+    .seller-create-toggle-row span {
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-create-toggle {
+        width: 44px !important;
+        height: 24px !important;
+        flex-basis: 44px !important;
+    }
+
+    .seller-create-toggle::after {
+        top: 3px !important;
+        left: 3px !important;
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .peer:checked + .seller-create-toggle::after {
+        transform: translateX(20px) !important;
+    }
+
+    .seller-create-setting-grid {
+        gap: 9px !important;
+        margin-top: 10px !important;
+    }
+
+    .seller-create-setting-card {
+        min-height: 74px !important;
+        gap: 10px !important;
+        padding: 11px 12px !important;
+        border-radius: 12px !important;
+    }
+
+    .seller-create-setting-copy {
+        gap: 8px !important;
+    }
+
+    .seller-create-setting-copy strong {
+        font-size: 10.5px !important;
+        line-height: 1.3 !important;
+    }
+
+    .seller-create-setting-copy span {
+        margin-top: 3px !important;
+        max-width: 310px !important;
+        font-size: 8.8px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-create-plain-icon {
+        width: 19px !important;
+        height: 19px !important;
+        flex-basis: 19px !important;
+    }
+
+    .seller-create-plain-icon svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    .seller-variant-table-wrap {
+        margin-top: 9px !important;
+        border-radius: 11px !important;
+    }
+
+    .seller-variant-table th {
+        padding: 7px 6px !important;
+        font-size: 8px !important;
+    }
+
+    .seller-variant-table td {
+        padding: 7px 6px !important;
+    }
+
+    .seller-variant-table input[type="text"],
+    .seller-variant-table input[type="number"] {
+        height: 32px !important;
+        border-radius: 8px !important;
+        padding-inline: 7px !important;
+        font-size: 8.8px !important;
+    }
+
+    .seller-variant-image-label {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 9px !important;
+    }
+
+    .seller-create-mobile-preview {
+        margin-top: 10px !important;
+        padding: 9px 11px !important;
+        border-radius: 11px !important;
+    }
+
+    .seller-create-mobile-preview-copy strong {
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-mobile-preview-copy > span:last-child {
+        font-size: 8.5px !important;
+    }
+
+    .seller-promo-preview {
+        margin-top: 10px !important;
+        border-radius: 12px !important;
+        padding: 10px 11px !important;
+    }
+
+    .seller-promo-preview-head {
+        padding-bottom: 8px !important;
+    }
+
+    .seller-promo-preview-head strong {
+        font-size: 10.5px !important;
+    }
+
+    .seller-promo-preview-head span {
+        min-height: 22px !important;
+        padding-inline: 8px !important;
+        font-size: 8.5px !important;
+    }
+
+    .seller-promo-preview-price {
+        margin-top: 9px !important;
+    }
+
+    .seller-promo-preview-price strong {
+        font-size: 18px !important;
+    }
+
+    .seller-promo-preview-price span {
+        font-size: 9.5px !important;
+    }
+
+    .seller-promo-preview-note {
+        margin-top: 6px !important;
+        font-size: 9px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-spec-row {
+        grid-template-columns: 1fr 1.4fr 90px 38px !important;
+        gap: 8px !important;
+        margin-top: 8px !important;
+    }
+
+    .seller-spec-row [data-remove-spec] {
+        height: 38px !important;
+    }
+
+    .seller-preview-head {
+        padding: 11px 12px !important;
+    }
+
+    .seller-preview-head h3 {
+        font-size: 11px !important;
+    }
+
+    .seller-preview-body {
+        padding: 10px !important;
+    }
+
+    .seller-preview-image {
+        max-height: 150px !important;
+        border-radius: 10px !important;
+    }
+
+    .seller-preview-title {
+        margin-top: 9px !important;
+        font-size: 11px !important;
+        line-height: 1.4 !important;
+    }
+
+    .seller-preview-price {
+        margin-top: 6px !important;
+        font-size: 17px !important;
+    }
+
+    .seller-preview-old-price {
+        margin-left: 6px !important;
+        font-size: 9px !important;
+    }
+
+    .seller-preview-badges {
+        gap: 4px !important;
+        margin-top: 7px !important;
+    }
+
+    .seller-preview-badge {
+        min-height: 20px !important;
+        padding-inline: 7px !important;
+        font-size: 7.5px !important;
+    }
+
+    .seller-preview-note {
+        margin-top: 10px !important;
+        padding-top: 9px !important;
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-inline-alert {
+        margin-bottom: 10px !important;
+        border-radius: 11px !important;
+        padding: 9px 11px !important;
+        font-size: 9.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .seller-draft-menu {
+        width: min(340px, 88vw) !important;
+        border-radius: 13px !important;
+    }
+
+    .seller-draft-menu-head {
+        padding: 10px 11px !important;
+    }
+
+    .seller-draft-menu-head strong {
+        font-size: 10px !important;
+    }
+
+    .seller-draft-menu-head span {
+        font-size: 7.8px !important;
+    }
+
+    .seller-draft-list {
+        max-height: 320px !important;
+    }
+
+    .seller-draft-item {
+        padding: 7px !important;
+        border-radius: 9px !important;
+    }
+
+    .seller-draft-open {
+        grid-template-columns: 40px minmax(0,1fr) !important;
+        gap: 8px !important;
+    }
+
+    .seller-draft-thumb {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 8px !important;
+    }
+
+    .seller-draft-open strong {
+        font-size: 8.8px !important;
+    }
+
+    .seller-draft-open span {
+        font-size: 7.5px !important;
+    }
+
+    .seller-draft-delete {
+        width: 27px !important;
+        height: 27px !important;
+    }
+
+    @media (max-width: 1500px) {
+        .seller-create-grid {
+            grid-template-columns: 158px minmax(0,1fr) !important;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .seller-create-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .seller-create-section {
+            padding: 14px !important;
+        }
+    }
+
+    @media (max-width: 760px) {
+        .seller-create-topbar {
+            gap: 10px !important;
+        }
+
+        .seller-create-heading-title {
+            font-size: clamp(28px, 8vw, 34px) !important;
+        }
+
+        .seller-create-topbar > .flex.items-center.gap-2 {
+            gap: 7px !important;
+        }
+
+        .seller-create-button {
+            height: 40px !important;
+            font-size: 9.5px !important;
+        }
+
+        .seller-create-input,
+        .seller-create-select,
+        .seller-create-money-field,
+        .seller-category-trigger {
+            height: 42px !important;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .seller-create-section {
+            padding: 12px !important;
+        }
+
+        .seller-create-field-grid,
+        .seller-create-field-grid--3,
+        .seller-create-field-grid--4,
+        .seller-create-setting-grid {
+            gap: 9px !important;
+        }
+
+        .seller-create-label,
+        .seller-create-label-with-icon {
+            font-size: 10px !important;
+        }
+
+        .seller-create-textarea {
+            min-height: 110px !important;
+        }
+
+        .seller-create-upload {
+            min-height: 120px !important;
+        }
+    }
+
+
+/* Extracted from resources/views/seller/products/create.blade.php — original style block 5. */
+/* ======================================================================
+   ADD PRODUCT — FLOATING CONTAINER EFFECTS
+   Visual-only enhancement. No form, route, validation, draft, gallery,
+   variant, preview, or submission behavior is changed.
+   ====================================================================== */
+
+.seller-create-page {
+    --sari-float-border: #E3E7EC;
+    --sari-float-border-strong: #D8DEE6;
+    --sari-float-shadow:
+        0 1px 2px rgba(15, 23, 42, .035),
+        0 10px 26px rgba(15, 23, 42, .075),
+        inset 0 1px 0 rgba(255, 255, 255, .86);
+    --sari-float-shadow-soft:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 7px 18px rgba(15, 23, 42, .055),
+        inset 0 1px 0 rgba(255, 255, 255, .82);
+}
+
+/* Main page containers — clear floating/elevated hierarchy. */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-section {
+    border: 1px solid var(--sari-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--sari-float-shadow) !important;
+    transform: none !important;
+}
+
+/* Keep the approved compact radii while making the outline crisp. */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-section {
+    border-radius: 14px !important;
+}
+
+/* No lift/motion when cursor passes over main cards. */
+.seller-create-page .seller-create-side-card:hover,
+.seller-create-page .seller-create-preview-card:hover,
+.seller-create-page .seller-create-section:hover {
+    border-color: var(--sari-float-border) !important;
+    box-shadow: var(--sari-float-shadow) !important;
+    transform: none !important;
+}
+
+/* Inner functional panels receive a softer elevation so the main cards
+   remain visually dominant. */
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-variant-table-wrap,
+.seller-create-page .seller-create-mobile-preview,
+.seller-create-page details.mt-4 {
+    border-color: #E4E8ED !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--sari-float-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Settings cards should remain still on hover; only normal control color
+   feedback is allowed. */
+.seller-create-page .seller-create-setting-card:hover {
+    border-color: #E1E6EC !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--sari-float-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Upload surface: subtle depth, but no physical movement. */
+.seller-create-page .seller-create-upload {
+    border-color: #D7DEE7 !important;
+    background: #FBFCFD !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .02),
+        0 5px 14px rgba(15, 23, 42, .045) !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-upload:hover {
+    border-color: #D0D7E0 !important;
+    background: #FBFCFD !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .02),
+        0 5px 14px rgba(15, 23, 42, .045) !important;
+    transform: none !important;
+}
+
+/* Gallery / empty states remain light and secondary. */
+.seller-create-page #createGalleryEmpty,
+.seller-create-page #createSpecificationsEmpty {
+    border-color: #DCE2E9 !important;
+    background: #FAFBFC !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+}
+
+/* Draft menu is a floating overlay, but neutral—not gold-tinted. */
+.seller-create-page .seller-draft-menu {
+    border-color: #E1E6EC !important;
+    box-shadow:
+        0 18px 42px rgba(15, 23, 42, .12),
+        0 4px 12px rgba(15, 23, 42, .04) !important;
+}
+
+/* Preview image/media has just enough depth to separate it from the card. */
+.seller-create-page .seller-preview-image,
+.seller-create-page .seller-create-gallery-thumb,
+.seller-create-page .seller-variant-image-label {
+    border-color: #E1E6EC !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .04) !important;
+}
+
+/* Buttons remain static too; preserve clickability without lift animation. */
+.seller-create-page .seller-create-button,
+.seller-create-page .seller-draft-new-button,
+.seller-create-page .seller-gallery-remove {
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-button:hover,
+.seller-create-page .seller-draft-new-button:hover,
+.seller-create-page .seller-gallery-remove:hover {
+    transform: none !important;
+}
+
+/* Keep semantic gold only where it is intentional; structural borders
+   and elevation stay neutral. */
+.seller-create-page .seller-create-section,
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-variant-table-wrap {
+    outline: 0 !important;
+}
+
+/* Mobile: same design, slightly lighter shadow to avoid visual heaviness. */
+@media (max-width: 760px) {
+    .seller-create-page .seller-create-side-card,
+    .seller-create-page .seller-create-preview-card,
+    .seller-create-page .seller-create-section {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .03),
+            0 7px 18px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .84) !important;
+    }
+
+    .seller-create-page .seller-create-setting-card,
+    .seller-create-page .seller-create-toggle-row,
+    .seller-create-page .seller-promo-preview,
+    .seller-create-page .seller-variant-table-wrap,
+    .seller-create-page .seller-create-mobile-preview,
+    .seller-create-page details.mt-4 {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .02),
+            0 5px 13px rgba(15, 23, 42, .05) !important;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — DASHBOARD SHADOW REFERENCE FINAL PASS
+   Front-end/CSS only. Product submission, validation, drafts, gallery,
+   variants, category picker, preview, routes and backend behavior remain
+   unchanged.
+   ====================================================================== */
+
+.seller-create-page {
+    --add-dashboard-border: #E5E7EB;
+    --add-dashboard-border-strong: #D1D5DB;
+    --add-dashboard-divider: #ECEFF2;
+
+    /* Dashboard-style layered elevation:
+       contact shadow + middle separation + broad ambient float. */
+    --add-dashboard-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+
+    --add-dashboard-shadow-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+
+    --add-dashboard-shadow-inner:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 5px 14px rgba(15, 23, 42, .045);
+}
+
+/* Header remains flat; only the divider stays visible. */
+.seller-create-page .seller-create-topbar {
+    border-bottom-color: var(--add-dashboard-divider) !important;
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------------
+   PRIMARY FLOATING SURFACES
+   Suggestions, form sections and buyer preview use the strongest depth.
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-section,
+.seller-create-page .seller-create-preview-card {
+    border: 1px solid var(--add-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-side-card:hover,
+.seller-create-page .seller-create-section:hover,
+.seller-create-page .seller-create-preview-card:hover {
+    border-color: var(--add-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+/* Neutral internal dividers. */
+.seller-create-page .seller-create-side-title,
+.seller-create-page .seller-preview-head,
+.seller-create-page .seller-create-rule,
+.seller-create-page .seller-preview-note {
+    border-color: var(--add-dashboard-divider) !important;
+}
+
+/* ------------------------------------------------------------------
+   SECONDARY FUNCTIONAL SURFACES
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-variant-table-wrap,
+.seller-create-page .seller-create-mobile-preview,
+.seller-create-page details.mt-4 {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-setting-card:hover,
+.seller-create-page .seller-create-toggle-row:hover,
+.seller-create-page .seller-promo-preview:hover,
+.seller-create-page .seller-variant-table-wrap:hover,
+.seller-create-page details.mt-4:hover {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Upload / media surfaces stay subordinate to their parent sections. */
+.seller-create-page .seller-create-upload,
+.seller-create-page .seller-preview-image,
+.seller-create-page .seller-create-gallery-thumb,
+.seller-create-page .seller-variant-image-label {
+    border-color: #E1E6EC !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--add-dashboard-shadow-inner) !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-upload:hover {
+    border-color: #D6DCE4 !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--add-dashboard-shadow-inner) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   FORM CONTROLS
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-create-input,
+.seller-create-page .seller-create-select,
+.seller-create-page .seller-create-textarea,
+.seller-create-page .seller-create-money-field,
+.seller-create-page .seller-category-trigger,
+.seller-create-page .seller-variant-table input[type="text"],
+.seller-create-page .seller-variant-table input[type="number"] {
+    border-color: var(--add-dashboard-border-strong) !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .02),
+        0 4px 10px rgba(15, 23, 42, .03) !important;
+}
+
+.seller-create-page .seller-create-input:hover,
+.seller-create-page .seller-create-select:hover,
+.seller-create-page .seller-create-textarea:hover,
+.seller-create-page .seller-category-trigger:hover {
+    border-color: #C9D0D9 !important;
+    background: #FFFFFF !important;
+}
+
+/* Keep focus visible but restrained. */
+.seller-create-page .seller-create-input:focus,
+.seller-create-page .seller-create-select:focus,
+.seller-create-page .seller-create-textarea:focus,
+.seller-create-page .seller-create-money-field:focus-within,
+.seller-create-page .seller-category-trigger[aria-expanded="true"],
+.seller-create-page .seller-variant-table input[type="text"]:focus,
+.seller-create-page .seller-variant-table input[type="number"]:focus {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 0 0 3px rgba(196, 163, 91, .08),
+        0 5px 14px rgba(15, 23, 42, .04) !important;
+}
+
+/* ------------------------------------------------------------------
+   DROPDOWNS / OVERLAYS
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-category-menu,
+.seller-create-page .seller-draft-menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* Neutral hover; selected state may keep a restrained gold cue. */
+.seller-create-page .seller-category-option:hover {
+    background: #F8FAFC !important;
+    color: #475467 !important;
+}
+
+.seller-create-page .seller-category-option.is-selected {
+    background: #FFF9EC !important;
+    color: #9A6708 !important;
+}
+
+.seller-create-page .seller-draft-item:hover {
+    border-color: #E5E7EB !important;
+    background: #F8FAFC !important;
+}
+
+.seller-create-page .seller-draft-item.is-current {
+    border-color: #EAD7A9 !important;
+    background: #FFF9EC !important;
+}
+
+/* ------------------------------------------------------------------
+   LEFT NAV + BUTTONS
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-create-nav button:hover {
+    border-color: #E5E7EB !important;
+    background: #F8FAFC !important;
+    color: #475467 !important;
+}
+
+.seller-create-page .seller-create-nav button.is-active {
+    border-color: #EAD7A9 !important;
+    background: #FFF9EC !important;
+    color: #9B6505 !important;
+}
+
+/* All controls remain physically static. */
+.seller-create-page .seller-create-button,
+.seller-create-page .seller-draft-new-button,
+.seller-create-page .seller-gallery-remove,
+.seller-create-page .seller-draft-delete {
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-button:hover,
+.seller-create-page .seller-draft-new-button:hover,
+.seller-create-page .seller-gallery-remove:hover,
+.seller-create-page .seller-draft-delete:hover {
+    transform: none !important;
+}
+
+/* Secondary buttons use neutral hover surfaces rather than cream. */
+.seller-create-page .seller-create-button:not(.seller-create-button--primary):not(.seller-create-button--soft):hover {
+    border-color: var(--add-dashboard-border-strong) !important;
+    background: #F8FAFC !important;
+}
+
+.seller-create-page .seller-create-button--soft:hover,
+.seller-create-page .seller-draft-new-button:hover {
+    background: #FFF9EC !important;
+}
+
+/* ------------------------------------------------------------------
+   EMPTY / INFO / FEEDBACK SURFACES
+   ------------------------------------------------------------------ */
+.seller-create-page #createGalleryEmpty,
+.seller-create-page #createSpecificationsEmpty {
+    border-color: #DCE2E9 !important;
+    background: #F8FAFC !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+}
+
+.seller-create-page .seller-inline-alert {
+    box-shadow: var(--add-dashboard-shadow-soft) !important;
+}
+
+/* Draft feedback intentionally remains animation + text only. */
+.seller-create-page .seller-draft-feedback-card {
+    box-shadow: none !important;
+}
+
+/* Structural surfaces never receive colored outlines. */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-section,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-variant-table-wrap {
+    outline: 0 !important;
+}
+
+/* Mobile: preserve float but reduce ambient spread. */
+@media (max-width: 760px) {
+    .seller-create-page .seller-create-side-card,
+    .seller-create-page .seller-create-section,
+    .seller-create-page .seller-create-preview-card {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .seller-create-page .seller-create-setting-card,
+    .seller-create-page .seller-create-toggle-row,
+    .seller-create-page .seller-promo-preview,
+    .seller-create-page .seller-variant-table-wrap,
+    .seller-create-page .seller-create-mobile-preview,
+    .seller-create-page details.mt-4 {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .02),
+            0 5px 13px rgba(15, 23, 42, .045) !important;
+    }
+}
+
+
+/* Extracted from resources/views/seller/products/create.blade.php — original style block 6. */
+/* ======================================================================
+   ADD PRODUCT — MAIN CONTAINERS ONLY FLOATING
+   Final hierarchy rule:
+   - Suggestions, major form sections, and Buyer Preview float.
+   - Everything nested inside those main surfaces stays flat.
+   - Popover/overlay menus may keep elevation because they leave the flow.
+   Visual-only: form, draft, gallery, variant, preview and submit behavior
+   remain unchanged.
+   ====================================================================== */
+
+.seller-create-page {
+    --add-main-border: #E5E7EB;
+    --add-main-divider: #ECEFF2;
+    --add-main-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+}
+
+/* ------------------------------------------------------------
+   ONLY THESE TOP-LEVEL SURFACES FLOAT
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-section,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-side-card:hover,
+.seller-create-page .seller-create-section:hover,
+.seller-create-page .seller-create-preview-card:hover {
+    border: 1px solid var(--add-main-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-main-shadow) !important;
+    transform: none !important;
+    outline: 0 !important;
+}
+
+/* Header remains an open, non-card page header. */
+.seller-create-page .seller-create-topbar,
+.seller-create-page .seller-create-topbar:hover {
+    border-bottom-color: var(--add-main-divider) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   NESTED PANELS / GROUPS — FLAT
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-setting-card:hover,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-create-toggle-row:hover,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-promo-preview:hover,
+.seller-create-page .seller-variant-table-wrap,
+.seller-create-page .seller-variant-table-wrap:hover,
+.seller-create-page .seller-create-mobile-preview,
+.seller-create-page details.mt-4,
+.seller-create-page details.mt-4:hover {
+    border-color: #E5E7EB !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Keep internal grouping via neutral dividers, never elevation. */
+.seller-create-page .seller-create-side-title,
+.seller-create-page .seller-preview-head,
+.seller-create-page .seller-create-rule,
+.seller-create-page .seller-preview-note,
+.seller-create-page .seller-promo-preview-head,
+.seller-create-page .seller-variant-table td,
+.seller-create-page details.mt-4 > div,
+.seller-create-page .mt-4.border-t,
+.seller-create-page .mt-5.border-t {
+    border-color: var(--add-main-divider) !important;
+}
+
+/* ------------------------------------------------------------
+   UPLOAD / MEDIA / EMPTY STATES — FLAT
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-upload,
+.seller-create-page .seller-create-upload:hover,
+.seller-create-page .seller-preview-image,
+.seller-create-page .seller-create-gallery-thumb,
+.seller-create-page .seller-variant-image-label,
+.seller-create-page #createGalleryEmpty,
+.seller-create-page #createSpecificationsEmpty {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-upload,
+.seller-create-page .seller-create-upload:hover {
+    border-color: #D7DEE7 !important;
+    background: #FAFBFC !important;
+}
+
+.seller-create-page .seller-preview-image,
+.seller-create-page .seller-create-gallery-thumb,
+.seller-create-page .seller-variant-image-label,
+.seller-create-page #createGalleryEmpty,
+.seller-create-page #createSpecificationsEmpty {
+    border-color: #E1E6EC !important;
+    background: #F8FAFC !important;
+}
+
+/* Remove the gallery thumbnail inset depth layer. */
+.seller-create-page .seller-create-gallery-thumb::after {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   FORM CONTROLS — CONTROLS, NOT FLOATING CARDS
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-input,
+.seller-create-page .seller-create-select,
+.seller-create-page .seller-create-textarea,
+.seller-create-page .seller-create-money-field,
+.seller-create-page .seller-category-trigger,
+.seller-create-page .seller-variant-table input[type="text"],
+.seller-create-page .seller-variant-table input[type="number"] {
+    border-color: #D1D5DB !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-input:hover,
+.seller-create-page .seller-create-select:hover,
+.seller-create-page .seller-create-textarea:hover,
+.seller-create-page .seller-create-money-field:hover,
+.seller-create-page .seller-category-trigger:hover,
+.seller-create-page .seller-variant-table input[type="text"]:hover,
+.seller-create-page .seller-variant-table input[type="number"]:hover {
+    border-color: #C9D0D9 !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+/* Focus ring is accessibility feedback, not resting elevation. */
+.seller-create-page .seller-create-input:focus,
+.seller-create-page .seller-create-select:focus,
+.seller-create-page .seller-create-textarea:focus,
+.seller-create-page .seller-create-money-field:focus-within,
+.seller-create-page .seller-category-trigger[aria-expanded="true"],
+.seller-create-page .seller-variant-table input[type="text"]:focus,
+.seller-create-page .seller-variant-table input[type="number"]:focus {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08) !important;
+}
+
+/* ------------------------------------------------------------
+   BUTTONS / BADGES / TOGGLES / ICONS — NO FLOATING DEPTH
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-button,
+.seller-create-page .seller-create-button:hover,
+.seller-create-page .seller-create-button:focus-visible,
+.seller-create-page .seller-draft-new-button,
+.seller-create-page .seller-draft-new-button:hover,
+.seller-create-page .seller-gallery-remove,
+.seller-create-page .seller-gallery-remove:hover,
+.seller-create-page .seller-draft-delete,
+.seller-create-page .seller-draft-delete:hover,
+.seller-create-page .seller-draft-status,
+.seller-create-page .seller-gallery-count,
+.seller-create-page .seller-preview-badge,
+.seller-create-page .seller-promo-preview-head span,
+.seller-create-page .seller-create-plain-icon,
+.seller-create-page .seller-create-section-icon,
+.seller-create-page .seller-category-trigger-icon,
+.seller-create-page .seller-draft-thumb {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Primary CTA keeps color emphasis, not shadow emphasis. */
+.seller-create-page .seller-create-button--primary,
+.seller-create-page .seller-create-button--primary:hover {
+    box-shadow: none !important;
+}
+
+/* Toggle track and knob remain flat inside their parent section. */
+.seller-create-page .seller-create-toggle {
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-create-toggle::after {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   TABLE / ROW CONTENT — FLAT WITHIN THE MAIN SALES SECTION
+   ------------------------------------------------------------ */
+.seller-create-page .seller-variant-table-wrap {
+    overflow: hidden;
+}
+
+.seller-create-page .seller-variant-table th {
+    background: #F8FAFC !important;
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-variant-table tr,
+.seller-create-page .seller-variant-table td {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Inline validation is informational, not a floating nested panel. */
+.seller-create-page .seller-inline-alert {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   OVERLAYS / POPOVERS
+   These may float because they are transient layers, not nested cards.
+   ------------------------------------------------------------ */
+.seller-create-page .seller-category-menu,
+.seller-create-page .seller-draft-menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* Draft feedback intentionally remains animation + text only. */
+.seller-create-page .seller-draft-feedback-card,
+.seller-create-page .seller-draft-feedback-loader,
+.seller-create-page .seller-draft-feedback-fallback {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   MOBILE — SAME HIERARCHY
+   ------------------------------------------------------------ */
+@media (max-width: 760px) {
+    .seller-create-page .seller-create-side-card,
+    .seller-create-page .seller-create-section,
+    .seller-create-page .seller-create-preview-card {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .seller-create-page .seller-create-setting-card,
+    .seller-create-page .seller-create-toggle-row,
+    .seller-create-page .seller-promo-preview,
+    .seller-create-page .seller-variant-table-wrap,
+    .seller-create-page .seller-create-mobile-preview,
+    .seller-create-page details.mt-4,
+    .seller-create-page .seller-create-upload,
+    .seller-create-page .seller-preview-image,
+    .seller-create-page .seller-create-gallery-thumb,
+    .seller-create-page .seller-variant-image-label,
+    .seller-create-page #createGalleryEmpty,
+    .seller-create-page #createSpecificationsEmpty {
+        box-shadow: none !important;
+    }
+}
+
+
+/* Extracted from resources/views/seller/products/create.blade.php — original style block 7. */
+/* ======================================================================
+   ADD PRODUCT — SMART VARIANT OPTIONS
+   Screenshot-inspired Sales Information workflow.
+   Nested variant configuration surfaces stay flat inside the main Sales card.
+   ====================================================================== */
+
+.seller-create-page .seller-sales-base-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(240px, .95fr);
+    gap: 10px;
+    align-items: stretch;
+}
+
+.seller-create-page .seller-sales-base-field,
+.seller-create-page .seller-variant-mode-card {
+    min-width: 0;
+}
+
+.seller-create-page .seller-variant-mode-card {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #E5E7EB;
+    border-radius: 11px;
+    background: #F8FAFC;
+    padding: 11px 12px;
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-variant-mode-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #344054;
+    font-size: 10.5px;
+    font-weight: 700;
+}
+
+.seller-create-page .seller-variant-info-dot {
+    display: inline-grid;
+    width: 15px;
+    height: 15px;
+    place-items: center;
+    border: 1px solid #C9D0D9;
+    border-radius: 999px;
+    color: #667085;
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.seller-create-page .seller-variant-mode-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 9px;
+}
+
+.seller-create-page .seller-variant-mode-choice {
+    display: inline-flex;
+    min-height: 28px;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: #667085;
+    font-size: 9.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-mode-choice:hover {
+    color: #344054;
+}
+
+.seller-create-page .seller-variant-mode-radio {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+    border: 1px solid #C9D0D9;
+    border-radius: 999px;
+    background: #FFFFFF;
+}
+
+.seller-create-page .seller-variant-mode-choice[aria-pressed="true"] {
+    color: #9A6708;
+}
+
+.seller-create-page .seller-variant-mode-choice[aria-pressed="true"] .seller-variant-mode-radio {
+    border-color: #D59617;
+}
+
+.seller-create-page .seller-variant-mode-choice[aria-pressed="true"] .seller-variant-mode-radio::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 999px;
+    background: #D59617;
+}
+
+.seller-create-page .seller-smart-variants {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.seller-create-page .seller-variant-options-panel,
+.seller-create-page .seller-variants-panel {
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    background: #FFFFFF;
+    box-shadow: none !important;
+    overflow: hidden;
+}
+
+.seller-create-page .seller-variant-subhead,
+.seller-create-page .seller-variants-panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 12px;
+    border-bottom: 1px solid #ECEFF2;
+}
+
+.seller-create-page .seller-variant-subhead h3,
+.seller-create-page .seller-variants-panel-head h3 {
+    color: #344054;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.seller-create-page .seller-variant-subhead p,
+.seller-create-page .seller-variants-panel-head p {
+    margin-top: 3px;
+    color: #8A94A3;
+    font-size: 8px;
+    line-height: 1.5;
+}
+
+.seller-create-page .seller-variants-panel-head h3 span {
+    margin-left: 5px;
+    color: #98A2B3;
+    font-size: 8px;
+    font-weight: 500;
+}
+
+.seller-create-page .seller-variant-option-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(210px, .95fr);
+    gap: 10px;
+    padding: 12px;
+}
+
+.seller-create-page .seller-variant-option-card,
+.seller-create-page .seller-variant-combination-summary {
+    min-width: 0;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    background: #FFFFFF;
+    padding: 10px;
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-variant-option-name-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #667085;
+    font-size: 7.5px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.seller-create-page .seller-variant-option-name {
+    width: 100%;
+    height: 31px;
+    border: 0;
+    border-bottom: 1px solid #ECEFF2;
+    background: #FFFFFF;
+    padding: 0 1px 6px;
+    color: #344054;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    outline: none;
+}
+
+.seller-create-page .seller-variant-option-name:focus {
+    border-bottom-color: #D6B064;
+}
+
+.seller-create-page .seller-variant-option-values {
+    display: flex;
+    min-height: 34px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 5px;
+    margin-top: 9px;
+}
+
+.seller-create-page .seller-variant-value-chip {
+    display: inline-flex;
+    min-height: 25px;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #E5D19C;
+    border-radius: 7px;
+    background: #FFF9EC;
+    padding: 0 7px;
+    color: #8E5F0A;
+    font-size: 8px;
+    font-weight: 600;
+}
+
+.seller-create-page .seller-variant-value-chip button {
+    display: grid;
+    width: 14px;
+    height: 14px;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: #B98627;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-option-add {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.seller-create-page .seller-variant-option-value-input {
+    min-width: 0;
+    height: 31px;
+    border: 1px solid #D7DDE5;
+    border-radius: 8px;
+    background: #FFFFFF;
+    padding: 0 8px;
+    color: #344054;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    font-size: 8.5px;
+    outline: none;
+}
+
+.seller-create-page .seller-variant-option-value-input:focus {
+    border-color: #C4A35B;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08);
+}
+
+.seller-create-page .seller-variant-add-value {
+    min-height: 31px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 0 9px;
+    color: #667085;
+    font-size: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-add-value:hover {
+    border-color: #D9B96F;
+    background: #FFF9EC;
+    color: #986408;
+}
+
+.seller-create-page .seller-variant-combination-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    background: #F8FAFC;
+}
+
+.seller-create-page .seller-variant-summary-icon {
+    display: grid;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    place-items: center;
+    color: #C9890B;
+}
+
+.seller-create-page .seller-variant-summary-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.seller-create-page #createVariantSummaryEyebrow {
+    display: block;
+    color: #667085;
+    font-size: 7.5px;
+    font-weight: 600;
+}
+
+.seller-create-page #createVariantCombinationSummary {
+    display: block;
+    margin-top: 7px;
+    color: #344054;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.seller-create-page #createVariantCombinationHelp {
+    margin-top: 6px;
+    color: #98A2B3;
+    font-size: 7.5px;
+    line-height: 1.5;
+}
+
+.seller-create-page .seller-variant-bulk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.seller-create-page .seller-variant-bulk-button {
+    display: inline-flex;
+    min-height: 31px;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #E3D09F;
+    border-radius: 8px;
+    background: #FFFFFF;
+    padding: 0 9px;
+    color: #9A6708;
+    font-size: 7.5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-bulk-button:hover {
+    border-color: #D6A740;
+    background: #FFF9EC;
+}
+
+.seller-create-page .seller-variant-bulk-button svg {
+    width: 12px;
+    height: 12px;
+}
+
+.seller-create-page .seller-variant-empty {
+    padding: 22px 14px;
+    color: #98A2B3;
+    font-size: 8.5px;
+    text-align: center;
+}
+
+.seller-create-page .seller-smart-variant-table select,
+.seller-create-page .seller-smart-variant-table input[type="text"],
+.seller-create-page .seller-smart-variant-table input[type="number"] {
+    width: 100%;
+    min-width: 0;
+    height: 32px;
+    border: 1px solid #D8DEE7;
+    border-radius: 8px;
+    background: #FFFFFF;
+    padding: 0 7px;
+    color: #344054;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    font-size: 8.5px;
+    outline: none;
+}
+
+.seller-create-page .seller-smart-variant-table select:focus,
+.seller-create-page .seller-smart-variant-table input:focus {
+    border-color: #C4A35B;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08);
+}
+
+.seller-create-page .seller-variant-money-cell {
+    position: relative;
+}
+
+.seller-create-page .seller-variant-money-cell::before {
+    content: "₱";
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    z-index: 1;
+    color: #667085;
+    font-size: 8px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.seller-create-page .seller-variant-money-cell input {
+    padding-left: 21px !important;
+}
+
+.seller-create-page .seller-variant-remove {
+    display: grid;
+    width: 29px;
+    height: 29px;
+    place-items: center;
+    border: 1px solid #F0D0D0;
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #D64B4B;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-remove:hover {
+    background: #FFF5F5;
+}
+
+.seller-create-page .seller-variant-remove svg {
+    width: 13px;
+    height: 13px;
+}
+
+/* Existing main-container-only hierarchy stays intact. */
+.seller-create-page .seller-variant-options-panel,
+.seller-create-page .seller-variants-panel,
+.seller-create-page .seller-variant-option-card,
+.seller-create-page .seller-variant-combination-summary,
+.seller-create-page .seller-variant-mode-card,
+.seller-create-page .seller-variant-table-wrap {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+@media (max-width: 980px) {
+    .seller-create-page .seller-sales-base-grid,
+    .seller-create-page .seller-variant-option-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .seller-create-page .seller-variant-mode-card,
+    .seller-create-page .seller-variant-combination-summary {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-sales-base-grid,
+    .seller-create-page .seller-variant-option-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .seller-create-page .seller-variant-mode-card,
+    .seller-create-page .seller-variant-combination-summary {
+        grid-column: auto;
+    }
+
+    .seller-create-page .seller-variants-panel-head {
+        flex-direction: column;
+    }
+
+    .seller-create-page .seller-variant-bulk-actions {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .seller-create-page .seller-variant-bulk-button {
+        flex: 1 1 0;
+        justify-content: center;
+    }
+
+    .seller-create-page .seller-variant-option-add {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — COLOR SWATCH + STRICT YES-ONLY VARIANT VISIBILITY
+   ====================================================================== */
+
+/* The smart variant UI must never appear until Has different options = Yes. */
+.seller-create-page #createVariantsArea[hidden],
+.seller-create-page #createVariantsArea.hidden,
+.seller-create-page .seller-smart-variants[aria-hidden="true"] {
+    display: none !important;
+}
+
+/* Color option chips in the option builder. */
+.seller-create-page .seller-variant-value-chip--color {
+    padding-left: 6px;
+}
+
+.seller-create-page .seller-variant-color-dot {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    flex: 0 0 13px;
+    border: 1px solid rgba(15, 23, 42, .14);
+    border-radius: 999px;
+    background: var(--variant-swatch, #D0D5DD);
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.26),
+        0 1px 2px rgba(15,23,42,.08);
+}
+
+/* White needs a visible neutral edge. */
+.seller-create-page .seller-variant-color-dot[data-light-swatch="true"] {
+    border-color: #CDD3DB;
+    box-shadow:
+        inset 0 0 0 1px rgba(15,23,42,.035),
+        0 1px 2px rgba(15,23,42,.06);
+}
+
+/* Variant table color selector: real swatch + text + native chevron. */
+.seller-create-page .seller-variant-color-select {
+    position: relative;
+    min-width: 0;
+}
+
+.seller-create-page .seller-variant-color-select .seller-variant-color-dot {
+    position: absolute;
+    top: 50%;
+    left: 9px;
+    z-index: 2;
+    width: 14px;
+    height: 14px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.seller-create-page .seller-variant-color-select select {
+    padding-left: 31px !important;
+    padding-right: 26px !important;
+    appearance: auto;
+}
+
+/* Keep non-color option selects visually identical. */
+.seller-create-page .seller-variant-plain-select {
+    min-width: 0;
+}
+
+/* When variants are disabled, row controls are non-interactive and not submitted. */
+.seller-create-page #createVariantsArea[aria-hidden="true"] [name^="variants["] {
+    pointer-events: none;
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-variant-color-select .seller-variant-color-dot {
+        left: 8px;
+    }
+
+    .seller-create-page .seller-variant-color-select select {
+        padding-left: 29px !important;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — FINAL VARIANT YES-ONLY + COLOR SWATCH FIX
+   ====================================================================== */
+
+/* No = absolutely no Variant Options / Variants UI. */
+.seller-create-page #createVariantsArea[hidden],
+.seller-create-page #createVariantsArea.hidden,
+.seller-create-page #createVariantsArea[aria-hidden="true"] {
+    display: none !important;
+}
+
+/* Yes = JS explicitly switches the area to grid. */
+.seller-create-page #createVariantsArea[aria-hidden="false"] {
+    visibility: visible !important;
+}
+
+/* Real visible color dot in each generated Color cell. */
+.seller-create-page .seller-variant-color-select {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.seller-create-page .seller-variant-color-select > .seller-variant-color-dot[data-variant-color-dot] {
+    position: absolute !important;
+    top: 50% !important;
+    left: 11px !important;
+    z-index: 5 !important;
+    display: block !important;
+    width: 14px !important;
+    height: 14px !important;
+    border: 1px solid rgba(15,23,42,.16) !important;
+    border-radius: 999px !important;
+    background-color: var(--variant-swatch, #D0D5DD) !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.22),
+        0 1px 2px rgba(15,23,42,.08) !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+}
+
+.seller-create-page .seller-variant-color-select > .seller-variant-color-dot[data-light-swatch="true"] {
+    border-color: #C8CED7 !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(15,23,42,.04),
+        0 1px 2px rgba(15,23,42,.06) !important;
+}
+
+.seller-create-page .seller-variant-color-select > select {
+    position: relative !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    padding-left: 34px !important;
+    padding-right: 28px !important;
+    background-color: #FFFFFF !important;
+}
+
+/* Color chips in Variant Options also show the same real swatch. */
+.seller-create-page .seller-variant-value-chip--color .seller-variant-color-dot {
+    display: inline-block !important;
+    width: 12px !important;
+    height: 12px !important;
+    flex: 0 0 12px !important;
+    background-color: var(--variant-swatch, #D0D5DD) !important;
+}
+
+/* Keep all nested variant controls flat. */
+.seller-create-page .seller-variant-color-select,
+.seller-create-page .seller-variant-color-select select,
+.seller-create-page .seller-variant-value-chip {
+    transform: none !important;
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-variant-color-select > .seller-variant-color-dot[data-variant-color-dot] {
+        left: 9px !important;
+    }
+
+    .seller-create-page .seller-variant-color-select > select {
+        padding-left: 31px !important;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — NEUTRAL VARIANT CHIPS + MODERN COLOR DROPDOWN
+   ====================================================================== */
+
+.seller-create-page .seller-variant-value-chip {
+    border-color: #DDE2E8 !important;
+    background: #FFFFFF !important;
+    color: #475467 !important;
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-variant-value-chip:hover {
+    border-color: #CDD4DD !important;
+    background: #F8FAFC !important;
+}
+
+.seller-create-page .seller-variant-value-chip button {
+    color: #667085 !important;
+}
+
+.seller-create-page .seller-variant-add-value {
+    border-color: #DDE2E8 !important;
+    background: #F8FAFC !important;
+    color: #475467 !important;
+}
+
+.seller-create-page .seller-variant-add-value:hover {
+    border-color: #CBD2DC !important;
+    background: #F1F4F7 !important;
+    color: #344054 !important;
+}
+
+/* Color dropdown: white control, light gray menu, swatches carry the color. */
+.seller-create-page .seller-variant-color-dropdown {
+    position: relative !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.seller-create-page .seller-variant-color-native-select {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.seller-create-page .seller-variant-color-trigger {
+    display: grid !important;
+    width: 100% !important;
+    height: 32px !important;
+    grid-template-columns: 15px minmax(0, 1fr) 14px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border: 1px solid #D8DEE7 !important;
+    border-radius: 8px !important;
+    background: #FFFFFF !important;
+    padding: 0 9px !important;
+    color: #344054 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    text-align: left !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-variant-color-trigger:hover {
+    border-color: #C8D0DA !important;
+    background: #F8FAFC !important;
+}
+
+.seller-create-page .seller-variant-color-trigger:focus-visible,
+.seller-create-page .seller-variant-color-trigger[aria-expanded="true"] {
+    border-color: #AEB7C3 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(71,84,103,.08) !important;
+}
+
+.seller-create-page .seller-variant-color-label {
+    overflow: hidden !important;
+    color: #344054 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.seller-create-page .seller-variant-color-chevron {
+    width: 14px !important;
+    height: 14px !important;
+    color: #98A2B3 !important;
+    transition: transform .14s ease !important;
+}
+
+.seller-create-page .seller-variant-color-trigger[aria-expanded="true"] .seller-variant-color-chevron {
+    transform: rotate(180deg) !important;
+}
+
+.seller-create-page .seller-variant-color-menu {
+    position: absolute !important;
+    top: calc(100% + 5px) !important;
+    right: 0 !important;
+    left: 0 !important;
+    z-index: 90 !important;
+    max-height: 190px !important;
+    overflow-y: auto !important;
+    border: 1px solid #DDE2E8 !important;
+    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    padding: 5px !important;
+    box-shadow:
+        0 4px 10px rgba(15,23,42,.05),
+        0 14px 30px rgba(15,23,42,.11) !important;
+}
+
+.seller-create-page .seller-variant-color-menu[hidden] {
+    display: none !important;
+}
+
+.seller-create-page .seller-variant-color-choice {
+    display: grid !important;
+    width: 100% !important;
+    min-height: 34px !important;
+    grid-template-columns: 15px minmax(0, 1fr) 14px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+    background: #FFFFFF !important;
+    padding: 0 8px !important;
+    color: #475467 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    text-align: left !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-variant-color-choice:hover {
+    background: #F5F7FA !important;
+    color: #344054 !important;
+}
+
+.seller-create-page .seller-variant-color-choice[aria-selected="true"] {
+    background: #F1F4F7 !important;
+    color: #101828 !important;
+    font-weight: 700 !important;
+}
+
+.seller-create-page .seller-variant-color-choice > svg {
+    width: 13px !important;
+    height: 13px !important;
+    color: #667085 !important;
+    opacity: 0 !important;
+}
+
+.seller-create-page .seller-variant-color-choice[aria-selected="true"] > svg {
+    opacity: 1 !important;
+}
+
+.seller-create-page .seller-variant-color-dot {
+    width: 13px !important;
+    height: 13px !important;
+    border-color: rgba(15,23,42,.16) !important;
+    background-color: var(--variant-swatch, #D0D5DD) !important;
+}
+
+/* Prevent duplicate product requests from repeated submit clicks. */
+.seller-create-page #submitProductReview[aria-busy="true"] {
+    cursor: wait !important;
+    opacity: .72 !important;
+    pointer-events: none !important;
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-variant-color-menu {
+        max-height: 166px !important;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — VARIANT OPTION SUMMARY
+   ====================================================================== */
+
+.seller-create-page #createVariantCombinationSummary,
+.seller-create-page #createVariantCombinationHelp,
+.seller-create-page #createVariantSummaryEyebrow {
+    color: #667085 !important;
+}
+
+.seller-create-page #createVariantCombinationSummary {
+    color: #344054 !important;
+}
+
+/* Keep option chips neutral; swatches are the only colorful element. */
+.seller-create-page .seller-variant-value-chip,
+.seller-create-page .seller-variant-value-chip--color {
+    background: #FFFFFF !important;
+    border-color: #DDE2E8 !important;
+    color: #475467 !important;
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — UNCLIPPED COLOR MENU + CARTESIAN VARIANTS
+   ====================================================================== */
+
+/*
+ * While open, the color menu is moved to <body> and positioned against the
+ * viewport. It cannot be clipped by the table's overflow, rounded panel,
+ * scrolling wrapper, or a long variant list.
+ */
+body > .seller-variant-color-menu.seller-variant-color-menu--portal {
+    position: fixed !important;
+    right: auto !important;
+    z-index: 99999 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border: 1px solid #DDE2E8 !important;
+    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    padding: 5px !important;
+    box-shadow:
+        0 4px 10px rgba(15,23,42,.05),
+        0 16px 36px rgba(15,23,42,.14) !important;
+    overscroll-behavior: contain !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal[hidden] {
+    display: none !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice {
+    display: grid !important;
+    width: 100% !important;
+    min-height: 34px !important;
+    grid-template-columns: 15px minmax(0,1fr) 14px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+    background: #FFFFFF !important;
+    padding: 0 8px !important;
+    color: #475467 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    transform: none !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice:hover {
+    background: #F5F7FA !important;
+    color: #344054 !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice[aria-selected="true"] {
+    background: #F1F4F7 !important;
+    color: #101828 !important;
+    font-weight: 700 !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice > svg {
+    width: 13px !important;
+    height: 13px !important;
+    color: #667085 !important;
+    opacity: 0 !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice[aria-selected="true"] > svg {
+    opacity: 1 !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-dot {
+    display: inline-block !important;
+    width: 13px !important;
+    height: 13px !important;
+    flex: 0 0 13px !important;
+    border: 1px solid rgba(15,23,42,.16) !important;
+    border-radius: 999px !important;
+    background-color: var(--variant-swatch,#D0D5DD) !important;
+}
+
+/* The table itself may keep horizontal scrolling; dropdown no longer lives in it. */
+.seller-create-page .seller-variant-table-wrap {
+    position: relative !important;
+    isolation: isolate;
+}
+
+/* Combination summary reflects true Size × Color generation. */
+.seller-create-page #createVariantCombinationSummary {
+    color: #344054 !important;
+    font-weight: 700 !important;
+}
+
+
+/* Extracted from resources/views/seller/products/create.blade.php — original style block 8. */
+/* ======================================================================
+   ADD PRODUCT — DRAG/DROP COVER + GALLERY ADD TILE
+   Frontend-only. Existing field names, routes, form submission, draft API,
+   validation and backend behavior are unchanged.
+   ====================================================================== */
+
+.seller-create-page .seller-create-upload--dropzone {
+    position: relative !important;
+    isolation: isolate;
+    cursor: pointer !important;
+    outline: none !important;
+}
+
+.seller-create-page .seller-create-upload--dropzone:focus-visible {
+    border-color: #C4A35B !important;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .10) !important;
+}
+
+.seller-create-page .seller-create-upload--dropzone.is-dragover {
+    border-color: #D59617 !important;
+    background: #FFFBF2 !important;
+    box-shadow: 0 0 0 3px rgba(213, 150, 23, .10) !important;
+}
+
+.seller-create-page .seller-cover-drop-copy {
+    display: grid;
+    place-items: center;
+    padding: 15px 12px;
+    pointer-events: none;
+}
+
+.seller-create-page .seller-cover-drop-copy strong {
+    margin-top: 8px;
+    color: #39414A;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.seller-create-page .seller-cover-drop-copy .seller-cover-drop-secondary {
+    margin-top: 3px;
+    color: #7D8793;
+    font-size: 7.5px;
+    font-weight: 500;
+}
+
+.seller-create-page .seller-cover-drop-copy .seller-cover-drop-meta {
+    margin-top: 6px;
+    color: #98A2B3;
+    font-size: 7px;
+}
+
+.seller-create-page .seller-cover-change-hint {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 3;
+    display: none;
+    align-items: center;
+    gap: 5px;
+    min-height: 25px;
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: 8px;
+    background: rgba(17,24,39,.72);
+    padding: 0 8px;
+    color: #FFFFFF;
+    font-size: 7.5px;
+    font-weight: 700;
+    line-height: 1;
+    pointer-events: none;
+    backdrop-filter: blur(5px);
+}
+
+.seller-create-page .seller-cover-change-hint svg {
+    width: 11px;
+    height: 11px;
+}
+
+.seller-create-page .seller-create-upload--dropzone.has-image .seller-cover-change-hint {
+    display: inline-flex;
+}
+
+.seller-create-page .seller-gallery-dropzone {
+    position: relative;
+    min-width: 0;
+    margin-top: 9px;
+    border-radius: 11px;
+    transition: background-color .12s ease, box-shadow .12s ease;
+}
+
+.seller-create-page .seller-gallery-dropzone.is-dragover {
+    background: #FFFBF2;
+    box-shadow: 0 0 0 3px rgba(213,150,23,.10);
+}
+
+.seller-create-page .seller-gallery-drop-empty {
+    display: flex;
+    width: 100%;
+    min-height: 104px;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    border: 1px dashed #D7DEE7 !important;
+    border-radius: 11px !important;
+    background: #FAFBFC !important;
+    padding: 14px 16px !important;
+    color: #667085;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: none !important;
+    transition: border-color .12s ease, background-color .12s ease;
+}
+
+.seller-create-page .seller-gallery-drop-empty:hover,
+.seller-create-page .seller-gallery-drop-empty:focus-visible,
+.seller-create-page .seller-gallery-dropzone.is-dragover .seller-gallery-drop-empty {
+    border-color: #D2AA50 !important;
+    background: #FFFBF2 !important;
+    outline: none;
+}
+
+.seller-create-page .seller-gallery-drop-icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    border: 1px solid #E1E6EC;
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: #667085;
+}
+
+.seller-create-page .seller-gallery-drop-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.seller-create-page .seller-gallery-drop-copy {
+    min-width: 0;
+}
+
+.seller-create-page .seller-gallery-drop-copy strong {
+    display: block;
+    color: #344054;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.seller-create-page .seller-gallery-drop-copy span {
+    display: block;
+    margin-top: 3px;
+    color: #8A94A3;
+    font-size: 7.5px;
+    line-height: 1.45;
+}
+
+.seller-create-page .seller-gallery-dropzone .seller-create-gallery {
+    margin-top: 0 !important;
+}
+
+.seller-create-page .seller-gallery-add-tile {
+    display: flex;
+    aspect-ratio: 1;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px dashed #C9D1DC;
+    border-radius: 9px;
+    background: #FFFFFF;
+    color: #667085;
+    cursor: pointer;
+    box-shadow: none !important;
+    transition: border-color .12s ease, background-color .12s ease, color .12s ease;
+}
+
+.seller-create-page .seller-gallery-add-tile:hover,
+.seller-create-page .seller-gallery-add-tile:focus-visible {
+    border-color: #D0A346;
+    background: #FFFBF2;
+    color: #9A6708;
+    outline: none;
+}
+
+.seller-create-page .seller-gallery-add-tile-icon {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    place-items: center;
+    border: 1px solid #E1E6EC;
+    border-radius: 8px;
+    background: #F8FAFC;
+}
+
+.seller-create-page .seller-gallery-add-tile-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+.seller-create-page .seller-gallery-add-tile strong {
+    font-size: 7.8px;
+    font-weight: 700;
+}
+
+.seller-create-page .seller-gallery-add-tile span:last-child {
+    color: #98A2B3;
+    font-size: 6.5px;
+    font-weight: 500;
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-gallery-drop-empty {
+        min-height: 94px;
+        padding: 12px !important;
+    }
+
+    .seller-create-page .seller-cover-change-hint {
+        right: 6px;
+        bottom: 6px;
+    }
+}

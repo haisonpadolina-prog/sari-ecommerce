@@ -31,13 +31,13 @@
     #logisticsFacilitiesWorkspace {
         --fh-gold: #d9950b;
         --fh-gold-dark: #c88708;
-        --fh-border: #e8e2d9;
-        --fh-muted: #887f75;
-        --fh-shadow: 0 6px 18px rgba(33,24,14,.035);
+        --fh-border: var(--sari-dark-d8c2716225, #e8e2d9);
+        --fh-muted: var(--sari-dark-a63aa16d7c, #887f75);
+        --fh-shadow: 0 6px 18px var(--sari-dark-7593018246, rgba(33,24,14,.035));
 
         max-width: 1620px;
         font-family: Poppins, ui-sans-serif, sans-serif;
-        color: #24211d;
+        color: var(--sari-dark-e23e64dd1e, #24211d);
     }
 
     /* Page heading */
@@ -50,11 +50,11 @@
         gap: 15px;
 
         padding: 5px 2px 17px;
-        border-bottom: 1px solid #e4e1dc;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e4e1dc);
     }
 
     #logisticsFacilitiesWorkspace .fh-eyebrow {
-        color: #a76f11;
+        color: var(--sari-dark-6e784b4931, #a76f11);
         font-size: 9px;
         font-weight: 700;
         letter-spacing: .14em;
@@ -63,7 +63,7 @@
 
     #logisticsFacilitiesWorkspace .fh-title {
         margin-top: 5px;
-        color: #24201b;
+        color: var(--sari-dark-e23e64dd1e, #24201b);
         font-size: clamp(23px,2.15vw,30px);
         font-weight: 750;
         letter-spacing: -.045em;
@@ -76,7 +76,7 @@
 
     #logisticsFacilitiesWorkspace .fh-intro {
         margin-top: 6px;
-        color: #897f75;
+        color: var(--sari-dark-a63aa16d7c, #897f75);
         font-size: 10px;
         line-height: 1.7;
     }
@@ -90,21 +90,21 @@
 
     #logisticsFacilitiesWorkspace .fh-network-state {
         padding: 9px 13px;
-        border: 1px solid #d5e8da;
+        border: 1px solid var(--sari-dark-d8c2716225, #d5e8da);
         border-radius: 11px;
-        background: #f5fbf7;
-        color: #387b54;
+        background: var(--sari-dark-950baec030, #f5fbf7);
+        color: var(--sari-dark-e23e64dd1e, #387b54);
     }
 
     #logisticsFacilitiesWorkspace .fh-network-state.is-warning {
-        border-color: #ead9b4;
-        background: #fffaf0;
-        color: #996a15;
+        border-color: var(--sari-dark-d8c2716225, #ead9b4);
+        background: var(--sari-dark-950baec030, #fffaf0);
+        color: var(--sari-dark-685eb4fc40, #996a15);
     }
 
     #logisticsFacilitiesWorkspace .fh-network-state small {
         display: block;
-        color: #857e75;
+        color: var(--sari-dark-a63aa16d7c, #857e75);
         font-size: 8px;
         font-weight: 650;
         letter-spacing: .09em;
@@ -132,7 +132,7 @@
         color: white;
         font-size: 10px;
         font-weight: 650;
-        box-shadow: 0 5px 12px rgba(194,132,10,.12);
+        box-shadow: 0 5px 12px var(--sari-dark-3b2338cbf0, rgba(194,132,10,.12));
 
         transition:
             background .15s ease,
@@ -143,7 +143,7 @@
     #logisticsFacilitiesWorkspace .fh-primary:hover {
         background: var(--fh-gold-dark);
         border-color: var(--fh-gold-dark);
-        box-shadow: 0 7px 16px rgba(194,132,10,.16);
+        box-shadow: 0 7px 16px var(--sari-dark-b5c2a2270e, rgba(194,132,10,.16));
     }
 
     /* KPI cards */
@@ -163,7 +163,7 @@
         padding: 13px;
         border: 1px solid var(--fh-border);
         border-radius: 16px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         box-shadow: var(--fh-shadow);
 
         transition:
@@ -173,14 +173,14 @@
     }
 
     #logisticsFacilitiesWorkspace .fh-kpi-label {
-        color: #736a60;
+        color: var(--sari-dark-a63aa16d7c, #736a60);
         font-size: 10px;
         font-weight: 600;
     }
 
     #logisticsFacilitiesWorkspace .fh-kpi-value {
         margin-top: 7px;
-        color: #211d18;
+        color: var(--sari-dark-e23e64dd1e, #211d18);
         font-size: 24px;
         font-weight: 750;
         letter-spacing: -.04em;
@@ -189,7 +189,7 @@
 
     #logisticsFacilitiesWorkspace .fh-kpi-sub {
         margin-top: 5px;
-        color: #8a8177;
+        color: var(--sari-dark-a63aa16d7c, #8a8177);
         font-size: 9px;
         line-height: 1.4;
     }
@@ -207,19 +207,19 @@
         border-radius: 0;
         background: transparent;
         box-shadow: none;
-        color: #bd831c;
+        color: var(--sari-dark-0dda4d8937, #bd831c);
     }
 
     #logisticsFacilitiesWorkspace .fh-kpi:nth-child(2) .fh-kpi-icon {
-        color: #45845f;
+        color: var(--sari-dark-a63aa16d7c, #45845f);
     }
 
     #logisticsFacilitiesWorkspace .fh-kpi:nth-child(3) .fh-kpi-icon {
-        color: #597fac;
+        color: var(--sari-dark-a374e11bf5, #597fac);
     }
 
     #logisticsFacilitiesWorkspace .fh-kpi:nth-child(4) .fh-kpi-icon {
-        color: #6a7481;
+        color: var(--sari-dark-a63aa16d7c, #6a7481);
     }
 
     #logisticsFacilitiesWorkspace .fh-kpi-icon svg {
@@ -234,7 +234,7 @@
         overflow: hidden;
         border: 1px solid var(--fh-border) !important;
         border-radius: 17px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow: var(--fh-shadow) !important;
     }
 
@@ -245,11 +245,11 @@
         flex-wrap: wrap;
         gap: 12px;
         padding: 14px 16px;
-        border-bottom: 1px solid #eee8df;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8df);
     }
 
     #logisticsFacilitiesWorkspace .fh-panel-title {
-        color: #28231d;
+        color: var(--sari-dark-e23e64dd1e, #28231d);
         font-size: 16px;
         font-weight: 700;
         letter-spacing: -.035em;
@@ -257,7 +257,7 @@
 
     #logisticsFacilitiesWorkspace .fh-panel-desc {
         margin-top: 4px;
-        color: #948a80;
+        color: var(--sari-dark-a63aa16d7c, #948a80);
         font-size: 9px;
         line-height: 1.5;
     }
@@ -274,9 +274,9 @@
         width: 225px;
         max-width: 100%;
         padding: 0 12px;
-        border: 1px solid #dae0e7;
+        border: 1px solid var(--sari-dark-d8c2716225, #dae0e7);
         border-radius: 10px;
-        background: white;
+        background: var(--sari-dark-950baec030, white);
         font-size: 10px;
         outline: none;
 
@@ -287,7 +287,7 @@
 
     #logisticsFacilitiesWorkspace .fh-search:focus {
         border-color: var(--fh-gold);
-        box-shadow: 0 0 0 3px rgba(217,149,11,.09);
+        box-shadow: 0 0 0 3px var(--sari-dark-b12a5e9552, rgba(217,149,11,.09));
     }
 
     #logisticsFacilitiesWorkspace .fh-counter {
@@ -295,10 +295,10 @@
         align-items: center;
         min-height: 35px;
         padding: 0 11px;
-        border: 1px solid #ecdec1;
+        border: 1px solid var(--sari-dark-d8c2716225, #ecdec1);
         border-radius: 9px;
-        background: #fffaf0;
-        color: #9f6c13;
+        background: var(--sari-dark-950baec030, #fffaf0);
+        color: var(--sari-dark-af18afcaa4, #9f6c13);
         font-size: 9px;
         font-weight: 700;
     }
@@ -317,10 +317,10 @@
         display: flex;
         flex-direction: column;
         min-width: 0;
-        border: 1px solid #e8e2da;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e2da);
         border-radius: 13px;
-        background: white;
-        box-shadow: 0 4px 13px rgba(35,27,18,.02);
+        background: var(--sari-dark-950baec030, white);
+        box-shadow: 0 4px 13px var(--sari-dark-f6fe7319d9, rgba(35,27,18,.02));
 
         transition:
             transform .18s cubic-bezier(.22,1,.36,1),
@@ -342,13 +342,13 @@
         width: 38px;
         height: 38px;
         border-radius: 11px;
-        background: #eff8f2;
-        color: #44815d;
+        background: var(--sari-dark-4d21eb669b, #eff8f2);
+        color: var(--sari-dark-a63aa16d7c, #44815d);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-symbol.is-inactive {
-        background: #f4f2ef;
-        color: #958d82;
+        background: var(--sari-dark-4d21eb669b, #f4f2ef);
+        color: var(--sari-dark-a63aa16d7c, #958d82);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-symbol svg {
@@ -357,7 +357,7 @@
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-name {
-        color: #322b23;
+        color: var(--sari-dark-e23e64dd1e, #322b23);
         font-size: 11px;
         font-weight: 700;
         line-height: 1.45;
@@ -367,8 +367,8 @@
         display: inline-flex;
         padding: 4px 8px;
         border-radius: 999px;
-        background: #edf8f1;
-        color: #367b52;
+        background: var(--sari-dark-4d21eb669b, #edf8f1);
+        color: var(--sari-dark-e23e64dd1e, #367b52);
         font-size: 8px;
         font-weight: 700;
         letter-spacing: .02em;
@@ -377,20 +377,20 @@
     }
 
     #logisticsFacilitiesWorkspace .fh-status.is-inactive {
-        background: #f2f0ed;
-        color: #847d74;
+        background: var(--sari-dark-4d21eb669b, #f2f0ed);
+        color: var(--sari-dark-a63aa16d7c, #847d74);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-address {
         margin-top: 7px;
-        color: #655c52;
+        color: var(--sari-dark-e23e64dd1e, #655c52);
         font-size: 10px;
         line-height: 1.5;
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-meta {
         margin-top: 5px;
-        color: #93887c;
+        color: var(--sari-dark-a63aa16d7c, #93887c);
         font-size: 9px;
         line-height: 1.55;
     }
@@ -404,14 +404,14 @@
         gap: 10px;
         margin: 0 15px 13px;
         padding: 11px 12px;
-        border: 1px solid #eee8e0;
+        border: 1px solid var(--sari-dark-d8c2716225, #eee8e0);
         border-radius: 10px;
-        background: #fbfbfc;
+        background: var(--sari-dark-950baec030, #fbfbfc);
     }
 
     #logisticsFacilitiesWorkspace .fh-operator small {
         display: block;
-        color: #9a8e7f;
+        color: var(--sari-dark-a63aa16d7c, #9a8e7f);
         font-size: 8px;
         font-weight: 650;
         letter-spacing: .08em;
@@ -421,14 +421,14 @@
     #logisticsFacilitiesWorkspace .fh-operator strong {
         display: block;
         margin-top: 5px;
-        color: #4b4339;
+        color: var(--sari-dark-e23e64dd1e, #4b4339);
         font-size: 10px;
         font-weight: 650;
     }
 
     #logisticsFacilitiesWorkspace .fh-operator p {
         margin-top: 3px;
-        color: #8e8478;
+        color: var(--sari-dark-a63aa16d7c, #8e8478);
         font-size: 9px;
         overflow-wrap: anywhere;
     }
@@ -443,11 +443,11 @@
         gap: 10px;
         margin-top: auto;
         padding: 11px 15px;
-        border-top: 1px solid #f0ebe5;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #f0ebe5);
     }
 
     #logisticsFacilitiesWorkspace .fh-code {
-        color: #8e8274;
+        color: var(--sari-dark-a63aa16d7c, #8e8274);
         font-family: ui-monospace, monospace;
         font-size: 9px;
         font-weight: 650;
@@ -466,10 +466,10 @@
         justify-content: center;
         min-height: 31px;
         padding: 0 11px;
-        border: 1px solid #e2d8c9;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2d8c9);
         border-radius: 8px;
-        background: white;
-        color: #65594c;
+        background: var(--sari-dark-950baec030, white);
+        color: var(--sari-dark-e23e64dd1e, #65594c);
         font-size: 9px;
         font-weight: 600;
 
@@ -480,34 +480,34 @@
     }
 
     #logisticsFacilitiesWorkspace .fh-action:hover {
-        background: #fffaf1;
+        background: var(--sari-dark-950baec030, #fffaf1);
         border-color: #d9bf93;
-        color: #94630b;
+        color: var(--sari-dark-af18afcaa4, #94630b);
     }
 
     #logisticsFacilitiesWorkspace .fh-action.is-warning {
-        border-color: #e9d8b5;
-        background: #fff9ee;
-        color: #986a19;
+        border-color: var(--sari-dark-d8c2716225, #e9d8b5);
+        background: var(--sari-dark-950baec030, #fff9ee);
+        color: var(--sari-dark-abfd83a056, #986a19);
     }
 
     #logisticsFacilitiesWorkspace .fh-action.is-danger {
-        border-color: #e8cccc;
-        background: #fff7f7;
-        color: #ac5555;
+        border-color: var(--sari-dark-d8c2716225, #e8cccc);
+        background: var(--sari-dark-950baec030, #fff7f7);
+        color: var(--sari-dark-a94cbc0f5d, #ac5555);
     }
 
     #logisticsFacilitiesWorkspace .fh-action.is-danger:hover {
-        background: #ffefef;
+        background: var(--sari-dark-950baec030, #ffefef);
         border-color: #deaaaa;
     }
 
     #logisticsFacilitiesWorkspace .fh-empty {
         grid-column: 1 / -1;
         padding: 38px 15px;
-        border: 1px dashed #e5dbcd;
+        border: 1px dashed var(--sari-dark-d8c2716225, #e5dbcd);
         border-radius: 12px;
-        color: #8f8374;
+        color: var(--sari-dark-a63aa16d7c, #8f8374);
         font-size: 10px;
         text-align: center;
     }
@@ -519,7 +519,7 @@
        ========================================================= */
     #logisticsFacilitiesWorkspace .fh-hub-table-wrap {
         overflow: visible;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-table {
@@ -530,13 +530,13 @@
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-table thead tr {
-        background: #f8fafb;
-        border-bottom: 1px solid #e9edf1;
+        background: var(--sari-dark-950baec030, #f8fafb);
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-table th {
         padding: 10px 16px;
-        color: #6f7782;
+        color: var(--sari-dark-a63aa16d7c, #6f7782);
         font-size: 8px;
         font-weight: 700;
         letter-spacing: .075em;
@@ -545,20 +545,20 @@
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-row {
-        border-bottom: 1px solid #eef1f4;
-        background: #fff;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eef1f4);
+        background: var(--sari-dark-950baec030, #fff);
         transition: background-color .14s ease, box-shadow .14s ease;
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-row:hover {
-        background: #fcfcfd;
+        background: var(--sari-dark-950baec030, #fcfcfd);
         box-shadow: inset 2px 0 0 var(--fh-gold);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-row td {
         padding: 12px 16px;
         vertical-align: middle;
-        color: #4b5563;
+        color: var(--sari-dark-e23e64dd1e, #4b5563);
         font-size: 9px;
     }
 
@@ -575,16 +575,16 @@
         height: 32px;
         flex: 0 0 32px;
         place-items: center;
-        border: 1px solid #dce7df;
+        border: 1px solid var(--sari-dark-d8c2716225, #dce7df);
         border-radius: 9px;
-        background: #f4faf6;
-        color: #42805b;
+        background: var(--sari-dark-950baec030, #f4faf6);
+        color: var(--sari-dark-a63aa16d7c, #42805b);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-row-icon.is-inactive {
-        border-color: #e5e7eb;
-        background: #f7f7f8;
-        color: #8b929b;
+        border-color: var(--sari-dark-d8c2716225, #e5e7eb);
+        background: var(--sari-dark-950baec030, #f7f7f8);
+        color: var(--sari-dark-a63aa16d7c, #8b929b);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-row-icon svg {
@@ -594,7 +594,7 @@
 
     #logisticsFacilitiesWorkspace .fh-hub-row-name {
         overflow: hidden;
-        color: #20242b;
+        color: var(--sari-dark-e23e64dd1e, #20242b);
         font-size: 11px;
         font-weight: 700;
         line-height: 1.35;
@@ -605,7 +605,7 @@
     #logisticsFacilitiesWorkspace .fh-hub-row-sub {
         overflow: hidden;
         margin-top: 3px;
-        color: #8a929d;
+        color: var(--sari-dark-a63aa16d7c, #8a929d);
         font-size: 9px;
         line-height: 1.45;
         text-overflow: ellipsis;
@@ -618,11 +618,11 @@
         align-items: center;
         gap: 5px;
         min-height: 24px;
-        border: 1px solid #e3e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e3e7eb);
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 9px;
-        color: #69727d;
+        color: var(--sari-dark-a63aa16d7c, #69727d);
         font-size: 8px;
         font-weight: 650;
         white-space: nowrap;
@@ -630,14 +630,14 @@
 
     #logisticsFacilitiesWorkspace .fh-role-badge.is-main {
         border-color: #e5c980;
-        background: #fffbf1;
-        color: #94640a;
+        background: var(--sari-dark-950baec030, #fffbf1);
+        color: var(--sari-dark-19b301f69a, #94640a);
     }
 
     #logisticsFacilitiesWorkspace .fh-route-badge.is-active {
-        border-color: #cfe6d7;
-        background: #f3faf5;
-        color: #367b52;
+        border-color: var(--sari-dark-d8c2716225, #cfe6d7);
+        background: var(--sari-dark-950baec030, #f3faf5);
+        color: var(--sari-dark-e23e64dd1e, #367b52);
     }
 
     #logisticsFacilitiesWorkspace .fh-view-hub {
@@ -646,19 +646,19 @@
         height: 34px;
         align-items: center;
         justify-content: center;
-        border: 1px solid #dfe4e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe4e8);
         border-radius: 9px;
-        background: #fff;
-        color: #69727d;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #69727d);
         transition: border-color .14s ease, background-color .14s ease, color .14s ease, box-shadow .14s ease;
     }
 
     #logisticsFacilitiesWorkspace .fh-view-hub:hover,
     #logisticsFacilitiesWorkspace .fh-view-hub[aria-expanded="true"] {
         border-color: #d8bd79;
-        background: #fffcf5;
-        color: #a66f0d;
-        box-shadow: 0 0 0 3px rgba(217,149,11,.07);
+        background: var(--sari-dark-950baec030, #fffcf5);
+        color: var(--sari-dark-af18afcaa4, #a66f0d);
+        box-shadow: 0 0 0 3px var(--sari-dark-7c935c8886, rgba(217,149,11,.07));
     }
 
     #logisticsFacilitiesWorkspace .fh-view-hub:focus-visible {
@@ -673,8 +673,8 @@
 
     #logisticsFacilitiesWorkspace .fh-hub-detail-row td {
         padding: 0;
-        border-bottom: 1px solid #e9edf1;
-        background: #fafbfc;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
+        background: var(--sari-dark-950baec030, #fafbfc);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-detail-panel {
@@ -690,7 +690,7 @@
 
     #logisticsFacilitiesWorkspace .fh-hub-detail-item small {
         display: block;
-        color: #98a0aa;
+        color: var(--sari-dark-a63aa16d7c, #98a0aa);
         font-size: 8px;
         font-weight: 700;
         letter-spacing: .08em;
@@ -701,7 +701,7 @@
     #logisticsFacilitiesWorkspace .fh-hub-detail-item p {
         display: block;
         margin-top: 4px;
-        color: #4b5563;
+        color: var(--sari-dark-e23e64dd1e, #4b5563);
         font-size: 10px;
         font-weight: 600;
         line-height: 1.55;
@@ -710,7 +710,7 @@
 
     #logisticsFacilitiesWorkspace .fh-hub-detail-item p {
         font-weight: 400;
-        color: #737d88;
+        color: var(--sari-dark-a63aa16d7c, #737d88);
     }
 
     #logisticsFacilitiesWorkspace .fh-hub-detail-actions {
@@ -721,7 +721,7 @@
         flex-wrap: wrap;
         gap: 7px;
         padding-top: 10px;
-        border-top: 1px solid #e8ecef;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #e8ecef);
     }
 
     /* Buyer Cart-inspired light-gray, readable directory empty states. */
@@ -745,7 +745,7 @@
         place-items: center;
         margin: 0 auto;
         background: transparent;
-        color: #b4bbc3;
+        color: var(--sari-dark-a63aa16d7c, #b4bbc3);
     }
 
     #logisticsFacilitiesWorkspace .fh-empty-icon svg {
@@ -760,7 +760,7 @@
 
     #logisticsFacilitiesWorkspace .fh-empty-title {
         margin: 18px 0 0;
-        color: #9ca4ad;
+        color: var(--sari-dark-a63aa16d7c, #9ca4ad);
         font-size: 22px;
         font-weight: 750;
         line-height: 1.2;
@@ -770,7 +770,7 @@
     #logisticsFacilitiesWorkspace .fh-empty-copy {
         max-width: 520px;
         margin: 7px auto 0;
-        color: #b0b7bf;
+        color: var(--sari-dark-a63aa16d7c, #b0b7bf);
         font-size: 12px;
         font-weight: 500;
         line-height: 1.55;
@@ -794,16 +794,16 @@
     /* Hub editor */
 
     #logisticsFacilitiesWorkspace #hubEditor {
-        border: 1px solid #e5eaf0 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5eaf0) !important;
         border-radius: 24px !important;
-        background: #ffffff !important;
-        box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08), 0 4px 14px rgba(15, 23, 42, 0.04) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        box-shadow: 0 18px 44px var(--sari-dark-c33e3d1bb4, rgba(15, 23, 42, 0.08)), 0 4px 14px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, 0.04)) !important;
     }
 
     #logisticsFacilitiesWorkspace #hubEditor > div:first-child {
         padding: 22px 24px !important;
-        border-color: #edf1f4 !important;
-        background: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #edf1f4) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     #logisticsFacilitiesWorkspace #hubEditor > div:first-child h3 {
@@ -811,7 +811,7 @@
         font-weight: 760 !important;
         letter-spacing: -.04em;
         line-height: 1.12;
-        color: #1f2933;
+        color: var(--sari-dark-e23e64dd1e, #1f2933);
     }
 
     #logisticsFacilitiesWorkspace #sariFacilityForm {
@@ -825,10 +825,10 @@
 
     #logisticsFacilitiesWorkspace
     #sariFacilityForm > div.grid > div:last-child > section {
-        background: #ffffff !important;
-        border: 1px solid #e8edf2 !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8edf2) !important;
         border-radius: 18px !important;
-        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05) !important;
+        box-shadow: 0 10px 28px var(--sari-dark-1df26971b5, rgba(15, 23, 42, 0.05)) !important;
     }
 
     #logisticsFacilitiesWorkspace
@@ -839,9 +839,9 @@
     #logisticsFacilitiesWorkspace #sariFacilityForm textarea {
         font-family: inherit;
         font-size: 13px !important;
-        background: #fff;
-        color: #2d3640;
-        border-color: #dce3ea;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #2d3640);
+        border-color: var(--sari-dark-d8c2716225, #dce3ea);
         border-radius: 14px !important;
 
         transition:
@@ -857,19 +857,19 @@
     #logisticsFacilitiesWorkspace #sariFacilityForm textarea:focus {
         outline: none;
         border-color: #d9950b !important;
-        box-shadow: 0 0 0 3px rgba(217,149,11,.09) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-b12a5e9552, rgba(217,149,11,.09)) !important;
     }
 
     #logisticsFacilitiesWorkspace
     #sariFacilityForm .hub-input-valid {
-        border-color: #68aa80 !important;
-        background: #f8fdf9 !important;
+        border-color: var(--sari-dark-d8c2716225, #68aa80) !important;
+        background: var(--sari-dark-950baec030, #f8fdf9) !important;
     }
 
     #logisticsFacilitiesWorkspace
     #sariFacilityForm .hub-input-invalid {
         border-color: #dc7777 !important;
-        background: #fff9f9 !important;
+        background: var(--sari-dark-950baec030, #fff9f9) !important;
     }
 
     #logisticsFacilitiesWorkspace #hubSubmitButton {
@@ -877,7 +877,7 @@
         min-height: 50px;
         font-size: 13px !important;
         border-radius: 14px !important;
-        box-shadow: 0 12px 28px rgba(194,132,10,.18);
+        box-shadow: 0 12px 28px var(--sari-dark-3793f9e558, rgba(194,132,10,.18));
 
         transition:
             background .15s ease,
@@ -886,7 +886,7 @@
 
     #logisticsFacilitiesWorkspace #hubSubmitButton:hover {
         background: #c88708;
-        box-shadow: 0 7px 16px rgba(194,132,10,.16);
+        box-shadow: 0 7px 16px var(--sari-dark-b5c2a2270e, rgba(194,132,10,.16));
     }
 
 
@@ -901,7 +901,7 @@
     #logisticsFacilitiesWorkspace #hubEditor .text-[10px].font-semibold.text-[#5f574e],
     #logisticsFacilitiesWorkspace #hubEditor .text-[10px].font-semibold.text-[#3e4650],
     #logisticsFacilitiesWorkspace #hubEditor .text-[10px].font-semibold.text-[#51493f] {
-        color: #43505c !important;
+        color: var(--sari-dark-e23e64dd1e, #43505c) !important;
     }
 
     #logisticsFacilitiesWorkspace #hubEditor .text-[10px].font-semibold.text-[#5f574e],
@@ -922,27 +922,27 @@
     #logisticsFacilitiesWorkspace #hubEditor .text-[9px].text-[#aaa198] {
         font-size: 12px !important;
         line-height: 1.7 !important;
-        color: #7b8794 !important;
+        color: var(--sari-dark-a63aa16d7c, #7b8794) !important;
     }
 
     #logisticsFacilitiesWorkspace #hubEditor .rounded-\[15px\].border.border-\[\#e1e5e9\].bg-\[\#f9fafb\].p-4.sm\:p-5,
     #logisticsFacilitiesWorkspace #hubEditor .rounded-\[15px\].border.border-\[\#e1e5e9\].bg-white.p-4.sm\:p-5 {
-        border-color: #e8edf2 !important;
-        background: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #e8edf2) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         border-radius: 18px !important;
-        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05) !important;
+        box-shadow: 0 10px 28px var(--sari-dark-1df26971b5, rgba(15, 23, 42, 0.05)) !important;
     }
 
     #logisticsFacilitiesWorkspace #hubEditor .border-b.border-\[\#eee5d8\],
     #logisticsFacilitiesWorkspace #hubEditor .border-b.border-\[\#e5e7eb\],
     #logisticsFacilitiesWorkspace #hubEditor .border-t.border-\[\#eee5d8\] {
-        border-color: #edf1f4 !important;
+        border-color: var(--sari-dark-d8c2716225, #edf1f4) !important;
     }
 
     #logisticsFacilitiesWorkspace #hubEditor .rounded-\[10px\].border.border-\[\#eadfc9\].bg-\[\#fffaf2\].px-3.py-3.text-\[10px\].text-\[\#98753b\] {
-        border-color: #dce5ef !important;
-        background: #f7fafc !important;
-        color: #51606d !important;
+        border-color: var(--sari-dark-d8c2716225, #dce5ef) !important;
+        background: var(--sari-dark-950baec030, #f7fafc) !important;
+        color: var(--sari-dark-a63aa16d7c, #51606d) !important;
         font-size: 12px !important;
         line-height: 1.65 !important;
         border-radius: 14px !important;
@@ -950,10 +950,10 @@
     }
 
     #logisticsFacilitiesWorkspace #hubEditor .rounded-\[11px\].border.border-\[\#eee4d3\].bg-\[\#fffdf8\].p-4 {
-        border-color: #e5ebf1 !important;
-        background: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #e5ebf1) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         border-radius: 16px !important;
-        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04) !important;
+        box-shadow: 0 10px 28px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, 0.04)) !important;
     }
 
     #logisticsFacilitiesWorkspace #hubEditor .rounded-full.px-3.py-1.text-\[8px\].font-bold {
@@ -962,11 +962,11 @@
     }
 
     #logisticsFacilitiesWorkspace #hubEditor .rounded-\[9px\].border.border-\[\#e4dacd\].px-4.py-2.text-\[10px\].font-semibold.text-\[\#81786c\] {
-        border-color: #dce3ea !important;
-        color: #51606d !important;
+        border-color: var(--sari-dark-d8c2716225, #dce3ea) !important;
+        color: var(--sari-dark-a63aa16d7c, #51606d) !important;
         font-size: 12px !important;
         border-radius: 12px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
 
@@ -985,10 +985,10 @@
         max-height: 215px;
         overflow-y: auto;
         padding: 5px;
-        border: 1px solid #e6dccc;
+        border: 1px solid var(--sari-dark-d8c2716225, #e6dccc);
         border-radius: 10px;
-        background: #fff;
-        box-shadow: 0 12px 28px rgba(42,31,18,.12);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 12px 28px var(--sari-dark-3b2338cbf0, rgba(42,31,18,.12));
     }
 
     .hub-address-results button {
@@ -996,7 +996,7 @@
         width: 100%;
         padding: 10px 11px;
         border-radius: 7px;
-        color: #51483e;
+        color: var(--sari-dark-e23e64dd1e, #51483e);
         font-size: 11px;
         text-align: left;
     }
@@ -1004,8 +1004,8 @@
     .hub-address-results button:hover,
     .hub-address-results button:focus {
         outline: none;
-        background: #fff5df;
-        color: #99650b;
+        background: var(--sari-dark-4d21eb669b, #fff5df);
+        color: var(--sari-dark-af18afcaa4, #99650b);
     }
 
     /* Map */
@@ -1014,9 +1014,9 @@
         width: 100%;
         height: 340px;
         overflow: hidden;
-        border: 1px solid #e5e2dd;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e2dd);
         border-radius: 12px;
-        background: #eef1ed;
+        background: var(--sari-dark-4d21eb669b, #eef1ed);
     }
 
     #sariFacilityMap .maplibregl-canvas {
@@ -1025,9 +1025,9 @@
 
     #sariFacilityMap .maplibregl-ctrl-group {
         overflow: hidden;
-        border: 1px solid #e7ddcf;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7ddcf);
         border-radius: 9px;
-        box-shadow: 0 7px 20px rgba(64,50,34,.08);
+        box-shadow: 0 7px 20px var(--sari-dark-c33e3d1bb4, rgba(64,50,34,.08));
     }
 
     /* Warehouse pin: same icon in the editor and saved-location detail modal.
@@ -1058,10 +1058,10 @@
         width: 50px;
         height: 50px;
         box-sizing: border-box;
-        border: 3px solid #fff;
+        border: 3px solid var(--sari-dark-d8c2716225, #fff);
         border-radius: 15px;
-        background: #293541;
-        box-shadow: 0 9px 24px rgba(24,37,51,.26), 0 2px 5px rgba(24,37,51,.12);
+        background: var(--sari-dark-fbb35de0d1, #293541);
+        box-shadow: 0 9px 24px var(--sari-dark-817538610c, rgba(24,37,51,.26)), 0 2px 5px var(--sari-dark-3b2338cbf0, rgba(24,37,51,.12));
     }
     .sari-facility-pin::after {
         content: '';
@@ -1070,7 +1070,7 @@
         left: 19px;
         border-left: 9px solid transparent;
         border-right: 9px solid transparent;
-        border-top: 13px solid #293541;
+        border-top: 13px solid var(--sari-dark-d8c2716225, #293541);
         filter: drop-shadow(0 2px 2px rgba(24,37,51,.18));
     }
     .sari-facility-pin svg {
@@ -1117,13 +1117,13 @@
         border: 0;
         border-radius: 8px;
         background: transparent;
-        color: #82776a;
+        color: var(--sari-dark-a63aa16d7c, #82776a);
         cursor: pointer;
     }
 
     .hub-password-eye:hover {
-        background: #fff3dc;
-        color: #b97805;
+        background: var(--sari-dark-4d21eb669b, #fff3dc);
+        color: var(--sari-dark-af18afcaa4, #b97805);
     }
 
     .hub-password-eye svg {
@@ -1138,16 +1138,16 @@
         gap: 9px;
         margin-top: 12px;
         padding: 13px;
-        border: 1px solid #eadfcf;
+        border: 1px solid var(--sari-dark-d8c2716225, #eadfcf);
         border-radius: 11px;
-        background: white;
+        background: var(--sari-dark-950baec030, white);
     }
 
     .hub-password-rule {
         display: flex;
         align-items: center;
         gap: 7px;
-        color: #93897d;
+        color: var(--sari-dark-a63aa16d7c, #93897d);
         font-size: 10px;
     }
 
@@ -1157,7 +1157,7 @@
     }
 
     .hub-password-rule.valid {
-        color: #328354;
+        color: var(--sari-dark-e23e64dd1e, #328354);
     }
 
     .hub-password-rule.valid::before {
@@ -1166,7 +1166,7 @@
     }
 
     .hub-password-rule.invalid {
-        color: #c04f4f;
+        color: var(--sari-dark-81bbb600e0, #c04f4f);
     }
 
     .hub-password-rule.invalid::before {
@@ -1177,29 +1177,29 @@
     .hub-feedback {
         display: block;
         margin-top: 7px;
-        color: #93897d;
+        color: var(--sari-dark-a63aa16d7c, #93897d);
         font-size: 10px;
         line-height: 16px;
     }
 
     .hub-feedback.valid {
-        color: #328354;
+        color: var(--sari-dark-e23e64dd1e, #328354);
         font-weight: 600;
     }
 
     .hub-feedback.invalid {
-        color: #c04f4f;
+        color: var(--sari-dark-81bbb600e0, #c04f4f);
         font-weight: 600;
     }
 
     .hub-input-valid {
-        border-color: #68aa80 !important;
-        background: #f8fdf9 !important;
+        border-color: var(--sari-dark-d8c2716225, #68aa80) !important;
+        background: var(--sari-dark-950baec030, #f8fdf9) !important;
     }
 
     .hub-input-invalid {
         border-color: #dc7777 !important;
-        background: #fff9f9 !important;
+        background: var(--sari-dark-950baec030, #fff9f9) !important;
     }
 
     /* Hover */
@@ -1208,8 +1208,8 @@
         #logisticsFacilitiesWorkspace .fh-kpi:hover,
         #logisticsFacilitiesWorkspace .fh-hub:hover {
             transform: translateY(-2px);
-            border-color: #d8c9b2;
-            box-shadow: 0 13px 28px rgba(43,33,21,.055);
+            border-color: var(--sari-dark-d8c2716225, #d8c9b2);
+            box-shadow: 0 13px 28px var(--sari-dark-fbd3b3b9f6, rgba(43,33,21,.055));
         }
     }
 
@@ -1344,9 +1344,9 @@
     #logisticsFacilitiesWorkspace .fh-view-hub:hover,
     #logisticsFacilitiesWorkspace .fh-view-hub:active {
         width: 36px; height: 36px; padding: 0; border: 0; border-radius: 0;
-        background: transparent; box-shadow: none; color: #697580;
+        background: transparent; box-shadow: none; color: var(--sari-dark-a63aa16d7c, #697580);
     }
-    #logisticsFacilitiesWorkspace .fh-view-hub:hover { color: #aa720d; }
+    #logisticsFacilitiesWorkspace .fh-view-hub:hover { color: var(--sari-dark-c8bdcce6ab, #aa720d); }
     #logisticsFacilitiesWorkspace .fh-view-hub svg { width: 21px; height: 21px; }
     #logisticsFacilitiesWorkspace .fh-view-hub:focus-visible {
         outline: 2px solid #b57b0a; outline-offset: 2px; border-radius: 6px;
@@ -1358,12 +1358,12 @@
        Keep the one outer dialog radius; make the inner surface seamless. */
     #logisticsContent #logisticsFacilitiesWorkspace dialog.fh-hub-dialog {
         overflow: hidden;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
     #logisticsContent #logisticsFacilitiesWorkspace dialog.fh-hub-dialog .fh-hub-dialog-surface {
         border: 0 !important;
         border-radius: 0 !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow: none !important;
         overflow-y: auto;
         max-height: min(90dvh, 820px);
@@ -1372,16 +1372,16 @@
         margin: 0 !important;
         border: 0 !important;
         border-radius: 0 !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         background-image: none !important;
         box-shadow: none !important;
         transform: none !important;
     }
     #logisticsContent #logisticsFacilitiesWorkspace dialog.fh-hub-dialog .fh-hub-dialog-header {
         border-radius: 0 !important;
-        border-bottom: 1px solid #e9edf2 !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf2) !important;
         box-shadow: none !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
     /* Gold is only for Deactivate; the existing Activate action remains neutral. */
     #logisticsContent #logisticsFacilitiesWorkspace dialog.fh-hub-dialog .fh-action.fh-deactivate-action {
@@ -1405,33 +1405,33 @@
     #logisticsFacilitiesWorkspace .fh-hub-dialog {
         position: fixed; inset: 0; width: min(640px, calc(100vw - 32px));
         max-width: 640px; max-height: min(90dvh, 820px); margin: auto;
-        padding: 0; overflow-y: auto; border: 1px solid #e1e6ed;
-        border-radius: 20px; background: #fff; color: #25303b;
-        box-shadow: 0 32px 92px rgba(15,23,42,.24), 0 8px 24px rgba(15,23,42,.08);
+        padding: 0; overflow-y: auto; border: 1px solid var(--sari-dark-d8c2716225, #e1e6ed);
+        border-radius: 20px; background: var(--sari-dark-950baec030, #fff); color: var(--sari-dark-e23e64dd1e, #25303b);
+        box-shadow: 0 32px 92px var(--sari-dark-7edf1b5a37, rgba(15,23,42,.24)), 0 8px 24px var(--sari-dark-c33e3d1bb4, rgba(15,23,42,.08));
     }
     #logisticsFacilitiesWorkspace .fh-hub-dialog:not([open]) { display: none; }
-    #logisticsFacilitiesWorkspace .fh-hub-dialog::backdrop { background: rgba(18,25,34,.52); }
+    #logisticsFacilitiesWorkspace .fh-hub-dialog::backdrop { background: var(--sari-dark-d9fe1155b7, rgba(18,25,34,.52)); }
     #logisticsFacilitiesWorkspace .fh-hub-dialog-header {
         display: flex; align-items: flex-start; justify-content: space-between;
-        gap: 20px; padding: 22px 24px; border-bottom: 1px solid #e9edf2; background: #fff;
+        gap: 20px; padding: 22px 24px; border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf2); background: var(--sari-dark-950baec030, #fff);
     }
     #logisticsFacilitiesWorkspace .fh-hub-dialog-kicker {
         margin: 0; font-size: 10px; line-height: 1.3; font-weight: 750;
-        letter-spacing: .12em; color: #aa720d; text-transform: uppercase;
+        letter-spacing: .12em; color: var(--sari-dark-c8bdcce6ab, #aa720d); text-transform: uppercase;
     }
     #logisticsFacilitiesWorkspace .fh-hub-dialog-title {
         margin: 6px 0 0; font-size: 22px; font-weight: 750;
         line-height: 1.25; letter-spacing: -.03em; overflow-wrap: anywhere;
     }
     #logisticsFacilitiesWorkspace .fh-hub-dialog-subtitle {
-        margin: 6px 0 0; font-size: 11px; color: #8a95a1; overflow-wrap: anywhere;
+        margin: 6px 0 0; font-size: 11px; color: var(--sari-dark-a63aa16d7c, #8a95a1); overflow-wrap: anywhere;
     }
     #logisticsFacilitiesWorkspace .fh-hub-dialog-close {
         display: inline-grid; flex: 0 0 34px; width: 34px; height: 34px;
-        place-items: center; border: 1px solid #e1e6ed; border-radius: 9px;
-        background: white; color: #667382;
+        place-items: center; border: 1px solid var(--sari-dark-d8c2716225, #e1e6ed); border-radius: 9px;
+        background: var(--sari-dark-950baec030, white); color: var(--sari-dark-a63aa16d7c, #667382);
     }
-    #logisticsFacilitiesWorkspace .fh-hub-dialog-close:hover { background: #f7f9fb; }
+    #logisticsFacilitiesWorkspace .fh-hub-dialog-close:hover { background: var(--sari-dark-950baec030, #f7f9fb); }
     #logisticsFacilitiesWorkspace .fh-hub-dialog-close svg { width: 18px; height: 18px; }
     #logisticsFacilitiesWorkspace .fh-hub-dialog-close:focus-visible { outline: 2px solid #b57b0a; outline-offset: 2px; }
     /* Hub details: a vertical stack of four clearly separated information cards.
@@ -1450,16 +1450,16 @@
         grid-column: auto !important;
         box-sizing: border-box;
         padding: 15px 17px !important;
-        border: 1px solid #e7edf3 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7edf3) !important;
         border-radius: 13px !important;
-        background: #f8fafc !important;
+        background: var(--sari-dark-950baec030, #f8fafc) !important;
         background-image: none !important;
         box-shadow: none !important;
         transform: none !important;
     }
     #logisticsFacilitiesWorkspace .fh-hub-dialog .fh-hub-detail-item small {
         display: block;
-        color: #84909e;
+        color: var(--sari-dark-a63aa16d7c, #84909e);
         font-size: 10px;
         font-weight: 750;
         line-height: 1.3;
@@ -1473,7 +1473,7 @@
         overflow-wrap: anywhere;
     }
     #logisticsFacilitiesWorkspace .fh-hub-dialog .fh-hub-detail-item p {
-        color: #566273;
+        color: var(--sari-dark-a63aa16d7c, #566273);
     }
     #logisticsContent #logisticsFacilitiesWorkspace dialog.fh-hub-dialog .fh-hub-detail-actions {
         width: 100%;
@@ -1481,19 +1481,19 @@
         gap: 9px;
         padding-top: 16px;
         margin-top: 4px;
-        border-top: 1px solid #e9edf2;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #e9edf2);
     }
     #logisticsFacilitiesWorkspace .fh-hub-dialog .fh-action {
         min-height: 37px; padding-inline: 14px; font-size: 11px;
-        border-color: #dce3ea; color: #4b5563;
+        border-color: var(--sari-dark-d8c2716225, #dce3ea); color: var(--sari-dark-e23e64dd1e, #4b5563);
     }
-    #logisticsFacilitiesWorkspace .fh-hub-dialog .fh-action:hover { border-color: #d4a851; color: #98660b; background: #fff; }
+    #logisticsFacilitiesWorkspace .fh-hub-dialog .fh-action:hover { border-color: #d4a851; color: var(--sari-dark-c8bdcce6ab, #98660b); background: var(--sari-dark-950baec030, #fff); }
     @media (max-width: 1100px) {
         /* The seven-column directory becomes two-column cards instead of scrolling. */
         #logisticsFacilitiesWorkspace .fh-hub-table { display: block; width: 100%; }
         #logisticsFacilitiesWorkspace .fh-hub-table thead { display: none; }
         #logisticsFacilitiesWorkspace .fh-hub-table tbody { display: block; }
-        #logisticsFacilitiesWorkspace .fh-hub-table tbody + tbody { border-top: 1px solid #edf0f3; }
+        #logisticsFacilitiesWorkspace .fh-hub-table tbody + tbody { border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3); }
         #logisticsFacilitiesWorkspace .fh-hub-row {
             position: relative; display: grid; grid-template-columns: repeat(2,minmax(0,1fr));
             gap: 14px 18px; padding: 17px 19px;
@@ -1509,7 +1509,7 @@
         #logisticsFacilitiesWorkspace .fh-hub-row td:not(:first-child):not(:last-child)::before {
             content: attr(data-label); display: block; margin-bottom: 6px;
             font-size: 9px; font-weight: 750; letter-spacing: .07em;
-            color: #95a0ad; text-transform: uppercase;
+            color: var(--sari-dark-a63aa16d7c, #95a0ad); text-transform: uppercase;
         }
         #logisticsFacilitiesWorkspace .fh-hub-row-name,
         #logisticsFacilitiesWorkspace .fh-hub-row-sub { white-space: normal; overflow-wrap: anywhere; }
@@ -1551,29 +1551,29 @@
     #logisticsFacilitiesWorkspace #facilitySearchEmpty.hidden { display: none !important; }
     #logisticsFacilitiesWorkspace .fh-admin-search > svg {
         position: absolute; top: 50%; left: 15px; transform: translateY(-50%);
-        width: 17px; height: 17px; color: #98a2b3; pointer-events: none;
+        width: 17px; height: 17px; color: var(--sari-dark-a63aa16d7c, #98a2b3); pointer-events: none;
     }
     #logisticsFacilitiesWorkspace .fh-admin-select-wrap > svg {
         position: absolute; top: 50%; right: 13px; transform: translateY(-50%);
-        width: 14px; height: 14px; color: #8c96a2; pointer-events: none;
+        width: 14px; height: 14px; color: var(--sari-dark-a63aa16d7c, #8c96a2); pointer-events: none;
     }
     #logisticsFacilitiesWorkspace .fh-admin-search input,
     #logisticsFacilitiesWorkspace .fh-admin-select-wrap select {
         box-sizing: border-box; width: 100%; height: 44px;
-        border: 1px solid #dfe5eb; border-radius: 12px;
-        background: #fff; color: #344054; outline: none;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe5eb); border-radius: 12px;
+        background: var(--sari-dark-950baec030, #fff); color: var(--sari-dark-e23e64dd1e, #344054); outline: none;
         font: 500 11px/1.3 Poppins,ui-sans-serif,sans-serif;
         box-shadow: none; transition: border-color .15s ease, box-shadow .15s ease;
     }
     #logisticsFacilitiesWorkspace .fh-admin-search input { padding: 0 14px 0 43px; }
-    #logisticsFacilitiesWorkspace .fh-admin-search input::placeholder { color: #98a2b3; font-weight: 400; }
+    #logisticsFacilitiesWorkspace .fh-admin-search input::placeholder { color: var(--sari-dark-a63aa16d7c, #98a2b3); font-weight: 400; }
     #logisticsFacilitiesWorkspace .fh-admin-select-wrap select { padding: 0 32px 0 13px; appearance: none; cursor: pointer; }
     #logisticsFacilitiesWorkspace .fh-admin-filters :is(input,select,button):focus-visible,
     #logisticsFacilitiesWorkspace .fh-admin-pagination :is(button,select):focus-visible {
         outline: 2px solid #c48c1b; outline-offset: 2px;
     }
     #logisticsFacilitiesWorkspace .fh-admin-filters :is(input,select):focus {
-        border-color: #d7a448; box-shadow: 0 0 0 3px rgba(217,149,0,.08);
+        border-color: #d7a448; box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(217,149,0,.08));
     }
     #logisticsFacilitiesWorkspace .fh-admin-apply,
     #logisticsFacilitiesWorkspace .fh-admin-reset {
@@ -1584,32 +1584,32 @@
     }
     #logisticsFacilitiesWorkspace .fh-admin-apply {
         background: #d99500; border: 1px solid #d99500; color: #fff;
-        box-shadow: 0 6px 14px rgba(217,149,0,.12);
+        box-shadow: 0 6px 14px var(--sari-dark-3b2338cbf0, rgba(217,149,0,.12));
     }
     #logisticsFacilitiesWorkspace .fh-admin-apply:hover { background: #b77c00; border-color: #b77c00; }
     #logisticsFacilitiesWorkspace .fh-admin-apply svg { width: 15px; height: 15px; }
     #logisticsFacilitiesWorkspace .fh-admin-reset {
-        background: white; border: 1px solid #dfe5eb; color: #596575;
+        background: var(--sari-dark-950baec030, white); border: 1px solid var(--sari-dark-d8c2716225, #dfe5eb); color: var(--sari-dark-a63aa16d7c, #596575);
     }
-    #logisticsFacilitiesWorkspace .fh-admin-reset:hover { background: #f9fafb; }
+    #logisticsFacilitiesWorkspace .fh-admin-reset:hover { background: var(--sari-dark-950baec030, #f9fafb); }
 
     /* Table retains the seven backend-driven fields and eye-modal action. */
     #logisticsFacilitiesWorkspace .fh-admin-directory {
-        overflow: hidden; border-color: #e5e9ef !important; border-radius: 18px !important;
-        box-shadow: 0 2px 5px rgba(15,23,42,.035),0 12px 28px rgba(15,23,42,.075) !important;
+        overflow: hidden; border-color: var(--sari-dark-d8c2716225, #e5e9ef) !important; border-radius: 18px !important;
+        box-shadow: 0 2px 5px var(--sari-dark-7593018246, rgba(15,23,42,.035)),0 12px 28px var(--sari-dark-e07575a086, rgba(15,23,42,.075)) !important;
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-panel-head {
-        padding: 18px 20px; border-bottom: 1px solid #eef0f3;
-        background: #fff;
+        padding: 18px 20px; border-bottom: 1px solid var(--sari-dark-d8c2716225, #eef0f3);
+        background: var(--sari-dark-950baec030, #fff);
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-panel-title {
-        color: #222b36; font-size: 16px; font-weight: 750;
+        color: var(--sari-dark-e23e64dd1e, #222b36); font-size: 16px; font-weight: 750;
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-panel-desc {
-        color: #8a95a2; font-size: 11px; line-height: 1.5;
+        color: var(--sari-dark-a63aa16d7c, #8a95a2); font-size: 11px; line-height: 1.5;
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-counter {
-        background: #f9fafb; border-color: #e5e9ef; color: #667085;
+        background: var(--sari-dark-950baec030, #f9fafb); border-color: var(--sari-dark-d8c2716225, #e5e9ef); color: var(--sari-dark-a63aa16d7c, #667085);
         font-size: 10px; min-height: 30px;
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table-wrap { overflow: visible; }
@@ -1617,60 +1617,60 @@
         width: 100%; min-width: 0; table-layout: fixed;
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table thead tr {
-        background: #f9fafb; border-bottom: 1px solid #eceff3;
+        background: var(--sari-dark-950baec030, #f9fafb); border-bottom: 1px solid var(--sari-dark-d8c2716225, #eceff3);
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table thead th {
-        padding-top: 13px; padding-bottom: 13px; color: #748092;
+        padding-top: 13px; padding-bottom: 13px; color: var(--sari-dark-a63aa16d7c, #748092);
         font-size: 10px; font-weight: 700; letter-spacing: .065em;
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row {
-        border-bottom-color: #edf0f3; background: #fff;
+        border-bottom-color: var(--sari-dark-d8c2716225, #edf0f3); background: var(--sari-dark-950baec030, #fff);
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row:hover {
-        background: #fdfbf7; box-shadow: inset 2px 0 0 #d99500;
+        background: var(--sari-dark-950baec030, #fdfbf7); box-shadow: inset 2px 0 0 var(--sari-dark-152c2221a5, #d99500);
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row td {
-        padding-top: 15px; padding-bottom: 15px; color: #475467; font-size: 11px;
+        padding-top: 15px; padding-bottom: 15px; color: var(--sari-dark-e23e64dd1e, #475467); font-size: 11px;
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row-name {
-        font-size: 12px; line-height: 1.4; color: #1e293b;
+        font-size: 12px; line-height: 1.4; color: var(--sari-dark-e23e64dd1e, #1e293b);
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row-sub {
-        font-size: 9.5px; line-height: 1.5; color: #98a2b3;
+        font-size: 9.5px; line-height: 1.5; color: var(--sari-dark-a63aa16d7c, #98a2b3);
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row td:nth-child(6) .font-mono {
-        font-size: 9.5px; color: #667085;
+        font-size: 9.5px; color: var(--sari-dark-a63aa16d7c, #667085);
     }
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-role-badge,
     #logisticsFacilitiesWorkspace .fh-admin-directory .fh-route-badge {
         min-height: 27px; padding: 3px 10px; font-size: 10px;
     }
-    #logisticsFacilitiesWorkspace .fh-admin-directory .fh-view-hub { color: #667085; }
-    #logisticsFacilitiesWorkspace .fh-admin-directory .fh-view-hub:hover { color: #aa720d; }
+    #logisticsFacilitiesWorkspace .fh-admin-directory .fh-view-hub { color: var(--sari-dark-a63aa16d7c, #667085); }
+    #logisticsFacilitiesWorkspace .fh-admin-directory .fh-view-hub:hover { color: var(--sari-dark-c8bdcce6ab, #aa720d); }
 
     #logisticsFacilitiesWorkspace .fh-admin-footer {
         display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
-        gap: 12px; padding: 13px 20px; border-top: 1px solid #edf0f3;
-        background: #fff;
+        gap: 12px; padding: 13px 20px; border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
+        background: var(--sari-dark-950baec030, #fff);
     }
     #logisticsFacilitiesWorkspace #facilityResultCount {
-        margin: 0; font-size: 11px; color: #667085; line-height: 1.5;
+        margin: 0; font-size: 11px; color: var(--sari-dark-a63aa16d7c, #667085); line-height: 1.5;
     }
     #logisticsFacilitiesWorkspace .fh-admin-pagination {
         display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap;
-        gap: 8px; font-size: 12px; color: #667085;
+        gap: 8px; font-size: 12px; color: var(--sari-dark-a63aa16d7c, #667085);
     }
     #logisticsFacilitiesWorkspace .fh-admin-pagination button,
     #logisticsFacilitiesWorkspace .fh-admin-pagination select {
-        height: 36px; border: 1px solid #e4e7ec; border-radius: 8px; background: #fff;
-        font-size: 11px; font-weight: 500; color: #475467; padding: 0 11px;
+        height: 36px; border: 1px solid var(--sari-dark-d8c2716225, #e4e7ec); border-radius: 8px; background: var(--sari-dark-950baec030, #fff);
+        font-size: 11px; font-weight: 500; color: var(--sari-dark-e23e64dd1e, #475467); padding: 0 11px;
     }
     #logisticsFacilitiesWorkspace .fh-admin-pagination select { width: 64px; padding: 0 7px; }
     #logisticsFacilitiesWorkspace .fh-admin-pagination #facilityNextPage:not(:disabled) {
         background: #d99500; border-color: #d99500; color: white;
     }
     #logisticsFacilitiesWorkspace .fh-admin-pagination button:disabled {
-        background: #f9fafb; border-color: #eef0f3; color: #98a2b3; cursor: not-allowed;
+        background: var(--sari-dark-950baec030, #f9fafb); border-color: var(--sari-dark-d8c2716225, #eef0f3); color: var(--sari-dark-a63aa16d7c, #98a2b3); cursor: not-allowed;
     }
     #logisticsFacilitiesWorkspace #facilityPageNumber { min-width: 39px; text-align: center; font-variant-numeric: tabular-nums; }
 
@@ -1704,10 +1704,10 @@
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory {
         min-width: 0;
         overflow: hidden;
-        border: 1px solid #e5eaf0 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5eaf0) !important;
         border-radius: 18px !important;
-        background: #fff !important;
-        box-shadow: 0 12px 28px rgba(15,23,42,.07), 0 2px 6px rgba(15,23,42,.025) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 12px 28px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)), 0 2px 6px var(--sari-dark-e1384eb7fc, rgba(15,23,42,.025)) !important;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory > .fh-panel-head {
         display: flex;
@@ -1715,13 +1715,13 @@
         justify-content: space-between;
         gap: 12px;
         padding: 17px 21px !important;
-        background: #fff !important;
-        border-bottom: 1px solid #eef0f3 !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eef0f3) !important;
         min-height: 0;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-panel-title {
         margin: 0 !important;
-        color: #212b36;
+        color: var(--sari-dark-e23e64dd1e, #212b36);
         font-size: 17px !important;
         font-weight: 750;
         line-height: 1.35;
@@ -1730,17 +1730,17 @@
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-counter {
         flex: 0 0 auto;
         min-height: 29px;
-        border-color: #e5eaf0;
-        background: #f8fafc;
+        border-color: var(--sari-dark-d8c2716225, #e5eaf0);
+        background: var(--sari-dark-950baec030, #f8fafc);
         padding-inline: 11px;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         white-space: nowrap;
         font-size: 10px;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip {
         padding: 13px 18px;
-        border-bottom: 1px solid #eef1f4;
-        background: #fff;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eef1f4);
+        background: var(--sari-dark-950baec030, #fff);
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-filters {
         display: grid;
@@ -1768,10 +1768,10 @@
         min-width: 0;
         width: 100%;
         height: 40px;
-        border: 1px solid #dce4eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #dce4eb);
         border-radius: 10px;
-        background: #fff;
-        color: #344054;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-family: Poppins, sans-serif;
         font-size: 11px !important;
         font-weight: 500;
@@ -1803,14 +1803,14 @@
         table-layout: fixed;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table thead tr {
-        background: #f8fafc;
-        border-bottom: 1px solid #e9edf2;
+        background: var(--sari-dark-950baec030, #f8fafc);
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf2);
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table th {
         padding: 12px 9px;
         font-size: 9px !important;
         line-height: 1.4;
-        color: #718096;
+        color: var(--sari-dark-a63aa16d7c, #718096);
         font-weight: 750;
         white-space: nowrap;
     }
@@ -1847,14 +1847,14 @@
         padding: 0 !important;
         width: 34px;
         height: 34px;
-        color: #687686;
+        color: var(--sari-dark-a63aa16d7c, #687686);
     }
-    #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-view-hub:hover { color: #b47a0e; }
+    #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-view-hub:hover { color: var(--sari-dark-c8bdcce6ab, #b47a0e); }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-view-hub svg { width: 20px; height: 20px; }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory > .fh-admin-footer {
         padding: 12px 19px;
-        border-top: 1px solid #edf0f3;
-        background: #fff;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
+        background: var(--sari-dark-950baec030, #fff);
     }
     @media (max-width: 1190px) {
         #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-filters {
@@ -1929,11 +1929,11 @@
     #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-search input,
     #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-select-wrap select {
         height: 49px !important;
-        border-color: #e0e5ed;
+        border-color: var(--sari-dark-d8c2716225, #e0e5ed);
         border-radius: 13px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         font-size: 11px !important;
-        box-shadow: 0 1px 2px rgba(16,24,40,.025);
+        box-shadow: 0 1px 2px var(--sari-dark-e1384eb7fc, rgba(16,24,40,.025));
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip :is(.fh-admin-apply,.fh-admin-reset) {
         height: 49px !important;
@@ -1945,23 +1945,23 @@
     #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-apply {
         border-color: #d99a12;
         background: #d99a12;
-        box-shadow: 0 6px 15px rgba(205,139,21,.15) !important;
+        box-shadow: 0 6px 15px var(--sari-dark-f4efbbfaa5, rgba(205,139,21,.15)) !important;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-apply:hover {
         border-color: #bc8010;
         background: #bc8010;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-reset {
-        border-color: #e0e5ed;
-        background: #fff;
-        color: #566477;
+        border-color: var(--sari-dark-d8c2716225, #e0e5ed);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #566477);
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory {
         margin: 0 !important;
-        border: 1px solid #e6eaf0 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e6eaf0) !important;
         border-radius: 17px !important;
-        background: #fff !important;
-        box-shadow: 0 13px 30px rgba(16,24,40,.065),0 2px 6px rgba(16,24,40,.025) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 13px 30px var(--sari-dark-4fc908fafe, rgba(16,24,40,.065)),0 2px 6px var(--sari-dark-e1384eb7fc, rgba(16,24,40,.025)) !important;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory > .fh-panel-head {
         padding: 16px 21px !important;
@@ -1980,7 +1980,7 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        color: #7c8795;
+        color: var(--sari-dark-a63aa16d7c, #7c8795);
         font-size: 11px;
         font-weight: 500;
         white-space: nowrap;
@@ -1988,10 +1988,10 @@
     #logisticsContent #logisticsFacilitiesWorkspace .fh-page-size-label select {
         height: 33px;
         padding: 0 9px;
-        border: 1px solid #e1e6ed;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e6ed);
         border-radius: 9px;
-        background: #fff;
-        color: #4b5563;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #4b5563);
         font-size: 11px;
         outline-offset: 2px;
     }
@@ -2023,8 +2023,8 @@
         padding: 0;
         border: 1px solid transparent !important;
         border-radius: 14px !important;
-        background: #f0f2f5 !important;
-        color: #8793a3 !important;
+        background: var(--sari-dark-4d21eb669b, #f0f2f5) !important;
+        color: var(--sari-dark-a63aa16d7c, #8793a3) !important;
         font-size: 14px;
         font-weight: 650;
         line-height: 1;
@@ -2039,11 +2039,11 @@
         border-color: #c99125 !important;
         background: #c99125 !important;
         color: #fff !important;
-        box-shadow: 0 7px 17px rgba(201,145,37,.22) !important;
+        box-shadow: 0 7px 17px var(--sari-dark-e267f3cebc, rgba(201,145,37,.22)) !important;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-pagination-nav :is(.fh-page-arrow,.fh-page-number):not(:disabled):hover:not(.is-current) {
-        background: #e8ebf0 !important;
-        color: #475467 !important;
+        background: var(--sari-dark-4d21eb669b, #e8ebf0) !important;
+        color: var(--sari-dark-e23e64dd1e, #475467) !important;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-pagination-nav .fh-page-arrow:disabled {
         opacity: .45;
@@ -2156,7 +2156,7 @@
         height: 15px !important;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fh-pagination-nav .fh-page-number.is-current {
-        box-shadow: 0 4px 10px rgba(201,145,37,.15) !important;
+        box-shadow: 0 4px 10px var(--sari-dark-f4efbbfaa5, rgba(201,145,37,.15)) !important;
     }
     @media (max-width: 1100px) {
         #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row {
@@ -2198,74 +2198,74 @@
     /* Functional, focused sorting-hub editor. Scoped to prevent shared Buyer CSS bleed. */
     #logisticsFacilitiesWorkspace .fe-workspace {
         overflow: visible !important;
-        border: 1px solid #e4e8ee !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e8ee) !important;
         border-radius: 21px !important;
-        background: #fff !important;
-        box-shadow: 0 18px 42px rgba(18, 27, 44, .075), 0 4px 12px rgba(18, 27, 44, .035) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 18px 42px var(--sari-dark-e07575a086, rgba(18, 27, 44, .075)), 0 4px 12px var(--sari-dark-7593018246, rgba(18, 27, 44, .035)) !important;
     }
-    #logisticsFacilitiesWorkspace .fe-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:23px 26px; border-bottom:1px solid #e9edf2; }
+    #logisticsFacilitiesWorkspace .fe-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:23px 26px; border-bottom:1px solid var(--sari-dark-d8c2716225, #e9edf2); }
     #logisticsFacilitiesWorkspace .fe-heading { min-width:0; }
-    #logisticsFacilitiesWorkspace .fe-kicker { margin:0 0 6px; color:#b67c0d; font-size:10px; font-weight:750; letter-spacing:.12em; text-transform:uppercase; }
-    #logisticsFacilitiesWorkspace .fe-title { margin:0; font-size:clamp(22px,2vw,29px); line-height:1.18; color:#202833; font-weight:750; letter-spacing:-.035em; }
-    #logisticsFacilitiesWorkspace .fe-intro { margin:8px 0 0; color:#818a97; font-size:12px; line-height:1.6; }
+    #logisticsFacilitiesWorkspace .fe-kicker { margin:0 0 6px; color:var(--sari-dark-19b301f69a, #b67c0d); font-size:10px; font-weight:750; letter-spacing:.12em; text-transform:uppercase; }
+    #logisticsFacilitiesWorkspace .fe-title { margin:0; font-size:clamp(22px,2vw,29px); line-height:1.18; color:var(--sari-dark-e23e64dd1e, #202833); font-weight:750; letter-spacing:-.035em; }
+    #logisticsFacilitiesWorkspace .fe-intro { margin:8px 0 0; color:var(--sari-dark-a63aa16d7c, #818a97); font-size:12px; line-height:1.6; }
     #logisticsFacilitiesWorkspace .fe-header-actions { display:flex; flex:0 0 auto; align-items:center; gap:9px; }
-    #logisticsFacilitiesWorkspace .fe-help-trigger, #logisticsFacilitiesWorkspace .fe-close { display:inline-flex; justify-content:center; align-items:center; min-height:38px; border:1px solid #e0e5eb; border-radius:11px; background:#fff; color:#596574; transition: border-color .15s ease, color .15s ease, background-color .15s ease; }
+    #logisticsFacilitiesWorkspace .fe-help-trigger, #logisticsFacilitiesWorkspace .fe-close { display:inline-flex; justify-content:center; align-items:center; min-height:38px; border:1px solid var(--sari-dark-d8c2716225, #e0e5eb); border-radius:11px; background:var(--sari-dark-950baec030, #fff); color:var(--sari-dark-a63aa16d7c, #596574); transition: border-color .15s ease, color .15s ease, background-color .15s ease; }
     #logisticsFacilitiesWorkspace .fe-help-trigger { width:38px; padding:0; }
     #logisticsFacilitiesWorkspace .fe-help-trigger svg { width:20px; height:20px; }
     #logisticsFacilitiesWorkspace .fe-close { padding:0 14px; font-size:11px; font-weight:650; }
-    #logisticsFacilitiesWorkspace .fe-help-trigger:hover, #logisticsFacilitiesWorkspace .fe-close:hover { border-color:#e0bd79; color:#a57211; background:#fffcf6; }
+    #logisticsFacilitiesWorkspace .fe-help-trigger:hover, #logisticsFacilitiesWorkspace .fe-close:hover { border-color:#e0bd79; color:var(--sari-dark-19b301f69a, #a57211); background:var(--sari-dark-950baec030, #fffcf6); }
     #logisticsFacilitiesWorkspace .fe-form { max-width:100%; padding:24px 26px 25px !important; }
-    #logisticsFacilitiesWorkspace .fe-section-head { display:flex; gap:11px; align-items:center; padding-bottom:18px; margin-bottom:22px; border-bottom:1px solid #edf0f4; }
-    #logisticsFacilitiesWorkspace .fe-section-number { display:grid; place-items:center; width:35px; height:35px; flex-shrink:0; border-radius:10px; background:#f2f4f7; color:#778494; font-size:12px; font-weight:750; }
-    #logisticsFacilitiesWorkspace .fe-section-head h4 { margin:0; font-size:15px; font-weight:700; color:#27303a; }
-    #logisticsFacilitiesWorkspace .fe-section-head p { margin:2px 0 0; color:#8c96a3; font-size:11px; }
+    #logisticsFacilitiesWorkspace .fe-section-head { display:flex; gap:11px; align-items:center; padding-bottom:18px; margin-bottom:22px; border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f4); }
+    #logisticsFacilitiesWorkspace .fe-section-number { display:grid; place-items:center; width:35px; height:35px; flex-shrink:0; border-radius:10px; background:var(--sari-dark-4d21eb669b, #f2f4f7); color:var(--sari-dark-a63aa16d7c, #778494); font-size:12px; font-weight:750; }
+    #logisticsFacilitiesWorkspace .fe-section-head h4 { margin:0; font-size:15px; font-weight:700; color:var(--sari-dark-e23e64dd1e, #27303a); }
+    #logisticsFacilitiesWorkspace .fe-section-head p { margin:2px 0 0; color:var(--sari-dark-a63aa16d7c, #8c96a3); font-size:11px; }
     #logisticsFacilitiesWorkspace .fe-fields { display:grid; gap:20px; max-width:1050px; }
     #logisticsFacilitiesWorkspace .fe-location-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
     #logisticsFacilitiesWorkspace .fe-field { min-width:0; }
-    #logisticsFacilitiesWorkspace .fe-field > label, #logisticsFacilitiesWorkspace .fe-map-header .fe-map-label { display:block; margin-bottom:7px; color:#414c59; font-size:12px; font-weight:650; }
-    #logisticsFacilitiesWorkspace .fe-field label span, #logisticsFacilitiesWorkspace .fe-map-header .fe-map-label span { color:#ae7812; }
-    #logisticsFacilitiesWorkspace .fe-field label em { font-size:11px; color:#919aa4; font-style:normal; font-weight:400; }
-    #logisticsFacilitiesWorkspace .fe-control { display:block; box-sizing:border-box; width:100%; min-height:45px; padding:10px 13px; border:1px solid #dce3e9 !important; border-radius:11px !important; background:#fff !important; color:#2c3744 !important; font-family:inherit; font-size:12px !important; font-weight:500; line-height:1.5; outline:none; transition:border-color .13s ease,box-shadow .13s ease; }
-    #logisticsFacilitiesWorkspace .fe-control::placeholder { color:#a6aeba; font-size:12px; font-weight:400; }
-    #logisticsFacilitiesWorkspace .fe-control:focus { border-color:#c89330 !important; box-shadow:0 0 0 3px rgba(201,147,48,.10) !important; }
-    #logisticsFacilitiesWorkspace .fe-control:disabled { background:#f6f8fa !important; color:#929aa5 !important; cursor:not-allowed; }
-    #logisticsFacilitiesWorkspace .fe-control.fe-invalid { border-color:#d17070 !important; box-shadow:0 0 0 3px rgba(209,112,112,.09) !important; }
+    #logisticsFacilitiesWorkspace .fe-field > label, #logisticsFacilitiesWorkspace .fe-map-header .fe-map-label { display:block; margin-bottom:7px; color:var(--sari-dark-e23e64dd1e, #414c59); font-size:12px; font-weight:650; }
+    #logisticsFacilitiesWorkspace .fe-field label span, #logisticsFacilitiesWorkspace .fe-map-header .fe-map-label span { color:var(--sari-dark-19b301f69a, #ae7812); }
+    #logisticsFacilitiesWorkspace .fe-field label em { font-size:11px; color:var(--sari-dark-a63aa16d7c, #919aa4); font-style:normal; font-weight:400; }
+    #logisticsFacilitiesWorkspace .fe-control { display:block; box-sizing:border-box; width:100%; min-height:45px; padding:10px 13px; border:1px solid var(--sari-dark-d8c2716225, #dce3e9) !important; border-radius:11px !important; background:var(--sari-dark-950baec030, #fff) !important; color:var(--sari-dark-e23e64dd1e, #2c3744) !important; font-family:inherit; font-size:12px !important; font-weight:500; line-height:1.5; outline:none; transition:border-color .13s ease,box-shadow .13s ease; }
+    #logisticsFacilitiesWorkspace .fe-control::placeholder { color:var(--sari-dark-a63aa16d7c, #a6aeba); font-size:12px; font-weight:400; }
+    #logisticsFacilitiesWorkspace .fe-control:focus { border-color:#c89330 !important; box-shadow:0 0 0 3px var(--sari-dark-8eadf403a5, rgba(201,147,48,.10)) !important; }
+    #logisticsFacilitiesWorkspace .fe-control:disabled { background:var(--sari-dark-950baec030, #f6f8fa) !important; color:var(--sari-dark-a63aa16d7c, #929aa5) !important; cursor:not-allowed; }
+    #logisticsFacilitiesWorkspace .fe-control.fe-invalid { border-color:#d17070 !important; box-shadow:0 0 0 3px var(--sari-dark-b12a5e9552, rgba(209,112,112,.09)) !important; }
     #logisticsFacilitiesWorkspace .fe-textarea { min-height:82px; resize:vertical; }
-    #logisticsFacilitiesWorkspace .fe-field-hint { margin:6px 0 0; color:#8b95a0; font-size:10.5px; line-height:1.5; }
-    #logisticsFacilitiesWorkspace .fe-error { margin:5px 0 0; color:#bd4848; font-size:11px; font-weight:600; line-height:1.5; }
-    #logisticsFacilitiesWorkspace .fe-address-status { margin:0; border:1px solid #e4eaf0; border-radius:10px; padding:9px 12px; color:#627080; background:#f8fafc; font-size:11px; line-height:1.5; }
+    #logisticsFacilitiesWorkspace .fe-field-hint { margin:6px 0 0; color:var(--sari-dark-a63aa16d7c, #8b95a0); font-size:10.5px; line-height:1.5; }
+    #logisticsFacilitiesWorkspace .fe-error { margin:5px 0 0; color:var(--sari-dark-81bbb600e0, #bd4848); font-size:11px; font-weight:600; line-height:1.5; }
+    #logisticsFacilitiesWorkspace .fe-address-status { margin:0; border:1px solid var(--sari-dark-d8c2716225, #e4eaf0); border-radius:10px; padding:9px 12px; color:var(--sari-dark-a63aa16d7c, #627080); background:var(--sari-dark-950baec030, #f8fafc); font-size:11px; line-height:1.5; }
     #logisticsFacilitiesWorkspace .fe-map-field { padding-top:6px; }
     #logisticsFacilitiesWorkspace .fe-map-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:9px; }
     #logisticsFacilitiesWorkspace .fe-map-header .fe-map-label { margin:0; }
     #logisticsFacilitiesWorkspace .fe-map-header .fe-field-hint { margin:4px 0 0; }
-    #logisticsFacilitiesWorkspace .fe-map-status { padding:6px 10px; background:#f3f5f7; color:#6b7682; border-radius:999px; font-size:9px; font-weight:750; white-space:nowrap; }
-    #logisticsFacilitiesWorkspace .fe-map-status.is-set { color:#27754c; background:#edf8f2; }
-    #logisticsFacilitiesWorkspace #sariFacilityMap { height:310px; width:100%; border:1px solid #e1e6eb; border-radius:13px; background:#f1f4f6; overflow:hidden; }
+    #logisticsFacilitiesWorkspace .fe-map-status { padding:6px 10px; background:var(--sari-dark-4d21eb669b, #f3f5f7); color:var(--sari-dark-a63aa16d7c, #6b7682); border-radius:999px; font-size:9px; font-weight:750; white-space:nowrap; }
+    #logisticsFacilitiesWorkspace .fe-map-status.is-set { color:var(--sari-dark-e23e64dd1e, #27754c); background:var(--sari-dark-4d21eb669b, #edf8f2); }
+    #logisticsFacilitiesWorkspace #sariFacilityMap { height:310px; width:100%; border:1px solid var(--sari-dark-d8c2716225, #e1e6eb); border-radius:13px; background:var(--sari-dark-4d21eb669b, #f1f4f6); overflow:hidden; }
     #logisticsFacilitiesWorkspace .fe-coordinates { margin-top:12px; }
-    #logisticsFacilitiesWorkspace .fe-active-row { display:flex; align-items:flex-start; gap:12px; border:1px solid #e5eaf0; border-radius:12px; padding:14px 16px; background:#fafbfc; cursor:pointer; }
+    #logisticsFacilitiesWorkspace .fe-active-row { display:flex; align-items:flex-start; gap:12px; border:1px solid var(--sari-dark-d8c2716225, #e5eaf0); border-radius:12px; padding:14px 16px; background:var(--sari-dark-950baec030, #fafbfc); cursor:pointer; }
     #logisticsFacilitiesWorkspace .fe-active-row input { width:17px; height:17px; margin:2px 0 0; flex:0 0 auto; accent-color:#c9911b; }
-    #logisticsFacilitiesWorkspace .fe-active-row strong { display:block; color:#343d48; font-size:12px; font-weight:700; }
-    #logisticsFacilitiesWorkspace .fe-active-row small { display:block; margin-top:3px; color:#8993a0; font-size:11px; line-height:1.55; }
-    #logisticsFacilitiesWorkspace .fe-form-footer { display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:19px; margin-top:24px; border-top:1px solid #ecf0f4; }
-    #logisticsFacilitiesWorkspace .fe-form-footer span { color:#929ba7; font-size:11px; }
-    #logisticsFacilitiesWorkspace .fe-save { min-height:43px; padding:0 19px; border-radius:11px; border:1px solid #d9950b; background:#d9950b; color:white; font-size:12px; font-weight:700; box-shadow:0 6px 14px rgba(217,149,11,.12); cursor:pointer; }
+    #logisticsFacilitiesWorkspace .fe-active-row strong { display:block; color:var(--sari-dark-e23e64dd1e, #343d48); font-size:12px; font-weight:700; }
+    #logisticsFacilitiesWorkspace .fe-active-row small { display:block; margin-top:3px; color:var(--sari-dark-a63aa16d7c, #8993a0); font-size:11px; line-height:1.55; }
+    #logisticsFacilitiesWorkspace .fe-form-footer { display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:19px; margin-top:24px; border-top:1px solid var(--sari-dark-d8c2716225, #ecf0f4); }
+    #logisticsFacilitiesWorkspace .fe-form-footer span { color:var(--sari-dark-a63aa16d7c, #929ba7); font-size:11px; }
+    #logisticsFacilitiesWorkspace .fe-save { min-height:43px; padding:0 19px; border-radius:11px; border:1px solid #d9950b; background:#d9950b; color:white; font-size:12px; font-weight:700; box-shadow:0 6px 14px var(--sari-dark-3b2338cbf0, rgba(217,149,11,.12)); cursor:pointer; }
     #logisticsFacilitiesWorkspace .fe-save:hover { background:#bb7f04; border-color:#bb7f04; }
-    #logisticsFacilitiesWorkspace .hub-address-results { border-color:#e0e5eb; background:#fff; box-shadow:0 14px 30px rgba(20,33,52,.12); }
-    #logisticsFacilitiesWorkspace .hub-address-results button { font-size:12px; color:#4a5664; }
-    #logisticsFacilitiesWorkspace .hub-address-results button:hover, #logisticsFacilitiesWorkspace .hub-address-results button:focus { background:#f6f8fa; color:#97670f; }
-    #facilityHelpDialog.fe-help-dialog { position:fixed; inset:0; width:min(560px,calc(100vw - 28px)); max-height:min(86vh,780px); margin:auto; padding:0; border:1px solid #e3e8ee; border-radius:20px; background:#fff; color:#283342; box-shadow:0 25px 85px rgba(15,23,42,.24); overflow-y:auto; }
-    #facilityHelpDialog::backdrop { background:rgba(17,24,39,.54); }
-    #facilityHelpDialog .fe-help-heading { display:flex; justify-content:space-between; gap:14px; align-items:flex-start; padding:22px 24px; border-bottom:1px solid #ebeff2; }
-    #facilityHelpDialog .fe-kicker { margin:0 0 6px; color:#b57b0f; font-size:10px; font-weight:750; letter-spacing:.12em; }
-    #facilityHelpDialog h3 { margin:0; font-size:22px; font-weight:750; color:#252e39; }
-    #facilityHelpDialog .fe-help-heading p:last-child { margin:7px 0 0; color:#798594; font-size:11px; line-height:1.6; }
-    #facilityHelpDialog .fe-help-close { display:grid; place-items:center; width:34px; height:34px; border:1px solid #e0e6ed; border-radius:9px; background:#fff; flex-shrink:0; color:#626d79; }
+    #logisticsFacilitiesWorkspace .hub-address-results { border-color:var(--sari-dark-d8c2716225, #e0e5eb); background:var(--sari-dark-950baec030, #fff); box-shadow:0 14px 30px var(--sari-dark-3b2338cbf0, rgba(20,33,52,.12)); }
+    #logisticsFacilitiesWorkspace .hub-address-results button { font-size:12px; color:var(--sari-dark-e23e64dd1e, #4a5664); }
+    #logisticsFacilitiesWorkspace .hub-address-results button:hover, #logisticsFacilitiesWorkspace .hub-address-results button:focus { background:var(--sari-dark-950baec030, #f6f8fa); color:var(--sari-dark-c8bdcce6ab, #97670f); }
+    #facilityHelpDialog.fe-help-dialog { position:fixed; inset:0; width:min(560px,calc(100vw - 28px)); max-height:min(86vh,780px); margin:auto; padding:0; border:1px solid var(--sari-dark-d8c2716225, #e3e8ee); border-radius:20px; background:var(--sari-dark-950baec030, #fff); color:var(--sari-dark-e23e64dd1e, #283342); box-shadow:0 25px 85px var(--sari-dark-7edf1b5a37, rgba(15,23,42,.24)); overflow-y:auto; }
+    #facilityHelpDialog::backdrop { background:var(--sari-dark-27033fc7d6, rgba(17,24,39,.54)); }
+    #facilityHelpDialog .fe-help-heading { display:flex; justify-content:space-between; gap:14px; align-items:flex-start; padding:22px 24px; border-bottom:1px solid var(--sari-dark-d8c2716225, #ebeff2); }
+    #facilityHelpDialog .fe-kicker { margin:0 0 6px; color:var(--sari-dark-c8bdcce6ab, #b57b0f); font-size:10px; font-weight:750; letter-spacing:.12em; }
+    #facilityHelpDialog h3 { margin:0; font-size:22px; font-weight:750; color:var(--sari-dark-e23e64dd1e, #252e39); }
+    #facilityHelpDialog .fe-help-heading p:last-child { margin:7px 0 0; color:var(--sari-dark-a63aa16d7c, #798594); font-size:11px; line-height:1.6; }
+    #facilityHelpDialog .fe-help-close { display:grid; place-items:center; width:34px; height:34px; border:1px solid var(--sari-dark-d8c2716225, #e0e6ed); border-radius:9px; background:var(--sari-dark-950baec030, #fff); flex-shrink:0; color:var(--sari-dark-a63aa16d7c, #626d79); }
     #facilityHelpDialog .fe-help-close svg { width:18px; height:18px; }
     #facilityHelpDialog .fe-help-body { display:grid; gap:10px; padding:18px 24px 24px; }
-    #facilityHelpDialog .fe-help-body section { padding:13px 15px; border:1px solid #e8edf2; border-radius:12px; background:#fafbfd; }
-    #facilityHelpDialog .fe-help-body h4 { margin:0 0 7px; color:#a16f15; font-size:10px; font-weight:750; text-transform:uppercase; letter-spacing:.07em; }
-    #facilityHelpDialog .fe-help-body strong { display:block; font-size:12px; font-weight:700; color:#3b4753; line-height:1.5; }
-    #facilityHelpDialog .fe-help-body p, #facilityHelpDialog .fe-help-body li { color:#707d8c; font-size:11px; line-height:1.65; }
+    #facilityHelpDialog .fe-help-body section { padding:13px 15px; border:1px solid var(--sari-dark-d8c2716225, #e8edf2); border-radius:12px; background:var(--sari-dark-950baec030, #fafbfd); }
+    #facilityHelpDialog .fe-help-body h4 { margin:0 0 7px; color:var(--sari-dark-85bcf8cbe4, #a16f15); font-size:10px; font-weight:750; text-transform:uppercase; letter-spacing:.07em; }
+    #facilityHelpDialog .fe-help-body strong { display:block; font-size:12px; font-weight:700; color:var(--sari-dark-e23e64dd1e, #3b4753); line-height:1.5; }
+    #facilityHelpDialog .fe-help-body p, #facilityHelpDialog .fe-help-body li { color:var(--sari-dark-a63aa16d7c, #707d8c); font-size:11px; line-height:1.65; }
     #facilityHelpDialog .fe-help-body p { margin:5px 0 0; }
     #facilityHelpDialog .fe-help-body ul { list-style:disc; margin:0; padding-left:17px; }
     /* v12: Search -> preview pin -> confirm. No visible coordinate inputs. */
@@ -2276,21 +2276,21 @@
         gap: 12px;
         min-height: 49px;
         box-sizing: border-box;
-        border: 1px solid #dce3ea !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #dce3ea) !important;
         border-radius: 13px;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 5px 6px 5px 16px;
-        box-shadow: 0 1px 3px rgba(15,23,42,.025);
+        box-shadow: 0 1px 3px var(--sari-dark-e1384eb7fc, rgba(15,23,42,.025));
         transition: border-color .15s ease, box-shadow .15s ease;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fe-place-search:focus-within {
-        border-color: #aebbc9 !important;
-        box-shadow: 0 0 0 3px rgba(93,112,132,.09) !important;
+        border-color: var(--sari-dark-d8c2716225, #aebbc9) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-b12a5e9552, rgba(93,112,132,.09)) !important;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fe-place-search svg {
         width: 19px;
         height: 19px;
-        color: #7f8c99;
+        color: var(--sari-dark-a63aa16d7c, #7f8c99);
         flex: none;
     }
     #logisticsContent #logisticsFacilitiesWorkspace #sariFacilityForm .fe-place-search input,
@@ -2308,42 +2308,42 @@
         outline: none !important;
         font-family: inherit;
         font-size: 13px !important;
-        color: #27323d !important;
+        color: var(--sari-dark-e23e64dd1e, #27323d) !important;
         appearance: none;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fe-place-search button {
         flex: none;
         min-height: 37px;
         padding: 0 17px;
-        border: 1px solid #e7ebf0;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7ebf0);
         border-radius: 9px;
-        background: #f4f6f8;
-        color: #3f4e5d;
+        background: var(--sari-dark-4d21eb669b, #f4f6f8);
+        color: var(--sari-dark-e23e64dd1e, #3f4e5d);
         font-size: 12px;
         font-weight: 650;
         transition: background .15s ease;
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fe-place-search button:hover {
-        background: #e9edf2;
+        background: var(--sari-dark-4d21eb669b, #e9edf2);
     }
     #logisticsContent #logisticsFacilitiesWorkspace .fe-place-search button:focus-visible {
-        outline: 2px solid #8d9bab;
+        outline: 2px solid var(--sari-dark-d8c2716225, #8d9bab);
         outline-offset: 2px;
     }
-    #logisticsFacilitiesWorkspace .fe-place-results { display:grid; gap:5px; border:1px solid #e3e9ef; border-radius:12px; background:#fff; box-shadow:0 10px 25px rgba(15,23,42,.06); padding:7px; max-height:238px; overflow-y:auto; }
+    #logisticsFacilitiesWorkspace .fe-place-results { display:grid; gap:5px; border:1px solid var(--sari-dark-d8c2716225, #e3e9ef); border-radius:12px; background:var(--sari-dark-950baec030, #fff); box-shadow:0 10px 25px var(--sari-dark-361b571631, rgba(15,23,42,.06)); padding:7px; max-height:238px; overflow-y:auto; }
     #logisticsFacilitiesWorkspace .fe-place-results[hidden] { display:none !important; }
     #logisticsFacilitiesWorkspace .fe-place-result { display:flex; flex-direction:column; gap:3px; width:100%; min-width:0; text-align:left; padding:11px 12px; border:0; border-radius:9px; background:transparent; }
-    #logisticsFacilitiesWorkspace .fe-place-result:hover, #logisticsFacilitiesWorkspace .fe-place-result:focus-visible { background:#f3f5f7; outline:none; }
-    #logisticsFacilitiesWorkspace .fe-place-result strong { color:#283340; font-size:12px; font-weight:650; }
-    #logisticsFacilitiesWorkspace .fe-place-result small { color:#7b8795; font-size:10px; line-height:1.5; }
-    #logisticsFacilitiesWorkspace .fe-place-feedback { padding:9px 11px; font-size:11px; line-height:1.5; color:#667481; background:#f8fafc; border-radius:10px; }
-    #logisticsFacilitiesWorkspace .fe-place-feedback.is-error { color:#9a4040; background:#fff4f4; }
-    #logisticsFacilitiesWorkspace .fe-pin-preview { display:flex; align-items:center; gap:9px; padding:10px 12px; margin-top:10px; background:#f8fafc; border:1px solid #e4eaf1; border-radius:11px; color:#5c6876; font-size:11px; line-height:1.5; }
-    #logisticsFacilitiesWorkspace .fe-pin-preview-icon svg { width:20px; height:20px; color:#c88912; flex:none; }
+    #logisticsFacilitiesWorkspace .fe-place-result:hover, #logisticsFacilitiesWorkspace .fe-place-result:focus-visible { background:var(--sari-dark-4d21eb669b, #f3f5f7); outline:none; }
+    #logisticsFacilitiesWorkspace .fe-place-result strong { color:var(--sari-dark-e23e64dd1e, #283340); font-size:12px; font-weight:650; }
+    #logisticsFacilitiesWorkspace .fe-place-result small { color:var(--sari-dark-a63aa16d7c, #7b8795); font-size:10px; line-height:1.5; }
+    #logisticsFacilitiesWorkspace .fe-place-feedback { padding:9px 11px; font-size:11px; line-height:1.5; color:var(--sari-dark-a63aa16d7c, #667481); background:var(--sari-dark-950baec030, #f8fafc); border-radius:10px; }
+    #logisticsFacilitiesWorkspace .fe-place-feedback.is-error { color:var(--sari-dark-a63aa16d7c, #9a4040); background:var(--sari-dark-950baec030, #fff4f4); }
+    #logisticsFacilitiesWorkspace .fe-pin-preview { display:flex; align-items:center; gap:9px; padding:10px 12px; margin-top:10px; background:var(--sari-dark-950baec030, #f8fafc); border:1px solid var(--sari-dark-d8c2716225, #e4eaf1); border-radius:11px; color:var(--sari-dark-a63aa16d7c, #5c6876); font-size:11px; line-height:1.5; }
+    #logisticsFacilitiesWorkspace .fe-pin-preview-icon svg { width:20px; height:20px; color:var(--sari-dark-19b301f69a, #c88912); flex:none; }
     #logisticsFacilitiesWorkspace .fe-confirm-location { margin-top:11px; width:100%; min-height:44px; border-radius:11px; background:#d9950b; color:#fff; font-size:12px; font-weight:700; }
     #logisticsFacilitiesWorkspace .fe-confirm-location:hover:not(:disabled) { background:#be8005; }
     #logisticsFacilitiesWorkspace .fe-confirm-location:disabled { opacity:.52; cursor:not-allowed; }
-    #logisticsFacilitiesWorkspace .fe-confirmed-location { margin-top:10px; padding:12px 13px; border:1px solid #cce6d5; background:#f3faf5; border-radius:11px; color:#286647; font-size:11px; font-weight:600; line-height:1.55; }
+    #logisticsFacilitiesWorkspace .fe-confirmed-location { margin-top:10px; padding:12px 13px; border:1px solid var(--sari-dark-d8c2716225, #cce6d5); background:var(--sari-dark-950baec030, #f3faf5); border-radius:11px; color:var(--sari-dark-e23e64dd1e, #286647); font-size:11px; font-weight:600; line-height:1.55; }
     #logisticsFacilitiesWorkspace .fe-place-feedback[hidden], #logisticsFacilitiesWorkspace .fe-pin-preview[hidden], #logisticsFacilitiesWorkspace .fe-confirmed-location[hidden] { display:none !important; }
     @media (max-width:640px) {
         #logisticsFacilitiesWorkspace .fe-header { padding:18px; }
@@ -2362,7 +2362,7 @@
     /* v11: Neutral directory hover. No gold inset stripe or warm cream. */
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row:hover,
     #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row:focus-within {
-        background: #f2f4f6 !important;
+        background: var(--sari-dark-4d21eb669b, #f2f4f6) !important;
         background-image: none !important;
         box-shadow: none !important;
         border-left-color: transparent !important;
@@ -2406,7 +2406,7 @@
         margin: 0 2px 10px;
     }
     #logisticsContent #logisticsFacilitiesWorkspace dialog.fh-hub-dialog .fh-hub-map-hint {
-        color: #8492a1;
+        color: var(--sari-dark-a63aa16d7c, #8492a1);
         font-size: 10px;
         font-weight: 550;
     }
@@ -2416,8 +2416,8 @@
         overflow: hidden;
         position: relative;
         border-radius: 10px;
-        border: 1px solid #e4eaf0;
-        background: #eef2f5;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4eaf0);
+        background: var(--sari-dark-4d21eb669b, #eef2f5);
     }
     #logisticsContent #logisticsFacilitiesWorkspace dialog.fh-hub-dialog .fh-hub-map-loading {
         position: absolute;
@@ -2426,7 +2426,7 @@
         align-items: center;
         justify-content: center;
         padding: 15px;
-        color: #6c7784;
+        color: var(--sari-dark-a63aa16d7c, #6c7784);
         font-size: 11px;
         line-height: 1.5;
         text-align: center;
@@ -3415,8 +3415,8 @@ document.addEventListener('DOMContentLoaded', function () {
         addressStatus.hidden = !error && message === 'Address directory ready.';
 
         addressStatus.style.color = error
-            ? '#bd4848'
-            : '#627080';
+            ? 'var(--sari-dark-81bbb600e0, #bd4848)'
+            : 'var(--sari-dark-a63aa16d7c, #627080)';
     }
 
     function enableManualAddress(message) {

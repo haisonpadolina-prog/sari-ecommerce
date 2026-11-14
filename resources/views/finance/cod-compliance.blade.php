@@ -4,20 +4,20 @@
 
 @push('styles')
 <style>
-.sari-cod-monitor{font-family:Poppins,system-ui,sans-serif;color:#344054;max-width:1500px;margin:0 auto}
+.sari-cod-monitor{font-family:Poppins,system-ui,sans-serif;color:var(--sari-dark-e23e64dd1e, #344054);max-width:1500px;margin:0 auto}
 .sari-cod-monitor *{box-sizing:border-box}
-.sari-cod-monitor .sc-card{border:1px solid #e5e7eb;border-radius:17px;background:white;box-shadow:0 4px 18px rgba(15,23,42,.04)}
-.sari-cod-monitor .sc-incident{border:1px solid #f3b5b5;border-radius:15px;background:#fff;padding:18px;margin-top:15px}
+.sari-cod-monitor .sc-card{border:1px solid var(--sari-dark-d8c2716225, #e5e7eb);border-radius:17px;background:var(--sari-dark-950baec030, white);box-shadow:0 4px 18px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04))}
+.sari-cod-monitor .sc-incident{border:1px solid var(--sari-dark-d8c2716225, #f3b5b5);border-radius:15px;background:var(--sari-dark-950baec030, #fff);padding:18px;margin-top:15px}
 .sari-cod-monitor .sc-incident.is-restricted{border-color:#e78a8a}
-.sari-cod-monitor .sc-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#8993a3;font-weight:750}
+.sari-cod-monitor .sc-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--sari-dark-a63aa16d7c, #8993a3);font-weight:750}
 .sari-cod-monitor .sc-action{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.sari-cod-monitor .sc-action select,.sari-cod-monitor .sc-action input,.sari-cod-monitor .sc-action textarea{border:1px solid #d9dee5;border-radius:10px;padding:10px;font:inherit;font-size:11px;background:#fff;min-width:0}
+.sari-cod-monitor .sc-action select,.sari-cod-monitor .sc-action input,.sari-cod-monitor .sc-action textarea{border:1px solid var(--sari-dark-d8c2716225, #d9dee5);border-radius:10px;padding:10px;font:inherit;font-size:11px;background:var(--sari-dark-950baec030, #fff);min-width:0}
 .sari-cod-monitor .sc-action textarea{flex:1 1 260px;min-height:45px;resize:vertical}
 .sari-cod-monitor .sc-action button,.sari-cod-monitor .sc-call{display:inline-flex;align-items:center;justify-content:center;border:1px solid #c88912;background:#c88912;border-radius:10px;color:#fff;text-decoration:none;padding:10px 15px;font-size:11px;font-weight:700;cursor:pointer}
-.sari-cod-monitor .sc-call{background:#fff;color:#936716}
+.sari-cod-monitor .sc-call{background:var(--sari-dark-950baec030, #fff);color:var(--sari-dark-0d676d4438, #936716)}
 .sari-cod-monitor .sc-action button:hover{background:#a9770e}
 .sari-cod-monitor .sc-action button:disabled{opacity:.5;cursor:not-allowed}
-.sari-cod-monitor summary{cursor:pointer;font-size:11px;color:#7e5a20;font-weight:650}
+.sari-cod-monitor summary{cursor:pointer;font-size:11px;color:var(--sari-dark-e23e64dd1e, #7e5a20);font-weight:650}
 .sari-cod-monitor .sc-num{font-variant-numeric:tabular-nums}
 @media(max-width:700px){.sari-cod-monitor .sc-incident{padding:13px}.sari-cod-monitor .sc-action>*{width:100%}}
 </style>
@@ -26,7 +26,7 @@
 @section('content')
 <div class="sari-cod-monitor space-y-4">
     <div class="flex flex-wrap items-start justify-between gap-3">
-        <div><p class="sc-label" style="color:#a8761e">CASH CONTROL · LOGISTICS MANAGER</p><h1 class="mt-1 text-[26px] font-bold text-slate-800">COD Remittance Monitoring</h1><p class="mt-1 text-[12px] text-slate-500">Cash due by 8:00 PM PHT · review and document before restrictions</p></div>
+        <div><p class="sc-label" style="color:var(--sari-dark-e13523fe23, #a8761e)">CASH CONTROL · LOGISTICS MANAGER</p><h1 class="mt-1 text-[26px] font-bold text-slate-800">COD Remittance Monitoring</h1><p class="mt-1 text-[12px] text-slate-500">Cash due by 8:00 PM PHT · review and document before restrictions</p></div>
         <a href="{{ route('logistics.remittances.index') }}" class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-[11px] font-semibold text-slate-700">Cash verification →</a>
     </div>
     @if(session('success'))<p class="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-[12px] text-emerald-800" role="status">{{ session('success') }}</p>@endif

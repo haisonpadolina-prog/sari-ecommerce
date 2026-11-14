@@ -30,14 +30,14 @@
 }
 #sariLoginFeedback .sari-login-feedback__title {
     margin: 0;
-    color: var(--sari-toast-ink, #263241);
+    color: var(--sari-toast-ink, var(--sari-dark-e23e64dd1e, #263241));
     font-size: 11px;
     line-height: 1.45;
     font-weight: 700;
 }
 #sariLoginFeedback .sari-login-feedback__message {
     margin: 2px 0 0;
-    color: #566274;
+    color: var(--sari-dark-a63aa16d7c, #566274);
     font-size: 11px;
     line-height: 1.5;
     font-weight: 500;
@@ -52,13 +52,13 @@
     align-items: center;
     border: 1px solid rgba(220, 57, 71, .24);
     border-radius: 5px;
-    background: #fff4f5;
-    color: #b32636;
+    background: var(--sari-dark-950baec030, #fff4f5);
+    color: var(--sari-dark-a63aa16d7c, #b32636);
     font: 600 10px/1.4 'Poppins', ui-sans-serif, system-ui, sans-serif;
     text-decoration: none;
     transition: background-color .15s;
 }
-#sariLoginFeedback .sari-login-feedback__register:hover { background: #ffe7ea; }
+#sariLoginFeedback .sari-login-feedback__register:hover { background: var(--sari-dark-4d21eb669b, #ffe7ea); }
 #sariLoginFeedback .sari-login-feedback__register:focus-visible {
     outline: 2px solid var(--sari-toast-error, #DC3947);
     outline-offset: 2px;

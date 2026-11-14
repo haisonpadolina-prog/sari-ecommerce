@@ -27,8 +27,8 @@
     #adminSidebar {
         width: var(--admin-sidebar-width, 238px) !important;
         overflow-x: hidden !important;
-        border-right-color: #E4E7EC !important;
-        background: #ffffff !important;
+        border-right-color: var(--sari-dark-d8c2716225, #E4E7EC) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         contain: layout paint;
         transition:
             width 130ms var(--admin-sidebar-ease, cubic-bezier(.22, 1, .36, 1)),
@@ -39,8 +39,8 @@
         min-height: 74px !important;
         padding-left: 12px !important;
         padding-right: 12px !important;
-        border-bottom-color: #EAECF0 !important;
-        background: #ffffff !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #EAECF0) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         transition:
             min-height 220ms var(--admin-sidebar-ease, cubic-bezier(.22, 1, .36, 1)),
             padding 220ms var(--admin-sidebar-ease, cubic-bezier(.22, 1, .36, 1));
@@ -93,12 +93,12 @@
 
     #adminSidebarNav::-webkit-scrollbar-thumb {
         border-radius: 999px;
-        background: #ddd4c7;
+        background: var(--sari-dark-4d21eb669b, #ddd4c7);
     }
 
     .admin-sidebar-section-label {
         margin: 10px 8px 7px !important;
-        color: #9a7840 !important;
+        color: var(--sari-dark-a63aa16d7c, #9a7840) !important;
         font-size: 7.5px !important;
         line-height: 1 !important;
         font-weight: 700 !important;
@@ -115,7 +115,7 @@
     .admin-sidebar-section-divider {
         height: 1px !important;
         margin: 11px 6px 9px !important;
-        background: #EAECF0 !important;
+        background: var(--sari-dark-4d21eb669b, #EAECF0) !important;
     }
 
     #adminSidebarNav > a[data-sidebar-item],
@@ -158,9 +158,9 @@
     #adminSidebarNav > a[data-sidebar-item]:not([data-sidebar-current="true"]):hover,
     #adminSidebarNav > form > button[data-sidebar-item]:hover,
     #adminSidebar [data-sidebar-item][data-admin-nav-active="false"]:hover {
-        border-color: #E4E7EC !important;
-        background-color: #F2F4F7 !important;
-        color: #94620a !important;
+        border-color: var(--sari-dark-d8c2716225, #E4E7EC) !important;
+        background-color: var(--sari-dark-4d21eb669b, #F2F4F7) !important;
+        color: var(--sari-dark-af18afcaa4, #94620a) !important;
         box-shadow: none !important;
     }
 
@@ -169,7 +169,7 @@
         border-color: #d9950b !important;
         background-color: #d9950b !important;
         color: #ffffff !important;
-        box-shadow: 0 5px 12px rgba(194, 132, 10, .12) !important;
+        box-shadow: 0 5px 12px var(--sari-dark-3b2338cbf0, rgba(194, 132, 10, .12)) !important;
     }
 
     #adminSidebarNav > a[data-sidebar-item][data-sidebar-current="true"]:not([data-admin-nav-active]):hover,
@@ -187,8 +187,8 @@
     }
 
     #adminSidebarProfile {
-        border-top-color: #EAECF0 !important;
-        background: #ffffff !important;
+        border-top-color: var(--sari-dark-d8c2716225, #EAECF0) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         padding: 9px 10px !important;
         transition: padding 190ms var(--admin-sidebar-ease, cubic-bezier(.22, 1, .36, 1));
     }
@@ -196,30 +196,30 @@
     #adminSidebarProfile > a {
         min-height: 54px !important;
         gap: 8px !important;
-        border-color: #E4E7EC !important;
+        border-color: var(--sari-dark-d8c2716225, #E4E7EC) !important;
         border-radius: 11px !important;
-        background-color: #ffffff !important;
+        background-color: var(--sari-dark-950baec030, #ffffff) !important;
         padding: 8px 9px !important;
-        box-shadow: 0 3px 10px rgba(40, 31, 21, .02) !important;
+        box-shadow: 0 3px 10px var(--sari-dark-f6fe7319d9, rgba(40, 31, 21, .02)) !important;
     }
 
     #adminSidebarProfile > a:hover {
-        border-color: #D0D5DD !important;
-        background-color: #FFFFFF !important;
-        box-shadow: 0 4px 12px rgba(40, 31, 21, .03) !important;
+        border-color: var(--sari-dark-d8c2716225, #D0D5DD) !important;
+        background-color: var(--sari-dark-950baec030, #FFFFFF) !important;
+        box-shadow: 0 4px 12px var(--sari-dark-b13200ac05, rgba(40, 31, 21, .03)) !important;
     }
 
     /* The profile shortcut stays a neutral Seller-style card on /admin/account. */
     #adminSidebar #adminSidebarProfile > a[data-admin-nav-active="true"] {
-        border-color: #E4E7EC !important;
-        background-color: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #E4E7EC) !important;
+        background-color: var(--sari-dark-950baec030, #ffffff) !important;
         color: inherit !important;
-        box-shadow: 0 3px 10px rgba(40, 31, 21, .02) !important;
+        box-shadow: 0 3px 10px var(--sari-dark-f6fe7319d9, rgba(40, 31, 21, .02)) !important;
     }
 
     #adminSidebar #adminSidebarProfile > a[data-admin-nav-active="true"]:hover {
-        border-color: #D0D5DD !important;
-        background-color: #FFFFFF !important;
+        border-color: var(--sari-dark-d8c2716225, #D0D5DD) !important;
+        background-color: var(--sari-dark-950baec030, #FFFFFF) !important;
     }
 
     #adminSidebarProfile > a > div:first-child {
@@ -343,6 +343,30 @@
             transition-duration: 1ms !important;
         }
     }
+
+    /* SARI_ADMIN_LOGO_THEME_FIX_V2
+       Keep original logo artwork in dark mode; use the black logo treatment in light mode. */
+    html:not([data-sari-theme="dark"]) #adminSidebarFullLogo {
+        filter: brightness(0) !important;
+        -webkit-filter: brightness(0) !important;
+    }
+    html[data-sari-theme="dark"] #adminSidebarFullLogo,
+    html[data-sari-theme="dark"] #adminSidebarCompactLogo {
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+
+    /* SARI_ADMIN_DEDICATED_DARK_LOGO_ASSET */
+    html[data-sari-theme="dark"] #adminSidebarFullLogo {
+        filter: none !important;
+        -webkit-filter: none !important;
+        opacity: 1 !important;
+        mix-blend-mode: normal !important;
+    }
+    html:not([data-sari-theme="dark"]) #adminSidebarFullLogo {
+        filter: brightness(0) !important;
+        -webkit-filter: brightness(0) !important;
+    }
 </style>
 
 <aside
@@ -369,15 +393,15 @@
         >
             <img
                 id="adminSidebarFullLogo"
-                src="{{ asset('images/sari-logo.png') }}"
+                src="{{ asset('images/sari-logo-darkmode.png') }}"
                 alt="SARI"
                 width="102"
                 height="44"
                 loading="eager"
                 decoding="async"
                 fetchpriority="high"
-                class="h-auto w-[102px] object-contain brightness-0"
-                style="width:102px;height:auto;object-fit:contain;filter:brightness(0);"
+                class="h-auto w-[102px] object-contain"
+                style="width:102px;height:auto;object-fit:contain;"
             >
 
             <img

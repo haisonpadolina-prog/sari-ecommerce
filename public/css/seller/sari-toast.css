@@ -1,12 +1,12 @@
 /* SARI Seller | Global compact action toast. Change toast UI HERE only.
    Shared by product/cart/checkout/account/orders and AJAX actions. */
 :root {
-  --sari-toast-ink: #263241;
-  --sari-toast-border: #E5E9EF;
+  --sari-toast-ink: var(--sari-dark-e23e64dd1e, #263241);
+  --sari-toast-border: var(--sari-dark-d8c2716225, #E5E9EF);
   --sari-toast-success: #17865E;
   --sari-toast-error: #DC3947;
   --sari-toast-info: #BE8A29;
-  --sari-toast-shadow: 0 6px 22px rgba(25, 37, 54, .10), 0 1px 3px rgba(25, 37, 54, .035);
+  --sari-toast-shadow: 0 6px 22px var(--sari-dark-8eadf403a5, rgba(25, 37, 54, .10)), 0 1px 3px var(--sari-dark-7593018246, rgba(25, 37, 54, .035));
 }
 #sariSellerToastStack {
   position: fixed;
@@ -33,7 +33,7 @@
   padding: 10px 11px;
   border: 1px solid var(--sari-toast-border);
   border-radius: 8px;
-  background: #fff;
+  background: var(--sari-dark-950baec030, #fff);
   color: var(--sari-toast-ink);
   box-shadow: var(--sari-toast-shadow);
   pointer-events: auto;
@@ -74,12 +74,12 @@
   border: 0;
   border-radius: 5px;
   background: transparent;
-  color: #8995A6;
+  color: var(--sari-dark-a63aa16d7c, #8995A6);
   cursor: pointer;
   transition: background-color .15s, color .15s;
 }
 .sari-modern-toast-close svg { width: 14px; height: 14px; }
-.sari-modern-toast-close:hover { background: #F3F5F8; color: #263241; }
+.sari-modern-toast-close:hover { background: var(--sari-dark-4d21eb669b, #F3F5F8); color: var(--sari-dark-e23e64dd1e, #263241); }
 .sari-modern-toast-close:focus-visible { outline: 2px solid var(--toast-accent); outline-offset: 1px; }
 .sari-toast-inline-hidden { display: none !important; }
 @keyframes sariToastEnter { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }

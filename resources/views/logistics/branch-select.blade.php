@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    @include('components.shared.theme-head')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -13,19 +14,19 @@
 
     <style>
         * { box-sizing: border-box; }
-        html { background: #e9eaec; }
+        html { background: var(--sari-dark-4d21eb669b, #e9eaec); }
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
             font-weight: 300;
-            color: #202328;
+            color: var(--sari-dark-e23e64dd1e, #202328);
         }
 
         .page-backdrop {
             position: fixed;
             inset: 0;
             overflow: hidden;
-            background: linear-gradient(135deg, #e7e8ea 0%, #f0f1f2 48%, #e5e6e8 100%);
+            background: linear-gradient(135deg, var(--sari-dark-4d21eb669b, #e7e8ea) 0%, var(--sari-dark-4d21eb669b, #f0f1f2) 48%, var(--sari-dark-4d21eb669b, #e5e6e8) 100%);
         }
 
         .page-backdrop::before,
@@ -56,13 +57,13 @@
         .page-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(238, 239, 241, .58);
+            background: var(--sari-dark-479f745442, rgba(238, 239, 241, .58));
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
         }
 
         .selector-card {
-            box-shadow: 0 26px 70px rgba(26, 31, 37, .13);
+            box-shadow: 0 26px 70px var(--sari-dark-3e32d50f5e, rgba(26, 31, 37, .13));
         }
 
         .branch-option {
@@ -70,20 +71,20 @@
         }
 
         .branch-option:hover {
-            border-color: #c7cbd0;
-            background: #fafafa;
+            border-color: var(--sari-dark-d8c2716225, #c7cbd0);
+            background: var(--sari-dark-950baec030, #fafafa);
         }
 
         .branch-radio:checked + .branch-option {
             border-color: #c98913;
-            background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(201, 137, 19, .08);
+            background: var(--sari-dark-950baec030, #ffffff);
+            box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(201, 137, 19, .08));
         }
 
         .branch-radio:checked + .branch-option .branch-check {
             border-color: #c98913;
             background: #c98913;
-            box-shadow: inset 0 0 0 4px #fff;
+            box-shadow: inset 0 0 0 4px var(--sari-dark-f30a5f9061, #fff);
         }
 
         .branch-radio:focus-visible + .branch-option {
@@ -97,7 +98,7 @@
 
         .primary-action:not(:disabled):hover {
             background: #b77b0e;
-            box-shadow: 0 9px 22px rgba(201, 137, 19, .22);
+            box-shadow: 0 9px 22px var(--sari-dark-e267f3cebc, rgba(201, 137, 19, .22));
             transform: translateY(-1px);
         }
 
@@ -124,6 +125,7 @@
 
             <header class="border-b border-[#e8eaed] px-5 py-4 sm:px-6 sm:py-4.5">
                 <div class="flex items-center justify-between gap-5">
+                    @include('components.shared.theme-toggle')
                     <div class="flex min-w-0 items-center">
                         <div class="grid h-10 w-10 shrink-0 place-items-center rounded-[12px] border border-[#e3e5e8] bg-[#f5f6f7]">
                             <img src="{{ asset('images/sari-main-logo.png') }}" alt="SARI" class="h-7 w-7 object-contain">

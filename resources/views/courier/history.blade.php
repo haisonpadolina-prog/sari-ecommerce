@@ -9,18 +9,18 @@
 @verbatim
 body:has(#sariDeliveryHistory),
 body:has(#sariDeliveryHistory) #courierMain {
-    background: #f4f5f7 !important;
-    color: #2f3742;
+    background: var(--sari-dark-4d21eb669b, #f4f5f7) !important;
+    color: var(--sari-dark-e23e64dd1e, #2f3742);
 }
 
 body:has(#sariDeliveryHistory) #courierSidebar {
-    background: #fff !important;
-    border-right-color: #e5e7eb !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    border-right-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
 }
 
 body:has(#sariDeliveryHistory) #courierMain > header {
-    background: rgba(255,255,255,.97) !important;
-    border-bottom-color: #e5e7eb !important;
+    background: var(--sari-dark-d2fbbe29b8, rgba(255,255,255,.97)) !important;
+    border-bottom-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
     box-shadow: none !important;
 }
 
@@ -32,14 +32,14 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 #sariDeliveryHistory {
     --dh-gold: #c88912;
     --dh-gold-hover: #b47b0e;
-    --dh-ink: #2f3742;
-    --dh-muted: #7a8593;
-    --dh-border: #e5e7eb;
+    --dh-ink: var(--sari-dark-e23e64dd1e, #2f3742);
+    --dh-muted: var(--sari-dark-a63aa16d7c, #7a8593);
+    --dh-border: var(--sari-dark-d8c2716225, #e5e7eb);
     --dh-hover: #f6f7f9;
-    --dh-shadow: 0 2px 5px rgba(15,23,42,.045),
-                 0 10px 24px rgba(15,23,42,.075),
-                 0 24px 54px rgba(15,23,42,.095),
-                 inset 0 1px 0 rgba(255,255,255,.92);
+    --dh-shadow: 0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+                 0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+                 0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+                 inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     display: grid;
     gap: 20px;
     width: 100%;
@@ -132,24 +132,24 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     gap: 8px;
     height: 48px;
     padding: 0 16px;
-    border: 1px solid #dce2e8;
+    border: 1px solid var(--sari-dark-d8c2716225, #dce2e8);
     border-radius: 14px;
-    background: #fff;
-    color: #475569;
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-e23e64dd1e, #475569);
     font-size: 12px;
     font-weight: 700;
     white-space: nowrap;
     cursor: pointer;
     transition: background-color .16s ease, border-color .16s ease;
 }
-#sariDeliveryHistory .dh-export-selected:hover { background: #f3f4f6; border-color: #cbd5e1; }
+#sariDeliveryHistory .dh-export-selected:hover { background: var(--sari-dark-4d21eb669b, #f3f4f6); border-color: var(--sari-dark-d8c2716225, #cbd5e1); }
 #sariDeliveryHistory .dh-export-selected svg { width: 16px; height: 16px; }
 
 #sariDeliveryHistory .dh-card {
     min-width: 0;
     border: 1px solid var(--dh-border);
     border-radius: 18px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
     box-shadow: var(--dh-shadow);
 }
 
@@ -177,7 +177,7 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 
 #sariDeliveryHistory .dh-stat-label {
     margin: 0;
-    color: #5f6d7c;
+    color: var(--sari-dark-a63aa16d7c, #5f6d7c);
     font-size: 15px;
     font-weight: 600;
 }
@@ -191,14 +191,14 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 }
 
 #sariDeliveryHistory .dh-stat-icon svg { width: 27px; height: 27px; }
-#sariDeliveryHistory .dh-stat-icon--gold { color: #c88912; }
-#sariDeliveryHistory .dh-stat-icon--blue { color: #3865c7; }
-#sariDeliveryHistory .dh-stat-icon--green { color: #0f8a6b; }
-#sariDeliveryHistory .dh-stat-icon--red { color: #cc4b37; }
+#sariDeliveryHistory .dh-stat-icon--gold { color: var(--sari-dark-19b301f69a, #c88912); }
+#sariDeliveryHistory .dh-stat-icon--blue { color: var(--sari-dark-059589c01f, #3865c7); }
+#sariDeliveryHistory .dh-stat-icon--green { color: var(--sari-dark-03a543331f, #0f8a6b); }
+#sariDeliveryHistory .dh-stat-icon--red { color: var(--sari-dark-8445ea8cc1, #cc4b37); }
 
 #sariDeliveryHistory .dh-stat-value {
     margin: 4px 0 0;
-    color: #1f2937;
+    color: var(--sari-dark-e23e64dd1e, #1f2937);
     font-size: clamp(25px,1.9vw,30px);
     font-weight: 650;
     letter-spacing: -.045em;
@@ -209,7 +209,7 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 
 #sariDeliveryHistory .dh-stat-sub {
     margin: auto 0 0;
-    color: #8995a3;
+    color: var(--sari-dark-a63aa16d7c, #8995a3);
     font-size: 12.5px;
     font-weight: 400;
 }
@@ -240,7 +240,7 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     top: 50%;
     left: 16px;
     transform: translateY(-50%);
-    color: #97a3b2;
+    color: var(--sari-dark-a63aa16d7c, #97a3b2);
     pointer-events: none;
 }
 
@@ -251,10 +251,10 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 #sariDeliveryHistory .dh-filter-trigger {
     height: 48px;
     min-width: 0;
-    border: 1px solid #dce2e8;
+    border: 1px solid var(--sari-dark-d8c2716225, #dce2e8);
     border-radius: 14px;
-    background: #fff;
-    color: #3f4b59;
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-e23e64dd1e, #3f4b59);
     font-size: 11.5px;
     font-weight: 600;
     transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
@@ -267,7 +267,7 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     outline: none;
 }
 
-#sariDeliveryHistory .dh-search::placeholder { color: #a0aab6; opacity: 1; }
+#sariDeliveryHistory .dh-search::placeholder { color: var(--sari-dark-a63aa16d7c, #a0aab6); opacity: 1; }
 
 /* Native select stays usable if JavaScript is unavailable. */
 #sariDeliveryHistory .dh-filter-wrap {
@@ -282,8 +282,8 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     top: 22px;
     width: 8px;
     height: 8px;
-    border-right: 1.8px solid #6b7280;
-    border-bottom: 1.8px solid #6b7280;
+    border-right: 1.8px solid var(--sari-dark-d8c2716225, #6b7280);
+    border-bottom: 1.8px solid var(--sari-dark-d8c2716225, #6b7280);
     transform: rotate(45deg);
     pointer-events: none;
     transition: transform .15s ease;
@@ -306,13 +306,13 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     white-space: nowrap;
 }
 
-#sariDeliveryHistory .dh-filter option { background: #fff; color: #374151; }
+#sariDeliveryHistory .dh-filter option { background: var(--sari-dark-950baec030, #fff); color: var(--sari-dark-e23e64dd1e, #374151); }
 
 #sariDeliveryHistory .dh-search:hover,
 #sariDeliveryHistory .dh-filter:hover,
 #sariDeliveryHistory .dh-filter-trigger:hover {
-    background: #f3f4f6;
-    border-color: #cfd6de;
+    background: var(--sari-dark-4d21eb669b, #f3f4f6);
+    border-color: var(--sari-dark-d8c2716225, #cfd6de);
 }
 
 /* Thin SARI gold focus border for both search and filter, not a thick glow. */
@@ -322,8 +322,8 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 #sariDeliveryHistory .dh-filter-trigger[aria-expanded="true"] {
     outline: 0;
     border-color: var(--dh-gold);
-    background: #fff;
-    box-shadow: 0 0 0 1px rgba(200,137,18,.12);
+    background: var(--sari-dark-950baec030, #fff);
+    box-shadow: 0 0 0 1px var(--sari-dark-3b2338cbf0, rgba(200,137,18,.12));
 }
 
 /* Custom listbox: removes the browser-dependent blue option highlight. */
@@ -334,10 +334,10 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     left: 0;
     right: 0;
     padding: 6px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
     border-radius: 13px;
-    background: #fff;
-    box-shadow: 0 12px 30px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.04);
+    background: var(--sari-dark-950baec030, #fff);
+    box-shadow: 0 12px 30px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)), 0 2px 6px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04));
 }
 
 #sariDeliveryHistory .dh-filter-option {
@@ -349,8 +349,8 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     padding: 9px 12px;
     border: none;
     border-radius: 8px;
-    background: #fff;
-    color: #475569;
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-e23e64dd1e, #475569);
     text-align: left;
     font-size: 12px;
     font-weight: 550;
@@ -361,8 +361,8 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 #sariDeliveryHistory .dh-filter-option:hover,
 #sariDeliveryHistory .dh-filter-option:focus-visible {
     outline: none;
-    background: #f1f3f5;
-    color: #334155;
+    background: var(--sari-dark-4d21eb669b, #f1f3f5);
+    color: var(--sari-dark-e23e64dd1e, #334155);
 }
 
 #sariDeliveryHistory .dh-filter-option[aria-selected="true"] { font-weight: 700; }
@@ -381,7 +381,7 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     flex-wrap: wrap;
     gap: 14px;
     padding: 21px 23px;
-    border-bottom: 1px solid #e9edf1;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
 }
 
 #courierMain #sariDeliveryHistory .dh-section-title {
@@ -395,13 +395,13 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 
 #sariDeliveryHistory .dh-section-sub {
     margin: 4px 0 0;
-    color: #8b96a4;
+    color: var(--sari-dark-a63aa16d7c, #8b96a4);
     font-size: 11.5px;
 }
 
 #sariDeliveryHistory .dh-showing {
     margin-left: auto;
-    color: #7b8794;
+    color: var(--sari-dark-a63aa16d7c, #7b8794);
     font-size: 12px;
     font-weight: 600;
     white-space: nowrap;
@@ -410,11 +410,11 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 #sariDeliveryHistory .dh-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 #sariDeliveryHistory .dh-table { width: 100%; min-width: 970px; border-collapse: collapse; text-align: left; }
 
-#sariDeliveryHistory .dh-table thead { background: #f8fafc; }
+#sariDeliveryHistory .dh-table thead { background: var(--sari-dark-950baec030, #f8fafc); }
 #sariDeliveryHistory .dh-table thead th {
     padding: 13px 16px;
-    border-bottom: 1px solid #e9edf1;
-    color: #8591a0;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
+    color: var(--sari-dark-a63aa16d7c, #8591a0);
     font-size: 11px;
     font-weight: 750;
     letter-spacing: .075em;
@@ -440,9 +440,9 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     width: 17px;
     height: 17px;
     margin: 0;
-    border: 1.5px solid #c6cbd2;
+    border: 1.5px solid var(--sari-dark-d8c2716225, #c6cbd2);
     border-radius: 5px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
     cursor: pointer;
     transition: border-color .15s ease, background-color .15s ease;
 }
@@ -453,8 +453,8 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     width: 8px;
     height: 5px;
     margin-top: -2px;
-    border-left: 2px solid #fff;
-    border-bottom: 2px solid #fff;
+    border-left: 2px solid var(--sari-dark-d8c2716225, #fff);
+    border-bottom: 2px solid var(--sari-dark-d8c2716225, #fff);
     transform: rotate(-45deg) scale(0);
     transition: transform .15s ease;
 }
@@ -474,11 +474,11 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     height: 0;
     margin-top: 0;
     border-left: 0;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid var(--sari-dark-d8c2716225, #fff);
     transform: none;
 }
 
-#sariDeliveryHistory .dh-checkbox:hover { border-color: #929da9; }
+#sariDeliveryHistory .dh-checkbox:hover { border-color: var(--sari-dark-d8c2716225, #929da9); }
 #sariDeliveryHistory .dh-checkbox:focus-visible {
     outline: 2px solid #c88912;
     outline-offset: 3px;
@@ -489,19 +489,19 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 #sariDeliveryHistory .dh-table tbody td:last-child { padding-right: 23px; }
 
 #sariDeliveryHistory .dh-row {
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
     transition: background-color .16s ease;
 }
 
 #sariDeliveryHistory .dh-row:hover { background: var(--dh-hover); }
-#sariDeliveryHistory .dh-row:has(.dh-checkbox:checked) { background: #fafbfc; }
-#sariDeliveryHistory .dh-row:has(.dh-checkbox:checked):hover { background: #f1f3f5; }
-#sariDeliveryHistory .dh-row + .dh-row { border-top: 1px solid #edf0f3; }
+#sariDeliveryHistory .dh-row:has(.dh-checkbox:checked) { background: var(--sari-dark-950baec030, #fafbfc); }
+#sariDeliveryHistory .dh-row:has(.dh-checkbox:checked):hover { background: var(--sari-dark-4d21eb669b, #f1f3f5); }
+#sariDeliveryHistory .dh-row + .dh-row { border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3); }
 #sariDeliveryHistory .dh-row[hidden] { display: none !important; }
 
 #sariDeliveryHistory .dh-row td {
     padding: 17px 16px;
-    color: #667383;
+    color: var(--sari-dark-a63aa16d7c, #667383);
     font-size: 12.5px;
     line-height: 1.6;
     vertical-align: middle;
@@ -509,7 +509,7 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 
 #sariDeliveryHistory .dh-row .dh-order-number,
 #sariDeliveryHistory .dh-row .dh-fee {
-    color: #293440;
+    color: var(--sari-dark-e23e64dd1e, #293440);
     font-weight: 750;
 }
 
@@ -528,10 +528,10 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     gap: 7px;
     white-space: nowrap;
     padding: 5px 11px;
-    border: 1px solid #d8dee6;
+    border: 1px solid var(--sari-dark-d8c2716225, #d8dee6);
     border-radius: 999px;
-    background: #f8fafc;
-    color: #5f6d7c;
+    background: var(--sari-dark-950baec030, #f8fafc);
+    color: var(--sari-dark-a63aa16d7c, #5f6d7c);
     font-size: 11px;
     font-weight: 700;
 }
@@ -546,9 +546,9 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 }
 
 #sariDeliveryHistory .dh-status--completed {
-    border-color: #bde7c9;
-    background: #effcf3;
-    color: #18794e;
+    border-color: var(--sari-dark-d8c2716225, #bde7c9);
+    background: var(--sari-dark-4d21eb669b, #effcf3);
+    color: var(--sari-dark-bef1dc8dc1, #18794e);
 }
 
 #sariDeliveryHistory .dh-status--completed::before {
@@ -558,7 +558,7 @@ body:has(#sariDeliveryHistory) #courierMain > header {
 #sariDeliveryHistory .dh-empty {
     padding: 42px 20px;
     text-align: center;
-    color: #8b96a4;
+    color: var(--sari-dark-a63aa16d7c, #8b96a4);
 }
 
 /* No icon container: a larger neutral-gray outline icon on the white surface. */
@@ -567,11 +567,11 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     width: 37px;
     height: 37px;
     margin: 0 auto 14px;
-    color: #9ca3af;
+    color: var(--sari-dark-a63aa16d7c, #9ca3af);
     stroke-width: 1.6;
 }
 #sariDeliveryHistory #historyNoResults svg.dh-empty-icon { width: 43px; height: 43px; }
-#sariDeliveryHistory .dh-empty strong { display: block; color: #536071; font-size: 13px; }
+#sariDeliveryHistory .dh-empty strong { display: block; color: var(--sari-dark-a63aa16d7c, #536071); font-size: 13px; }
 #sariDeliveryHistory .dh-empty p { margin: 5px 0 0; font-size: 11.5px; }
 #sariDeliveryHistory [hidden] { display: none !important; }
 
@@ -590,10 +590,10 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     #courierMain #sariDeliveryHistory .dh-title { font-size: 25px; }
     #sariDeliveryHistory .dh-kicker { font-size: 9.5px; }
     #sariDeliveryHistory .dh-card {
-        box-shadow: 0 1px 3px rgba(15,23,42,.035),
-                    0 6px 16px rgba(15,23,42,.055),
-                    0 13px 28px rgba(15,23,42,.065),
-                    inset 0 1px 0 rgba(255,255,255,.90);
+        box-shadow: 0 1px 3px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+                    0 6px 16px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+                    0 13px 28px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)),
+                    inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90));
     }
     #sariDeliveryHistory .dh-stat { min-height: 106px; padding: 13px 14px; }
     #sariDeliveryHistory .dh-stat-value { font-size: 27px; }
@@ -618,12 +618,12 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     flex-wrap: wrap;
     gap: 12px 18px;
     padding: 13px 20px;
-    border-top: 1px solid #edf0f4;
-    background: #fff;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f4);
+    background: var(--sari-dark-950baec030, #fff);
 }
 #sariDeliveryHistory .dh-pagination-count {
     margin: 0;
-    color: #8a96a6;
+    color: var(--sari-dark-a63aa16d7c, #8a96a6);
     font-size: 11px;
     font-weight: 550;
     line-height: 1.5;
@@ -645,8 +645,8 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     padding: 0 9px;
     border: 1px solid transparent;
     border-radius: 10px;
-    background: #f7f8fa;
-    color: #8795a6;
+    background: var(--sari-dark-950baec030, #f7f8fa);
+    color: var(--sari-dark-a63aa16d7c, #8795a6);
     font-size: 11.5px;
     font-weight: 700;
     line-height: 1;
@@ -654,15 +654,15 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     transition: background-color .15s ease, border-color .15s ease, color .15s ease;
 }
 #sariDeliveryHistory .dh-page-btn:hover:not(:disabled):not([aria-current="page"]) {
-    background: #edf0f3;
-    border-color: #e6eaef;
-    color: #4b596a;
+    background: var(--sari-dark-4d21eb669b, #edf0f3);
+    border-color: var(--sari-dark-d8c2716225, #e6eaef);
+    color: var(--sari-dark-e23e64dd1e, #4b596a);
 }
 #sariDeliveryHistory .dh-page-btn[aria-current="page"] {
     background: var(--dh-gold);
     border-color: var(--dh-gold);
     color: #fff;
-    box-shadow: 0 3px 9px rgba(200,137,18,.17);
+    box-shadow: 0 3px 9px var(--sari-dark-3135cb7628, rgba(200,137,18,.17));
     cursor: default;
 }
 #sariDeliveryHistory .dh-page-btn:disabled { opacity: .45; cursor: not-allowed; }
@@ -673,7 +673,7 @@ body:has(#sariDeliveryHistory) #courierMain > header {
     height: 34px;
     align-items: center;
     justify-content: center;
-    color: #9ba5b1;
+    color: var(--sari-dark-a63aa16d7c, #9ba5b1);
     font-size: 11px;
     user-select: none;
 }

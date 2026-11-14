@@ -1,0 +1,507 @@
+/*
+ * SARI Logistics / Buyer visual parity — 2026-10-29
+ * Presentation-only. Loaded after individual Logistics view styles.
+ * No routes, request fields, element IDs, state classes, or JS are changed.
+ * Static card elevation avoids transform animations on dense operation lists.
+ */
+
+:root {
+  --sari-lg-canvas: #f4f5f7;
+  --sari-lg-surface: #fff;
+  --sari-lg-border: #e5e7eb;
+  --sari-lg-ink: #2e343b;
+  --sari-lg-muted: #7d8792;
+  --sari-lg-gold: #c88912;
+  --sari-lg-gold-hover: #a96e09;
+  --sari-lg-radius: 18px;
+  --sari-lg-radius-large: 22px;
+  --sari-lg-shadow: 0 2px 5px rgba(15,23,42,.045),
+    0 10px 24px rgba(15,23,42,.075),
+    0 24px 54px rgba(15,23,42,.095),
+    inset 0 1px 0 rgba(255,255,255,.92);
+  --sari-lg-shadow-soft: 0 1px 3px rgba(15,23,42,.035),
+    0 7px 18px rgba(15,23,42,.06),
+    0 15px 32px rgba(15,23,42,.065);
+}
+
+/* Match the already-compatible Buyer navigation shell; no layout shifts. */
+#logisticsSidebarNav .logistics-sidebar-item {
+  min-height: 43px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+}
+#logisticsSidebarNav .logistics-sidebar-section-label {
+  font-size: 9px !important;
+  letter-spacing: .13em !important;
+}
+#logisticsSidebarProfile > a { min-height: 54px; }
+#logisticsHeader h1 { color: var(--sari-lg-ink) !important; }
+
+#logisticsContent > main > .sari-logistics-ui:not(.logistics-messages-page) {
+  width: 100%;
+  max-width: 1500px;
+  margin-inline: auto;
+  color: var(--sari-lg-ink);
+  font-family: 'Poppins', sans-serif;
+}
+.sari-logistics-ui { --sari-lg-focus: rgba(200,137,18,.15); }
+.sari-logistics-ui :where(button, a, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--sari-lg-gold);
+  outline-offset: 2px;
+}
+.sari-logistics-ui :where(input, select, textarea) {
+  accent-color: var(--sari-lg-gold);
+}
+/* Prevent long order identifiers, addresses and tabular values from forcing overflow. */
+.sari-logistics-ui :where(.pickup-page-header, .intake-page-header, .sorting-page-header,
+  .transfer-page-header, .lastmile-page-header, .monitor-page-header, .rm-header,
+  .ra-page-header, .account-page-header, .fh-heading, .la-head) { min-width: 0; }
+
+/* Buyer content-heading composition — NOT the 17px navigation-bar label. */
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-page-header, .intake-page-header, .sorting-page-header,
+  .transfer-page-header, .lastmile-page-header, .monitor-page-header,
+  .fh-heading, .account-page-header, .la-head, .rm-header,
+  .ra-page-header, .sari-logistics-intro
+) {
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-left: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  padding: 5px 2px 17px !important;
+  margin-bottom: 17px !important;
+  min-height: 0 !important;
+  border-bottom: 1px solid #e4e6e9 !important;
+}
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-page-header, .intake-page-header, .sorting-page-header,
+  .transfer-page-header, .lastmile-page-header, .monitor-page-header,
+  .fh-heading, .account-page-header, .la-head, .rm-header,
+  .ra-page-header
+)::before,
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-page-header, .intake-page-header, .sorting-page-header,
+  .transfer-page-header, .lastmile-page-header, .monitor-page-header,
+  .fh-heading, .account-page-header, .la-head, .rm-header,
+  .ra-page-header
+)::after { display: none !important; }
+
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-page-header h1, .intake-page-header h1, .sorting-page-header h1,
+  .transfer-page-header h1, .lastmile-page-header h1, .monitor-page-header h1,
+  .fh-title, .account-page-header h1, .la-head h1, .rm-title,
+  .ra-page-header h1, .sari-logistics-intro h1
+) {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: clamp(27px, 2.25vw, 31px) !important;
+  font-weight: 760 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.035em !important;
+  color: var(--sari-lg-ink) !important;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-page-header h1 span, .intake-page-header h1 span,
+  .sorting-page-header h1 span, .transfer-page-header h1 span,
+  .lastmile-page-header h1 span, .monitor-page-header h1 span,
+  .fh-title span, .rm-title-accent, .ra-page-header h1 span,
+  .sari-logistics-intro h1 span
+) { color: var(--sari-lg-gold) !important; }
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-eyebrow, .intake-eyebrow, .sorting-eyebrow,
+  .transfer-eyebrow, .lastmile-eyebrow, .monitor-eyebrow,
+  .fh-eyebrow, .account-eyebrow, .la-eyebrow, .rm-eyebrow,
+  .ra-page-header > p:first-child, .sari-logistics-eyebrow
+) {
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+  line-height: 1.5 !important;
+  text-transform: uppercase;
+  color: #a87316 !important;
+}
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-subtitle, .intake-subtitle, .sorting-subtitle, .transfer-subtitle,
+  .lastmile-subtitle, .monitor-subtitle, .fh-intro, .account-subtitle,
+  .la-head p, .rm-subtitle, .ra-page-header h1 + p,
+  .sari-logistics-intro > p:last-child
+) {
+  max-width: 820px;
+  margin-top: 7px;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 1.65 !important;
+  color: var(--sari-lg-muted) !important;
+}
+.sari-logistics-intro { display: block; }
+.sari-logistics-eyebrow { margin: 0; }
+
+/* Primary outer cards: layered static elevation, flat rows within. */
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-stat, .intake-stat, .sorting-stat, .transfer-stat,
+  .lastmile-stat, .monitor-stat, .fh-kpi, .rm-summary-card,
+  .ra-kpi, .la-stat, .ld-kpi
+) {
+  background: #fff !important;
+  border: 1px solid var(--sari-lg-border) !important;
+  border-radius: 17px !important;
+  box-shadow: var(--sari-lg-shadow-soft) !important;
+  transform: none !important;
+  transition: border-color .16s ease, background-color .16s ease !important;
+}
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-workspace, .intake-workspace, .sorting-workspace,
+  .transfer-workspace, .lastmile-workspace, .monitor-workspace,
+  .pickup-batch, .transfer-manifest, .transfer-create-panel,
+  .transfer-ready-card, .lastmile-area-card, .monitor-order-card,
+  .monitor-delivered-workspace, .fh-panel, .fh-hub-detail-panel,
+  .account-card, .account-summary-card, .la-panel, .rm-table-card,
+  .ra-panel, .ld-panel, .reports-card
+) {
+  border: 1px solid var(--sari-lg-border) !important;
+  border-radius: var(--sari-lg-radius) !important;
+  background: #fff !important;
+  box-shadow: var(--sari-lg-shadow) !important;
+  transform: none !important;
+  transition: border-color .16s ease !important;
+}
+/* Secondary cards remain flat for better scanability and GPU cost. */
+#logisticsContent .sari-logistics-ui :is(
+  .lastmile-assignment-card, .monitor-delivered-card, .sari-route-stop-card,
+  .pickup-dispatch-panel, .lastmile-dispatch-panel, .fh-hub,
+  .account-save-card
+) {
+  border-color: var(--sari-lg-border) !important;
+  border-radius: 13px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-toolbar, .intake-toolbar, .sorting-toolbar,
+  .transfer-toolbar, .lastmile-toolbar, .monitor-toolbar,
+  .rm-toolbar, .ra-filter-bar
+) {
+  border-color: var(--sari-lg-border) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-stat, .intake-stat, .sorting-stat, .transfer-stat,
+  .lastmile-stat, .monitor-stat, .fh-kpi, .rm-summary-card,
+  .ra-kpi, .la-stat, .ld-kpi, .pickup-batch, .transfer-manifest,
+  .lastmile-area-card, .monitor-order-card, .account-card,
+  .rm-table-card, .ra-panel, .fh-panel, .ld-panel
+):hover { transform: none !important; }
+
+/* Compact readable controls; keep all original actions and state classes intact. */
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-button, .intake-button, .sorting-button, .transfer-button,
+  .lastmile-button, .monitor-button, .fh-primary, .rm-add-button
+) {
+  border-radius: 10px !important;
+  min-height: 39px;
+  font-size: 10.5px !important;
+  font-weight: 650 !important;
+  transition: background-color .14s ease, border-color .14s ease,
+    color .14s ease !important;
+  transform: none !important;
+}
+#logisticsContent .sari-logistics-ui :is(input[type="text"], input[type="search"],
+  input[type="email"], input[type="password"], input[type="number"],
+  input[type="date"], select, textarea) {
+  border-radius: 10px;
+}
+#logisticsContent .sari-logistics-ui :is(input, select, textarea):focus-visible {
+  border-color: var(--sari-lg-gold) !important;
+  box-shadow: 0 0 0 3px var(--sari-lg-focus) !important;
+}
+
+/* Dashboard: upgrade the executive header and KPI hierarchy without changing charts. */
+#logisticsContent .logistics-dashboard-shell .ld-exec-hero {
+  background: #fff !important;
+  background-image: none !important;
+  border: 1px solid var(--sari-lg-border) !important;
+  border-radius: var(--sari-lg-radius-large) !important;
+  box-shadow: var(--sari-lg-shadow) !important;
+  color: var(--sari-lg-ink) !important;
+  padding: 22px 25px !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-hero::before {
+  display: none !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-title {
+  font-size: clamp(27px,2.25vw,31px) !important;
+  font-weight: 760 !important;
+  letter-spacing: -.035em !important;
+  line-height: 1.08 !important;
+  color: var(--sari-lg-ink) !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-kicker {
+  font-size: 10.5px !important;
+  color: #a87316 !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-main-badge {
+  border-color: #efddb8 !important;
+  background: #fff8e9 !important;
+  color: #99650a !important;
+}
+#logisticsContent .logistics-dashboard-shell :is(.ld-exec-status, .ld-exec-stat-sub) {
+  color: var(--sari-lg-muted) !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-stat-label {
+  color: #8a939d !important;
+  font-size: 9px !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-stat-value {
+  color: var(--sari-lg-ink) !important;
+  font-size: 15px !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-stat + .ld-exec-stat {
+  border-left-color: var(--sari-lg-border) !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-stat-icon {
+  color: #ad791b !important;
+  background: #fff5e3 !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-rider-value small {
+  color: var(--sari-lg-muted) !important;
+  font-size: 9px !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-online {
+  color: #327a53 !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-exec-stat-icon.is-rider {
+  color: #497ba7 !important;
+  background: #edf5fb !important;
+}
+#logisticsContent .logistics-dashboard-shell .ld-kpi:hover { transform: none !important; }
+
+/* Operator-specific reading density. Don't restyle inner table cells as cards. */
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-stat strong, .intake-stat strong, .sorting-stat strong,
+  .transfer-stat strong, .lastmile-stat strong, .monitor-stat strong,
+  .fh-kpi-value, .rm-summary-value, .la-stat > strong
+) { color: var(--sari-lg-ink) !important; }
+#logisticsContent .sari-logistics-ui :is(
+  .fh-panel-title, .account-card-header h2, .la-panel-heading h2,
+  .rm-table-title, .ra-queue-card h2
+) { color: var(--sari-lg-ink) !important; font-weight: 700 !important; }
+
+/* Utility-class finance, treasury, COD and route pages: style only their top-level sections. */
+#logisticsContent .sari-logistics-ui:is(
+  .sari-logistics-finance, .sari-logistics-remittances, .sari-logistics-treasury,
+  .sari-logistics-cash-detail, .sari-logistics-route, .sari-logistics-reports
+) > section:not(.grid),
+#logisticsContent .sari-logistics-ui.sari-logistics-route > div:first-child,
+#logisticsContent .sari-logistics-ui.sari-logistics-route > .grid > section,
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section:first-child,
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section.grid > .space-y-4 > section {
+  background: #fff !important;
+  border: 1px solid var(--sari-lg-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--sari-lg-shadow) !important;
+}
+#logisticsContent .sari-logistics-ui:is(
+  .sari-logistics-finance, .sari-logistics-remittances, .sari-logistics-treasury,
+  .sari-logistics-cash-detail
+) > section:first-of-type h2,
+#logisticsContent .sari-logistics-route > div:first-child h1,
+#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:first-child h2 {
+  font-size: clamp(27px,2.25vw,31px) !important;
+  font-weight: 760 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.035em !important;
+  color: var(--sari-lg-ink) !important;
+}
+#logisticsContent .sari-logistics-ui:is(
+  .sari-logistics-finance, .sari-logistics-remittances, .sari-logistics-treasury,
+  .sari-logistics-cash-detail
+) > section:first-of-type p:first-child,
+#logisticsContent .sari-logistics-route > div:first-child p:first-child {
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+  color: #a87316 !important;
+}
+#logisticsContent .sari-logistics-ui:is(
+  .sari-logistics-finance, .sari-logistics-remittances, .sari-logistics-treasury,
+  .sari-logistics-cash-detail
+) > section:first-of-type h2 + p,
+#logisticsContent .sari-logistics-route > div:first-child h1 + p {
+  font-size: 11px !important;
+  line-height: 1.6 !important;
+  color: var(--sari-lg-muted) !important;
+}
+/* KPI grids are separate raised cards, not one giant elevated grid. */
+#logisticsContent .sari-logistics-ui:is(
+  .sari-logistics-finance, .sari-logistics-remittances, .sari-logistics-treasury,
+  .sari-logistics-cash-detail
+) > section.grid > :is(article, div) {
+  background: #fff !important;
+  border: 1px solid var(--sari-lg-border) !important;
+  border-radius: 17px !important;
+  box-shadow: var(--sari-lg-shadow-soft) !important;
+}
+/* The financial pages contain a few nested sections; do not shadow those. */
+#logisticsContent .sari-logistics-ui:is(.sari-logistics-finance,
+  .sari-logistics-remittances, .sari-logistics-treasury,
+  .sari-logistics-cash-detail) > section :is(section, article) {
+  box-shadow: none !important;
+}
+/* Financial pages and logs: legible supporting data without changing column widths. */
+#logisticsContent .sari-logistics-ui :is(
+  .pickup-table, .intake-table, .sorting-table, .fh-hub-table,
+  .la-table, .rm-table, .ra-queue-card table
+) :is(th, td) {
+  font-size: 10px !important;
+  line-height: 1.55;
+}
+#logisticsContent .sari-logistics-ui:is(
+  .sari-logistics-finance, .sari-logistics-remittances,
+  .sari-logistics-treasury, .sari-logistics-cash-detail,
+  .sari-logistics-reports, .sari-logistics-route
+) table :is(th, td) { font-size: 10px !important; line-height: 1.6; }
+#logisticsContent .sari-logistics-ui:is(
+  .sari-logistics-finance, .sari-logistics-remittances,
+  .sari-logistics-treasury, .sari-logistics-cash-detail
+) > section.grid > :is(div, article) > p:first-child {
+  font-size: 10px !important;
+  color: var(--sari-lg-muted) !important;
+}
+#logisticsContent .sari-logistics-ui:is(
+  .sari-logistics-finance, .sari-logistics-remittances,
+  .sari-logistics-treasury, .sari-logistics-cash-detail
+) > section.grid > :is(div, article) > p + p {
+  font-size: clamp(18px,1.7vw,22px) !important;
+  color: var(--sari-lg-ink) !important;
+}
+/* Reports: KPI panels raised, table a single floating workspace. */
+#logisticsContent .sari-logistics-reports > .grid > div {
+  border: 1px solid var(--sari-lg-border) !important;
+  border-radius: 17px !important;
+  box-shadow: var(--sari-lg-shadow-soft) !important;
+  background: #fff !important;
+}
+#logisticsContent .sari-logistics-reports > div.rounded-\[18px\] {
+  border-color: var(--sari-lg-border) !important;
+  box-shadow: var(--sari-lg-shadow) !important;
+}
+#logisticsContent .sari-logistics-reports > .grid > div p:first-child {
+  font-size: 10px !important;
+  color: var(--sari-lg-muted) !important;
+}
+#logisticsContent .sari-logistics-reports > .grid > div p + p {
+  font-size: 21px !important;
+  color: var(--sari-lg-ink) !important;
+}
+#logisticsContent .sari-logistics-reports thead { background: #f8f9fb !important; }
+
+/* Route map, QR camera, and chat retain fixed sizes, scrolling, and dark video/canvas. */
+#logisticsContent .sari-logistics-route .sari-route-map {
+  border: 1px solid var(--sari-lg-border);
+  border-radius: 15px;
+}
+#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section.grid > div:first-child {
+  border-radius: 18px !important;
+  overflow: hidden;
+}
+#logisticsContent .logistics-messages-page #logisticsPlatformChat {
+  border: 1px solid var(--sari-lg-border) !important;
+  background: #fff;
+  box-shadow: none !important;
+}
+#logisticsContent .logistics-messages-page .logistics-conversation-heading h3 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  letter-spacing: -.025em;
+  color: var(--sari-lg-ink) !important;
+}
+/* Do not modify chat pane geometry, scrolling, or message bubble positioning. */
+
+/* Standalone operating-branch selector, without the shared Logistics shell. */
+.sari-logistics-branch-select { background: var(--sari-lg-canvas); color: var(--sari-lg-ink); }
+.sari-logistics-branch-select .page-backdrop {
+  background: var(--sari-lg-canvas) !important;
+}
+.sari-logistics-branch-select .page-backdrop::before,
+.sari-logistics-branch-select .page-backdrop::after { display: none !important; }
+.sari-logistics-branch-select .page-overlay {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.sari-logistics-branch-select .selector-card {
+  border: 1px solid var(--sari-lg-border) !important;
+  background: #fff !important;
+  border-radius: 22px !important;
+  box-shadow: var(--sari-lg-shadow) !important;
+}
+.sari-logistics-branch-select #branchSelectTitle {
+  font-size: clamp(27px,2.25vw,31px) !important;
+  line-height: 1.08 !important;
+  font-weight: 700 !important;
+  color: var(--sari-lg-ink) !important;
+}
+.sari-logistics-branch-select .branch-option {
+  border-color: var(--sari-lg-border) !important;
+  background: #fff !important;
+  transition: background-color .14s ease, border-color .14s ease !important;
+  transform: none !important;
+}
+.sari-logistics-branch-select .branch-option:hover { background: #fffaf0 !important; }
+.sari-logistics-branch-select .branch-radio:checked + .branch-option {
+  border-color: var(--sari-lg-gold) !important;
+  background: #fffaf0 !important;
+}
+.sari-logistics-branch-select .primary-action { transform: none !important; }
+
+/* Mobile: keep cards readable and protect narrow forms/tables. */
+@media (max-width: 767px) {
+  #logisticsContent .sari-logistics-ui :is(
+    .pickup-page-header, .intake-page-header, .sorting-page-header,
+    .transfer-page-header, .lastmile-page-header, .monitor-page-header,
+    .fh-heading, .account-page-header, .la-head, .rm-header,
+    .ra-page-header, .sari-logistics-intro
+  ) { padding: 3px 0 14px !important; gap: 12px; }
+  #logisticsContent .sari-logistics-ui :is(
+    .pickup-page-header h1, .intake-page-header h1, .sorting-page-header h1,
+    .transfer-page-header h1, .lastmile-page-header h1, .monitor-page-header h1,
+    .fh-title, .account-page-header h1, .la-head h1, .rm-title,
+    .ra-page-header h1, .sari-logistics-intro h1
+  ) { font-size: 25px !important; line-height: 1.13 !important; }
+  #logisticsContent .sari-logistics-ui :is(
+    .pickup-workspace, .intake-workspace, .sorting-workspace, .transfer-workspace,
+    .lastmile-workspace, .monitor-workspace, .pickup-batch, .transfer-manifest,
+    .lastmile-area-card, .monitor-order-card, .fh-panel, .account-card,
+    .la-panel, .rm-table-card, .ra-panel, .ld-panel
+  ) { border-radius: 15px !important; box-shadow: var(--sari-lg-shadow-soft) !important; }
+  #logisticsContent .logistics-dashboard-shell .ld-exec-hero {
+    padding: 18px 17px !important; border-radius: 16px !important;
+  }
+  #logisticsContent .logistics-dashboard-shell .ld-exec-title { font-size: 25px !important; }
+  #logisticsContent .logistics-dashboard-shell .ld-exec-side { min-width: 0; }
+  #logisticsContent .logistics-dashboard-shell .ld-exec-stat { padding-inline: 8px; }
+  #logisticsContent .sari-logistics-ui:is(.sari-logistics-finance,
+    .sari-logistics-remittances,.sari-logistics-treasury,
+    .sari-logistics-cash-detail) > section { padding: 17px !important; }
+  #logisticsContent .sari-logistics-ui.sari-logistics-route > div:first-child {
+    padding: 17px !important;
+  }
+  #logisticsContent .logistics-messages-page #logisticsPlatformChat { border-radius: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #logisticsSidebarNav .logistics-sidebar-item,
+  .sari-logistics-ui :is(button, a, input, select, textarea, summary),
+  .sari-logistics-branch-select .branch-option,
+  .sari-logistics-branch-select .primary-action {
+    transition: none !important;
+    animation: none !important;
+  }
+}

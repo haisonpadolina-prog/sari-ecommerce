@@ -16,11 +16,11 @@
     .rm-page {
         --rm-gold: #D59617;
         --rm-gold-strong: #B97805;
-        --rm-text: #111827;
-        --rm-text-2: #344054;
-        --rm-muted: #7C8592;
-        --rm-line: #E5E7EB;
-        --rm-line-soft: #ECEFF2;
+        --rm-text: var(--sari-dark-e23e64dd1e, #111827);
+        --rm-text-2: var(--sari-dark-e23e64dd1e, #344054);
+        --rm-muted: var(--sari-dark-a63aa16d7c, #7C8592);
+        --rm-line: var(--sari-dark-d8c2716225, #E5E7EB);
+        --rm-line-soft: var(--sari-dark-d8c2716225, #ECEFF2);
         --rm-soft: #F9FAFB;
         --rm-green: #16856A;
         --rm-red: #C45454;
@@ -90,13 +90,13 @@
         overflow: hidden;
         border: 1px solid var(--rm-line);
         border-radius: 12px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 18px;
-        box-shadow: 0 2px 6px rgba(16, 24, 40, .04);
+        box-shadow: 0 2px 6px var(--sari-dark-25b2da5e49, rgba(16, 24, 40, .04));
     }
 
     .rm-summary-label {
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         font-size: 12px;
         font-weight: 500;
         line-height: 20px;
@@ -104,7 +104,7 @@
 
     .rm-summary-value {
         margin-top: 10px;
-        color: #101828;
+        color: var(--sari-dark-e23e64dd1e, #101828);
         font-size: 28px;
         font-weight: 700;
         line-height: 1;
@@ -150,7 +150,7 @@
         left: 12px;
         width: 13px;
         height: 13px;
-        color: #98A2B3;
+        color: var(--sari-dark-a63aa16d7c, #98A2B3);
         transform: translateY(-50%);
         pointer-events: none;
     }
@@ -167,7 +167,7 @@
         right: 11px;
         width: 12px;
         height: 12px;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         transform: translateY(-50%);
         pointer-events: none;
     }
@@ -177,7 +177,7 @@
         height: 38px;
         border: 1px solid var(--rm-line);
         border-radius: 9px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         color: var(--rm-text-2);
         padding: 0 10px;
         font-size: 9.5px;
@@ -201,19 +201,19 @@
     }
 
     .rm-control::placeholder {
-        color: #98A2B3;
+        color: var(--sari-dark-a63aa16d7c, #98A2B3);
         font-size: 9.5px;
         font-weight: 400;
     }
 
     .rm-control:hover {
-        border-color: #D1D5DB;
-        background: #fff;
+        border-color: var(--sari-dark-d8c2716225, #D1D5DB);
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .rm-control:focus {
         border-color: var(--rm-gold);
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .09);
+        box-shadow: 0 0 0 3px var(--sari-dark-b12a5e9552, rgba(213, 150, 23, .09));
     }
 
     .rm-add-button {
@@ -232,7 +232,7 @@
         font-weight: 600;
         line-height: 1;
         white-space: nowrap;
-        box-shadow: 0 4px 10px rgba(213, 150, 23, .14);
+        box-shadow: 0 4px 10px var(--sari-dark-59ed29fe9d, rgba(213, 150, 23, .14));
         transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
     }
 
@@ -245,7 +245,7 @@
     .rm-add-button:hover {
         border-color: var(--rm-gold-strong);
         background: var(--rm-gold-strong);
-        box-shadow: 0 5px 12px rgba(185, 120, 5, .16);
+        box-shadow: 0 5px 12px var(--sari-dark-b5c2a2270e, rgba(185, 120, 5, .16));
     }
 
     .rm-alert {
@@ -261,8 +261,8 @@
         overflow: hidden;
         border: 1px solid var(--rm-line);
         border-radius: 14px;
-        background: #fff;
-        box-shadow: 0 2px 5px rgba(15, 23, 42, .04), 0 10px 24px rgba(15, 23, 42, .06);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 2px 5px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)), 0 10px 24px var(--sari-dark-361b571631, rgba(15, 23, 42, .06));
     }
 
     .rm-table-header {
@@ -284,7 +284,7 @@
 
     .rm-table-title {
         margin: 0;
-        color: #101828;
+        color: var(--sari-dark-e23e64dd1e, #101828);
         font-size: 14px;
         font-weight: 700;
         line-height: 1.2;
@@ -299,7 +299,7 @@
         border-radius: 999px;
         background: var(--rm-soft);
         padding: 0 8px;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         font-size: 8px;
         font-weight: 600;
     }
@@ -313,10 +313,10 @@
 
     .rm-table-wrap { overflow-x: auto; }
     .rm-table { width: 100%; min-width: 940px; border-collapse: collapse; }
-    .rm-table thead tr { background: #F9FAFB; }
+    .rm-table thead tr { background: var(--sari-dark-950baec030, #F9FAFB); }
     .rm-table th {
         padding: 10px 14px;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         font-size: 8px;
         font-weight: 700;
         letter-spacing: .075em;
@@ -330,22 +330,22 @@
 
     .rm-table tbody tr {
         border-top: 1px solid var(--rm-line-soft);
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         transition: background-color .14s ease, box-shadow .14s ease;
     }
     .rm-table tbody tr:hover {
-        background: #FFFCF5;
+        background: var(--sari-dark-950baec030, #FFFCF5);
         box-shadow: inset 2px 0 0 var(--rm-gold);
     }
     .rm-table td {
         padding: 11px 14px;
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
         font-size: 9px;
         vertical-align: middle;
     }
 
-    .rm-rider-name { color: #101828; font-size: 9.5px; font-weight: 600; }
-    .rm-rider-email { margin-top: 2px; color: #98A2B3; font-size: 8px; }
+    .rm-rider-name { color: var(--sari-dark-e23e64dd1e, #101828); font-size: 9.5px; font-weight: 600; }
+    .rm-rider-email { margin-top: 2px; color: var(--sari-dark-a63aa16d7c, #98A2B3); font-size: 8px; }
 
     .rm-badge {
         display: inline-flex;
@@ -360,11 +360,11 @@
         white-space: nowrap;
     }
 
-    .rm-badge.is-active { border-color: #CFE1D5; background: #F2F8F4; color: #4F7C60; }
-    .rm-badge.is-pending { border-color: #EADFC9; background: #FFFAF2; color: #A8731F; }
-    .rm-badge.is-inactive { border-color: #E8CCCC; background: #FFF3F3; color: #A55A5A; }
-    .rm-badge.is-online { border-color: #CFE1D5; background: #F2F8F4; color: #4F7C60; }
-    .rm-badge.is-offline { border-color: #E5E7EB; background: #F9FAFB; color: #667085; }
+    .rm-badge.is-active { border-color: var(--sari-dark-d8c2716225, #CFE1D5); background: var(--sari-dark-4d21eb669b, #F2F8F4); color: var(--sari-dark-a63aa16d7c, #4F7C60); }
+    .rm-badge.is-pending { border-color: var(--sari-dark-d8c2716225, #EADFC9); background: var(--sari-dark-950baec030, #FFFAF2); color: var(--sari-dark-5d5ad776eb, #A8731F); }
+    .rm-badge.is-inactive { border-color: var(--sari-dark-d8c2716225, #E8CCCC); background: var(--sari-dark-950baec030, #FFF3F3); color: var(--sari-dark-573e4b124d, #A55A5A); }
+    .rm-badge.is-online { border-color: var(--sari-dark-d8c2716225, #CFE1D5); background: var(--sari-dark-4d21eb669b, #F2F8F4); color: var(--sari-dark-a63aa16d7c, #4F7C60); }
+    .rm-badge.is-offline { border-color: var(--sari-dark-d8c2716225, #E5E7EB); background: var(--sari-dark-950baec030, #F9FAFB); color: var(--sari-dark-a63aa16d7c, #667085); }
 
     .rm-resend {
         margin-top: 6px;
@@ -397,7 +397,7 @@
         margin: 0 auto;
         border: 0;
         background: transparent;
-        color: #B4BBC3;
+        color: var(--sari-dark-a63aa16d7c, #B4BBC3);
     }
 
     .rm-page .rm-empty-icon svg {
@@ -412,7 +412,7 @@
 
     .rm-page .rm-empty-title {
         margin: 18px 0 0;
-        color: #9CA4AD;
+        color: var(--sari-dark-a63aa16d7c, #9CA4AD);
         font-size: 22px;
         font-weight: 750;
         line-height: 1.2;
@@ -422,7 +422,7 @@
     .rm-page .rm-empty-copy {
         max-width: 520px;
         margin: 7px auto 0;
-        color: #B0B7BF;
+        color: var(--sari-dark-a63aa16d7c, #B0B7BF);
         font-size: 12px;
         font-weight: 500;
         line-height: 1.55;
@@ -454,7 +454,7 @@
         align-items: center;
         justify-content: center;
         padding: 20px;
-        background: rgba(17, 24, 39, .46);
+        background: var(--sari-dark-afab254fcf, rgba(17, 24, 39, .46));
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
     }
@@ -464,10 +464,10 @@
         width: min(860px, 100%);
         max-height: min(88vh, 760px);
         overflow: hidden;
-        border: 1px solid #E5E7EB;
+        border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB);
         border-radius: 18px;
-        background: #fff;
-        box-shadow: 0 30px 80px rgba(15, 23, 42, .20);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 30px 80px var(--sari-dark-ef22e61893, rgba(15, 23, 42, .20));
     }
 
     .rm-modal-head {
@@ -488,7 +488,7 @@
     }
     .rm-modal-title {
         margin: 0;
-        color: #101828;
+        color: var(--sari-dark-e23e64dd1e, #101828);
         font-size: 18px;
         font-weight: 700;
         letter-spacing: -.025em;
@@ -507,10 +507,10 @@
         place-items: center;
         border: 1px solid var(--rm-line);
         border-radius: 9px;
-        background: #fff;
-        color: #667085;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #667085);
     }
-    .rm-modal-close:hover { background: #F9FAFB; }
+    .rm-modal-close:hover { background: var(--sari-dark-950baec030, #F9FAFB); }
 
     .rm-modal-body {
         max-height: calc(min(88vh, 760px) - 78px);
@@ -527,7 +527,7 @@
     .rm-field-label {
         display: block;
         margin-bottom: 6px;
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
         font-size: 8.5px;
         font-weight: 600;
     }
@@ -536,25 +536,25 @@
         height: 40px;
         border: 1px solid var(--rm-line);
         border-radius: 9px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 11px;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-size: 9.5px;
         outline: none;
     }
     .rm-form-control:focus {
         border-color: var(--rm-gold);
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .10);
+        box-shadow: 0 0 0 3px var(--sari-dark-8eadf403a5, rgba(213, 150, 23, .10));
     }
 
     .rm-file-input {
         width: 100%;
         min-height: 40px;
-        border: 1px dashed #D1D5DB;
+        border: 1px dashed var(--sari-dark-d8c2716225, #D1D5DB);
         border-radius: 9px;
-        background: #F9FAFB;
+        background: var(--sari-dark-950baec030, #F9FAFB);
         padding: 8px 10px;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         font-size: 8.5px;
     }
 
@@ -579,8 +579,8 @@
     }
     .rm-button-secondary {
         border: 1px solid var(--rm-line);
-        background: #fff;
-        color: #667085;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #667085);
     }
     .rm-button-primary {
         border: 1px solid var(--rm-gold);
@@ -649,21 +649,21 @@
         <article class="rm-summary-card">
             <p class="rm-summary-label">Approved Riders</p>
             <p class="rm-summary-value">{{ $stats['total'] }}</p>
-            <span class="rm-summary-icon" style="color:#AC7A16" aria-hidden="true">
+            <span class="rm-summary-icon" style="color:var(--sari-dark-9db03b407c, #AC7A16)" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="7" r="3"></circle><path d="M3 20a6 6 0 0 1 12 0"></path><path d="M17 6a3 3 0 0 1 0 6"></path><path d="M18 15a5 5 0 0 1 3 5"></path></svg>
             </span>
         </article>
         <article class="rm-summary-card">
             <p class="rm-summary-label">Active Accounts</p>
             <p class="rm-summary-value">{{ $stats['active'] }}</p>
-            <span class="rm-summary-icon" style="color:#16856A" aria-hidden="true">
+            <span class="rm-summary-icon" style="color:var(--sari-dark-63ef464c7f, #16856A)" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg>
             </span>
         </article>
         <article class="rm-summary-card">
             <p class="rm-summary-label">Busy Now</p>
             <p class="rm-summary-value">{{ $stats['busy'] }}</p>
-            <span class="rm-summary-icon" style="color:#4F82B6" aria-hidden="true">
+            <span class="rm-summary-icon" style="color:var(--sari-dark-5eab7c8294, #4F82B6)" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 15h2l2-5h7l2 5h3"></path><circle cx="8" cy="17" r="2"></circle><circle cx="18" cy="17" r="2"></circle><path d="M9 10V7h5"></path></svg>
             </span>
         </article>

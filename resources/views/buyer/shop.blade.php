@@ -10,12 +10,12 @@
     .sari-shop-page {
         --shop-gold: #c88912;
         --shop-gold-dark: #9d680d;
-        --shop-ink: #111827;
-        --shop-text: #344054;
-        --shop-muted: #7a8594;
-        --shop-line: #e3e8ed;
+        --shop-ink: var(--sari-dark-e23e64dd1e, #111827);
+        --shop-text: var(--sari-dark-e23e64dd1e, #344054);
+        --shop-muted: var(--sari-dark-a63aa16d7c, #7a8594);
+        --shop-line: var(--sari-dark-d8c2716225, #e3e8ed);
         --shop-soft: #f7f8fa;
-        --shop-bg: #f5f7f9;
+        --shop-bg: var(--sari-dark-950baec030, #f5f7f9);
         background: var(--shop-bg);
         color: var(--shop-text);
     }
@@ -31,14 +31,14 @@
         overflow: hidden;
         border: 1px solid var(--shop-line);
         border-radius: 18px;
-        background: #fff;
-        box-shadow: 0 10px 28px rgba(15, 23, 42, .035);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 10px 28px var(--sari-dark-7593018246, rgba(15, 23, 42, .035));
     }
 
     .sari-shop-banner {
         height: 170px;
         overflow: hidden;
-        background: #f1f3f5;
+        background: var(--sari-dark-4d21eb669b, #f1f3f5);
         border-bottom: 1px solid var(--shop-line);
     }
 
@@ -71,9 +71,9 @@
         width: 68px;
         height: 68px;
         flex: 0 0 68px;
-        border: 1px solid #dfe5ea;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe5ea);
         border-radius: 15px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         object-fit: cover;
     }
 
@@ -143,7 +143,7 @@
 
     .sari-shop-section-label {
         margin: 0;
-        color: #697586;
+        color: var(--sari-dark-a63aa16d7c, #697586);
         font-size: 9px;
         font-weight: 800;
         letter-spacing: .09em;
@@ -153,7 +153,7 @@
     .sari-shop-description {
         max-width: 900px;
         margin: 8px 0 0;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         font-size: 10px;
         line-height: 1.8;
         white-space: pre-line;
@@ -165,7 +165,7 @@
         overflow: hidden;
         border: 1px solid var(--shop-line);
         border-radius: 12px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .sari-shop-contact-row {
@@ -177,18 +177,18 @@
     }
 
     .sari-shop-contact-row + .sari-shop-contact-row {
-        border-top: 1px solid #edf0f3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
     }
 
     .sari-shop-contact dt {
-        color: #8a94a1;
+        color: var(--sari-dark-a63aa16d7c, #8a94a1);
         font-size: 8px;
         font-weight: 600;
     }
 
     .sari-shop-contact dd {
         margin: 0;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-size: 8px;
         font-weight: 800;
         text-align: right;
@@ -206,7 +206,7 @@
         min-width: 160px;
         border: 1px solid #e5d5b3;
         border-radius: 10px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 10px 12px;
         text-align: left;
         transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
@@ -215,9 +215,9 @@
     .sari-shop-voucher:hover,
     .sari-shop-voucher:focus-visible {
         border-color: #d4b46c;
-        background: #fffdf8;
+        background: var(--sari-dark-950baec030, #fffdf8);
         outline: none;
-        box-shadow: 0 0 0 3px rgba(200, 137, 18, .06);
+        box-shadow: 0 0 0 3px var(--sari-dark-361b571631, rgba(200, 137, 18, .06));
     }
 
     .sari-shop-voucher-code {
@@ -230,7 +230,7 @@
     .sari-shop-voucher-meta {
         display: block;
         margin-top: 3px;
-        color: #7e8793;
+        color: var(--sari-dark-a63aa16d7c, #7e8793);
         font-size: 8px;
         line-height: 1.45;
     }
@@ -240,8 +240,8 @@
         padding: 20px 22px 24px;
         border: 1px solid var(--shop-line);
         border-radius: 18px;
-        background: #fff;
-        box-shadow: 0 10px 28px rgba(15, 23, 42, .03);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 10px 28px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03));
     }
 
     .sari-shop-products-head {
@@ -269,24 +269,24 @@
     .sari-shop-search {
         width: 290px;
         height: 42px;
-        border: 1px solid #dce2e7;
+        border: 1px solid var(--sari-dark-d8c2716225, #dce2e7);
         border-radius: 10px;
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
         padding: 0 14px;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-size: 9px;
         outline: none;
         transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
     }
 
     .sari-shop-search::placeholder {
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
     }
 
     .sari-shop-search:focus {
         border-color: #c9a253;
-        background: #fff;
-        box-shadow: 0 0 0 3px rgba(200, 137, 18, .07);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 0 0 3px var(--sari-dark-7c935c8886, rgba(200, 137, 18, .07));
     }
 
     .sari-shop-product-grid {
@@ -308,11 +308,11 @@
 
     .sari-shop-empty {
         margin-top: 18px;
-        border: 1px dashed #d9e0e6;
+        border: 1px dashed var(--sari-dark-d8c2716225, #d9e0e6);
         border-radius: 14px;
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
         padding: 38px 20px;
-        color: #7c8794;
+        color: var(--sari-dark-a63aa16d7c, #7c8794);
         font-size: 10px;
         text-align: center;
     }
@@ -426,10 +426,10 @@
        Existing product grid, Blade data, actions and JS unchanged.
        ============================================================== */
     .sari-shop-page {
-        --shop-bg: #f4f5f7;
-        --shop-line: #e5e7eb;
-        --shop-text: #3d4856;
-        --shop-muted: #75808d;
+        --shop-bg: var(--sari-dark-4d21eb669b, #f4f5f7);
+        --shop-line: var(--sari-dark-d8c2716225, #e5e7eb);
+        --shop-text: var(--sari-dark-e23e64dd1e, #3d4856);
+        --shop-muted: var(--sari-dark-a63aa16d7c, #75808d);
         background: var(--shop-bg);
         color: var(--shop-text);
         font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
@@ -444,14 +444,14 @@
     /* Keep only the two top-level sections elevated. */
     .sari-shop-page .sari-shop-card,
     .sari-shop-page .sari-shop-products-card {
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
         border-radius: 19px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         box-shadow:
-            0 2px 5px rgba(15,23,42,.045),
-            0 10px 24px rgba(15,23,42,.075),
-            0 24px 54px rgba(15,23,42,.095),
-            inset 0 1px 0 rgba(255,255,255,.92);
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
         transform: none;
     }
 
@@ -475,7 +475,7 @@
         width: 74px;
         height: 74px;
         flex-basis: 74px;
-        border-color: #e3e7eb;
+        border-color: var(--sari-dark-d8c2716225, #e3e7eb);
     }
 
     .sari-shop-page .sari-shop-eyebrow {
@@ -496,7 +496,7 @@
 
     .sari-shop-page .sari-shop-meta {
         margin-top: 9px;
-        color: #707b88;
+        color: var(--sari-dark-a63aa16d7c, #707b88);
         font-size: 13px;
         font-weight: 450;
         line-height: 1.6;
@@ -521,7 +521,7 @@
     .sari-shop-page .sari-shop-section-line {
         margin-top: 24px;
         padding-top: 22px;
-        border-top-color: #eceff2;
+        border-top-color: var(--sari-dark-d8c2716225, #eceff2);
     }
 
     .sari-shop-page .sari-shop-info-grid {
@@ -529,7 +529,7 @@
     }
 
     .sari-shop-page .sari-shop-section-label {
-        color: #586475;
+        color: var(--sari-dark-a63aa16d7c, #586475);
         font-size: 12px;
         font-weight: 700;
         line-height: 1.4;
@@ -539,7 +539,7 @@
     .sari-shop-page .sari-shop-description {
         margin-top: 10px;
         max-width: 920px;
-        color: #667383;
+        color: var(--sari-dark-a63aa16d7c, #667383);
         font-size: 13.5px;
         font-weight: 400;
         line-height: 1.8;
@@ -548,9 +548,9 @@
 
     .sari-shop-page .sari-shop-contact {
         min-width: 270px;
-        border-color: #e6e9ed;
+        border-color: var(--sari-dark-d8c2716225, #e6e9ed);
         border-radius: 11px;
-        background: #fbfcfd;
+        background: var(--sari-dark-950baec030, #fbfcfd);
         box-shadow: none;
     }
 
@@ -560,14 +560,14 @@
     }
 
     .sari-shop-page .sari-shop-contact dt {
-        color: #7b8794;
+        color: var(--sari-dark-a63aa16d7c, #7b8794);
         font-size: 11.5px;
         font-weight: 500;
         line-height: 1.4;
     }
 
     .sari-shop-page .sari-shop-contact dd {
-        color: #354151;
+        color: var(--sari-dark-e23e64dd1e, #354151);
         font-size: 12px;
         font-weight: 600;
         line-height: 1.45;
@@ -581,7 +581,7 @@
 
     .sari-shop-page .sari-shop-voucher {
         min-width: 190px;
-        border-color: #e6ded0;
+        border-color: var(--sari-dark-d8c2716225, #e6ded0);
         border-radius: 10px;
         padding: 12px 14px;
         box-shadow: none;
@@ -595,7 +595,7 @@
 
     .sari-shop-page .sari-shop-voucher-meta {
         margin-top: 5px;
-        color: #77828e;
+        color: var(--sari-dark-a63aa16d7c, #77828e);
         font-size: 11.5px;
         font-weight: 450;
         line-height: 1.55;
@@ -618,7 +618,7 @@
     }
 
     .sari-shop-page .sari-shop-products-title {
-        color: #26313f;
+        color: var(--sari-dark-e23e64dd1e, #26313f);
         font-size: 23px;
         font-weight: 700;
         line-height: 1.3;
@@ -627,7 +627,7 @@
 
     .sari-shop-page .sari-shop-products-subtitle {
         margin-top: 5px;
-        color: #798491;
+        color: var(--sari-dark-a63aa16d7c, #798491);
         font-size: 12px;
         font-weight: 450;
         line-height: 1.55;
@@ -636,17 +636,17 @@
     .sari-shop-page .sari-shop-search {
         width: 318px;
         height: 46px;
-        border-color: #dfe4e9;
+        border-color: var(--sari-dark-d8c2716225, #dfe4e9);
         border-radius: 10px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding-inline: 15px;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-size: 13px;
         font-weight: 450;
     }
 
     .sari-shop-page .sari-shop-search::placeholder {
-        color: #8b96a4;
+        color: var(--sari-dark-a63aa16d7c, #8b96a4);
         opacity: 1;
     }
 
@@ -660,11 +660,11 @@
     .sari-shop-page .sari-shop-product-grid > .sari-product-card,
     .sari-shop-page .sari-shop-product-grid > .sari-product-card:hover,
     .sari-shop-page .sari-shop-product-grid > .sari-product-card:focus-within {
-        border-color: #e4e8ec !important;
+        border-color: var(--sari-dark-d8c2716225, #e4e8ec) !important;
         box-shadow:
-            0 1px 3px rgba(15,23,42,.035),
-            0 7px 18px rgba(15,23,42,.06),
-            inset 0 1px 0 rgba(255,255,255,.92) !important;
+            0 1px 3px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92)) !important;
         transform: none !important;
     }
 
@@ -701,9 +701,9 @@
     }
 
     .sari-shop-page .sari-shop-empty {
-        border-color: #e3e7eb;
-        background: #fafbfc;
-        color: #6d7886;
+        border-color: var(--sari-dark-d8c2716225, #e3e7eb);
+        background: var(--sari-dark-950baec030, #fafbfc);
+        color: var(--sari-dark-a63aa16d7c, #6d7886);
         font-size: 13px;
         font-weight: 450;
         line-height: 1.6;
@@ -728,10 +728,10 @@
         .sari-shop-page .sari-shop-products-card {
             border-radius: 16px;
             box-shadow:
-                0 1px 3px rgba(15,23,42,.035),
-                0 7px 18px rgba(15,23,42,.06),
-                0 15px 32px rgba(15,23,42,.065),
-                inset 0 1px 0 rgba(255,255,255,.90);
+                0 1px 3px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+                0 7px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),
+                0 15px 32px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90));
         }
 
         .sari-shop-page .sari-shop-profile {

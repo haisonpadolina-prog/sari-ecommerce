@@ -1,0 +1,15 @@
+/* Shared order summary card: buyer and seller messaging. */
+.sari-order-card{width:min(100%,410px);margin-top:10px;overflow:hidden;border:1px solid #333945;border-radius:18px;background:#202328;color:#f6f6f6;box-shadow:0 10px 25px rgba(24,27,34,.12);font-family:Poppins,ui-sans-serif,system-ui,sans-serif}
+.sari-order-card-head{display:flex;align-items:center;gap:10px;padding:15px 16px 13px;border-bottom:1px solid #363b43}
+.sari-order-icon{width:36px;height:36px;display:grid;place-items:center;flex-shrink:0;border-radius:11px;background:#363633;color:#edbe65}
+.sari-order-icon svg{height:19px;width:19px}
+.sari-order-headline{min-width:0;flex:1;display:grid;gap:3px}.sari-order-headline strong{font-size:13px;font-weight:700;line-height:1.35}.sari-order-headline small{font-size:10px;color:#aeb5bc;overflow-wrap:anywhere}
+.sari-order-status{flex-shrink:0;border:1px solid #85682e;border-radius:100px;background:#3c3425;padding:5px 7px;color:#f6cf82;font-size:9px;font-weight:650}.sari-order-status.is-confirmed{background:#263e33;border-color:#417356;color:#9fe0b6}
+.sari-order-products{margin:12px 14px;padding:12px 13px;border-radius:13px;background:#2e3237;display:grid;gap:8px}.sari-order-products-label{font-size:10px;color:#a7aeb8}.sari-order-product{font-size:11px;line-height:1.6;color:#f2f4f5;overflow-wrap:anywhere}.sari-order-products small{font-size:10px;color:#abb3bb}.sari-order-total{padding-top:8px;border-top:1px solid #454a51;color:#f4cb79;font-size:12px;text-align:right}
+.sari-order-details{display:grid;gap:12px;margin:0;padding:7px 16px 16px}.sari-order-details>div{display:grid;grid-template-columns:98px minmax(0,1fr);gap:10px}.sari-order-details dt{font-size:10px;color:#a6adb7}.sari-order-details dd{min-width:0;margin:0;font-size:11px;line-height:1.6;text-align:right;overflow-wrap:anywhere;white-space:pre-wrap}
+.sari-order-confirm-button{width:calc(100% - 28px);margin:0 14px;min-height:43px;padding:10px;border:0;border-radius:11px;background:#c99128;color:#fff;font-size:12px;font-weight:750;cursor:pointer;transition:background .15s,transform .15s}.sari-order-confirm-button:hover{background:#b9821e}.sari-order-confirm-button:active{transform:translateY(1px)}.sari-order-confirm-button:focus-visible{outline:3px solid #f4dca8;outline-offset:3px}.sari-order-confirm-button:disabled{opacity:.7;cursor:wait}
+.sari-order-hint{padding:8px 16px 15px;margin:0;color:#aeb5bf;font-size:10px;line-height:1.7}.sari-order-confirmed{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px 16px;color:#a3e6b9;font-size:11px;font-weight:650}.sari-order-confirmed svg{width:18px;height:18px}
+@media(max-width:440px){.sari-order-card-head{flex-wrap:wrap}.sari-order-status{margin-left:46px}.sari-order-details>div{grid-template-columns:1fr;gap:2px}.sari-order-details dd{text-align:left}}
+@media(prefers-reduced-motion:reduce){.sari-order-confirm-button{transition:none}}
+
+.sari-order-product{display:flex;align-items:center;gap:10px}.sari-order-product img{width:41px;height:46px;flex:0 0 41px;object-fit:cover;background:white;border-radius:8px}.sari-order-product span{min-width:0;flex:1}

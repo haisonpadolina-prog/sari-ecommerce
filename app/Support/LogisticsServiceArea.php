@@ -17,7 +17,7 @@ final class LogisticsServiceArea
     {
         return self::normalize(
             preg_replace(
-                '/^(?:barangay|brgy\.?)\s+/iu',
+                '/^(?:barangay|brgy\.?|bgy\.?)\s+/iu',
                 '',
                 trim((string) $value)
             )
@@ -67,14 +67,27 @@ final class LogisticsServiceArea
             )
         );
 
-        foreach ($parts as $part) {
+        foreach ($parts as $index => $part) {
             if (
                 preg_match(
-                    '/^(?:barangay|brgy\.?)\s+(.+)$/iu',
+                    '/^(?:barangay|brgy\.?|bgy\.?)\s+(.+)$/iu',
                     $part,
                     $matches
                 )
             ) {
+                // Numbered barangays may contain a comma in their official name,
+                // e.g. Bgy. No. 42, Apaya. Bound the continuation by the known city.
+                if ($municipality && preg_match('/^(?:no\.?\s*)?\d+\b/iu', trim($matches[1]))) {
+                    foreach ($parts as $cityIndex => $cityPart) {
+                        if ($cityIndex > $index && self::municipality($cityPart) === self::municipality($municipality)) {
+                            $nameParts = array_slice($parts, $index, $cityIndex - $index);
+                            $nameParts[0] = trim($matches[1]);
+
+                            return implode(', ', $nameParts);
+                        }
+                    }
+                }
+
                 return trim($matches[1]);
             }
         }
@@ -111,6 +124,7 @@ final class LogisticsServiceArea
             && self::barangay($barangay)
                 === self::barangay($destination->barangay_name ?? null);
     }
+
     /**
      * Match the Seller's pickup barangay, city and province -- NOT the hub's.
      * Hubs may serve neighboring cities, so hub coordinates cannot define pickup duty.
@@ -134,15 +148,10 @@ final class LogisticsServiceArea
         }
         $province = array_pop($parts);
         $municipality = array_pop($parts);
-        $barangay = null;
-        foreach ($parts as $part) {
-            if (preg_match('/^(?:barangay|brgy\.?)\s+(.+)$/iu', $part, $matches)) {
-                $barangay = trim($matches[1]);
-                break;
-            }
-        }
-        // Standard PH address format: landmark, street, barangay, city, province.
-        $barangay ??= end($parts) ?: null;
+        $barangay = self::fromAddress(
+            implode(', ', array_merge($parts, [$municipality, $province])),
+            $municipality
+        );
         if (self::barangay($barangay) === '' || self::municipality($municipality) === '' || self::normalize($province) === '') {
             return false;
         }
@@ -153,5 +162,4 @@ final class LogisticsServiceArea
             'barangay_name' => $barangay,
         ]);
     }
-
 }

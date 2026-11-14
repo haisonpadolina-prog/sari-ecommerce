@@ -11,16 +11,16 @@
 .seller-vouchers-page {
     --voucher-gold:#C88912;
     --voucher-gold-hover:#AD730F;
-    --voucher-ink:#293440;
-    --voucher-text:#475569;
-    --voucher-muted:#8190A1;
-    --voucher-line:#E5E9EE;
+    --voucher-ink:var(--sari-dark-e23e64dd1e, #293440);
+    --voucher-text:var(--sari-dark-e23e64dd1e, #475569);
+    --voucher-muted:var(--sari-dark-a63aa16d7c, #8190A1);
+    --voucher-line:var(--sari-dark-d8c2716225, #E5E9EE);
     --voucher-soft:#F8FAFC;
     --voucher-main-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
     width:100%; max-width:1520px; margin-inline:auto; padding-bottom:36px;
     font-family:"Poppins",ui-sans-serif,system-ui,sans-serif;
     color:var(--voucher-ink);
@@ -30,43 +30,43 @@
 .seller-vouchers-page :is(button,input,select,summary,a):focus-visible {outline:2px solid rgba(200,137,18,.46);outline-offset:2px}
 .seller-vouchers-page :is(button,a,summary) {transition:background-color .15s ease,border-color .15s ease,color .15s ease}
 .seller-vouchers-header {padding:0 2px 17px;border-bottom:1px solid var(--voucher-line)}
-.seller-vouchers-eyebrow {margin:0;color:#A87316;font-size:10.5px;font-weight:800;line-height:1.35;letter-spacing:.11em;text-transform:uppercase}
-.seller-vouchers-title {margin:5px 0 0;color:#2E343B;font-size:clamp(27px,2.3vw,31px);font-weight:760;line-height:1.14;letter-spacing:-.03em}
+.seller-vouchers-eyebrow {margin:0;color:var(--sari-dark-685eb4fc40, #A87316);font-size:10.5px;font-weight:800;line-height:1.35;letter-spacing:.11em;text-transform:uppercase}
+.seller-vouchers-title {margin:5px 0 0;color:var(--sari-dark-e23e64dd1e, #2E343B);font-size:clamp(27px,2.3vw,31px);font-weight:760;line-height:1.14;letter-spacing:-.03em}
 .seller-vouchers-title span:last-child {margin-left:.2em;color:var(--voucher-gold)}
-.seller-vouchers-subtitle {max-width:810px;margin:8px 0 0;color:#7B8897;font-size:11.5px;line-height:1.65}
+.seller-vouchers-subtitle {max-width:810px;margin:8px 0 0;color:var(--sari-dark-a63aa16d7c, #7B8897);font-size:11.5px;line-height:1.65}
 /* Consistent white/gray notification treatment */
 .seller-voucher-alert {display:flex;align-items:flex-start;gap:10px;margin-bottom:13px;padding:12px 14px;border:1px solid;border-radius:13px;font-size:11.5px;line-height:1.55;font-weight:500}
-.seller-voucher-alert--success {border-color:#BFE7CA;background:#F0FDF4;color:#166534}
-.seller-voucher-alert--error {border-color:#FECACA;background:#FEF2F2;color:#B91C1C}
+.seller-voucher-alert--success {border-color:var(--sari-dark-d8c2716225, #BFE7CA);background:var(--sari-dark-950baec030, #F0FDF4);color:var(--sari-dark-e23e64dd1e, #166534)}
+.seller-voucher-alert--error {border-color:var(--sari-dark-d8c2716225, #FECACA);background:var(--sari-dark-950baec030, #FEF2F2);color:var(--sari-dark-5300031fd1, #B91C1C)}
 .seller-voucher-alert-icon {display:grid;flex:0 0 22px;width:22px;height:22px;place-items:center;border:0;background:transparent}
 .seller-voucher-alert-icon svg {width:19px;height:19px}
 /* Major headings and floating work surfaces */
 .seller-shipping-promo-section {margin:24px 0 22px}
 .seller-shipping-promo-head {display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:13px}
-.seller-shipping-promo-head h2 {margin:0;color:#293440;font-size:18px;font-weight:750;letter-spacing:-.025em;line-height:1.35}
-.seller-shipping-promo-head p {margin:5px 0 0;color:#8190A1;font-size:11px;line-height:1.6}
-.seller-shipping-promo-tz {color:#A56D0A;font-weight:650}
+.seller-shipping-promo-head h2 {margin:0;color:var(--sari-dark-e23e64dd1e, #293440);font-size:18px;font-weight:750;letter-spacing:-.025em;line-height:1.35}
+.seller-shipping-promo-head p {margin:5px 0 0;color:var(--sari-dark-a63aa16d7c, #8190A1);font-size:11px;line-height:1.6}
+.seller-shipping-promo-tz {color:var(--sari-dark-af18afcaa4, #A56D0A);font-weight:650}
 .seller-shipping-promo-grid {display:grid;grid-template-columns:minmax(330px,.88fr) minmax(0,1.12fr);gap:16px;align-items:stretch}
 .seller-shipping-promo-card, .seller-voucher-panel {
-    min-width:0;border:1px solid #E5E7EB;border-radius:20px;background:#FFF;
+    min-width:0;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB);border-radius:20px;background:var(--sari-dark-950baec030, #FFF);
     box-shadow:var(--voucher-main-shadow);
 }
 .seller-shipping-promo-card {padding:21px 22px}
-.seller-shipping-promo-card h3 {margin:0;color:#293440;font-size:16px;font-weight:750;line-height:1.4}
-.seller-shipping-promo-note {margin:6px 0 0;color:#8491A0;font-size:11px;line-height:1.6}
+.seller-shipping-promo-card h3 {margin:0;color:var(--sari-dark-e23e64dd1e, #293440);font-size:16px;font-weight:750;line-height:1.4}
+.seller-shipping-promo-note {margin:6px 0 0;color:var(--sari-dark-a63aa16d7c, #8491A0);font-size:11px;line-height:1.6}
 .seller-shipping-promo-fields {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:18px}
 .seller-shipping-promo-field {min-width:0}
-.seller-shipping-promo-field label, .seller-voucher-label {display:block;margin:0 0 7px;color:#586473;font-size:11px;line-height:1.4;font-weight:650}
-.seller-voucher-label small {color:#94A3B8;font-size:10px;font-weight:500}
+.seller-shipping-promo-field label, .seller-voucher-label {display:block;margin:0 0 7px;color:var(--sari-dark-a63aa16d7c, #586473);font-size:11px;line-height:1.4;font-weight:650}
+.seller-voucher-label small {color:var(--sari-dark-a63aa16d7c, #94A3B8);font-size:10px;font-weight:500}
 .seller-shipping-promo-field input, .seller-voucher-input, .seller-voucher-select {
-    display:block;width:100%;height:48px;min-height:48px;min-width:0;border:1px solid #DCE2E8;
-    border-radius:12px;background:#FFF;padding:0 14px;color:#344054;font-size:11.5px;font-weight:550;
+    display:block;width:100%;height:48px;min-height:48px;min-width:0;border:1px solid var(--sari-dark-d8c2716225, #DCE2E8);
+    border-radius:12px;background:var(--sari-dark-950baec030, #FFF);padding:0 14px;color:var(--sari-dark-e23e64dd1e, #344054);font-size:11.5px;font-weight:550;
     box-shadow:none;outline:0;transition:border-color .15s ease,box-shadow .15s ease;
 }
-.seller-shipping-promo-field input::placeholder, .seller-voucher-input::placeholder {color:#9BA6B3;font-weight:400}
-.seller-shipping-promo-field input:hover, .seller-voucher-input:hover, .seller-voucher-select:hover {border-color:#C9D1DB}
+.seller-shipping-promo-field input::placeholder, .seller-voucher-input::placeholder {color:var(--sari-dark-a63aa16d7c, #9BA6B3);font-weight:400}
+.seller-shipping-promo-field input:hover, .seller-voucher-input:hover, .seller-voucher-select:hover {border-color:var(--sari-dark-d8c2716225, #C9D1DB)}
 .seller-shipping-promo-field input:focus, .seller-voucher-input:focus, .seller-voucher-select:focus {
-    border-color:var(--voucher-gold);box-shadow:0 0 0 3px rgba(200,137,18,.09);outline:0;
+    border-color:var(--voucher-gold);box-shadow:0 0 0 3px var(--sari-dark-b12a5e9552, rgba(200,137,18,.09));outline:0;
 }
 .seller-shipping-promo-submit, .seller-voucher-submit {
     display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;
@@ -75,90 +75,90 @@
 }
 .seller-shipping-promo-submit:hover, .seller-voucher-submit:hover {background:var(--voucher-gold-hover);border-color:var(--voucher-gold-hover)}
 .seller-shipping-promo-submit {margin-top:16px;max-width:100%}
-.seller-shipping-promo-funder {margin-top:17px;padding:12px 14px;border:1px solid var(--voucher-line);border-radius:12px;background:var(--voucher-soft);color:#6D7988;font-size:10.5px;line-height:1.65}
-.seller-shipping-promo-funder strong {color:#455261;font-weight:750}
+.seller-shipping-promo-funder {margin-top:17px;padding:12px 14px;border:1px solid var(--voucher-line);border-radius:12px;background:var(--voucher-soft);color:var(--sari-dark-a63aa16d7c, #6D7988);font-size:10.5px;line-height:1.65}
+.seller-shipping-promo-funder strong {color:var(--sari-dark-e23e64dd1e, #455261);font-weight:750}
 .seller-shipping-promo-list {display:grid;gap:0;margin-top:17px}
-.seller-shipping-promo-item {padding:15px 0;border:0;border-bottom:1px solid #EDF0F3;border-radius:0;background:transparent}
+.seller-shipping-promo-item {padding:15px 0;border:0;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3);border-radius:0;background:transparent}
 .seller-shipping-promo-item:first-child {padding-top:0}
 .seller-shipping-promo-item:last-child {border-bottom:0;padding-bottom:0}
 .seller-shipping-promo-item-head {display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
-.seller-shipping-promo-terms {color:#303D4C;font-size:12px;font-weight:700;line-height:1.5}
-.seller-shipping-promo-meta {margin-top:5px;color:#8794A2;font-size:10.5px;line-height:1.6}
+.seller-shipping-promo-terms {color:var(--sari-dark-e23e64dd1e, #303D4C);font-size:12px;font-weight:700;line-height:1.5}
+.seller-shipping-promo-meta {margin-top:5px;color:var(--sari-dark-a63aa16d7c, #8794A2);font-size:10.5px;line-height:1.6}
 .seller-shipping-promo-status, .seller-voucher-status {display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;min-height:27px;border:1px solid;border-radius:999px;padding:3px 11px;font-size:10px;font-weight:700;line-height:1.3;white-space:nowrap}
-.seller-shipping-promo-status.is-active, .seller-voucher-status--active {border-color:#BBF7D0;background:#ECFDF3;color:#166534}
-.seller-shipping-promo-status.is-scheduled {border-color:#BFDBFE;background:#EFF6FF;color:#1D4ED8}
-.seller-shipping-promo-status.is-paused, .seller-voucher-status--inactive {border-color:#E2E8F0;background:#F8FAFC;color:#64748B}
-.seller-shipping-promo-status.is-ended {border-color:#FECACA;background:#FEF2F2;color:#B91C1C}
+.seller-shipping-promo-status.is-active, .seller-voucher-status--active {border-color:var(--sari-dark-d8c2716225, #BBF7D0);background:var(--sari-dark-4d21eb669b, #ECFDF3);color:var(--sari-dark-e23e64dd1e, #166534)}
+.seller-shipping-promo-status.is-scheduled {border-color:var(--sari-dark-d8c2716225, #BFDBFE);background:var(--sari-dark-950baec030, #EFF6FF);color:var(--sari-dark-7a41191112, #1D4ED8)}
+.seller-shipping-promo-status.is-paused, .seller-voucher-status--inactive {border-color:var(--sari-dark-d8c2716225, #E2E8F0);background:var(--sari-dark-950baec030, #F8FAFC);color:var(--sari-dark-a63aa16d7c, #64748B)}
+.seller-shipping-promo-status.is-ended {border-color:var(--sari-dark-d8c2716225, #FECACA);background:var(--sari-dark-950baec030, #FEF2F2);color:var(--sari-dark-5300031fd1, #B91C1C)}
 .seller-shipping-promo-actions {display:flex;flex-wrap:wrap;gap:9px;margin-top:11px}
 .seller-shipping-promo-actions form {margin:0}
 .seller-shipping-promo-action, .seller-shipping-promo-edit summary, .seller-voucher-action-button {
     display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;
-    border:1px solid #DCE2E8;border-radius:10px;background:#FFF;padding:0 13px;
-    color:#526071;font-size:11px;font-weight:650;line-height:1.3;cursor:pointer;text-decoration:none;list-style:none;
+    border:1px solid var(--sari-dark-d8c2716225, #DCE2E8);border-radius:10px;background:var(--sari-dark-950baec030, #FFF);padding:0 13px;
+    color:var(--sari-dark-a63aa16d7c, #526071);font-size:11px;font-weight:650;line-height:1.3;cursor:pointer;text-decoration:none;list-style:none;
 }
-.seller-shipping-promo-action:hover, .seller-shipping-promo-edit summary:hover, .seller-voucher-action-button--toggle:hover {border-color:#C9D1DB;background:#F8FAFC;color:#344054}
-.seller-shipping-promo-action.is-danger, .seller-voucher-action-button--delete {border-color:#FECACA;color:#B91C1C;background:#FFF}
-.seller-shipping-promo-action.is-danger:hover, .seller-voucher-action-button--delete:hover {background:#FEF2F2;border-color:#FCA5A5;color:#991B1B}
+.seller-shipping-promo-action:hover, .seller-shipping-promo-edit summary:hover, .seller-voucher-action-button--toggle:hover {border-color:var(--sari-dark-d8c2716225, #C9D1DB);background:var(--sari-dark-950baec030, #F8FAFC);color:var(--sari-dark-e23e64dd1e, #344054)}
+.seller-shipping-promo-action.is-danger, .seller-voucher-action-button--delete {border-color:var(--sari-dark-d8c2716225, #FECACA);color:var(--sari-dark-5300031fd1, #B91C1C);background:var(--sari-dark-950baec030, #FFF)}
+.seller-shipping-promo-action.is-danger:hover, .seller-voucher-action-button--delete:hover {background:var(--sari-dark-950baec030, #FEF2F2);border-color:var(--sari-dark-d8c2716225, #FCA5A5);color:var(--sari-dark-6780f56d77, #991B1B)}
 .seller-shipping-promo-edit {margin-top:10px}
 .seller-shipping-promo-edit summary::-webkit-details-marker {display:none}
-.seller-shipping-promo-edit[open] summary {border-color:#D1A24E;color:#A56D0A}
+.seller-shipping-promo-edit[open] summary {border-color:#D1A24E;color:var(--sari-dark-af18afcaa4, #A56D0A)}
 .seller-shipping-promo-edit-form {margin-top:13px;border-top:1px solid var(--voucher-line);padding-top:2px}
-.seller-shipping-promo-empty {display:grid;min-height:190px;place-items:center;margin-top:16px;padding:24px;text-align:center;border:1px dashed #DCE2E8;border-radius:12px;background:#FAFBFC;color:#8491A0;font-size:12px;line-height:1.6}
+.seller-shipping-promo-empty {display:grid;min-height:190px;place-items:center;margin-top:16px;padding:24px;text-align:center;border:1px dashed var(--sari-dark-d8c2716225, #DCE2E8);border-radius:12px;background:var(--sari-dark-950baec030, #FAFBFC);color:var(--sari-dark-a63aa16d7c, #8491A0);font-size:12px;line-height:1.6}
 /* Voucher create and listing panels */
 .seller-vouchers-layout {display:grid;grid-template-columns:minmax(360px,420px) minmax(0,1fr);align-items:start;gap:16px;margin-top:23px}
 .seller-voucher-panel {overflow:hidden}
-.seller-voucher-panel-head {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:21px 22px 17px;border-bottom:1px solid var(--voucher-line);background:#FFF}
+.seller-voucher-panel-head {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:21px 22px 17px;border-bottom:1px solid var(--voucher-line);background:var(--sari-dark-950baec030, #FFF)}
 .seller-voucher-panel-title-group {display:flex;align-items:center;min-width:0;gap:11px}
-.seller-voucher-panel-title {margin:0;color:#293440;font-size:18px;font-weight:750;line-height:1.3;letter-spacing:-.025em}
-.seller-voucher-count {display:inline-flex;align-items:center;min-height:28px;padding:3px 10px;border:1px solid #E2E8F0;border-radius:999px;background:#F8FAFC;color:#64748B;font-size:10.5px;font-weight:700;white-space:nowrap}
+.seller-voucher-panel-title {margin:0;color:var(--sari-dark-e23e64dd1e, #293440);font-size:18px;font-weight:750;line-height:1.3;letter-spacing:-.025em}
+.seller-voucher-count {display:inline-flex;align-items:center;min-height:28px;padding:3px 10px;border:1px solid var(--sari-dark-d8c2716225, #E2E8F0);border-radius:999px;background:var(--sari-dark-950baec030, #F8FAFC);color:var(--sari-dark-a63aa16d7c, #64748B);font-size:10.5px;font-weight:700;white-space:nowrap}
 .seller-voucher-form {padding:21px 22px 22px}
 .seller-voucher-form-grid {display:grid;gap:16px}
 .seller-voucher-field-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .seller-voucher-field {min-width:0}
 .seller-voucher-code {font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .seller-voucher-form-divider {height:1px;margin:2px 0 0;background:var(--voucher-line)}
-.seller-voucher-section-label {color:#A56D0A;font-size:10px;font-weight:800;line-height:1.35;letter-spacing:.09em;text-transform:uppercase}
+.seller-voucher-section-label {color:var(--sari-dark-af18afcaa4, #A56D0A);font-size:10px;font-weight:800;line-height:1.35;letter-spacing:.09em;text-transform:uppercase}
 .seller-voucher-submit {width:100%;margin-top:3px}
 .seller-voucher-submit svg {width:16px;height:16px}
-.seller-voucher-form-note {margin:0;color:#8A96A4;font-size:10px;line-height:1.6;text-align:center}
+.seller-voucher-form-note {margin:0;color:var(--sari-dark-a63aa16d7c, #8A96A4);font-size:10px;line-height:1.6;text-align:center}
 .seller-voucher-select {appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:17px}
 /* The enhancement leaves native select functional when JS is unavailable. */
 .seller-voucher-discount-dropdown {position:relative}
 .seller-voucher-discount-dropdown.is-enhanced .seller-voucher-select {display:none}
-.seller-voucher-discount-trigger {display:flex;width:100%;min-height:48px;align-items:center;justify-content:space-between;gap:9px;padding:0 14px;border:1px solid #DCE2E8;border-radius:12px;background:#FFF;color:#344054;font-size:11.5px;font-weight:600;cursor:pointer;text-align:left}
-.seller-voucher-discount-trigger:hover {border-color:#C9D1DB;background:#F8FAFC}
-.seller-voucher-discount-trigger[aria-expanded="true"] {border-color:var(--voucher-gold);box-shadow:0 0 0 2px rgba(200,137,18,.10)}
-.seller-voucher-discount-trigger svg {width:17px;height:17px;flex-shrink:0;color:#64748B}
-.seller-voucher-discount-menu {position:absolute;top:calc(100% + 7px);left:0;right:0;z-index:120;padding:7px;border:1px solid #E2E8F0;border-radius:13px;background:#FFF;box-shadow:0 15px 34px rgba(15,23,42,.12),0 3px 8px rgba(15,23,42,.04)}
+.seller-voucher-discount-trigger {display:flex;width:100%;min-height:48px;align-items:center;justify-content:space-between;gap:9px;padding:0 14px;border:1px solid var(--sari-dark-d8c2716225, #DCE2E8);border-radius:12px;background:var(--sari-dark-950baec030, #FFF);color:var(--sari-dark-e23e64dd1e, #344054);font-size:11.5px;font-weight:600;cursor:pointer;text-align:left}
+.seller-voucher-discount-trigger:hover {border-color:var(--sari-dark-d8c2716225, #C9D1DB);background:var(--sari-dark-950baec030, #F8FAFC)}
+.seller-voucher-discount-trigger[aria-expanded="true"] {border-color:var(--voucher-gold);box-shadow:0 0 0 2px var(--sari-dark-8eadf403a5, rgba(200,137,18,.10))}
+.seller-voucher-discount-trigger svg {width:17px;height:17px;flex-shrink:0;color:var(--sari-dark-a63aa16d7c, #64748B)}
+.seller-voucher-discount-menu {position:absolute;top:calc(100% + 7px);left:0;right:0;z-index:120;padding:7px;border:1px solid var(--sari-dark-d8c2716225, #E2E8F0);border-radius:13px;background:var(--sari-dark-950baec030, #FFF);box-shadow:0 15px 34px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)),0 3px 8px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04))}
 .seller-voucher-discount-menu[hidden], .seller-voucher-discount-trigger[hidden] {display:none!important}
-.seller-voucher-discount-option {display:block;width:100%;min-height:39px;padding:9px 11px;border:0;border-radius:9px;background:transparent;color:#475569;text-align:left;font-size:11.5px;font-weight:600;cursor:pointer}
-.seller-voucher-discount-option:hover, .seller-voucher-discount-option:focus-visible {outline:0;background:#F8FAFC;color:#A56D0A}
-.seller-voucher-discount-option.is-selected {background:#F8FAFC;color:#293440;font-weight:750}
+.seller-voucher-discount-option {display:block;width:100%;min-height:39px;padding:9px 11px;border:0;border-radius:9px;background:transparent;color:var(--sari-dark-e23e64dd1e, #475569);text-align:left;font-size:11.5px;font-weight:600;cursor:pointer}
+.seller-voucher-discount-option:hover, .seller-voucher-discount-option:focus-visible {outline:0;background:var(--sari-dark-950baec030, #F8FAFC);color:var(--sari-dark-af18afcaa4, #A56D0A)}
+.seller-voucher-discount-option.is-selected {background:var(--sari-dark-950baec030, #F8FAFC);color:var(--sari-dark-e23e64dd1e, #293440);font-weight:750}
 /* Flat, scannable voucher records */
-.seller-voucher-list {display:grid;background:#FFF}
-.seller-voucher-row {display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;padding:19px 22px;border-bottom:1px solid #EDF0F3;background:#FFF}
+.seller-voucher-list {display:grid;background:var(--sari-dark-950baec030, #FFF)}
+.seller-voucher-row {display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;padding:19px 22px;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3);background:var(--sari-dark-950baec030, #FFF)}
 .seller-voucher-row:last-child {border-bottom:0}
-.seller-voucher-row:hover {background:#F8FAFC}
+.seller-voucher-row:hover {background:var(--sari-dark-950baec030, #F8FAFC)}
 .seller-voucher-main {min-width:0}
 .seller-voucher-heading {display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.seller-voucher-code-badge {display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border:1px solid #E5E7EB;border-radius:9px;background:#F8FAFC;color:#A56D0A;font-size:11px;font-weight:800;letter-spacing:.035em}
-.seller-voucher-name {color:#293440;font-size:12.5px;font-weight:750;line-height:1.4;overflow-wrap:anywhere}
-.seller-voucher-meta {display:flex;flex-wrap:wrap;align-items:center;gap:5px 9px;margin-top:9px;color:#8491A0;font-size:11px;line-height:1.5}
-.seller-voucher-meta strong {color:#475569;font-weight:700}
+.seller-voucher-code-badge {display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB);border-radius:9px;background:var(--sari-dark-950baec030, #F8FAFC);color:var(--sari-dark-af18afcaa4, #A56D0A);font-size:11px;font-weight:800;letter-spacing:.035em}
+.seller-voucher-name {color:var(--sari-dark-e23e64dd1e, #293440);font-size:12.5px;font-weight:750;line-height:1.4;overflow-wrap:anywhere}
+.seller-voucher-meta {display:flex;flex-wrap:wrap;align-items:center;gap:5px 9px;margin-top:9px;color:var(--sari-dark-a63aa16d7c, #8491A0);font-size:11px;line-height:1.5}
+.seller-voucher-meta strong {color:var(--sari-dark-e23e64dd1e, #475569);font-weight:700}
 .seller-voucher-meta-separator {color:#CBD5E1}
 .seller-voucher-actions {display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px}
 .seller-voucher-actions form {margin:0}
 .seller-voucher-action-button svg {width:15px;height:15px}
-.seller-voucher-action-button--toggle {color:#526071}
-.seller-voucher-empty {display:grid;min-height:230px;place-items:center;padding:38px 22px;text-align:center;background:#FFF}
-.seller-voucher-empty-icon {display:grid;place-items:center;width:74px;height:74px;margin-inline:auto;color:#94A3B8;background:transparent;border:0;border-radius:0}
+.seller-voucher-action-button--toggle {color:var(--sari-dark-a63aa16d7c, #526071)}
+.seller-voucher-empty {display:grid;min-height:230px;place-items:center;padding:38px 22px;text-align:center;background:var(--sari-dark-950baec030, #FFF)}
+.seller-voucher-empty-icon {display:grid;place-items:center;width:74px;height:74px;margin-inline:auto;color:var(--sari-dark-a63aa16d7c, #94A3B8);background:transparent;border:0;border-radius:0}
 .seller-voucher-empty-icon svg {width:48px;height:48px}
-.seller-voucher-empty-title {margin-top:12px;color:#344054;font-size:17px;font-weight:750}
-.seller-voucher-empty-copy {max-width:320px;margin:7px auto 0;color:#8A96A4;font-size:11.5px;line-height:1.65}
+.seller-voucher-empty-title {margin-top:12px;color:var(--sari-dark-e23e64dd1e, #344054);font-size:17px;font-weight:750}
+.seller-voucher-empty-copy {max-width:320px;margin:7px auto 0;color:var(--sari-dark-a63aa16d7c, #8A96A4);font-size:11.5px;line-height:1.65}
 /* Paginator remains inside the primary white panel */
-.seller-voucher-pagination {padding:14px 20px;border-top:1px solid var(--voucher-line);background:#FFF}
+.seller-voucher-pagination {padding:14px 20px;border-top:1px solid var(--voucher-line);background:var(--sari-dark-950baec030, #FFF)}
 .seller-voucher-pagination nav {font-family:inherit;font-size:11px}
-.seller-voucher-pagination nav :is(a,span) {border-color:#E2E8F0}
+.seller-voucher-pagination nav :is(a,span) {border-color:var(--sari-dark-d8c2716225, #E2E8F0)}
 .seller-voucher-pagination nav [aria-current="page"] span {border-color:var(--voucher-gold)!important;background:var(--voucher-gold)!important;color:#FFF!important}
 @media(max-width:1140px) {
     .seller-shipping-promo-grid {grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
@@ -196,10 +196,10 @@
 @media (max-width: 767px) {
     .seller-vouchers-page {
         --voucher-main-shadow:
-            0 1px 3px rgba(15, 23, 42, .035),
-            0 6px 16px rgba(15, 23, 42, .055),
-            0 13px 28px rgba(15, 23, 42, .065),
-            inset 0 1px 0 rgba(255, 255, 255, .90);
+            0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 6px 16px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+            0 13px 28px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
     }
     .seller-vouchers-page .seller-shipping-promo-card,
     .seller-vouchers-page .seller-voucher-panel {

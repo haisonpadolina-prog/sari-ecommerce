@@ -10,16 +10,16 @@
 /* SARI Rider Account: adapted from the existing Buyer Account Management design. */
 body:has(#sariRiderAccount),
 body:has(#sariRiderAccount) #courierMain {
-    background: #f4f5f7 !important;
-    color: #202938;
+    background: var(--sari-dark-4d21eb669b, #f4f5f7) !important;
+    color: var(--sari-dark-e23e64dd1e, #202938);
 }
 body:has(#sariRiderAccount) #courierSidebar {
-    background: #fff !important;
-    border-right-color: #e5e7eb !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    border-right-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
 }
 body:has(#sariRiderAccount) #courierMain > header {
-    background: rgba(255,255,255,.97) !important;
-    border-bottom: 1px solid #e5e7eb !important;
+    background: var(--sari-dark-d2fbbe29b8, rgba(255,255,255,.97)) !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
     box-shadow: none !important;
 }
 #courierMain > main:has(#sariRiderAccount) {
@@ -29,15 +29,15 @@ body:has(#sariRiderAccount) #courierMain > header {
 #sariRiderAccount {
     --ra-gold: #c88912;
     --ra-gold-dark: #aa730f;
-    --ra-ink: #202938;
+    --ra-ink: var(--sari-dark-e23e64dd1e, #202938);
     --ra-body: #596579;
-    --ra-muted: #8490a2;
-    --ra-line: #e5e7eb;
-    --ra-line-soft: #edf1f5;
+    --ra-muted: var(--sari-dark-a63aa16d7c, #8490a2);
+    --ra-line: var(--sari-dark-d8c2716225, #e5e7eb);
+    --ra-line-soft: var(--sari-dark-d8c2716225, #edf1f5);
     --ra-soft: #f7f9fb;
-    --ra-shadow: 0 3px 7px rgba(15,23,42,.055),
-                 0 14px 32px rgba(15,23,42,.095),
-                 0 30px 68px rgba(15,23,42,.11);
+    --ra-shadow: 0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+                 0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+                 0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11));
     width: 100%;
     max-width: 1380px;
     margin: 0 auto;
@@ -66,7 +66,7 @@ body:has(#sariRiderAccount) #courierMain > header {
 }
 #courierMain #sariRiderAccount .sa-eyebrow {
     margin: 0 !important;
-    color: #a87316 !important;
+    color: var(--sari-dark-685eb4fc40, #a87316) !important;
     font-size: 10.5px !important;
     font-weight: 800 !important;
     line-height: 1.2 !important;
@@ -75,7 +75,7 @@ body:has(#sariRiderAccount) #courierMain > header {
 }
 #courierMain #sariRiderAccount .sa-page-title {
     margin: 5px 0 0 !important;
-    color: #2e343b !important;
+    color: var(--sari-dark-e23e64dd1e, #2e343b) !important;
     font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif !important;
     font-size: clamp(27px, 2.25vw, 31px) !important;
     font-weight: 760 !important;
@@ -83,77 +83,77 @@ body:has(#sariRiderAccount) #courierMain > header {
     letter-spacing: -.035em !important;
 }
 #courierMain #sariRiderAccount .sa-page-title span {
-    color: #c88912 !important;
+    color: var(--sari-dark-19b301f69a, #c88912) !important;
 }
 @media (max-width: 640px) {
     #courierMain #sariRiderAccount .sa-eyebrow { font-size: 9.5px !important; }
     #courierMain #sariRiderAccount .sa-page-title { font-size: 25px !important; }
 }
 #sariRiderAccount .ra-feedback {
-    margin:0 0 14px; border:1px solid #dfe5eb; border-radius:11px;
-    background:#fff; padding:11px 14px; font-size:11.5px; line-height:1.55;
+    margin:0 0 14px; border:1px solid var(--sari-dark-d8c2716225, #dfe5eb); border-radius:11px;
+    background:var(--sari-dark-950baec030, #fff); padding:11px 14px; font-size:11.5px; line-height:1.55;
 }
-#sariRiderAccount .ra-feedback--success { color:#27754e; background:#f6fbf8; border-color:#cce8d6; }
-#sariRiderAccount .ra-feedback--error { color:#a34850; background:#fff8f8; border-color:#eecfd2; }
+#sariRiderAccount .ra-feedback--success { color:var(--sari-dark-e23e64dd1e, #27754e); background:var(--sari-dark-950baec030, #f6fbf8); border-color:var(--sari-dark-d8c2716225, #cce8d6); }
+#sariRiderAccount .ra-feedback--error { color:var(--sari-dark-a63aa16d7c, #a34850); background:var(--sari-dark-950baec030, #fff8f8); border-color:var(--sari-dark-d8c2716225, #eecfd2); }
 
 /* LEFT: Rider profile preview, RIGHT: one unified information surface. */
 #sariRiderAccount .ra-layout { display:grid; grid-template-columns:286px minmax(0,1fr); gap:14px; align-items:start; }
 #sariRiderAccount .ra-left { position:sticky; top:84px; display:grid; gap:14px; min-width:0; }
 #sariRiderAccount .ra-card {
     min-width:0; overflow:hidden; border:1px solid var(--ra-line);
-    border-radius:17px; background:#fff; box-shadow:var(--ra-shadow);
+    border-radius:17px; background:var(--sari-dark-950baec030, #fff); box-shadow:var(--ra-shadow);
 }
 #sariRiderAccount .ra-profile-head {
     display:flex; align-items:center; justify-content:space-between; gap:10px;
     padding:15px 17px; border-bottom:1px solid var(--ra-line-soft);
 }
 #courierMain #sariRiderAccount .ra-card-title {
-    margin:0; color:#2b3441; font-size:16px; font-weight:750; line-height:1.3;
+    margin:0; color:var(--sari-dark-e23e64dd1e, #2b3441); font-size:16px; font-weight:750; line-height:1.3;
 }
 #sariRiderAccount .ra-profile-type {
-    color:#98a2ae; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--sari-dark-a63aa16d7c, #98a2ae); font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
 }
 #sariRiderAccount .ra-profile-body { padding:21px 17px 18px; }
 #sariRiderAccount .ra-avatar-wrap { position:relative; width:118px; height:118px; margin:0 auto; }
 #sariRiderAccount .ra-avatar {
     display:grid; place-items:center; width:118px; height:118px; overflow:hidden;
-    border:1px solid #dbe1e8; border-radius:20px; background:#f4f6f8;
-    color:#919ba8; font-size:30px; font-weight:700; letter-spacing:-.05em;
+    border:1px solid var(--sari-dark-d8c2716225, #dbe1e8); border-radius:20px; background:var(--sari-dark-4d21eb669b, #f4f6f8);
+    color:var(--sari-dark-a63aa16d7c, #919ba8); font-size:30px; font-weight:700; letter-spacing:-.05em;
 }
 #sariRiderAccount .ra-avatar img { width:100%; height:100%; object-fit:cover; }
 #sariRiderAccount .ra-avatar-edit {
     position:absolute; right:-7px; bottom:-7px; z-index:2;
     display:grid; place-items:center; width:36px; height:36px;
-    border:3px solid #fff; border-radius:11px; background:var(--ra-gold);
-    color:#fff; cursor:pointer; box-shadow:0 5px 13px rgba(200,137,18,.2);
+    border:3px solid var(--sari-dark-d8c2716225, #fff); border-radius:11px; background:var(--ra-gold);
+    color:#fff; cursor:pointer; box-shadow:0 5px 13px var(--sari-dark-ef22e61893, rgba(200,137,18,.2));
     transition:background-color .14s ease;
 }
 #sariRiderAccount .ra-avatar-edit:hover,
 #sariRiderAccount .ra-avatar-edit:focus-visible { background:var(--ra-gold-dark); }
 #sariRiderAccount .ra-avatar-edit svg { width:15px; height:15px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
 #sariRiderAccount .ra-profile-name {
-    margin:19px 0 0; color:#242d38; font-size:18px; font-weight:740;
+    margin:19px 0 0; color:var(--sari-dark-e23e64dd1e, #242d38); font-size:18px; font-weight:740;
     letter-spacing:-.025em; line-height:1.3; text-align:center; overflow-wrap:anywhere;
 }
 #sariRiderAccount .ra-profile-email {
-    margin:5px 0 0; color:#8993a0; font-size:11px; line-height:1.45;
+    margin:5px 0 0; color:var(--sari-dark-a63aa16d7c, #8993a0); font-size:11px; line-height:1.45;
     text-align:center; overflow-wrap:anywhere;
 }
 #sariRiderAccount .ra-availability-pill {
     display:table; margin:11px auto 0; padding:5px 11px;
-    border:1px solid #e1e5ea; border-radius:999px;
-    background:#f8f9fb; color:#697586; font-size:10px; font-weight:700;
+    border:1px solid var(--sari-dark-d8c2716225, #e1e5ea); border-radius:999px;
+    background:var(--sari-dark-950baec030, #f8f9fb); color:var(--sari-dark-a63aa16d7c, #697586); font-size:10px; font-weight:700;
 }
-#sariRiderAccount .ra-availability-pill--online { background:#ecf9f1; border-color:#c9ead5; color:#238052; }
+#sariRiderAccount .ra-availability-pill--online { background:var(--sari-dark-4d21eb669b, #ecf9f1); border-color:var(--sari-dark-d8c2716225, #c9ead5); color:var(--sari-dark-e23e64dd1e, #238052); }
 #sariRiderAccount .ra-profile-sub {
-    margin:11px 0 0; text-align:center; color:#84909e; font-size:10.5px; line-height:1.65;
+    margin:11px 0 0; text-align:center; color:var(--sari-dark-a63aa16d7c, #84909e); font-size:10.5px; line-height:1.65;
     overflow-wrap:anywhere;
 }
 #sariRiderAccount .ra-profile-file-status {
-    display:block; margin:10px 0 0; color:#9aa3ad; font-size:10px;
+    display:block; margin:10px 0 0; color:var(--sari-dark-a63aa16d7c, #9aa3ad); font-size:10px;
     line-height:1.5; text-align:center; overflow-wrap:anywhere;
 }
-#sariRiderAccount .ra-profile-file-status.is-error { color:#b54d56; }
+#sariRiderAccount .ra-profile-file-status.is-error { color:var(--sari-dark-c6045a6e31, #b54d56); }
 #sariRiderAccount .ra-meta {
     display:grid; gap:0; margin-top:17px; padding-top:9px;
     border-top:1px solid var(--ra-line-soft);
@@ -162,44 +162,44 @@ body:has(#sariRiderAccount) #courierMain > header {
     display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
     padding:8px 0; min-width:0;
 }
-#sariRiderAccount .ra-meta-label { color:#96a0ad; font-size:10.5px; font-weight:550; }
+#sariRiderAccount .ra-meta-label { color:var(--sari-dark-a63aa16d7c, #96a0ad); font-size:10.5px; font-weight:550; }
 #sariRiderAccount .ra-meta-value {
-    color:#485465; font-size:11px; font-weight:650; text-align:right;
+    color:var(--sari-dark-e23e64dd1e, #485465); font-size:11px; font-weight:650; text-align:right;
     max-width:63%; overflow-wrap:anywhere;
 }
 #sariRiderAccount .ra-side-section { padding:16px 17px 18px; }
-#sariRiderAccount .ra-side-title { margin:0; color:#323d4c; font-size:14px; font-weight:740; }
-#sariRiderAccount .ra-side-copy { margin:4px 0 13px; color:#8a95a2; font-size:10.5px; line-height:1.55; }
-#sariRiderAccount .ra-form-label { display:block; margin:0 0 6px; color:#40506a; font-size:11.5px; font-weight:690; }
+#sariRiderAccount .ra-side-title { margin:0; color:var(--sari-dark-e23e64dd1e, #323d4c); font-size:14px; font-weight:740; }
+#sariRiderAccount .ra-side-copy { margin:4px 0 13px; color:var(--sari-dark-a63aa16d7c, #8a95a2); font-size:10.5px; line-height:1.55; }
+#sariRiderAccount .ra-form-label { display:block; margin:0 0 6px; color:var(--sari-dark-e23e64dd1e, #40506a); font-size:11.5px; font-weight:690; }
 #sariRiderAccount .ra-select-shell { position:relative; }
 #sariRiderAccount .ra-select-shell::after {
     content:''; position:absolute; top:50%; right:16px; width:8px; height:8px;
-    border-right:1.8px solid #6a7380; border-bottom:1.8px solid #6a7380;
+    border-right:1.8px solid var(--sari-dark-d8c2716225, #6a7380); border-bottom:1.8px solid var(--sari-dark-d8c2716225, #6a7380);
     transform:translateY(-65%) rotate(45deg); pointer-events:none;
 }
 #sariRiderAccount .ra-control {
     display:block; width:100%; min-width:0; min-height:45px; padding:10px 13px;
-    border:1px solid #d7dee7; border-radius:11px; background:#fff;
-    color:#2e3948; font-size:12px; font-weight:500; line-height:1.5;
+    border:1px solid var(--sari-dark-d8c2716225, #d7dee7); border-radius:11px; background:var(--sari-dark-950baec030, #fff);
+    color:var(--sari-dark-e23e64dd1e, #2e3948); font-size:12px; font-weight:500; line-height:1.5;
     outline:none; transition:border-color .14s ease,box-shadow .14s ease,background-color .14s ease;
 }
 #sariRiderAccount select.ra-control {
     appearance:none; -webkit-appearance:none; -moz-appearance:none;
     padding-right:42px; cursor:pointer;
 }
-#sariRiderAccount .ra-control:hover:not(:disabled) { border-color:#c9d1db; }
+#sariRiderAccount .ra-control:hover:not(:disabled) { border-color:var(--sari-dark-d8c2716225, #c9d1db); }
 /* Clean, thin gold focus border: no thick gold halo or offset outline. */
 #sariRiderAccount .ra-control:focus,
 #sariRiderAccount .ra-control:focus-visible { border-color:var(--ra-gold); box-shadow:none; outline:none; outline-offset:0; }
-#sariRiderAccount .ra-control::placeholder { color:#a0a9b6; }
+#sariRiderAccount .ra-control::placeholder { color:var(--sari-dark-a63aa16d7c, #a0a9b6); }
 #sariRiderAccount .ra-control:disabled,
-#sariRiderAccount .ra-control[readonly] { color:#697586; background:#f7f9fb; border-color:#e3e7ec; }
+#sariRiderAccount .ra-control[readonly] { color:var(--sari-dark-a63aa16d7c, #697586); background:var(--sari-dark-950baec030, #f7f9fb); border-color:var(--sari-dark-d8c2716225, #e3e7ec); }
 #sariRiderAccount .ra-button {
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
     min-height:42px; padding:0 16px; border:1px solid var(--ra-gold);
     border-radius:10px; background:var(--ra-gold); color:#fff;
     font-size:11.5px; font-weight:720; cursor:pointer;
-    box-shadow:0 5px 13px rgba(200,137,18,.12);
+    box-shadow:0 5px 13px var(--sari-dark-3b2338cbf0, rgba(200,137,18,.12));
     transition:background-color .14s ease,border-color .14s ease;
 }
 #sariRiderAccount .ra-button:hover { background:var(--ra-gold-dark); border-color:var(--ra-gold-dark); }
@@ -210,63 +210,63 @@ body:has(#sariRiderAccount) #courierMain > header {
 #sariRiderAccount .ra-unified-section + .ra-unified-section { border-top:1px solid var(--ra-line-soft); }
 #sariRiderAccount .ra-section-heading { display:flex; align-items:flex-start; gap:16px; padding:19px 21px 13px; }
 #courierMain #sariRiderAccount .ra-section-title {
-    margin:0; color:#273140; font-size:16px; font-weight:760;
+    margin:0; color:var(--sari-dark-e23e64dd1e, #273140); font-size:16px; font-weight:760;
     letter-spacing:-.018em; line-height:1.3; white-space:nowrap;
 }
-#sariRiderAccount .ra-section-rule { height:1px; flex:1; margin-top:11px; background:#e2e7ed; }
+#sariRiderAccount .ra-section-rule { height:1px; flex:1; margin-top:11px; background:var(--sari-dark-4d21eb669b, #e2e7ed); }
 #sariRiderAccount .ra-section-body { padding:0 21px 21px; }
 #sariRiderAccount .ra-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
 #sariRiderAccount .ra-field { display:block; min-width:0; }
 #sariRiderAccount .ra-field--full { grid-column:1/-1; }
-#sariRiderAccount .ra-required { color:#c75a5a; }
-#sariRiderAccount .ra-help { margin:5px 0 0; color:#929ca9; font-size:10px; line-height:1.5; }
-#sariRiderAccount .ra-field-error { display:block; margin:5px 0 0; color:#b24754; font-size:10.5px; line-height:1.45; }
+#sariRiderAccount .ra-required { color:var(--sari-dark-e4fe02e52c, #c75a5a); }
+#sariRiderAccount .ra-help { margin:5px 0 0; color:var(--sari-dark-a63aa16d7c, #929ca9); font-size:10px; line-height:1.5; }
+#sariRiderAccount .ra-field-error { display:block; margin:5px 0 0; color:var(--sari-dark-b970d02d67, #b24754); font-size:10.5px; line-height:1.45; }
 #sariRiderAccount .ra-control[aria-invalid="true"] { border-color:#d77f89; }
-#sariRiderAccount .ra-control[aria-invalid="true"]:focus { box-shadow:0 0 0 3px rgba(199,90,90,.10); }
+#sariRiderAccount .ra-control[aria-invalid="true"]:focus { box-shadow:0 0 0 3px var(--sari-dark-8eadf403a5, rgba(199,90,90,.10)); }
 
 #sariRiderAccount .ra-readonly {
     display:flex; justify-content:space-between; align-items:center; gap:10px;
-    min-height:45px; padding:9px 12px; border:1px solid #e3e7ec;
-    border-radius:11px; background:#f7f9fb;
+    min-height:45px; padding:9px 12px; border:1px solid var(--sari-dark-d8c2716225, #e3e7ec);
+    border-radius:11px; background:var(--sari-dark-950baec030, #f7f9fb);
 }
-#sariRiderAccount .ra-readonly-value { color:#647183; font-size:11.5px; overflow-wrap:anywhere; }
+#sariRiderAccount .ra-readonly-value { color:var(--sari-dark-a63aa16d7c, #647183); font-size:11.5px; overflow-wrap:anywhere; }
 #sariRiderAccount .ra-readonly-badge {
-    border:1px solid #e1e5ea; border-radius:999px; background:#fff; padding:3px 8px;
-    color:#8993a0; font-size:9px; font-weight:700; white-space:nowrap;
+    border:1px solid var(--sari-dark-d8c2716225, #e1e5ea); border-radius:999px; background:var(--sari-dark-950baec030, #fff); padding:3px 8px;
+    color:var(--sari-dark-a63aa16d7c, #8993a0); font-size:9px; font-weight:700; white-space:nowrap;
 }
 #sariRiderAccount .ra-form-footer {
     display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
     gap:13px; border-top:1px solid var(--ra-line-soft);
-    background:#fbfcfd; padding:15px 21px;
+    background:var(--sari-dark-950baec030, #fbfcfd); padding:15px 21px;
 }
-#sariRiderAccount .ra-save-note { margin:0; color:#8d97a4; font-size:10px; line-height:1.5; }
+#sariRiderAccount .ra-save-note { margin:0; color:var(--sari-dark-a63aa16d7c, #8d97a4); font-size:10px; line-height:1.5; }
 
 /* The existing platform complaint form stays functional, styled to match the Buyer surface. */
 #sariRiderAccount .ra-support-wrapper > section {
     margin:0 !important; padding:16px 17px 17px !important;
     border:1px solid var(--ra-line) !important; border-radius:17px !important;
-    background:#fff !important; box-shadow:var(--ra-shadow);
+    background:var(--sari-dark-950baec030, #fff) !important; box-shadow:var(--ra-shadow);
 }
-#sariRiderAccount .ra-support-wrapper h3 { color:#323d4c !important; font-size:14px !important; font-weight:740 !important; }
-#sariRiderAccount .ra-support-wrapper p { font-size:10.5px !important; color:#8a95a2 !important; }
+#sariRiderAccount .ra-support-wrapper h3 { color:var(--sari-dark-e23e64dd1e, #323d4c) !important; font-size:14px !important; font-weight:740 !important; }
+#sariRiderAccount .ra-support-wrapper p { font-size:10.5px !important; color:var(--sari-dark-a63aa16d7c, #8a95a2) !important; }
 #sariRiderAccount .ra-support-wrapper form { gap:10px !important; margin-top:13px !important; }
 #sariRiderAccount .ra-support-wrapper :is(input,textarea) {
     width:100%; min-height:43px; padding:10px 12px !important;
-    border:1px solid #d7dee7 !important; border-radius:10px !important;
-    background:#fff !important; color:#2e3948 !important;
+    border:1px solid var(--sari-dark-d8c2716225, #d7dee7) !important; border-radius:10px !important;
+    background:var(--sari-dark-950baec030, #fff) !important; color:var(--sari-dark-e23e64dd1e, #2e3948) !important;
     font-size:11px !important; outline:0 !important;
 }
 #sariRiderAccount .ra-support-wrapper textarea { min-height:90px !important; resize:vertical; }
 #sariRiderAccount .ra-support-wrapper :is(input,textarea):focus {
     border-color:var(--ra-gold) !important;
-    box-shadow:0 0 0 3px rgba(200,137,18,.08) !important;
+    box-shadow:0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08)) !important;
 }
 #sariRiderAccount .ra-support-wrapper form button {
-    width:100%; min-height:40px; background:#343d49 !important;
+    width:100%; min-height:40px; background:var(--sari-dark-fbb35de0d1, #343d49) !important;
     border-radius:10px !important; color:#fff !important;
     font-size:11px !important; font-weight:700 !important;
 }
-#sariRiderAccount .ra-support-wrapper form button:hover { background:#252c34 !important; }
+#sariRiderAccount .ra-support-wrapper form button:hover { background:var(--sari-dark-fbb35de0d1, #252c34) !important; }
 
 @media (max-width:1020px) {
     #sariRiderAccount .ra-layout { grid-template-columns:245px minmax(0,1fr); }
@@ -303,7 +303,7 @@ body:has(#sariRiderAccount) #courierMain > header {
     #sariRiderAccount .ra-avatar { width:96px; height:96px; }
     #sariRiderAccount .ra-avatar-edit { right:-5px; bottom:-5px; }
     #sariRiderAccount .ra-profile-name { font-size:16px; }
-    #sariRiderAccount .ra-card { border-radius:14px; box-shadow:0 2px 4px rgba(15,23,42,.035),0 8px 18px rgba(15,23,42,.06),0 18px 38px rgba(15,23,42,.07); }
+    #sariRiderAccount .ra-card { border-radius:14px; box-shadow:0 2px 4px var(--sari-dark-7593018246, rgba(15,23,42,.035)),0 8px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),0 18px 38px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)); }
 }
 @media (prefers-reduced-motion:reduce) {
     #sariRiderAccount *,#sariRiderAccount *::before,#sariRiderAccount *::after { transition-duration:.01ms !important; }
@@ -314,8 +314,8 @@ body:has(#sariRiderAccount) #courierMain > header {
 /* Password visibility: scoped; preserves existing field layout. */
 #sariRiderAccount .ra-password-wrap { position:relative; }
 #sariRiderAccount .ra-password-wrap .ra-control { padding-right:48px; }
-#sariRiderAccount .ra-password-toggle { position:absolute; right:7px; top:50%; transform:translateY(-50%); display:grid; place-items:center; width:34px; height:34px; padding:0; border:0; border-radius:8px; background:transparent; color:#697586; cursor:pointer; }
-#sariRiderAccount .ra-password-toggle:hover { background:#f3f5f7; color:#202938; }
+#sariRiderAccount .ra-password-toggle { position:absolute; right:7px; top:50%; transform:translateY(-50%); display:grid; place-items:center; width:34px; height:34px; padding:0; border:0; border-radius:8px; background:transparent; color:var(--sari-dark-a63aa16d7c, #697586); cursor:pointer; }
+#sariRiderAccount .ra-password-toggle:hover { background:var(--sari-dark-4d21eb669b, #f3f5f7); color:var(--sari-dark-e23e64dd1e, #202938); }
 #sariRiderAccount .ra-password-toggle svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
 /* Match the same thin border on the support form inputs, too. */
 #sariRiderAccount .ra-support-wrapper :is(input,textarea):focus,
@@ -346,7 +346,7 @@ body:has(#sariRiderAccount) #courierMain > header {
     font-weight:800 !important;
     line-height:1.2 !important;
     letter-spacing:.14em !important;
-    color:#a87316 !important;
+    color:var(--sari-dark-685eb4fc40, #a87316) !important;
 }
 #courierMain #sariRiderAccount .sa-page-title {
     font-family:'Poppins',ui-sans-serif,system-ui,sans-serif !important;
@@ -354,9 +354,9 @@ body:has(#sariRiderAccount) #courierMain > header {
     font-weight:760 !important;
     line-height:1.04 !important;
     letter-spacing:-.035em !important;
-    color:#2e343b !important;
+    color:var(--sari-dark-e23e64dd1e, #2e343b) !important;
 }
-#courierMain #sariRiderAccount .sa-page-title > span { color:#c88912 !important; }
+#courierMain #sariRiderAccount .sa-page-title > span { color:var(--sari-dark-19b301f69a, #c88912) !important; }
 /* Buyer card rhythm: visible difference from the former Courier-only padding. */
 #sariRiderAccount .ra-profile-head { padding:14px 15px; }
 #sariRiderAccount .ra-profile-body { padding:16px; }

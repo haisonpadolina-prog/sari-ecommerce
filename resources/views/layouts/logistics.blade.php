@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    @include('components.shared.theme-head')
     <meta charset="UTF-8">
 
     <meta
@@ -59,7 +60,7 @@
         html,
         body {
             min-height: 100%;
-            background: #F4F5F7;
+            background: var(--sari-dark-4d21eb669b, #F4F5F7);
         }
 
         body {
@@ -77,7 +78,7 @@
 
         #logisticsContent {
             min-height: 100vh;
-            background: #F4F5F7;
+            background: var(--sari-dark-4d21eb669b, #F4F5F7);
         }
 
         #logisticsSidebarNav {
@@ -97,7 +98,7 @@
 
         #logisticsSidebarNav::-webkit-scrollbar-thumb {
             border-radius: 999px;
-            background: #e7ddcc;
+            background: var(--sari-dark-4d21eb669b, #e7ddcc);
         }
 
         #logisticsSidebarLogoCompact {
@@ -146,8 +147,8 @@
         }
 
         #logisticsActionModalIcon {
-            background: #fbf5e9;
-            color: #a8731f;
+            background: var(--sari-dark-4d21eb669b, #fbf5e9);
+            color: var(--sari-dark-5d5ad776eb, #a8731f);
         }
 
         #logisticsActionModalConfirm {
@@ -160,8 +161,8 @@
 
         #logisticsActionModalCard.is-danger
         #logisticsActionModalIcon {
-            background: #fff0f0;
-            color: #c24141;
+            background: var(--sari-dark-950baec030, #fff0f0);
+            color: var(--sari-dark-75bc23828f, #c24141);
         }
 
         #logisticsActionModalCard.is-danger
@@ -263,16 +264,16 @@
 
 :root {
     --logistics-sidebar-width: 238px;
-    --logistics-shell-bg: #f4f5f7;
-    --logistics-surface: #fff;
-    --logistics-ink: #24201b;
-    --logistics-muted: #91877b;
-    --logistics-border: #ece5da;
+    --logistics-shell-bg: var(--sari-dark-4d21eb669b, #f4f5f7);
+    --logistics-surface: var(--sari-dark-950baec030, #fff);
+    --logistics-ink: var(--sari-dark-e23e64dd1e, #24201b);
+    --logistics-muted: var(--sari-dark-a63aa16d7c, #91877b);
+    --logistics-border: var(--sari-dark-d8c2716225, #ece5da);
     --logistics-gold: #d9950b;
     --logistics-gold-dark: #c88708;
     --logistics-gold-pale: #fff9ef;
-    --logistics-shadow: 0 6px 18px rgba(33,24,14,.035);
-    --logistics-shadow-hover: 0 12px 27px rgba(43,33,21,.065);
+    --logistics-shadow: 0 6px 18px var(--sari-dark-7593018246, rgba(33,24,14,.035));
+    --logistics-shadow-hover: 0 12px 27px var(--sari-dark-4fc908fafe, rgba(43,33,21,.065));
     --logistics-shell-ease: cubic-bezier(.22,1,.36,1);
 }
 
@@ -317,8 +318,8 @@ body {
 
 #logisticsSidebarBrand {
     min-height: 74px !important;
-    background: #fff !important;
-    border-bottom-color: #eee7dc !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    border-bottom-color: var(--sari-dark-d8c2716225, #eee7dc) !important;
 }
 
 #logisticsSidebarLogoStage {
@@ -335,13 +336,13 @@ body {
 }
 
 #logisticsSidebarNav::-webkit-scrollbar-thumb {
-    background: #ddd4c7 !important;
+    background: var(--sari-dark-4d21eb669b, #ddd4c7) !important;
 }
 
 #logisticsSidebarNav .logistics-sidebar-section-label {
     margin: 10px 8px 7px !important;
     padding: 0 !important;
-    color: #9a7840 !important;
+    color: var(--sari-dark-a63aa16d7c, #9a7840) !important;
     font-size: 7.5px !important;
     font-weight: 700 !important;
     letter-spacing: .13em !important;
@@ -350,7 +351,7 @@ body {
 
 #logisticsSidebarNav > div.border-t {
     margin: 11px 6px 9px !important;
-    border-color: #eee7dd !important;
+    border-color: var(--sari-dark-d8c2716225, #eee7dd) !important;
 }
 
 #logisticsSidebarNav .logistics-sidebar-item {
@@ -386,8 +387,8 @@ body {
 #logisticsSidebarNav
 .logistics-sidebar-item:not([class*="bg-[#d9930a]"]):hover {
     background: var(--logistics-gold-pale) !important;
-    border-color: #eadfcf !important;
-    color: #94620a !important;
+    border-color: var(--sari-dark-d8c2716225, #eadfcf) !important;
+    color: var(--sari-dark-af18afcaa4, #94620a) !important;
     box-shadow: none !important;
 }
 
@@ -400,7 +401,7 @@ body {
     color: #fff !important;
 
     box-shadow:
-        0 5px 12px rgba(194,132,10,.12) !important;
+        0 5px 12px var(--sari-dark-3b2338cbf0, rgba(194,132,10,.12)) !important;
 }
 
 #logisticsSidebarNav
@@ -419,19 +420,19 @@ body {
 
 #logisticsSidebarProfile {
     padding: 9px 10px !important;
-    background: #fff !important;
-    border-top-color: #eee7dc !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    border-top-color: var(--sari-dark-d8c2716225, #eee7dc) !important;
 }
 
 #logisticsSidebarProfile > a {
     min-height: 54px !important;
-    border: 1px solid #e9e0d3 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #e9e0d3) !important;
     border-radius: 11px !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     padding: 8px 9px !important;
 
     box-shadow:
-        0 3px 10px rgba(40,31,21,.02);
+        0 3px 10px var(--sari-dark-f6fe7319d9, rgba(40,31,21,.02));
 
     transition:
         background-color 120ms ease,
@@ -440,18 +441,18 @@ body {
 }
 
 #logisticsSidebarProfile > a:hover {
-    background: #fffdf9 !important;
+    background: var(--sari-dark-950baec030, #fffdf9) !important;
     border-color: #dcc9a7 !important;
 
     box-shadow:
-        0 4px 12px rgba(40,31,21,.03);
+        0 4px 12px var(--sari-dark-b13200ac05, rgba(40,31,21,.03));
 }
 
 /* Header */
 
 #logisticsHeader {
-    background: #fff !important;
-    border-bottom: 1px solid #eee4d3 !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee4d3) !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
 }
@@ -462,13 +463,13 @@ body {
 }
 
 #logisticsHeader h1 {
-    color: #191712 !important;
+    color: var(--sari-dark-e23e64dd1e, #191712) !important;
     letter-spacing: -.025em;
 }
 
 #logisticsHeader input[type="search"] {
-    background: #fff !important;
-    border-color: #e3dcd1 !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    border-color: var(--sari-dark-d8c2716225, #e3dcd1) !important;
     border-radius: 11px !important;
 
     transition:
@@ -480,7 +481,7 @@ body {
     border-color: #d9950b !important;
 
     box-shadow:
-        0 0 0 3px rgba(216,155,16,.09) !important;
+        0 0 0 3px var(--sari-dark-b12a5e9552, rgba(216,155,16,.09)) !important;
 }
 
 /* Icon-only notification bell */
@@ -490,14 +491,14 @@ body {
     background: transparent !important;
     box-shadow: none !important;
     transform: none !important;
-    color: #475467 !important;
+    color: var(--sari-dark-e23e64dd1e, #475467) !important;
 }
 
 #logisticsNotificationButton:hover,
 #logisticsNotificationButton:focus-visible {
     background: transparent !important;
     border-color: transparent !important;
-    color: #c9890b !important;
+    color: var(--sari-dark-9db03b407c, #c9890b) !important;
     box-shadow: none !important;
 }
 
@@ -506,11 +507,11 @@ body {
 #logisticsMenuButton,
 #logisticsSidebarToggle {
     border-radius: 10px !important;
-    background: #fff !important;
-    border-color: #e5ded2 !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    border-color: var(--sari-dark-d8c2716225, #e5ded2) !important;
 
     box-shadow:
-        0 2px 5px rgba(40,31,21,.035) !important;
+        0 2px 5px var(--sari-dark-7593018246, rgba(40,31,21,.035)) !important;
 
     transition:
         background-color 120ms ease,
@@ -520,8 +521,8 @@ body {
 
 #logisticsMenuButton:hover,
 #logisticsSidebarToggle:hover {
-    background: #fff9ef !important;
-    color: #a96f09 !important;
+    background: var(--sari-dark-950baec030, #fff9ef) !important;
+    color: var(--sari-dark-af18afcaa4, #a96f09) !important;
     border-color: #dec99f !important;
 }
 
@@ -582,7 +583,7 @@ body {
     border-color: #d9950b !important;
 
     box-shadow:
-        0 0 0 3px rgba(216,155,16,.09) !important;
+        0 0 0 3px var(--sari-dark-b12a5e9552, rgba(216,155,16,.09)) !important;
 }
 
 /* Keyboard accessibility */

@@ -1,0 +1,94 @@
+{
+  "products": [
+    {
+      "sku": "SARI-FLOW10-001",
+      "seller_email": "seller.flow.001@example.test",
+      "name": "USB Optical Mouse (Demo)",
+      "category": "Electronics",
+      "description": "USB Optical Mouse reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-001.png",
+      "sha256": "1947623308dff8e3b53be3a5045ca39b8d9156c7981c3e21ae5fb9321457f5da"
+    },
+    {
+      "sku": "SARI-FLOW10-002",
+      "seller_email": "seller.flow.002@example.test",
+      "name": "Canvas Tote Bag (Demo)",
+      "category": "Fashion",
+      "description": "Canvas Tote Bag reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-002.png",
+      "sha256": "fc19b4c14744d7ef7ce6a2da63a1f8a30686329f1ddae19aa11c82d79bb662bb"
+    },
+    {
+      "sku": "SARI-FLOW10-003",
+      "seller_email": "seller.flow.003@example.test",
+      "name": "Ceramic Mug (Demo)",
+      "category": "Home & Living",
+      "description": "Ceramic Mug reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-003.png",
+      "sha256": "dfbcfd231f1d30d59e483c019daac22e9a894302f52e76bcf25a2102074d44d2"
+    },
+    {
+      "sku": "SARI-FLOW10-004",
+      "seller_email": "seller.flow.004@example.test",
+      "name": "Travel Toiletry Pouch (Demo)",
+      "category": "Beauty",
+      "description": "Travel Toiletry Pouch reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-004.png",
+      "sha256": "3eb6b41ae1e34dc2a04aa057518d547d88793c47f93cb7386f156a7ab1b56b70"
+    },
+    {
+      "sku": "SARI-FLOW10-005",
+      "seller_email": "seller.flow.005@example.test",
+      "name": "Ruled Notebook (Demo)",
+      "category": "Books",
+      "description": "Ruled Notebook reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-005.png",
+      "sha256": "4ffcfc2ed098117519bcf55a9014d91df4b7444a27825f25e814a3c21c3ef542"
+    },
+    {
+      "sku": "SARI-FLOW10-006",
+      "seller_email": "seller.flow.006@example.test",
+      "name": "Oat Cookies Pack (Demo)",
+      "category": "Food & Beverage",
+      "description": "Oat Cookies Pack reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-006.png",
+      "sha256": "79a69710b395e817c741815df5c8aa7790bf88e8e0b2b7353df5753bee40a662"
+    },
+    {
+      "sku": "SARI-FLOW10-007",
+      "seller_email": "seller.flow.007@example.test",
+      "name": "Minimalist Bracelet (Demo)",
+      "category": "Jewelry & Watches",
+      "description": "Minimalist Bracelet reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-007.png",
+      "sha256": "4675acab0e8faef3c7855bd2798f967948cfab4af4dbe430832835a8aec9225f"
+    },
+    {
+      "sku": "SARI-FLOW10-008",
+      "seller_email": "seller.flow.008@example.test",
+      "name": "Desk Pen Organizer (Demo)",
+      "category": "Furniture & Office",
+      "description": "Desk Pen Organizer reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-008.png",
+      "sha256": "b2cbeca2559c7121d535c6ccdbb22d96096d58817f367988c5decbe230dd59bd"
+    },
+    {
+      "sku": "SARI-FLOW10-009",
+      "seller_email": "seller.flow.009@example.test",
+      "name": "Cotton Utility Pouch (Demo)",
+      "category": "Others",
+      "description": "Cotton Utility Pouch reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-009.png",
+      "sha256": "86deec8c8302cd08932bcdd1da7c51236644352183bbf0c0ffe1b61d54707931"
+    },
+    {
+      "sku": "SARI-FLOW10-010",
+      "seller_email": "seller.flow.010@example.test",
+      "name": "Compact USB Keyboard (Demo)",
+      "category": "Electronics",
+      "description": "Compact USB Keyboard reference fixture for checkout, seller preparation and parcel handling tests.",
+      "image": "product-010.png",
+      "sha256": "4a43fb29a431f7eaaca1437a642790b567e728681f6d36a326c4b2f22af02fe1"
+    }
+  ]
+}

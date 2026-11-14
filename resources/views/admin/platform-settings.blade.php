@@ -57,16 +57,16 @@
 
 <style>
     :root{
-        --ps-bg:#f5f6f8;
-        --ps-surface:#ffffff;
-        --ps-surface-2:#fafbfc;
-        --ps-ink:#191b1f;
-        --ps-text:#565c65;
-        --ps-muted:#8a8f98;
-        --ps-line:#e7e9ec;
-        --ps-line-strong:#d5d8dd;
+        --ps-bg:var(--sari-dark-950baec030, #f5f6f8);
+        --ps-surface:var(--sari-dark-950baec030, #ffffff);
+        --ps-surface-2:var(--sari-dark-950baec030, #fafbfc);
+        --ps-ink:var(--sari-dark-e23e64dd1e, #191b1f);
+        --ps-text:var(--sari-dark-a63aa16d7c, #565c65);
+        --ps-muted:var(--sari-dark-a63aa16d7c, #8a8f98);
+        --ps-line:var(--sari-dark-d8c2716225, #e7e9ec);
+        --ps-line-strong:var(--sari-dark-d8c2716225, #d5d8dd);
         --ps-accent:#a9700f;
-        --ps-accent-ink:#8a5c0e;
+        --ps-accent-ink:var(--sari-dark-6e784b4931, #8a5c0e);
         --ps-accent-soft:#fbf1de;
         --ps-accent-line:#e7cd97;
         --ps-success:#3f7d52;
@@ -76,8 +76,8 @@
         --ps-radius-lg:12px;
         --ps-radius-md:9px;
         --ps-radius-sm:7px;
-        --ps-shadow:0 1px 2px rgba(20,22,26,.04), 0 6px 16px rgba(20,22,26,.04);
-        --ps-shadow-strong:0 12px 32px rgba(20,22,26,.14);
+        --ps-shadow:0 1px 2px var(--sari-dark-25b2da5e49, rgba(20,22,26,.04)), 0 6px 16px var(--sari-dark-25b2da5e49, rgba(20,22,26,.04));
+        --ps-shadow-strong:0 12px 32px var(--sari-dark-59ed29fe9d, rgba(20,22,26,.14));
     }
 
     .platform-settings-page{
@@ -157,7 +157,7 @@
         gap:6px;
         border:1px solid var(--ps-line);
         border-radius:var(--ps-radius-sm);
-        background:#fff;
+        background:var(--sari-dark-950baec030, #fff);
         padding:0 11px;
         color:var(--ps-text);
         font-size:11.5px;
@@ -174,21 +174,21 @@
 
     .ps-alert{
         margin-bottom:14px;
-        border:1px solid #cfe1cf;
+        border:1px solid var(--sari-dark-d8c2716225, #cfe1cf);
         border-radius:var(--ps-radius-md);
         background:var(--ps-success-soft);
         padding:11px 14px;
-        color:#375f43;
+        color:var(--sari-dark-e23e64dd1e, #375f43);
         font-size:12.5px;
         font-weight:600;
     }
     .ps-errors{
         margin-bottom:14px;
-        border:1px solid #e9c3bd;
+        border:1px solid var(--sari-dark-d8c2716225, #e9c3bd);
         border-radius:var(--ps-radius-md);
         background:var(--ps-danger-soft);
         padding:11px 14px;
-        color:#8f382e;
+        color:var(--sari-dark-a63aa16d7c, #8f382e);
         font-size:12px;
         line-height:1.6;
     }
@@ -316,7 +316,7 @@
         width:100%;
         border:1px solid var(--ps-line-strong);
         border-radius:var(--ps-radius-sm);
-        background:#fff;
+        background:var(--sari-dark-950baec030, #fff);
         color:var(--ps-ink);
         font:inherit;
         font-size:12.5px;
@@ -326,10 +326,10 @@
     }
     .ps-input{height:40px;padding:0 12px}
     .ps-textarea{min-height:88px;padding:10px 12px;resize:vertical;line-height:1.6}
-    .ps-input:hover,.ps-textarea:hover{border-color:#c3c7cd}
+    .ps-input:hover,.ps-textarea:hover{border-color:var(--sari-dark-d8c2716225, #c3c7cd)}
     .ps-input:focus,.ps-textarea:focus{
         border-color:var(--ps-accent);
-        box-shadow:0 0 0 3px rgba(169,112,15,.10);
+        box-shadow:0 0 0 3px var(--sari-dark-8eadf403a5, rgba(169,112,15,.10));
     }
     .ps-input-wrap{position:relative}
     .ps-input-wrap .ps-input{padding-right:44px}
@@ -393,7 +393,7 @@
         inset:0;
         border:1px solid var(--ps-line-strong);
         border-radius:999px;
-        background:#e3e5e8;
+        background:var(--sari-dark-4d21eb669b, #e3e5e8);
         cursor:pointer;
         transition:.15s ease;
     }
@@ -405,8 +405,8 @@
         width:16px;
         height:16px;
         border-radius:50%;
-        background:#fff;
-        box-shadow:0 1px 3px rgba(0,0,0,.16);
+        background:var(--sari-dark-950baec030, #fff);
+        box-shadow:0 1px 3px var(--sari-dark-b5c2a2270e, rgba(0,0,0,.16));
         transition:.15s ease;
     }
     .ps-switch input:checked + span{
@@ -517,13 +517,13 @@
     }
     .ps-btn-secondary{
         border:1px solid var(--ps-line-strong);
-        background:#fff;
+        background:var(--sari-dark-950baec030, #fff);
         color:var(--ps-text);
     }
     .ps-btn-secondary:hover{background:var(--ps-surface-2)}
     .ps-btn-danger{
         border:1px solid #e3b8b1;
-        background:#fff;
+        background:var(--sari-dark-950baec030, #fff);
         color:var(--ps-danger);
     }
     .ps-btn-danger:hover{background:var(--ps-danger-soft)}
@@ -545,7 +545,7 @@
         margin-top:16px;
         border:1px solid var(--ps-line-strong);
         border-radius:var(--ps-radius-lg);
-        background:#fff;
+        background:var(--sari-dark-950baec030, #fff);
         padding:12px 14px;
         box-shadow:var(--ps-shadow-strong);
     }
@@ -623,7 +623,7 @@
         gap:6px;
         border:1px solid var(--ps-line);
         border-radius:var(--ps-radius-sm);
-        background:#fff;
+        background:var(--sari-dark-950baec030, #fff);
         padding:0 10px;
         color:var(--ps-text);
         font-size:10.5px;
@@ -658,7 +658,7 @@
         width:min(360px,calc(100vw - 40px));
         border:1px solid var(--ps-line);
         border-radius:var(--ps-radius-lg);
-        background:#fff;
+        background:var(--sari-dark-950baec030, #fff);
         padding:14px;
         box-shadow:var(--ps-shadow-strong);
     }
@@ -688,7 +688,7 @@
         height:22px;
         place-items:center;
         border-radius:6px;
-        background:#eceef0;
+        background:var(--sari-dark-4d21eb669b, #eceef0);
         color:var(--ps-text);
         font-size:10px;
         font-weight:650;
@@ -712,7 +712,7 @@
         z-index:1000;
         display:none;
         place-items:center;
-        background:rgba(17,19,23,.42);
+        background:var(--sari-dark-416d70b0b2, rgba(17,19,23,.42));
         padding:20px;
     }
     .ps-modal-backdrop.show{display:grid}
@@ -720,9 +720,9 @@
         width:min(460px,100%);
         border:1px solid var(--ps-line);
         border-radius:var(--ps-radius-lg);
-        background:#fff;
+        background:var(--sari-dark-950baec030, #fff);
         padding:20px;
-        box-shadow:0 24px 64px rgba(17,19,23,.28);
+        box-shadow:0 24px 64px var(--sari-dark-d014e7232e, rgba(17,19,23,.28));
     }
     .ps-modal h3{margin:0;color:var(--ps-ink);font-size:16px;font-weight:650}
     .ps-modal p{margin:6px 0 0;color:var(--ps-text);font-size:12px;line-height:1.55}
@@ -800,11 +800,11 @@
         height:44px !important;
         flex:0 0 44px !important;
         place-items:center !important;
-        border:1px solid #eadfc9 !important;
+        border:1px solid var(--sari-dark-d8c2716225, #eadfc9) !important;
         border-radius:12px !important;
-        background:#fff8eb !important;
-        color:#b77c18 !important;
-        box-shadow:0 4px 12px rgba(75,54,25,.045) !important;
+        background:var(--sari-dark-4d21eb669b, #fff8eb) !important;
+        color:var(--sari-dark-5acaf64852, #b77c18) !important;
+        box-shadow:0 4px 12px var(--sari-dark-1190f58155, rgba(75,54,25,.045)) !important;
     }
 
     .platform-settings-page .ps-header-icon svg{
@@ -814,7 +814,7 @@
 
     .platform-settings-page .ps-eyebrow{
         margin:0 !important;
-        color:#9a6f23 !important;
+        color:var(--sari-dark-a63aa16d7c, #9a6f23) !important;
         -webkit-text-fill-color:#9a6f23 !important;
         font-size:8px !important;
         font-weight:700 !important;
@@ -832,19 +832,19 @@
     }
 
     .platform-settings-page .ps-title-dark{
-        color:#17130f !important;
+        color:var(--sari-dark-e23e64dd1e, #17130f) !important;
         -webkit-text-fill-color:#17130f !important;
     }
 
     .platform-settings-page .ps-title-accent{
-        color:#d99500 !important;
+        color:var(--sari-dark-7f7834ccc9, #d99500) !important;
         -webkit-text-fill-color:#d99500 !important;
     }
 
     .platform-settings-page .ps-subtitle{
         max-width:760px !important;
         margin:7px 0 0 !important;
-        color:#7f756a !important;
+        color:var(--sari-dark-a63aa16d7c, #7f756a) !important;
         -webkit-text-fill-color:#7f756a !important;
         font-size:11px !important;
         font-weight:400 !important;
@@ -951,30 +951,30 @@
        ============================================================ */
 
     .platform-settings-page{
-        --ps-bg:#f4f5f7 !important;
-        --ps-surface:#ffffff !important;
-        --ps-surface-2:#f9fafb !important;
-        --ps-ink:#111827 !important;
-        --ps-text:#475467 !important;
-        --ps-muted:#7c8592 !important;
-        --ps-line:#e5e7eb !important;
-        --ps-line-strong:#d1d5db !important;
+        --ps-bg:var(--sari-dark-4d21eb669b, #f4f5f7) !important;
+        --ps-surface:var(--sari-dark-950baec030, #ffffff) !important;
+        --ps-surface-2:var(--sari-dark-950baec030, #f9fafb) !important;
+        --ps-ink:var(--sari-dark-e23e64dd1e, #111827) !important;
+        --ps-text:var(--sari-dark-e23e64dd1e, #475467) !important;
+        --ps-muted:var(--sari-dark-a63aa16d7c, #7c8592) !important;
+        --ps-line:var(--sari-dark-d8c2716225, #e5e7eb) !important;
+        --ps-line-strong:var(--sari-dark-d8c2716225, #d1d5db) !important;
         --ps-accent:#d59617 !important;
-        --ps-accent-ink:#b97805 !important;
+        --ps-accent-ink:var(--sari-dark-af18afcaa4, #b97805) !important;
         --ps-accent-soft:#fff8e8 !important;
         --ps-accent-line:#ead7ae !important;
         --ps-radius-lg:14px !important;
         --ps-radius-md:10px !important;
         --ps-radius-sm:9px !important;
         --ps-shadow:
-            0 2px 5px rgba(15,23,42,.045),
-            0 10px 24px rgba(15,23,42,.075),
-            0 24px 54px rgba(15,23,42,.095),
-            inset 0 1px 0 rgba(255,255,255,.92) !important;
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92)) !important;
         --ps-shadow-strong:
-            0 3px 7px rgba(15,23,42,.055),
-            0 14px 32px rgba(15,23,42,.095),
-            0 30px 68px rgba(15,23,42,.11) !important;
+            0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+            0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+            0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11)) !important;
 
         width:100% !important;
         max-width:1500px !important;
@@ -991,7 +991,7 @@
         gap:18px !important;
         margin:0 0 14px !important;
         padding:2px 2px 13px !important;
-        border-bottom:1px solid #eceff2 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #eceff2) !important;
         background:transparent !important;
         box-shadow:none !important;
     }
@@ -1007,7 +1007,7 @@
 
     .platform-settings-page .ps-eyebrow{
         margin:0 !important;
-        color:#b97805 !important;
+        color:var(--sari-dark-af18afcaa4, #b97805) !important;
         -webkit-text-fill-color:#b97805 !important;
         font-size:8px !important;
         font-weight:800 !important;
@@ -1024,19 +1024,19 @@
     }
 
     .platform-settings-page .ps-title-dark{
-        color:#111827 !important;
+        color:var(--sari-dark-e23e64dd1e, #111827) !important;
         -webkit-text-fill-color:#111827 !important;
     }
 
     .platform-settings-page .ps-title-accent{
-        color:#d59617 !important;
+        color:var(--sari-dark-9db03b407c, #d59617) !important;
         -webkit-text-fill-color:#d59617 !important;
     }
 
     .platform-settings-page .ps-subtitle{
         max-width:760px !important;
         margin:7px 0 0 !important;
-        color:#7c8592 !important;
+        color:var(--sari-dark-a63aa16d7c, #7c8592) !important;
         -webkit-text-fill-color:#7c8592 !important;
         font-size:10px !important;
         font-weight:400 !important;
@@ -1054,11 +1054,11 @@
     .platform-settings-page .ps-header-actions .ps-help-trigger{
         min-height:36px !important;
         height:36px !important;
-        border:1px solid #e5e7eb !important;
+        border:1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius:9px !important;
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
         padding:0 10px !important;
-        color:#475467 !important;
+        color:var(--sari-dark-e23e64dd1e, #475467) !important;
         font-size:8.5px !important;
         font-weight:600 !important;
         box-shadow:none !important;
@@ -1070,9 +1070,9 @@
 
     /* Main page surfaces carry depth; nested UI remains flat. */
     .platform-settings-page .ps-card{
-        border:1px solid #e5e7eb !important;
+        border:1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius:14px !important;
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
         box-shadow:var(--ps-shadow) !important;
         transform:none !important;
     }
@@ -1086,11 +1086,11 @@
     .platform-settings-page .ps-policy-cell{
         min-height:92px !important;
         padding:14px 16px !important;
-        border-right:1px solid #eceff2 !important;
+        border-right:1px solid var(--sari-dark-d8c2716225, #eceff2) !important;
     }
 
     .platform-settings-page .ps-kicker{
-        color:#7c8592 !important;
+        color:var(--sari-dark-a63aa16d7c, #7c8592) !important;
         font-size:8px !important;
         font-weight:700 !important;
         letter-spacing:.02em !important;
@@ -1098,7 +1098,7 @@
 
     .platform-settings-page .ps-policy-value{
         margin-top:5px !important;
-        color:#111827 !important;
+        color:var(--sari-dark-e23e64dd1e, #111827) !important;
         font-size:21px !important;
         font-weight:700 !important;
         line-height:1.05 !important;
@@ -1107,7 +1107,7 @@
 
     .platform-settings-page .ps-policy-note{
         margin-top:6px !important;
-        color:#8a93a0 !important;
+        color:var(--sari-dark-a63aa16d7c, #8a93a0) !important;
         font-size:8px !important;
         line-height:1.45 !important;
     }
@@ -1129,11 +1129,11 @@
         gap:12px !important;
         margin-bottom:14px !important;
         padding-bottom:12px !important;
-        border-bottom:1px solid #eceff2 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #eceff2) !important;
     }
 
     .platform-settings-page .ps-section-title{
-        color:#1f2937 !important;
+        color:var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size:12px !important;
         font-weight:700 !important;
         line-height:1.35 !important;
@@ -1143,7 +1143,7 @@
     .platform-settings-page .ps-section-copy{
         max-width:560px !important;
         margin-top:4px !important;
-        color:#7c8592 !important;
+        color:var(--sari-dark-a63aa16d7c, #7c8592) !important;
         font-size:8.5px !important;
         line-height:1.5 !important;
     }
@@ -1156,11 +1156,11 @@
     .platform-settings-page .ps-help-trigger{
         min-height:28px !important;
         height:28px !important;
-        border:1px solid #e5e7eb !important;
+        border:1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius:8px !important;
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
         padding:0 8px !important;
-        color:#667085 !important;
+        color:var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size:7.5px !important;
         font-weight:650 !important;
         box-shadow:none !important;
@@ -1176,23 +1176,23 @@
     }
 
     .platform-settings-page .ps-label{
-        color:#344054 !important;
+        color:var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size:9px !important;
         font-weight:650 !important;
     }
 
     .platform-settings-page .ps-current{
-        color:#98a2b3 !important;
+        color:var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size:7.5px !important;
         font-weight:500 !important;
     }
 
     .platform-settings-page .ps-input,
     .platform-settings-page .ps-textarea{
-        border:1px solid #d1d5db !important;
+        border:1px solid var(--sari-dark-d8c2716225, #d1d5db) !important;
         border-radius:9px !important;
-        background:#fff !important;
-        color:#344054 !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
+        color:var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size:9px !important;
         font-weight:500 !important;
         box-shadow:none !important;
@@ -1211,13 +1211,13 @@
 
     .platform-settings-page .ps-input:hover,
     .platform-settings-page .ps-textarea:hover{
-        border-color:#c5cad1 !important;
+        border-color:var(--sari-dark-d8c2716225, #c5cad1) !important;
     }
 
     .platform-settings-page .ps-input:focus,
     .platform-settings-page .ps-textarea:focus{
         border-color:#d59617 !important;
-        box-shadow:0 0 0 3px rgba(213,150,23,.085) !important;
+        box-shadow:0 0 0 3px var(--sari-dark-0a9e89f88f, rgba(213,150,23,.085)) !important;
     }
 
     .platform-settings-page .ps-input-wrap .ps-input{
@@ -1228,21 +1228,21 @@
         min-width:28px !important;
         height:24px !important;
         border-radius:6px !important;
-        background:#f3f4f6 !important;
-        color:#7c8592 !important;
+        background:var(--sari-dark-4d21eb669b, #f3f4f6) !important;
+        color:var(--sari-dark-a63aa16d7c, #7c8592) !important;
         font-size:8px !important;
     }
 
     .platform-settings-page .ps-help{
         margin-top:5px !important;
-        color:#8a93a0 !important;
+        color:var(--sari-dark-a63aa16d7c, #8a93a0) !important;
         font-size:7.6px !important;
         line-height:1.5 !important;
     }
 
     .platform-settings-page .ps-divider{
         margin:14px 0 !important;
-        background:#eceff2 !important;
+        background:var(--sari-dark-4d21eb669b, #eceff2) !important;
     }
 
     /* Nested operational blocks stay visually quiet. */
@@ -1255,8 +1255,8 @@
     .platform-settings-page .ps-mini,
     .platform-settings-page .ps-help-step,
     .platform-settings-page .ps-modal-summary{
-        border:1px solid #e5e7eb !important;
-        background:#f9fafb !important;
+        border:1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
+        background:var(--sari-dark-950baec030, #f9fafb) !important;
         box-shadow:none !important;
     }
 
@@ -1267,14 +1267,14 @@
 
     .platform-settings-page .ps-toggle-title,
     .platform-settings-page .ps-governance-title{
-        color:#344054 !important;
+        color:var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size:9px !important;
         font-weight:650 !important;
     }
 
     .platform-settings-page .ps-toggle-copy,
     .platform-settings-page .ps-governance-copy{
-        color:#7c8592 !important;
+        color:var(--sari-dark-a63aa16d7c, #7c8592) !important;
         font-size:7.8px !important;
         line-height:1.5 !important;
     }
@@ -1298,8 +1298,8 @@
     .platform-settings-page .ps-permission{
         margin-top:14px !important;
         padding-top:12px !important;
-        border-top:1px solid #eceff2 !important;
-        color:#667085 !important;
+        border-top:1px solid var(--sari-dark-d8c2716225, #eceff2) !important;
+        color:var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size:8px !important;
     }
 
@@ -1318,19 +1318,19 @@
     }
 
     .platform-settings-page .ps-mini span{
-        color:#8a93a0 !important;
+        color:var(--sari-dark-a63aa16d7c, #8a93a0) !important;
         font-size:7px !important;
     }
 
     .platform-settings-page .ps-mini strong{
-        color:#344054 !important;
+        color:var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size:8px !important;
     }
 
     .platform-settings-page .ps-diff{
-        border-top:1px solid #eceff2 !important;
+        border-top:1px solid var(--sari-dark-d8c2716225, #eceff2) !important;
         padding:8px 0 !important;
-        color:#667085 !important;
+        color:var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size:8px !important;
     }
 
@@ -1349,7 +1349,7 @@
         border-color:#d59617 !important;
         background:#d59617 !important;
         color:#fff !important;
-        box-shadow:0 4px 10px rgba(213,150,23,.11) !important;
+        box-shadow:0 4px 10px var(--sari-dark-71f44bdb16, rgba(213,150,23,.11)) !important;
     }
 
     .platform-settings-page .ps-btn-primary:hover,
@@ -1360,27 +1360,27 @@
     }
 
     .platform-settings-page .ps-btn-secondary{
-        border-color:#d1d5db !important;
-        background:#fff !important;
-        color:#475467 !important;
+        border-color:var(--sari-dark-d8c2716225, #d1d5db) !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
+        color:var(--sari-dark-e23e64dd1e, #475467) !important;
     }
 
     /* Sticky action bar is the focal workflow surface. */
     .platform-settings-page .ps-actions{
         bottom:12px !important;
         margin-top:14px !important;
-        border:1px solid #d1d5db !important;
+        border:1px solid var(--sari-dark-d8c2716225, #d1d5db) !important;
         border-radius:14px !important;
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
         padding:10px 12px !important;
         box-shadow:
-            0 2px 5px rgba(15,23,42,.055),
-            0 12px 28px rgba(15,23,42,.10),
-            0 26px 58px rgba(15,23,42,.11) !important;
+            0 2px 5px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+            0 12px 28px var(--sari-dark-8eadf403a5, rgba(15,23,42,.10)),
+            0 26px 58px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11)) !important;
     }
 
     .platform-settings-page .ps-change-state{
-        color:#7c8592 !important;
+        color:var(--sari-dark-a63aa16d7c, #7c8592) !important;
         font-size:8.5px !important;
     }
 
@@ -1389,25 +1389,25 @@
     }
 
     .platform-settings-page .ps-actions.is-dirty .ps-change-state{
-        color:#b97805 !important;
+        color:var(--sari-dark-af18afcaa4, #b97805) !important;
     }
 
     /* Help overlays and confirmation modal receive focal elevation. */
     .platform-settings-page .ps-help-panel{
         width:min(360px,calc(100vw - 40px)) !important;
-        border:1px solid #e5e7eb !important;
+        border:1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius:12px !important;
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
         padding:12px !important;
         box-shadow:
-            0 3px 7px rgba(15,23,42,.05),
-            0 14px 32px rgba(15,23,42,.095),
-            0 28px 60px rgba(15,23,42,.10) !important;
+            0 3px 7px var(--sari-dark-1df26971b5, rgba(15,23,42,.05)),
+            0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+            0 28px 60px var(--sari-dark-8eadf403a5, rgba(15,23,42,.10)) !important;
     }
 
     .platform-settings-page .ps-help-panel-title{
         margin-bottom:9px !important;
-        color:#344054 !important;
+        color:var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size:9px !important;
     }
 
@@ -1421,7 +1421,7 @@
     }
 
     .platform-settings-page .ps-help-step strong{
-        color:#344054 !important;
+        color:var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size:8px !important;
     }
 
@@ -1433,36 +1433,36 @@
 
     .platform-settings-page .ps-help-note{
         border-left-color:#d59617 !important;
-        background:#fff8e8 !important;
-        color:#94620a !important;
+        background:var(--sari-dark-4d21eb669b, #fff8e8) !important;
+        color:var(--sari-dark-af18afcaa4, #94620a) !important;
     }
 
     .ps-modal-backdrop{
-        background:rgba(17,24,39,.48) !important;
+        background:var(--sari-dark-0aceb62107, rgba(17,24,39,.48)) !important;
         backdrop-filter:none !important;
     }
 
     .ps-modal{
         width:min(500px,calc(100vw - 28px)) !important;
-        border:1px solid #e5e7eb !important;
+        border:1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius:18px !important;
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
         padding:18px !important;
         box-shadow:
-            0 3px 7px rgba(15,23,42,.055),
-            0 14px 32px rgba(15,23,42,.095),
-            0 30px 68px rgba(15,23,42,.11) !important;
+            0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+            0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+            0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11)) !important;
     }
 
     .ps-modal h3{
-        color:#1f2937 !important;
+        color:var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size:15px !important;
         font-weight:700 !important;
         letter-spacing:-.02em !important;
     }
 
     .ps-modal p{
-        color:#7c8592 !important;
+        color:var(--sari-dark-a63aa16d7c, #7c8592) !important;
         font-size:8.5px !important;
         line-height:1.55 !important;
     }
@@ -1471,7 +1471,7 @@
         margin-top:12px !important;
         border-radius:10px !important;
         padding:10px 11px !important;
-        color:#475467 !important;
+        color:var(--sari-dark-e23e64dd1e, #475467) !important;
         font-size:8.5px !important;
         line-height:1.7 !important;
     }
@@ -1485,7 +1485,7 @@
     .platform-settings-page .ps-audit-head{
         gap:12px !important;
         padding:14px 16px !important;
-        border-bottom:1px solid #eceff2 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #eceff2) !important;
     }
 
     .platform-settings-page .ps-table{
@@ -1494,9 +1494,9 @@
 
     .platform-settings-page .ps-table th{
         padding:9px 11px !important;
-        border-bottom:1px solid #eceff2 !important;
-        background:#f9fafb !important;
-        color:#7c8592 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #eceff2) !important;
+        background:var(--sari-dark-950baec030, #f9fafb) !important;
+        color:var(--sari-dark-a63aa16d7c, #7c8592) !important;
         font-size:7.5px !important;
         font-weight:700 !important;
         letter-spacing:.035em !important;
@@ -1505,18 +1505,18 @@
 
     .platform-settings-page .ps-table td{
         padding:9px 11px !important;
-        border-bottom:1px solid #f0f2f4 !important;
-        color:#475467 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #f0f2f4) !important;
+        color:var(--sari-dark-e23e64dd1e, #475467) !important;
         font-size:8px !important;
         line-height:1.45 !important;
     }
 
     .platform-settings-page .ps-table tbody tr:hover td{
-        background:#fffcf5 !important;
+        background:var(--sari-dark-950baec030, #fffcf5) !important;
     }
 
     .platform-settings-page .ps-audit-setting{
-        color:#344054 !important;
+        color:var(--sari-dark-e23e64dd1e, #344054) !important;
         font-weight:650 !important;
     }
 
@@ -1526,9 +1526,9 @@
         padding:10px 12px !important;
         font-size:8.5px !important;
         box-shadow:
-            0 1px 3px rgba(15,23,42,.035),
-            0 7px 18px rgba(15,23,42,.06),
-            0 15px 32px rgba(15,23,42,.065) !important;
+            0 1px 3px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),
+            0 15px 32px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)) !important;
     }
 
     @media(max-width:1200px){
@@ -1575,7 +1575,7 @@
         .platform-settings-page .ps-policy-cell{
             min-height:0 !important;
             border-right:0 !important;
-            border-bottom:1px solid #eceff2 !important;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #eceff2) !important;
         }
 
         .platform-settings-page .ps-section{
@@ -1638,12 +1638,12 @@
     /* SARI reference parity — scoped settings presentation. */
     .platform-settings-page {
         --ps-accent: #c88912 !important;
-        --ps-accent-ink: #a96d08 !important;
-        --ps-ink: #29323b !important;
-        --ps-text: #4c545e !important;
-        --ps-muted: #707b86 !important;
+        --ps-accent-ink: var(--sari-dark-6e784b4931, #a96d08) !important;
+        --ps-ink: var(--sari-dark-e23e64dd1e, #29323b) !important;
+        --ps-text: var(--sari-dark-e23e64dd1e, #4c545e) !important;
+        --ps-muted: var(--sari-dark-a63aa16d7c, #707b86) !important;
         --ps-radius-lg: 17px !important;
-        --ps-shadow: 0 2px 5px rgba(15,23,42,.045),0 10px 24px rgba(15,23,42,.075),0 24px 54px rgba(15,23,42,.095),inset 0 1px 0 rgba(255,255,255,.92) !important;
+        --ps-shadow: 0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92)) !important;
         max-width: 1640px !important;
         min-width: 0;
         padding: 2px 2px 32px !important;
@@ -1654,62 +1654,62 @@
     .platform-settings-page *, .platform-settings-page *::before, .platform-settings-page *::after { box-sizing: border-box; }
     .platform-settings-page :is(input,textarea,button) { font-family: inherit; }
     .platform-settings-page .ps-header { align-items: flex-end !important; gap: 20px !important; padding: 2px 0 16px !important; margin-bottom: 18px !important; border-bottom: 0 !important; }
-    .platform-settings-page .ps-eyebrow { color: #a87316 !important; -webkit-text-fill-color: #a87316 !important; font-size: 10.5px !important; font-weight: 800 !important; line-height: 1.2 !important; letter-spacing: .14em !important; }
+    .platform-settings-page .ps-eyebrow { color: var(--sari-dark-685eb4fc40, #a87316) !important; -webkit-text-fill-color: #a87316 !important; font-size: 10.5px !important; font-weight: 800 !important; line-height: 1.2 !important; letter-spacing: .14em !important; }
     .platform-settings-page .ps-title { margin-top: 5px !important; font-size: clamp(29px,2.35vw,34px) !important; font-weight: 750 !important; line-height: 1.04 !important; }
-    .platform-settings-page .ps-title-dark { color: #2e343b !important; -webkit-text-fill-color: #2e343b !important; }
-    .platform-settings-page .ps-title-accent { color: #c88912 !important; -webkit-text-fill-color: #c88912 !important; }
-    .platform-settings-page .ps-subtitle { color: #707b86 !important; -webkit-text-fill-color: #707b86 !important; font-size: 11.5px !important; line-height: 1.6 !important; }
+    .platform-settings-page .ps-title-dark { color: var(--sari-dark-e23e64dd1e, #2e343b) !important; -webkit-text-fill-color: #2e343b !important; }
+    .platform-settings-page .ps-title-accent { color: var(--sari-dark-19b301f69a, #c88912) !important; -webkit-text-fill-color: #c88912 !important; }
+    .platform-settings-page .ps-subtitle { color: var(--sari-dark-a63aa16d7c, #707b86) !important; -webkit-text-fill-color: #707b86 !important; font-size: 11.5px !important; line-height: 1.6 !important; }
     .platform-settings-page .ps-header-actions { gap: 10px !important; padding-left: 0 !important; }
     .platform-settings-page .ps-header-actions :is(.ps-badge,.ps-help-trigger) { min-height: 40px !important; height: 40px !important; font-size: 11px !important; }
     .platform-settings-page .ps-card { min-width: 0; border-radius: 17px !important; box-shadow: var(--ps-shadow) !important; }
     .platform-settings-page .ps-policy-strip { grid-template-columns: repeat(4,minmax(0,1fr)) !important; margin-bottom: 18px !important; }
     .platform-settings-page .ps-policy-cell { min-height: 110px !important; padding: 17px 18px !important; border-bottom: 0 !important; }
     .platform-settings-page .ps-policy-cell:last-child { border-right: 0 !important; }
-    .platform-settings-page .ps-kicker { color: #707b86 !important; font-size: 11.5px !important; font-weight: 500 !important; }
-    .platform-settings-page .ps-policy-value { margin-top: 7px !important; color: #29323b !important; font-size: clamp(22px,1.6vw,26px) !important; line-height: 1.2 !important; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
-    .platform-settings-page .ps-policy-note { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.5 !important; }
+    .platform-settings-page .ps-kicker { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 11.5px !important; font-weight: 500 !important; }
+    .platform-settings-page .ps-policy-value { margin-top: 7px !important; color: var(--sari-dark-e23e64dd1e, #29323b) !important; font-size: clamp(22px,1.6vw,26px) !important; line-height: 1.2 !important; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+    .platform-settings-page .ps-policy-note { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10.5px !important; line-height: 1.5 !important; }
     .platform-settings-page .ps-grid { grid-template-columns: minmax(0,1.5fr) minmax(350px,1fr) !important; gap: 18px !important; }
     .platform-settings-page .ps-stack { min-width: 0; gap: 18px !important; }
     .platform-settings-page .ps-section { padding: 18px !important; }
     .platform-settings-page .ps-section-head { gap: 12px !important; flex-wrap: wrap; margin-bottom: 16px !important; padding-bottom: 14px !important; }
-    .platform-settings-page .ps-section-title { color: #29323b !important; font-size: 14px !important; font-weight: 750 !important; }
-    .platform-settings-page .ps-section-copy { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.6 !important; }
+    .platform-settings-page .ps-section-title { color: var(--sari-dark-e23e64dd1e, #29323b) !important; font-size: 14px !important; font-weight: 750 !important; }
+    .platform-settings-page .ps-section-copy { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10.5px !important; line-height: 1.6 !important; }
     .platform-settings-page .ps-head-actions { gap: 7px !important; flex-wrap: wrap; }
     .platform-settings-page :is(.ps-tag,.ps-help-trigger) { min-height: 32px !important; height: 32px !important; font-size: 10.5px !important; }
     .platform-settings-page .ps-help-chevron { width: 13px !important; height: 13px !important; }
     .platform-settings-page .ps-help-icon { width: 17px !important; height: 17px !important; font-size: 10px !important; }
     .platform-settings-page .ps-form-grid { gap: 14px !important; }
     .platform-settings-page .ps-label-row { flex-wrap: wrap; gap: 4px 10px; margin-bottom: 6px !important; }
-    .platform-settings-page .ps-label { color: #4b5560 !important; font-size: 11px !important; font-weight: 750 !important; }
-    .platform-settings-page .ps-current { color: #707b86 !important; font-size: 10px !important; }
-    .platform-settings-page :is(.ps-input,.ps-textarea) { min-width: 0; border-color: #dfe3e8 !important; background: #fff !important; color: #333d47 !important; font-size: 12px !important; font-weight: 550 !important; }
+    .platform-settings-page .ps-label { color: var(--sari-dark-e23e64dd1e, #4b5560) !important; font-size: 11px !important; font-weight: 750 !important; }
+    .platform-settings-page .ps-current { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10px !important; }
+    .platform-settings-page :is(.ps-input,.ps-textarea) { min-width: 0; border-color: var(--sari-dark-d8c2716225, #dfe3e8) !important; background: var(--sari-dark-950baec030, #fff) !important; color: var(--sari-dark-e23e64dd1e, #333d47) !important; font-size: 12px !important; font-weight: 550 !important; }
     .platform-settings-page .ps-input { height: 42px !important; padding-inline: 11px !important; }
     .platform-settings-page .ps-input-wrap .ps-input { padding-right: 46px !important; }
     .platform-settings-page .ps-textarea { min-height: 100px !important; padding: 11px !important; line-height: 1.6 !important; }
-    .platform-settings-page :is(.ps-input,.ps-textarea)::placeholder { color: #79838e; font-size: 11.5px; }
+    .platform-settings-page :is(.ps-input,.ps-textarea)::placeholder { color: var(--sari-dark-a63aa16d7c, #79838e); font-size: 11.5px; }
     .platform-settings-page .ps-suffix { font-size: 10px !important; }
-    .platform-settings-page .ps-help { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.6 !important; }
+    .platform-settings-page .ps-help { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10.5px !important; line-height: 1.6 !important; }
     .platform-settings-page .ps-toggle-list { gap: 10px !important; }
     .platform-settings-page .ps-toggle-row { padding: 13px !important; gap: 14px; }
     .platform-settings-page .ps-toggle-row > div { min-width: 0; }
-    .platform-settings-page :is(.ps-toggle-title,.ps-governance-title) { color: #4c545e !important; font-size: 11.5px !important; }
-    .platform-settings-page :is(.ps-toggle-copy,.ps-governance-copy) { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.6 !important; }
+    .platform-settings-page :is(.ps-toggle-title,.ps-governance-title) { color: var(--sari-dark-e23e64dd1e, #4c545e) !important; font-size: 11.5px !important; }
+    .platform-settings-page :is(.ps-toggle-copy,.ps-governance-copy) { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10.5px !important; line-height: 1.6 !important; }
     .platform-settings-page .ps-switch { width: 40px !important; height: 24px !important; flex-basis: 40px !important; }
     .platform-settings-page .ps-switch span::after { width: 18px; height: 18px; }
     .platform-settings-page .ps-switch input:checked + span { border-color: #c88912 !important; background: #c88912 !important; }
     .platform-settings-page .ps-switch input:focus-visible + span { outline: 2px solid #9b6710; outline-offset: 3px; }
     .platform-settings-page .ps-permission { font-size: 10.5px !important; }
-    .platform-settings-page .ps-mini span { color: #707b86 !important; font-size: 10px !important; }
+    .platform-settings-page .ps-mini span { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10px !important; }
     .platform-settings-page .ps-mini strong { font-size: 11px !important; overflow-wrap: anywhere; }
     .platform-settings-page .ps-diff { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr) 18px minmax(0,1fr); font-size: 11px !important; overflow-wrap: anywhere; }
     .platform-settings-page .ps-scheduled-head { flex-wrap: wrap; }
     .platform-settings-page .ps-btn { min-height: 42px !important; height: 42px !important; font-size: 11px !important; }
-    .platform-settings-page .ps-btn-primary { border-color: #c88912 !important; background: #c88912 !important; box-shadow: 0 6px 16px rgba(201,132,8,.14) !important; }
+    .platform-settings-page .ps-btn-primary { border-color: #c88912 !important; background: #c88912 !important; box-shadow: 0 6px 16px var(--sari-dark-59ed29fe9d, rgba(201,132,8,.14)) !important; }
     .platform-settings-page .ps-btn-primary:hover { background: #a96d08 !important; border-color: #a96d08 !important; }
     .platform-settings-page .ps-actions { border-radius: 17px !important; padding: 13px 16px !important; gap: 12px; }
     .platform-settings-page .ps-change-state { font-size: 11px !important; }
     .platform-settings-page .ps-actions-right { flex-wrap: wrap; }
-    .platform-settings-page .ps-help-panel { border-radius: 12px !important; padding: 14px !important; max-height: min(640px,70dvh); overflow-y: auto; box-shadow: 0 18px 42px rgba(31,41,55,.13),0 4px 12px rgba(31,41,55,.04) !important; }
+    .platform-settings-page .ps-help-panel { border-radius: 12px !important; padding: 14px !important; max-height: min(640px,70dvh); overflow-y: auto; box-shadow: 0 18px 42px var(--sari-dark-3e32d50f5e, rgba(31,41,55,.13)),0 4px 12px var(--sari-dark-25b2da5e49, rgba(31,41,55,.04)) !important; }
     .platform-settings-page .ps-help-panel-title { font-size: 12px !important; }
     .platform-settings-page .ps-help-step strong { font-size: 11px !important; }
     .platform-settings-page :is(.ps-help-step p,.ps-help-note) { font-size: 10.5px !important; line-height: 1.6 !important; }
@@ -1738,7 +1738,7 @@
     @container (max-width: 800px) {
         .platform-settings-page .ps-policy-strip { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
         .platform-settings-page .ps-policy-cell:nth-child(2) { border-right: 0 !important; }
-        .platform-settings-page .ps-policy-cell:nth-child(-n+2) { border-bottom: 1px solid #eceff2 !important; }
+        .platform-settings-page .ps-policy-cell:nth-child(-n+2) { border-bottom: 1px solid var(--sari-dark-d8c2716225, #eceff2) !important; }
     }
     @container (max-width: 600px) {
         .platform-settings-page .ps-form-grid { grid-template-columns: 1fr; }
@@ -1750,13 +1750,13 @@
     }
     @container (max-width: 400px) {
         .platform-settings-page .ps-policy-strip { grid-template-columns: 1fr !important; }
-        .platform-settings-page .ps-policy-cell { border-right: 0 !important; border-bottom: 1px solid #eceff2 !important; }
+        .platform-settings-page .ps-policy-cell { border-right: 0 !important; border-bottom: 1px solid var(--sari-dark-d8c2716225, #eceff2) !important; }
         .platform-settings-page .ps-policy-cell:last-child { border-bottom: 0 !important; }
     }
     @media (max-width: 767px) {
         .platform-settings-page .ps-title { font-size: 29px !important; }
         .platform-settings-page .ps-eyebrow { font-size: 9.5px !important; }
-        .platform-settings-page .ps-card { border-radius: 14px !important; box-shadow: 0 2px 4px rgba(15,23,42,.035),0 8px 18px rgba(15,23,42,.06),0 18px 38px rgba(15,23,42,.07) !important; }
+        .platform-settings-page .ps-card { border-radius: 14px !important; box-shadow: 0 2px 4px var(--sari-dark-7593018246, rgba(15,23,42,.035)),0 8px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),0 18px 38px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)) !important; }
         .platform-settings-page .ps-section { padding: 14px !important; }
         .platform-settings-page :is(.ps-input,.ps-btn) { height: 44px !important; min-height: 44px !important; }
     }
@@ -2483,4 +2483,19 @@
     syncDirtyState();
 })();
 </script>
+
+<style>
+/* SARI_PLATFORM_SETTINGS_TITLE_DARKMODE_FIX
+   Dark-mode-only correction for the Platform Settings heading.
+   Keep the Settings accent in the existing SARI gold. */
+html[data-sari-theme="dark"] .platform-settings-page .ps-title.ps-title-dark,
+html[data-sari-theme="dark"] .platform-settings-page .ps-title-dark {
+    color: #f4f4f4 !important;
+    -webkit-text-fill-color: #f4f4f4 !important;
+}
+html[data-sari-theme="dark"] .platform-settings-page .ps-title.ps-title-accent {
+    color: var(--sari-gold, #d99500) !important;
+    -webkit-text-fill-color: var(--sari-gold, #d99500) !important;
+}
+</style>
 @endsection

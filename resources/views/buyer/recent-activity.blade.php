@@ -19,11 +19,11 @@
     <style>
         [data-sari-activity-page] {
             --activity-page:#f5f6f8;
-            --activity-panel:#ffffff;
-            --activity-border:#e3e7eb;
-            --activity-border-soft:#edf0f3;
-            --activity-text:#20252b;
-            --activity-muted:#747d87;
+            --activity-panel:var(--sari-dark-950baec030, #ffffff);
+            --activity-border:var(--sari-dark-d8c2716225, #e3e7eb);
+            --activity-border-soft:var(--sari-dark-d8c2716225, #edf0f3);
+            --activity-text:var(--sari-dark-e23e64dd1e, #20252b);
+            --activity-muted:var(--sari-dark-a63aa16d7c, #747d87);
             --activity-gold:#c99128;
             --activity-gold-dark:#ad781b;
             width:100%;
@@ -46,7 +46,7 @@
 
         .sari-activity-eyebrow {
             margin:0;
-            color:#a87316;
+            color:var(--sari-dark-685eb4fc40, #a87316);
             font-size:10.5px;
             font-weight:800;
             letter-spacing:.14em;
@@ -56,7 +56,7 @@
 
         .sari-activity-title {
             margin:5px 0 0;
-            color:#2e343b;
+            color:var(--sari-dark-e23e64dd1e, #2e343b);
             font-size:clamp(27px,2.25vw,31px);
             font-weight:760;
             line-height:1.04;
@@ -78,7 +78,7 @@
             border-radius:0 !important;
             background:transparent !important;
             padding:0 !important;
-            color:#59636e !important;
+            color:var(--sari-dark-a63aa16d7c, #59636e) !important;
             font-size:11.5px !important;
             font-weight:750 !important;
             line-height:1.35 !important;
@@ -99,7 +99,7 @@
 
         .sari-activity-notifications-link:hover,
         .sari-activity-notifications-link:focus-visible {
-            color:#c88912 !important;
+            color:var(--sari-dark-19b301f69a, #c88912) !important;
             background:transparent !important;
             outline:none !important;
             text-decoration:none !important;
@@ -111,13 +111,13 @@
             position:relative;
             overflow:visible;
             margin-top:0;
-            border:1px solid #e5e7eb;
+            border:1px solid var(--sari-dark-d8c2716225, #e5e7eb);
             border-radius:22px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             box-shadow:
-                0 3px 7px rgba(15,23,42,.055),
-                0 14px 32px rgba(15,23,42,.095),
-                0 30px 68px rgba(15,23,42,.11);
+                0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+                0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+                0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11));
         }
 
         .sari-activity-toolbar {
@@ -128,13 +128,13 @@
             min-height:54px;
             padding:0 20px;
             border-bottom:1px solid var(--activity-border-soft);
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             border-radius:22px 22px 0 0;
         }
 
         .sari-activity-toolbar h2 {
             margin:0;
-            color:#303740;
+            color:var(--sari-dark-e23e64dd1e, #303740);
             font-size:15px;
             font-weight:800;
             line-height:1.2;
@@ -151,7 +151,7 @@
         }
 
         .sari-activity-count {
-            color:#7d8792;
+            color:var(--sari-dark-a63aa16d7c, #7d8792);
             font-size:10.5px;
             font-weight:650;
         }
@@ -169,8 +169,8 @@
             align-items:center;
             min-height:104px;
             padding:16px 18px;
-            border-bottom:1px solid #e7eaee;
-            background:#fff;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #e7eaee);
+            background:var(--sari-dark-950baec030, #fff);
             cursor:pointer;
             transition:background-color .14s ease;
         }
@@ -185,7 +185,7 @@
 
         .sari-activity-row:hover,
         .sari-activity-row:focus-within {
-            background:#f4f5f6;
+            background:var(--sari-dark-4d21eb669b, #f4f5f6);
         }
 
         /* Fill and crop the SARI art into a true circle, not a rounded-square inset. */
@@ -198,9 +198,9 @@
             overflow:hidden;
             border:2px solid #e5c78d;
             border-radius:50%;
-            background:#f4f0e7;
+            background:var(--sari-dark-4d21eb669b, #f4f0e7);
             padding:0;
-            box-shadow:0 2px 8px rgba(37,43,49,.08);
+            box-shadow:0 2px 8px var(--sari-dark-c33e3d1bb4, rgba(37,43,49,.08));
         }
 
         .sari-activity-avatar img {
@@ -217,7 +217,7 @@
         .sari-activity-avatar-initials {
             font-size:14px;
             font-weight:800;
-            color:#9d761f;
+            color:var(--sari-dark-4f496ef092, #9d761f);
             letter-spacing:.03em;
         }
         .sari-activity-main {
@@ -228,7 +228,7 @@
         .sari-activity-event-title {
             margin:0;
             overflow:hidden;
-            color:#1e2329;
+            color:var(--sari-dark-e23e64dd1e, #1e2329);
             font-size:15px;
             font-weight:760;
             line-height:1.3;
@@ -241,7 +241,7 @@
         .sari-activity-event-message {
             margin:4px 0 0;
             overflow:hidden;
-            color:#707985;
+            color:var(--sari-dark-a63aa16d7c, #707985);
             font-size:12px;
             font-weight:500;
             line-height:1.45;
@@ -255,7 +255,7 @@
             flex-wrap:wrap;
             gap:5px;
             margin-top:4px;
-            color:#7f8892;
+            color:var(--sari-dark-a63aa16d7c, #7f8892);
             font-size:11px;
             font-weight:520;
             line-height:1.35;
@@ -270,7 +270,7 @@
         .sari-activity-event-meta span:not(:last-child)::after {
             content:"·";
             margin-left:5px;
-            color:#a7afb7;
+            color:var(--sari-dark-a63aa16d7c, #a7afb7);
         }
 
         .sari-activity-view-wrap {
@@ -291,9 +291,9 @@
             justify-content:center;
             border:0;
             border-radius:13px;
-            background:#f1f2f4;
+            background:var(--sari-dark-4d21eb669b, #f1f2f4);
             padding:0 16px;
-            color:#24292f;
+            color:var(--sari-dark-e23e64dd1e, #24292f);
             cursor:pointer;
             font:inherit;
             font-size:11px;
@@ -305,8 +305,8 @@
 
         .sari-activity-view:hover,
         .sari-activity-view:focus-visible {
-            background:#e7e9ec;
-            color:#171b20;
+            background:var(--sari-dark-4d21eb669b, #e7e9ec);
+            color:var(--sari-dark-e23e64dd1e, #171b20);
             outline:none;
         }
 
@@ -328,7 +328,7 @@
             border:0;
             border-radius:10px;
             background:transparent;
-            color:#69727c;
+            color:var(--sari-dark-a63aa16d7c, #69727c);
             cursor:pointer;
             transition:background-color .14s ease,color .14s ease;
         }
@@ -336,8 +336,8 @@
         .sari-activity-menu-toggle:hover,
         .sari-activity-menu-toggle:focus-visible,
         .sari-activity-menu-toggle[aria-expanded="true"] {
-            background:rgba(31,41,55,.06);
-            color:#24292f;
+            background:var(--sari-dark-bc8af743f0, rgba(31,41,55,.06));
+            color:var(--sari-dark-e23e64dd1e, #24292f);
             outline:none;
         }
 
@@ -354,13 +354,13 @@
             right:0;
             width:218px;
             overflow:hidden;
-            border:1px solid #e0e4e8;
+            border:1px solid var(--sari-dark-d8c2716225, #e0e4e8);
             border-radius:18px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:8px;
             box-shadow:
-                0 22px 48px rgba(31,41,55,.16),
-                0 5px 14px rgba(31,41,55,.06);
+                0 22px 48px var(--sari-dark-b5c2a2270e, rgba(31,41,55,.16)),
+                0 5px 14px var(--sari-dark-361b571631, rgba(31,41,55,.06));
         }
 
         .sari-activity-menu[hidden] {
@@ -377,7 +377,7 @@
             border-radius:11px;
             background:transparent;
             padding:0 12px;
-            color:#2b3138;
+            color:var(--sari-dark-e23e64dd1e, #2b3138);
             cursor:pointer;
             font:inherit;
             font-size:12px;
@@ -389,8 +389,8 @@
 
         .sari-activity-menu-item:hover,
         .sari-activity-menu-item:focus-visible {
-            background:#f4f5f7;
-            color:#171b20;
+            background:var(--sari-dark-4d21eb669b, #f4f5f7);
+            color:var(--sari-dark-e23e64dd1e, #171b20);
             outline:none;
         }
 
@@ -406,15 +406,15 @@
         }
 
         .sari-activity-menu form { margin:0; }
-        .sari-activity-menu-item.is-danger { color:#e12535; }
-        .sari-activity-menu-item.is-danger svg { stroke:#e12535; }
+        .sari-activity-menu-item.is-danger { color:var(--sari-dark-f0275c819d, #e12535); }
+        .sari-activity-menu-item.is-danger svg { stroke:var(--sari-dark-f0275c819d, #e12535); }
         .sari-activity-menu-item.is-danger:hover,
         .sari-activity-menu-item.is-danger:focus-visible {
-            background:#fff0f1;
-            color:#c91529;
+            background:var(--sari-dark-950baec030, #fff0f1);
+            color:var(--sari-dark-9b9f9d008d, #c91529);
         }
         .sari-activity-menu-item.is-danger:hover svg,
-        .sari-activity-menu-item.is-danger:focus-visible svg { stroke:#c91529; }
+        .sari-activity-menu-item.is-danger:focus-visible svg { stroke:var(--sari-dark-9b9f9d008d, #c91529); }
         .sari-activity-menu-item:disabled { opacity:.55; cursor:wait; }
         /* Gold folder tabs, without an underline. */
         .sari-activity-actions {
@@ -441,7 +441,7 @@
             border-radius:0;
             background:transparent;
             padding:6px 0;
-            color:#7f8995;
+            color:var(--sari-dark-a63aa16d7c, #7f8995);
             font-size:12px;
             font-weight:650;
             line-height:1.25;
@@ -452,7 +452,7 @@
         .sari-activity-filter:hover,
         .sari-activity-filter:focus-visible {
             background:transparent;
-            color:#c88912;
+            color:var(--sari-dark-19b301f69a, #c88912);
             text-decoration:none;
             box-shadow:none;
         }
@@ -461,7 +461,7 @@
         .sari-activity-filter[aria-current="page"]:focus-visible {
             border:0;
             background:transparent;
-            color:#c88912;
+            color:var(--sari-dark-19b301f69a, #c88912);
             font-weight:750;
             box-shadow:none;
         }
@@ -489,25 +489,25 @@
             white-space:nowrap;
             transition:color .15s ease;
         }
-        .sari-activity-read-all:not(:disabled):hover { color:#8e5b0a; }
+        .sari-activity-read-all:not(:disabled):hover { color:var(--sari-dark-4b8b580e58, #8e5b0a); }
         .sari-activity-read-all:disabled {
             color:var(--activity-gold-dark);
             opacity:.48;
             cursor:default;
         }
         .sari-activity-alert {
-            margin:4px 0 16px; padding:11px 15px; border:1px solid #e8dcc4;
-            border-radius:11px; background:#fffaf0; color:#94702b;
+            margin:4px 0 16px; padding:11px 15px; border:1px solid var(--sari-dark-d8c2716225, #e8dcc4);
+            border-radius:11px; background:var(--sari-dark-950baec030, #fffaf0); color:var(--sari-dark-a63aa16d7c, #94702b);
             font-size:12px; font-weight:550;
         }
         .sari-activity-empty-archive {
-            display:inline-block; margin-top:16px; color:#a57421;
+            display:inline-block; margin-top:16px; color:var(--sari-dark-ee2a8b7064, #a57421);
             font-size:12px; font-weight:650; text-decoration:none;
         }
         .sari-activity-menu-divider {
             height:1px;
             margin:7px 4px;
-            background:#eceff2;
+            background:var(--sari-dark-4d21eb669b, #eceff2);
         }
 
         .sari-activity-time-mobile {
@@ -531,7 +531,7 @@
             grid-row:1;
             justify-self:start;
             margin:0;
-            color:#9aa3ae;
+            color:var(--sari-dark-a63aa16d7c, #9aa3ae);
             font-size:12px;
             font-weight:450;
             line-height:1.5;
@@ -564,9 +564,9 @@
             justify-content:center;
             border:1px solid transparent;
             border-radius:12px;
-            background:#f0f2f6;
+            background:var(--sari-dark-4d21eb669b, #f0f2f6);
             padding:0 10px;
-            color:#929aa6;
+            color:var(--sari-dark-a63aa16d7c, #929aa6);
             font-size:12px;
             font-weight:600;
             line-height:1;
@@ -576,8 +576,8 @@
 
         .sari-activity-page-link:hover,
         .sari-activity-page-arrow:hover {
-            background:#e7ebf1;
-            color:#687381;
+            background:var(--sari-dark-4d21eb669b, #e7ebf1);
+            color:var(--sari-dark-a63aa16d7c, #687381);
         }
 
         .sari-activity-page-link:focus-visible,
@@ -590,7 +590,7 @@
             border-color:#c99128;
             background:#c99128;
             color:#fff;
-            box-shadow:0 3px 12px rgba(201,145,40,.24);
+            box-shadow:0 3px 12px var(--sari-dark-7edf1b5a37, rgba(201,145,40,.24));
             pointer-events:none;
         }
 
@@ -605,8 +605,8 @@
         }
 
         .sari-activity-page-arrow.is-disabled {
-            background:#f0f2f6;
-            color:#b5bcc6;
+            background:var(--sari-dark-4d21eb669b, #f0f2f6);
+            color:var(--sari-dark-a63aa16d7c, #b5bcc6);
             cursor:default;
         }
 
@@ -617,7 +617,7 @@
             flex:0 0 auto;
             align-items:center;
             justify-content:center;
-            color:#a7afba;
+            color:var(--sari-dark-a63aa16d7c, #a7afba);
             font-size:13px;
             user-select:none;
         }
@@ -677,15 +677,15 @@
             min-height:430px;
             margin-top:0;
             place-items:center;
-            border:1px solid #e5e7eb;
+            border:1px solid var(--sari-dark-d8c2716225, #e5e7eb);
             border-radius:18px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:72px 24px;
             text-align:center;
             box-shadow:
-                0 3px 7px rgba(15,23,42,.055),
-                0 14px 32px rgba(15,23,42,.095),
-                0 30px 68px rgba(15,23,42,.11);
+                0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+                0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+                0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11));
         }
 
         .sari-activity-empty-icon {
@@ -694,7 +694,7 @@
             height:82px;
             margin:0 auto;
             place-items:center;
-            color:#b4bbc3;
+            color:var(--sari-dark-a63aa16d7c, #b4bbc3);
         }
 
         .sari-activity-empty-icon svg {
@@ -709,7 +709,7 @@
 
         .sari-activity-empty-title {
             margin:16px 0 0;
-            color:#9099a3;
+            color:var(--sari-dark-a63aa16d7c, #9099a3);
             font-size:21px;
             font-weight:750;
             line-height:1.2;
@@ -719,7 +719,7 @@
         .sari-activity-empty-copy {
             max-width:520px;
             margin:7px auto 0;
-            color:#a8b0b8;
+            color:var(--sari-dark-a63aa16d7c, #a8b0b8);
             font-size:12px;
             font-weight:500;
             line-height:1.55;
@@ -871,9 +871,9 @@
             .sari-activity-shell,
             .sari-activity-empty-state {
                 box-shadow:
-                    0 2px 4px rgba(15,23,42,.035),
-                    0 8px 18px rgba(15,23,42,.06),
-                    0 18px 38px rgba(15,23,42,.07);
+                    0 2px 4px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+                    0 8px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),
+                    0 18px 38px var(--sari-dark-7c935c8886, rgba(15,23,42,.07));
             }
         }
     </style>

@@ -455,8 +455,8 @@ function initSariProductsPage() {
         if (catalogHealthLabel) {
             catalogHealthLabel.textContent = scoreLabel;
             catalogHealthLabel.style.color = scoreColor;
-            catalogHealthLabel.style.borderColor = score >= 80 ? '#cfe4d7' : (score >= 50 ? '#ead9b2' : '#ebcaca');
-            catalogHealthLabel.style.backgroundColor = score >= 80 ? '#f3faf5' : (score >= 50 ? '#fff8e9' : '#fff4f4');
+            catalogHealthLabel.style.borderColor = score >= 80 ? 'var(--sari-dark-d8c2716225, #cfe4d7)' : (score >= 50 ? 'var(--sari-dark-d8c2716225, #ead9b2)' : 'var(--sari-dark-d8c2716225, #ebcaca)');
+            catalogHealthLabel.style.backgroundColor = score >= 80 ? 'var(--sari-dark-950baec030, #f3faf5)' : (score >= 50 ? 'var(--sari-dark-4d21eb669b, #fff8e9)' : 'var(--sari-dark-950baec030, #fff4f4)');
         }
     }
 

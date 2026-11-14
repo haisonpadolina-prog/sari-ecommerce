@@ -11,17 +11,17 @@
     }
 
     .ra-panel {
-        border: 1px solid #e4e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e7eb);
         border-radius: 18px;
-        background: #fff;
-        box-shadow: 0 12px 28px rgba(26, 31, 38, .055);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 12px 28px var(--sari-dark-fbd3b3b9f6, rgba(26, 31, 38, .055));
     }
 
     .ra-kpi {
-        border: 1px solid #e1e5e9;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e5e9);
         border-radius: 16px;
-        background: #fff;
-        box-shadow: 0 6px 18px rgba(26, 31, 38, .035);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 6px 18px var(--sari-dark-7593018246, rgba(26, 31, 38, .035));
     }
 
     .ra-focus:focus-visible {
@@ -35,15 +35,15 @@
         max-height: min(860px, calc(100dvh - 40px));
         margin: auto;
         padding: 0;
-        border: 1px solid #dde2e7;
+        border: 1px solid var(--sari-dark-d8c2716225, #dde2e7);
         border-radius: 20px;
-        background: #fff;
-        color: #1b1f24;
-        box-shadow: 0 30px 80px rgba(20, 24, 30, .24);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #1b1f24);
+        box-shadow: 0 30px 80px var(--sari-dark-7edf1b5a37, rgba(20, 24, 30, .24));
     }
 
     .ra-dialog::backdrop {
-        background: rgba(23, 27, 33, .44);
+        background: var(--sari-dark-13762c5eae, rgba(23, 27, 33, .44));
         backdrop-filter: blur(5px);
     }
 
@@ -74,7 +74,7 @@
         min-height: 66px !important;
         margin: 0 0 12px !important;
         padding: 2px 2px 13px !important;
-        border-bottom-color: #eceff2 !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #eceff2) !important;
     }
 
     .ra-page-header > p:first-child {
@@ -109,16 +109,16 @@
     .ra-kpi {
         min-height: 104px !important;
         padding: 18px !important;
-        border-color: #e4e7ec !important;
+        border-color: var(--sari-dark-d8c2716225, #e4e7ec) !important;
         border-radius: 12px !important;
-        box-shadow: 0 2px 6px rgba(16,24,40,.04) !important;
+        box-shadow: 0 2px 6px var(--sari-dark-25b2da5e49, rgba(16,24,40,.04)) !important;
     }
 
     .ra-kpi > div > p:first-child {
         font-size: 12px !important;
         font-weight: 500 !important;
         line-height: 20px !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
     }
 
     .ra-kpi > div > p:nth-child(2) {
@@ -126,7 +126,7 @@
         font-size: 28px !important;
         font-weight: 700 !important;
         line-height: 1 !important;
-        color: #101828 !important;
+        color: var(--sari-dark-e23e64dd1e, #101828) !important;
     }
 
     .ra-kpi > span {
@@ -184,7 +184,7 @@
         padding-inline: 13px !important;
         font-size: 9.5px !important;
         font-weight: 650 !important;
-        box-shadow: 0 5px 12px rgba(213,150,23,.16) !important;
+        box-shadow: 0 5px 12px var(--sari-dark-b5c2a2270e, rgba(213,150,23,.16)) !important;
     }
 
     .ra-filter-bar a {
@@ -196,13 +196,13 @@
     .ra-queue-card {
         margin-top: 14px !important;
         border-radius: 14px !important;
-        border-color: #e5e7eb !important;
-        box-shadow: 0 2px 5px rgba(15,23,42,.045), 0 10px 24px rgba(15,23,42,.075) !important;
+        border-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
+        box-shadow: 0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)), 0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)) !important;
     }
 
     .ra-queue-card > div:first-child {
         padding: 15px 18px !important;
-        border-bottom-color: #eceff2 !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #eceff2) !important;
     }
 
     .ra-queue-card > div:first-child h2 {
@@ -226,7 +226,7 @@
     }
 
     .ra-queue-card thead tr {
-        background: #f9fafb !important;
+        background: var(--sari-dark-950baec030, #f9fafb) !important;
     }
 
     .ra-queue-card th {
@@ -235,7 +235,7 @@
         font-size: 8px !important;
         font-weight: 700 !important;
         letter-spacing: .075em !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
     }
 
     .ra-queue-card td {
@@ -321,7 +321,7 @@
         height: 92px;
         margin-inline: auto;
         place-items: center;
-        color: #b4bbc3;
+        color: var(--sari-dark-a63aa16d7c, #b4bbc3);
         background: transparent;
         border: 0;
         box-shadow: none;
@@ -336,7 +336,7 @@
 
     .rider-applications-page .ra-queue-card tbody td .ra-empty-title {
         margin-top: 18px !important;
-        color: #9ca4ad !important;
+        color: var(--sari-dark-a63aa16d7c, #9ca4ad) !important;
         font-size: 22px !important;
         font-weight: 750 !important;
         line-height: 1.2 !important;
@@ -346,7 +346,7 @@
     .rider-applications-page .ra-queue-card tbody td .ra-empty-copy {
         max-width: 520px;
         margin: 7px auto 0 !important;
-        color: #b0b7bf !important;
+        color: var(--sari-dark-a63aa16d7c, #b0b7bf) !important;
         font-size: 12px !important;
         font-weight: 500 !important;
         line-height: 1.55 !important;

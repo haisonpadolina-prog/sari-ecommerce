@@ -8,7 +8,7 @@
 
 <style>
 
-    .sari-account-page{font-family:'Poppins',sans-serif;color:#26211d;}
+    .sari-account-page{font-family:'Poppins',sans-serif;color:var(--sari-dark-e23e64dd1e, #26211d);}
 
     .sari-account-page input:-webkit-autofill,
 
@@ -22,9 +22,9 @@
 
     }
 
-    .sari-account-page .account-card{box-shadow:0 8px 26px rgba(55,45,32,.035);}
+    .sari-account-page .account-card{box-shadow:0 8px 26px var(--sari-dark-7593018246, rgba(55,45,32,.035));}
 
-    .sari-account-page .field-input:focus{border-color:#d6b363;box-shadow:0 0 0 4px rgba(201,145,40,.07);outline:none;}
+    .sari-account-page .field-input:focus{border-color:#d6b363;box-shadow:0 0 0 4px var(--sari-dark-7c935c8886, rgba(201,145,40,.07));outline:none;}
 
     /* ============================================================
 
@@ -36,57 +36,57 @@
 
     .sari-account-page{
 
-        --account-canvas:#F4F5F7;
+        --account-canvas:var(--sari-dark-4d21eb669b, #F4F5F7);
 
-        --account-surface:#FFFFFF;
+        --account-surface:var(--sari-dark-950baec030, #FFFFFF);
 
-        --account-surface-soft:#F9FAFB;
+        --account-surface-soft:var(--sari-dark-950baec030, #F9FAFB);
 
-        --account-text:#111827;
+        --account-text:var(--sari-dark-e23e64dd1e, #111827);
 
-        --account-text-secondary:#344054;
+        --account-text-secondary:var(--sari-dark-e23e64dd1e, #344054);
 
-        --account-muted:#7C8592;
+        --account-muted:var(--sari-dark-a63aa16d7c, #7C8592);
 
         --account-gold:#D59617;
 
         --account-gold-strong:#B97805;
 
-        --account-border:#E5E7EB;
+        --account-border:var(--sari-dark-d8c2716225, #E5E7EB);
 
-        --account-border-strong:#D1D5DB;
+        --account-border-strong:var(--sari-dark-d8c2716225, #D1D5DB);
 
-        --account-divider:#ECEFF2;
+        --account-divider:var(--sari-dark-d8c2716225, #ECEFF2);
 
         --account-radius:14px;
 
         --account-shadow-main:
 
-            0 2px 5px rgba(15,23,42,.045),
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
 
-            0 10px 24px rgba(15,23,42,.075),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
 
-            0 24px 54px rgba(15,23,42,.095),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
 
-            inset 0 1px 0 rgba(255,255,255,.92);
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
 
         --account-shadow-soft:
 
-            0 1px 3px rgba(15,23,42,.035),
+            0 1px 3px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
 
-            0 7px 18px rgba(15,23,42,.06),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),
 
-            0 15px 32px rgba(15,23,42,.065),
+            0 15px 32px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)),
 
-            inset 0 1px 0 rgba(255,255,255,.90);
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90));
 
         --account-shadow-focal:
 
-            0 3px 7px rgba(15,23,42,.055),
+            0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
 
-            0 14px 32px rgba(15,23,42,.095),
+            0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
 
-            0 30px 68px rgba(15,23,42,.11);
+            0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11));
 
         width:100% !important;
 
@@ -206,13 +206,13 @@
 
         border-radius:14px !important;
 
-        border-color:#D7E7DB !important;
+        border-color:var(--sari-dark-d8c2716225, #D7E7DB) !important;
 
-        background:#F5FAF6 !important;
+        background:var(--sari-dark-950baec030, #F5FAF6) !important;
 
         padding:10px 12px !important;
 
-        color:#4F725A !important;
+        color:var(--sari-dark-a63aa16d7c, #4F725A) !important;
 
         font-size:9px !important;
 
@@ -226,7 +226,7 @@
 
         height:26px !important;
 
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
 
         box-shadow:none !important;
 
@@ -298,11 +298,11 @@
 
         flex-basis:42px !important;
 
-        border:1px solid #DDE6E2 !important;
+        border:1px solid var(--sari-dark-d8c2716225, #DDE6E2) !important;
 
-        background:#F1F5F3 !important;
+        background:var(--sari-dark-4d21eb669b, #F1F5F3) !important;
 
-        color:#60756E !important;
+        color:var(--sari-dark-a63aa16d7c, #60756E) !important;
 
         font-size:10px !important;
 
@@ -386,7 +386,7 @@
 
     .sari-account-page .account-card p.font-bold.uppercase{
 
-        color:#8B6B31 !important;
+        color:var(--sari-dark-a63aa16d7c, #8B6B31) !important;
 
         font-size:8px !important;
 
@@ -430,7 +430,7 @@
 
         border-radius:10px !important;
 
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
 
         padding-inline:12px !important;
 
@@ -450,7 +450,7 @@
 
     .sari-account-page .field-input:hover{
 
-        border-color:#C7CCD3 !important;
+        border-color:var(--sari-dark-d8c2716225, #C7CCD3) !important;
 
     }
 
@@ -458,9 +458,9 @@
 
         border-color:var(--account-gold) !important;
 
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
 
-        box-shadow:0 0 0 3px rgba(213,150,23,.10) !important;
+        box-shadow:0 0 0 3px var(--sari-dark-8eadf403a5, rgba(213,150,23,.10)) !important;
 
     }
 
@@ -500,7 +500,7 @@
 
         color:#fff !important;
 
-        box-shadow:0 4px 10px rgba(185,120,5,.12) !important;
+        box-shadow:0 4px 10px var(--sari-dark-3b2338cbf0, rgba(185,120,5,.12)) !important;
 
     }
 
@@ -600,11 +600,11 @@
 
     .sari-account-page > section.account-card > div:first-child > div:last-child.rounded-\[10px\]{
 
-        border-color:#E9DEC3 !important;
+        border-color:var(--sari-dark-d8c2716225, #E9DEC3) !important;
 
-        background:#FFFBF3 !important;
+        background:var(--sari-dark-950baec030, #FFFBF3) !important;
 
-        color:#8A682A !important;
+        color:var(--sari-dark-e23e64dd1e, #8A682A) !important;
 
         box-shadow:none !important;
 
@@ -636,9 +636,9 @@
 
         outline:none !important;
 
-        background:#F5F3EF !important;
+        background:var(--sari-dark-4d21eb669b, #F5F3EF) !important;
 
-        color:#7E5C21 !important;
+        color:var(--sari-dark-e23e64dd1e, #7E5C21) !important;
 
     }
 
@@ -662,9 +662,9 @@
 
         border:1px solid #E1C98D !important;
 
-        background:#FFFAEF !important;
+        background:var(--sari-dark-950baec030, #FFFAEF) !important;
 
-        color:#8B641E !important;
+        color:var(--sari-dark-e23e64dd1e, #8B641E) !important;
 
         box-shadow:none !important;
 
@@ -674,9 +674,9 @@
 
         border-color:#D8B86A !important;
 
-        background:#FFF5DE !important;
+        background:var(--sari-dark-4d21eb669b, #FFF5DE) !important;
 
-        color:#7B5718 !important;
+        color:var(--sari-dark-bcedc438cb, #7B5718) !important;
 
     }
 
@@ -684,7 +684,7 @@
 
     .sari-account-page > section.account-card:last-of-type{
 
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
 
         box-shadow:var(--account-shadow-main) !important;
 
@@ -770,7 +770,7 @@
 
     .sari-account-page .text-\[7px\].text-\[\#a65f57\]{
 
-        color:#A65F57 !important;
+        color:var(--sari-dark-29c2b76f8a, #A65F57) !important;
 
         font-size:7px !important;
 
@@ -891,82 +891,82 @@
     .sari-account-page {
         --account-gold: #c88912;
         --account-gold-strong: #aa730f;
-        --account-text: #202938;
-        --account-text-secondary: #596579;
-        --account-muted: #8490a2;
+        --account-text: var(--sari-dark-e23e64dd1e, #202938);
+        --account-text-secondary: var(--sari-dark-a63aa16d7c, #596579);
+        --account-muted: var(--sari-dark-a63aa16d7c, #8490a2);
         --account-radius: 17px;
-        --account-shadow-main: 0 3px 7px rgba(15,23,42,.055),0 14px 32px rgba(15,23,42,.095),0 30px 68px rgba(15,23,42,.11);
+        --account-shadow-main: 0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11));
         width: 100% !important;
         max-width: 1380px !important;
         padding: 20px 16px 40px !important;
         font-size: 12.5px;
     }
     .sari-account-page > .mb-5 { min-height: 0 !important; margin-bottom: 0 !important; padding: 2px 2px 14px !important; border-bottom: 0 !important; }
-    .sari-account-page > .mb-5 p:first-child { font-size: 10.5px !important; color: #a87316 !important; line-height: 1.2 !important; letter-spacing: .14em !important; }
-    .sari-account-page > .mb-5 h1 { font-size: clamp(27px,2.25vw,31px) !important; font-weight: 760 !important; line-height: 1.04 !important; color: #2e343b !important; }
-    .sari-account-page > .mb-5 h1 + p { font-size: 11.5px !important; color: #7d8792 !important; }
+    .sari-account-page > .mb-5 p:first-child { font-size: 10.5px !important; color: var(--sari-dark-685eb4fc40, #a87316) !important; line-height: 1.2 !important; letter-spacing: .14em !important; }
+    .sari-account-page > .mb-5 h1 { font-size: clamp(27px,2.25vw,31px) !important; font-weight: 760 !important; line-height: 1.04 !important; color: var(--sari-dark-e23e64dd1e, #2e343b) !important; }
+    .sari-account-page > .mb-5 h1 + p { font-size: 11.5px !important; color: var(--sari-dark-a63aa16d7c, #7d8792) !important; }
     .sari-account-page .admin-account-layout { display: grid; grid-template-columns: 286px minmax(0,1fr); gap: 14px; align-items: start; }
     .sari-account-page .admin-account-sidebar { position: sticky; top: 84px; display: grid; gap: 14px; min-width: 0; align-self: start; }
-    .sari-account-page .account-card { min-width: 0; border: 1px solid #e5e7eb !important; border-radius: 17px !important; background: #fff !important; box-shadow: var(--account-shadow-main) !important; }
+    .sari-account-page .account-card { min-width: 0; border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important; border-radius: 17px !important; background: var(--sari-dark-950baec030, #fff) !important; box-shadow: var(--account-shadow-main) !important; }
     .sari-account-page .admin-account-profile-card { overflow: hidden; }
-    .sari-account-page .admin-account-panel-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 15px; border-bottom: 1px solid #edf1f5; }
-    .sari-account-page .admin-account-panel-head h2 { margin: 0; color: #2b3441; font-size: 16px; font-weight: 760; }
-    .sari-account-page .admin-account-panel-head > span { font-size: 10px; color: #8490a2; text-transform: uppercase; }
+    .sari-account-page .admin-account-panel-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 15px; border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf1f5); }
+    .sari-account-page .admin-account-panel-head h2 { margin: 0; color: var(--sari-dark-e23e64dd1e, #2b3441); font-size: 16px; font-weight: 760; }
+    .sari-account-page .admin-account-panel-head > span { font-size: 10px; color: var(--sari-dark-a63aa16d7c, #8490a2); text-transform: uppercase; }
     .sari-account-page .admin-account-identity { padding: 16px; }
     .sari-account-page .admin-account-identity > div { display: flex; flex-direction: column; align-items: center; padding: 0; border: 0; gap: 16px; }
     .sari-account-page .admin-account-identity > div > div:first-child { display: flex; width: 100%; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
-    .sari-account-page .admin-account-identity .h-12.w-12 { width: 118px !important; height: 118px !important; flex: 0 0 118px; border: 1px solid #dbe1e8 !important; border-radius: 20px !important; background: #f4f6f8 !important; color: #919ba8 !important; font-size: 30px !important; font-weight: 720; }
-    .sari-account-page .admin-account-identity h2 { color: #273140; font-size: 18px; font-weight: 760; white-space: normal; overflow-wrap: anywhere; }
+    .sari-account-page .admin-account-identity .h-12.w-12 { width: 118px !important; height: 118px !important; flex: 0 0 118px; border: 1px solid var(--sari-dark-d8c2716225, #dbe1e8) !important; border-radius: 20px !important; background: var(--sari-dark-4d21eb669b, #f4f6f8) !important; color: var(--sari-dark-a63aa16d7c, #919ba8) !important; font-size: 30px !important; font-weight: 720; }
+    .sari-account-page .admin-account-identity h2 { color: var(--sari-dark-e23e64dd1e, #273140); font-size: 18px; font-weight: 760; white-space: normal; overflow-wrap: anywhere; }
     .sari-account-page .admin-account-identity h2 + div { justify-content: center; gap: 6px; margin-top: 8px; }
-    .sari-account-page .admin-account-identity .inline-flex { height: auto; min-height: 25px; padding: 4px 9px; border-color: #e5e7eb !important; background: #f7f9fb !important; color: #596579 !important; font-size: 10px; }
-    .sari-account-page .admin-account-identity > div > div:last-child { width: 100%; border-color: #edf1f5; border-radius: 11px; background: #f7f9fb; padding: 11px; text-align: center; }
-    .sari-account-page .admin-account-identity > div > div:last-child p:first-child { color: #8490a2; font-size: 10px; }
-    .sari-account-page .admin-account-identity > div > div:last-child p:last-child { color: #596579; font-size: 12px; }
+    .sari-account-page .admin-account-identity .inline-flex { height: auto; min-height: 25px; padding: 4px 9px; border-color: var(--sari-dark-d8c2716225, #e5e7eb) !important; background: var(--sari-dark-950baec030, #f7f9fb) !important; color: var(--sari-dark-a63aa16d7c, #596579) !important; font-size: 10px; }
+    .sari-account-page .admin-account-identity > div > div:last-child { width: 100%; border-color: var(--sari-dark-d8c2716225, #edf1f5); border-radius: 11px; background: var(--sari-dark-950baec030, #f7f9fb); padding: 11px; text-align: center; }
+    .sari-account-page .admin-account-identity > div > div:last-child p:first-child { color: var(--sari-dark-a63aa16d7c, #8490a2); font-size: 10px; }
+    .sari-account-page .admin-account-identity > div > div:last-child p:last-child { color: var(--sari-dark-a63aa16d7c, #596579); font-size: 12px; }
     .sari-account-page .admin-account-access { padding: 16px !important; }
     .sari-account-page .admin-account-access > div:first-child { flex-wrap: wrap; gap: 10px; }
-    .sari-account-page .admin-account-access p.font-bold.uppercase { color: #273140 !important; font-size: 16px !important; letter-spacing: -.018em !important; text-transform: none; }
+    .sari-account-page .admin-account-access p.font-bold.uppercase { color: var(--sari-dark-e23e64dd1e, #273140) !important; font-size: 16px !important; letter-spacing: -.018em !important; text-transform: none; }
     .sari-account-page .admin-account-access p.font-bold.uppercase + p { font-size: 10.5px !important; }
     .sari-account-page .admin-account-access > div:first-child > span { font-size: 9px; }
     .sari-account-page .admin-account-access dl { margin-top: 16px; }
-    .sari-account-page .admin-account-access dl > div { gap: 10px; padding-block: 9px; border-color: #edf1f5; }
-    .sari-account-page .admin-account-access dt { font-size: 11px; color: #8490a2; }
-    .sari-account-page .admin-account-access dd { font-size: 12px; color: #596579; max-width: 60%; overflow-wrap: anywhere; }
+    .sari-account-page .admin-account-access dl > div { gap: 10px; padding-block: 9px; border-color: var(--sari-dark-d8c2716225, #edf1f5); }
+    .sari-account-page .admin-account-access dt { font-size: 11px; color: var(--sari-dark-a63aa16d7c, #8490a2); }
+    .sari-account-page .admin-account-access dd { font-size: 12px; color: var(--sari-dark-a63aa16d7c, #596579); max-width: 60%; overflow-wrap: anywhere; }
     .sari-account-page .admin-account-main { overflow: hidden; padding: 0 !important; }
-    .sari-account-page .admin-account-main > section { margin: 0 !important; padding: 17px 18px 18px !important; border: 0 !important; border-radius: 0 !important; background: #fff !important; box-shadow: none !important; }
-    .sari-account-page .admin-account-main > section + section { border-top: 1px solid #edf1f5 !important; }
+    .sari-account-page .admin-account-main > section { margin: 0 !important; padding: 17px 18px 18px !important; border: 0 !important; border-radius: 0 !important; background: var(--sari-dark-950baec030, #fff) !important; box-shadow: none !important; }
+    .sari-account-page .admin-account-main > section + section { border-top: 1px solid var(--sari-dark-d8c2716225, #edf1f5) !important; }
     .sari-account-page .admin-account-profile > .mt-5 { margin-top: 0; }
-    .sari-account-page .admin-account-main p.font-bold.uppercase { font-size: 17px !important; font-weight: 760 !important; color: #273140 !important; letter-spacing: -.018em !important; text-transform: none; }
+    .sari-account-page .admin-account-main p.font-bold.uppercase { font-size: 17px !important; font-weight: 760 !important; color: var(--sari-dark-e23e64dd1e, #273140) !important; letter-spacing: -.018em !important; text-transform: none; }
     .sari-account-page .admin-account-main p.font-bold.uppercase + p { font-size: 10.5px !important; line-height: 1.55 !important; }
     .sari-account-page .admin-account-main form { gap: 12px 13px; }
-    .sari-account-page label > span:first-child { font-size: 11.5px !important; color: #40506a !important; font-weight: 700 !important; }
-    .sari-account-page .field-input { width: 100%; height: 52px !important; margin-top: 5px !important; padding-inline: 14px !important; border: 1px solid #d7dee7 !important; border-radius: 14px !important; font-size: 12.5px !important; color: #2e3948 !important; font-weight: 500 !important; }
-    .sari-account-page .field-input::placeholder { color: #a0a9b6; }
-    .sari-account-page .field-input:focus { border-color: #c88912 !important; box-shadow: 0 0 0 3px rgba(200,137,18,.08) !important; }
+    .sari-account-page label > span:first-child { font-size: 11.5px !important; color: var(--sari-dark-e23e64dd1e, #40506a) !important; font-weight: 700 !important; }
+    .sari-account-page .field-input { width: 100%; height: 52px !important; margin-top: 5px !important; padding-inline: 14px !important; border: 1px solid var(--sari-dark-d8c2716225, #d7dee7) !important; border-radius: 14px !important; font-size: 12.5px !important; color: var(--sari-dark-e23e64dd1e, #2e3948) !important; font-weight: 500 !important; }
+    .sari-account-page .field-input::placeholder { color: var(--sari-dark-a63aa16d7c, #a0a9b6); }
+    .sari-account-page .field-input:focus { border-color: #c88912 !important; box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08)) !important; }
     .sari-account-page .admin-account-security .relative .field-input { margin-top: 0 !important; padding-right: 46px !important; }
     .sari-account-page .admin-account-security > div:first-child { align-items: flex-start; }
-    .sari-account-page .admin-account-security > div:first-child > div:last-child { border-color: #dfe5ec !important; background: #f7f9fb !important; color: #596579 !important; font-size: 10px; }
+    .sari-account-page .admin-account-security > div:first-child > div:last-child { border-color: var(--sari-dark-d8c2716225, #dfe5ec) !important; background: var(--sari-dark-950baec030, #f7f9fb) !important; color: var(--sari-dark-a63aa16d7c, #596579) !important; font-size: 10px; }
     .sari-account-page .admin-account-security form { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); margin-top: 16px; }
-    .sari-account-page .admin-account-security form > div:last-child { grid-column: 1 / -1; padding-top: 14px; border-color: #edf1f5; }
+    .sari-account-page .admin-account-security form > div:last-child { grid-column: 1 / -1; padding-top: 14px; border-color: var(--sari-dark-d8c2716225, #edf1f5); }
     .sari-account-page .admin-account-security form > div:last-child span { font-size: 10px; }
     .sari-account-page form button[type="submit"] { height: 42px !important; min-height: 42px !important; border-radius: 10px !important; font-size: 11.5px !important; }
     .sari-account-page .admin-account-profile form button[type="submit"] { border: 1px solid #c88912; background: #c88912; color: #fff; }
     .sari-account-page .admin-account-profile form button[type="submit"]:hover { background: #aa730f; }
-    .sari-account-page .admin-account-security form button[type="submit"] { border-color: #dfe5ec !important; background: #f3f5f7 !important; color: #475467 !important; }
-    .sari-account-page .admin-account-security form button[type="submit"]:hover { background: #e9edf2 !important; }
+    .sari-account-page .admin-account-security form button[type="submit"] { border-color: var(--sari-dark-d8c2716225, #dfe5ec) !important; background: var(--sari-dark-4d21eb669b, #f3f5f7) !important; color: var(--sari-dark-e23e64dd1e, #475467) !important; }
+    .sari-account-page .admin-account-security form button[type="submit"]:hover { background: var(--sari-dark-4d21eb669b, #e9edf2) !important; }
     .sari-account-page form button[type="submit"] svg { width: 16px; height: 16px; }
     .sari-account-page [data-password-toggle] { width: 34px !important; height: 34px !important; right: 8px; }
-    .sari-account-page [data-password-toggle]:hover { background: #f3f5f7 !important; color: #475467 !important; }
+    .sari-account-page [data-password-toggle]:hover { background: var(--sari-dark-4d21eb669b, #f3f5f7) !important; color: var(--sari-dark-e23e64dd1e, #475467) !important; }
     .sari-account-page [data-password-toggle] svg { width: 18px; height: 18px; }
     .sari-account-page .admin-account-activity > div:first-child { flex-wrap: wrap; gap: 14px; }
     .sari-account-page .admin-account-activity > div:first-child > div:last-child { gap: 8px; }
-    .sari-account-page .admin-account-activity > div:first-child a { background: #fff !important; border-color: #dfe5ec !important; color: #596579 !important; font-size: 10.5px; min-height: 34px; }
-    .sari-account-page .admin-account-activity > div:first-child a:hover { background: #f3f5f7 !important; }
+    .sari-account-page .admin-account-activity > div:first-child a { background: var(--sari-dark-950baec030, #fff) !important; border-color: var(--sari-dark-d8c2716225, #dfe5ec) !important; color: var(--sari-dark-a63aa16d7c, #596579) !important; font-size: 10.5px; min-height: 34px; }
+    .sari-account-page .admin-account-activity > div:first-child a:hover { background: var(--sari-dark-4d21eb669b, #f3f5f7) !important; }
     .sari-account-page .admin-account-activity > div:first-child span { font-size: 9px; }
     .sari-account-page .admin-account-activity > .mt-5 { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 16px; }
-    .sari-account-page .admin-account-activity > .mt-5 > div { min-width: 0; padding: 13px; border: 1px solid #dfe5ec; border-radius: 11px; background: #f7f9fb; }
-    .sari-account-page .admin-account-activity > .mt-5 p:first-child { font-size: 10px; color: #8490a2; }
-    .sari-account-page .admin-account-activity > .mt-5 p:nth-child(2) { font-size: 12px; color: #40506a; overflow-wrap: anywhere; }
-    .sari-account-page .admin-account-activity > .mt-5 p:last-child { font-size: 10px; color: #8490a2; }
+    .sari-account-page .admin-account-activity > .mt-5 > div { min-width: 0; padding: 13px; border: 1px solid var(--sari-dark-d8c2716225, #dfe5ec); border-radius: 11px; background: var(--sari-dark-950baec030, #f7f9fb); }
+    .sari-account-page .admin-account-activity > .mt-5 p:first-child { font-size: 10px; color: var(--sari-dark-a63aa16d7c, #8490a2); }
+    .sari-account-page .admin-account-activity > .mt-5 p:nth-child(2) { font-size: 12px; color: var(--sari-dark-e23e64dd1e, #40506a); overflow-wrap: anywhere; }
+    .sari-account-page .admin-account-activity > .mt-5 p:last-child { font-size: 10px; color: var(--sari-dark-a63aa16d7c, #8490a2); }
     .sari-account-page label > span:last-child:not(:first-child) { font-size: 10px; }
     .sari-account-page :is(button,a,input):focus-visible { outline: 2px solid #9b6710 !important; outline-offset: 3px; }
     @media (min-width: 640px) { .sari-account-page { padding-inline: 24px !important; } }
@@ -994,14 +994,14 @@
     }
 
 
-    .sari-account-page .admin-field-feedback { display: block; margin-top: 6px; color: #b65a50; font-size: 10.5px; line-height: 1.5; }
+    .sari-account-page .admin-field-feedback { display: block; margin-top: 6px; color: var(--sari-dark-4947a77b93, #b65a50); font-size: 10.5px; line-height: 1.5; }
     .sari-account-page .admin-field-feedback[hidden] { display: none; }
     .sari-account-page form[aria-busy="true"] button[type="submit"] { opacity: .7; cursor: wait; }
 
     .sari-account-page .admin-account-identity .h-12.w-12 {
         overflow: hidden;
         padding: 12px;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
     .sari-account-page .admin-account-brand-logo {
         display: block;

@@ -9,10 +9,10 @@
 .sari-reviews-page {
     --rv-gold: #C88912;
     --rv-gold-hover: #B47B0E;
-    --rv-ink: #2F3742;
-    --rv-text: #475569;
-    --rv-muted: #8491A1;
-    --rv-border: #E5E7EB;
+    --rv-ink: var(--sari-dark-e23e64dd1e, #2F3742);
+    --rv-text: var(--sari-dark-e23e64dd1e, #475569);
+    --rv-muted: var(--sari-dark-a63aa16d7c, #8491A1);
+    --rv-border: var(--sari-dark-d8c2716225, #E5E7EB);
     --rv-soft: #F8FAFC;
     width: 100%;
     max-width: 1520px;
@@ -33,7 +33,7 @@
     justify-content: space-between;
     gap: 24px;
     padding: 2px 2px 17px;
-    border-bottom: 1px solid #E6EAF0;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #E6EAF0);
 }
 .sari-reviews-eyebrow {
     margin: 0;
@@ -42,7 +42,7 @@
     letter-spacing: .12em;
     line-height: 1.4;
     text-transform: uppercase;
-    color: #A87316;
+    color: var(--sari-dark-685eb4fc40, #A87316);
 }
 .sari-reviews-title {
     margin: 6px 0 0;
@@ -57,7 +57,7 @@
     margin: 8px 0 0;
     font-size: 11.5px;
     line-height: 1.6;
-    color: #768397;
+    color: var(--sari-dark-a63aa16d7c, #768397);
 }
 .sari-reviews-back {
     display: inline-flex;
@@ -65,7 +65,7 @@
     gap: 8px;
     flex: 0 0 auto;
     margin-top: 4px;
-    color: #59636E;
+    color: var(--sari-dark-a63aa16d7c, #59636E);
     font-size: 11.5px;
     font-weight: 750;
     line-height: 1.35;
@@ -92,25 +92,25 @@
     padding: 17px 18px;
     border: 1px solid var(--rv-border);
     border-radius: 18px;
-    background: #FFF;
-    box-shadow: 0 2px 6px rgba(15,23,42,.035), 0 10px 24px rgba(15,23,42,.07);
+    background: var(--sari-dark-950baec030, #FFF);
+    box-shadow: 0 2px 6px var(--sari-dark-7593018246, rgba(15,23,42,.035)), 0 10px 24px var(--sari-dark-7c935c8886, rgba(15,23,42,.07));
 }
 .sari-reviews-metric-copy { min-width: 0; }
-.sari-reviews-metric-label { margin: 0; color: #5A6879; font-size: 13px; font-weight: 650; line-height: 1.35; }
+.sari-reviews-metric-label { margin: 0; color: var(--sari-dark-a63aa16d7c, #5A6879); font-size: 13px; font-weight: 650; line-height: 1.35; }
 .sari-reviews-metric-value {
     margin: 8px 0 0;
     font-size: clamp(25px, 2.1vw, 30px);
     line-height: 1.08;
     font-weight: 750;
     letter-spacing: -.04em;
-    color: #273442;
+    color: var(--sari-dark-e23e64dd1e, #273442);
     font-variant-numeric: tabular-nums;
 }
-.sari-reviews-metric-value small { font-size: 13px; font-weight: 600; color: #8793A3; letter-spacing: 0; }
-.sari-reviews-metric-note { margin: 7px 0 0; font-size: 10.5px; line-height: 1.4; color: #8793A3; }
-.sari-reviews-metric-icon { width: 27px; height: 27px; flex: 0 0 27px; fill: none; stroke: currentColor; color: #94A3B8; }
+.sari-reviews-metric-value small { font-size: 13px; font-weight: 600; color: var(--sari-dark-a63aa16d7c, #8793A3); letter-spacing: 0; }
+.sari-reviews-metric-note { margin: 7px 0 0; font-size: 10.5px; line-height: 1.4; color: var(--sari-dark-a63aa16d7c, #8793A3); }
+.sari-reviews-metric-icon { width: 27px; height: 27px; flex: 0 0 27px; fill: none; stroke: currentColor; color: var(--sari-dark-a63aa16d7c, #94A3B8); }
 .sari-reviews-metric:nth-child(1) .sari-reviews-metric-icon { color: var(--rv-gold); }
-.sari-reviews-metric:nth-child(3) .sari-reviews-metric-icon { color: #16966B; }
+.sari-reviews-metric:nth-child(3) .sari-reviews-metric-icon { color: var(--sari-dark-1f64fb38e1, #16966B); }
 
 /* Search + custom rating menu (no check icons or cream selected styles). */
 .sari-reviews-toolbar {
@@ -125,7 +125,7 @@
 .sari-reviews-search { position: relative; display: block; min-width: 0; }
 .sari-reviews-search svg {
     position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-    width: 21px; height: 21px; fill: none; stroke: #94A3B8; pointer-events: none;
+    width: 21px; height: 21px; fill: none; stroke: var(--sari-dark-a63aa16d7c, #94A3B8); pointer-events: none;
 }
 .sari-reviews-search input,
 .sari-reviews-rating-trigger,
@@ -135,36 +135,36 @@
     border-radius: 14px; font-size: 11.5px; font-weight: 600;
 }
 .sari-reviews-search input {
-    padding: 0 16px 0 46px; border: 1px solid #DCE2E8;
-    background: #FFF; color: var(--rv-ink); outline: 0;
+    padding: 0 16px 0 46px; border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8);
+    background: var(--sari-dark-950baec030, #FFF); color: var(--rv-ink); outline: 0;
 }
-.sari-reviews-search input::placeholder { color: #94A3B8; opacity: 1; }
+.sari-reviews-search input::placeholder { color: var(--sari-dark-a63aa16d7c, #94A3B8); opacity: 1; }
 .sari-reviews-search input:focus-visible,
 .sari-reviews-rating-trigger:focus-visible,
 .sari-reviews-rating-trigger[aria-expanded="true"] {
-    border-color: var(--rv-gold); outline: 0; box-shadow: 0 0 0 3px rgba(200,137,18,.1);
+    border-color: var(--rv-gold); outline: 0; box-shadow: 0 0 0 3px var(--sari-dark-8eadf403a5, rgba(200,137,18,.1));
 }
 .sari-reviews-rating { position: relative; min-width: 0; }
 .sari-reviews-rating-trigger {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 0 16px; border: 1px solid #DCE2E8; background: white;
-    color: #3F4B59; cursor: pointer; text-align: left;
+    padding: 0 16px; border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8); background: var(--sari-dark-950baec030, white);
+    color: var(--sari-dark-e23e64dd1e, #3F4B59); cursor: pointer; text-align: left;
 }
 .sari-reviews-rating-trigger:hover { background: var(--rv-soft); }
-.sari-reviews-rating-trigger svg { width: 17px; height: 17px; flex: 0 0 17px; fill: none; stroke: #64748B; }
+.sari-reviews-rating-trigger svg { width: 17px; height: 17px; flex: 0 0 17px; fill: none; stroke: var(--sari-dark-a63aa16d7c, #64748B); }
 .sari-reviews-rating-menu {
     position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; right: 0;
-    min-width: 192px; padding: 8px; border: 1px solid #E2E8F0;
-    border-radius: 14px; background: #FFF;
-    box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05);
+    min-width: 192px; padding: 8px; border: 1px solid var(--sari-dark-d8c2716225, #E2E8F0);
+    border-radius: 14px; background: var(--sari-dark-950baec030, #FFF);
+    box-shadow: 0 16px 32px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)), 0 2px 6px var(--sari-dark-1df26971b5, rgba(15,23,42,.05));
 }
 .sari-reviews-rating-option {
     display: block; width: 100%; min-height: 38px; padding: 8px 12px;
     border: 0; border-radius: 10px; background: transparent;
-    text-align: left; color: #475569; font-size: 11.5px;
+    text-align: left; color: var(--sari-dark-e23e64dd1e, #475569); font-size: 11.5px;
     font-weight: 600; cursor: pointer;
 }
-.sari-reviews-rating-option:hover, .sari-reviews-rating-option:focus-visible { background: var(--rv-soft); color: #A56D0A; outline: 0; }
+.sari-reviews-rating-option:hover, .sari-reviews-rating-option:focus-visible { background: var(--rv-soft); color: var(--sari-dark-af18afcaa4, #A56D0A); outline: 0; }
 .sari-reviews-rating-option.is-selected { background: var(--rv-soft); color: var(--rv-ink); font-weight: 750; }
 .sari-reviews-apply, .sari-reviews-reset {
     display: inline-flex; align-items: center; justify-content: center; gap: 7px;
@@ -173,7 +173,7 @@
 .sari-reviews-apply { border: 1px solid var(--rv-gold); background: var(--rv-gold); color: white; font-weight: 750; }
 .sari-reviews-apply:hover, .sari-reviews-apply:focus-visible { background: var(--rv-gold-hover); border-color: var(--rv-gold-hover); }
 .sari-reviews-apply svg { width: 15px; height: 15px; fill: none; stroke: currentColor; }
-.sari-reviews-reset { border: 1px solid #DCE2E8; background: white; color: #526071; }
+.sari-reviews-reset { border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8); background: var(--sari-dark-950baec030, white); color: var(--sari-dark-a63aa16d7c, #526071); }
 .sari-reviews-reset:hover, .sari-reviews-reset:focus-visible { background: var(--rv-soft); }
 .sari-reviews-apply:focus-visible, .sari-reviews-reset:focus-visible { outline: 3px solid rgba(200,137,18,.2); outline-offset: 2px; }
 
@@ -181,59 +181,59 @@
 .sari-reviews-panel {
     margin-top: 22px; overflow: hidden;
     border: 1px solid var(--rv-border); border-radius: 18px;
-    background: #FFF; box-shadow: 0 2px 6px rgba(15,23,42,.035), 0 12px 28px rgba(15,23,42,.085);
+    background: var(--sari-dark-950baec030, #FFF); box-shadow: 0 2px 6px var(--sari-dark-7593018246, rgba(15,23,42,.035)), 0 12px 28px var(--sari-dark-0a9e89f88f, rgba(15,23,42,.085));
 }
 .sari-reviews-panel-head {
     display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
     gap: 12px; min-height: 92px; padding: 20px 24px;
-    border-bottom: 1px solid #ECEFF2;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2);
 }
-.sari-reviews-panel-title { margin: 0; color: #263442; font-size: 18px; font-weight: 780; line-height: 1.3; letter-spacing: -.025em; }
-.sari-reviews-panel-subtitle { margin: 4px 0 0; color: #8491A1; font-size: 11px; line-height: 1.45; }
-.sari-reviews-visible-label { color: #8491A1; font-size: 11px; font-weight: 650; }
+.sari-reviews-panel-title { margin: 0; color: var(--sari-dark-e23e64dd1e, #263442); font-size: 18px; font-weight: 780; line-height: 1.3; letter-spacing: -.025em; }
+.sari-reviews-panel-subtitle { margin: 4px 0 0; color: var(--sari-dark-a63aa16d7c, #8491A1); font-size: 11px; line-height: 1.45; }
+.sari-reviews-visible-label { color: var(--sari-dark-a63aa16d7c, #8491A1); font-size: 11px; font-weight: 650; }
 .sari-reviews-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; padding: 20px 24px; }
 .sari-review-card {
     min-width: 0; padding: 19px 20px;
-    border: 1px solid #E7EBF0; border-radius: 14px;
-    background: #FFF;
+    border: 1px solid var(--sari-dark-d8c2716225, #E7EBF0); border-radius: 14px;
+    background: var(--sari-dark-950baec030, #FFF);
 }
 .sari-review-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
-.sari-review-product { margin: 0; color: #263442; font-size: 13px; font-weight: 750; line-height: 1.5; overflow-wrap: anywhere; }
-.sari-review-order { margin: 4px 0 0; color: #8894A4; font-size: 11px; line-height: 1.45; overflow-wrap: anywhere; }
+.sari-review-product { margin: 0; color: var(--sari-dark-e23e64dd1e, #263442); font-size: 13px; font-weight: 750; line-height: 1.5; overflow-wrap: anywhere; }
+.sari-review-order { margin: 4px 0 0; color: var(--sari-dark-a63aa16d7c, #8894A4); font-size: 11px; line-height: 1.45; overflow-wrap: anywhere; }
 .sari-review-rating { flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
 .sari-review-stars { font-size: 17px; line-height: 1.25; white-space: nowrap; letter-spacing: .025em; }
-.sari-review-stars .filled { color: #C88912; }
+.sari-review-stars .filled { color: var(--sari-dark-19b301f69a, #C88912); }
 .sari-review-stars .empty { color: #D7DFE8; }
-.sari-review-rating-label { font-size: 10px; font-weight: 650; color: #748295; white-space: nowrap; }
+.sari-review-rating-label { font-size: 10px; font-weight: 650; color: var(--sari-dark-a63aa16d7c, #748295); white-space: nowrap; }
 .sari-review-comment {
-    margin: 18px 0; color: #475569; font-size: 12px;
+    margin: 18px 0; color: var(--sari-dark-e23e64dd1e, #475569); font-size: 12px;
     line-height: 1.75; overflow-wrap: anywhere; min-height: 40px;
 }
-.sari-review-comment.is-placeholder { color: #8B97A5; font-style: italic; }
+.sari-review-comment.is-placeholder { color: var(--sari-dark-a63aa16d7c, #8B97A5); font-style: italic; }
 .sari-review-footer {
     display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-    gap: 6px 12px; padding-top: 13px; border-top: 1px solid #EDF0F4;
-    color: #8491A1; font-size: 10.5px; line-height: 1.5;
+    gap: 6px 12px; padding-top: 13px; border-top: 1px solid var(--sari-dark-d8c2716225, #EDF0F4);
+    color: var(--sari-dark-a63aa16d7c, #8491A1); font-size: 10.5px; line-height: 1.5;
 }
-.sari-review-buyer { color: #5F6D7C; font-weight: 600; overflow-wrap: anywhere; }
+.sari-review-buyer { color: var(--sari-dark-a63aa16d7c, #5F6D7C); font-weight: 600; overflow-wrap: anywhere; }
 .sari-review-footer time { font-variant-numeric: tabular-nums; }
 .sari-reviews-empty { display: grid; place-items: center; min-height: 225px; padding: 36px 20px; text-align: center; }
-.sari-reviews-empty svg { width: 54px; height: 54px; margin-inline: auto; fill: none; stroke: #A0ACB9; }
-.sari-reviews-empty h3 { margin: 12px 0 0; color: #344054; font-size: 16px; font-weight: 750; }
-.sari-reviews-empty p { margin: 7px auto 0; max-width: 360px; color: #8B97A5; font-size: 11.5px; line-height: 1.65; }
+.sari-reviews-empty svg { width: 54px; height: 54px; margin-inline: auto; fill: none; stroke: var(--sari-dark-a63aa16d7c, #A0ACB9); }
+.sari-reviews-empty h3 { margin: 12px 0 0; color: var(--sari-dark-e23e64dd1e, #344054); font-size: 16px; font-weight: 750; }
+.sari-reviews-empty p { margin: 7px auto 0; max-width: 360px; color: var(--sari-dark-a63aa16d7c, #8B97A5); font-size: 11.5px; line-height: 1.65; }
 
 /* Pagination belongs inside its parent container */
 .sari-reviews-pagination {
     display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
-    gap: 12px; padding: 16px 24px; border-top: 1px solid #ECEFF2;
+    gap: 12px; padding: 16px 24px; border-top: 1px solid var(--sari-dark-d8c2716225, #ECEFF2);
 }
-.sari-reviews-page-count { color: #8390A1; font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.sari-reviews-page-count { color: var(--sari-dark-a63aa16d7c, #8390A1); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .sari-reviews-pages { display: flex; align-items: center; gap: 5px; }
 .sari-reviews-page-button {
     display: inline-flex; align-items: center; justify-content: center;
     min-width: 34px; height: 34px; padding: 0 8px;
-    border: 1px solid #E2E8F0; border-radius: 9px;
-    background: #FFF; color: #657387; font-size: 11px; font-weight: 700; cursor: pointer;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E8F0); border-radius: 9px;
+    background: var(--sari-dark-950baec030, #FFF); color: var(--sari-dark-a63aa16d7c, #657387); font-size: 11px; font-weight: 700; cursor: pointer;
 }
 .sari-reviews-page-button:hover:not(:disabled):not(.is-current) { background: var(--rv-soft); }
 .sari-reviews-page-button.is-current { border-color: var(--rv-gold); background: var(--rv-gold); color: white; }

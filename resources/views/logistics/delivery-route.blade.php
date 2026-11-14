@@ -13,14 +13,14 @@
         height: 520px;
         overflow: hidden;
         border-radius: 16px;
-        background: #f3f2ef;
+        background: var(--sari-dark-4d21eb669b, #f3f2ef);
     }
 
     .sari-route-stop-card {
         position: relative;
-        border: 1px solid #e9e2d8;
+        border: 1px solid var(--sari-dark-d8c2716225, #e9e2d8);
         border-radius: 14px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 14px;
     }
 
@@ -52,17 +52,17 @@
         width: 30px;
         height: 30px;
         place-items: center;
-        border: 3px solid #fff;
+        border: 3px solid var(--sari-dark-d8c2716225, #fff);
         border-radius: 999px;
         background: #c98913;
         color: #fff;
         font-size: 8px;
         font-weight: 800;
-        box-shadow: 0 6px 16px rgba(45,35,22,.2);
+        box-shadow: 0 6px 16px var(--sari-dark-ef22e61893, rgba(45,35,22,.2));
     }
 
     .sari-route-map-pin.is-buyer {
-        background: #2f2b27;
+        background: var(--sari-dark-fbb35de0d1, #2f2b27);
     }
 
     .leaflet-container img {

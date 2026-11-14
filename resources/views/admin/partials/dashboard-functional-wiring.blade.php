@@ -116,7 +116,7 @@
         if (scoreNode) scoreNode.textContent = Math.round(score);
         if (ring) {
             const degrees = Math.round(score * 3.6);
-            ring.style.background = `conic-gradient(#c99524 0deg ${degrees}deg, #eee6d9 ${degrees}deg 360deg)`;
+            ring.style.background = `conic-gradient(#c99524 0deg ${degrees}deg, var(--sari-dark-4d21eb669b, #eee6d9) ${degrees}deg 360deg)`;
         }
 
         const stableBadge = Array.from(panel.querySelectorAll('span')).find(function (node) {

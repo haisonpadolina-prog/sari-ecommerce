@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    @include('components.shared.theme-head')
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -147,23 +148,23 @@
         #adminSidebar [data-sidebar-item][data-admin-nav-active="true"] {
             background-color: #d9950b !important;
             color: #ffffff !important;
-            box-shadow: 0 5px 12px rgba(194, 132, 10, .12) !important;
+            box-shadow: 0 5px 12px var(--sari-dark-3b2338cbf0, rgba(194, 132, 10, .12)) !important;
         }
 
         #adminSidebar [data-sidebar-item][data-admin-nav-active="false"] {
             background-color: transparent !important;
-            color: #514b42 !important;
+            color: var(--sari-dark-e23e64dd1e, #514b42) !important;
             box-shadow: none !important;
         }
 
         #adminSidebar [data-sidebar-item][data-admin-nav-active="false"]:hover {
-            background-color: #fff9ef !important;
-            color: #94620a !important;
+            background-color: var(--sari-dark-950baec030, #fff9ef) !important;
+            color: var(--sari-dark-af18afcaa4, #94620a) !important;
         }
 
         #adminSidebar [data-sidebar-item][data-admin-nav-active="true"] [data-admin-unread-badge] {
-            background-color: #ffffff !important;
-            color: #c48413 !important;
+            background-color: var(--sari-dark-950baec030, #ffffff) !important;
+            color: var(--sari-dark-af18afcaa4, #c48413) !important;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -180,7 +181,7 @@
         html,
         body,
         #adminContent {
-            background: #F4F5F7 !important;
+            background: var(--sari-dark-4d21eb669b, #F4F5F7) !important;
         }
 
         #adminPageContent {

@@ -354,11 +354,11 @@
 
     --rewards-gold-dark:#aa710d;
 
-    --rewards-text:#27303a;
+    --rewards-text:var(--sari-dark-e23e64dd1e, #27303a);
 
-    --rewards-muted:#7c8794;
+    --rewards-muted:var(--sari-dark-a63aa16d7c, #7c8794);
 
-    --rewards-border:#e2e7ec;
+    --rewards-border:var(--sari-dark-d8c2716225, #e2e7ec);
 
     font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
@@ -378,7 +378,7 @@
 
 .sari-rewards-eyebrow {
 
-    color:#a76f13;
+    color:var(--sari-dark-9b2ca2d764, #a76f13);
 
     font-size:7px;
 
@@ -396,7 +396,7 @@
 
     margin-top:5px;
 
-    color:#202834;
+    color:var(--sari-dark-e23e64dd1e, #202834);
 
     font-size:clamp(30px,2.6vw,38px);
 
@@ -416,7 +416,7 @@
 
     margin-top:7px;
 
-    color:#7f8a98;
+    color:var(--sari-dark-a63aa16d7c, #7f8a98);
 
     font-size:8.5px;
 
@@ -436,39 +436,39 @@
 
     border-radius:14px;
 
-    background:#fff;
+    background:var(--sari-dark-950baec030, #fff);
 
     padding:16px;
 
-    box-shadow:0 8px 22px rgba(31,41,55,.045);
+    box-shadow:0 8px 22px var(--sari-dark-1190f58155, rgba(31,41,55,.045));
 
 }
 
-.sari-voucher-section-head {display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding-bottom:12px;border-bottom:1px solid #edf0f2}
+.sari-voucher-section-head {display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding-bottom:12px;border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f2)}
 
-.sari-voucher-section-head h2 {margin-top:4px;color:#28303a;font-size:14px;font-weight:750}
+.sari-voucher-section-head h2 {margin-top:4px;color:var(--sari-dark-e23e64dd1e, #28303a);font-size:14px;font-weight:750}
 
-.sari-voucher-section-head p:last-child {margin-top:4px;color:#7f8a98;font-size:8px;line-height:1.55}
+.sari-voucher-section-head p:last-child {margin-top:4px;color:var(--sari-dark-a63aa16d7c, #7f8a98);font-size:8px;line-height:1.55}
 
-.sari-pht-badge {display:inline-flex;min-height:25px;align-items:center;border:1px solid #ead39d;border-radius:999px;background:#fff8e9;padding:0 9px;color:#94620a;font-size:7px;font-weight:800;white-space:nowrap}
+.sari-pht-badge {display:inline-flex;min-height:25px;align-items:center;border:1px solid #ead39d;border-radius:999px;background:var(--sari-dark-4d21eb669b, #fff8e9);padding:0 9px;color:var(--sari-dark-af18afcaa4, #94620a);font-size:7px;font-weight:800;white-space:nowrap}
 
 .sari-voucher-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
 
-.sari-voucher-card {border:1px solid #e8dfce;border-radius:12px;background:#fffdf8;padding:13px}
+.sari-voucher-card {border:1px solid var(--sari-dark-d8c2716225, #e8dfce);border-radius:12px;background:var(--sari-dark-950baec030, #fffdf8);padding:13px}
 
 .sari-voucher-card-top {display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 
-.sari-voucher-campaign {color:#7b8692;font-size:7.5px;font-weight:600}
+.sari-voucher-campaign {color:var(--sari-dark-a63aa16d7c, #7b8692);font-size:7.5px;font-weight:600}
 
-.sari-voucher-code {display:block;margin-top:4px;color:#8f6218;font-size:14px;letter-spacing:.04em}
+.sari-voucher-code {display:block;margin-top:4px;color:var(--sari-dark-00a00a0e12, #8f6218);font-size:14px;letter-spacing:.04em}
 
-.sari-voucher-value {color:#b97805;font-size:9px;font-weight:800;white-space:nowrap}
+.sari-voucher-value {color:var(--sari-dark-af18afcaa4, #b97805);font-size:9px;font-weight:800;white-space:nowrap}
 
-.sari-voucher-meta {margin-top:10px;color:#7e766d;font-size:7.5px;line-height:1.55}
+.sari-voucher-meta {margin-top:10px;color:var(--sari-dark-a63aa16d7c, #7e766d);font-size:7.5px;line-height:1.55}
 
-.sari-voucher-shop {display:inline-flex;height:31px;align-items:center;justify-content:center;margin-top:10px;border:1px solid #dfc17a;border-radius:8px;background:#fff8e9;padding:0 10px;color:#8f6218;font-size:7.5px;font-weight:750;text-decoration:none}
+.sari-voucher-shop {display:inline-flex;height:31px;align-items:center;justify-content:center;margin-top:10px;border:1px solid #dfc17a;border-radius:8px;background:var(--sari-dark-4d21eb669b, #fff8e9);padding:0 10px;color:var(--sari-dark-00a00a0e12, #8f6218);font-size:7.5px;font-weight:750;text-decoration:none}
 
-.sari-voucher-empty {margin-top:12px;border:1px dashed #dfe4e8;border-radius:10px;background:#fafbfc;padding:18px;color:#7f8a98;font-size:8.5px;text-align:center}
+.sari-voucher-empty {margin-top:12px;border:1px dashed var(--sari-dark-d8c2716225, #dfe4e8);border-radius:10px;background:var(--sari-dark-950baec030, #fafbfc);padding:18px;color:var(--sari-dark-a63aa16d7c, #7f8a98);font-size:8.5px;text-align:center}
 
 @media(max-width:700px){.sari-voucher-section-head{flex-direction:column}.sari-voucher-grid{grid-template-columns:1fr}}
 
@@ -488,9 +488,9 @@
 
     border-radius:17px;
 
-    background:#fff;
+    background:var(--sari-dark-950baec030, #fff);
 
-    box-shadow:0 14px 34px rgba(31,41,55,.055),0 3px 8px rgba(31,41,55,.02);
+    box-shadow:0 14px 34px var(--sari-dark-fbd3b3b9f6, rgba(31,41,55,.055)),0 3px 8px var(--sari-dark-f6fe7319d9, rgba(31,41,55,.02));
 
 }
 
@@ -542,13 +542,13 @@
 
     place-items:center;
 
-    border:1px solid #f0e1c1;
+    border:1px solid var(--sari-dark-d8c2716225, #f0e1c1);
 
     border-radius:17px;
 
-    background:#fff9ed;
+    background:var(--sari-dark-4d21eb669b, #fff9ed);
 
-    color:#c3830e;
+    color:var(--sari-dark-c8bdcce6ab, #c3830e);
 
 }
 
@@ -572,7 +572,7 @@
 
 .sari-reward-stat-label {
 
-    color:#657080;
+    color:var(--sari-dark-a63aa16d7c, #657080);
 
     font-size:8px;
 
@@ -598,7 +598,7 @@
 
 .sari-reward-stat-value {
 
-    color:#bf7d08;
+    color:var(--sari-dark-af18afcaa4, #bf7d08);
 
     font-size:30px;
 
@@ -622,7 +622,7 @@
 
 .sari-reward-stat-unit {
 
-    color:#202834;
+    color:var(--sari-dark-e23e64dd1e, #202834);
 
     font-size:18px;
 
@@ -640,7 +640,7 @@
 
     margin-top:7px;
 
-    color:#8993a0;
+    color:var(--sari-dark-a63aa16d7c, #8993a0);
 
     font-size:7.5px;
 
@@ -656,7 +656,7 @@
 
     height:90px;
 
-    background:#e7ebef;
+    background:var(--sari-dark-4d21eb669b, #e7ebef);
 
 }
 
@@ -706,13 +706,13 @@
 
     border-radius:999px;
 
-    background:#fff8e9;
+    background:var(--sari-dark-4d21eb669b, #fff8e9);
 
-    color:#d08a0d;
+    color:var(--sari-dark-af18afcaa4, #d08a0d);
 
     font-weight:900;
 
-    box-shadow:0 5px 14px rgba(190,125,9,.12);
+    box-shadow:0 5px 14px var(--sari-dark-3b2338cbf0, rgba(190,125,9,.12));
 
 }
 
@@ -738,9 +738,9 @@
 
     border-radius:17px;
 
-    background:#fff;
+    background:var(--sari-dark-950baec030, #fff);
 
-    box-shadow:0 12px 30px rgba(31,41,55,.048),0 2px 7px rgba(31,41,55,.018);
+    box-shadow:0 12px 30px var(--sari-dark-378abf7631, rgba(31,41,55,.048)),0 2px 7px var(--sari-dark-7672bb207e, rgba(31,41,55,.018));
 
 }
 
@@ -758,7 +758,7 @@
 
     padding:16px 20px;
 
-    border-bottom:1px solid #edf0f3;
+    border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
 }
 
@@ -776,13 +776,13 @@
 
     place-items:center;
 
-    border:1px solid #f0e2c5;
+    border:1px solid var(--sari-dark-d8c2716225, #f0e2c5);
 
     border-radius:11px;
 
-    background:#fff9ed;
+    background:var(--sari-dark-4d21eb669b, #fff9ed);
 
-    color:#c18412;
+    color:var(--sari-dark-c8bdcce6ab, #c18412);
 
 }
 
@@ -806,7 +806,7 @@
 
 .sari-rewards-activity-head h2 {
 
-    color:#28313b;
+    color:var(--sari-dark-e23e64dd1e, #28313b);
 
     font-size:15px;
 
@@ -822,7 +822,7 @@
 
     margin-top:2px;
 
-    color:#8993a0;
+    color:var(--sari-dark-a63aa16d7c, #8993a0);
 
     font-size:7.2px;
 
@@ -838,15 +838,15 @@
 
     align-items:center;
 
-    border:1px solid #e1e6eb;
+    border:1px solid var(--sari-dark-d8c2716225, #e1e6eb);
 
     border-radius:999px;
 
-    background:#f8f9fa;
+    background:var(--sari-dark-950baec030, #f8f9fa);
 
     padding:0 10px;
 
-    color:#66717d;
+    color:var(--sari-dark-a63aa16d7c, #66717d);
 
     font-size:7px;
 
@@ -874,11 +874,11 @@
 
     gap:14px;
 
-    border:1px solid #e7ebef;
+    border:1px solid var(--sari-dark-d8c2716225, #e7ebef);
 
     border-radius:11px;
 
-    background:#fff;
+    background:var(--sari-dark-950baec030, #fff);
 
     padding:12px 13px;
 
@@ -898,11 +898,11 @@
 
 .sari-reward-row:hover {
 
-    border-color:#d7dde3;
+    border-color:var(--sari-dark-d8c2716225, #d7dde3);
 
-    background:#fcfcfd;
+    background:var(--sari-dark-950baec030, #fcfcfd);
 
-    box-shadow:0 6px 15px rgba(31,41,55,.035);
+    box-shadow:0 6px 15px var(--sari-dark-7593018246, rgba(31,41,55,.035));
 
 }
 
@@ -920,13 +920,13 @@
 
     place-items:center;
 
-    border:1px solid #eadfc9;
+    border:1px solid var(--sari-dark-d8c2716225, #eadfc9);
 
     border-radius:9px;
 
-    background:#fffaf1;
+    background:var(--sari-dark-950baec030, #fffaf1);
 
-    color:#a97010;
+    color:var(--sari-dark-6e784b4931, #a97010);
 
 }
 
@@ -956,7 +956,7 @@
 
     white-space:nowrap;
 
-    color:#343c45;
+    color:var(--sari-dark-e23e64dd1e, #343c45);
 
     font-size:8.8px;
 
@@ -972,7 +972,7 @@
 
     margin-top:3px;
 
-    color:#89929c;
+    color:var(--sari-dark-a63aa16d7c, #89929c);
 
     font-size:6.7px;
 
@@ -986,15 +986,15 @@
 
     align-items:center;
 
-    border:1px solid #d6e7dc;
+    border:1px solid var(--sari-dark-d8c2716225, #d6e7dc);
 
     border-radius:999px;
 
-    background:#f5faf7;
+    background:var(--sari-dark-950baec030, #f5faf7);
 
     padding:5px 9px;
 
-    color:#4d765d;
+    color:var(--sari-dark-a63aa16d7c, #4d765d);
 
     font-size:7.4px;
 
@@ -1018,11 +1018,11 @@
 
     justify-content:center;
 
-    border:1px dashed #dbe1e6;
+    border:1px dashed var(--sari-dark-d8c2716225, #dbe1e6);
 
     border-radius:13px;
 
-    background:#fafbfc;
+    background:var(--sari-dark-950baec030, #fafbfc);
 
     padding:30px 18px;
 
@@ -1042,13 +1042,13 @@
 
     place-items:center;
 
-    border:1px solid #eadfc9;
+    border:1px solid var(--sari-dark-d8c2716225, #eadfc9);
 
     border-radius:12px;
 
-    background:#fffaf1;
+    background:var(--sari-dark-950baec030, #fffaf1);
 
-    color:#be7d0d;
+    color:var(--sari-dark-6e784b4931, #be7d0d);
 
 }
 
@@ -1074,7 +1074,7 @@
 
     margin-top:13px;
 
-    color:#303740;
+    color:var(--sari-dark-e23e64dd1e, #303740);
 
     font-size:10px;
 
@@ -1090,7 +1090,7 @@
 
     margin-top:5px;
 
-    color:#8a949f;
+    color:var(--sari-dark-a63aa16d7c, #8a949f);
 
     font-size:7.4px;
 
@@ -1376,10 +1376,10 @@
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
     overflow:hidden;
-    border:1px solid #dfe5ea;
+    border:1px solid var(--sari-dark-d8c2716225, #dfe5ea);
     border-radius:16px;
-    background:#ffffff;
-    box-shadow:0 8px 24px rgba(31,41,55,.035);
+    background:var(--sari-dark-950baec030, #ffffff);
+    box-shadow:0 8px 24px var(--sari-dark-7593018246, rgba(31,41,55,.035));
 }
 
 .sari-rewards-summary-item {
@@ -1387,7 +1387,7 @@
     min-width:0;
     min-height:116px;
     padding:18px 22px;
-    background:#ffffff;
+    background:var(--sari-dark-950baec030, #ffffff);
 }
 
 .sari-rewards-summary-item + .sari-rewards-summary-item::before {
@@ -1397,12 +1397,12 @@
     top:20px;
     bottom:20px;
     width:1px;
-    background:#e3e8ed;
+    background:var(--sari-dark-4d21eb669b, #e3e8ed);
 }
 
 .sari-rewards-summary-label {
     margin:0;
-    color:#697586;
+    color:var(--sari-dark-a63aa16d7c, #697586);
     font-size:9px;
     font-weight:750;
     line-height:1.2;
@@ -1418,7 +1418,7 @@
 }
 
 .sari-rewards-summary-value {
-    color:#111827;
+    color:var(--sari-dark-e23e64dd1e, #111827);
     font-size:28px;
     font-weight:800;
     line-height:1;
@@ -1426,7 +1426,7 @@
 }
 
 .sari-rewards-summary-unit {
-    color:#5f6b78;
+    color:var(--sari-dark-a63aa16d7c, #5f6b78);
     font-size:12px;
     font-weight:650;
 }
@@ -1434,7 +1434,7 @@
 .sari-rewards-summary-copy {
     max-width:420px;
     margin-top:9px;
-    color:#8a949f;
+    color:var(--sari-dark-a63aa16d7c, #8a949f);
     font-size:9.5px;
     font-weight:500;
     line-height:1.5;
@@ -1484,7 +1484,7 @@
 }
 
 .sari-rewards-page .sari-rewards-page-header .sari-rewards-eyebrow {
-    color: #a87316 !important;
+    color: var(--sari-dark-685eb4fc40, #a87316) !important;
     font-size: 10.5px !important;
     font-weight: 800 !important;
     line-height: 1.2 !important;
@@ -1494,7 +1494,7 @@
 
 .sari-rewards-page .sari-rewards-page-title {
     margin-top: 5px !important;
-    color: #2e343b !important;
+    color: var(--sari-dark-e23e64dd1e, #2e343b) !important;
     font-size: clamp(28px, 2.35vw, 33px) !important;
     font-weight: 760 !important;
     line-height: 1.04 !important;
@@ -1504,7 +1504,7 @@
 .sari-rewards-page .sari-rewards-page-copy {
     max-width: 760px !important;
     margin-top: 7px !important;
-    color: #7d8792 !important;
+    color: var(--sari-dark-a63aa16d7c, #7d8792) !important;
     font-size: 11.5px !important;
     font-weight: 450 !important;
     line-height: 1.55 !important;
@@ -1516,14 +1516,14 @@
 
 .sari-rewards-page .sari-voucher-section-head h2 {
     margin-top: 5px !important;
-    color: #28313b !important;
+    color: var(--sari-dark-e23e64dd1e, #28313b) !important;
     font-size: 15.5px !important;
     font-weight: 750 !important;
 }
 
 .sari-rewards-page .sari-voucher-section-head p:last-child {
     margin-top: 5px !important;
-    color: #7f8a98 !important;
+    color: var(--sari-dark-a63aa16d7c, #7f8a98) !important;
     font-size: 10.5px !important;
     line-height: 1.5 !important;
 }
@@ -1542,7 +1542,7 @@
 }
 
 .sari-rewards-page .sari-rewards-activity-head h2 {
-    color: #26303a !important;
+    color: var(--sari-dark-e23e64dd1e, #26303a) !important;
     font-size: 16.5px !important;
     font-weight: 750 !important;
     line-height: 1.25 !important;
@@ -1551,7 +1551,7 @@
 
 .sari-rewards-page .sari-rewards-activity-head p {
     margin-top: 4px !important;
-    color: #7e8996 !important;
+    color: var(--sari-dark-a63aa16d7c, #7e8996) !important;
     font-size: 11px !important;
     font-weight: 450 !important;
     line-height: 1.5 !important;
@@ -1560,7 +1560,7 @@
 .sari-rewards-page .sari-rewards-count {
     min-height: 30px !important;
     padding-inline: 10px !important;
-    color: #65717e !important;
+    color: var(--sari-dark-a63aa16d7c, #65717e) !important;
     font-size: 9.5px !important;
     font-weight: 650 !important;
 }
@@ -1569,7 +1569,7 @@
     min-height: 330px !important;
     border: 0 !important;
     border-radius: 0 !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     padding: 58px 24px !important;
     box-shadow: none !important;
 }
@@ -1580,7 +1580,7 @@
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
-    color: #b4bbc3 !important;
+    color: var(--sari-dark-a63aa16d7c, #b4bbc3) !important;
 }
 
 .sari-rewards-page .sari-rewards-empty-icon svg {
@@ -1592,7 +1592,7 @@
 
 .sari-rewards-page .sari-rewards-empty h3 {
     margin-top: 16px !important;
-    color: #929ba5 !important;
+    color: var(--sari-dark-a63aa16d7c, #929ba5) !important;
     font-size: 20px !important;
     font-weight: 720 !important;
     line-height: 1.25 !important;
@@ -1602,7 +1602,7 @@
 .sari-rewards-page .sari-rewards-empty p {
     max-width: 560px !important;
     margin-top: 7px !important;
-    color: #a4acb5 !important;
+    color: var(--sari-dark-a63aa16d7c, #a4acb5) !important;
     font-size: 11.5px !important;
     font-weight: 450 !important;
     line-height: 1.6 !important;
@@ -1698,24 +1698,24 @@
    voucher tiles, links, and controls retain their existing UI.
    ============================================================ */
 .sari-rewards-page {
-    --sari-rewards-float-border: #e5e7eb;
+    --sari-rewards-float-border: var(--sari-dark-d8c2716225, #e5e7eb);
     --sari-rewards-float-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
     --sari-rewards-float-shadow-soft:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065),
-        inset 0 1px 0 rgba(255, 255, 255, .90);
+        0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+        0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
 }
 
 /* Reward Points and Delivered Spend form one elevated KPI surface. */
 .sari-rewards-page .sari-rewards-summary-card {
     border: 1px solid var(--sari-rewards-float-border) !important;
     border-radius: 18px !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     box-shadow: var(--sari-rewards-float-shadow-soft) !important;
 }
 
@@ -1723,7 +1723,7 @@
 .sari-rewards-page .sari-voucher-section {
     border: 1px solid var(--sari-rewards-float-border) !important;
     border-radius: 18px !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     box-shadow: var(--sari-rewards-float-shadow) !important;
 }
 
@@ -1731,7 +1731,7 @@
 .sari-rewards-page .sari-rewards-activity {
     border: 1px solid var(--sari-rewards-float-border) !important;
     border-radius: 18px !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     box-shadow: var(--sari-rewards-float-shadow) !important;
 }
 
@@ -1751,10 +1751,10 @@
     .sari-rewards-page .sari-rewards-activity {
         border-radius: 16px !important;
         box-shadow:
-            0 2px 5px rgba(15, 23, 42, .045),
-            0 8px 19px rgba(15, 23, 42, .065),
-            0 16px 33px rgba(15, 23, 42, .07),
-            inset 0 1px 0 rgba(255, 255, 255, .9) !important;
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+            0 8px 19px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            0 16px 33px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .9)) !important;
     }
 }
 

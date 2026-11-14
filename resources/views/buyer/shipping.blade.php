@@ -20,7 +20,7 @@
         }
 
         .sari-shipping-eyebrow {
-            color: #a87316;
+            color: var(--sari-dark-685eb4fc40, #a87316);
             font-size: 10.5px;
             font-weight: 800;
             line-height: 1.2;
@@ -30,7 +30,7 @@
 
         .sari-shipping-title {
             margin-top: 5px;
-            color: #2e343b;
+            color: var(--sari-dark-e23e64dd1e, #2e343b);
             font-size: clamp(27px, 2.25vw, 31px);
             font-weight: 760;
             line-height: 1.04;
@@ -46,7 +46,7 @@
             border: 0;
             background: transparent;
             padding: 0;
-            color: #59636e;
+            color: var(--sari-dark-a63aa16d7c, #59636e);
             font-size: 11.5px;
             font-weight: 750;
             line-height: 1.35;
@@ -56,7 +56,7 @@
 
         .sari-shipping-orders-link:hover,
         .sari-shipping-orders-link:focus-visible {
-            color: #c88912;
+            color: var(--sari-dark-19b301f69a, #c88912);
             outline: none;
         }
 
@@ -71,12 +71,12 @@
 
         /* Empty state mirrors the Buyer Cart / My Orders empty UI. */
         .sari-shipping-empty {
-            border: 1px solid #e3e7eb !important;
+            border: 1px solid var(--sari-dark-d8c2716225, #e3e7eb) !important;
             border-radius: 16px !important;
-            background: #ffffff !important;
+            background: var(--sari-dark-950baec030, #ffffff) !important;
             padding: 72px 24px !important;
             text-align: center;
-            box-shadow: 0 10px 28px rgba(31,41,55,.045) !important;
+            box-shadow: 0 10px 28px var(--sari-dark-1190f58155, rgba(31,41,55,.045)) !important;
         }
 
         .sari-shipping-empty-icon {
@@ -87,20 +87,20 @@
             place-items: center;
             border: 0;
             background: transparent;
-            color: #b4bbc3;
+            color: var(--sari-dark-a63aa16d7c, #b4bbc3);
         }
 
         .sari-shipping-empty-icon svg {
             width: 58px;
             height: 58px;
-            color: #b4bbc3;
+            color: var(--sari-dark-a63aa16d7c, #b4bbc3);
             stroke: currentColor;
             stroke-width: 1.45;
         }
 
         .sari-shipping-empty-title {
             margin-top: 18px;
-            color: #9ca4ad;
+            color: var(--sari-dark-a63aa16d7c, #9ca4ad);
             font-size: 22px;
             font-weight: 750;
             line-height: 1.2;
@@ -109,7 +109,7 @@
 
         .sari-shipping-empty-copy {
             margin-top: 7px;
-            color: #b0b7bf;
+            color: var(--sari-dark-a63aa16d7c, #b0b7bf);
             font-size: 12px;
             font-weight: 500;
             line-height: 1.55;
@@ -145,11 +145,11 @@
 
         /* Existing shipment cards stay functional; only light UI cleanup. */
         .sari-shipment-card {
-            border: 1px solid #e3e7eb !important;
-            background: #ffffff !important;
+            border: 1px solid var(--sari-dark-d8c2716225, #e3e7eb) !important;
+            background: var(--sari-dark-950baec030, #ffffff) !important;
             box-shadow:
-                0 10px 28px rgba(31,41,55,.045),
-                0 2px 7px rgba(31,41,55,.018) !important;
+                0 10px 28px var(--sari-dark-1190f58155, rgba(31,41,55,.045)),
+                0 2px 7px var(--sari-dark-7672bb207e, rgba(31,41,55,.018)) !important;
         }
 
         @media (max-width: 640px) {

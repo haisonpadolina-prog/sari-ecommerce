@@ -28,10 +28,10 @@
     }
 
     .sari-admin-dashboard {
-        --ink:#211d17;
-        --muted:#8f877d;
-        --line:#ece6dd;
-        --surface:#ffffff;
+        --ink:var(--sari-dark-e23e64dd1e, #211d17);
+        --muted:var(--sari-dark-a63aa16d7c, #8f877d);
+        --line:var(--sari-dark-d8c2716225, #ece6dd);
+        --surface:var(--sari-dark-950baec030, #ffffff);
         --soft:#fbfaf7;
         --gold:#c99524;
         --gold-dark:#a96f10;
@@ -41,22 +41,22 @@
     .admin-panel {
         border:1px solid var(--line);
         border-radius:18px;
-        background:#fff;
-        box-shadow:0 8px 24px rgba(49,38,24,.035);
+        background:var(--sari-dark-950baec030, #fff);
+        box-shadow:0 8px 24px var(--sari-dark-7593018246, rgba(49,38,24,.035));
     }
 
     .admin-kpi {
-        border:1px solid #ece6dd;
+        border:1px solid var(--sari-dark-d8c2716225, #ece6dd);
         border-radius:16px;
-        background:#fff;
-        box-shadow:0 6px 16px rgba(49,38,24,.025);
+        background:var(--sari-dark-950baec030, #fff);
+        box-shadow:0 6px 16px var(--sari-dark-e1384eb7fc, rgba(49,38,24,.025));
         transition:border-color .14s ease, transform .14s ease, box-shadow .14s ease;
     }
 
     .admin-kpi:hover {
-        border-color:#dfd4c4;
+        border-color:var(--sari-dark-d8c2716225, #dfd4c4);
         transform:translateY(-1px);
-        box-shadow:0 8px 18px rgba(49,38,24,.045);
+        box-shadow:0 8px 18px var(--sari-dark-1190f58155, rgba(49,38,24,.045));
     }
 
     .admin-icon-box {
@@ -74,20 +74,20 @@
         align-items:center;
         justify-content:center;
         gap:6px;
-        border:1px solid #e9e1d6;
+        border:1px solid var(--sari-dark-d8c2716225, #e9e1d6);
         border-radius:10px;
-        background:#fff;
+        background:var(--sari-dark-950baec030, #fff);
         padding:0 12px;
         font-size:10px;
         font-weight:600;
-        color:#756b5d;
+        color:var(--sari-dark-a63aa16d7c, #756b5d);
         transition:border-color .14s ease, background-color .14s ease, color .14s ease;
     }
 
     .admin-view-button:hover {
         border-color:#d8c39a;
-        background:#fffaf0;
-        color:#9b6715;
+        background:var(--sari-dark-950baec030, #fffaf0);
+        color:var(--sari-dark-6c498671da, #9b6715);
     }
 
     .admin-donut {
@@ -106,8 +106,8 @@
         position:absolute;
         inset:32px;
         border-radius:inherit;
-        background:#fff;
-        box-shadow:inset 0 0 0 1px #eee7dd;
+        background:var(--sari-dark-950baec030, #fff);
+        box-shadow:inset 0 0 0 1px var(--sari-dark-f30a5f9061, #eee7dd);
     }
 
     .admin-donut-center { position:relative; z-index:1; text-align:center; }
@@ -120,10 +120,10 @@
     .sari-hero {
         position: relative;
         overflow: hidden;
-        border: 1px solid #3f3a2c;
+        border: 1px solid var(--sari-dark-d8c2716225, #3f3a2c);
         border-radius: 24px;
-        background: linear-gradient(112deg, #161913 0%, #202318 38%, #403a2a 68%, #8f8260 100%);
-        box-shadow: 0 18px 42px rgba(31, 29, 23, .11);
+        background: linear-gradient(112deg, var(--sari-dark-f3318ab620, #161913) 0%, var(--sari-dark-f3318ab620, #202318) 38%, var(--sari-dark-fbb35de0d1, #403a2a) 68%, #8f8260 100%);
+        box-shadow: 0 18px 42px var(--sari-dark-71f44bdb16, rgba(31, 29, 23, .11));
     }
 
     .sari-hero::before {
@@ -143,7 +143,7 @@
         height: 220px;
         width: 220px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, .06);
+        background: var(--sari-dark-4cd63dc51a, rgba(255, 255, 255, .06));
         filter: blur(34px);
         pointer-events: none;
     }
@@ -209,7 +209,7 @@
 
     .sari-hero-stat + .sari-hero-stat {
         padding-left: 18px;
-        border-left: 1px solid rgba(255,255,255,.12);
+        border-left: 1px solid var(--sari-dark-0d02a17c1b, rgba(255,255,255,.12));
     }
 
     .sari-hero-stat-label {
@@ -239,7 +239,7 @@
     }
 
     .sari-hero-stat-icon.is-cloud {
-        background: rgba(255,255,255,.08);
+        background: var(--sari-dark-d1438881c6, rgba(255,255,255,.08));
         color: rgba(255,255,255,.90);
     }
 
@@ -278,7 +278,7 @@
     }
 
     .sari-hero-brand-inner {
-        border-left: 1px solid rgba(255,255,255,.12);
+        border-left: 1px solid var(--sari-dark-0d02a17c1b, rgba(255,255,255,.12));
         padding-left: 18px;
         text-align: right;
     }
@@ -348,16 +348,16 @@
     ============================================================ */
 
     .admin-control-panel {
-        border: 1px solid #e9e2d8;
+        border: 1px solid var(--sari-dark-d8c2716225, #e9e2d8);
         border-radius: 18px;
-        background: #fff;
-        box-shadow: 0 8px 24px rgba(49,38,24,.035);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 8px 24px var(--sari-dark-7593018246, rgba(49,38,24,.035));
     }
 
     .admin-control-subtle {
-        border: 1px solid #eee8df;
+        border: 1px solid var(--sari-dark-d8c2716225, #eee8df);
         border-radius: 14px;
-        background: #fcfbf8;
+        background: var(--sari-dark-950baec030, #fcfbf8);
     }
 
     .admin-section-icon {
@@ -367,8 +367,8 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 10px;
-        background: #fff7e7;
-        color: #c99524;
+        background: var(--sari-dark-4d21eb669b, #fff7e7);
+        color: var(--sari-dark-91b715374c, #c99524);
     }
 
     .admin-focus-chip {
@@ -377,21 +377,21 @@
         align-items: center;
         justify-content: center;
         gap: 6px;
-        border: 1px solid #e8e0d5;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e0d5);
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 11px;
         font-size: 9px;
         font-weight: 600;
-        color: #786f65;
+        color: var(--sari-dark-a63aa16d7c, #786f65);
         transition: border-color .14s ease, background-color .14s ease, color .14s ease;
     }
 
     .admin-focus-chip:hover,
     .admin-focus-chip.is-active {
         border-color: #d8bc80;
-        background: #fff8e9;
-        color: #9b6715;
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
+        color: var(--sari-dark-6c498671da, #9b6715);
     }
 
     .admin-health-ring {
@@ -401,7 +401,7 @@
         width: 148px;
         place-items: center;
         border-radius: 999px;
-        background: conic-gradient(#c99524 0deg 313deg, #eee7dc 313deg 360deg);
+        background: conic-gradient(#c99524 0deg 313deg, var(--sari-dark-4d21eb669b, #eee7dc) 313deg 360deg);
     }
 
     .admin-health-ring::after {
@@ -409,8 +409,8 @@
         position: absolute;
         inset: 14px;
         border-radius: inherit;
-        background: #fff;
-        box-shadow: inset 0 0 0 1px #eee7dc;
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: inset 0 0 0 1px var(--sari-dark-f30a5f9061, #eee7dc);
     }
 
     .admin-health-center {
@@ -426,9 +426,9 @@
         align-items: flex-start;
         justify-content: space-between;
         gap: 8px;
-        border: 1px solid #ebe4d9;
+        border: 1px solid var(--sari-dark-d8c2716225, #ebe4d9);
         border-radius: 13px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 12px;
         text-align: left;
         transition: border-color .14s ease, background-color .14s ease, transform .14s ease;
@@ -436,20 +436,20 @@
 
     .admin-quick-action:hover {
         border-color: #d8c49d;
-        background: #fffaf0;
+        background: var(--sari-dark-950baec030, #fffaf0);
         transform: translateY(-1px);
     }
 
     .admin-role-card {
-        border: 1px solid #ece6dd;
+        border: 1px solid var(--sari-dark-d8c2716225, #ece6dd);
         border-radius: 14px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 14px;
         transition: border-color .14s ease, transform .14s ease;
     }
 
     .admin-role-card:hover {
-        border-color: #d9c8aa;
+        border-color: var(--sari-dark-d8c2716225, #d9c8aa);
         transform: translateY(-1px);
     }
 
@@ -466,7 +466,7 @@
         left: calc(50% + 26px);
         width: calc(100% - 52px);
         height: 1px;
-        background: #e9e1d6;
+        background: var(--sari-dark-4d21eb669b, #e9e1d6);
     }
 
     .admin-stage-icon {
@@ -477,28 +477,28 @@
         width: 44px;
         margin: 0 auto;
         place-items: center;
-        border: 1px solid #e8e1d8;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e1d8);
         border-radius: 999px;
-        background: #fff;
-        color: #857a6e;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #857a6e);
     }
 
     .admin-stage-icon.is-good {
-        border-color: #d6e8df;
-        background: #eff8f4;
-        color: #438879;
+        border-color: var(--sari-dark-d8c2716225, #d6e8df);
+        background: var(--sari-dark-4d21eb669b, #eff8f4);
+        color: var(--sari-dark-a63aa16d7c, #438879);
     }
 
     .admin-stage-icon.is-warn {
-        border-color: #ead9b5;
-        background: #fff7e7;
-        color: #b77a18;
+        border-color: var(--sari-dark-d8c2716225, #ead9b5);
+        background: var(--sari-dark-4d21eb669b, #fff7e7);
+        color: var(--sari-dark-6c498671da, #b77a18);
     }
 
     .admin-stage-icon.is-hot {
-        border-color: #efc7c7;
-        background: #fff1f1;
-        color: #b85f5f;
+        border-color: var(--sari-dark-d8c2716225, #efc7c7);
+        background: var(--sari-dark-950baec030, #fff1f1);
+        color: var(--sari-dark-384406f848, #b85f5f);
     }
 
     .admin-risk-row {
@@ -507,7 +507,7 @@
         align-items: center;
         gap: 10px;
         padding: 10px 0;
-        border-bottom: 1px solid #f0ebe4;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
     }
 
     .admin-risk-row:last-child {
@@ -527,18 +527,18 @@
     }
 
     .admin-severity.high {
-        background: #fbecec;
-        color: #b95656;
+        background: var(--sari-dark-4d21eb669b, #fbecec);
+        color: var(--sari-dark-65fa15dc70, #b95656);
     }
 
     .admin-severity.medium {
-        background: #fff4dd;
-        color: #a86f16;
+        background: var(--sari-dark-4d21eb669b, #fff4dd);
+        color: var(--sari-dark-6c498671da, #a86f16);
     }
 
     .admin-severity.low {
-        background: #edf7f2;
-        color: #4b8d69;
+        background: var(--sari-dark-4d21eb669b, #edf7f2);
+        color: var(--sari-dark-a63aa16d7c, #4b8d69);
     }
 
     .admin-rider-ring {
@@ -562,15 +562,15 @@
         position: absolute;
         inset: 24px;
         border-radius: inherit;
-        background: #fff;
-        box-shadow: inset 0 0 0 1px #eee7dc;
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: inset 0 0 0 1px var(--sari-dark-f30a5f9061, #eee7dc);
     }
 
     .admin-drawer-backdrop {
         position: fixed;
         inset: 0;
         z-index: 80;
-        background: rgba(31, 27, 22, .28);
+        background: var(--sari-dark-c038cbfcdf, rgba(31, 27, 22, .28));
         opacity: 0;
         pointer-events: none;
         transition: opacity .16s ease;
@@ -589,9 +589,9 @@
         height: 100dvh;
         width: min(430px, 92vw);
         overflow-y: auto;
-        border-left: 1px solid #e8e0d5;
-        background: #fff;
-        box-shadow: -18px 0 48px rgba(42, 32, 21, .12);
+        border-left: 1px solid var(--sari-dark-d8c2716225, #e8e0d5);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: -18px 0 48px var(--sari-dark-3b2338cbf0, rgba(42, 32, 21, .12));
         transform: translateX(102%);
         transition: transform .18s ease;
     }
@@ -606,14 +606,14 @@
         bottom: 22px;
         z-index: 110;
         max-width: 330px;
-        border: 1px solid #e1d2b4;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1d2b4);
         border-radius: 13px;
-        background: #fffaf0;
+        background: var(--sari-dark-950baec030, #fffaf0);
         padding: 11px 13px;
-        color: #76541a;
+        color: var(--sari-dark-e23e64dd1e, #76541a);
         font-size: 10px;
         font-weight: 600;
-        box-shadow: 0 12px 30px rgba(49,38,24,.10);
+        box-shadow: 0 12px 30px var(--sari-dark-8eadf403a5, rgba(49,38,24,.10));
         opacity: 0;
         transform: translateY(8px);
         pointer-events: none;
@@ -658,44 +658,44 @@
     ============================================================ */
 
     .sari-admin-dashboard {
-        background: #fbfaf7;
+        background: var(--sari-dark-950baec030, #fbfaf7);
     }
 
     .admin-panel,
     .admin-control-panel,
     .admin-kpi {
-        border-color: #e8e1d6 !important;
-        background: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #e8e1d6) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            8px 8px 20px rgba(74, 58, 38, .055),
-            -5px -5px 14px rgba(255, 255, 255, .90) !important;
+            8px 8px 20px var(--sari-dark-fbd3b3b9f6, rgba(74, 58, 38, .055)),
+            -5px -5px 14px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90)) !important;
     }
 
     .admin-control-subtle,
     .admin-soft-card {
-        border-color: #ece5db !important;
-        background: #fdfcf9 !important;
+        border-color: var(--sari-dark-d8c2716225, #ece5db) !important;
+        background: var(--sari-dark-950baec030, #fdfcf9) !important;
         box-shadow:
-            inset 2px 2px 5px rgba(78, 61, 40, .03),
-            inset -2px -2px 5px rgba(255, 255, 255, .88);
+            inset 2px 2px 5px var(--sari-dark-b13200ac05, rgba(78, 61, 40, .03)),
+            inset -2px -2px 5px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .88));
     }
 
     .admin-panel:hover,
     .admin-control-panel:hover,
     .admin-kpi:hover {
         transform: translateY(-1px);
-        border-color: #ded1bd !important;
+        border-color: var(--sari-dark-d8c2716225, #ded1bd) !important;
         box-shadow:
-            10px 10px 24px rgba(74, 58, 38, .06),
-            -6px -6px 16px rgba(255, 255, 255, .94) !important;
+            10px 10px 24px var(--sari-dark-361b571631, rgba(74, 58, 38, .06)),
+            -6px -6px 16px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .94)) !important;
     }
 
     .admin-section-icon,
     .admin-stat-icon,
     .admin-icon-box {
         box-shadow:
-            3px 3px 8px rgba(72, 55, 36, .04),
-            -2px -2px 6px rgba(255,255,255,.92);
+            3px 3px 8px var(--sari-dark-25b2da5e49, rgba(72, 55, 36, .04)),
+            -2px -2px 6px var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     }
 
     /* ============================================================
@@ -714,10 +714,10 @@
         place-items: center;
         border-radius: 50%;
         background:
-            conic-gradient(#c99524 0deg 313deg, #eee6d9 313deg 360deg);
+            conic-gradient(#c99524 0deg 313deg, var(--sari-dark-4d21eb669b, #eee6d9) 313deg 360deg);
         box-shadow:
-            10px 10px 24px rgba(74, 58, 38, .07),
-            -6px -6px 16px rgba(255,255,255,.96);
+            10px 10px 24px var(--sari-dark-7c935c8886, rgba(74, 58, 38, .07)),
+            -6px -6px 16px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96));
     }
 
     .admin-health-score::before {
@@ -725,10 +725,10 @@
         position: absolute;
         inset: 15px;
         border-radius: 50%;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         box-shadow:
-            inset 4px 4px 9px rgba(79,61,40,.04),
-            inset -4px -4px 9px rgba(255,255,255,.95);
+            inset 4px 4px 9px var(--sari-dark-25b2da5e49, rgba(79,61,40,.04)),
+            inset -4px -4px 9px var(--sari-dark-f30a5f9061, rgba(255,255,255,.95));
     }
 
     .admin-health-score-content {
@@ -742,23 +742,23 @@
         align-items: center;
         gap: 6px;
         margin-top: 7px;
-        border: 1px solid #d8eadf;
+        border: 1px solid var(--sari-dark-d8c2716225, #d8eadf);
         border-radius: 999px;
-        background: #eff8f4;
+        background: var(--sari-dark-4d21eb669b, #eff8f4);
         padding: 4px 8px;
         font-size: 8px;
         font-weight: 700;
-        color: #4d8d68;
+        color: var(--sari-dark-a63aa16d7c, #4d8d68);
     }
 
     .admin-health-metric {
-        border: 1px solid #eee8df;
+        border: 1px solid var(--sari-dark-d8c2716225, #eee8df);
         border-radius: 13px;
-        background: #fdfcf9;
+        background: var(--sari-dark-950baec030, #fdfcf9);
         padding: 11px 12px;
         box-shadow:
-            inset 2px 2px 5px rgba(79,61,40,.025),
-            inset -2px -2px 5px rgba(255,255,255,.9);
+            inset 2px 2px 5px var(--sari-dark-e1384eb7fc, rgba(79,61,40,.025)),
+            inset -2px -2px 5px var(--sari-dark-f30a5f9061, rgba(255,255,255,.9));
     }
 
     .admin-health-track {
@@ -766,8 +766,8 @@
         height: 7px;
         overflow: hidden;
         border-radius: 999px;
-        background: #eee8df;
-        box-shadow: inset 1px 1px 2px rgba(69,54,37,.05);
+        background: var(--sari-dark-4d21eb669b, #eee8df);
+        box-shadow: inset 1px 1px 2px var(--sari-dark-1df26971b5, rgba(69,54,37,.05));
     }
 
     .admin-health-track > span {
@@ -783,14 +783,14 @@
     .admin-chart-premium {
         position: relative;
         overflow: hidden;
-        border: 1px solid #e9e2d8;
+        border: 1px solid var(--sari-dark-d8c2716225, #e9e2d8);
         border-radius: 16px;
         background:
-            linear-gradient(180deg, #fff 0%, #fcfaf6 100%);
+            linear-gradient(180deg, var(--sari-dark-950baec030, #fff) 0%, var(--sari-dark-950baec030, #fcfaf6) 100%);
         padding: 16px;
         box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.95),
-            5px 5px 12px rgba(74,58,38,.025);
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.95)),
+            5px 5px 12px var(--sari-dark-e1384eb7fc, rgba(74,58,38,.025));
     }
 
     .admin-chart-premium::after {
@@ -817,13 +817,13 @@
     }
 
     .admin-chart-summary-card {
-        border: 1px solid #eee7dc;
+        border: 1px solid var(--sari-dark-d8c2716225, #eee7dc);
         border-radius: 12px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 10px 12px;
         box-shadow:
-            3px 3px 8px rgba(74,58,38,.03),
-            -2px -2px 6px rgba(255,255,255,.9);
+            3px 3px 8px var(--sari-dark-b13200ac05, rgba(74,58,38,.03)),
+            -2px -2px 6px var(--sari-dark-f30a5f9061, rgba(255,255,255,.9));
     }
 
     /* ============================================================
@@ -844,8 +844,8 @@
                 #c78d49 328deg 360deg
             );
         box-shadow:
-            10px 10px 24px rgba(74,58,38,.06),
-            -6px -6px 16px rgba(255,255,255,.94);
+            10px 10px 24px var(--sari-dark-361b571631, rgba(74,58,38,.06)),
+            -6px -6px 16px var(--sari-dark-f30a5f9061, rgba(255,255,255,.94));
     }
 
     .admin-donut-premium::before {
@@ -853,10 +853,10 @@
         position: absolute;
         inset: 30px;
         border-radius: inherit;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         box-shadow:
-            inset 4px 4px 9px rgba(79,61,40,.035),
-            inset -4px -4px 9px rgba(255,255,255,.95);
+            inset 4px 4px 9px var(--sari-dark-7593018246, rgba(79,61,40,.035)),
+            inset -4px -4px 9px var(--sari-dark-f30a5f9061, rgba(255,255,255,.95));
     }
 
     .admin-donut-premium-center {
@@ -867,14 +867,14 @@
 
     .admin-rider-ring {
         box-shadow:
-            9px 9px 22px rgba(74,58,38,.055),
-            -6px -6px 15px rgba(255,255,255,.92);
+            9px 9px 22px var(--sari-dark-fbd3b3b9f6, rgba(74,58,38,.055)),
+            -6px -6px 15px var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     }
 
     .admin-rider-ring::after {
         box-shadow:
-            inset 4px 4px 9px rgba(79,61,40,.035),
-            inset -4px -4px 9px rgba(255,255,255,.95);
+            inset 4px 4px 9px var(--sari-dark-7593018246, rgba(79,61,40,.035)),
+            inset -4px -4px 9px var(--sari-dark-f30a5f9061, rgba(255,255,255,.95));
     }
 
     .admin-legend-row {
@@ -882,7 +882,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        border-bottom: 1px solid #f0ebe4;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
         padding: 9px 0;
     }
 
@@ -895,7 +895,7 @@
         height: 5px;
         overflow: hidden;
         border-radius: 999px;
-        background: #efe8dd;
+        background: var(--sari-dark-4d21eb669b, #efe8dd);
     }
 
     .admin-legend-bar > span {
@@ -933,13 +933,13 @@
     ============================================================ */
 
     .sari-sales-card {
-        border: 1px solid #e8dfd3;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8dfd3);
         border-radius: 20px;
-        background: #fffefb;
+        background: var(--sari-dark-950baec030, #fffefb);
         padding: 20px;
         box-shadow:
-            9px 9px 22px rgba(69, 53, 34, .055),
-            -5px -5px 14px rgba(255, 255, 255, .94);
+            9px 9px 22px var(--sari-dark-fbd3b3b9f6, rgba(69, 53, 34, .055)),
+            -5px -5px 14px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .94));
     }
 
     .sari-sales-header-icon {
@@ -948,13 +948,13 @@
         width: 42px;
         flex: 0 0 auto;
         place-items: center;
-        border: 1px solid #eee3cd;
+        border: 1px solid var(--sari-dark-d8c2716225, #eee3cd);
         border-radius: 13px;
-        background: #fbf5e9;
-        color: #b9831f;
+        background: var(--sari-dark-4d21eb669b, #fbf5e9);
+        color: var(--sari-dark-e5d2eb9f95, #b9831f);
         box-shadow:
-            3px 3px 8px rgba(69,53,34,.035),
-            -2px -2px 6px rgba(255,255,255,.92);
+            3px 3px 8px var(--sari-dark-7593018246, rgba(69,53,34,.035)),
+            -2px -2px 6px var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     }
 
     .sari-sales-period {
@@ -963,16 +963,16 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        border: 1px solid #e7ded2;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7ded2);
         border-radius: 12px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 13px;
         font-size: 9px;
         font-weight: 700;
-        color: #554d44;
+        color: var(--sari-dark-e23e64dd1e, #554d44);
         box-shadow:
-            4px 4px 10px rgba(69,53,34,.035),
-            -3px -3px 8px rgba(255,255,255,.92);
+            4px 4px 10px var(--sari-dark-7593018246, rgba(69,53,34,.035)),
+            -3px -3px 8px var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     }
 
     .sari-sales-kpis {
@@ -987,13 +987,13 @@
         min-width: 0;
         align-items: center;
         gap: 12px;
-        border: 1px solid #ece4d9;
+        border: 1px solid var(--sari-dark-d8c2716225, #ece4d9);
         border-radius: 15px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 13px 14px;
         box-shadow:
-            5px 5px 12px rgba(69,53,34,.038),
-            -3px -3px 9px rgba(255,255,255,.94);
+            5px 5px 12px var(--sari-dark-e0ffb11e26, rgba(69,53,34,.038)),
+            -3px -3px 9px var(--sari-dark-f30a5f9061, rgba(255,255,255,.94));
     }
 
     .sari-sales-kpi-icon {
@@ -1003,8 +1003,8 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 50%;
-        background: #faf3e4;
-        color: #b9821d;
+        background: var(--sari-dark-4d21eb669b, #faf3e4);
+        color: var(--sari-dark-d9e93148e8, #b9821d);
     }
 
     .sari-sales-kpi-value {
@@ -1013,7 +1013,7 @@
         line-height: 1;
         font-weight: 700;
         letter-spacing: -.035em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-sales-trend {
@@ -1023,30 +1023,30 @@
         align-items: center;
         gap: 5px;
         font-size: 8px;
-        color: #92897f;
+        color: var(--sari-dark-a63aa16d7c, #92897f);
     }
 
     .sari-sales-trend strong {
-        color: #4d8d68;
+        color: var(--sari-dark-a63aa16d7c, #4d8d68);
         font-weight: 700;
     }
 
     .sari-sales-chart-shell {
         margin-top: 14px;
         overflow: hidden;
-        border: 1px solid #eae2d7;
+        border: 1px solid var(--sari-dark-d8c2716225, #eae2d7);
         border-radius: 17px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.96),
-            4px 4px 12px rgba(69,53,34,.025);
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+            4px 4px 12px var(--sari-dark-e1384eb7fc, rgba(69,53,34,.025));
     }
 
     .sari-sales-chart-head {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        border-bottom: 1px solid #f0ebe4;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
         padding: 13px 14px 11px;
     }
 
@@ -1063,19 +1063,19 @@
         min-height: 28px;
         align-items: center;
         gap: 6px;
-        border: 1px solid #e8e0d5;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e0d5);
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 9px;
         font-size: 8px;
         font-weight: 600;
-        color: #71685f;
+        color: var(--sari-dark-a63aa16d7c, #71685f);
     }
 
     .sari-sales-updated {
         border-color: transparent;
         background: transparent;
-        color: #a09990;
+        color: var(--sari-dark-a63aa16d7c, #a09990);
         padding-left: 2px;
         padding-right: 2px;
     }
@@ -1089,7 +1089,7 @@
     .sari-sales-chart {
         position: relative;
         padding: 8px 8px 2px;
-        background: linear-gradient(180deg, #fff 0%, #fffdf9 100%);
+        background: linear-gradient(180deg, var(--sari-dark-950baec030, #fff) 0%, var(--sari-dark-950baec030, #fffdf9) 100%);
     }
 
     .sari-sales-chart svg {
@@ -1111,13 +1111,13 @@
         min-width: 0;
         align-items: center;
         gap: 11px;
-        border: 1px solid #ece4d9;
+        border: 1px solid var(--sari-dark-d8c2716225, #ece4d9);
         border-radius: 14px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 12px 13px;
         box-shadow:
-            4px 4px 10px rgba(69,53,34,.032),
-            -3px -3px 8px rgba(255,255,255,.92);
+            4px 4px 10px var(--sari-dark-2d78d45c63, rgba(69,53,34,.032)),
+            -3px -3px 8px var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     }
 
     .sari-sales-insight-icon {
@@ -1127,8 +1127,8 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 50%;
-        background: #faf3e4;
-        color: #b9821d;
+        background: var(--sari-dark-4d21eb669b, #faf3e4);
+        color: var(--sari-dark-d9e93148e8, #b9821d);
     }
 
     .sari-sales-insight-badge {
@@ -1137,11 +1137,11 @@
         min-height: 25px;
         align-items: center;
         border-radius: 999px;
-        background: #f4f6e9;
+        background: var(--sari-dark-4d21eb669b, #f4f6e9);
         padding: 0 8px;
         font-size: 7px;
         font-weight: 700;
-        color: #667b24;
+        color: var(--sari-dark-e23e64dd1e, #667b24);
         white-space: nowrap;
     }
 
@@ -1150,13 +1150,13 @@
         font-size: 15px;
         font-weight: 700;
         letter-spacing: -.025em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-sales-insight-note {
         margin-top: 2px;
         font-size: 7.5px;
-        color: #92897f;
+        color: var(--sari-dark-a63aa16d7c, #92897f);
     }
 
     .sari-sales-tooltip-card {
@@ -1218,7 +1218,7 @@
 
     .sari-sales-chart .sales-line {
         fill: none;
-        stroke: #c79229;
+        stroke: var(--sari-dark-8e839fb2d1, #c79229);
         stroke-width: 2.25;
         stroke-linecap: round;
         stroke-linejoin: round;
@@ -1226,7 +1226,7 @@
 
     .sari-sales-chart .commission-line {
         fill: none;
-        stroke: #d7c8b0;
+        stroke: var(--sari-dark-a63aa16d7c, #d7c8b0);
         stroke-width: 1.7;
         stroke-linecap: round;
         stroke-linejoin: round;
@@ -1234,30 +1234,30 @@
 
     .sari-sales-chart .sales-point {
         fill: #fff;
-        stroke: #c79229;
+        stroke: var(--sari-dark-8e839fb2d1, #c79229);
         stroke-width: 2;
     }
 
     .sari-sales-chart .commission-point {
         fill: #fff;
-        stroke: #d7c8b0;
+        stroke: var(--sari-dark-a63aa16d7c, #d7c8b0);
         stroke-width: 1.7;
     }
 
     .sari-sales-chart .latest-point-ring {
-        fill: rgba(199,146,41,.10);
-        stroke: rgba(199,146,41,.28);
+        fill: var(--sari-dark-b8db0970a4, rgba(199,146,41,.10));
+        stroke: var(--sari-dark-5d9b9b206d, rgba(199,146,41,.28));
         stroke-width: 1;
     }
 
     .sari-sales-chart .axis-label {
-        fill: #9b9388;
+        fill: var(--sari-dark-a63aa16d7c, #9b9388);
         font-size: 9px;
         font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
     }
 
     .sari-sales-chart .point-value {
-        fill: #6f665d;
+        fill: var(--sari-dark-a63aa16d7c, #6f665d);
         font-size: 8px;
         font-weight: 600;
         font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
@@ -1285,10 +1285,10 @@
 
     .sari-ops-card {
         overflow: hidden;
-        border: 1px solid #e8e1d6;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e1d6);
         border-radius: 18px;
-        background: #fff;
-        box-shadow: 0 8px 22px rgba(70, 55, 37, .045);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 8px 22px var(--sari-dark-1190f58155, rgba(70, 55, 37, .045));
     }
 
     .sari-ops-head {
@@ -1311,14 +1311,14 @@
         line-height: 1.25;
         font-weight: 700;
         letter-spacing: -.02em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-ops-subtitle {
         margin-top: 3px;
         font-size: 9px;
         line-height: 1.45;
-        color: #978f84;
+        color: var(--sari-dark-a63aa16d7c, #978f84);
     }
 
     .sari-ops-action {
@@ -1328,25 +1328,25 @@
         align-items: center;
         justify-content: center;
         gap: 7px;
-        border: 1px solid #e6dccb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e6dccb);
         border-radius: 999px;
-        background: #fffdf9;
+        background: var(--sari-dark-950baec030, #fffdf9);
         padding: 0 13px;
         font-size: 9px;
         font-weight: 700;
-        color: #7c5b20;
+        color: var(--sari-dark-e23e64dd1e, #7c5b20);
         transition: border-color .14s ease, background-color .14s ease, color .14s ease;
     }
 
     .sari-ops-action:hover {
         border-color: #d9bd82;
-        background: #fff8e9;
-        color: #9b6715;
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
+        color: var(--sari-dark-6c498671da, #9b6715);
     }
 
     .sari-role-table {
         margin: 0 20px 18px;
-        border-top: 1px solid #f0ebe4;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
     }
 
     .sari-role-table-head,
@@ -1359,8 +1359,8 @@
 
     .sari-role-table-head {
         min-height: 36px;
-        border-bottom: 1px solid #eee8df;
-        color: #999087;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8df);
+        color: var(--sari-dark-a63aa16d7c, #999087);
         font-size: 8px;
         font-weight: 700;
         letter-spacing: .06em;
@@ -1369,8 +1369,8 @@
 
     .sari-role-row {
         min-height: 54px;
-        border-bottom: 1px solid #f1ece5;
-        color: #2b261f;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f1ece5);
+        color: var(--sari-dark-e23e64dd1e, #2b261f);
         transition: background-color .14s ease;
     }
 
@@ -1379,7 +1379,7 @@
     }
 
     .sari-role-row:hover {
-        background: #fdfbf7;
+        background: var(--sari-dark-950baec030, #fdfbf7);
     }
 
     .sari-role-name {
@@ -1404,13 +1404,13 @@
         font-size: 15px;
         font-weight: 700;
         letter-spacing: -.025em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-role-pending {
         font-size: 9px;
         font-weight: 600;
-        color: #a56f17;
+        color: var(--sari-dark-c1de49d0b4, #a56f17);
     }
 
     .sari-role-chevron {
@@ -1420,13 +1420,13 @@
         place-items: center;
         justify-self: end;
         border-radius: 8px;
-        color: #9a8b77;
+        color: var(--sari-dark-a63aa16d7c, #9a8b77);
         transition: background-color .14s ease, color .14s ease;
     }
 
     .sari-role-row:hover .sari-role-chevron {
-        background: #fff6e4;
-        color: #a56f17;
+        background: var(--sari-dark-4d21eb669b, #fff6e4);
+        color: var(--sari-dark-c1de49d0b4, #a56f17);
     }
 
     .sari-journey-body {
@@ -1471,36 +1471,36 @@
         width: 46px;
         margin: 0 auto;
         place-items: center;
-        border: 1px solid #e3ddd5;
+        border: 1px solid var(--sari-dark-d8c2716225, #e3ddd5);
         border-radius: 999px;
-        background: #fff;
-        color: #8b847d;
-        box-shadow: 0 3px 10px rgba(65, 50, 32, .025);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #8b847d);
+        box-shadow: 0 3px 10px var(--sari-dark-e1384eb7fc, rgba(65, 50, 32, .025));
     }
 
     .sari-journey-icon.is-good {
-        border-color: #cfe4d9;
-        background: #f2f8f5;
-        color: #3f866d;
+        border-color: var(--sari-dark-d8c2716225, #cfe4d9);
+        background: var(--sari-dark-4d21eb669b, #f2f8f5);
+        color: var(--sari-dark-a63aa16d7c, #3f866d);
     }
 
     .sari-journey-icon.is-warn {
         border-color: #e5bd68;
-        background: #fff8e9;
-        color: #b67915;
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
+        color: var(--sari-dark-9b2ca2d764, #b67915);
     }
 
     .sari-journey-icon.is-hot {
-        border-color: #e7c4c4;
-        background: #fff3f3;
-        color: #b85f5f;
+        border-color: var(--sari-dark-d8c2716225, #e7c4c4);
+        background: var(--sari-dark-950baec030, #fff3f3);
+        color: var(--sari-dark-384406f848, #b85f5f);
     }
 
     .sari-journey-name {
         margin-top: 8px;
         font-size: 8.5px;
         font-weight: 500;
-        color: #797168;
+        color: var(--sari-dark-a63aa16d7c, #797168);
         white-space: nowrap;
     }
 
@@ -1509,7 +1509,7 @@
         font-size: 15px;
         font-weight: 700;
         letter-spacing: -.02em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-journey-status {
@@ -1517,17 +1517,17 @@
         align-items: center;
         gap: 10px;
         margin-top: 16px;
-        border: 1px solid #dcebe3;
+        border: 1px solid var(--sari-dark-d8c2716225, #dcebe3);
         border-radius: 12px;
-        background: #f5faf7;
+        background: var(--sari-dark-950baec030, #f5faf7);
         padding: 10px 12px;
-        color: #326e52;
+        color: var(--sari-dark-e23e64dd1e, #326e52);
     }
 
     .sari-journey-status.is-alert {
-        border-color: #ead9b5;
-        background: #fff9ee;
-        color: #916318;
+        border-color: var(--sari-dark-d8c2716225, #ead9b5);
+        background: var(--sari-dark-950baec030, #fff9ee);
+        color: var(--sari-dark-cd21db0299, #916318);
     }
 
     .sari-journey-status-icon {
@@ -1553,11 +1553,11 @@
     .sari-journey-status-copy {
         margin-top: 1px;
         font-size: 8.5px;
-        color: #7d8d83;
+        color: var(--sari-dark-a63aa16d7c, #7d8d83);
     }
 
     .sari-journey-status.is-alert .sari-journey-status-copy {
-        color: #9a7b4b;
+        color: var(--sari-dark-a63aa16d7c, #9a7b4b);
     }
 
     @media (min-width: 1280px) {
@@ -1601,10 +1601,10 @@
        Approved SARI reference: same live data, cleaner hierarchy.
     ============================================================ */
     .sari-health-card {
-        border: 1px solid #e8e1d6;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e1d6);
         border-radius: 20px;
-        background: #fff;
-        box-shadow: 0 8px 22px rgba(70, 55, 37, .04);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 8px 22px var(--sari-dark-25b2da5e49, rgba(70, 55, 37, .04));
     }
 
     .sari-health-header {
@@ -1627,8 +1627,8 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 13px;
-        background: #fff6e4;
-        color: #b77a18;
+        background: var(--sari-dark-4d21eb669b, #fff6e4);
+        color: var(--sari-dark-6c498671da, #b77a18);
     }
 
     .sari-health-title {
@@ -1636,14 +1636,14 @@
         line-height: 1.25;
         font-weight: 700;
         letter-spacing: -.02em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-health-subtitle {
         margin-top: 3px;
         font-size: 9px;
         line-height: 1.45;
-        color: #978f84;
+        color: var(--sari-dark-a63aa16d7c, #978f84);
     }
 
     .sari-health-actions {
@@ -1659,11 +1659,11 @@
         align-items: center;
         gap: 7px;
         border-radius: 999px;
-        background: #edf7f1;
+        background: var(--sari-dark-4d21eb669b, #edf7f1);
         padding: 0 12px;
         font-size: 9px;
         font-weight: 700;
-        color: #2f7d56;
+        color: var(--sari-dark-e23e64dd1e, #2f7d56);
     }
 
     .sari-health-action {
@@ -1672,20 +1672,20 @@
         align-items: center;
         justify-content: center;
         gap: 7px;
-        border: 1px solid #e3d5bc;
+        border: 1px solid var(--sari-dark-d8c2716225, #e3d5bc);
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 14px;
         font-size: 9px;
         font-weight: 700;
-        color: #956313;
+        color: var(--sari-dark-4b8b580e58, #956313);
         transition: border-color .14s ease, background-color .14s ease, color .14s ease;
     }
 
     .sari-health-action:hover {
         border-color: #d5b779;
-        background: #fff9ef;
-        color: #87570d;
+        background: var(--sari-dark-950baec030, #fff9ef);
+        color: var(--sari-dark-0e58bfc5a3, #87570d);
     }
 
     .sari-health-main {
@@ -1700,9 +1700,9 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        border: 1px solid #ece5dc;
+        border: 1px solid var(--sari-dark-d8c2716225, #ece5dc);
         border-radius: 16px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 18px 14px;
         text-align: center;
     }
@@ -1712,7 +1712,7 @@
         max-width: 220px;
         font-size: 9px;
         line-height: 1.65;
-        color: #8b8379;
+        color: var(--sari-dark-a63aa16d7c, #8b8379);
     }
 
     .sari-health-metrics {
@@ -1721,9 +1721,9 @@
     }
 
     .sari-health-metric-v2 {
-        border: 1px solid #ece5dc;
+        border: 1px solid var(--sari-dark-d8c2716225, #ece5dc);
         border-radius: 16px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 14px;
     }
 
@@ -1741,8 +1741,8 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 11px;
-        background: #fff6e7;
-        color: #af7718;
+        background: var(--sari-dark-4d21eb669b, #fff6e7);
+        color: var(--sari-dark-5acaf64852, #af7718);
     }
 
     .sari-health-metric-copy {
@@ -1753,13 +1753,13 @@
     .sari-health-metric-label {
         font-size: 9.5px;
         font-weight: 700;
-        color: #332d27;
+        color: var(--sari-dark-e23e64dd1e, #332d27);
     }
 
     .sari-health-metric-note {
         margin-top: 2px;
         font-size: 8px;
-        color: #9c948a;
+        color: var(--sari-dark-a63aa16d7c, #9c948a);
     }
 
     .sari-health-metric-value {
@@ -1767,7 +1767,7 @@
         font-size: 14px;
         font-weight: 700;
         letter-spacing: -.02em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-health-progress {
@@ -1775,7 +1775,7 @@
         margin-top: 12px;
         overflow: hidden;
         border-radius: 999px;
-        background: #ece7df;
+        background: var(--sari-dark-4d21eb669b, #ece7df);
     }
 
     .sari-health-progress > span {
@@ -1790,16 +1790,16 @@
         gap: 10px;
         margin-top: 14px;
         padding-top: 14px;
-        border-top: 1px solid #f0ebe4;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
     }
 
     .sari-health-summary-card {
         display: flex;
         align-items: center;
         gap: 11px;
-        border: 1px solid #ece5dc;
+        border: 1px solid var(--sari-dark-d8c2716225, #ece5dc);
         border-radius: 15px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 12px 13px;
     }
 
@@ -1817,7 +1817,7 @@
         font-weight: 600;
         letter-spacing: .08em;
         text-transform: uppercase;
-        color: #9b9388;
+        color: var(--sari-dark-a63aa16d7c, #9b9388);
     }
 
     .sari-health-summary-value {
@@ -1825,18 +1825,18 @@
         font-size: 13px;
         font-weight: 700;
         letter-spacing: -.02em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-health-summary-note {
         margin-top: 2px;
         font-size: 7.5px;
-        color: #9c948a;
+        color: var(--sari-dark-a63aa16d7c, #9c948a);
     }
 
     .sari-focus-list-v2 {
         margin-top: 14px;
-        border-top: 1px solid #f0ebe4;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
     }
 
     .sari-focus-row-v2 {
@@ -1845,14 +1845,14 @@
         align-items: center;
         gap: 10px;
         width: 100%;
-        border-bottom: 1px solid #f0ebe4;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
         padding: 11px 0;
         text-align: left;
         transition: background-color .14s ease;
     }
 
     .sari-focus-row-v2:hover {
-        background: #fdfbf7;
+        background: var(--sari-dark-950baec030, #fdfbf7);
     }
 
     .sari-focus-row-v2:last-child {
@@ -1870,13 +1870,13 @@
     .sari-focus-title-v2 {
         font-size: 9.5px;
         font-weight: 650;
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
     }
 
     .sari-focus-copy-v2 {
         margin-top: 2px;
         font-size: 8px;
-        color: #9a9288;
+        color: var(--sari-dark-a63aa16d7c, #9a9288);
     }
 
     .sari-focus-count-v2 {
@@ -1884,7 +1884,7 @@
         text-align: right;
         font-size: 13px;
         font-weight: 700;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-focus-badge-v2 {
@@ -1903,16 +1903,16 @@
         height: 22px;
         width: 22px;
         place-items: center;
-        color: #9b9184;
+        color: var(--sari-dark-a63aa16d7c, #9b9184);
     }
 
     .sari-focus-empty-v2 {
         margin-top: 14px;
-        border: 1px solid #dcebe3;
+        border: 1px solid var(--sari-dark-d8c2716225, #dcebe3);
         border-radius: 14px;
-        background: #f5faf7;
+        background: var(--sari-dark-950baec030, #f5faf7);
         padding: 14px;
-        color: #326e52;
+        color: var(--sari-dark-e23e64dd1e, #326e52);
     }
 
     @media (min-width: 640px) {
@@ -1962,10 +1962,10 @@
     .sari-monitor-card {
         min-width: 0;
         overflow: hidden;
-        border: 1px solid #e8e1d6;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e1d6);
         border-radius: 20px;
-        background: #fff;
-        box-shadow: 0 8px 22px rgba(70, 55, 37, .04);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 8px 22px var(--sari-dark-25b2da5e49, rgba(70, 55, 37, .04));
     }
 
     .sari-monitor-head {
@@ -1990,8 +1990,8 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 13px;
-        background: #fff6e4;
-        color: #b77a18;
+        background: var(--sari-dark-4d21eb669b, #fff6e4);
+        color: var(--sari-dark-6c498671da, #b77a18);
     }
 
     .sari-monitor-title {
@@ -1999,14 +1999,14 @@
         line-height: 1.25;
         font-weight: 700;
         letter-spacing: -.02em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-monitor-subtitle {
         margin-top: 3px;
         font-size: 9px;
         line-height: 1.45;
-        color: #978f84;
+        color: var(--sari-dark-a63aa16d7c, #978f84);
     }
 
     .sari-monitor-action {
@@ -2016,20 +2016,20 @@
         align-items: center;
         justify-content: center;
         gap: 7px;
-        border: 1px solid #e3d8c7;
+        border: 1px solid var(--sari-dark-d8c2716225, #e3d8c7);
         border-radius: 11px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 13px;
         font-size: 9px;
         font-weight: 700;
-        color: #6f6253;
+        color: var(--sari-dark-a63aa16d7c, #6f6253);
         transition: border-color .14s ease, background-color .14s ease, color .14s ease;
     }
 
     .sari-monitor-action:hover {
         border-color: #d8bd82;
-        background: #fff9ef;
-        color: #956313;
+        background: var(--sari-dark-950baec030, #fff9ef);
+        color: var(--sari-dark-4b8b580e58, #956313);
     }
 
     .sari-risk-body {
@@ -2038,9 +2038,9 @@
 
     .sari-risk-list {
         overflow: hidden;
-        border: 1px solid #eee7de;
+        border: 1px solid var(--sari-dark-d8c2716225, #eee7de);
         border-radius: 14px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .sari-risk-item {
@@ -2050,7 +2050,7 @@
         gap: 13px;
         min-height: 58px;
         padding: 11px 14px;
-        border-bottom: 1px solid #f1ece5;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f1ece5);
         color: inherit;
         transition: background-color .14s ease;
     }
@@ -2060,7 +2060,7 @@
     }
 
     .sari-risk-item:hover {
-        background: #fdfbf8;
+        background: var(--sari-dark-950baec030, #fdfbf8);
     }
 
     .sari-risk-pill {
@@ -2076,18 +2076,18 @@
     }
 
     .sari-risk-pill.low {
-        background: #edf7f2;
-        color: #3f8560;
+        background: var(--sari-dark-4d21eb669b, #edf7f2);
+        color: var(--sari-dark-a63aa16d7c, #3f8560);
     }
 
     .sari-risk-pill.medium {
-        background: #fff4dd;
-        color: #a86f16;
+        background: var(--sari-dark-4d21eb669b, #fff4dd);
+        color: var(--sari-dark-6c498671da, #a86f16);
     }
 
     .sari-risk-pill.high {
-        background: #fbecec;
-        color: #b95656;
+        background: var(--sari-dark-4d21eb669b, #fbecec);
+        color: var(--sari-dark-65fa15dc70, #b95656);
     }
 
     .sari-risk-name {
@@ -2097,7 +2097,7 @@
         white-space: nowrap;
         font-size: 10px;
         font-weight: 600;
-        color: #332d27;
+        color: var(--sari-dark-e23e64dd1e, #332d27);
     }
 
     .sari-risk-live {
@@ -2107,7 +2107,7 @@
         white-space: nowrap;
         font-size: 8px;
         font-weight: 500;
-        color: #958c82;
+        color: var(--sari-dark-a63aa16d7c, #958c82);
     }
 
     .sari-risk-live-dot {
@@ -2123,7 +2123,7 @@
         align-items: center;
         gap: 11px;
         padding: 12px 14px;
-        color: #64786c;
+        color: var(--sari-dark-a63aa16d7c, #64786c);
     }
 
     .sari-risk-state {
@@ -2131,15 +2131,15 @@
         align-items: center;
         gap: 12px;
         margin-top: 14px;
-        border: 1px solid #dcebe3;
+        border: 1px solid var(--sari-dark-d8c2716225, #dcebe3);
         border-radius: 15px;
-        background: #f6faf8;
+        background: var(--sari-dark-950baec030, #f6faf8);
         padding: 14px 15px;
     }
 
     .sari-risk-state.is-alert {
-        border-color: #ead9b5;
-        background: #fff9ef;
+        border-color: var(--sari-dark-d8c2716225, #ead9b5);
+        background: var(--sari-dark-950baec030, #fff9ef);
     }
 
     .sari-risk-state-icon {
@@ -2149,34 +2149,34 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 50%;
-        background: #e7f4ed;
-        color: #34805b;
+        background: var(--sari-dark-4d21eb669b, #e7f4ed);
+        color: var(--sari-dark-e23e64dd1e, #34805b);
     }
 
     .sari-risk-state.is-alert .sari-risk-state-icon {
-        background: #fff0d7;
-        color: #a76d12;
+        background: var(--sari-dark-4d21eb669b, #fff0d7);
+        color: var(--sari-dark-4b8b580e58, #a76d12);
     }
 
     .sari-risk-state-title {
         font-size: 10px;
         font-weight: 700;
-        color: #2f6e50;
+        color: var(--sari-dark-e23e64dd1e, #2f6e50);
     }
 
     .sari-risk-state.is-alert .sari-risk-state-title {
-        color: #8b5d14;
+        color: var(--sari-dark-e820db56d9, #8b5d14);
     }
 
     .sari-risk-state-copy {
         margin-top: 2px;
         font-size: 8.5px;
         line-height: 1.55;
-        color: #7d8d83;
+        color: var(--sari-dark-a63aa16d7c, #7d8d83);
     }
 
     .sari-risk-state.is-alert .sari-risk-state-copy {
-        color: #95794c;
+        color: var(--sari-dark-a63aa16d7c, #95794c);
     }
 
     .sari-rider-body {
@@ -2203,7 +2203,7 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 50%;
-        box-shadow: 0 8px 20px rgba(68, 53, 35, .05);
+        box-shadow: 0 8px 20px var(--sari-dark-1df26971b5, rgba(68, 53, 35, .05));
     }
 
     .sari-rider-donut-v2::after {
@@ -2211,8 +2211,8 @@
         position: absolute;
         inset: 25px;
         border-radius: inherit;
-        background: #fff;
-        box-shadow: inset 0 0 0 1px #eee7de;
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: inset 0 0 0 1px var(--sari-dark-f30a5f9061, #eee7de);
     }
 
     .sari-rider-donut-center {
@@ -2226,13 +2226,13 @@
         line-height: 1;
         font-weight: 700;
         letter-spacing: -.045em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-rider-total-label {
         margin-top: 6px;
         font-size: 8px;
-        color: #958c82;
+        color: var(--sari-dark-a63aa16d7c, #958c82);
     }
 
     .sari-rider-stats {
@@ -2248,7 +2248,7 @@
         justify-content: space-between;
         gap: 10px;
         min-height: 44px;
-        border-bottom: 1px solid #f0ebe4;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
     }
 
     .sari-rider-stat-name {
@@ -2257,7 +2257,7 @@
         align-items: center;
         gap: 9px;
         font-size: 9px;
-        color: #716960;
+        color: var(--sari-dark-a63aa16d7c, #716960);
     }
 
     .sari-rider-stat-name span:last-child {
@@ -2278,7 +2278,7 @@
         flex: 0 0 auto;
         font-size: 10px;
         font-weight: 700;
-        color: #2f2923;
+        color: var(--sari-dark-e23e64dd1e, #2f2923);
     }
 
     .sari-rider-summary {
@@ -2286,9 +2286,9 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
         margin-top: 16px;
         overflow: hidden;
-        border: 1px solid #ebe4da;
+        border: 1px solid var(--sari-dark-d8c2716225, #ebe4da);
         border-radius: 14px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .sari-rider-summary-item {
@@ -2297,12 +2297,12 @@
     }
 
     .sari-rider-summary-item + .sari-rider-summary-item {
-        border-left: 1px solid #eee8df;
+        border-left: 1px solid var(--sari-dark-d8c2716225, #eee8df);
     }
 
     .sari-rider-summary-label {
         font-size: 8px;
-        color: #958c82;
+        color: var(--sari-dark-a63aa16d7c, #958c82);
     }
 
     .sari-rider-summary-value {
@@ -2311,7 +2311,7 @@
         line-height: 1;
         font-weight: 700;
         letter-spacing: -.025em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     @media (min-width: 900px) {
@@ -2353,7 +2353,7 @@
         }
 
         .sari-rider-summary-item + .sari-rider-summary-item {
-            border-top: 1px solid #eee8df;
+            border-top: 1px solid var(--sari-dark-d8c2716225, #eee8df);
             border-left: 0;
         }
     }
@@ -2372,10 +2372,10 @@
     .sari-sales-clean-card,
     .sari-reg-clean-card {
         min-width: 0;
-        border: 1px solid #e8e1d8;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e1d8);
         border-radius: 20px;
-        background: #fff;
-        box-shadow: 0 8px 22px rgba(70, 55, 37, .035);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 8px 22px var(--sari-dark-7593018246, rgba(70, 55, 37, .035));
     }
 
     .sari-sales-clean-card {
@@ -2400,7 +2400,7 @@
         line-height: 1.25;
         font-weight: 700;
         letter-spacing: -.025em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-sales-clean-subtitle,
@@ -2408,7 +2408,7 @@
         margin-top: 4px;
         font-size: 9.5px;
         line-height: 1.5;
-        color: #978f84;
+        color: var(--sari-dark-a63aa16d7c, #978f84);
     }
 
     .sari-sales-clean-period {
@@ -2418,13 +2418,13 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        border: 1px solid #e7e0d7;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e0d7);
         border-radius: 12px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 14px;
         font-size: 9px;
         font-weight: 700;
-        color: #564d43;
+        color: var(--sari-dark-e23e64dd1e, #564d43);
     }
 
     .sari-sales-clean-metrics {
@@ -2441,7 +2441,7 @@
     .sari-sales-clean-metric-label {
         font-size: 9.5px;
         font-weight: 500;
-        color: #7f776e;
+        color: var(--sari-dark-a63aa16d7c, #7f776e);
     }
 
     .sari-sales-clean-metric-value {
@@ -2450,7 +2450,7 @@
         line-height: 1;
         font-weight: 700;
         letter-spacing: -.045em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-sales-clean-metric-note {
@@ -2461,17 +2461,17 @@
         margin-top: 8px;
         font-size: 9px;
         font-weight: 650;
-        color: #72695f;
+        color: var(--sari-dark-a63aa16d7c, #72695f);
     }
 
-    .sari-sales-clean-metric-note.is-positive > span:first-child { color: #2f8b60; }
-    .sari-sales-clean-metric-note.is-negative > span:first-child { color: #bf5057; }
-    .sari-sales-clean-metric-note .is-muted { color: #948c82; font-weight: 500; }
+    .sari-sales-clean-metric-note.is-positive > span:first-child { color: var(--sari-dark-a63aa16d7c, #2f8b60); }
+    .sari-sales-clean-metric-note.is-negative > span:first-child { color: var(--sari-dark-7377616d7f, #bf5057); }
+    .sari-sales-clean-metric-note .is-muted { color: var(--sari-dark-a63aa16d7c, #948c82); font-weight: 500; }
 
     .sari-sales-clean-divider {
         height: 1px;
         margin-top: 4px;
-        background: #f0ebe5;
+        background: var(--sari-dark-4d21eb669b, #f0ebe5);
     }
 
     .sari-sales-clean-chart-head {
@@ -2484,14 +2484,14 @@
     .sari-sales-clean-chart-title {
         font-size: 11.5px;
         font-weight: 700;
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
     }
 
     .sari-sales-clean-chart-copy {
         margin-top: 3px;
         font-size: 8.5px;
         line-height: 1.5;
-        color: #9a9288;
+        color: var(--sari-dark-a63aa16d7c, #9a9288);
     }
 
     .sari-sales-clean-legend {
@@ -2508,11 +2508,11 @@
         padding: 2px 0;
         font-size: 9px;
         font-weight: 500;
-        color: #746c63;
+        color: var(--sari-dark-a63aa16d7c, #746c63);
         transition: opacity .14s ease, color .14s ease;
     }
 
-    .sari-sales-clean-legend-item:hover { color: #433b33; }
+    .sari-sales-clean-legend-item:hover { color: var(--sari-dark-e23e64dd1e, #433b33); }
     .sari-sales-clean-legend-item[aria-pressed="false"] { opacity: .38; }
 
     .sari-sales-clean-dot {
@@ -2555,7 +2555,7 @@
     }
 
     .sari-sales-clean-axis {
-        fill: #9a9288;
+        fill: var(--sari-dark-a63aa16d7c, #9a9288);
         font-size: 9px;
         font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
     }
@@ -2568,12 +2568,12 @@
     }
 
     .sari-sales-clean-line.is-sales {
-        stroke: #c79229;
+        stroke: var(--sari-dark-8e839fb2d1, #c79229);
         stroke-width: 2.3;
     }
 
     .sari-sales-clean-line.is-commission {
-        stroke: #d3ccc3;
+        stroke: var(--sari-dark-a63aa16d7c, #d3ccc3);
         stroke-width: 1.7;
     }
 
@@ -2587,12 +2587,12 @@
     }
 
     .sari-sales-clean-point.is-sales {
-        stroke: #c79229;
+        stroke: var(--sari-dark-8e839fb2d1, #c79229);
         stroke-width: 2;
     }
 
     .sari-sales-clean-point.is-commission {
-        stroke: #d3ccc3;
+        stroke: var(--sari-dark-a63aa16d7c, #d3ccc3);
         stroke-width: 1.6;
     }
 
@@ -2622,11 +2622,11 @@
         position: absolute;
         z-index: 10;
         min-width: 142px;
-        border: 1px solid #e7dfd6;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7dfd6);
         border-radius: 11px;
-        background: rgba(255,255,255,.97);
+        background: var(--sari-dark-d2fbbe29b8, rgba(255,255,255,.97));
         padding: 10px 11px;
-        box-shadow: 0 10px 24px rgba(57,44,28,.09);
+        box-shadow: 0 10px 24px var(--sari-dark-b12a5e9552, rgba(57,44,28,.09));
         opacity: 0;
         transform: translateY(5px);
         pointer-events: none;
@@ -2642,7 +2642,7 @@
         margin-bottom: 7px;
         font-size: 8px;
         font-weight: 700;
-        color: #756c62;
+        color: var(--sari-dark-a63aa16d7c, #756c62);
     }
 
     .sari-sales-clean-tooltip-row {
@@ -2652,7 +2652,7 @@
         gap: 14px;
         margin-top: 5px;
         font-size: 8px;
-        color: #8a8178;
+        color: var(--sari-dark-a63aa16d7c, #8a8178);
     }
 
     .sari-sales-clean-tooltip-row span {
@@ -2670,7 +2670,7 @@
 
     .sari-sales-clean-tooltip-row i.is-sales { background: #c79229; }
     .sari-sales-clean-tooltip-row i.is-commission { background: #d2cbc2; }
-    .sari-sales-clean-tooltip-row strong { font-size: 8.5px; color: #2b261f; }
+    .sari-sales-clean-tooltip-row strong { font-size: 8.5px; color: var(--sari-dark-e23e64dd1e, #2b261f); }
 
     .sari-sales-clean-empty {
         display: flex;
@@ -2678,7 +2678,7 @@
         gap: 12px;
         margin-top: 8px;
         border-radius: 14px;
-        background: #fcf8ef;
+        background: var(--sari-dark-4d21eb669b, #fcf8ef);
         padding: 14px 16px;
     }
 
@@ -2689,26 +2689,26 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 50%;
-        background: #fff4da;
-        color: #b67d18;
+        background: var(--sari-dark-4d21eb669b, #fff4da);
+        color: var(--sari-dark-685eb4fc40, #b67d18);
     }
 
     .sari-sales-clean-empty-title {
         font-size: 10px;
         font-weight: 700;
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
     }
 
     .sari-sales-clean-empty-copy {
         margin-top: 3px;
         font-size: 8.5px;
         line-height: 1.5;
-        color: #928a80;
+        color: var(--sari-dark-a63aa16d7c, #928a80);
     }
 
     .sari-reg-clean-head {
         padding-bottom: 17px;
-        border-bottom: 1px solid #f0ebe5;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe5);
     }
 
     .sari-reg-clean-view-all {
@@ -2719,11 +2719,11 @@
         padding-top: 2px;
         font-size: 9px;
         font-weight: 700;
-        color: #af7414;
+        color: var(--sari-dark-9b2ca2d764, #af7414);
         transition: color .14s ease;
     }
 
-    .sari-reg-clean-view-all:hover { color: #8f5d0c; }
+    .sari-reg-clean-view-all:hover { color: var(--sari-dark-9b2ca2d764, #8f5d0c); }
 
     .sari-reg-clean-list {
         margin-top: 3px;
@@ -2735,13 +2735,13 @@
         align-items: center;
         gap: 12px;
         min-height: 70px;
-        border-bottom: 1px solid #f0ebe5;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe5);
         color: inherit;
         transition: background-color .14s ease;
     }
 
     .sari-reg-clean-row:last-child { border-bottom: 0; }
-    .sari-reg-clean-row:hover { background: #fdfbf8; }
+    .sari-reg-clean-row:hover { background: var(--sari-dark-950baec030, #fdfbf8); }
 
     .sari-reg-clean-person { min-width: 0; }
 
@@ -2751,13 +2751,13 @@
         white-space: nowrap;
         font-size: 10.5px;
         font-weight: 650;
-        color: #2c2721;
+        color: var(--sari-dark-e23e64dd1e, #2c2721);
     }
 
     .sari-reg-clean-role {
         margin-top: 3px;
         font-size: 8.5px;
-        color: #968e84;
+        color: var(--sari-dark-a63aa16d7c, #968e84);
     }
 
     .sari-reg-clean-status {
@@ -2766,15 +2766,15 @@
         white-space: nowrap;
     }
 
-    .sari-reg-clean-status.is-approved { color: #2e865b; }
-    .sari-reg-clean-status.is-pending { color: #ad7415; }
-    .sari-reg-clean-status.is-rejected { color: #bd565b; }
+    .sari-reg-clean-status.is-approved { color: var(--sari-dark-e23e64dd1e, #2e865b); }
+    .sari-reg-clean-status.is-pending { color: var(--sari-dark-6e784b4931, #ad7415); }
+    .sari-reg-clean-status.is-rejected { color: var(--sari-dark-c7abf1e142, #bd565b); }
 
     .sari-reg-clean-time {
         min-width: 72px;
         text-align: right;
         font-size: 8px;
-        color: #9b9389;
+        color: var(--sari-dark-a63aa16d7c, #9b9389);
         white-space: nowrap;
     }
 
@@ -2785,14 +2785,14 @@
     .sari-reg-clean-empty-title {
         font-size: 10px;
         font-weight: 650;
-        color: #4c443c;
+        color: var(--sari-dark-e23e64dd1e, #4c443c);
     }
 
     .sari-reg-clean-empty-copy {
         margin-top: 4px;
         font-size: 8.5px;
         line-height: 1.5;
-        color: #9a9288;
+        color: var(--sari-dark-a63aa16d7c, #9a9288);
     }
 
     @media (min-width: 640px) {
@@ -2808,7 +2808,7 @@
         .sari-sales-clean-metric:last-child { padding-right: 0; }
 
         .sari-sales-clean-metric + .sari-sales-clean-metric {
-            border-left: 1px solid #f0ebe5;
+            border-left: 1px solid var(--sari-dark-d8c2716225, #f0ebe5);
         }
 
         .sari-sales-clean-chart-head {
@@ -2836,7 +2836,7 @@
         }
 
         .sari-sales-clean-metric + .sari-sales-clean-metric {
-            border-top: 1px solid #f0ebe5;
+            border-top: 1px solid var(--sari-dark-d8c2716225, #f0ebe5);
         }
 
         .sari-reg-clean-row {
@@ -2873,12 +2873,12 @@
     .sari-monitor-card,
     .sari-sales-clean-card,
     .sari-reg-clean-card {
-        border-color: #e3dbcf !important;
-        background: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #e3dbcf) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 20px 42px rgba(58, 45, 29, .145),
-            0 7px 16px rgba(58, 45, 29, .075),
-            -7px -7px 18px rgba(255, 255, 255, .98) !important;
+            0 20px 42px var(--sari-dark-7027383420, rgba(58, 45, 29, .145)),
+            0 7px 16px var(--sari-dark-e07575a086, rgba(58, 45, 29, .075)),
+            -7px -7px 18px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .98)) !important;
     }
 
     .admin-kpi,
@@ -2897,11 +2897,11 @@
     .sari-sales-clean-card:hover,
     .sari-reg-clean-card:hover {
         transform: translateY(-2px);
-        border-color: #d9cebe !important;
+        border-color: var(--sari-dark-d8c2716225, #d9cebe) !important;
         box-shadow:
-            0 26px 54px rgba(58, 45, 29, .18),
-            0 9px 20px rgba(58, 45, 29, .09),
-            -8px -8px 20px rgba(255, 255, 255, 1) !important;
+            0 26px 54px var(--sari-dark-3793f9e558, rgba(58, 45, 29, .18)),
+            0 9px 20px var(--sari-dark-b12a5e9552, rgba(58, 45, 29, .09)),
+            -8px -8px 20px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, 1)) !important;
     }
 
     .sari-health-score-card,
@@ -2913,8 +2913,8 @@
     .sari-sales-clean-empty,
     .sari-sales-clean-period {
         box-shadow:
-            0 10px 22px rgba(58, 45, 29, .075),
-            -4px -4px 10px rgba(255, 255, 255, .96);
+            0 10px 22px var(--sari-dark-e07575a086, rgba(58, 45, 29, .075)),
+            -4px -4px 10px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .96));
     }
 
 
@@ -2942,12 +2942,12 @@
     .sari-sales-clean-card:hover,
     .sari-reg-clean-card:hover {
         transform: none !important;
-        border-color: #e3dbcf !important;
-        background: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #e3dbcf) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 20px 42px rgba(58, 45, 29, .145),
-            0 7px 16px rgba(58, 45, 29, .075),
-            -7px -7px 18px rgba(255, 255, 255, .98) !important;
+            0 20px 42px var(--sari-dark-7027383420, rgba(58, 45, 29, .145)),
+            0 7px 16px var(--sari-dark-e07575a086, rgba(58, 45, 29, .075)),
+            -7px -7px 18px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .98)) !important;
     }
 
     .admin-role-card {
@@ -2957,7 +2957,7 @@
 
     .admin-role-card:hover {
         transform: none !important;
-        border-color: #ece6dd !important;
+        border-color: var(--sari-dark-d8c2716225, #ece6dd) !important;
     }
 
     .sari-role-row,
@@ -2976,7 +2976,7 @@
 
     .sari-role-row:hover .sari-role-chevron {
         background: transparent !important;
-        color: #9a8b77 !important;
+        color: var(--sari-dark-a63aa16d7c, #9a8b77) !important;
     }
 
 
@@ -3985,15 +3985,15 @@
     #adminMarketplaceHealth{
         padding:15px 16px !important;
         border-radius:15px !important;
-        border-color:#e7e0d6 !important;
-        background:#fff !important;
-        box-shadow:0 8px 22px rgba(58,45,29,.055) !important;
+        border-color:var(--sari-dark-d8c2716225, #e7e0d6) !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
+        box-shadow:0 8px 22px var(--sari-dark-fbd3b3b9f6, rgba(58,45,29,.055)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-header{
         gap:10px !important;
         padding-bottom:12px !important;
-        border-bottom:1px solid #f0ebe4 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
     }
 
     #adminMarketplaceHealth .sari-health-heading{
@@ -4006,7 +4006,7 @@
         height:30px !important;
         flex-basis:30px !important;
         border-radius:8px !important;
-        background:#fff8ea !important;
+        background:var(--sari-dark-4d21eb669b, #fff8ea) !important;
         box-shadow:none !important;
     }
 
@@ -4075,7 +4075,7 @@
 
     #adminMarketplaceHealth .admin-health-score::before{
         inset:10px !important;
-        box-shadow:inset 0 0 0 1px #eee7dc !important;
+        box-shadow:inset 0 0 0 1px var(--sari-dark-f30a5f9061, #eee7dc) !important;
     }
 
     #adminMarketplaceHealth .admin-health-score-content > p:first-child{
@@ -4093,7 +4093,7 @@
         margin-top:4px !important;
         gap:4px !important;
         border:0 !important;
-        background:#f2f7f3 !important;
+        background:var(--sari-dark-4d21eb669b, #f2f7f3) !important;
         padding:3px 6px !important;
         font-size:6px !important;
         box-shadow:none !important;
@@ -4115,7 +4115,7 @@
     #adminMarketplaceHealth .sari-health-metrics{
         grid-template-columns:repeat(2,minmax(0,1fr)) !important;
         gap:0 !important;
-        border-left:1px solid #f0ebe4 !important;
+        border-left:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
     }
 
     #adminMarketplaceHealth .sari-health-metric-v2{
@@ -4128,11 +4128,11 @@
     }
 
     #adminMarketplaceHealth .sari-health-metric-v2:nth-child(odd){
-        border-right:1px solid #f0ebe4 !important;
+        border-right:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
     }
 
     #adminMarketplaceHealth .sari-health-metric-v2:nth-child(-n+2){
-        border-bottom:1px solid #f0ebe4 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
     }
 
     #adminMarketplaceHealth .sari-health-metric-top{
@@ -4147,7 +4147,7 @@
         flex-basis:22px !important;
         border-radius:0 !important;
         background:transparent !important;
-        color:#b47b19 !important;
+        color:var(--sari-dark-1cc3cbd310, #b47b19) !important;
         box-shadow:none !important;
     }
 
@@ -4180,7 +4180,7 @@
         height:4px !important;
         margin-top:8px !important;
         border-radius:999px !important;
-        background:#f0ece6 !important;
+        background:var(--sari-dark-4d21eb669b, #f0ece6) !important;
         box-shadow:none !important;
     }
 
@@ -4190,7 +4190,7 @@
         gap:0 !important;
         margin-top:12px !important;
         padding-top:12px !important;
-        border-top:1px solid #f0ebe4 !important;
+        border-top:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
     }
 
     #adminMarketplaceHealth .sari-health-summary-card{
@@ -4212,7 +4212,7 @@
     }
 
     #adminMarketplaceHealth .sari-health-summary-card + .sari-health-summary-card{
-        border-left:1px solid #f0ebe4 !important;
+        border-left:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
     }
 
     #adminMarketplaceHealth .sari-health-summary-icon{
@@ -4294,7 +4294,7 @@
 
         #adminMarketplaceHealth .sari-health-metrics{
             border-left:0 !important;
-            border-top:1px solid #f0ebe4 !important;
+            border-top:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
             padding-top:4px !important;
         }
     }
@@ -4310,7 +4310,7 @@
 
         #adminMarketplaceHealth .sari-health-metric-v2{
             border-right:0 !important;
-            border-bottom:1px solid #f0ebe4 !important;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
         }
 
         #adminMarketplaceHealth .sari-health-metric-v2:last-child{
@@ -4329,7 +4329,7 @@
 
         #adminMarketplaceHealth .sari-health-summary-card + .sari-health-summary-card{
             border-left:0 !important;
-            border-top:1px solid #f0ebe4 !important;
+            border-top:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
         }
     }
 
@@ -4341,20 +4341,20 @@
        ============================================================ */
 
     .sari-admin-dashboard{
-        --sari-bg:#fbfaf7;
-        --sari-surface:#ffffff;
-        --sari-line:#e9e2d9;
-        --sari-line-soft:#f0ebe4;
-        --sari-shadow-section:0 6px 18px rgba(54,42,28,.050);
-        --sari-shadow-kpi:0 5px 14px rgba(54,42,28,.055);
-        --sari-shadow-kpi-hover:0 8px 18px rgba(54,42,28,.070);
-        --sari-shadow-hero:0 12px 30px rgba(31,28,21,.105);
+        --sari-bg:var(--sari-dark-950baec030, #fbfaf7);
+        --sari-surface:var(--sari-dark-950baec030, #ffffff);
+        --sari-line:var(--sari-dark-d8c2716225, #e9e2d9);
+        --sari-line-soft:var(--sari-dark-d8c2716225, #f0ebe4);
+        --sari-shadow-section:0 6px 18px var(--sari-dark-1df26971b5, rgba(54,42,28,.050));
+        --sari-shadow-kpi:0 5px 14px var(--sari-dark-fbd3b3b9f6, rgba(54,42,28,.055));
+        --sari-shadow-kpi-hover:0 8px 18px var(--sari-dark-7c935c8886, rgba(54,42,28,.070));
+        --sari-shadow-hero:0 12px 30px var(--sari-dark-03e9d0debe, rgba(31,28,21,.105));
         background:transparent !important;
     }
 
     /* Level 1: hero is the only strongly elevated surface. */
     .sari-hero{
-        border-color:#3d392d !important;
+        border-color:var(--sari-dark-d8c2716225, #3d392d) !important;
         box-shadow:var(--sari-shadow-hero) !important;
     }
 
@@ -4385,7 +4385,7 @@
 
     .admin-kpi:hover{
         transform:translateY(-1px) !important;
-        border-color:#ddd1c1 !important;
+        border-color:var(--sari-dark-d8c2716225, #ddd1c1) !important;
         box-shadow:var(--sari-shadow-kpi-hover) !important;
     }
 
@@ -4437,14 +4437,14 @@
     .admin-control-subtle,
     .admin-soft-card{
         border-color:var(--sari-line-soft) !important;
-        background:#fcfbf8 !important;
+        background:var(--sari-dark-950baec030, #fcfbf8) !important;
     }
 
     .sari-risk-list,
     .sari-rider-summary,
     .sari-sales-chart-shell{
         border-color:var(--sari-line-soft) !important;
-        background:#fff !important;
+        background:var(--sari-dark-950baec030, #fff) !important;
     }
 
     .sari-risk-state{
@@ -4496,11 +4496,11 @@
 
     /* Drawer: keep useful separation without excessive shadow. */
     .admin-drawer{
-        box-shadow:-12px 0 34px rgba(42,32,21,.10) !important;
+        box-shadow:-12px 0 34px var(--sari-dark-8eadf403a5, rgba(42,32,21,.10)) !important;
     }
 
     .admin-toast{
-        box-shadow:0 8px 20px rgba(49,38,24,.08) !important;
+        box-shadow:0 8px 20px var(--sari-dark-c33e3d1bb4, rgba(49,38,24,.08)) !important;
     }
 
     /* Make scrolling feel stable by avoiding unnecessary animated transforms. */
@@ -4515,11 +4515,11 @@
     /* Keep touch / laptop density comfortable. */
     @media(max-height:850px) and (min-width:900px){
         .sari-hero{
-            box-shadow:0 10px 24px rgba(31,28,21,.09) !important;
+            box-shadow:0 10px 24px var(--sari-dark-b12a5e9552, rgba(31,28,21,.09)) !important;
         }
 
         .admin-kpi{
-            box-shadow:0 4px 12px rgba(54,42,28,.05) !important;
+            box-shadow:0 4px 12px var(--sari-dark-1df26971b5, rgba(54,42,28,.05)) !important;
         }
 
         .admin-panel,
@@ -4529,7 +4529,7 @@
         .sari-monitor-card,
         .sari-sales-clean-card,
         .sari-reg-clean-card{
-            box-shadow:0 5px 14px rgba(54,42,28,.045) !important;
+            box-shadow:0 5px 14px var(--sari-dark-1190f58155, rgba(54,42,28,.045)) !important;
         }
     }
 
@@ -4630,7 +4630,7 @@
         }
 
         .sari-hero-stat + .sari-hero-stat {
-            border-left: 1px solid rgba(255,255,255,.12) !important;
+            border-left: 1px solid var(--sari-dark-0d02a17c1b, rgba(255,255,255,.12)) !important;
         }
 
         .sari-hero-brand {
@@ -4641,7 +4641,7 @@
         }
 
         .sari-hero-brand-inner {
-            border-left: 1px solid rgba(255,255,255,.12) !important;
+            border-left: 1px solid var(--sari-dark-0d02a17c1b, rgba(255,255,255,.12)) !important;
             padding-left: 18px !important;
             text-align: right !important;
         }
@@ -4675,7 +4675,7 @@
 
         .sari-hero-brand-inner {
             border-left: 0 !important;
-            border-top: 1px solid rgba(255,255,255,.12) !important;
+            border-top: 1px solid var(--sari-dark-0d02a17c1b, rgba(255,255,255,.12)) !important;
             width: 100%;
             padding-left: 0 !important;
             padding-top: 12px !important;
@@ -4714,12 +4714,12 @@
         position: relative;
         overflow: hidden;
         padding: 20px !important;
-        border: 1px solid #e8dfd3 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8dfd3) !important;
         border-radius: 18px !important;
         background:
             radial-gradient(circle at 16% 22%, rgba(201,149,36,.035), transparent 28%),
-            linear-gradient(180deg, #fff 0%, #fffdfa 100%) !important;
-        box-shadow: 0 7px 20px rgba(54,42,28,.045) !important;
+            linear-gradient(180deg, var(--sari-dark-950baec030, #fff) 0%, var(--sari-dark-950baec030, #fffdfa) 100%) !important;
+        box-shadow: 0 7px 20px var(--sari-dark-1190f58155, rgba(54,42,28,.045)) !important;
     }
 
     .sari-category-head {
@@ -4742,10 +4742,10 @@
         height: 42px;
         flex: 0 0 42px;
         place-items: center;
-        border: 1px solid #f0e5cd;
+        border: 1px solid var(--sari-dark-d8c2716225, #f0e5cd);
         border-radius: 13px;
         background: #1F9D55 !important;
-        color: #bb841b;
+        color: var(--sari-dark-375e3b57e7, #bb841b);
     }
 
     .sari-category-head-icon svg {
@@ -4758,14 +4758,14 @@
         line-height: 1.3;
         font-weight: 700;
         letter-spacing: -.025em;
-        color: #211d17;
+        color: var(--sari-dark-e23e64dd1e, #211d17);
     }
 
     .sari-category-subtitle {
         margin-top: 3px;
         font-size: 8.5px;
         line-height: 1.45;
-        color: #978f84;
+        color: var(--sari-dark-a63aa16d7c, #978f84);
     }
 
     .sari-category-action {
@@ -4775,20 +4775,20 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        border: 1px solid #e5d8c4;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5d8c4);
         border-radius: 12px;
-        background: rgba(255,255,255,.86);
+        background: var(--sari-dark-379cbaaa2a, rgba(255,255,255,.86));
         padding: 0 13px;
         font-size: 8.5px;
         font-weight: 700;
-        color: #765522;
+        color: var(--sari-dark-e23e64dd1e, #765522);
         transition: border-color .14s ease, background-color .14s ease, color .14s ease;
     }
 
     .sari-category-action:hover {
         border-color: #d5b777;
-        background: #fff8e9;
-        color: #956313;
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
+        color: var(--sari-dark-4b8b580e58, #956313);
     }
 
     .sari-category-action svg {
@@ -4820,8 +4820,8 @@
         border-radius: 50%;
         isolation: isolate;
         box-shadow:
-            0 15px 30px rgba(61,47,29,.075),
-            0 3px 8px rgba(61,47,29,.045);
+            0 15px 30px var(--sari-dark-e07575a086, rgba(61,47,29,.075)),
+            0 3px 8px var(--sari-dark-1190f58155, rgba(61,47,29,.045));
     }
 
     /* Premium inner disc */
@@ -4830,12 +4830,12 @@
         position: absolute;
         z-index: 1;
         inset: 31px;
-        border: 1px solid rgba(233,224,211,.92);
+        border: 1px solid var(--sari-dark-ed07d02c93, rgba(233,224,211,.92));
         border-radius: inherit;
         background: #1F9D55 !important;
         box-shadow:
-            0 6px 15px rgba(67,51,32,.055),
-            inset 0 1px 0 rgba(255,255,255,.98);
+            0 6px 15px var(--sari-dark-fbd3b3b9f6, rgba(67,51,32,.055)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
     }
 
     /* Very light highlight so the ring reads less flat without looking glossy. */
@@ -4846,7 +4846,7 @@
         inset: 0;
         border-radius: inherit;
         background:
-            radial-gradient(circle at 30% 24%, rgba(255,255,255,.22), transparent 30%),
+            radial-gradient(circle at 30% 24%, var(--sari-dark-eb9313f6bb, rgba(255,255,255,.22)), transparent 30%),
             radial-gradient(circle at 68% 74%, rgba(86,64,32,.055), transparent 42%);
         pointer-events: none;
     }
@@ -4866,7 +4866,7 @@
         font-weight: 500;
         letter-spacing: .12em;
         text-transform: uppercase;
-        color: #9b938a;
+        color: var(--sari-dark-a63aa16d7c, #9b938a);
     }
 
     .sari-category-donut-value {
@@ -4875,7 +4875,7 @@
         line-height: .95;
         font-weight: 700;
         letter-spacing: -.05em;
-        color: #171d26;
+        color: var(--sari-dark-e23e64dd1e, #171d26);
     }
 
     .sari-category-donut-accent {
@@ -4890,7 +4890,7 @@
         margin-top: 8px;
         font-size: 8px;
         font-weight: 600;
-        color: #8f8982;
+        color: var(--sari-dark-a63aa16d7c, #8f8982);
     }
 
     .sari-category-list {
@@ -4906,7 +4906,7 @@
         gap: 12px;
         min-height: 57px;
         padding: 9px 0;
-        border-bottom: 1px solid #f0ebe4;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
     }
 
     .sari-category-row:last-child {
@@ -4947,7 +4947,7 @@
         font-size: 10.5px;
         font-weight: 650;
         letter-spacing: -.01em;
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
     }
 
     .sari-category-percent {
@@ -4957,7 +4957,7 @@
         font-size: 10.5px;
         font-weight: 700;
         letter-spacing: -.02em;
-        color: #201c18;
+        color: var(--sari-dark-e23e64dd1e, #201c18);
     }
 
     .sari-category-progress {
@@ -4966,7 +4966,7 @@
         margin-top: 8px;
         overflow: hidden;
         border-radius: 999px;
-        background: #eee9e2;
+        background: var(--sari-dark-4d21eb669b, #eee9e2);
     }
 
     .sari-category-progress > span {
@@ -4975,7 +4975,7 @@
         min-width: 3px;
         border-radius: inherit;
         background: var(--category-color);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.24);
+        box-shadow: inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.24));
     }
 
     @media (min-width: 640px) {
@@ -5106,11 +5106,11 @@
         z-index: 40;
         width: 176px;
         overflow: hidden;
-        border: 1px solid #e7dfd5;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7dfd5);
         border-radius: 13px;
-        background: rgba(255,255,255,.985);
+        background: var(--sari-dark-56c375634d, rgba(255,255,255,.985));
         padding: 5px;
-        box-shadow: 0 14px 32px rgba(55,43,29,.12);
+        box-shadow: 0 14px 32px var(--sari-dark-3b2338cbf0, rgba(55,43,29,.12));
     }
 
     .sari-sales-period-option {
@@ -5128,18 +5128,18 @@
         padding: 0 10px;
         font-size: 8.5px;
         font-weight: 600;
-        color: #655c52;
+        color: var(--sari-dark-e23e64dd1e, #655c52);
         transition: background-color .12s ease, color .12s ease;
     }
 
     .sari-sales-period-option:hover {
-        background: #fbf7ef;
-        color: #8f6116;
+        background: var(--sari-dark-4d21eb669b, #fbf7ef);
+        color: var(--sari-dark-a0f3b28b84, #8f6116);
     }
 
     .sari-sales-period-option.is-active {
-        background: #fff5df;
-        color: #966311;
+        background: var(--sari-dark-4d21eb669b, #fff5df);
+        color: var(--sari-dark-9b2ca2d764, #966311);
         font-weight: 700;
     }
 
@@ -5215,10 +5215,10 @@
        ============================================================ */
 
     .sari-admin-dashboard {
-        --sari-neumo-surface: #fffefa;
-        --sari-neumo-border: #e2d8ca;
-        --sari-neumo-shadow-main: rgba(55, 43, 29, .105);
-        --sari-neumo-shadow-near: rgba(55, 43, 29, .045);
+        --sari-neumo-surface: var(--sari-dark-950baec030, #fffefa);
+        --sari-neumo-border: var(--sari-dark-d8c2716225, #e2d8ca);
+        --sari-neumo-shadow-main: var(--sari-dark-03e9d0debe, rgba(55, 43, 29, .105));
+        --sari-neumo-shadow-near: var(--sari-dark-1190f58155, rgba(55, 43, 29, .045));
         --sari-neumo-highlight: rgba(255, 255, 255, .96);
     }
 
@@ -5233,12 +5233,12 @@
     #adminCategoryBreakdown.sari-category-card {
         border-color: var(--sari-neumo-border) !important;
         background:
-            linear-gradient(145deg, #ffffff 0%, #fdfbf7 100%) !important;
+            linear-gradient(145deg, var(--sari-dark-950baec030, #ffffff) 0%, var(--sari-dark-950baec030, #fdfbf7) 100%) !important;
         box-shadow:
             0 16px 34px var(--sari-neumo-shadow-main),
             0 5px 12px var(--sari-neumo-shadow-near),
             -7px -7px 18px var(--sari-neumo-highlight),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)) !important;
         transform: none !important;
         transition: none !important;
     }
@@ -5253,25 +5253,25 @@
     #adminCategoryBreakdown.sari-category-card:hover {
         border-color: var(--sari-neumo-border) !important;
         background:
-            linear-gradient(145deg, #ffffff 0%, #fdfbf7 100%) !important;
+            linear-gradient(145deg, var(--sari-dark-950baec030, #ffffff) 0%, var(--sari-dark-950baec030, #fdfbf7) 100%) !important;
         box-shadow:
             0 16px 34px var(--sari-neumo-shadow-main),
             0 5px 12px var(--sari-neumo-shadow-near),
             -7px -7px 18px var(--sari-neumo-highlight),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)) !important;
         transform: none !important;
     }
 
     /* Summary cards: only interactive hover surfaces. */
     .admin-kpi {
-        border-color: #e1d6c8 !important;
+        border-color: var(--sari-dark-d8c2716225, #e1d6c8) !important;
         background:
-            linear-gradient(145deg, #ffffff 0%, #fefbf6 100%) !important;
+            linear-gradient(145deg, var(--sari-dark-950baec030, #ffffff) 0%, var(--sari-dark-950baec030, #fefbf6) 100%) !important;
         box-shadow:
-            0 9px 21px rgba(55,43,29,.080),
-            0 3px 8px rgba(55,43,29,.035),
-            -5px -5px 12px rgba(255,255,255,.96),
-            inset 0 1px 0 rgba(255,255,255,.94) !important;
+            0 9px 21px var(--sari-dark-c33e3d1bb4, rgba(55,43,29,.080)),
+            0 3px 8px var(--sari-dark-7593018246, rgba(55,43,29,.035)),
+            -5px -5px 12px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.94)) !important;
         transform: translateY(0) !important;
         transition:
             transform .22s cubic-bezier(.2,.7,.2,1),
@@ -5282,12 +5282,12 @@
 
     .admin-kpi:hover {
         transform: translateY(-3px) !important;
-        border-color: #d3c5b3 !important;
+        border-color: var(--sari-dark-d8c2716225, #d3c5b3) !important;
         box-shadow:
-            0 16px 30px rgba(55,43,29,.125),
-            0 5px 11px rgba(55,43,29,.050),
-            -6px -6px 14px rgba(255,255,255,.99),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
+            0 16px 30px var(--sari-dark-b76db732a1, rgba(55,43,29,.125)),
+            0 5px 11px var(--sari-dark-1df26971b5, rgba(55,43,29,.050)),
+            -6px -6px 14px var(--sari-dark-f30a5f9061, rgba(255,255,255,.99)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)) !important;
     }
 
     /* Inner content stays integrated so parent elevation remains the visual focus. */
@@ -5303,11 +5303,11 @@
     .sari-sales-chart-shell,
     .admin-chart-premium,
     .admin-chart-summary-card {
-        border-color: #eee7dd !important;
-        background: rgba(253,252,249,.72) !important;
+        border-color: var(--sari-dark-d8c2716225, #eee7dd) !important;
+        background: var(--sari-dark-7ec801fc27, rgba(253,252,249,.72)) !important;
         box-shadow:
-            inset 1px 1px 3px rgba(69,53,35,.018),
-            inset -1px -1px 3px rgba(255,255,255,.82) !important;
+            inset 1px 1px 3px var(--sari-dark-7672bb207e, rgba(69,53,35,.018)),
+            inset -1px -1px 3px var(--sari-dark-f30a5f9061, rgba(255,255,255,.82)) !important;
         transform: none !important;
     }
 
@@ -5345,53 +5345,53 @@
     }
 
     .admin-view-button:hover {
-        border-color: #e9e1d6 !important;
-        background: #fff !important;
-        color: #756b5d !important;
+        border-color: var(--sari-dark-d8c2716225, #e9e1d6) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-a63aa16d7c, #756b5d) !important;
     }
 
     .admin-focus-chip:not(.is-active):hover {
-        border-color: #e8e0d5 !important;
-        background: #fff !important;
-        color: #786f65 !important;
+        border-color: var(--sari-dark-d8c2716225, #e8e0d5) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-a63aa16d7c, #786f65) !important;
     }
 
     .admin-focus-chip.is-active:hover {
         border-color: #d8bc80 !important;
-        background: #fff8e9 !important;
-        color: #9b6715 !important;
+        background: var(--sari-dark-4d21eb669b, #fff8e9) !important;
+        color: var(--sari-dark-6c498671da, #9b6715) !important;
     }
 
     .sari-health-action:hover {
-        border-color: #e3d5bc !important;
-        background: #fff !important;
-        color: #956313 !important;
+        border-color: var(--sari-dark-d8c2716225, #e3d5bc) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-4b8b580e58, #956313) !important;
     }
 
     .sari-ops-action:hover {
-        border-color: #e6dccb !important;
-        background: #fffdf9 !important;
-        color: #7c5b20 !important;
+        border-color: var(--sari-dark-d8c2716225, #e6dccb) !important;
+        background: var(--sari-dark-950baec030, #fffdf9) !important;
+        color: var(--sari-dark-e23e64dd1e, #7c5b20) !important;
     }
 
     .sari-monitor-action:hover {
-        border-color: #e3d8c7 !important;
-        background: #fff !important;
-        color: #6f6253 !important;
+        border-color: var(--sari-dark-d8c2716225, #e3d8c7) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-a63aa16d7c, #6f6253) !important;
     }
 
     .sari-category-action:hover {
-        border-color: #e5d8c4 !important;
-        background: rgba(255,255,255,.86) !important;
-        color: #765522 !important;
+        border-color: var(--sari-dark-d8c2716225, #e5d8c4) !important;
+        background: var(--sari-dark-379cbaaa2a, rgba(255,255,255,.86)) !important;
+        color: var(--sari-dark-e23e64dd1e, #765522) !important;
     }
 
     .sari-sales-clean-legend-item:hover {
-        color: #746c63 !important;
+        color: var(--sari-dark-a63aa16d7c, #746c63) !important;
     }
 
     .sari-reg-clean-view-all:hover {
-        color: #af7414 !important;
+        color: var(--sari-dark-9b2ca2d764, #af7414) !important;
     }
 
     /* Operational rows/cards remain static. */
@@ -5416,12 +5416,12 @@
     }
 
     .admin-role-card:hover {
-        border-color: #ece6dd !important;
+        border-color: var(--sari-dark-d8c2716225, #ece6dd) !important;
     }
 
     .sari-role-row:hover .sari-role-chevron {
         background: transparent !important;
-        color: #9a8b77 !important;
+        color: var(--sari-dark-a63aa16d7c, #9a8b77) !important;
     }
 
     /* Platform Activity rows: suppress utility hover background. */
@@ -5431,11 +5431,11 @@
 
     /* Dropdown can float as an overlay, but has no option hover motion. */
     .sari-sales-period-options {
-        border-color: #dfd4c6 !important;
-        background: rgba(255,254,251,.995) !important;
+        border-color: var(--sari-dark-d8c2716225, #dfd4c6) !important;
+        background: var(--sari-dark-1f9dc7d68c, rgba(255,254,251,.995)) !important;
         box-shadow:
-            0 16px 30px rgba(55,42,28,.135),
-            0 4px 10px rgba(55,42,28,.045) !important;
+            0 16px 30px var(--sari-dark-511e84d248, rgba(55,42,28,.135)),
+            0 4px 10px var(--sari-dark-1190f58155, rgba(55,42,28,.045)) !important;
     }
 
     .sari-sales-period-option:hover {
@@ -5445,8 +5445,8 @@
     /* Hero remains the strongest visual anchor, without hover behavior. */
     .sari-hero {
         box-shadow:
-            0 16px 34px rgba(31,28,21,.14),
-            0 4px 10px rgba(31,28,21,.06) !important;
+            0 16px 34px var(--sari-dark-59ed29fe9d, rgba(31,28,21,.14)),
+            0 4px 10px var(--sari-dark-361b571631, rgba(31,28,21,.06)) !important;
         transition: none !important;
         transform: none !important;
     }
@@ -5461,10 +5461,10 @@
         .sari-reg-clean-card,
         #adminCategoryBreakdown.sari-category-card {
             box-shadow:
-                0 13px 28px rgba(55,43,29,.090),
-                0 4px 10px rgba(55,43,29,.038),
-                -6px -6px 15px rgba(255,255,255,.92),
-                inset 0 1px 0 rgba(255,255,255,.92) !important;
+                0 13px 28px var(--sari-dark-b12a5e9552, rgba(55,43,29,.090)),
+                0 4px 10px var(--sari-dark-e0ffb11e26, rgba(55,43,29,.038)),
+                -6px -6px 15px var(--sari-dark-f30a5f9061, rgba(255,255,255,.92)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92)) !important;
         }
     }
 
@@ -5478,23 +5478,23 @@
         .sari-reg-clean-card,
         #adminCategoryBreakdown.sari-category-card {
             box-shadow:
-                0 10px 22px rgba(55,43,29,.080),
-                0 3px 8px rgba(55,43,29,.035),
-                inset 0 1px 0 rgba(255,255,255,.90) !important;
+                0 10px 22px var(--sari-dark-c33e3d1bb4, rgba(55,43,29,.080)),
+                0 3px 8px var(--sari-dark-7593018246, rgba(55,43,29,.035)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90)) !important;
         }
 
         .admin-kpi {
             box-shadow:
-                0 7px 16px rgba(55,43,29,.070),
-                0 2px 6px rgba(55,43,29,.030),
-                inset 0 1px 0 rgba(255,255,255,.90) !important;
+                0 7px 16px var(--sari-dark-7c935c8886, rgba(55,43,29,.070)),
+                0 2px 6px var(--sari-dark-b13200ac05, rgba(55,43,29,.030)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90)) !important;
         }
 
         .admin-kpi:hover {
             transform: translateY(-1px) !important;
             box-shadow:
-                0 10px 21px rgba(55,43,29,.090),
-                inset 0 1px 0 rgba(255,255,255,.94) !important;
+                0 10px 21px var(--sari-dark-b12a5e9552, rgba(55,43,29,.090)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.94)) !important;
         }
     }
 
@@ -5515,29 +5515,29 @@
        Matches the Seller visual language.
        ============================================================ */
     .sari-admin-dashboard {
-        --sari-page-bg: #F4F5F7;
-        --sari-surface: #FFFFFF;
-        --sari-surface-soft: #FAFAFB;
-        --sari-border: #E7E9EE;
+        --sari-page-bg: var(--sari-dark-4d21eb669b, #F4F5F7);
+        --sari-surface: var(--sari-dark-950baec030, #FFFFFF);
+        --sari-surface-soft: var(--sari-dark-950baec030, #FAFAFB);
+        --sari-border: var(--sari-dark-d8c2716225, #E7E9EE);
 
         --sari-gold: #D89B10;
         --sari-gold-dark: #B67A08;
         --sari-charcoal: #202124;
         --sari-secondary: #4B5563;
-        --sari-muted: #8A919B;
+        --sari-muted: var(--sari-dark-a63aa16d7c, #8A919B);
         --sari-success: #63A375;
         --sari-info: #6C8FB5;
         --sari-danger: #D97C6C;
 
         --sari-float-shadow:
-            0 1px 2px rgba(32, 33, 36, .025),
-            0 8px 20px rgba(32, 33, 36, .050),
-            0 18px 38px rgba(32, 33, 36, .055);
+            0 1px 2px var(--sari-dark-e1384eb7fc, rgba(32, 33, 36, .025)),
+            0 8px 20px var(--sari-dark-1df26971b5, rgba(32, 33, 36, .050)),
+            0 18px 38px var(--sari-dark-fbd3b3b9f6, rgba(32, 33, 36, .055));
 
         --sari-float-shadow-hover:
-            0 2px 4px rgba(32, 33, 36, .025),
-            0 12px 27px rgba(32, 33, 36, .065),
-            0 25px 50px rgba(32, 33, 36, .075);
+            0 2px 4px var(--sari-dark-e1384eb7fc, rgba(32, 33, 36, .025)),
+            0 12px 27px var(--sari-dark-4fc908fafe, rgba(32, 33, 36, .065)),
+            0 25px 50px var(--sari-dark-e07575a086, rgba(32, 33, 36, .075));
 
         background: transparent !important;
         color: var(--sari-charcoal) !important;
@@ -5547,13 +5547,13 @@
        HERO: solid palette color only — no decorative gradient/glow.
        ------------------------------------------------------------ */
     .sari-hero {
-        border-color: #303236 !important;
-        background: #222222 !important;
+        border-color: var(--sari-dark-d8c2716225, #303236) !important;
+        background: var(--sari-dark-fbb35de0d1, #222222) !important;
         background-image: none !important;
         box-shadow:
-            0 2px 5px rgba(20, 20, 20, .070),
-            0 13px 30px rgba(20, 20, 20, .105),
-            0 25px 50px rgba(20, 20, 20, .075) !important;
+            0 2px 5px var(--sari-dark-7c935c8886, rgba(20, 20, 20, .070)),
+            0 13px 30px var(--sari-dark-03e9d0debe, rgba(20, 20, 20, .105)),
+            0 25px 50px var(--sari-dark-e07575a086, rgba(20, 20, 20, .075)) !important;
         filter: none !important;
         backdrop-filter: none !important;
     }
@@ -5634,7 +5634,7 @@
     .sari-sales-clean-period,
     .sari-chart-premium {
         border-color: var(--sari-border) !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
         box-shadow: none !important;
         filter: none !important;
@@ -5646,7 +5646,7 @@
     #adminMarketplaceHealth .sari-health-score-card,
     #adminMarketplaceHealth .sari-health-metric-v2,
     #adminMarketplaceHealth .sari-health-summary-card {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
     }
 
@@ -5682,7 +5682,7 @@
     .sari-sales-clean-chart,
     #adminCategoryBreakdown.sari-category-card,
     .sari-category-donut::before {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
     }
 
@@ -5693,7 +5693,7 @@
     }
 
     .sari-category-head-icon {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
     }
 
@@ -5708,7 +5708,7 @@
     .sari-category-action,
     .sari-sales-clean-period {
         border-color: var(--sari-border) !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
         color: var(--sari-secondary) !important;
         box-shadow: none !important;
@@ -5721,21 +5721,21 @@
     .sari-category-action:hover,
     .sari-sales-clean-period:hover {
         border-color: var(--sari-gold) !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         color: var(--sari-gold-dark) !important;
         transform: none !important;
     }
 
     .admin-focus-chip {
         border-color: var(--sari-border) !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         color: var(--sari-secondary) !important;
         box-shadow: none !important;
     }
 
     .admin-focus-chip:hover {
         border-color: var(--sari-gold) !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         color: var(--sari-gold-dark) !important;
     }
 
@@ -5751,29 +5751,29 @@
     .sari-focus-row-v2:hover,
     .sari-risk-item:hover,
     .sari-reg-clean-row:hover {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
     }
 
     .sari-role-row:hover .sari-role-chevron {
         background: transparent !important;
-        color: #8A919B !important;
+        color: var(--sari-dark-a63aa16d7c, #8A919B) !important;
     }
 
     /* Neutral dropdown surfaces. */
     .sari-sales-period-options,
     .sari-sales-clean-tooltip {
         border-color: var(--sari-border) !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
     }
 
     .sari-sales-period-option:hover {
-        background: #F4F5F7 !important;
+        background: var(--sari-dark-4d21eb669b, #F4F5F7) !important;
         color: var(--sari-gold-dark) !important;
     }
 
     .sari-sales-period-option.is-active {
-        background: #F4F5F7 !important;
+        background: var(--sari-dark-4d21eb669b, #F4F5F7) !important;
         color: var(--sari-gold-dark) !important;
     }
 
@@ -5834,27 +5834,27 @@
        ============================================================ */
 
     .sari-admin-dashboard {
-        --seller-canvas: #F4F5F7;
-        --seller-surface: #FFFFFF;
-        --seller-border: #E5E7EB;
-        --seller-border-strong: #D1D5DB;
-        --seller-divider: #ECEFF2;
-        --seller-ink: #202124;
-        --seller-muted: #697481;
+        --seller-canvas: var(--sari-dark-4d21eb669b, #F4F5F7);
+        --seller-surface: var(--sari-dark-950baec030, #FFFFFF);
+        --seller-border: var(--sari-dark-d8c2716225, #E5E7EB);
+        --seller-border-strong: var(--sari-dark-d8c2716225, #D1D5DB);
+        --seller-divider: var(--sari-dark-d8c2716225, #ECEFF2);
+        --seller-ink: var(--sari-dark-e23e64dd1e, #202124);
+        --seller-muted: var(--sari-dark-a63aa16d7c, #697481);
         --seller-gold: #D59617;
         --seller-gold-strong: #B97805;
 
         --seller-shadow-main:
-            0 2px 5px rgba(15, 23, 42, .045),
-            0 10px 24px rgba(15, 23, 42, .075),
-            0 24px 54px rgba(15, 23, 42, .095),
-            inset 0 1px 0 rgba(255, 255, 255, .92);
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
 
         --seller-shadow-soft:
-            0 1px 3px rgba(15, 23, 42, .035),
-            0 7px 18px rgba(15, 23, 42, .060),
-            0 15px 32px rgba(15, 23, 42, .065),
-            inset 0 1px 0 rgba(255, 255, 255, .90);
+            0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .060)),
+            0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
 
         color: var(--seller-ink) !important;
     }
@@ -5957,7 +5957,7 @@
     .sari-chart-premium {
         border-color: var(--seller-divider) !important;
         border-radius: 7px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
         box-shadow: none !important;
         transform: none !important;
@@ -6167,7 +6167,7 @@
        ------------------------------------------------------------ */
     .sari-dashboard-secondary-grid #adminMarketplaceHealth {
         padding: 15px 16px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
     }
 
     .sari-dashboard-secondary-grid #adminMarketplaceHealth .sari-health-header {
@@ -6292,7 +6292,7 @@
         overflow: hidden !important;
         border: 1px solid var(--seller-border) !important;
         border-radius: 8px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         box-shadow: var(--seller-shadow-main) !important;
     }
 
@@ -6302,7 +6302,7 @@
     }
 
     #adminRoleControl .sari-ops-title {
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         font-size: 12px !important;
         font-weight: 700 !important;
         letter-spacing: -.02em !important;
@@ -6310,7 +6310,7 @@
 
     #adminRoleControl .sari-ops-subtitle {
         margin-top: 2px !important;
-        color: #7B8490 !important;
+        color: var(--sari-dark-a63aa16d7c, #7B8490) !important;
         font-size: 8px !important;
         line-height: 1.45 !important;
     }
@@ -6318,11 +6318,11 @@
     #adminRoleControl .sari-ops-action {
         min-height: 30px !important;
         gap: 6px !important;
-        border: 1px solid #DDE2E7 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #DDE2E7) !important;
         border-radius: 999px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         padding: 0 11px !important;
-        color: #374151 !important;
+        color: var(--sari-dark-e23e64dd1e, #374151) !important;
         font-size: 8px !important;
         font-weight: 700 !important;
         box-shadow: none !important;
@@ -6331,9 +6331,9 @@
     }
 
     #adminRoleControl .sari-ops-action:hover {
-        border-color: #C9D0D7 !important;
-        background: #F8F9FA !important;
-        color: #202124 !important;
+        border-color: var(--sari-dark-d8c2716225, #C9D0D7) !important;
+        background: var(--sari-dark-950baec030, #F8F9FA) !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         transform: none !important;
     }
 
@@ -6344,7 +6344,7 @@
 
     #adminRoleControl .sari-role-table {
         margin: 0 16px 14px !important;
-        border-top: 1px solid #E8EBEE !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #E8EBEE) !important;
     }
 
     #adminRoleControl .sari-role-table-head,
@@ -6355,8 +6355,8 @@
 
     #adminRoleControl .sari-role-table-head {
         min-height: 34px !important;
-        border-bottom: 1px solid #E8EBEE !important;
-        color: #7D8691 !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #E8EBEE) !important;
+        color: var(--sari-dark-a63aa16d7c, #7D8691) !important;
         font-size: 7px !important;
         font-weight: 700 !important;
         letter-spacing: .07em !important;
@@ -6364,9 +6364,9 @@
 
     #adminRoleControl .sari-role-row {
         min-height: 52px !important;
-        border-bottom: 1px solid #ECEFF2 !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
         background: transparent !important;
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         transform: none !important;
         translate: none !important;
         scale: 1 !important;
@@ -6387,7 +6387,7 @@
 
     #adminRoleControl .sari-role-name {
         gap: 10px !important;
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         font-size: 9px !important;
         font-weight: 650 !important;
     }
@@ -6406,7 +6406,7 @@
         border-radius: 0 !important;
         background: transparent !important;
         background-image: none !important;
-        color: #B97805 !important;
+        color: var(--sari-dark-af18afcaa4, #B97805) !important;
         box-shadow: none !important;
         filter: none !important;
     }
@@ -6421,14 +6421,14 @@
     }
 
     #adminRoleControl .sari-role-value {
-        color: #111827 !important;
+        color: var(--sari-dark-e23e64dd1e, #111827) !important;
         font-size: 13px !important;
         font-weight: 700 !important;
         letter-spacing: -.025em !important;
     }
 
     #adminRoleControl .sari-role-pending {
-        color: #A66D09 !important;
+        color: var(--sari-dark-af18afcaa4, #A66D09) !important;
         font-size: 8px !important;
         font-weight: 600 !important;
     }
@@ -6440,7 +6440,7 @@
         border: 0 !important;
         border-radius: 0 !important;
         background: transparent !important;
-        color: #7D8691 !important;
+        color: var(--sari-dark-a63aa16d7c, #7D8691) !important;
         box-shadow: none !important;
         transform: none !important;
         transition: none !important;
@@ -6453,7 +6453,7 @@
 
     #adminRoleControl .sari-role-row:hover .sari-role-chevron {
         background: transparent !important;
-        color: #5F6873 !important;
+        color: var(--sari-dark-a63aa16d7c, #5F6873) !important;
         transform: none !important;
     }
 
@@ -6497,7 +6497,7 @@
     #adminOrderJourney {
         border: 1px solid var(--seller-border) !important;
         border-radius: 8px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         box-shadow: var(--seller-shadow-main) !important;
         overflow: hidden !important;
     }
@@ -6508,7 +6508,7 @@
     }
 
     #adminOrderJourney .sari-ops-title {
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         font-size: 12px !important;
         font-weight: 700 !important;
         letter-spacing: -.02em !important;
@@ -6516,7 +6516,7 @@
 
     #adminOrderJourney .sari-ops-subtitle {
         margin-top: 2px !important;
-        color: #7B8490 !important;
+        color: var(--sari-dark-a63aa16d7c, #7B8490) !important;
         font-size: 8px !important;
         line-height: 1.45 !important;
     }
@@ -6524,11 +6524,11 @@
     #adminOrderJourney .sari-ops-action {
         min-height: 30px !important;
         gap: 6px !important;
-        border: 1px solid #DDE2E7 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #DDE2E7) !important;
         border-radius: 999px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         padding: 0 11px !important;
-        color: #4B5563 !important;
+        color: var(--sari-dark-e23e64dd1e, #4B5563) !important;
         font-size: 8px !important;
         font-weight: 700 !important;
         box-shadow: none !important;
@@ -6537,9 +6537,9 @@
     }
 
     #adminOrderJourney .sari-ops-action:hover {
-        border-color: #CBD5DF !important;
-        background: #F8F9FA !important;
-        color: #202124 !important;
+        border-color: var(--sari-dark-d8c2716225, #CBD5DF) !important;
+        background: var(--sari-dark-950baec030, #F8F9FA) !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         transform: none !important;
     }
 
@@ -6582,7 +6582,7 @@
         width: calc(100% - 48px) !important;
         height: 2px !important;
         border-radius: 999px !important;
-        background: #D5DDE5 !important;
+        background: var(--sari-dark-4d21eb669b, #D5DDE5) !important;
     }
 
     #adminOrderJourney .sari-journey-icon {
@@ -6599,7 +6599,7 @@
         background: transparent !important;
         background-image: none !important;
         box-shadow: none !important;
-        color: #6B7280 !important;
+        color: var(--sari-dark-a63aa16d7c, #6B7280) !important;
         filter: none !important;
     }
 
@@ -6610,22 +6610,22 @@
     }
 
     #adminOrderJourney .sari-journey-icon.is-good {
-        color: #16A34A !important;
+        color: var(--sari-dark-bc794282b4, #16A34A) !important;
     }
 
     #adminOrderJourney .sari-journey-icon.is-warn {
-        color: #D59617 !important;
+        color: var(--sari-dark-9db03b407c, #D59617) !important;
     }
 
     #adminOrderJourney .sari-journey-icon.is-hot {
-        color: #EF4444 !important;
+        color: var(--sari-dark-65ed380fe4, #EF4444) !important;
     }
 
     #adminOrderJourney .sari-journey-name {
         margin-top: 12px !important;
         font-size: 8.5px !important;
         font-weight: 500 !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         white-space: nowrap !important;
         line-height: 1.3 !important;
     }
@@ -6635,7 +6635,7 @@
         font-size: 15px !important;
         font-weight: 700 !important;
         letter-spacing: -.03em !important;
-        color: #111827 !important;
+        color: var(--sari-dark-e23e64dd1e, #111827) !important;
         line-height: 1 !important;
     }
 
@@ -6644,17 +6644,17 @@
         align-items: center !important;
         gap: 12px !important;
         margin-top: 18px !important;
-        border: 1px solid #D6EAD9 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #D6EAD9) !important;
         border-radius: 12px !important;
-        background: #F5FAF6 !important;
+        background: var(--sari-dark-950baec030, #F5FAF6) !important;
         padding: 12px 14px !important;
-        color: #21824A !important;
+        color: var(--sari-dark-e23e64dd1e, #21824A) !important;
     }
 
     #adminOrderJourney .sari-journey-status.is-alert {
         border-color: #E9D8AF !important;
-        background: #FFF9EC !important;
-        color: #A66D09 !important;
+        background: var(--sari-dark-4d21eb669b, #FFF9EC) !important;
+        color: var(--sari-dark-af18afcaa4, #A66D09) !important;
     }
 
     #adminOrderJourney .sari-journey-status-icon {
@@ -6692,11 +6692,11 @@
         margin-top: 2px !important;
         font-size: 8.2px !important;
         line-height: 1.45 !important;
-        color: #6F7F77 !important;
+        color: var(--sari-dark-a63aa16d7c, #6F7F77) !important;
     }
 
     #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-copy {
-        color: #8F774E !important;
+        color: var(--sari-dark-a63aa16d7c, #8F774E) !important;
     }
 
     @media (max-width: 639px) {
@@ -6796,7 +6796,7 @@
         left: calc(50% + 17px) !important;
         width: calc(100% - 34px) !important;
         height: 2px !important;
-        background: #D7DEE5 !important;
+        background: var(--sari-dark-4d21eb669b, #D7DEE5) !important;
     }
 
     #adminOrderJourney .sari-journey-icon {
@@ -7021,7 +7021,7 @@
     .sari-platform-activity-card {
         border: 1px solid var(--seller-border) !important;
         border-radius: 8px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
         box-shadow: var(--seller-shadow-main) !important;
         transform: none !important;
@@ -7041,12 +7041,12 @@
     }
 
     #adminCategoryBreakdown .sari-category-title {
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         font-size: 13px !important;
     }
 
     #adminCategoryBreakdown .sari-category-subtitle {
-        color: #7B8490 !important;
+        color: var(--sari-dark-a63aa16d7c, #7B8490) !important;
         font-size: 8px !important;
     }
 
@@ -7064,27 +7064,27 @@
     }
 
     #adminCategoryBreakdown .sari-category-donut::before {
-        border-color: #E5E9ED !important;
-        background: #FFFFFF !important;
+        border-color: var(--sari-dark-d8c2716225, #E5E9ED) !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         box-shadow: none !important;
     }
 
     .sari-category-empty {
-        border: 1px solid #E5E9ED !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E5E9ED) !important;
         border-radius: 9px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         padding: 14px 16px !important;
     }
 
     .sari-category-empty-title {
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         font-size: 9px !important;
         font-weight: 700 !important;
     }
 
     .sari-category-empty-copy {
         margin-top: 4px !important;
-        color: #7B8490 !important;
+        color: var(--sari-dark-a63aa16d7c, #7B8490) !important;
         font-size: 7.5px !important;
         line-height: 1.5 !important;
     }
@@ -7103,12 +7103,12 @@
         justify-content: space-between !important;
         gap: 14px !important;
         padding-bottom: 12px !important;
-        border-bottom: 1px solid #ECEFF2 !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     }
 
     .sari-platform-activity-title {
         margin: 0 !important;
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         font-size: 13px !important;
         line-height: 1.3 !important;
         font-weight: 700 !important;
@@ -7117,7 +7117,7 @@
 
     .sari-platform-activity-subtitle {
         margin: 2px 0 0 !important;
-        color: #7B8490 !important;
+        color: var(--sari-dark-a63aa16d7c, #7B8490) !important;
         font-size: 8px !important;
         line-height: 1.45 !important;
     }
@@ -7133,7 +7133,7 @@
         gap: 18px !important;
         min-height: 58px !important;
         padding: 12px 0 !important;
-        border-bottom: 1px solid #ECEFF2 !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
         background: transparent !important;
         transform: none !important;
         transition: none !important;
@@ -7154,7 +7154,7 @@
 
     .sari-platform-activity-name {
         margin: 0 !important;
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
         font-size: 9.5px !important;
         line-height: 1.4 !important;
         font-weight: 650 !important;
@@ -7162,14 +7162,14 @@
 
     .sari-platform-activity-body {
         margin: 4px 0 0 !important;
-        color: #697481 !important;
+        color: var(--sari-dark-a63aa16d7c, #697481) !important;
         font-size: 7.7px !important;
         line-height: 1.55 !important;
     }
 
     .sari-platform-activity-time {
         padding-top: 1px !important;
-        color: #9AA3AD !important;
+        color: var(--sari-dark-a63aa16d7c, #9AA3AD) !important;
         font-size: 7.2px !important;
         line-height: 1.4 !important;
         white-space: nowrap !important;
@@ -7180,14 +7180,14 @@
     }
 
     .sari-platform-activity-empty-title {
-        color: #4B5563 !important;
+        color: var(--sari-dark-e23e64dd1e, #4B5563) !important;
         font-size: 9px !important;
         font-weight: 650 !important;
     }
 
     .sari-platform-activity-empty-copy {
         margin-top: 4px !important;
-        color: #8A949F !important;
+        color: var(--sari-dark-a63aa16d7c, #8A949F) !important;
         font-size: 7.5px !important;
         line-height: 1.5 !important;
     }
@@ -7253,9 +7253,9 @@
         display: flex !important;
         align-items: center !important;
         gap: 12px !important;
-        border: 1px solid #E3E8EC !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E3E8EC) !important;
         border-radius: 10px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         padding: 12px 14px !important;
         box-shadow: none !important;
     }
@@ -7277,8 +7277,8 @@
         background-color: #1F9D55 !important;
         color: #FFFFFF !important;
         box-shadow:
-            0 2px 4px rgba(16, 24, 40, .08),
-            0 8px 18px rgba(31, 157, 85, .24) !important;
+            0 2px 4px var(--sari-dark-c33e3d1bb4, rgba(16, 24, 40, .08)),
+            0 8px 18px var(--sari-dark-7edf1b5a37, rgba(31, 157, 85, .24)) !important;
         filter: none !important;
     }
 
@@ -7291,12 +7291,12 @@
     }
 
     #adminInterventionRadar .sari-risk-empty p:first-child {
-        color: #24734A !important;
+        color: var(--sari-dark-e23e64dd1e, #24734A) !important;
         font-weight: 700 !important;
     }
 
     #adminInterventionRadar .sari-risk-empty p:last-child {
-        color: #7A8680 !important;
+        color: var(--sari-dark-a63aa16d7c, #7A8680) !important;
     }
 
     /* Second all-clear status row */
@@ -7305,9 +7305,9 @@
         align-items: center !important;
         gap: 12px !important;
         margin-top: 12px !important;
-        border: 1px solid #E3E8EC !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E3E8EC) !important;
         border-radius: 10px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         padding: 12px 14px !important;
         box-shadow: none !important;
     }
@@ -7328,8 +7328,8 @@
         background-color: #1F9D55 !important;
         color: #FFFFFF !important;
         box-shadow:
-            0 2px 4px rgba(16, 24, 40, .08),
-            0 8px 18px rgba(31, 157, 85, .24) !important;
+            0 2px 4px var(--sari-dark-c33e3d1bb4, rgba(16, 24, 40, .08)),
+            0 8px 18px var(--sari-dark-7edf1b5a37, rgba(31, 157, 85, .24)) !important;
         filter: none !important;
     }
 
@@ -7342,12 +7342,12 @@
     }
 
     #adminInterventionRadar .sari-risk-state-title {
-        color: #24734A !important;
+        color: var(--sari-dark-e23e64dd1e, #24734A) !important;
         font-weight: 700 !important;
     }
 
     #adminInterventionRadar .sari-risk-state-copy {
-        color: #7A8680 !important;
+        color: var(--sari-dark-a63aa16d7c, #7A8680) !important;
     }
 
     /* Alert fallback */
@@ -7356,8 +7356,8 @@
         background-color: #D59617 !important;
         color: #FFFFFF !important;
         box-shadow:
-            0 2px 4px rgba(16, 24, 40, .08),
-            0 8px 18px rgba(213, 150, 23, .24) !important;
+            0 2px 4px var(--sari-dark-c33e3d1bb4, rgba(16, 24, 40, .08)),
+            0 8px 18px var(--sari-dark-7edf1b5a37, rgba(213, 150, 23, .24)) !important;
     }
 
     #adminInterventionRadar .sari-risk-state.is-alert > .sari-risk-state-icon svg {
@@ -7539,7 +7539,7 @@
         font-size: 10.5px !important;
         font-weight: 600 !important;
         line-height: 1.35 !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
     }
 
     .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:nth-child(2) {
@@ -7548,7 +7548,7 @@
         font-weight: 700 !important;
         line-height: 1.05 !important;
         letter-spacing: -.035em !important;
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
     }
 
     .sari-admin-dashboard .admin-kpi > div:last-child {
@@ -7566,7 +7566,7 @@
     .sari-admin-dashboard .admin-kpi > div:last-child > span:last-child {
         font-size: 9.5px !important;
         font-weight: 500 !important;
-        color: #7B8490 !important;
+        color: var(--sari-dark-a63aa16d7c, #7B8490) !important;
     }
 
     /* Keep the freestanding KPI icons readable beside the larger text. */
@@ -8238,54 +8238,54 @@
        Light mode + SARI gold palette.
        ============================================================ */
     #adminMarketplaceHealth{
-        border:1px solid #eadfcb !important;
+        border:1px solid var(--sari-dark-d8c2716225, #eadfcb) !important;
         border-radius:26px !important;
         background:
             radial-gradient(circle at top right, rgba(240, 213, 153, 0.20), transparent 34%),
-            linear-gradient(180deg, #fffdfa 0%, #fffaf3 100%) !important;
+            linear-gradient(180deg, var(--sari-dark-950baec030, #fffdfa) 0%, var(--sari-dark-950baec030, #fffaf3) 100%) !important;
         box-shadow:
-            0 12px 32px rgba(23, 25, 31, 0.05),
-            0 28px 60px rgba(23, 25, 31, 0.04) !important;
+            0 12px 32px var(--sari-dark-1df26971b5, rgba(23, 25, 31, 0.05)),
+            0 28px 60px var(--sari-dark-25b2da5e49, rgba(23, 25, 31, 0.04)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-header{
         align-items:flex-start !important;
         padding-bottom:14px !important;
-        border-bottom:1px solid #efe5d5 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #efe5d5) !important;
     }
 
     #adminMarketplaceHealth .sari-health-title{
         font-size:17px !important;
         line-height:1.28 !important;
         font-weight:700 !important;
-        color:#241d15 !important;
+        color:var(--sari-dark-e23e64dd1e, #241d15) !important;
     }
 
     #adminMarketplaceHealth .sari-health-subtitle{
         margin-top:4px !important;
         font-size:10px !important;
         line-height:1.5 !important;
-        color:#7c746a !important;
+        color:var(--sari-dark-a63aa16d7c, #7c746a) !important;
     }
 
     #adminMarketplaceHealth .sari-health-stable{
         min-height:34px !important;
-        border:1px solid #e8dcc3 !important;
-        background:#fffdfa !important;
-        color:#8f6716 !important;
+        border:1px solid var(--sari-dark-d8c2716225, #e8dcc3) !important;
+        background:var(--sari-dark-950baec030, #fffdfa) !important;
+        color:var(--sari-dark-e4c83a7d26, #8f6716) !important;
     }
 
     #adminMarketplaceHealth .sari-health-action{
         min-height:34px !important;
         border:1px solid #e2d1ad !important;
-        background:linear-gradient(180deg, #fff5df 0%, #fdefcf 100%) !important;
-        color:#8a6214 !important;
+        background:linear-gradient(180deg, var(--sari-dark-4d21eb669b, #fff5df) 0%, var(--sari-dark-4d21eb669b, #fdefcf) 100%) !important;
+        color:var(--sari-dark-4c24c1ed19, #8a6214) !important;
     }
 
     #adminMarketplaceHealth .sari-health-action:hover{
         border-color:#d3b97d !important;
-        background:linear-gradient(180deg, #ffefce 0%, #fbe5b8 100%) !important;
-        color:#78540f !important;
+        background:linear-gradient(180deg, var(--sari-dark-4d21eb669b, #ffefce) 0%, var(--sari-dark-a19bde6a70, #fbe5b8) 100%) !important;
+        color:var(--sari-dark-19b301f69a, #78540f) !important;
     }
 
     #adminMarketplaceHealth .sari-health-main--chart-redesign{
@@ -8296,15 +8296,15 @@
     }
 
     #adminMarketplaceHealth .sari-health-graph-panel{
-        border:1px solid #ede2cf !important;
+        border:1px solid var(--sari-dark-d8c2716225, #ede2cf) !important;
         border-radius:26px !important;
         background:
-            linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,248,236,.96) 100%),
+            linear-gradient(180deg, var(--sari-dark-ff55c56e19, rgba(255,255,255,.95)) 0%, var(--sari-dark-ae872dd778, rgba(255,248,236,.96)) 100%),
             radial-gradient(circle at 10% 10%, rgba(221,168,58,.12), transparent 28%) !important;
         padding:16px !important;
         box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.9),
-            0 16px 34px rgba(34, 27, 17, 0.04) !important;
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.9)),
+            0 16px 34px var(--sari-dark-25b2da5e49, rgba(34, 27, 17, 0.04)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-head{
@@ -8321,7 +8321,7 @@
         font-weight:800 !important;
         letter-spacing:.14em !important;
         text-transform:uppercase !important;
-        color:#9f7a2d !important;
+        color:var(--sari-dark-a63aa16d7c, #9f7a2d) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-score-line{
@@ -8337,13 +8337,13 @@
         line-height:1 !important;
         font-weight:700 !important;
         letter-spacing:-.05em !important;
-        color:#2a2219 !important;
+        color:var(--sari-dark-e23e64dd1e, #2a2219) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-score-line span{
         font-size:10px !important;
         line-height:1.4 !important;
-        color:#84796c !important;
+        color:var(--sari-dark-a63aa16d7c, #84796c) !important;
         margin-bottom:5px !important;
     }
 
@@ -8355,8 +8355,8 @@
         align-items:center !important;
         border-radius:999px !important;
         padding:0 10px !important;
-        background:#fff2cf !important;
-        color:#8b6110 !important;
+        background:var(--sari-dark-4d21eb669b, #fff2cf) !important;
+        color:var(--sari-dark-19b301f69a, #8b6110) !important;
         font-size:9px !important;
         font-weight:700 !important;
     }
@@ -8366,7 +8366,7 @@
         max-width:520px !important;
         font-size:9.1px !important;
         line-height:1.65 !important;
-        color:#7c746a !important;
+        color:var(--sari-dark-a63aa16d7c, #7c746a) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-side{
@@ -8383,21 +8383,21 @@
         font-weight:700 !important;
         letter-spacing:.12em !important;
         text-transform:uppercase !important;
-        color:#9e9382 !important;
+        color:var(--sari-dark-a63aa16d7c, #9e9382) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-side strong{
         font-size:16px !important;
         line-height:1.1 !important;
         font-weight:700 !important;
-        color:#8d6312 !important;
+        color:var(--sari-dark-19b301f69a, #8d6312) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-canvas{
-        border:1px solid #efdfbe !important;
+        border:1px solid var(--sari-dark-d8c2716225, #efdfbe) !important;
         border-radius:24px !important;
         background:
-            linear-gradient(180deg, #fffdfa 0%, #fff3da 100%),
+            linear-gradient(180deg, var(--sari-dark-950baec030, #fffdfa) 0%, var(--sari-dark-4d21eb669b, #fff3da) 100%),
             radial-gradient(circle at top right, rgba(224, 176, 74, 0.14), transparent 28%) !important;
         padding:10px 10px 8px !important;
         overflow:hidden !important;
@@ -8410,20 +8410,20 @@
     }
 
     #adminMarketplaceHealth .sari-health-graph-grid-line{
-        stroke:rgba(151, 130, 90, .22) !important;
+        stroke:var(--sari-dark-6d95e2917f, rgba(151, 130, 90, .22)) !important;
         stroke-width:1 !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-y-label,
     #adminMarketplaceHealth .sari-health-graph-x-label{
-        fill:#81776b !important;
+        fill:var(--sari-dark-a63aa16d7c, #81776b) !important;
         font-family:"Poppins",sans-serif !important;
         font-size:9.2px !important;
         font-weight:600 !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-x-label{
-        fill:#6f6559 !important;
+        fill:var(--sari-dark-a63aa16d7c, #6f6559) !important;
         font-size:9.6px !important;
     }
 
@@ -8447,8 +8447,8 @@
     }
 
     #adminMarketplaceHealth .sari-health-graph-point-core{
-        fill:#d49e2c !important;
-        stroke:#bf8511 !important;
+        fill:var(--sari-dark-f5aedeeede, #d49e2c) !important;
+        stroke:var(--sari-dark-9db03b407c, #bf8511) !important;
         stroke-width:1.5 !important;
     }
 
@@ -8463,9 +8463,9 @@
         display:flex !important;
         align-items:flex-start !important;
         gap:8px !important;
-        border:1px solid #efe4d3 !important;
+        border:1px solid var(--sari-dark-d8c2716225, #efe4d3) !important;
         border-radius:16px !important;
-        background:#fffdfa !important;
+        background:var(--sari-dark-950baec030, #fffdfa) !important;
         padding:9px 10px !important;
     }
 
@@ -8476,14 +8476,14 @@
         flex:0 0 8px !important;
         border-radius:999px !important;
         background:linear-gradient(180deg, #d8a23a 0%, #b47d0f 100%) !important;
-        box-shadow:0 0 0 4px rgba(222, 182, 94, 0.16) !important;
+        box-shadow:0 0 0 4px var(--sari-dark-b5c2a2270e, rgba(222, 182, 94, 0.16)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-legend-label{
         font-size:8.5px !important;
         line-height:1.35 !important;
         font-weight:700 !important;
-        color:#73685c !important;
+        color:var(--sari-dark-a63aa16d7c, #73685c) !important;
         text-transform:uppercase !important;
         letter-spacing:.04em !important;
     }
@@ -8493,7 +8493,7 @@
         font-size:12px !important;
         line-height:1.15 !important;
         font-weight:700 !important;
-        color:#2d2419 !important;
+        color:var(--sari-dark-e23e64dd1e, #2d2419) !important;
     }
 
     #adminMarketplaceHealth .sari-health-metrics--chart-redesign{
@@ -8504,46 +8504,46 @@
 
     #adminMarketplaceHealth .sari-health-metric-v2{
         min-height:0 !important;
-        border:1px solid #eee3d2 !important;
+        border:1px solid var(--sari-dark-d8c2716225, #eee3d2) !important;
         border-radius:20px !important;
-        background:linear-gradient(180deg, #ffffff 0%, #fffaf1 100%) !important;
+        background:linear-gradient(180deg, var(--sari-dark-950baec030, #ffffff) 0%, var(--sari-dark-950baec030, #fffaf1) 100%) !important;
         padding:12px 12px 11px !important;
-        box-shadow:0 10px 22px rgba(35, 28, 17, 0.03) !important;
+        box-shadow:0 10px 22px var(--sari-dark-b13200ac05, rgba(35, 28, 17, 0.03)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-metric-icon{
-        border:1px solid #ecdcb5 !important;
-        background:linear-gradient(180deg, #fff4d9 0%, #fcebc4 100%) !important;
-        color:#b78314 !important;
-        box-shadow:0 8px 16px rgba(201, 147, 24, 0.08) !important;
+        border:1px solid var(--sari-dark-d8c2716225, #ecdcb5) !important;
+        background:linear-gradient(180deg, var(--sari-dark-4d21eb669b, #fff4d9) 0%, var(--sari-dark-436469437c, #fcebc4) 100%) !important;
+        color:var(--sari-dark-7f7834ccc9, #b78314) !important;
+        box-shadow:0 8px 16px var(--sari-dark-c33e3d1bb4, rgba(201, 147, 24, 0.08)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-metric-label{
         font-size:10px !important;
         line-height:1.35 !important;
         font-weight:700 !important;
-        color:#2a2217 !important;
+        color:var(--sari-dark-e23e64dd1e, #2a2217) !important;
     }
 
     #adminMarketplaceHealth .sari-health-metric-note{
         margin-top:2px !important;
         font-size:8.4px !important;
         line-height:1.45 !important;
-        color:#7e7367 !important;
+        color:var(--sari-dark-a63aa16d7c, #7e7367) !important;
     }
 
     #adminMarketplaceHealth .sari-health-metric-value{
         font-size:14px !important;
         line-height:1.1 !important;
         font-weight:700 !important;
-        color:#8d6310 !important;
+        color:var(--sari-dark-9db03b407c, #8d6310) !important;
     }
 
     #adminMarketplaceHealth .sari-health-progress{
         margin-top:9px !important;
         height:6px !important;
         border-radius:999px !important;
-        background:#f1e8d8 !important;
+        background:var(--sari-dark-4d21eb669b, #f1e8d8) !important;
     }
 
     #adminMarketplaceHealth .sari-health-progress > span{
@@ -8555,23 +8555,23 @@
         gap:12px !important;
         margin-top:14px !important;
         padding-top:14px !important;
-        border-top:1px solid #efe5d5 !important;
+        border-top:1px solid var(--sari-dark-d8c2716225, #efe5d5) !important;
     }
 
     #adminMarketplaceHealth .sari-health-summary-card{
         min-height:0 !important;
-        border:1px solid #eee3d2 !important;
+        border:1px solid var(--sari-dark-d8c2716225, #eee3d2) !important;
         border-radius:18px !important;
-        background:linear-gradient(180deg, #ffffff 0%, #fffaf1 100%) !important;
+        background:linear-gradient(180deg, var(--sari-dark-950baec030, #ffffff) 0%, var(--sari-dark-950baec030, #fffaf1) 100%) !important;
         padding:10px 12px !important;
-        box-shadow:0 8px 18px rgba(35, 28, 17, 0.03) !important;
+        box-shadow:0 8px 18px var(--sari-dark-b13200ac05, rgba(35, 28, 17, 0.03)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-summary-label{
         font-size:8.5px !important;
         line-height:1.35 !important;
         font-weight:700 !important;
-        color:#8a7b67 !important;
+        color:var(--sari-dark-a63aa16d7c, #8a7b67) !important;
         letter-spacing:.04em !important;
         text-transform:uppercase !important;
     }
@@ -8581,14 +8581,14 @@
         font-size:13px !important;
         line-height:1.15 !important;
         font-weight:700 !important;
-        color:#2c241b !important;
+        color:var(--sari-dark-e23e64dd1e, #2c241b) !important;
     }
 
     #adminMarketplaceHealth .sari-health-summary-note{
         margin-top:2px !important;
         font-size:8.4px !important;
         line-height:1.45 !important;
-        color:#7e7367 !important;
+        color:var(--sari-dark-a63aa16d7c, #7e7367) !important;
     }
 
     @media (max-width: 900px){
@@ -8690,12 +8690,12 @@
     }
 
     #adminMarketplaceHealth .sari-health-graph-grid-line {
-        stroke: rgba(144, 124, 87, .20) !important;
+        stroke: var(--sari-dark-5618e45f0e, rgba(144, 124, 87, .20)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-y-label {
         font-size: 8.8px !important;
-        fill: #85796b !important;
+        fill: var(--sari-dark-a63aa16d7c, #85796b) !important;
     }
 
     #adminMarketplaceHealth .sari-health-series-line {
@@ -8705,17 +8705,17 @@
     }
 
     #adminMarketplaceHealth .sari-health-series-line.is-order {
-        stroke: #C58E18 !important;
+        stroke: var(--sari-dark-7f7834ccc9, #C58E18) !important;
         stroke-width: 4.5 !important;
     }
 
     #adminMarketplaceHealth .sari-health-series-line.is-fulfillment {
-        stroke: #E0B454 !important;
+        stroke: var(--sari-dark-91b715374c, #E0B454) !important;
         stroke-width: 3.6 !important;
     }
 
     #adminMarketplaceHealth .sari-health-series-line.is-seller {
-        stroke: #9F741C !important;
+        stroke: var(--sari-dark-9e21f226ff, #9F741C) !important;
         stroke-width: 3.2 !important;
     }
 
@@ -8730,15 +8730,15 @@
     }
 
     #adminMarketplaceHealth .sari-health-series-point.is-order {
-        fill: #C58E18 !important;
+        fill: var(--sari-dark-7f7834ccc9, #C58E18) !important;
     }
 
     #adminMarketplaceHealth .sari-health-series-point.is-fulfillment {
-        fill: #E0B454 !important;
+        fill: var(--sari-dark-91b715374c, #E0B454) !important;
     }
 
     #adminMarketplaceHealth .sari-health-series-point.is-seller {
-        fill: #9F741C !important;
+        fill: var(--sari-dark-9e21f226ff, #9F741C) !important;
     }
 
     #adminMarketplaceHealth .sari-health-series-point.is-approval {
@@ -8750,7 +8750,7 @@
         grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
         gap: 0 !important;
         margin-top: 8px !important;
-        border-top: 1px solid #eee4d3 !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee4d3) !important;
         padding-top: 9px !important;
     }
 
@@ -8766,7 +8766,7 @@
     }
 
     #adminMarketplaceHealth .sari-health-graph-legend-item--flat + .sari-health-graph-legend-item--flat {
-        border-left: 1px solid #eee4d3 !important;
+        border-left: 1px solid var(--sari-dark-d8c2716225, #eee4d3) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-legend-line {
@@ -8836,7 +8836,7 @@
 
         #adminMarketplaceHealth .sari-health-graph-legend-item--flat {
             border-left: 0 !important;
-            border-top: 1px solid #f1e7d8 !important;
+            border-top: 1px solid var(--sari-dark-d8c2716225, #f1e7d8) !important;
             padding: 7px 2px !important;
         }
 
@@ -8852,27 +8852,27 @@
        Curves are a current-state visual profile, not historical time-series data.
        ============================================================ */
     #adminMarketplaceHealth {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
-        border-color: #E5E7EB !important;
-        box-shadow: 0 6px 18px rgba(17,24,39,.05) !important;
+        border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
+        box-shadow: 0 6px 18px var(--sari-dark-1df26971b5, rgba(17,24,39,.05)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-header {
-        border-bottom-color: #E5E7EB !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-panel--white {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
-        border-color: #E5E7EB !important;
+        border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
         box-shadow: none !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-canvas--white {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
-        border-color: #E5E7EB !important;
+        border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
         box-shadow: none !important;
     }
 
@@ -8890,7 +8890,7 @@
     }
 
     #adminMarketplaceHealth .sari-health-graph-y-label {
-        fill: #7B8490 !important;
+        fill: var(--sari-dark-a63aa16d7c, #7B8490) !important;
         font-size: 8.8px !important;
         font-weight: 600 !important;
     }
@@ -8903,22 +8903,22 @@
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-order {
-        stroke: #A96F10 !important;
+        stroke: var(--sari-dark-9b2ca2d764, #A96F10) !important;
         stroke-width: 4.4 !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-fulfillment {
-        stroke: #D59617 !important;
+        stroke: var(--sari-dark-9db03b407c, #D59617) !important;
         stroke-width: 4 !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-seller {
-        stroke: #E2B24B !important;
+        stroke: var(--sari-dark-363c7920e8, #E2B24B) !important;
         stroke-width: 3.7 !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-approval {
-        stroke: #C79B45 !important;
+        stroke: var(--sari-dark-37730a05f5, #C79B45) !important;
         stroke-width: 3.6 !important;
     }
 
@@ -8928,32 +8928,32 @@
     }
 
     #adminMarketplaceHealth .sari-health-profile-point.is-order {
-        fill: #A96F10 !important;
+        fill: var(--sari-dark-9b2ca2d764, #A96F10) !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-point.is-fulfillment {
-        fill: #D59617 !important;
+        fill: var(--sari-dark-9db03b407c, #D59617) !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-point.is-seller {
-        fill: #E2B24B !important;
+        fill: var(--sari-dark-363c7920e8, #E2B24B) !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-point.is-approval {
-        fill: #C79B45 !important;
+        fill: var(--sari-dark-37730a05f5, #C79B45) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-legend--white {
-        background: #FFFFFF !important;
-        border-top-color: #E5E7EB !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        border-top-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-legend-item--flat {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-legend-item--flat + .sari-health-graph-legend-item--flat {
-        border-left-color: #E5E7EB !important;
+        border-left-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-legend-line.is-order {
@@ -8974,26 +8974,26 @@
 
     /* Neutralize remaining cream fills in the graph header area. */
     #adminMarketplaceHealth .sari-health-graph-score-line em {
-        background: #FFFFFF !important;
-        border: 1px solid #E5E7EB !important;
-        color: #8A6214 !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
+        color: var(--sari-dark-4c24c1ed19, #8A6214) !important;
     }
 
     #adminMarketplaceHealth .sari-health-stable {
-        background: #FFFFFF !important;
-        border-color: #E5E7EB !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
         box-shadow: none !important;
     }
 
     #adminMarketplaceHealth .sari-health-action {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
         border-color: #D9C293 !important;
         box-shadow: none !important;
     }
 
     #adminMarketplaceHealth .sari-health-action:hover {
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
     }
 
@@ -9042,7 +9042,7 @@
 
     #adminMarketplaceHealth .sari-health-graph-description::after {
         content: " · Visual profile of current health indicators" !important;
-        color: #9A8F80 !important;
+        color: var(--sari-dark-a63aa16d7c, #9A8F80) !important;
     }
 
     @media (max-width: 767px) {
@@ -9096,22 +9096,22 @@
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-order {
-        stroke: #A96F10 !important;
+        stroke: var(--sari-dark-9b2ca2d764, #A96F10) !important;
         stroke-width: 4.2 !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-fulfillment {
-        stroke: #D59617 !important;
+        stroke: var(--sari-dark-9db03b407c, #D59617) !important;
         stroke-width: 3.9 !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-seller {
-        stroke: #E2B24B !important;
+        stroke: var(--sari-dark-363c7920e8, #E2B24B) !important;
         stroke-width: 3.6 !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-approval {
-        stroke: #C79B45 !important;
+        stroke: var(--sari-dark-37730a05f5, #C79B45) !important;
         stroke-width: 3.2 !important;
     }
 
@@ -9135,19 +9135,19 @@
 
     /* SARI dashboard parity: white containers, gray supporting surfaces. */
     .sari-admin-dashboard {
-        --dashboard-surface-shadow: 0 2px 5px rgba(15,23,42,.045),0 10px 24px rgba(15,23,42,.075),0 24px 54px rgba(15,23,42,.095),inset 0 1px 0 rgba(255,255,255,.92);
+        --dashboard-surface-shadow: 0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
         width: 100%;
         max-width: 1640px !important;
         min-width: 0;
         padding-bottom: 32px;
-        color: #29323b;
+        color: var(--sari-dark-e23e64dd1e, #29323b);
         container-type: inline-size;
     }
     .sari-admin-dashboard :is(.admin-kpi,.admin-panel,.sari-sales-clean-card,.sari-reg-clean-card,.sari-health-card,.sari-ops-card,.sari-monitor-card) {
         min-width: 0;
-        border: 1px solid #e5e7eb !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 17px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow: var(--dashboard-surface-shadow) !important;
         transform: none !important;
     }
@@ -9155,40 +9155,40 @@
     .sari-admin-dashboard .sari-dashboard-health-role-grid { grid-template-columns: minmax(0,1fr) !important; }
     .sari-admin-dashboard #adminRoleControl { width: 100% !important; min-width: 0 !important; }
     .sari-admin-dashboard .admin-kpi { min-height: 110px; padding: 17px 16px !important; }
-    .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:first-child { font-size: 11.5px !important; color: #707b86 !important; }
+    .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:first-child { font-size: 11.5px !important; color: var(--sari-dark-a63aa16d7c, #707b86) !important; }
     .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:nth-child(2) { font-size: clamp(22px,1.6vw,26px) !important; line-height: 1.2 !important; white-space: normal; overflow-wrap: anywhere; }
     .sari-admin-dashboard .admin-kpi > div:last-child { flex-wrap: wrap; }
     .sari-admin-dashboard .admin-kpi > div:last-child > span { font-size: 10px !important; }
     .sari-admin-dashboard .admin-kpi .admin-icon-box,
     .sari-admin-dashboard .admin-kpi .admin-icon-box svg { width: 22px !important; height: 22px !important; min-width: 22px !important; min-height: 22px !important; flex-basis: 22px !important; }
-    .sari-admin-dashboard :is(.sari-sales-clean-title,.sari-reg-clean-title,.sari-health-title,.sari-ops-title,.sari-monitor-title,.sari-category-title,.sari-platform-activity-title) { color: #29323b !important; font-size: 16px !important; font-weight: 750 !important; line-height: 1.35 !important; }
-    .sari-admin-dashboard :is(.sari-sales-clean-subtitle,.sari-reg-clean-subtitle,.sari-health-subtitle,.sari-ops-subtitle,.sari-monitor-subtitle,.sari-category-subtitle,.sari-platform-activity-subtitle) { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.55 !important; }
+    .sari-admin-dashboard :is(.sari-sales-clean-title,.sari-reg-clean-title,.sari-health-title,.sari-ops-title,.sari-monitor-title,.sari-category-title,.sari-platform-activity-title) { color: var(--sari-dark-e23e64dd1e, #29323b) !important; font-size: 16px !important; font-weight: 750 !important; line-height: 1.35 !important; }
+    .sari-admin-dashboard :is(.sari-sales-clean-subtitle,.sari-reg-clean-subtitle,.sari-health-subtitle,.sari-ops-subtitle,.sari-monitor-subtitle,.sari-category-subtitle,.sari-platform-activity-subtitle) { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10.5px !important; line-height: 1.55 !important; }
     .sari-admin-dashboard :is(.sari-sales-clean-head,.sari-reg-clean-head,.sari-ops-head,.sari-monitor-head,.sari-category-head,.sari-platform-activity-head) { padding: 16px 18px !important; gap: 12px !important; flex-wrap: wrap; }
     .sari-admin-dashboard :is(.sari-health-card,.sari-ops-card,.sari-monitor-card) { padding: 18px !important; }
     .sari-admin-dashboard .sari-health-card .sari-health-header { gap: 12px; flex-wrap: wrap; }
     .sari-admin-dashboard :is(.admin-focus-chip,.admin-view-button,.sari-health-action,.sari-ops-action,.sari-category-action) { min-height: 34px !important; font-size: 11px !important; border-radius: 9px !important; }
-    .sari-admin-dashboard .admin-focus-chip { border-color: #dfe3e8 !important; background: #fff !important; color: #596579 !important; box-shadow: none !important; }
-    .sari-admin-dashboard .admin-focus-chip.is-active { background: #eef2f6 !important; border-color: #d7dee6 !important; color: #29323b !important; }
-    .sari-admin-dashboard :is(.admin-focus-chip,.admin-view-button,.sari-health-action,.sari-ops-action,.sari-category-action):hover { background: #f3f5f7 !important; color: #475467 !important; }
-    .sari-admin-dashboard :is(.sari-role-row,.sari-reg-clean-row,.sari-platform-activity-row) { background: #fff !important; }
-    .sari-admin-dashboard :is(.sari-role-row,.sari-reg-clean-row,.sari-platform-activity-row):hover { background: #f7f9fb !important; }
-    .sari-admin-dashboard :is(.sari-role-name,.sari-reg-clean-name,.sari-platform-activity-name,.sari-category-name) { color: #29323b !important; font-size: 12px !important; line-height: 1.45 !important; }
-    .sari-admin-dashboard :is(.sari-reg-clean-time,.sari-platform-activity-body,.sari-platform-activity-time,.sari-category-subtitle) { color: #707b86 !important; font-size: 10.5px !important; }
-    .sari-admin-dashboard :is(.sari-role-pending,.sari-sales-clean-period) { background: #f3f5f7 !important; border-color: #dfe5ec !important; color: #596579 !important; }
-    .sari-admin-dashboard .sari-sales-period-option.is-active { background: #eef2f6 !important; color: #475467 !important; }
-    .sari-admin-dashboard .sari-sales-period-popover { border-radius: 12px; background: #fff !important; box-shadow: 0 18px 42px rgba(31,41,55,.13),0 4px 12px rgba(31,41,55,.04) !important; }
+    .sari-admin-dashboard .admin-focus-chip { border-color: var(--sari-dark-d8c2716225, #dfe3e8) !important; background: var(--sari-dark-950baec030, #fff) !important; color: var(--sari-dark-a63aa16d7c, #596579) !important; box-shadow: none !important; }
+    .sari-admin-dashboard .admin-focus-chip.is-active { background: var(--sari-dark-4d21eb669b, #eef2f6) !important; border-color: var(--sari-dark-d8c2716225, #d7dee6) !important; color: var(--sari-dark-e23e64dd1e, #29323b) !important; }
+    .sari-admin-dashboard :is(.admin-focus-chip,.admin-view-button,.sari-health-action,.sari-ops-action,.sari-category-action):hover { background: var(--sari-dark-4d21eb669b, #f3f5f7) !important; color: var(--sari-dark-e23e64dd1e, #475467) !important; }
+    .sari-admin-dashboard :is(.sari-role-row,.sari-reg-clean-row,.sari-platform-activity-row) { background: var(--sari-dark-950baec030, #fff) !important; }
+    .sari-admin-dashboard :is(.sari-role-row,.sari-reg-clean-row,.sari-platform-activity-row):hover { background: var(--sari-dark-950baec030, #f7f9fb) !important; }
+    .sari-admin-dashboard :is(.sari-role-name,.sari-reg-clean-name,.sari-platform-activity-name,.sari-category-name) { color: var(--sari-dark-e23e64dd1e, #29323b) !important; font-size: 12px !important; line-height: 1.45 !important; }
+    .sari-admin-dashboard :is(.sari-reg-clean-time,.sari-platform-activity-body,.sari-platform-activity-time,.sari-category-subtitle) { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10.5px !important; }
+    .sari-admin-dashboard :is(.sari-role-pending,.sari-sales-clean-period) { background: var(--sari-dark-4d21eb669b, #f3f5f7) !important; border-color: var(--sari-dark-d8c2716225, #dfe5ec) !important; color: var(--sari-dark-a63aa16d7c, #596579) !important; }
+    .sari-admin-dashboard .sari-sales-period-option.is-active { background: var(--sari-dark-4d21eb669b, #eef2f6) !important; color: var(--sari-dark-e23e64dd1e, #475467) !important; }
+    .sari-admin-dashboard .sari-sales-period-popover { border-radius: 12px; background: var(--sari-dark-950baec030, #fff) !important; box-shadow: 0 18px 42px var(--sari-dark-3e32d50f5e, rgba(31,41,55,.13)),0 4px 12px var(--sari-dark-25b2da5e49, rgba(31,41,55,.04)) !important; }
     .sari-admin-dashboard .sari-sales-period-option { min-height: 39px; font-size: 11.5px; }
-    .sari-admin-dashboard :is(button,a,input,summary):focus-visible { outline: 2px solid #64748b !important; outline-offset: 3px; }
-    #adminFocusDrawer > .p-5 > div:first-child { border-color: #e5e7eb !important; background: #f7f9fb !important; }
-    #adminDrawerRole { background: #eef2f6 !important; color: #596579 !important; }
-    #adminMarkReviewed { border-color: #dfe5ec !important; background: #f3f5f7 !important; color: #475467 !important; }
+    .sari-admin-dashboard :is(button,a,input,summary):focus-visible { outline: 2px solid var(--sari-dark-d8c2716225, #64748b) !important; outline-offset: 3px; }
+    #adminFocusDrawer > .p-5 > div:first-child { border-color: var(--sari-dark-d8c2716225, #e5e7eb) !important; background: var(--sari-dark-950baec030, #f7f9fb) !important; }
+    #adminDrawerRole { background: var(--sari-dark-4d21eb669b, #eef2f6) !important; color: var(--sari-dark-a63aa16d7c, #596579) !important; }
+    #adminMarkReviewed { border-color: var(--sari-dark-d8c2716225, #dfe5ec) !important; background: var(--sari-dark-4d21eb669b, #f3f5f7) !important; color: var(--sari-dark-e23e64dd1e, #475467) !important; }
     @container (max-width: 1100px) {
         .sari-admin-dashboard .sari-dashboard-primary-grid,
         .sari-admin-dashboard .sari-dashboard-focus-journey-grid,
         .sari-admin-dashboard .sari-dashboard-bottom-grid { grid-template-columns: minmax(0,1fr) !important; }
     }
     @media (max-width: 767px) {
-        .sari-admin-dashboard :is(.admin-kpi,.admin-panel,.sari-sales-clean-card,.sari-reg-clean-card,.sari-health-card,.sari-ops-card,.sari-monitor-card) { border-radius: 14px !important; box-shadow: 0 2px 4px rgba(15,23,42,.035),0 8px 18px rgba(15,23,42,.06),0 18px 38px rgba(15,23,42,.07) !important; }
+        .sari-admin-dashboard :is(.admin-kpi,.admin-panel,.sari-sales-clean-card,.sari-reg-clean-card,.sari-health-card,.sari-ops-card,.sari-monitor-card) { border-radius: 14px !important; box-shadow: 0 2px 4px var(--sari-dark-7593018246, rgba(15,23,42,.035)),0 8px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),0 18px 38px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)) !important; }
         .sari-admin-dashboard :is(.sari-dashboard-primary-grid,.sari-dashboard-secondary-grid,.sari-dashboard-focus-journey-grid,.sari-dashboard-bottom-grid) { gap: 14px !important; margin-top: 14px !important; }
         .sari-admin-dashboard :is(.sari-sales-clean-title,.sari-reg-clean-title,.sari-health-title,.sari-ops-title,.sari-monitor-title,.sari-category-title,.sari-platform-activity-title) { font-size: 15px !important; }
     }
@@ -9197,184 +9197,184 @@
     }
 
 /* Clean operational panels — no icon tiles, cream surfaces or decorative gradients. */
-.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown){min-width:0!important;border:1px solid #E5E7EB!important;border-radius:18px!important;background:#FFF!important;background-image:none!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important;transform:none!important;overflow:hidden!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown){min-width:0!important;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;border-radius:18px!important;background:var(--sari-dark-950baec030, #FFF)!important;background-image:none!important;box-shadow:0 3px 10px var(--sari-dark-7593018246, rgba(15,23,42,.035)),0 12px 30px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055))!important;transform:none!important;overflow:hidden!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus{padding:20px!important}
 .sari-admin-dashboard.dashboard-clean-ops :is(#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown){padding:0!important}
-.sari-admin-dashboard.dashboard-clean-ops :is(#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-ops-head,.sari-monitor-head,.sari-category-head){display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:12px!important;flex-wrap:wrap!important;margin:0!important;padding:20px 20px 16px!important;border:0!important;border-bottom:1px solid #EDF0F3!important;background:#FFF!important}
-.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-health-title,.sari-ops-title,.sari-monitor-title,.sari-category-title){margin:0!important;color:#293440!important;font-size:16px!important;font-weight:650!important;line-height:1.4!important;letter-spacing:-.02em!important}
-.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-health-subtitle,.sari-ops-subtitle,.sari-monitor-subtitle,.sari-category-subtitle){margin:5px 0 0!important;font-size:11.5px!important;line-height:1.6!important;color:#788598!important}
-.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-health-action,.sari-ops-action,.sari-monitor-action,.sari-category-action){display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-height:32px!important;padding:6px 10px!important;border:1px solid #E5E7EB!important;border-radius:9px!important;background:#FFF!important;color:#526173!important;box-shadow:none!important;font-size:10.5px!important;font-weight:600!important;line-height:1.4!important;text-decoration:none!important;transform:none!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-ops-head,.sari-monitor-head,.sari-category-head){display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:12px!important;flex-wrap:wrap!important;margin:0!important;padding:20px 20px 16px!important;border:0!important;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;background:var(--sari-dark-950baec030, #FFF)!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-health-title,.sari-ops-title,.sari-monitor-title,.sari-category-title){margin:0!important;color:var(--sari-dark-e23e64dd1e, #293440)!important;font-size:16px!important;font-weight:650!important;line-height:1.4!important;letter-spacing:-.02em!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-health-subtitle,.sari-ops-subtitle,.sari-monitor-subtitle,.sari-category-subtitle){margin:5px 0 0!important;font-size:11.5px!important;line-height:1.6!important;color:var(--sari-dark-a63aa16d7c, #788598)!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-health-action,.sari-ops-action,.sari-monitor-action,.sari-category-action){display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-height:32px!important;padding:6px 10px!important;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;border-radius:9px!important;background:var(--sari-dark-950baec030, #FFF)!important;color:var(--sari-dark-a63aa16d7c, #526173)!important;box-shadow:none!important;font-size:10.5px!important;font-weight:600!important;line-height:1.4!important;text-decoration:none!important;transform:none!important}
 .sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(button,a):hover{transform:none!important}
-.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(button,a):focus-visible{outline:2px solid #64748B!important;outline-offset:3px!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(button,a):focus-visible{outline:2px solid var(--sari-dark-d8c2716225, #64748B)!important;outline-offset:3px!important}
 /* Icons remain, their old circles/tiles do not. */
-.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-focus-icon-v2,.sari-journey-icon,.sari-journey-status-icon,.sari-risk-state-icon,.sari-risk-empty-icon,.sari-category-icon,.sari-category-head-icon,.sari-monitor-head-icon,.sari-ops-head-icon){display:inline-flex!important;align-items:center!important;justify-content:center!important;width:26px!important;height:26px!important;min-width:26px!important;min-height:26px!important;flex:0 0 26px!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;background-image:none!important;box-shadow:none!important;color:#64748B!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-focus-icon-v2,.sari-journey-icon,.sari-journey-status-icon,.sari-risk-state-icon,.sari-risk-empty-icon,.sari-category-icon,.sari-category-head-icon,.sari-monitor-head-icon,.sari-ops-head-icon){display:inline-flex!important;align-items:center!important;justify-content:center!important;width:26px!important;height:26px!important;min-width:26px!important;min-height:26px!important;flex:0 0 26px!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;background-image:none!important;box-shadow:none!important;color:var(--sari-dark-a63aa16d7c, #64748B)!important}
 .sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-focus-icon-v2,.sari-journey-icon,.sari-journey-status-icon,.sari-risk-state-icon,.sari-risk-empty-icon,.sari-category-icon,.sari-category-head-icon) svg{width:23px!important;height:23px!important;stroke-width:1.7!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-health-header{padding:0 0 16px!important;border-bottom:1px solid #EDF0F3!important;gap:12px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-health-header{padding:0 0 16px!important;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;gap:12px!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-list-v2{margin:0!important;padding:0!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-row-v2{display:grid!important;grid-template-columns:26px minmax(0,1fr) 34px 62px 14px!important;align-items:center!important;gap:12px!important;min-height:78px!important;padding:16px 0!important;border:0!important;border-bottom:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important;text-align:left!important;transform:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-row-v2{display:grid!important;grid-template-columns:26px minmax(0,1fr) 34px 62px 14px!important;align-items:center!important;gap:12px!important;min-height:78px!important;padding:16px 0!important;border:0!important;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;border-radius:0!important;background:var(--sari-dark-950baec030, #FFF)!important;box-shadow:none!important;text-align:left!important;transform:none!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-row-v2:last-child{border-bottom:0!important;padding-bottom:0!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-title-v2{font-size:12px!important;font-weight:600!important;line-height:1.5!important;color:#344254!important;white-space:normal!important;overflow:visible!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-copy-v2{margin-top:4px!important;font-size:10.5px!important;line-height:1.65!important;color:#788598!important;white-space:normal!important;overflow:visible!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-count-v2{font-size:20px!important;line-height:1.2!important;font-weight:600!important;color:#293440!important;font-variant-numeric:tabular-nums}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-badge-v2,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:25px!important;padding:4px 8px!important;border:1px solid #E2E8F0!important;border-radius:7px!important;background:#F1F5F9!important;color:#475569!important;font-size:10px!important;font-weight:600!important;line-height:1.3!important;white-space:nowrap!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="High"] .sari-focus-badge-v2,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.high{background:#FEF2F2!important;border-color:#FECACA!important;color:#B91C1C!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Low"] .sari-focus-badge-v2,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.low{background:#F0FDF4!important;border-color:#DCFCE7!important;color:#166534!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-chevron-v2{color:#94A3B8!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-empty-v2{margin-top:16px!important;padding:18px 0!important;border:0!important;background:transparent!important;color:#526173!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-empty-v2 span:first-child{width:26px!important;height:26px!important;border:0!important;border-radius:0!important;background:transparent!important;color:#64748B!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-title-v2{font-size:12px!important;font-weight:600!important;line-height:1.5!important;color:var(--sari-dark-e23e64dd1e, #344254)!important;white-space:normal!important;overflow:visible!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-copy-v2{margin-top:4px!important;font-size:10.5px!important;line-height:1.65!important;color:var(--sari-dark-a63aa16d7c, #788598)!important;white-space:normal!important;overflow:visible!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-count-v2{font-size:20px!important;line-height:1.2!important;font-weight:600!important;color:var(--sari-dark-e23e64dd1e, #293440)!important;font-variant-numeric:tabular-nums}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-badge-v2,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:25px!important;padding:4px 8px!important;border:1px solid var(--sari-dark-d8c2716225, #E2E8F0)!important;border-radius:7px!important;background:var(--sari-dark-4d21eb669b, #F1F5F9)!important;color:var(--sari-dark-e23e64dd1e, #475569)!important;font-size:10px!important;font-weight:600!important;line-height:1.3!important;white-space:nowrap!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="High"] .sari-focus-badge-v2,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.high{background:var(--sari-dark-950baec030, #FEF2F2)!important;border-color:var(--sari-dark-d8c2716225, #FECACA)!important;color:var(--sari-dark-5300031fd1, #B91C1C)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Low"] .sari-focus-badge-v2,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.low{background:var(--sari-dark-950baec030, #F0FDF4)!important;border-color:var(--sari-dark-d8c2716225, #DCFCE7)!important;color:var(--sari-dark-e23e64dd1e, #166534)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-chevron-v2{color:var(--sari-dark-a63aa16d7c, #94A3B8)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-empty-v2{margin-top:16px!important;padding:18px 0!important;border:0!important;background:transparent!important;color:var(--sari-dark-a63aa16d7c, #526173)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-empty-v2 span:first-child{width:26px!important;height:26px!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--sari-dark-a63aa16d7c, #64748B)!important;box-shadow:none!important}
 /* Six recorded stages, plain icons and fine connectors. */
 .sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-body{padding:20px!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-scroll{overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:thin!important;padding:0 0 4px!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-track{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:0!important;min-width:480px!important;width:100%!important;margin:0!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step{padding:4px 3px!important;text-align:center!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-icon{margin:0 auto!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:not(:last-child)::after{top:17px!important;left:calc(50% + 20px)!important;width:calc(100% - 40px)!important;height:1px!important;background:#E2E8F0!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-name{margin-top:10px!important;color:#788598!important;font-size:10.5px!important;line-height:1.5!important;white-space:nowrap!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-count{margin-top:5px!important;color:#293440!important;font-size:23px!important;font-weight:600!important;line-height:1.25!important;font-variant-numeric:tabular-nums}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state{display:flex!important;align-items:flex-start!important;gap:12px!important;margin:18px 0 0!important;padding:14px!important;border:1px solid #E5E7EB!important;border-radius:12px!important;background:#F8FAFC!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status-title,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-title{font-size:11.5px!important;font-weight:600!important;line-height:1.5!important;color:#475569!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status-copy,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-copy{margin-top:4px!important;font-size:10.5px!important;line-height:1.65!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:not(:last-child)::after{top:17px!important;left:calc(50% + 20px)!important;width:calc(100% - 40px)!important;height:1px!important;background:var(--sari-dark-4d21eb669b, #E2E8F0)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-name{margin-top:10px!important;color:var(--sari-dark-a63aa16d7c, #788598)!important;font-size:10.5px!important;line-height:1.5!important;white-space:nowrap!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-count{margin-top:5px!important;color:var(--sari-dark-e23e64dd1e, #293440)!important;font-size:23px!important;font-weight:600!important;line-height:1.25!important;font-variant-numeric:tabular-nums}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state{display:flex!important;align-items:flex-start!important;gap:12px!important;margin:18px 0 0!important;padding:14px!important;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;border-radius:12px!important;background:var(--sari-dark-950baec030, #F8FAFC)!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status-title,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-title{font-size:11.5px!important;font-weight:600!important;line-height:1.5!important;color:var(--sari-dark-e23e64dd1e, #475569)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status-copy,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-copy{margin-top:4px!important;font-size:10.5px!important;line-height:1.65!important;color:var(--sari-dark-a63aa16d7c, #788598)!important}
 /* Risk rows: compact, unclipped and readable. */
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-body{padding:4px 20px 20px!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-list{gap:0!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{display:grid!important;grid-template-columns:64px minmax(0,1fr) 42px!important;gap:12px!important;align-items:center!important;min-height:64px!important;padding:14px 0!important;border:0!important;border-bottom:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important;text-decoration:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-name{font-size:11.5px!important;font-weight:500!important;line-height:1.65!important;color:#475569!important;white-space:normal!important;overflow:visible!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{font-size:9px!important;color:#788598!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{display:grid!important;grid-template-columns:64px minmax(0,1fr) 42px!important;gap:12px!important;align-items:center!important;min-height:64px!important;padding:14px 0!important;border:0!important;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;border-radius:0!important;background:var(--sari-dark-950baec030, #FFF)!important;box-shadow:none!important;text-decoration:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-name{font-size:11.5px!important;font-weight:500!important;line-height:1.65!important;color:var(--sari-dark-e23e64dd1e, #475569)!important;white-space:normal!important;overflow:visible!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{font-size:9px!important;color:var(--sari-dark-a63aa16d7c, #788598)!important;background:transparent!important;border:0!important;box-shadow:none!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live-dot{background:#3F9275!important;width:5px!important;height:5px!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-empty{background:transparent!important;border:0!important;padding:20px 0!important}
 /* Rider capacity remains a real chart, with a neutral supporting surface. */
 .sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-body{padding:20px!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-main{display:grid!important;grid-template-columns:150px minmax(0,1fr)!important;align-items:center!important;gap:24px!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-v2{width:144px!important;height:144px!important;border:0!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-center{background:#FFF!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-total{color:#293440!important;font-size:29px!important;line-height:1.2!important;font-weight:600!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-total-label{font-size:10.5px!important;color:#788598!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-stat{padding:9px 0!important;border-bottom:1px solid #EDF0F3!important;background:transparent!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-stat-name{font-size:11.5px!important;color:#64748B!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-stat-value{font-size:13px!important;font-weight:600!important;color:#344254!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:0!important;margin-top:20px!important;padding:16px 0 0!important;border:0!important;border-top:1px solid #EDF0F3!important;background:transparent!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item{padding:0 12px!important;border:0!important;border-right:1px solid #EDF0F3!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-center{background:var(--sari-dark-950baec030, #FFF)!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-total{color:var(--sari-dark-e23e64dd1e, #293440)!important;font-size:29px!important;line-height:1.2!important;font-weight:600!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-total-label{font-size:10.5px!important;color:var(--sari-dark-a63aa16d7c, #788598)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-stat{padding:9px 0!important;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;background:transparent!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-stat-name{font-size:11.5px!important;color:var(--sari-dark-a63aa16d7c, #64748B)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-stat-value{font-size:13px!important;font-weight:600!important;color:var(--sari-dark-e23e64dd1e, #344254)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:0!important;margin-top:20px!important;padding:16px 0 0!important;border:0!important;border-top:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;background:transparent!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item{padding:0 12px!important;border:0!important;border-right:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:first-child{padding-left:0!important}.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:last-child{border-right:0!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-label{font-size:10.5px!important;line-height:1.5!important;color:#788598!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-value{font-size:22px!important;font-weight:600!important;line-height:1.3!important;color:#344254!important;margin-top:5px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-label{font-size:10.5px!important;line-height:1.5!important;color:var(--sari-dark-a63aa16d7c, #788598)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-value{font-size:22px!important;font-weight:600!important;line-height:1.3!important;color:var(--sari-dark-e23e64dd1e, #344254)!important;margin-top:5px!important}
 /* Category chart colors are functional; icon backgrounds are removed. */
 .sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-layout{display:grid!important;grid-template-columns:180px minmax(0,1fr)!important;gap:24px!important;padding:22px 20px!important;align-items:center!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut{width:160px!important;height:160px!important;box-shadow:none!important;border:0!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut::before{inset:13px!important;background:#FFF!important;box-shadow:none!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut::after{display:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut-value{font-size:30px!important;font-weight:600!important;color:#293440!important;line-height:1.2!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown :is(.sari-category-donut-label,.sari-category-donut-meta){font-size:10.5px!important;line-height:1.5!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut::before{inset:13px!important;background:var(--sari-dark-950baec030, #FFF)!important;box-shadow:none!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut::after{display:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut-value{font-size:30px!important;font-weight:600!important;color:var(--sari-dark-e23e64dd1e, #293440)!important;line-height:1.2!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown :is(.sari-category-donut-label,.sari-category-donut-meta){font-size:10.5px!important;line-height:1.5!important;color:var(--sari-dark-a63aa16d7c, #788598)!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut-accent{display:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-row{display:flex!important;align-items:center!important;gap:14px!important;min-height:65px!important;padding:12px 0!important;border-bottom:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-row{display:flex!important;align-items:center!important;gap:14px!important;min-height:65px!important;padding:12px 0!important;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;border-radius:0!important;background:var(--sari-dark-950baec030, #FFF)!important;box-shadow:none!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-row:last-child{border-bottom:0!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-name{font-size:12px!important;font-weight:500!important;color:#475569!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-percent{font-size:11.5px!important;font-weight:600!important;color:#64748B!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-progress{height:4px!important;margin-top:9px!important;border-radius:99px!important;background:#EEF2F6!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-name{font-size:12px!important;font-weight:500!important;color:var(--sari-dark-e23e64dd1e, #475569)!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-percent{font-size:11.5px!important;font-weight:600!important;color:var(--sari-dark-a63aa16d7c, #64748B)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-progress{height:4px!important;margin-top:9px!important;border-radius:99px!important;background:var(--sari-dark-4d21eb669b, #EEF2F6)!important;box-shadow:none!important}
 @media(max-width:640px){.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown){border-radius:14px!important}.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus{padding:16px!important}.sari-admin-dashboard.dashboard-clean-ops :is(#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-ops-head,.sari-monitor-head,.sari-category-head){padding:16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-row-v2{grid-template-columns:24px minmax(0,1fr) 30px!important;gap:10px!important}.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-badge-v2{grid-column:2!important;justify-self:start!important}.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-chevron-v2{display:none!important}.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-body,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-body{padding:16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-body{padding:0 16px 16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{grid-template-columns:60px minmax(0,1fr)!important;gap:10px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{display:none!important}.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-main{grid-template-columns:120px minmax(0,1fr)!important;gap:16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-v2{width:116px!important;height:116px!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-layout{grid-template-columns:minmax(0,1fr)!important;gap:18px!important;padding:18px 16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut-wrap{justify-self:center!important}}
 @media(max-width:380px){.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-main{grid-template-columns:minmax(0,1fr)!important}.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-wrap{justify-self:center!important}}
 
 
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-v2::after{inset:17px!important;background:#FFF!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-v2::after{inset:17px!important;background:var(--sari-dark-950baec030, #FFF)!important;box-shadow:none!important}
 
 /* Compact Role Control Center: one strip instead of a tall four-row table. */
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl{padding:0!important;height:auto!important;min-height:0!important;align-self:start!important;border-radius:16px!important;background:#FFF!important;border:1px solid #E5E7EB!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;padding:13px 16px!important;margin:0!important;border:0!important;border-bottom:1px solid #EDF0F3!important;background:#FFF!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-title{font-size:15px!important;line-height:1.35!important;font-weight:650!important;margin:0!important;color:#293440!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-subtitle{font-size:10.5px!important;line-height:1.45!important;margin-top:3px!important;color:#788598!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-action{display:inline-flex!important;align-items:center!important;gap:5px!important;min-height:30px!important;padding:5px 9px!important;border:1px solid #E5E7EB!important;border-radius:8px!important;background:#FFF!important;color:#526173!important;font-size:10px!important;font-weight:600!important;box-shadow:none!important;white-space:nowrap!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl{padding:0!important;height:auto!important;min-height:0!important;align-self:start!important;border-radius:16px!important;background:var(--sari-dark-950baec030, #FFF)!important;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;box-shadow:0 3px 10px var(--sari-dark-7593018246, rgba(15,23,42,.035)),0 12px 30px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055))!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;padding:13px 16px!important;margin:0!important;border:0!important;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;background:var(--sari-dark-950baec030, #FFF)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-title{font-size:15px!important;line-height:1.35!important;font-weight:650!important;margin:0!important;color:var(--sari-dark-e23e64dd1e, #293440)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-subtitle{font-size:10.5px!important;line-height:1.45!important;margin-top:3px!important;color:var(--sari-dark-a63aa16d7c, #788598)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-action{display:inline-flex!important;align-items:center!important;gap:5px!important;min-height:30px!important;padding:5px 9px!important;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;border-radius:8px!important;background:var(--sari-dark-950baec030, #FFF)!important;color:var(--sari-dark-a63aa16d7c, #526173)!important;font-size:10px!important;font-weight:600!important;box-shadow:none!important;white-space:nowrap!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-action svg{width:12px!important;height:12px!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-table{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important;padding:0!important;margin:0!important;background:#FFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-table{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important;padding:0!important;margin:0!important;background:var(--sari-dark-950baec030, #FFF)!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-table-head{display:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-content:start!important;align-items:center!important;gap:6px 12px!important;min-width:0!important;min-height:86px!important;height:auto!important;padding:15px 16px!important;border:0!important;border-right:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important;transform:none!important;text-decoration:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-content:start!important;align-items:center!important;gap:6px 12px!important;min-width:0!important;min-height:86px!important;height:auto!important;padding:15px 16px!important;border:0!important;border-right:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;border-radius:0!important;background:var(--sari-dark-950baec030, #FFF)!important;box-shadow:none!important;transform:none!important;text-decoration:none!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:last-child{border-right:0!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:hover{background:#F8FAFC!important;transform:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:focus-visible{outline:2px solid #64748B!important;outline-offset:-3px!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-name{display:flex!important;align-items:center!important;gap:8px!important;min-width:0!important;color:#526173!important;font-size:11.5px!important;line-height:1.5!important;font-weight:600!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-icon{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:20px!important;height:20px!important;min-width:20px!important;flex:0 0 20px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:hover{background:var(--sari-dark-950baec030, #F8FAFC)!important;transform:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:focus-visible{outline:2px solid var(--sari-dark-d8c2716225, #64748B)!important;outline-offset:-3px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-name{display:flex!important;align-items:center!important;gap:8px!important;min-width:0!important;color:var(--sari-dark-a63aa16d7c, #526173)!important;font-size:11.5px!important;line-height:1.5!important;font-weight:600!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-icon{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:20px!important;height:20px!important;min-width:20px!important;flex:0 0 20px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--sari-dark-a63aa16d7c, #788598)!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-icon svg{width:18px!important;height:18px!important;stroke-width:1.7!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-value{font-size:22px!important;line-height:1.2!important;font-weight:600!important;color:#293440!important;font-variant-numeric:tabular-nums}
-.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-pending{grid-column:1/-1!important;display:block!important;width:auto!important;min-width:0!important;min-height:0!important;height:auto!important;margin:0!important;padding:0 0 0 28px!important;border:0!important;border-radius:0!important;background:transparent!important;color:#788598!important;box-shadow:none!important;font-size:10px!important;line-height:1.5!important;font-weight:400!important;white-space:normal!important;text-align:left!important;overflow:visible!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-value{font-size:22px!important;line-height:1.2!important;font-weight:600!important;color:var(--sari-dark-e23e64dd1e, #293440)!important;font-variant-numeric:tabular-nums}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-pending{grid-column:1/-1!important;display:block!important;width:auto!important;min-width:0!important;min-height:0!important;height:auto!important;margin:0!important;padding:0 0 0 28px!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--sari-dark-a63aa16d7c, #788598)!important;box-shadow:none!important;font-size:10px!important;line-height:1.5!important;font-weight:400!important;white-space:normal!important;text-align:left!important;overflow:visible!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-chevron{display:none!important}
-@media(max-width:1000px){.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-table{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:nth-of-type(2){border-right:0!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:nth-of-type(-n+2){border-bottom:1px solid #EDF0F3!important}}
+@media(max-width:1000px){.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-table{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:nth-of-type(2){border-right:0!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:nth-of-type(-n+2){border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important}}
 @media(max-width:480px){.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-head{align-items:flex-start!important;padding:12px!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-subtitle{max-width:210px!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row{padding:12px!important;gap:6px 8px!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-value{font-size:20px!important}}
 
 
 /* Semantic red/blue/gold accents — Radar and Rider Overview only. */
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-action{border-color:#E8D7B2!important;color:#92600B!important;background:#FFF!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.high{background:#FEF2F2!important;border-color:#FECACA!important;color:#B91C1C!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.medium{background:#FFF!important;border-color:#E8D7B2!important;color:#92600B!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.low{background:#EFF6FF!important;border-color:#BFDBFE!important;color:#1D4ED8!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-action{border-color:var(--sari-dark-d8c2716225, #E8D7B2)!important;color:var(--sari-dark-6e784b4931, #92600B)!important;background:var(--sari-dark-950baec030, #FFF)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.high{background:var(--sari-dark-950baec030, #FEF2F2)!important;border-color:var(--sari-dark-d8c2716225, #FECACA)!important;color:var(--sari-dark-5300031fd1, #B91C1C)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.medium{background:var(--sari-dark-950baec030, #FFF)!important;border-color:var(--sari-dark-d8c2716225, #E8D7B2)!important;color:var(--sari-dark-6e784b4931, #92600B)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.low{background:var(--sari-dark-950baec030, #EFF6FF)!important;border-color:var(--sari-dark-d8c2716225, #BFDBFE)!important;color:var(--sari-dark-7a41191112, #1D4ED8)!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live-dot{background:#2563EB!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert{background:#FFF!important;border-color:#E8D7B2!important;border-left:3px solid #C88912!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-icon,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-title{color:#92600B!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-monitor-action{border-color:#BFDBFE!important;color:#1D4ED8!important;background:#FFF!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-total{color:#1D4ED8!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-value,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="On Delivery"] .sari-rider-stat-value,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Logistics"] .sari-rider-stat-value{color:#1D4ED8!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Idle"] .sari-rider-stat-value{color:#92600B!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Offline"] .sari-rider-stat-value{color:#788598!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Open Issues"] .sari-rider-stat-value{color:#B91C1C!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:first-child .sari-rider-summary-value{color:#92600B!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:nth-child(2) .sari-rider-summary-value,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:nth-child(3) .sari-rider-summary-value{color:#1D4ED8!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert{background:var(--sari-dark-950baec030, #FFF)!important;border-color:var(--sari-dark-d8c2716225, #E8D7B2)!important;border-left:3px solid #C88912!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-icon,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-title{color:var(--sari-dark-6e784b4931, #92600B)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-monitor-action{border-color:var(--sari-dark-d8c2716225, #BFDBFE)!important;color:var(--sari-dark-7a41191112, #1D4ED8)!important;background:var(--sari-dark-950baec030, #FFF)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-total{color:var(--sari-dark-7a41191112, #1D4ED8)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-value,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="On Delivery"] .sari-rider-stat-value,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Logistics"] .sari-rider-stat-value{color:var(--sari-dark-7a41191112, #1D4ED8)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Idle"] .sari-rider-stat-value{color:var(--sari-dark-6e784b4931, #92600B)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Offline"] .sari-rider-stat-value{color:var(--sari-dark-a63aa16d7c, #788598)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Open Issues"] .sari-rider-stat-value{color:var(--sari-dark-5300031fd1, #B91C1C)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:first-child .sari-rider-summary-value{color:var(--sari-dark-6e784b4931, #92600B)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:nth-child(2) .sari-rider-summary-value,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:nth-child(3) .sari-rider-summary-value{color:var(--sari-dark-7a41191112, #1D4ED8)!important}
 
 
 /* Intervention Radar — larger readable rows, requested badge colors, neutral callout edges. */
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-head{align-items:center!important;gap:14px!important;padding:20px!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-title{font-size:19px!important;font-weight:650!important;line-height:1.35!important;color:#293440!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-subtitle{font-size:12px!important;line-height:1.6!important;margin-top:5px!important;color:#727D8C!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-action{min-height:36px!important;padding:7px 12px!important;font-size:11.5px!important;line-height:1.4!important;color:#92600B!important;border:1px solid #E2D2AE!important;background:#FFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-title{font-size:19px!important;font-weight:650!important;line-height:1.35!important;color:var(--sari-dark-e23e64dd1e, #293440)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-subtitle{font-size:12px!important;line-height:1.6!important;margin-top:5px!important;color:var(--sari-dark-a63aa16d7c, #727D8C)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-action{min-height:36px!important;padding:7px 12px!important;font-size:11.5px!important;line-height:1.4!important;color:var(--sari-dark-6e784b4931, #92600B)!important;border:1px solid #E2D2AE!important;background:var(--sari-dark-950baec030, #FFF)!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-body{padding:0 20px 20px!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-list{display:grid!important;gap:0!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{display:grid!important;grid-template-columns:76px minmax(0,1fr) 44px!important;align-items:center!important;gap:14px!important;min-height:76px!important;margin:0!important;padding:18px 0!important;border:0!important;border-bottom:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important;text-decoration:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item:hover{background:#F8FAFC!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-list{display:grid!important;gap:0!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:var(--sari-dark-950baec030, #FFF)!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{display:grid!important;grid-template-columns:76px minmax(0,1fr) 44px!important;align-items:center!important;gap:14px!important;min-height:76px!important;margin:0!important;padding:18px 0!important;border:0!important;border-bottom:1px solid var(--sari-dark-d8c2716225, #EDF0F3)!important;border-radius:0!important;background:var(--sari-dark-950baec030, #FFF)!important;box-shadow:none!important;text-decoration:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item:hover{background:var(--sari-dark-950baec030, #F8FAFC)!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item:last-child{border-bottom:0!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill{min-height:29px!important;padding:5px 10px!important;font-size:11.5px!important;line-height:1.4!important;font-weight:600!important;border-radius:8px!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.low{color:#B91C1C!important;border:1px solid #FECACA!important;background:#FEF2F2!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.medium{color:#92600B!important;border:1px solid #E2D2AE!important;background:#FFF!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-name{font-size:13px!important;line-height:1.65!important;font-weight:500!important;letter-spacing:0!important;color:#3F4B5A!important;white-space:normal!important;overflow:visible!important;overflow-wrap:anywhere!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{display:inline-flex!important;align-items:center!important;justify-content:flex-end!important;gap:5px!important;font-size:10.5px!important;line-height:1.4!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.low{color:var(--sari-dark-5300031fd1, #B91C1C)!important;border:1px solid var(--sari-dark-d8c2716225, #FECACA)!important;background:var(--sari-dark-950baec030, #FEF2F2)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.medium{color:var(--sari-dark-6e784b4931, #92600B)!important;border:1px solid #E2D2AE!important;background:var(--sari-dark-950baec030, #FFF)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-name{font-size:13px!important;line-height:1.65!important;font-weight:500!important;letter-spacing:0!important;color:var(--sari-dark-e23e64dd1e, #3F4B5A)!important;white-space:normal!important;overflow:visible!important;overflow-wrap:anywhere!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{display:inline-flex!important;align-items:center!important;justify-content:flex-end!important;gap:5px!important;font-size:10.5px!important;line-height:1.4!important;color:var(--sari-dark-a63aa16d7c, #788598)!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live-dot{width:5px!important;height:5px!important;background:#94A3B8!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert{display:flex!important;align-items:flex-start!important;gap:12px!important;margin:10px 0 0!important;padding:16px!important;border:1px solid #E5E7EB!important;border-left:1px solid #E5E7EB!important;border-radius:12px!important;background:#F8FAFC!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert{display:flex!important;align-items:flex-start!important;gap:12px!important;margin:10px 0 0!important;padding:16px!important;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;border-left:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;border-radius:12px!important;background:var(--sari-dark-950baec030, #F8FAFC)!important;box-shadow:none!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state::before,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state::after{display:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state .sari-risk-state-icon,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-icon{width:24px!important;height:24px!important;min-width:24px!important;flex-basis:24px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#64748B!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-title,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-title{font-size:14px!important;font-weight:600!important;line-height:1.5!important;color:#344254!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-copy{margin-top:5px!important;font-size:12px!important;line-height:1.7!important;color:#727D8C!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state .sari-risk-state-icon,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-icon{width:24px!important;height:24px!important;min-width:24px!important;flex-basis:24px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:var(--sari-dark-a63aa16d7c, #64748B)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-title,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-title{font-size:14px!important;font-weight:600!important;line-height:1.5!important;color:var(--sari-dark-e23e64dd1e, #344254)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-copy{margin-top:5px!important;font-size:12px!important;line-height:1.7!important;color:var(--sari-dark-a63aa16d7c, #727D8C)!important}
 @media(max-width:640px){.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-head{padding:16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-title{font-size:18px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-body{padding:0 16px 16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{grid-template-columns:72px minmax(0,1fr)!important;gap:12px!important;min-height:72px!important;padding:16px 0!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{display:none!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state{padding:14px!important}}
 
 
 /* Focus and journey — requested status colors, plain icons and neutral borders. */
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Low"] .sari-focus-badge-v2{background:#FEF2F2!important;border-color:#FECACA!important;color:#B91C1C!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Medium"] .sari-focus-badge-v2{background:#FEF9C3!important;border-color:#FDE68A!important;color:#854D0E!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="High"] .sari-focus-icon-v2{color:#B91C1C!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Medium"] .sari-focus-icon-v2{color:#B58118!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Low"] .sari-focus-icon-v2{color:#B35C57!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(1) .sari-journey-icon{color:#64748B!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(2) .sari-journey-icon{color:#A97920!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(3) .sari-journey-icon{color:#B18A42!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(4) .sari-journey-icon{color:#B35C57!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(5) .sari-journey-icon{color:#4F6F95!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(6) .sari-journey-icon{color:#50806A!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert{background:#FFF!important;border:1px solid #E5E7EB!important;border-left:1px solid #E5E7EB!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-title{color:#B91C1C!important;font-size:13px!important;font-weight:600!important;line-height:1.5!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-copy{color:#A64B46!important;font-size:11.5px!important;line-height:1.65!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-icon{color:#B91C1C!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Low"] .sari-focus-badge-v2{background:var(--sari-dark-950baec030, #FEF2F2)!important;border-color:var(--sari-dark-d8c2716225, #FECACA)!important;color:var(--sari-dark-5300031fd1, #B91C1C)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Medium"] .sari-focus-badge-v2{background:var(--sari-dark-4d21eb669b, #FEF9C3)!important;border-color:#FDE68A!important;color:var(--sari-dark-77f8658434, #854D0E)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="High"] .sari-focus-icon-v2{color:var(--sari-dark-5300031fd1, #B91C1C)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Medium"] .sari-focus-icon-v2{color:var(--sari-dark-96bc1e89ae, #B58118)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Low"] .sari-focus-icon-v2{color:var(--sari-dark-02bfc3039c, #B35C57)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(1) .sari-journey-icon{color:var(--sari-dark-a63aa16d7c, #64748B)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(2) .sari-journey-icon{color:var(--sari-dark-8d64d3d835, #A97920)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(3) .sari-journey-icon{color:var(--sari-dark-95d9cc7572, #B18A42)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(4) .sari-journey-icon{color:var(--sari-dark-02bfc3039c, #B35C57)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(5) .sari-journey-icon{color:var(--sari-dark-a63aa16d7c, #4F6F95)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(6) .sari-journey-icon{color:var(--sari-dark-a63aa16d7c, #50806A)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert{background:var(--sari-dark-950baec030, #FFF)!important;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;border-left:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-title{color:var(--sari-dark-5300031fd1, #B91C1C)!important;font-size:13px!important;font-weight:600!important;line-height:1.5!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-copy{color:var(--sari-dark-a63aa16d7c, #A64B46)!important;font-size:11.5px!important;line-height:1.65!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-icon{color:var(--sari-dark-5300031fd1, #B91C1C)!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
 
 
 /* Match the Focus Medium badge exactly; online/live indicators use green. */
-.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.medium{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:25px!important;padding:4px 8px!important;border:1px solid #FDE68A!important;border-radius:7px!important;background:#FEF9C3!important;color:#854D0E!important;font-size:10px!important;font-weight:600!important;line-height:1.3!important;white-space:nowrap!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.medium{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:25px!important;padding:4px 8px!important;border:1px solid #FDE68A!important;border-radius:7px!important;background:var(--sari-dark-4d21eb669b, #FEF9C3)!important;color:var(--sari-dark-77f8658434, #854D0E)!important;font-size:10px!important;font-weight:600!important;line-height:1.3!important;white-space:nowrap!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live-dot{background:#16A34A!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-dot{background:#16A34A!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-value{color:#15803D!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-name{color:#15803D!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-value{color:var(--sari-dark-9409b20329, #15803D)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-name{color:var(--sari-dark-9409b20329, #15803D)!important}
 
 
 /* Unfilled header actions, raised registration link, black focus buttons. */
-.sari-admin-dashboard.dashboard-clean-ops :is(#adminInterventionRadar,#adminRiderOverview) .sari-monitor-head > .sari-monitor-action{background:transparent!important;background-image:none!important;border:1px solid #E5E7EB!important;color:#4B5563!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops :is(#adminInterventionRadar,#adminRiderOverview) .sari-monitor-head > .sari-monitor-action:hover{background:transparent!important;border-color:#9CA3AF!important;color:#111827!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminInterventionRadar,#adminRiderOverview) .sari-monitor-head > .sari-monitor-action{background:transparent!important;background-image:none!important;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;color:var(--sari-dark-e23e64dd1e, #4B5563)!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminInterventionRadar,#adminRiderOverview) .sari-monitor-head > .sari-monitor-action:hover{background:transparent!important;border-color:var(--sari-dark-d8c2716225, #9CA3AF)!important;color:var(--sari-dark-e23e64dd1e, #111827)!important}
 .sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head{display:flex!important;flex-direction:row!important;align-items:flex-start!important;justify-content:space-between!important;flex-wrap:nowrap!important;gap:12px!important}
 .sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head > div{flex:1 1 auto!important;min-width:0!important}
-.sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head > .sari-reg-clean-view-all{display:inline-flex!important;align-items:center!important;justify-content:center!important;align-self:flex-start!important;flex:0 0 auto!important;margin:-8px 0 0 auto!important;position:static!important;float:none!important;white-space:nowrap!important;font-size:12px!important;font-weight:600!important;line-height:1.4!important;min-height:34px!important;padding:8px 12px!important;border:1px solid #E5E7EB!important;border-radius:8px!important;background:transparent!important;background-image:none!important;color:#374151!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head > .sari-reg-clean-view-all:hover{background:transparent!important;border-color:#9CA3AF!important;color:#111827!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip,.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip.is-active{background:#111111!important;background-image:none!important;border:1px solid #111111!important;color:#FFFFFF!important;box-shadow:none!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip:hover{background:#292929!important;border-color:#292929!important;color:#FFFFFF!important}
-.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip.is-active{outline:2px solid #9CA3AF!important;outline-offset:2px!important}
+.sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head > .sari-reg-clean-view-all{display:inline-flex!important;align-items:center!important;justify-content:center!important;align-self:flex-start!important;flex:0 0 auto!important;margin:-8px 0 0 auto!important;position:static!important;float:none!important;white-space:nowrap!important;font-size:12px!important;font-weight:600!important;line-height:1.4!important;min-height:34px!important;padding:8px 12px!important;border:1px solid var(--sari-dark-d8c2716225, #E5E7EB)!important;border-radius:8px!important;background:transparent!important;background-image:none!important;color:var(--sari-dark-e23e64dd1e, #374151)!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head > .sari-reg-clean-view-all:hover{background:transparent!important;border-color:var(--sari-dark-d8c2716225, #9CA3AF)!important;color:var(--sari-dark-e23e64dd1e, #111827)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip,.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip.is-active{background:var(--sari-dark-f3318ab620, #111111)!important;background-image:none!important;border:1px solid var(--sari-dark-d8c2716225, #111111)!important;color:#FFFFFF!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip:hover{background:var(--sari-dark-fbb35de0d1, #292929)!important;border-color:var(--sari-dark-d8c2716225, #292929)!important;color:#FFFFFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip.is-active{outline:2px solid var(--sari-dark-d8c2716225, #9CA3AF)!important;outline-offset:2px!important}
 .sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip:focus-visible{outline:2px solid #B18A42!important;outline-offset:3px!important}
 
 </style>

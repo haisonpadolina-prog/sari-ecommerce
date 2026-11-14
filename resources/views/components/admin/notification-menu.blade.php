@@ -27,7 +27,7 @@
     width:34px!important; min-width:34px!important; height:34px!important;
     padding:0!important; overflow:hidden!important;
     font-size:0!important; line-height:0!important; color:transparent!important;
-    border:1px solid #E4E7EC!important; border-radius:9px!important; background:#fff!important;
+    border:1px solid var(--sari-dark-d8c2716225, #E4E7EC)!important; border-radius:9px!important; background:var(--sari-dark-950baec030, #fff)!important;
 }
 #adminHeader #adminNotificationSound > * { display:none!important; }
 #adminHeader #adminNotificationSound::before {
@@ -38,6 +38,6 @@
 #adminHeader #adminNotificationSound[aria-pressed="false"]::before {
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23475467%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m11%205-6%204H2v6h3l6%204V5Z%22%2F%3E%3Cpath%20d%3D%22m16%209%205%206m0-6-5%206%22%2F%3E%3C%2Fsvg%3E");
 }
-#adminHeader #adminNotificationSound:hover { background-color:#F2F4F7!important; }
-#adminHeader #adminNotificationSound:focus-visible { outline:2px solid #64748B; outline-offset:3px; }
+#adminHeader #adminNotificationSound:hover { background-color:var(--sari-dark-4d21eb669b, #F2F4F7)!important; }
+#adminHeader #adminNotificationSound:focus-visible { outline:2px solid var(--sari-dark-d8c2716225, #64748B); outline-offset:3px; }
 </style>

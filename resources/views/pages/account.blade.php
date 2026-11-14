@@ -7,21 +7,21 @@
 
 <style>
     .seller-account-control {
-        color: #302a24 !important;
+        color: var(--sari-dark-e23e64dd1e, #302a24) !important;
         -webkit-text-fill-color: #302a24 !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
     }
 
     .seller-account-control::placeholder {
-        color: #aaa196 !important;
+        color: var(--sari-dark-a63aa16d7c, #aaa196) !important;
         -webkit-text-fill-color: #aaa196 !important;
     }
 
     .seller-account-control:focus {
         outline: none;
         border-color: #d49a2d !important;
-        box-shadow: 0 0 0 4px rgba(212, 154, 45, .08);
+        box-shadow: 0 0 0 4px var(--sari-dark-c33e3d1bb4, rgba(212, 154, 45, .08));
     }
 
     .seller-account-section {
@@ -29,9 +29,9 @@
     }
 
     .seller-account-nav-link[data-active="true"] {
-        border-color: #ead8b4;
-        background: #fffaf1;
-        color: #9a6817;
+        border-color: var(--sari-dark-d8c2716225, #ead8b4);
+        background: var(--sari-dark-950baec030, #fffaf1);
+        color: var(--sari-dark-a0f3b28b84, #9a6817);
     }
 
 

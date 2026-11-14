@@ -34,10 +34,10 @@
 
         .sari-cart-row[data-selected="true"] {
             border-color:#dda62f;
-            background:#fffdfa;
+            background:var(--sari-dark-950baec030, #fffdfa);
             box-shadow:
-                0 8px 20px rgba(188,125,9,.055),
-                inset 3px 0 0 #d29115;
+                0 8px 20px var(--sari-dark-fbd3b3b9f6, rgba(188,125,9,.055)),
+                inset 3px 0 0 var(--sari-dark-152c2221a5, #d29115);
         }
 
         .sari-cart-check-shell {
@@ -50,7 +50,7 @@
         .sari-cart-row[data-selected="true"] .sari-cart-check-shell {
             border-color:#d29115;
             background:#d29115;
-            box-shadow:0 5px 12px rgba(190,127,12,.15);
+            box-shadow:0 5px 12px var(--sari-dark-f4efbbfaa5, rgba(190,127,12,.15));
         }
 
         .sari-cart-check-mark {
@@ -70,20 +70,20 @@
 
         .sari-summary-disabled {
             cursor:not-allowed !important;
-            background:#d7d3cc !important;
+            background:var(--sari-dark-4d21eb669b, #d7d3cc) !important;
             box-shadow:none !important;
         }
 
         .sari-cart-summary {
             box-shadow:
-                0 14px 34px rgba(43,34,24,.055),
-                0 3px 10px rgba(43,34,24,.022);
+                0 14px 34px var(--sari-dark-fbd3b3b9f6, rgba(43,34,24,.055)),
+                0 3px 10px var(--sari-dark-cd8ef5542e, rgba(43,34,24,.022));
         }
 
         @media (hover:hover) and (pointer:fine) {
             .sari-cart-row:hover {
-                border-color:#e1d5c2;
-                box-shadow:0 7px 18px rgba(43,34,24,.035);
+                border-color:var(--sari-dark-d8c2716225, #e1d5c2);
+                box-shadow:0 7px 18px var(--sari-dark-7593018246, rgba(43,34,24,.035));
             }
 
             .sari-cart-row:hover .sari-cart-img {
@@ -111,32 +111,32 @@
         .sari-btn-secondary,
         .sari-cart-summary {
             box-shadow:
-                0 8px 20px rgba(58, 45, 30, .045),
-                0 2px 6px rgba(58, 45, 30, .022),
-                inset 0 1px 0 rgba(255,255,255,.98),
-                inset 0 -1px 0 rgba(228,219,207,.42);
+                0 8px 20px var(--sari-dark-1190f58155, rgba(58, 45, 30, .045)),
+                0 2px 6px var(--sari-dark-cd8ef5542e, rgba(58, 45, 30, .022)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)),
+                inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(228,219,207,.42));
         }
 
         .sari-seller-shell {
-            border-color:#e7ded2 !important;
+            border-color:var(--sari-dark-d8c2716225, #e7ded2) !important;
         }
 
         .sari-cart-row {
             box-shadow:
-                0 5px 14px rgba(51,40,28,.026),
-                inset 0 1px 0 rgba(255,255,255,.98);
+                0 5px 14px var(--sari-dark-54756fd423, rgba(51,40,28,.026)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         .sari-cart-row[data-selected="true"] {
             box-shadow:
-                0 10px 24px rgba(188,125,9,.075),
-                0 2px 7px rgba(188,125,9,.035),
-                inset 3px 0 0 #d29115,
-                inset 0 1px 0 rgba(255,255,255,.98);
+                0 10px 24px var(--sari-dark-e07575a086, rgba(188,125,9,.075)),
+                0 2px 7px var(--sari-dark-7593018246, rgba(188,125,9,.035)),
+                inset 3px 0 0 var(--sari-dark-152c2221a5, #d29115),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         .sari-cart-count-pill {
-            background:#fffaf0 !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
         }
 
         .sari-btn-secondary,
@@ -152,39 +152,39 @@
         }
 
         .sari-btn-secondary {
-            border-color:#ded4c7 !important;
-            background:#fff !important;
+            border-color:var(--sari-dark-d8c2716225, #ded4c7) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         .sari-btn-update {
             border:1px solid #d9bd80 !important;
-            background:#fffaf0 !important;
-            color:#92610d !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
+            color:var(--sari-dark-6e784b4931, #92610d) !important;
             box-shadow:
-                0 5px 12px rgba(170,112,13,.055),
-                inset 0 1px 0 rgba(255,255,255,.98);
+                0 5px 12px var(--sari-dark-fbd3b3b9f6, rgba(170,112,13,.055)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         .sari-btn-remove {
-            border:1px solid #efd9d7;
-            background:#fff8f7 !important;
-            color:#a85650 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #efd9d7);
+            background:var(--sari-dark-950baec030, #fff8f7) !important;
+            color:var(--sari-dark-db6ab5ab1f, #a85650) !important;
             box-shadow:
-                0 4px 10px rgba(168,86,80,.035),
-                inset 0 1px 0 rgba(255,255,255,.98);
+                0 4px 10px var(--sari-dark-7593018246, rgba(168,86,80,.035)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         .sari-btn-checkout {
             background:#c98d19 !important;
             box-shadow:
-                0 9px 18px rgba(187,125,13,.17),
-                inset 0 1px 0 rgba(255,255,255,.16);
+                0 9px 18px var(--sari-dark-3135cb7628, rgba(187,125,13,.17)),
+                inset 0 1px 0 var(--sari-dark-7a3762baa2, rgba(255,255,255,.16));
         }
 
         .sari-qty-control {
             box-shadow:
-                inset 0 2px 5px rgba(46,35,24,.045),
-                0 3px 9px rgba(46,35,24,.025);
+                inset 0 2px 5px var(--sari-dark-1190f58155, rgba(46,35,24,.045)),
+                0 3px 9px var(--sari-dark-e1384eb7fc, rgba(46,35,24,.025));
         }
 
         .sari-update-state {
@@ -197,20 +197,20 @@
             bottom:22px;
             z-index:220;
             max-width:320px;
-            border:1px solid #d9e6dd;
+            border:1px solid var(--sari-dark-d8c2716225, #d9e6dd);
             border-radius:12px;
-            background:#f5fbf7;
+            background:var(--sari-dark-950baec030, #f5fbf7);
             padding:10px 13px;
-            color:#4f7d61;
+            color:var(--sari-dark-a63aa16d7c, #4f7d61);
             font-size:8px;
             font-weight:600;
-            box-shadow:0 12px 30px rgba(39,32,24,.11);
+            box-shadow:0 12px 30px var(--sari-dark-71f44bdb16, rgba(39,32,24,.11));
         }
 
         .sari-cart-feedback.is-error {
-            border-color:#edd1d1;
-            background:#fff6f6;
-            color:#a65353;
+            border-color:var(--sari-dark-d8c2716225, #edd1d1);
+            background:var(--sari-dark-950baec030, #fff6f6);
+            color:var(--sari-dark-58dd29f069, #a65353);
         }
 
         @media (hover:hover) and (pointer:fine) {
@@ -223,26 +223,26 @@
 
             .sari-btn-secondary:hover {
                 border-color:#d5bd8c !important;
-                background:#fffaf1 !important;
-                color:#936313 !important;
-                box-shadow:0 8px 16px rgba(126,88,22,.075);
+                background:var(--sari-dark-950baec030, #fffaf1) !important;
+                color:var(--sari-dark-7a324da987, #936313) !important;
+                box-shadow:0 8px 16px var(--sari-dark-e07575a086, rgba(126,88,22,.075));
             }
 
             .sari-btn-update:hover {
                 border-color:#cda65a !important;
-                background:#fff5df !important;
-                box-shadow:0 8px 16px rgba(170,112,13,.09);
+                background:var(--sari-dark-4d21eb669b, #fff5df) !important;
+                box-shadow:0 8px 16px var(--sari-dark-b12a5e9552, rgba(170,112,13,.09));
             }
 
             .sari-btn-remove:hover {
-                border-color:#e8c4c1 !important;
-                background:#fff0ef !important;
-                box-shadow:0 7px 14px rgba(168,86,80,.07);
+                border-color:var(--sari-dark-d8c2716225, #e8c4c1) !important;
+                background:var(--sari-dark-950baec030, #fff0ef) !important;
+                box-shadow:0 7px 14px var(--sari-dark-7c935c8886, rgba(168,86,80,.07));
             }
 
             .sari-btn-checkout:not(:disabled):hover {
                 background:#b87d10 !important;
-                box-shadow:0 12px 22px rgba(175,116,11,.21);
+                box-shadow:0 12px 22px var(--sari-dark-17d8af3d60, rgba(175,116,11,.21));
             }
         }
 
@@ -275,7 +275,7 @@
         ============================================================ */
 
         [data-sari-cart-page] {
-            background:#fbfaf7;
+            background:var(--sari-dark-950baec030, #fbfaf7);
         }
 
         .sari-cart-toolbar,
@@ -284,174 +284,174 @@
         .sari-cart-count-pill,
         .sari-btn-secondary {
             box-shadow:
-                10px 10px 24px rgba(75, 59, 39, .055),
-                -8px -8px 20px rgba(255, 255, 255, .92),
-                inset 0 1px 0 rgba(255,255,255,.98),
-                inset 0 -1px 0 rgba(225,216,204,.48);
+                10px 10px 24px var(--sari-dark-fbd3b3b9f6, rgba(75, 59, 39, .055)),
+                -8px -8px 20px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)),
+                inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(225,216,204,.48));
         }
 
         .sari-cart-toolbar {
-            background:#fefdfb !important;
-            border-color:#e6ddd1 !important;
+            background:var(--sari-dark-950baec030, #fefdfb) !important;
+            border-color:var(--sari-dark-d8c2716225, #e6ddd1) !important;
         }
 
         .sari-seller-shell {
-            background:#fff !important;
-            border-color:#e5dbce !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            border-color:var(--sari-dark-d8c2716225, #e5dbce) !important;
             box-shadow:
-                12px 12px 28px rgba(68, 52, 33, .055),
-                -8px -8px 22px rgba(255,255,255,.96),
-                inset 0 1px 0 rgba(255,255,255,.98),
-                inset 0 -1px 0 rgba(226,217,205,.42);
+                12px 12px 28px var(--sari-dark-fbd3b3b9f6, rgba(68, 52, 33, .055)),
+                -8px -8px 22px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)),
+                inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(226,217,205,.42));
         }
 
         .sari-cart-summary {
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:
-                14px 14px 34px rgba(68, 52, 33, .065),
-                -10px -10px 26px rgba(255,255,255,.96),
-                inset 0 1px 0 rgba(255,255,255,.98),
-                inset 0 -1px 0 rgba(226,217,205,.44);
+                14px 14px 34px var(--sari-dark-4fc908fafe, rgba(68, 52, 33, .065)),
+                -10px -10px 26px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)),
+                inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(226,217,205,.44));
         }
 
         .sari-cart-row {
-            border-color:#e9e1d7 !important;
-            background:#fff !important;
+            border-color:var(--sari-dark-d8c2716225, #e9e1d7) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:
-                7px 7px 18px rgba(69, 54, 35, .045),
-                -5px -5px 14px rgba(255,255,255,.96),
-                inset 0 1px 0 rgba(255,255,255,.98),
-                inset 0 -1px 0 rgba(228,220,209,.34);
+                7px 7px 18px var(--sari-dark-1190f58155, rgba(69, 54, 35, .045)),
+                -5px -5px 14px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)),
+                inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(228,220,209,.34));
         }
 
         .sari-cart-row[data-selected="true"] {
             border-color:#d9aa4c !important;
-            background:#fffdf8 !important;
+            background:var(--sari-dark-950baec030, #fffdf8) !important;
             box-shadow:
-                10px 10px 24px rgba(182, 120, 14, .09),
-                -7px -7px 18px rgba(255,255,255,.96),
-                inset 3px 0 0 #d29115,
-                inset 0 1px 0 rgba(255,255,255,.98);
+                10px 10px 24px var(--sari-dark-b12a5e9552, rgba(182, 120, 14, .09)),
+                -7px -7px 18px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+                inset 3px 0 0 var(--sari-dark-152c2221a5, #d29115),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         .sari-cart-check-shell {
             box-shadow:
-                inset 2px 2px 5px rgba(86,68,46,.08),
-                inset -2px -2px 5px rgba(255,255,255,.95);
+                inset 2px 2px 5px var(--sari-dark-c33e3d1bb4, rgba(86,68,46,.08)),
+                inset -2px -2px 5px var(--sari-dark-f30a5f9061, rgba(255,255,255,.95));
         }
 
         .sari-cart-row[data-selected="true"] .sari-cart-check-shell {
             box-shadow:
-                0 5px 12px rgba(190,127,12,.18),
-                inset 0 1px 0 rgba(255,255,255,.18);
+                0 5px 12px var(--sari-dark-3793f9e558, rgba(190,127,12,.18)),
+                inset 0 1px 0 var(--sari-dark-3ab7594414, rgba(255,255,255,.18));
         }
 
         .sari-cart-count-pill {
-            border-color:#e6d6b8 !important;
-            background:#fff9ee !important;
+            border-color:var(--sari-dark-d8c2716225, #e6d6b8) !important;
+            background:var(--sari-dark-950baec030, #fff9ee) !important;
             box-shadow:
-                6px 6px 14px rgba(129,90,22,.055),
-                -5px -5px 12px rgba(255,255,255,.95),
-                inset 0 1px 0 rgba(255,255,255,.98);
+                6px 6px 14px var(--sari-dark-fbd3b3b9f6, rgba(129,90,22,.055)),
+                -5px -5px 12px var(--sari-dark-f30a5f9061, rgba(255,255,255,.95)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         .sari-qty-control {
-            border-color:#ddd3c6 !important;
-            background:#fdfcf9 !important;
+            border-color:var(--sari-dark-d8c2716225, #ddd3c6) !important;
+            background:var(--sari-dark-950baec030, #fdfcf9) !important;
             box-shadow:
-                inset 4px 4px 8px rgba(78,61,40,.06),
-                inset -4px -4px 8px rgba(255,255,255,.95),
-                0 3px 8px rgba(59,46,31,.025);
+                inset 4px 4px 8px var(--sari-dark-361b571631, rgba(78,61,40,.06)),
+                inset -4px -4px 8px var(--sari-dark-f30a5f9061, rgba(255,255,255,.95)),
+                0 3px 8px var(--sari-dark-e1384eb7fc, rgba(59,46,31,.025));
         }
 
         .sari-btn-secondary {
             box-shadow:
-                6px 6px 14px rgba(74,58,39,.05),
-                -5px -5px 12px rgba(255,255,255,.96),
-                inset 0 1px 0 rgba(255,255,255,.98);
+                6px 6px 14px var(--sari-dark-1df26971b5, rgba(74,58,39,.05)),
+                -5px -5px 12px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         .sari-btn-update {
             border-color:#d6b36d !important;
-            background:#fffaf0 !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
             box-shadow:
-                6px 6px 14px rgba(149,99,13,.07),
-                -5px -5px 12px rgba(255,255,255,.96),
-                inset 0 1px 0 rgba(255,255,255,.98);
+                6px 6px 14px var(--sari-dark-7c935c8886, rgba(149,99,13,.07)),
+                -5px -5px 12px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         .sari-btn-remove {
-            border-color:#ebd3d0 !important;
-            background:#fff8f7 !important;
+            border-color:var(--sari-dark-d8c2716225, #ebd3d0) !important;
+            background:var(--sari-dark-950baec030, #fff8f7) !important;
             box-shadow:
-                5px 5px 12px rgba(155,77,71,.05),
-                -4px -4px 10px rgba(255,255,255,.95),
-                inset 0 1px 0 rgba(255,255,255,.98);
+                5px 5px 12px var(--sari-dark-1df26971b5, rgba(155,77,71,.05)),
+                -4px -4px 10px var(--sari-dark-f30a5f9061, rgba(255,255,255,.95)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         .sari-btn-checkout {
             box-shadow:
-                0 10px 22px rgba(183,119,10,.19),
-                inset 0 1px 0 rgba(255,255,255,.2),
-                inset 0 -2px 0 rgba(122,76,0,.08);
+                0 10px 22px var(--sari-dark-ef4e8433d9, rgba(183,119,10,.19)),
+                inset 0 1px 0 var(--sari-dark-b8e5ffc36e, rgba(255,255,255,.2)),
+                inset 0 -2px 0 var(--sari-dark-c33e3d1bb4, rgba(122,76,0,.08));
         }
 
         .sari-summary-disabled {
             box-shadow:
-                inset 3px 3px 7px rgba(105,98,88,.08),
-                inset -3px -3px 7px rgba(255,255,255,.55) !important;
+                inset 3px 3px 7px var(--sari-dark-c33e3d1bb4, rgba(105,98,88,.08)),
+                inset -3px -3px 7px var(--sari-dark-f30a5f9061, rgba(255,255,255,.55)) !important;
         }
 
         /* Main product image frame gets gentle raised depth. */
         [data-selectable-card] > div > a {
             box-shadow:
-                5px 5px 12px rgba(74,58,39,.045),
-                -4px -4px 10px rgba(255,255,255,.95),
-                inset 0 1px 0 rgba(255,255,255,.98);
+                5px 5px 12px var(--sari-dark-1190f58155, rgba(74,58,39,.045)),
+                -4px -4px 10px var(--sari-dark-f30a5f9061, rgba(255,255,255,.95)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
         }
 
         /* Summary info panel looks softly pressed. */
         .sari-cart-summary .bg-\[\#f4f8fd\] {
             box-shadow:
-                inset 3px 3px 7px rgba(78,95,114,.045),
-                inset -3px -3px 7px rgba(255,255,255,.75);
+                inset 3px 3px 7px var(--sari-dark-1190f58155, rgba(78,95,114,.045)),
+                inset -3px -3px 7px var(--sari-dark-f30a5f9061, rgba(255,255,255,.75));
         }
 
         @media (hover:hover) and (pointer:fine) {
             .sari-cart-row:hover {
                 transform:translateY(-1px);
-                border-color:#dfd2bf !important;
+                border-color:var(--sari-dark-d8c2716225, #dfd2bf) !important;
                 box-shadow:
-                    10px 10px 22px rgba(70,54,35,.055),
-                    -7px -7px 16px rgba(255,255,255,.96),
-                    inset 0 1px 0 rgba(255,255,255,.98);
+                    10px 10px 22px var(--sari-dark-fbd3b3b9f6, rgba(70,54,35,.055)),
+                    -7px -7px 16px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+                    inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
             }
 
             .sari-btn-update:hover {
                 box-shadow:
-                    8px 8px 16px rgba(149,99,13,.09),
-                    -6px -6px 13px rgba(255,255,255,.96),
-                    inset 0 1px 0 rgba(255,255,255,.98);
+                    8px 8px 16px var(--sari-dark-b12a5e9552, rgba(149,99,13,.09)),
+                    -6px -6px 13px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+                    inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
             }
 
             .sari-btn-remove:hover {
                 box-shadow:
-                    7px 7px 14px rgba(155,77,71,.07),
-                    -5px -5px 11px rgba(255,255,255,.95),
-                    inset 0 1px 0 rgba(255,255,255,.98);
+                    7px 7px 14px var(--sari-dark-7c935c8886, rgba(155,77,71,.07)),
+                    -5px -5px 11px var(--sari-dark-f30a5f9061, rgba(255,255,255,.95)),
+                    inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
             }
 
             .sari-btn-secondary:hover {
                 box-shadow:
-                    8px 8px 16px rgba(99,73,35,.07),
-                    -6px -6px 13px rgba(255,255,255,.96),
-                    inset 0 1px 0 rgba(255,255,255,.98);
+                    8px 8px 16px var(--sari-dark-7c935c8886, rgba(99,73,35,.07)),
+                    -6px -6px 13px var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+                    inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98));
             }
 
             .sari-btn-checkout:not(:disabled):hover {
                 box-shadow:
-                    0 13px 26px rgba(173,112,8,.23),
-                    inset 0 1px 0 rgba(255,255,255,.22);
+                    0 13px 26px var(--sari-dark-fcc85d970f, rgba(173,112,8,.23)),
+                    inset 0 1px 0 var(--sari-dark-4f63db89ae, rgba(255,255,255,.22));
             }
         }
 
@@ -463,44 +463,44 @@
         /* More depth on the bordered sections, not on the buttons. */
         .sari-cart-toolbar {
             box-shadow:
-                0 10px 24px rgba(61,47,31,.065),
-                0 3px 8px rgba(61,47,31,.028),
-                inset 0 1px 0 rgba(255,255,255,.98) !important;
+                0 10px 24px var(--sari-dark-4fc908fafe, rgba(61,47,31,.065)),
+                0 3px 8px var(--sari-dark-7888fe3028, rgba(61,47,31,.028)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)) !important;
         }
 
         .sari-seller-shell {
             box-shadow:
-                0 14px 30px rgba(61,47,31,.068),
-                0 4px 10px rgba(61,47,31,.028),
-                inset 0 1px 0 rgba(255,255,255,.98) !important;
+                0 14px 30px var(--sari-dark-2b6be1e5b6, rgba(61,47,31,.068)),
+                0 4px 10px var(--sari-dark-7888fe3028, rgba(61,47,31,.028)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)) !important;
         }
 
         .sari-cart-row {
             box-shadow:
-                0 8px 18px rgba(61,47,31,.052),
-                0 2px 7px rgba(61,47,31,.022),
-                inset 0 1px 0 rgba(255,255,255,.98) !important;
+                0 8px 18px var(--sari-dark-a49f9eb969, rgba(61,47,31,.052)),
+                0 2px 7px var(--sari-dark-cd8ef5542e, rgba(61,47,31,.022)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)) !important;
         }
 
         .sari-cart-row[data-selected="true"] {
             box-shadow:
-                0 11px 24px rgba(178,116,13,.10),
-                0 3px 8px rgba(178,116,13,.035),
-                inset 3px 0 0 #d29115,
-                inset 0 1px 0 rgba(255,255,255,.98) !important;
+                0 11px 24px var(--sari-dark-8eadf403a5, rgba(178,116,13,.10)),
+                0 3px 8px var(--sari-dark-7593018246, rgba(178,116,13,.035)),
+                inset 3px 0 0 var(--sari-dark-152c2221a5, #d29115),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)) !important;
         }
 
         .sari-cart-summary {
             box-shadow:
-                0 16px 34px rgba(61,47,31,.075),
-                0 4px 11px rgba(61,47,31,.028),
-                inset 0 1px 0 rgba(255,255,255,.98) !important;
+                0 16px 34px var(--sari-dark-e07575a086, rgba(61,47,31,.075)),
+                0 4px 11px var(--sari-dark-7888fe3028, rgba(61,47,31,.028)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)) !important;
         }
 
         [data-selectable-card] > div > a {
             box-shadow:
-                0 6px 14px rgba(61,47,31,.045),
-                inset 0 1px 0 rgba(255,255,255,.98) !important;
+                0 6px 14px var(--sari-dark-1190f58155, rgba(61,47,31,.045)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)) !important;
         }
 
         /* Flat, simple buttons — no shadow. */
@@ -514,20 +514,20 @@
 
         .sari-btn-secondary {
             border:1px solid #d9bd80 !important;
-            background:#fff !important;
-            color:#966719 !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            color:var(--sari-dark-febf1db9a2, #966719) !important;
         }
 
         .sari-btn-update {
             border:1px solid #d5ae5b !important;
-            background:#fffaf0 !important;
-            color:#8f5e09 !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
+            color:var(--sari-dark-af18afcaa4, #8f5e09) !important;
         }
 
         .sari-btn-remove {
-            border:1px solid #e3d4b5 !important;
-            background:#fffdf8 !important;
-            color:#8d641d !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e3d4b5) !important;
+            background:var(--sari-dark-950baec030, #fffdf8) !important;
+            color:var(--sari-dark-01abbb34dc, #8d641d) !important;
         }
 
         .sari-btn-checkout {
@@ -538,8 +538,8 @@
         }
 
         .sari-summary-disabled {
-            border-color:#d9d4cc !important;
-            background:#d9d4cc !important;
+            border-color:var(--sari-dark-d8c2716225, #d9d4cc) !important;
+            background:var(--sari-dark-4d21eb669b, #d9d4cc) !important;
             color:#fff !important;
             box-shadow:none !important;
         }
@@ -547,30 +547,30 @@
         /* Quantity should stay crisp and simple. */
         .sari-qty-control {
             box-shadow:none !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         @media (hover:hover) and (pointer:fine) {
             .sari-btn-secondary:hover {
                 border-color:#cfa34d !important;
-                background:#fffaf0 !important;
-                color:#875909 !important;
+                background:var(--sari-dark-950baec030, #fffaf0) !important;
+                color:var(--sari-dark-af18afcaa4, #875909) !important;
                 box-shadow:none !important;
                 transform:none !important;
             }
 
             .sari-btn-update:hover {
                 border-color:#c9952d !important;
-                background:#fff5df !important;
-                color:#845506 !important;
+                background:var(--sari-dark-4d21eb669b, #fff5df) !important;
+                color:var(--sari-dark-6e784b4931, #845506) !important;
                 box-shadow:none !important;
                 transform:none !important;
             }
 
             .sari-btn-remove:hover {
                 border-color:#d4bd8c !important;
-                background:#fff8e9 !important;
-                color:#80550d !important;
+                background:var(--sari-dark-4d21eb669b, #fff8e9) !important;
+                color:var(--sari-dark-6e784b4931, #80550d) !important;
                 box-shadow:none !important;
                 transform:none !important;
             }
@@ -584,9 +584,9 @@
 
             .sari-cart-row:hover {
                 box-shadow:
-                    0 10px 22px rgba(61,47,31,.065),
-                    0 3px 8px rgba(61,47,31,.025),
-                    inset 0 1px 0 rgba(255,255,255,.98) !important;
+                    0 10px 22px var(--sari-dark-4fc908fafe, rgba(61,47,31,.065)),
+                    0 3px 8px var(--sari-dark-e1384eb7fc, rgba(61,47,31,.025)),
+                    inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)) !important;
             }
         }
 
@@ -985,7 +985,7 @@
                                                             <path d="M9 7V5h6v2"></path>
                                                             <path d="M8 7l1 12h6l1-12"></path>
                                                         </svg>
-                                                        <span class="sari-remove-label" style="color:#ef4444 !important;">Remove</span>
+                                                        <span class="sari-remove-label" style="color:var(--sari-dark-65ed380fe4, #ef4444) !important;">Remove</span>
                                                     </button>
                                                 </form>
                                             </div>
@@ -1549,7 +1549,7 @@
 .sari-cart-toolbar {
     padding: 14px 16px !important;
     border-radius: 14px !important;
-    box-shadow: 0 8px 22px rgba(56, 43, 28, .055) !important;
+    box-shadow: 0 8px 22px var(--sari-dark-fbd3b3b9f6, rgba(56, 43, 28, .055)) !important;
 }
 
 .sari-cart-toolbar label > span > span:first-child {
@@ -1570,8 +1570,8 @@
 .sari-seller-shell {
     border-radius: 16px !important;
     box-shadow:
-        0 10px 28px rgba(56, 43, 28, .06),
-        0 2px 7px rgba(56, 43, 28, .025) !important;
+        0 10px 28px var(--sari-dark-361b571631, rgba(56, 43, 28, .06)),
+        0 2px 7px var(--sari-dark-e1384eb7fc, rgba(56, 43, 28, .025)) !important;
 }
 
 .sari-seller-shell > div:first-child {
@@ -1595,8 +1595,8 @@
     padding: 14px !important;
     border-radius: 14px !important;
     box-shadow:
-        0 5px 15px rgba(56, 43, 28, .045),
-        inset 0 1px 0 rgba(255,255,255,.96) !important;
+        0 5px 15px var(--sari-dark-1190f58155, rgba(56, 43, 28, .045)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)) !important;
 }
 
 .sari-cart-row > div {
@@ -1664,8 +1664,8 @@
 .sari-cart-summary {
     border-radius: 16px !important;
     box-shadow:
-        0 12px 30px rgba(56, 43, 28, .07),
-        0 3px 8px rgba(56, 43, 28, .025) !important;
+        0 12px 30px var(--sari-dark-7c935c8886, rgba(56, 43, 28, .07)),
+        0 3px 8px var(--sari-dark-e1384eb7fc, rgba(56, 43, 28, .025)) !important;
 }
 
 .sari-cart-summary > div:first-child {
@@ -1853,11 +1853,11 @@
 
 [data-sari-cart-page] {
     --cart-page: #f5f6f8;
-    --cart-panel: #ffffff;
-    --cart-border: #e2e6ea;
-    --cart-border-soft: #eceff2;
-    --cart-text: #303740;
-    --cart-muted: #7b8490;
+    --cart-panel: var(--sari-dark-950baec030, #ffffff);
+    --cart-border: var(--sari-dark-d8c2716225, #e2e6ea);
+    --cart-border-soft: var(--sari-dark-d8c2716225, #eceff2);
+    --cart-text: var(--sari-dark-e23e64dd1e, #303740);
+    --cart-muted: var(--sari-dark-a63aa16d7c, #7b8490);
     --cart-gold: #c88912;
     --cart-gold-dark: #a96f0e;
 
@@ -1880,7 +1880,7 @@
 }
 
 [data-sari-cart-page] > section:first-of-type p:first-child {
-    color: #a87316 !important;
+    color: var(--sari-dark-685eb4fc40, #a87316) !important;
     font-size: 6.6px !important;
     font-weight: 800 !important;
     letter-spacing: .15em !important;
@@ -1888,7 +1888,7 @@
 
 [data-sari-cart-page] > section:first-of-type h1 {
     margin-top: 5px !important;
-    color: #2e343b !important;
+    color: var(--sari-dark-e23e64dd1e, #2e343b) !important;
     font-size: clamp(27px, 2.25vw, 31px) !important;
     font-weight: 760 !important;
     line-height: 1.04 !important;
@@ -1896,13 +1896,13 @@
 }
 
 [data-sari-cart-page] > section:first-of-type h1 span {
-    color: #c88912 !important;
+    color: var(--sari-dark-19b301f69a, #c88912) !important;
 }
 
 [data-sari-cart-page] > section:first-of-type h1 + p {
     max-width: 660px;
     margin-top: 7px !important;
-    color: #818995 !important;
+    color: var(--sari-dark-a63aa16d7c, #818995) !important;
     font-size: 8px !important;
     line-height: 1.6 !important;
 }
@@ -1918,23 +1918,23 @@
 }
 
 .sari-cart-count-pill {
-    border: 1px solid #eadfc9 !important;
-    background: #fffaf1 !important;
-    color: #95620e !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #eadfc9) !important;
+    background: var(--sari-dark-950baec030, #fffaf1) !important;
+    color: var(--sari-dark-9b2ca2d764, #95620e) !important;
     box-shadow: none !important;
 }
 
 .sari-btn-secondary {
-    border: 1px solid #dfe3e8 !important;
-    background: #fff !important;
-    color: #4f5862 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    color: var(--sari-dark-e23e64dd1e, #4f5862) !important;
     box-shadow: none !important;
 }
 
 .sari-btn-secondary:hover {
-    border-color: #d0d6dc !important;
-    background: #f8f9fa !important;
-    color: #2d343b !important;
+    border-color: var(--sari-dark-d8c2716225, #d0d6dc) !important;
+    background: var(--sari-dark-950baec030, #f8f9fa) !important;
+    color: var(--sari-dark-e23e64dd1e, #2d343b) !important;
 }
 
 /* MAIN LAYOUT */
@@ -1951,8 +1951,8 @@
     border: 1px solid var(--cart-border) !important;
     background: var(--cart-panel) !important;
     box-shadow:
-        0 12px 30px rgba(31,41,55,.052),
-        0 2px 7px rgba(31,41,55,.022) !important;
+        0 12px 30px var(--sari-dark-a49f9eb969, rgba(31,41,55,.052)),
+        0 2px 7px var(--sari-dark-cd8ef5542e, rgba(31,41,55,.022)) !important;
 }
 
 /* SELECT ALL */
@@ -1966,27 +1966,27 @@
 }
 
 .sari-cart-toolbar label > span > span:first-child {
-    color: #3b434c !important;
+    color: var(--sari-dark-e23e64dd1e, #3b434c) !important;
     font-size: 8.6px !important;
     font-weight: 700 !important;
 }
 
 .sari-cart-toolbar label > span > span:last-child {
     margin-top: 2px !important;
-    color: #9098a1 !important;
+    color: var(--sari-dark-a63aa16d7c, #9098a1) !important;
     font-size: 6.7px !important;
 }
 
 #cartSelectedTopCount {
-    border-color: #e7dcc8 !important;
-    background: #fffaf1 !important;
+    border-color: var(--sari-dark-d8c2716225, #e7dcc8) !important;
+    background: var(--sari-dark-950baec030, #fffaf1) !important;
     padding: 4px 8px !important;
-    color: #91600d !important;
+    color: var(--sari-dark-6e784b4931, #91600d) !important;
     font-size: 6.8px !important;
 }
 
 .sari-cart-toolbar .text-\[7px\] {
-    color: #939aa3 !important;
+    color: var(--sari-dark-a63aa16d7c, #939aa3) !important;
     font-size: 6.6px !important;
 }
 
@@ -1998,7 +1998,7 @@
 
 .sari-seller-shell > div:first-child {
     border-bottom: 1px solid var(--cart-border-soft) !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     padding: 11px 13px !important;
 }
 
@@ -2009,14 +2009,14 @@
 .sari-seller-shell > div:first-child > div:first-child > span {
     width: 32px !important;
     height: 32px !important;
-    border: 1px solid #e7dcc8 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #e7dcc8) !important;
     border-radius: 9px !important;
-    background: #fffaf1 !important;
-    color: #aa7010 !important;
+    background: var(--sari-dark-950baec030, #fffaf1) !important;
+    color: var(--sari-dark-9b2ca2d764, #aa7010) !important;
 }
 
 .sari-seller-shell > div:first-child h2 {
-    color: #343b43 !important;
+    color: var(--sari-dark-e23e64dd1e, #343b43) !important;
     font-size: 9px !important;
     font-weight: 750 !important;
 }
@@ -2026,48 +2026,48 @@
 }
 
 .sari-seller-shell > div:first-child .text-\[7px\] {
-    color: #8e969f !important;
+    color: var(--sari-dark-a63aa16d7c, #8e969f) !important;
     font-size: 6.3px !important;
 }
 
 .sari-seller-shell > div:first-child a {
-    border-color: #e0e4e8 !important;
+    border-color: var(--sari-dark-d8c2716225, #e0e4e8) !important;
     border-radius: 8px !important;
-    background: #fff !important;
-    color: #8f5e0d !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    color: var(--sari-dark-9b2ca2d764, #8f5e0d) !important;
 }
 
 .sari-seller-shell > div:nth-child(2) {
-    background: #f7f8fa !important;
+    background: var(--sari-dark-950baec030, #f7f8fa) !important;
     padding: 8px !important;
 }
 
 /* PRODUCT ROW — compact floating item card */
 .sari-cart-row {
-    border: 1px solid #e4e8ec !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #e4e8ec) !important;
     border-radius: 12px !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     padding: 11px !important;
     box-shadow:
-        0 5px 14px rgba(31,41,55,.032),
-        0 1px 4px rgba(31,41,55,.014) !important;
+        0 5px 14px var(--sari-dark-2d78d45c63, rgba(31,41,55,.032)),
+        0 1px 4px var(--sari-dark-cb5e9b4925, rgba(31,41,55,.014)) !important;
     transform: none !important;
 }
 
 .sari-cart-row:hover {
-    border-color: #d8dde2 !important;
+    border-color: var(--sari-dark-d8c2716225, #d8dde2) !important;
     box-shadow:
-        0 8px 18px rgba(31,41,55,.045),
-        0 2px 6px rgba(31,41,55,.018) !important;
+        0 8px 18px var(--sari-dark-1190f58155, rgba(31,41,55,.045)),
+        0 2px 6px var(--sari-dark-7672bb207e, rgba(31,41,55,.018)) !important;
     transform: none !important;
 }
 
 .sari-cart-row[data-selected="true"] {
     border-color: #d7b066 !important;
-    background: #fffefa !important;
+    background: var(--sari-dark-950baec030, #fffefa) !important;
     box-shadow:
-        0 7px 18px rgba(179,119,14,.055),
-        inset 3px 0 0 #c88912 !important;
+        0 7px 18px var(--sari-dark-fbd3b3b9f6, rgba(179,119,14,.055)),
+        inset 3px 0 0 var(--sari-dark-152c2221a5, #c88912) !important;
 }
 
 .sari-cart-row > div {
@@ -2078,9 +2078,9 @@
 .sari-cart-row > div > a {
     width: 96px !important;
     height: 96px !important;
-    border: 1px solid #e6eaee !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #e6eaee) !important;
     border-radius: 10px !important;
-    background: #f8f9fa !important;
+    background: var(--sari-dark-950baec030, #f8f9fa) !important;
     padding: 6px !important;
     box-shadow: none !important;
 }
@@ -2088,9 +2088,9 @@
 .sari-cart-check-shell {
     width: 18px !important;
     height: 18px !important;
-    border-color: #d8dde2 !important;
+    border-color: var(--sari-dark-d8c2716225, #d8dde2) !important;
     border-radius: 5px !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow: none !important;
 }
 
@@ -2106,43 +2106,43 @@
 }
 
 .sari-cart-row .bg-\[\#f1f8f4\] {
-    border-color: #d8e8de !important;
-    background: #f5faf7 !important;
-    color: #4d765d !important;
+    border-color: var(--sari-dark-d8c2716225, #d8e8de) !important;
+    background: var(--sari-dark-950baec030, #f5faf7) !important;
+    color: var(--sari-dark-a63aa16d7c, #4d765d) !important;
 }
 
 .sari-cart-row .bg-\[\#f6f3ef\] {
-    background: #f3f5f7 !important;
-    color: #68717c !important;
+    background: var(--sari-dark-4d21eb669b, #f3f5f7) !important;
+    color: var(--sari-dark-a63aa16d7c, #68717c) !important;
 }
 
 /* Product typography */
 .sari-cart-row .text-\[12px\] {
-    color: #2f363e !important;
+    color: var(--sari-dark-e23e64dd1e, #2f363e) !important;
     font-size: 10px !important;
     font-weight: 750 !important;
     line-height: 1.45 !important;
 }
 
 .sari-cart-row .text-\[7\.5px\] {
-    color: #818a94 !important;
+    color: var(--sari-dark-a63aa16d7c, #818a94) !important;
     font-size: 6.8px !important;
     line-height: 1.45 !important;
 }
 
 .sari-cart-row .text-\[7px\] {
-    color: #8d959e !important;
+    color: var(--sari-dark-a63aa16d7c, #8d959e) !important;
     font-size: 6.5px !important;
 }
 
 .sari-cart-row .text-\[17px\] {
-    color: #b6760b !important;
+    color: var(--sari-dark-6e784b4931, #b6760b) !important;
     font-size: 14px !important;
     font-weight: 800 !important;
 }
 
 .sari-cart-row .text-\[6\.5px\] {
-    color: #949ba3 !important;
+    color: var(--sari-dark-a63aa16d7c, #949ba3) !important;
     font-size: 6px !important;
 }
 
@@ -2159,27 +2159,27 @@
 .sari-qty-control {
     height: 34px !important;
     overflow: hidden !important;
-    border: 1px solid #dfe3e7 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #dfe3e7) !important;
     border-radius: 8px !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow: none !important;
 }
 
 .sari-qty-control button {
     width: 32px !important;
-    color: #626b75 !important;
+    color: var(--sari-dark-a63aa16d7c, #626b75) !important;
     font-size: 12px !important;
 }
 
 .sari-qty-control button:hover {
-    background: #f5f6f8 !important;
-    color: #303740 !important;
+    background: var(--sari-dark-950baec030, #f5f6f8) !important;
+    color: var(--sari-dark-e23e64dd1e, #303740) !important;
 }
 
 .sari-qty-control input {
     width: 42px !important;
-    border-color: #e6e9ed !important;
-    color: #3d454e !important;
+    border-color: var(--sari-dark-d8c2716225, #e6e9ed) !important;
+    color: var(--sari-dark-e23e64dd1e, #3d454e) !important;
     font-size: 7.5px !important;
 }
 
@@ -2196,25 +2196,25 @@
 
 .sari-btn-update {
     border: 1px solid #d9c28d !important;
-    background: #fffaf1 !important;
-    color: #8e5d0d !important;
+    background: var(--sari-dark-950baec030, #fffaf1) !important;
+    color: var(--sari-dark-9b2ca2d764, #8e5d0d) !important;
 }
 
 .sari-btn-update:hover {
     border-color: #cfa957 !important;
-    background: #fff6e6 !important;
+    background: var(--sari-dark-4d21eb669b, #fff6e6) !important;
 }
 
 .sari-btn-remove {
-    border: 1px solid #e2e5e8 !important;
-    background: #fff !important;
-    color: #69727c !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #e2e5e8) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    color: var(--sari-dark-a63aa16d7c, #69727c) !important;
 }
 
 .sari-btn-remove:hover {
-    border-color: #d6dade !important;
-    background: #f7f8f9 !important;
-    color: #444c55 !important;
+    border-color: var(--sari-dark-d8c2716225, #d6dade) !important;
+    background: var(--sari-dark-950baec030, #f7f8f9) !important;
+    color: var(--sari-dark-e23e64dd1e, #444c55) !important;
 }
 
 /* ORDER SUMMARY — strongest floating card */
@@ -2222,26 +2222,26 @@
     overflow: hidden !important;
     border-radius: 14px !important;
     box-shadow:
-        0 16px 36px rgba(31,41,55,.065),
-        0 3px 9px rgba(31,41,55,.025) !important;
+        0 16px 36px var(--sari-dark-4fc908fafe, rgba(31,41,55,.065)),
+        0 3px 9px var(--sari-dark-e1384eb7fc, rgba(31,41,55,.025)) !important;
 }
 
 .sari-cart-summary > div:first-child {
     border-bottom: 1px solid var(--cart-border-soft) !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     padding: 13px 15px !important;
 }
 
 .sari-cart-summary > div:first-child h2 {
-    color: #303740 !important;
+    color: var(--sari-dark-e23e64dd1e, #303740) !important;
     font-size: 13px !important;
     font-weight: 760 !important;
 }
 
 #cartSelectedSummaryCount {
-    border-color: #e7dcc8 !important;
-    background: #fffaf1 !important;
-    color: #8e5d0d !important;
+    border-color: var(--sari-dark-d8c2716225, #e7dcc8) !important;
+    background: var(--sari-dark-950baec030, #fffaf1) !important;
+    color: var(--sari-dark-9b2ca2d764, #8e5d0d) !important;
     font-size: 6.5px !important;
     padding: 4px 8px !important;
 }
@@ -2256,22 +2256,22 @@
 }
 
 .sari-cart-summary .space-y-3\.5 > div span:first-child {
-    color: #7d8690 !important;
+    color: var(--sari-dark-a63aa16d7c, #7d8690) !important;
     font-size: 7.2px !important;
 }
 
 .sari-cart-summary .space-y-3\.5 > div span:last-child {
-    color: #404850 !important;
+    color: var(--sari-dark-e23e64dd1e, #404850) !important;
     font-size: 7.4px !important;
 }
 
 .sari-cart-summary .space-y-3\.5 .text-\[9px\] {
-    color: #444c55 !important;
+    color: var(--sari-dark-e23e64dd1e, #444c55) !important;
     font-size: 8px !important;
 }
 
 #cartSelectedTotal {
-    color: #b6760b !important;
+    color: var(--sari-dark-6e784b4931, #b6760b) !important;
     font-size: 21px !important;
     font-weight: 800 !important;
 }
@@ -2293,21 +2293,21 @@
 }
 
 .sari-summary-disabled {
-    border-color: #d7dce0 !important;
-    background: #d7dce0 !important;
+    border-color: var(--sari-dark-d8c2716225, #d7dce0) !important;
+    background: var(--sari-dark-4d21eb669b, #d7dce0) !important;
     color: #fff !important;
 }
 
 /* Summary info hint */
 .sari-cart-summary .bg-\[\#f4f8fd\] {
-    border-color: #e1e7ee !important;
+    border-color: var(--sari-dark-d8c2716225, #e1e7ee) !important;
     border-radius: 10px !important;
-    background: #f7f9fb !important;
+    background: var(--sari-dark-950baec030, #f7f9fb) !important;
     box-shadow: none !important;
 }
 
 #cartSelectionHint {
-    color: #75808b !important;
+    color: var(--sari-dark-a63aa16d7c, #75808b) !important;
     font-size: 6.3px !important;
     line-height: 1.5 !important;
 }
@@ -2321,11 +2321,11 @@
     width: 29px !important;
     height: 29px !important;
     border-radius: 8px !important;
-    background: #f6f7f8 !important;
+    background: var(--sari-dark-950baec030, #f6f7f8) !important;
 }
 
 .sari-cart-summary .grid.grid-cols-3 p {
-    color: #747d87 !important;
+    color: var(--sari-dark-a63aa16d7c, #747d87) !important;
     font-size: 5.6px !important;
     line-height: 1.35 !important;
 }
@@ -2334,17 +2334,17 @@
 [data-sari-cart-page] > section.mt-5.rounded-\[20px\] {
     border: 1px solid var(--cart-border) !important;
     border-radius: 14px !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow:
-        0 12px 30px rgba(31,41,55,.05),
-        0 2px 7px rgba(31,41,55,.02) !important;
+        0 12px 30px var(--sari-dark-1df26971b5, rgba(31,41,55,.05)),
+        0 2px 7px var(--sari-dark-f6fe7319d9, rgba(31,41,55,.02)) !important;
 }
 
 /* Toast */
 .sari-cart-feedback {
     border-radius: 10px !important;
     font-size: 7.5px !important;
-    box-shadow: 0 12px 28px rgba(31,41,55,.12) !important;
+    box-shadow: 0 12px 28px var(--sari-dark-3b2338cbf0, rgba(31,41,55,.12)) !important;
 }
 
 /* Responsive */
@@ -2417,13 +2417,13 @@
     flex: 0 0 34px;
     place-items: center;
     overflow: hidden;
-    border: 1px solid #dde2e7;
+    border: 1px solid var(--sari-dark-d8c2716225, #dde2e7);
     border-radius: 10px;
-    background: #f7f8fa;
+    background: var(--sari-dark-950baec030, #f7f8fa);
     text-decoration: none;
     box-shadow:
-        0 3px 8px rgba(31,41,55,.035),
-        inset 0 1px 0 rgba(255,255,255,.9);
+        0 3px 8px var(--sari-dark-7593018246, rgba(31,41,55,.035)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.9));
     transition:
         border-color .16s ease,
         box-shadow .16s ease,
@@ -2434,8 +2434,8 @@ a.sari-store-profile:hover,
 a.sari-store-profile:focus-visible {
     border-color: #d0b16e;
     box-shadow:
-        0 6px 14px rgba(31,41,55,.055),
-        0 0 0 3px rgba(200,137,18,.08);
+        0 6px 14px var(--sari-dark-fbd3b3b9f6, rgba(31,41,55,.055)),
+        0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08));
     transform: translateY(-1px);
     outline: none;
 }
@@ -2453,7 +2453,7 @@ a.sari-store-profile:focus-visible {
     width: 100%;
     height: 100%;
     place-items: center;
-    background: #2f343b;
+    background: var(--sari-dark-fbb35de0d1, #2f343b);
     color: #ffffff;
     font-size: 8px;
     font-weight: 800;
@@ -2466,7 +2466,7 @@ a.sari-store-profile:focus-visible {
 }
 
 .sari-store-name-link {
-    color: #343b43 !important;
+    color: var(--sari-dark-e23e64dd1e, #343b43) !important;
     font-size: 9px !important;
     font-weight: 750 !important;
     line-height: 1.25;
@@ -2476,7 +2476,7 @@ a.sari-store-profile:focus-visible {
 
 a.sari-store-name-link:hover,
 a.sari-store-name-link:focus-visible {
-    color: #9b6710 !important;
+    color: var(--sari-dark-6e784b4931, #9b6710) !important;
     outline: none;
 }
 
@@ -2503,7 +2503,7 @@ a.sari-store-name-link:focus-visible {
     display: inline-flex;
     align-items: center;
     min-height: 38px;
-    color: #5f6873;
+    color: var(--sari-dark-a63aa16d7c, #5f6873);
     font-size: 7.6px;
     font-weight: 700;
     line-height: 1.35;
@@ -2564,12 +2564,12 @@ a.sari-store-name-link:focus-visible {
 .sari-cart-toolbar label > span > span:first-child {
     font-size: 10px !important;
     font-weight: 800 !important;
-    color: #303740 !important;
+    color: var(--sari-dark-e23e64dd1e, #303740) !important;
 }
 
 .sari-cart-toolbar label > span > span:last-child {
     font-size: 7.6px !important;
-    color: #7e8791 !important;
+    color: var(--sari-dark-a63aa16d7c, #7e8791) !important;
 }
 
 #cartSelectedTopCount {
@@ -2579,14 +2579,14 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-toolbar .text-\[7px\] {
     font-size: 7.2px !important;
-    color: #7f8892 !important;
+    color: var(--sari-dark-a63aa16d7c, #7f8892) !important;
 }
 
 .sari-store-name-link,
 .sari-seller-shell > div:first-child h2 {
     font-size: 10.2px !important;
     font-weight: 800 !important;
-    color: #303740 !important;
+    color: var(--sari-dark-e23e64dd1e, #303740) !important;
 }
 
 .sari-seller-shell > div:first-child .rounded-full {
@@ -2596,7 +2596,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-seller-shell > div:first-child .text-\[7px\] {
     font-size: 7px !important;
-    color: #7f8892 !important;
+    color: var(--sari-dark-a63aa16d7c, #7f8892) !important;
 }
 
 .sari-seller-shell > div:first-child a:not(.sari-store-profile):not(.sari-store-name-link) {
@@ -2647,26 +2647,26 @@ a.sari-store-name-link:focus-visible {
 /* Bright red Remove treatment */
 .sari-btn-remove {
     border: 1px solid #ef4444 !important;
-    background: #ffffff !important;
-    color: #dc2626 !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
+    color: var(--sari-dark-0c8ad229f5, #dc2626) !important;
 }
 
 .sari-btn-remove svg {
-    color: #dc2626 !important;
+    color: var(--sari-dark-0c8ad229f5, #dc2626) !important;
     stroke: currentColor !important;
 }
 
 .sari-btn-remove:hover,
 .sari-btn-remove:focus-visible {
     border-color: #dc2626 !important;
-    background: #fff5f5 !important;
-    color: #b91c1c !important;
+    background: var(--sari-dark-950baec030, #fff5f5) !important;
+    color: var(--sari-dark-5300031fd1, #b91c1c) !important;
     box-shadow: none !important;
 }
 
 .sari-btn-remove:hover svg,
 .sari-btn-remove:focus-visible svg {
-    color: #b91c1c !important;
+    color: var(--sari-dark-5300031fd1, #b91c1c) !important;
 }
 
 .sari-btn-remove:focus-visible {
@@ -2702,9 +2702,9 @@ a.sari-store-name-link:focus-visible {
     width: 18px;
     height: 18px;
     place-items: center;
-    border: 1px solid #d5dbe0;
+    border: 1px solid var(--sari-dark-d8c2716225, #d5dbe0);
     border-radius: 5px;
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
     color: #ffffff;
     cursor: pointer;
     transition:
@@ -2727,7 +2727,7 @@ a.sari-store-name-link:focus-visible {
 #cartSelectAll:indeterminate + .sari-select-all-check-shell {
     border-color: #c88912;
     background: #c88912;
-    box-shadow: 0 4px 10px rgba(200,137,18,.14);
+    box-shadow: 0 4px 10px var(--sari-dark-59ed29fe9d, rgba(200,137,18,.14));
 }
 
 #cartSelectAll:checked + .sari-select-all-check-shell .sari-select-all-check-mark {
@@ -2769,7 +2769,7 @@ a.sari-store-name-link:focus-visible {
 /* Top availability + Continue Shopping */
 .sari-cart-availability-text {
     min-height: 40px !important;
-    color: #4f5964 !important;
+    color: var(--sari-dark-e23e64dd1e, #4f5964) !important;
     font-size: 9px !important;
     font-weight: 750 !important;
 }
@@ -2810,7 +2810,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-toolbar .text-\[7px\] {
     font-size: 8px !important;
-    color: #737d87 !important;
+    color: var(--sari-dark-a63aa16d7c, #737d87) !important;
 }
 
 /* Seller area */
@@ -2892,19 +2892,19 @@ a.sari-store-name-link:focus-visible {
 .sari-btn-remove *,
 .sari-btn-remove span,
 .sari-btn-remove svg {
-    color: #ef4444 !important;
-    stroke: #ef4444 !important;
+    color: var(--sari-dark-65ed380fe4, #ef4444) !important;
+    stroke: var(--sari-dark-65ed380fe4, #ef4444) !important;
 }
 
 .sari-btn-remove {
     border: 1px solid #ef4444 !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
 }
 
 .sari-btn-remove:hover,
 .sari-btn-remove:focus-visible {
     border-color: #dc2626 !important;
-    background: #fff5f5 !important;
+    background: var(--sari-dark-950baec030, #fff5f5) !important;
 }
 
 .sari-btn-remove:hover,
@@ -2913,8 +2913,8 @@ a.sari-store-name-link:focus-visible {
 .sari-btn-remove:focus-visible,
 .sari-btn-remove:focus-visible *,
 .sari-btn-remove:focus-visible svg {
-    color: #dc2626 !important;
-    stroke: #dc2626 !important;
+    color: var(--sari-dark-0c8ad229f5, #dc2626) !important;
+    stroke: var(--sari-dark-0c8ad229f5, #dc2626) !important;
 }
 
 /* Order Summary */
@@ -2936,7 +2936,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-summary .space-y-3\.5 > div span:first-child {
     font-size: 9px !important;
-    color: #6f7984 !important;
+    color: var(--sari-dark-a63aa16d7c, #6f7984) !important;
 }
 
 .sari-cart-summary .space-y-3\.5 > div span:last-child {
@@ -2963,7 +2963,7 @@ a.sari-store-name-link:focus-visible {
 #cartSelectionHint {
     font-size: 7.8px !important;
     line-height: 1.55 !important;
-    color: #68737f !important;
+    color: var(--sari-dark-a63aa16d7c, #68737f) !important;
 }
 
 .sari-cart-summary .grid.grid-cols-3 p {
@@ -3009,14 +3009,14 @@ a.sari-store-name-link:focus-visible {
 
 /* Absolute final override for Remove label */
 .sari-btn-remove .sari-remove-label {
-    color: #ef4444 !important;
+    color: var(--sari-dark-65ed380fe4, #ef4444) !important;
     -webkit-text-fill-color: #ef4444 !important;
     opacity: 1 !important;
 }
 
 .sari-btn-remove:hover .sari-remove-label,
 .sari-btn-remove:focus-visible .sari-remove-label {
-    color: #dc2626 !important;
+    color: var(--sari-dark-0c8ad229f5, #dc2626) !important;
     -webkit-text-fill-color: #dc2626 !important;
 }
 
@@ -3036,7 +3036,7 @@ a.sari-store-name-link:focus-visible {
 .sari-cart-availability-text {
     display: inline !important;
     min-height: 0 !important;
-    color: #59636e !important;
+    color: var(--sari-dark-a63aa16d7c, #59636e) !important;
     font-size: 9px !important;
     font-weight: 650 !important;
     line-height: 1.4 !important;
@@ -3059,7 +3059,7 @@ a.sari-store-name-link:focus-visible {
     border-radius: 0 !important;
     background: transparent !important;
     padding: 0 !important;
-    color: #59636e !important;
+    color: var(--sari-dark-a63aa16d7c, #59636e) !important;
     font-size: 11.5px !important;
     font-weight: 750 !important;
     line-height: 1.35 !important;
@@ -3080,7 +3080,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-continue-text:hover,
 .sari-cart-continue-text:focus-visible {
-    color: #c88912 !important;
+    color: var(--sari-dark-19b301f69a, #c88912) !important;
     background: transparent !important;
     outline: none !important;
     text-decoration: none !important;
@@ -3089,12 +3089,12 @@ a.sari-store-name-link:focus-visible {
 
 /* Empty cart: soft neutral presentation, no cream icon treatment. */
 .sari-cart-empty-state {
-    border: 1px solid #e3e7eb !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #e3e7eb) !important;
     border-radius: 16px !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     padding-top: 72px !important;
     padding-bottom: 72px !important;
-    box-shadow: 0 10px 28px rgba(31,41,55,.045) !important;
+    box-shadow: 0 10px 28px var(--sari-dark-1190f58155, rgba(31,41,55,.045)) !important;
 }
 
 .sari-cart-empty-icon {
@@ -3103,21 +3103,21 @@ a.sari-store-name-link:focus-visible {
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
-    color: #b4bbc3 !important;
+    color: var(--sari-dark-a63aa16d7c, #b4bbc3) !important;
     box-shadow: none !important;
 }
 
 .sari-cart-empty-icon svg {
     width: 58px !important;
     height: 58px !important;
-    color: #b4bbc3 !important;
+    color: var(--sari-dark-a63aa16d7c, #b4bbc3) !important;
     stroke: currentColor !important;
     stroke-width: 1.45 !important;
 }
 
 .sari-cart-empty-title {
     margin-top: 18px !important;
-    color: #9ca4ad !important;
+    color: var(--sari-dark-a63aa16d7c, #9ca4ad) !important;
     font-size: 22px !important;
     font-weight: 750 !important;
     line-height: 1.2 !important;
@@ -3126,7 +3126,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-empty-copy {
     margin-top: 7px !important;
-    color: #b0b7bf !important;
+    color: var(--sari-dark-a63aa16d7c, #b0b7bf) !important;
     font-size: 12px !important;
     font-weight: 500 !important;
     line-height: 1.55 !important;
@@ -3158,7 +3158,7 @@ a.sari-store-name-link:focus-visible {
 
 /* Larger eyebrow label for cart page header. */
 [data-sari-cart-page] > section:first-of-type p:first-child {
-    color: #a87316 !important;
+    color: var(--sari-dark-685eb4fc40, #a87316) !important;
     font-size: 10.5px !important;
     font-weight: 800 !important;
     letter-spacing: .14em !important;
@@ -3231,7 +3231,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-seller-items {
     order: 2;
-    background: #f8f9fb !important;
+    background: var(--sari-dark-950baec030, #f8f9fb) !important;
     padding: 12px !important;
 }
 
@@ -3247,9 +3247,9 @@ a.sari-store-name-link:focus-visible {
     gap: 7px !important;
     border: 1px solid #d8b66e !important;
     border-radius: 10px !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     padding: 0 13px !important;
-    color: #8f5d0b !important;
+    color: var(--sari-dark-9b2ca2d764, #8f5d0b) !important;
     font-size: 9.5px !important;
     font-weight: 750 !important;
     line-height: 1 !important;
@@ -3290,15 +3290,15 @@ a.sari-store-name-link:focus-visible {
     align-items: center !important;
     justify-content: center !important;
     overflow: hidden !important;
-    border: 1px solid #e5e9ed !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e9ed) !important;
     border-radius: 12px !important;
-    background: #f8f9fb !important;
+    background: var(--sari-dark-950baec030, #f8f9fb) !important;
     padding: 8px !important;
     box-shadow: none !important;
 }
 
 .sari-cart-media-unavailable {
-    color: #8c96a1 !important;
+    color: var(--sari-dark-a63aa16d7c, #8c96a1) !important;
     font-size: 9px !important;
     font-weight: 650 !important;
     text-align: center !important;
@@ -3309,7 +3309,7 @@ a.sari-store-name-link:focus-visible {
     align-items: center;
     gap: 6px;
     margin: 8px 0 0 2px;
-    color: #5d7d68;
+    color: var(--sari-dark-a63aa16d7c, #5d7d68);
     font-size: 9px;
     font-weight: 650;
     line-height: 1.3;
@@ -3325,7 +3325,7 @@ a.sari-store-name-link:focus-visible {
 }
 
 .sari-cart-stock-text.is-out {
-    color: #a76666;
+    color: var(--sari-dark-a63aa16d7c, #a76666);
 }
 
 .sari-cart-stock-text.is-out .sari-cart-stock-dot {
@@ -3334,7 +3334,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-unavailable-text {
     margin-bottom: 6px;
-    color: #b25f5f;
+    color: var(--sari-dark-741e9fdd0a, #b25f5f);
     font-size: 9px;
     font-weight: 700;
 }
@@ -3345,9 +3345,9 @@ a.sari-store-name-link:focus-visible {
     align-items: center;
     justify-content: space-between;
     gap: 18px;
-    border-top: 1px solid #e7ece9;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #e7ece9);
     border-bottom: 0 !important;
-    background: #f7faf8;
+    background: var(--sari-dark-950baec030, #f7faf8);
     padding: 13px 16px;
 }
 
@@ -3363,14 +3363,14 @@ a.sari-store-name-link:focus-visible {
     height: 22px;
     flex: 0 0 22px;
     fill: none;
-    stroke: #4f8065;
+    stroke: var(--sari-dark-a63aa16d7c, #4f8065);
     stroke-width: 1.7;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
 .sari-shipping-footer-title {
-    color: #334a3c;
+    color: var(--sari-dark-e23e64dd1e, #334a3c);
     font-size: 10.5px;
     font-weight: 800;
     line-height: 1.3;
@@ -3378,7 +3378,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-shipping-footer-description {
     margin-top: 3px;
-    color: #718078;
+    color: var(--sari-dark-a63aa16d7c, #718078);
     font-size: 8.5px;
     font-weight: 500;
     line-height: 1.5;
@@ -3390,20 +3390,20 @@ a.sari-store-name-link:focus-visible {
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    border: 1px solid #d7e3db;
+    border: 1px solid var(--sari-dark-d8c2716225, #d7e3db);
     border-radius: 999px;
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
     padding: 0 12px;
-    color: #68786f;
+    color: var(--sari-dark-a63aa16d7c, #68786f);
     font-size: 8.5px;
     font-weight: 750;
     white-space: nowrap;
 }
 
 .sari-shipping-status[data-qualified="true"] {
-    border-color: #cde2d3;
-    background: #eef8f1;
-    color: #397451;
+    border-color: var(--sari-dark-d8c2716225, #cde2d3);
+    background: var(--sari-dark-4d21eb669b, #eef8f1);
+    color: var(--sari-dark-e23e64dd1e, #397451);
 }
 
 .sari-qty-save-status {
@@ -3411,22 +3411,22 @@ a.sari-store-name-link:focus-visible {
     min-width: 48px;
     min-height: 36px;
     align-items: center;
-    color: #8b949e;
+    color: var(--sari-dark-a63aa16d7c, #8b949e);
     font-size: 8px;
     font-weight: 650;
     line-height: 1;
 }
 
 .sari-qty-save-status[data-tone="saving"] {
-    color: #8b949e;
+    color: var(--sari-dark-a63aa16d7c, #8b949e);
 }
 
 .sari-qty-save-status[data-tone="saved"] {
-    color: #4f8065;
+    color: var(--sari-dark-a63aa16d7c, #4f8065);
 }
 
 .sari-qty-save-status[data-tone="error"] {
-    color: #c45151;
+    color: var(--sari-dark-e4fe02e52c, #c45151);
 }
 
 /* The quantity is persisted automatically; no manual Update control remains. */
@@ -3484,7 +3484,7 @@ a.sari-store-name-link:focus-visible {
 }
 
 .sari-cart-toolbar > div:last-child .text-\[7px\] {
-    color: #66717d !important;
+    color: var(--sari-dark-a63aa16d7c, #66717d) !important;
     font-size: 10.5px !important;
     font-weight: 600 !important;
 }
@@ -3496,7 +3496,7 @@ a.sari-store-name-link:focus-visible {
     border-radius: 0 !important;
     background: transparent !important;
     padding: 0 !important;
-    color: #222831 !important;
+    color: var(--sari-dark-e23e64dd1e, #222831) !important;
     font-size: 11px !important;
     font-weight: 750 !important;
     line-height: 1.35 !important;
@@ -3510,7 +3510,7 @@ a.sari-store-name-link:focus-visible {
 }
 
 .sari-cart-summary > div:first-child h2 {
-    color: #252c34 !important;
+    color: var(--sari-dark-e23e64dd1e, #252c34) !important;
     font-size: 19px !important;
     font-weight: 800 !important;
     line-height: 1.2 !important;
@@ -3525,25 +3525,25 @@ a.sari-store-name-link:focus-visible {
 }
 
 .sari-cart-summary .space-y-3\.5 > div span:first-child {
-    color: #65707b !important;
+    color: var(--sari-dark-a63aa16d7c, #65707b) !important;
     font-size: 11px !important;
     font-weight: 600 !important;
 }
 
 .sari-cart-summary .space-y-3\.5 > div span:last-child {
-    color: #2f3740 !important;
+    color: var(--sari-dark-e23e64dd1e, #2f3740) !important;
     font-size: 11.5px !important;
     font-weight: 750 !important;
 }
 
 .sari-cart-summary .space-y-3\.5 .text-\[9px\] {
-    color: #343c45 !important;
+    color: var(--sari-dark-e23e64dd1e, #343c45) !important;
     font-size: 12px !important;
     font-weight: 750 !important;
 }
 
 #cartSelectedTotal {
-    color: #b6760b !important;
+    color: var(--sari-dark-6e784b4931, #b6760b) !important;
     font-size: 28px !important;
     font-weight: 850 !important;
 }
@@ -3555,13 +3555,13 @@ a.sari-store-name-link:focus-visible {
 }
 
 #cartSelectionHint {
-    color: #687480 !important;
+    color: var(--sari-dark-a63aa16d7c, #687480) !important;
     font-size: 9.5px !important;
     line-height: 1.6 !important;
 }
 
 .sari-cart-summary .grid.grid-cols-3 p {
-    color: #66717d !important;
+    color: var(--sari-dark-a63aa16d7c, #66717d) !important;
     font-size: 8.5px !important;
     font-weight: 700 !important;
     line-height: 1.35 !important;
@@ -3607,7 +3607,7 @@ a.sari-store-name-link:focus-visible {
 ============================================================ */
 .sari-store-name-link,
 .sari-seller-shell > div:first-child h2 {
-    color: #202a35 !important;
+    color: var(--sari-dark-e23e64dd1e, #202a35) !important;
     font-size: 15px !important;
     font-weight: 800 !important;
     line-height: 1.2 !important;
@@ -3627,7 +3627,7 @@ a.sari-store-name-link:focus-visible {
 }
 
 .sari-seller-product-count {
-    color: #68737f !important;
+    color: var(--sari-dark-a63aa16d7c, #68737f) !important;
     font-size: 10.5px !important;
     font-weight: 650 !important;
 }
@@ -3650,14 +3650,14 @@ a.sari-store-name-link:focus-visible {
 }
 
 .sari-shipping-footer-title {
-    color: #2f4939 !important;
+    color: var(--sari-dark-e23e64dd1e, #2f4939) !important;
     font-size: 12.5px !important;
     font-weight: 800 !important;
 }
 
 .sari-shipping-footer-description {
     margin-top: 4px !important;
-    color: #65766c !important;
+    color: var(--sari-dark-a63aa16d7c, #65766c) !important;
     font-size: 10.5px !important;
     font-weight: 550 !important;
     line-height: 1.45 !important;
@@ -3677,7 +3677,7 @@ a.sari-store-name-link:focus-visible {
     aspect-ratio: 1 / 1 !important;
     overflow: hidden !important;
     border-radius: 13px !important;
-    background: #eef1f4 !important;
+    background: var(--sari-dark-4d21eb669b, #eef1f4) !important;
     padding: 0 !important;
 }
 
@@ -3698,7 +3698,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-stock-text {
     margin-top: 9px !important;
-    color: #527460 !important;
+    color: var(--sari-dark-a63aa16d7c, #527460) !important;
     font-size: 10.5px !important;
     font-weight: 700 !important;
 }
@@ -3711,7 +3711,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-product-name {
     margin-top: 2px !important;
-    color: #202a35 !important;
+    color: var(--sari-dark-e23e64dd1e, #202a35) !important;
     font-size: 16px !important;
     font-weight: 800 !important;
     line-height: 1.35 !important;
@@ -3721,7 +3721,7 @@ a.sari-store-name-link:focus-visible {
 /* Variant details intentionally get stronger readability. */
 .sari-cart-variant-text {
     margin-top: 7px !important;
-    color: #5d6976 !important;
+    color: var(--sari-dark-a63aa16d7c, #5d6976) !important;
     font-size: 12.5px !important;
     font-weight: 650 !important;
     line-height: 1.5 !important;
@@ -3729,14 +3729,14 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-unit-price {
     margin-top: 5px !important;
-    color: #6f7a86 !important;
+    color: var(--sari-dark-a63aa16d7c, #6f7a86) !important;
     font-size: 12px !important;
     font-weight: 600 !important;
     line-height: 1.45 !important;
 }
 
 .sari-cart-line-total {
-    color: #b6760b !important;
+    color: var(--sari-dark-6e784b4931, #b6760b) !important;
     font-size: 22px !important;
     font-weight: 850 !important;
     line-height: 1.1 !important;
@@ -3744,14 +3744,14 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-line-total-label {
     margin-top: 4px !important;
-    color: #7e8994 !important;
+    color: var(--sari-dark-a63aa16d7c, #7e8994) !important;
     font-size: 10px !important;
     font-weight: 650 !important;
 }
 
 .sari-cart-quantity-label {
     margin-bottom: 8px !important;
-    color: #697581 !important;
+    color: var(--sari-dark-a63aa16d7c, #697581) !important;
     font-size: 10px !important;
     font-weight: 800 !important;
     letter-spacing: .12em !important;
@@ -3846,15 +3846,15 @@ a.sari-store-name-link:focus-visible {
 /* Selected product: stay white, glow only. */
 .sari-cart-row[data-selected="true"] {
     border-color: #d7a53a !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     box-shadow:
-        0 0 0 2px rgba(200,137,18,.10),
-        0 10px 26px rgba(200,137,18,.12) !important;
+        0 0 0 2px var(--sari-dark-8eadf403a5, rgba(200,137,18,.10)),
+        0 10px 26px var(--sari-dark-3b2338cbf0, rgba(200,137,18,.12)) !important;
 }
 
 /* Stronger product content hierarchy. */
 .sari-cart-product-name {
-    color: #18212b !important;
+    color: var(--sari-dark-e23e64dd1e, #18212b) !important;
     font-size: 18.5px !important;
     font-weight: 800 !important;
     line-height: 1.32 !important;
@@ -3863,7 +3863,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-variant-text {
     margin-top: 8px !important;
-    color: #465361 !important;
+    color: var(--sari-dark-e23e64dd1e, #465361) !important;
     font-size: 14px !important;
     font-weight: 700 !important;
     line-height: 1.5 !important;
@@ -3871,7 +3871,7 @@ a.sari-store-name-link:focus-visible {
 
 .sari-cart-unit-price {
     margin-top: 6px !important;
-    color: #596675 !important;
+    color: var(--sari-dark-a63aa16d7c, #596675) !important;
     font-size: 13.5px !important;
     font-weight: 650 !important;
     line-height: 1.45 !important;
@@ -3884,7 +3884,7 @@ a.sari-store-name-link:focus-visible {
 
 /* Seller product count is easier to scan. */
 .sari-seller-product-count {
-    color: #4f5b67 !important;
+    color: var(--sari-dark-e23e64dd1e, #4f5b67) !important;
     font-size: 12.5px !important;
     font-weight: 700 !important;
 }
@@ -3900,7 +3900,7 @@ a.sari-store-name-link:focus-visible {
     color: #ffffff !important;
     font-size: 11.5px !important;
     font-weight: 800 !important;
-    box-shadow: 0 6px 14px rgba(200,137,18,.15) !important;
+    box-shadow: 0 6px 14px var(--sari-dark-f4efbbfaa5, rgba(200,137,18,.15)) !important;
 }
 
 .sari-view-seller-link svg,
@@ -3918,7 +3918,7 @@ a.sari-store-name-link:focus-visible {
     border-color: #ad760f !important;
     background: #ad760f !important;
     color: #ffffff !important;
-    box-shadow: 0 8px 18px rgba(173,118,15,.18) !important;
+    box-shadow: 0 8px 18px var(--sari-dark-3793f9e558, rgba(173,118,15,.18)) !important;
 }
 
 /* Brighter verified seller badge. */
@@ -3932,7 +3932,7 @@ a.sari-store-name-link:focus-visible {
     color: #ffffff !important;
     font-size: 11.5px !important;
     font-weight: 800 !important;
-    box-shadow: 0 5px 12px rgba(34,197,94,.16) !important;
+    box-shadow: 0 5px 12px var(--sari-dark-b5c2a2270e, rgba(34,197,94,.16)) !important;
 }
 
 .sari-verified-seller-badge svg {
@@ -3951,7 +3951,7 @@ a.sari-store-name-link:focus-visible {
     color: #ffffff !important;
     font-size: 11.5px !important;
     font-weight: 800 !important;
-    box-shadow: 0 5px 12px rgba(34,197,94,.14) !important;
+    box-shadow: 0 5px 12px var(--sari-dark-59ed29fe9d, rgba(34,197,94,.14)) !important;
 }
 
 @media (max-width: 767px) {
@@ -3993,7 +3993,7 @@ a.sari-store-name-link:focus-visible {
     border-radius: 999px !important;
     background: transparent !important;
     padding: 0 13px !important;
-    color: #16a34a !important;
+    color: var(--sari-dark-bc794282b4, #16a34a) !important;
     font-size: 12.5px !important;
     font-weight: 800 !important;
     box-shadow: none !important;
@@ -4002,8 +4002,8 @@ a.sari-store-name-link:focus-visible {
 .sari-verified-seller-badge svg {
     width: 16px !important;
     height: 16px !important;
-    color: #16a34a !important;
-    stroke: #16a34a !important;
+    color: var(--sari-dark-bc794282b4, #16a34a) !important;
+    stroke: var(--sari-dark-bc794282b4, #16a34a) !important;
 }
 
 .sari-shipping-status[data-qualified="true"] {
@@ -4012,7 +4012,7 @@ a.sari-store-name-link:focus-visible {
     border: 1.5px solid #16a34a !important;
     background: transparent !important;
     padding-inline: 15px !important;
-    color: #16a34a !important;
+    color: var(--sari-dark-bc794282b4, #16a34a) !important;
     font-size: 12.5px !important;
     font-weight: 800 !important;
     box-shadow: none !important;
@@ -4034,7 +4034,7 @@ a.sari-store-name-link:focus-visible {
 }
 
 .sari-seller-product-count {
-    color: #37424d !important;
+    color: var(--sari-dark-e23e64dd1e, #37424d) !important;
     font-size: 14px !important;
     font-weight: 800 !important;
 }
@@ -4078,7 +4078,7 @@ a.sari-store-name-link:focus-visible {
    Verification/status/trust UI removed from markup.
 ============================================================ */
 .sari-seller-product-count {
-    color: #303943 !important;
+    color: var(--sari-dark-e23e64dd1e, #303943) !important;
     font-size: 15px !important;
     font-weight: 800 !important;
     line-height: 1.2 !important;
@@ -4144,7 +4144,7 @@ a.sari-store-name-link:focus-visible {
    Beats legacy high-specificity !important rules.
 ============================================================ */
 [data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child .sari-seller-product-count {
-    color: #303943 !important;
+    color: var(--sari-dark-e23e64dd1e, #303943) !important;
     font-size: 12.5px !important;
     font-weight: 750 !important;
     line-height: 1.2 !important;
@@ -4181,7 +4181,7 @@ a.sari-store-name-link:focus-visible {
 }
 
 [data-sari-cart-page] .sari-cart-row .sari-btn-remove .sari-remove-label {
-    color: #ef4444 !important;
+    color: var(--sari-dark-65ed380fe4, #ef4444) !important;
     -webkit-text-fill-color: #ef4444 !important;
     font-size: 11.5px !important;
     font-weight: 800 !important;
@@ -4224,7 +4224,7 @@ a.sari-store-name-link:focus-visible {
 
 /* Balanced final sizes after button typography tuning. */
 [data-sari-cart-page] .sari-summary-selected-count {
-    color: #222831 !important;
+    color: var(--sari-dark-e23e64dd1e, #222831) !important;
     font-size: 12.5px !important;
     font-weight: 750 !important;
 }
@@ -4241,7 +4241,7 @@ a.sari-store-name-link:focus-visible {
    Stronger readability without changing cart behavior.
 ============================================================ */
 [data-sari-cart-page] .sari-cart-row .sari-cart-product-name {
-    color: #1f2933 !important;
+    color: var(--sari-dark-e23e64dd1e, #1f2933) !important;
     font-size: 15.5px !important;
     font-weight: 650 !important;
     line-height: 1.32 !important;
@@ -4250,7 +4250,7 @@ a.sari-store-name-link:focus-visible {
 
 [data-sari-cart-page] .sari-cart-row .sari-cart-variant-text {
     margin-top: 8px !important;
-    color: #4d5a68 !important;
+    color: var(--sari-dark-e23e64dd1e, #4d5a68) !important;
     font-size: 12.5px !important;
     font-weight: 500 !important;
     line-height: 1.5 !important;
@@ -4258,7 +4258,7 @@ a.sari-store-name-link:focus-visible {
 
 [data-sari-cart-page] .sari-cart-row .sari-cart-unit-price {
     margin-top: 6px !important;
-    color: #687482 !important;
+    color: var(--sari-dark-a63aa16d7c, #687482) !important;
     font-size: 11.5px !important;
     font-weight: 500 !important;
     line-height: 1.45 !important;
@@ -4266,7 +4266,7 @@ a.sari-store-name-link:focus-visible {
 
 /* Cleaner seller identity: stronger name, neutral text, gold only on interaction. */
 [data-sari-cart-page] .sari-seller-shell > div:first-child .sari-store-name-link {
-    color: #27313b !important;
+    color: var(--sari-dark-e23e64dd1e, #27313b) !important;
     font-size: 14.5px !important;
     font-weight: 650 !important;
     line-height: 1.2 !important;
@@ -4275,7 +4275,7 @@ a.sari-store-name-link:focus-visible {
 
 [data-sari-cart-page] .sari-seller-shell > div:first-child a.sari-store-name-link:hover,
 [data-sari-cart-page] .sari-seller-shell > div:first-child a.sari-store-name-link:focus-visible {
-    color: #a96f0e !important;
+    color: var(--sari-dark-6e784b4931, #a96f0e) !important;
 }
 
 /* Give the product count and View Seller action deliberate breathing room. */
@@ -4326,7 +4326,7 @@ a.sari-store-name-link:focus-visible {
    Elevation is reserved for top-level surfaces; inner items stay flat.
 ============================================================ */
 [data-sari-cart-page] {
-    --cart-float-border: #e5e7eb;
+    --cart-float-border: var(--sari-dark-d8c2716225, #e5e7eb);
     --cart-float-strong:
         0 2px 5px rgba(15, 23, 42, .045),
         0 10px 24px rgba(15, 23, 42, .075),
@@ -4342,7 +4342,7 @@ a.sari-store-name-link:focus-visible {
 /* Select All: a lighter floating control panel. */
 [data-sari-cart-page] .sari-cart-toolbar {
     border-color: var(--cart-float-border) !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     box-shadow: var(--cart-float-soft) !important;
 }
 
@@ -4350,14 +4350,14 @@ a.sari-store-name-link:focus-visible {
 [data-sari-cart-page] .sari-seller-shell,
 [data-sari-cart-page] .sari-cart-summary {
     border-color: var(--cart-float-border) !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     box-shadow: var(--cart-float-strong) !important;
 }
 
 /* Empty cart shares the same elevation without lifting inner content. */
 [data-sari-cart-page] .sari-cart-empty-state {
     border-color: var(--cart-float-border) !important;
-    background: #ffffff !important;
+    background: var(--sari-dark-950baec030, #ffffff) !important;
     box-shadow: var(--cart-float-strong) !important;
 }
 
@@ -4375,10 +4375,10 @@ a.sari-store-name-link:focus-visible {
     [data-sari-cart-page] .sari-cart-summary,
     [data-sari-cart-page] .sari-cart-empty-state {
         box-shadow:
-            0 1px 3px rgba(15, 23, 42, .035),
-            0 6px 16px rgba(15, 23, 42, .055),
-            0 13px 28px rgba(15, 23, 42, .065),
-            inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+            0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 6px 16px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+            0 13px 28px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90)) !important;
     }
 }
 </style>

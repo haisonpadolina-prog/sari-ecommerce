@@ -146,11 +146,11 @@
         --sari-gold: #c98913;
         --sari-gold-dark: #9d6910;
         --sari-gold-soft: #fff7e8;
-        --sari-ink: #25211d;
-        --sari-text: #514a43;
-        --sari-muted: #8d857c;
-        --sari-border: #e8e3dc;
-        --sari-surface: #ffffff;
+        --sari-ink: var(--sari-dark-e23e64dd1e, #25211d);
+        --sari-text: var(--sari-dark-e23e64dd1e, #514a43);
+        --sari-muted: var(--sari-dark-a63aa16d7c, #8d857c);
+        --sari-border: var(--sari-dark-d8c2716225, #e8e3dc);
+        --sari-surface: var(--sari-dark-950baec030, #ffffff);
         --sari-subtle: #f8f7f5;
         --sari-success: #37805a;
         font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -179,7 +179,7 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        color: #716961;
+        color: var(--sari-dark-a63aa16d7c, #716961);
         font-size: 12px;
         font-weight: 600;
         text-decoration: none;
@@ -210,9 +210,9 @@
         gap: 7px;
         border: 1px solid var(--sari-border);
         border-radius: 10px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 13px;
-        color: #625b54;
+        color: var(--sari-dark-e23e64dd1e, #625b54);
         font-size: 10.5px;
         font-weight: 650;
         text-decoration: none;
@@ -221,7 +221,7 @@
 
     .sari-track-action:hover {
         border-color: #d9bb80;
-        background: #fffbf3;
+        background: var(--sari-dark-950baec030, #fffbf3);
         color: var(--sari-gold-dark);
     }
 
@@ -299,7 +299,7 @@
     }
 
     .sari-track-meta strong {
-        color: #5a524a;
+        color: var(--sari-dark-e23e64dd1e, #5a524a);
         font-weight: 600;
     }
 
@@ -311,7 +311,7 @@
         border: 1px solid var(--sari-border);
         border-radius: 13px;
         overflow: hidden;
-        background: #fbfaf8;
+        background: var(--sari-dark-950baec030, #fbfaf8);
     }
 
     .sari-track-stat {
@@ -334,7 +334,7 @@
     .sari-track-stat-value {
         display: block;
         margin-top: 5px;
-        color: #37322d;
+        color: var(--sari-dark-e23e64dd1e, #37322d);
         font-size: 12px;
         font-weight: 700;
     }
@@ -345,7 +345,7 @@
     }
 
     .sari-track-progress-wrap {
-        border-top: 1px solid #eee9e3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
         padding: 21px 26px 22px;
     }
 
@@ -368,7 +368,7 @@
     }
 
     .sari-track-progress::before {
-        background: #e8e3dc;
+        background: var(--sari-dark-4d21eb669b, #e8e3dc);
     }
 
     .sari-track-progress::after {
@@ -391,10 +391,10 @@
         height: 28px;
         margin: 0 auto;
         place-items: center;
-        border: 2px solid #ded8d1;
+        border: 2px solid var(--sari-dark-d8c2716225, #ded8d1);
         border-radius: 50%;
-        background: #fff;
-        color: #a9a098;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #a9a098);
         font-size: 9px;
         font-weight: 700;
     }
@@ -407,12 +407,12 @@
     }
 
     .sari-track-progress-step.is-current .sari-track-progress-dot {
-        box-shadow: 0 0 0 5px rgba(201, 137, 19, .09);
+        box-shadow: 0 0 0 5px var(--sari-dark-b12a5e9552, rgba(201, 137, 19, .09));
     }
 
     .sari-track-progress-label {
         margin: 8px 0 0;
-        color: #918980;
+        color: var(--sari-dark-a63aa16d7c, #918980);
         font-size: 9px;
         line-height: 1.35;
         font-weight: 600;
@@ -420,7 +420,7 @@
 
     .sari-track-progress-step.is-complete .sari-track-progress-label,
     .sari-track-progress-step.is-current .sari-track-progress-label {
-        color: #443d37;
+        color: var(--sari-dark-e23e64dd1e, #443d37);
         font-weight: 700;
     }
 
@@ -430,9 +430,9 @@
         justify-content: space-between;
         gap: 18px;
         margin-top: 14px;
-        border: 1px solid #eee7dc;
+        border: 1px solid var(--sari-dark-d8c2716225, #eee7dc);
         border-radius: 14px;
-        background: #fffdf9;
+        background: var(--sari-dark-950baec030, #fffdf9);
         padding: 14px 16px;
     }
 
@@ -442,7 +442,7 @@
 
     .sari-track-current-title {
         margin: 0;
-        color: #38322d;
+        color: var(--sari-dark-e23e64dd1e, #38322d);
         font-size: 12.5px;
         font-weight: 700;
     }
@@ -457,7 +457,7 @@
     .sari-track-current-badge {
         flex: 0 0 auto;
         border-radius: 9px;
-        background: #f7f3eb;
+        background: var(--sari-dark-4d21eb669b, #f7f3eb);
         padding: 8px 10px;
         color: var(--sari-gold-dark);
         font-size: 9px;
@@ -475,7 +475,7 @@
     .sari-track-panel {
         border: 1px solid var(--sari-border);
         border-radius: 17px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .sari-track-panel-head {
@@ -483,7 +483,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 16px;
-        border-bottom: 1px solid #eee9e3;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
         padding: 17px 19px;
     }
 
@@ -498,14 +498,14 @@
 
     .sari-track-panel-title {
         margin: 3px 0 0;
-        color: #332e29;
+        color: var(--sari-dark-e23e64dd1e, #332e29);
         font-size: 15px;
         font-weight: 700;
         letter-spacing: -.015em;
     }
 
     .sari-track-panel-note {
-        color: #9a9188;
+        color: var(--sari-dark-a63aa16d7c, #9a9188);
         font-size: 8.5px;
         font-weight: 500;
     }
@@ -516,7 +516,7 @@
     }
 
     .sari-track-timeline {
-        border-right: 1px solid #eee9e3;
+        border-right: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
         padding: 18px 18px 18px 19px;
     }
 
@@ -539,7 +539,7 @@
         bottom: -1px;
         left: 10px;
         width: 1px;
-        background: #e7e2dc;
+        background: var(--sari-dark-4d21eb669b, #e7e2dc);
     }
 
     .sari-track-event:last-child::before {
@@ -557,46 +557,46 @@
         width: 22px;
         height: 22px;
         place-items: center;
-        border: 1px solid #ddd7d0;
+        border: 1px solid var(--sari-dark-d8c2716225, #ddd7d0);
         border-radius: 50%;
-        background: #fff;
-        color: #aaa29a;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #aaa29a);
         font-size: 7px;
         font-weight: 700;
     }
 
     .sari-track-event.is-complete .sari-track-event-dot {
         border-color: #dab468;
-        background: #fff8ea;
+        background: var(--sari-dark-4d21eb669b, #fff8ea);
         color: var(--sari-gold-dark);
     }
 
     .sari-track-event.is-current .sari-track-event-dot {
-        box-shadow: 0 0 0 4px rgba(201, 137, 19, .09);
+        box-shadow: 0 0 0 4px var(--sari-dark-b12a5e9552, rgba(201, 137, 19, .09));
     }
 
     .sari-track-event-title {
         margin: 1px 0 0;
-        color: #3d3732;
+        color: var(--sari-dark-e23e64dd1e, #3d3732);
         font-size: 10.5px;
         line-height: 1.4;
         font-weight: 700;
     }
 
     .sari-track-event:not(.is-complete) .sari-track-event-title {
-        color: #9c948c;
+        color: var(--sari-dark-a63aa16d7c, #9c948c);
     }
 
     .sari-track-event-time {
         margin: 3px 0 0;
-        color: #9b9289;
+        color: var(--sari-dark-a63aa16d7c, #9b9289);
         font-size: 7.5px;
         font-weight: 500;
     }
 
     .sari-track-event-copy {
         margin: 4px 0 0;
-        color: #887f76;
+        color: var(--sari-dark-a63aa16d7c, #887f76);
         font-size: 8.5px;
         line-height: 1.5;
     }
@@ -609,9 +609,9 @@
         position: relative;
         min-height: 385px;
         overflow: hidden;
-        border: 1px solid #e7e2dc;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e2dc);
         border-radius: 14px;
-        background: #f6f5f2;
+        background: var(--sari-dark-4d21eb669b, #f6f5f2);
     }
 
     .sari-track-map-bar {
@@ -624,24 +624,24 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        border: 1px solid rgba(255,255,255,.9);
+        border: 1px solid var(--sari-dark-bf6dec1266, rgba(255,255,255,.9));
         border-radius: 11px;
-        background: rgba(255,255,255,.94);
+        background: var(--sari-dark-fa7f649147, rgba(255,255,255,.94));
         padding: 10px 11px;
-        box-shadow: 0 8px 20px rgba(45,39,33,.05);
+        box-shadow: 0 8px 20px var(--sari-dark-1df26971b5, rgba(45,39,33,.05));
         backdrop-filter: blur(6px);
     }
 
     .sari-track-map-title {
         margin: 0;
-        color: #3a3530;
+        color: var(--sari-dark-e23e64dd1e, #3a3530);
         font-size: 9.5px;
         font-weight: 700;
     }
 
     .sari-track-map-sub {
         margin: 2px 0 0;
-        color: #948b82;
+        color: var(--sari-dark-a63aa16d7c, #948b82);
         font-size: 7.5px;
     }
 
@@ -677,24 +677,24 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        border: 1px solid rgba(255,255,255,.9);
+        border: 1px solid var(--sari-dark-bf6dec1266, rgba(255,255,255,.9));
         border-radius: 11px;
-        background: rgba(255,255,255,.95);
+        background: var(--sari-dark-ff55c56e19, rgba(255,255,255,.95));
         padding: 10px 11px;
-        box-shadow: 0 8px 20px rgba(45,39,33,.05);
+        box-shadow: 0 8px 20px var(--sari-dark-1df26971b5, rgba(45,39,33,.05));
         backdrop-filter: blur(6px);
     }
 
     .sari-track-courier-name {
         margin: 0;
-        color: #3f3933;
+        color: var(--sari-dark-e23e64dd1e, #3f3933);
         font-size: 9.5px;
         font-weight: 700;
     }
 
     .sari-track-courier-note {
         margin: 2px 0 0;
-        color: #958b82;
+        color: var(--sari-dark-a63aa16d7c, #958b82);
         font-size: 7.5px;
         line-height: 1.4;
     }
@@ -720,7 +720,7 @@
 
     .sari-track-summary-title {
         margin: 0;
-        color: #342f2a;
+        color: var(--sari-dark-e23e64dd1e, #342f2a);
         font-size: 14px;
         font-weight: 700;
     }
@@ -730,9 +730,9 @@
         min-height: 23px;
         align-items: center;
         border-radius: 999px;
-        background: #f7f5f1;
+        background: var(--sari-dark-4d21eb669b, #f7f5f1);
         padding: 0 8px;
-        color: #81786f;
+        color: var(--sari-dark-a63aa16d7c, #81786f);
         font-size: 7.5px;
         font-weight: 650;
     }
@@ -750,14 +750,14 @@
     }
 
     .sari-track-summary-row dt {
-        color: #91887f;
+        color: var(--sari-dark-a63aa16d7c, #91887f);
         font-size: 8.5px;
         line-height: 1.45;
     }
 
     .sari-track-summary-row dd {
         margin: 0;
-        color: #48413a;
+        color: var(--sari-dark-e23e64dd1e, #48413a);
         font-size: 8.5px;
         line-height: 1.45;
         font-weight: 650;
@@ -766,32 +766,32 @@
 
     .sari-track-summary-address {
         margin-top: 11px;
-        border-top: 1px solid #eee9e3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
         padding-top: 13px;
     }
 
     .sari-track-summary-address-label {
-        color: #91887f;
+        color: var(--sari-dark-a63aa16d7c, #91887f);
         font-size: 8.5px;
     }
 
     .sari-track-summary-address-name {
         margin: 5px 0 0;
-        color: #433d37;
+        color: var(--sari-dark-e23e64dd1e, #433d37);
         font-size: 9.5px;
         font-weight: 700;
     }
 
     .sari-track-summary-address-copy {
         margin: 3px 0 0;
-        color: #837a72;
+        color: var(--sari-dark-a63aa16d7c, #837a72);
         font-size: 8px;
         line-height: 1.55;
     }
 
     .sari-track-totals {
         margin-top: 13px;
-        border-top: 1px solid #eee9e3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
         padding-top: 11px;
     }
 
@@ -804,24 +804,24 @@
     }
 
     .sari-track-total-row span:first-child {
-        color: #8f867d;
+        color: var(--sari-dark-a63aa16d7c, #8f867d);
         font-size: 8.5px;
     }
 
     .sari-track-total-row span:last-child {
-        color: #45403a;
+        color: var(--sari-dark-e23e64dd1e, #45403a);
         font-size: 9px;
         font-weight: 650;
     }
 
     .sari-track-total-row--grand {
         margin-top: 8px;
-        border-top: 1px solid #eee9e3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
         padding-top: 11px;
     }
 
     .sari-track-total-row--grand span:first-child {
-        color: #38332e;
+        color: var(--sari-dark-e23e64dd1e, #38332e);
         font-size: 10px;
         font-weight: 700;
     }
@@ -861,7 +861,7 @@
 
     .sari-track-courier-label {
         margin: 0;
-        color: #91887f;
+        color: var(--sari-dark-a63aa16d7c, #91887f);
         font-size: 7.5px;
         font-weight: 650;
         letter-spacing: .08em;
@@ -870,16 +870,16 @@
 
     .sari-track-courier-value {
         margin: 3px 0 0;
-        color: #39342f;
+        color: var(--sari-dark-e23e64dd1e, #39342f);
         font-size: 10.5px;
         font-weight: 700;
     }
 
     .sari-track-courier-contact {
         margin-top: 12px;
-        border-top: 1px solid #eee9e3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
         padding-top: 11px;
-        color: #7f776f;
+        color: var(--sari-dark-a63aa16d7c, #7f776f);
         font-size: 8px;
         line-height: 1.5;
     }
@@ -901,7 +901,7 @@
     }
 
     .sari-track-item + .sari-track-item {
-        border-top: 1px solid #eee9e3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
     }
 
     .sari-track-item-main {
@@ -918,10 +918,10 @@
         flex: 0 0 46px;
         overflow: hidden;
         place-items: center;
-        border: 1px solid #e9e4de;
+        border: 1px solid var(--sari-dark-d8c2716225, #e9e4de);
         border-radius: 10px;
-        background: #f8f7f5;
-        color: #aaa29a;
+        background: var(--sari-dark-950baec030, #f8f7f5);
+        color: var(--sari-dark-a63aa16d7c, #aaa29a);
     }
 
     .sari-track-item-image img {
@@ -938,7 +938,7 @@
     .sari-track-item-name {
         margin: 0;
         overflow: hidden;
-        color: #413b35;
+        color: var(--sari-dark-e23e64dd1e, #413b35);
         font-size: 10px;
         font-weight: 700;
         text-overflow: ellipsis;
@@ -947,13 +947,13 @@
 
     .sari-track-item-meta {
         margin: 4px 0 0;
-        color: #948b83;
+        color: var(--sari-dark-a63aa16d7c, #948b83);
         font-size: 8px;
     }
 
     .sari-track-item-price {
         flex: 0 0 auto;
-        color: #37322d;
+        color: var(--sari-dark-e23e64dd1e, #37322d);
         font-size: 10.5px;
         font-weight: 700;
     }
@@ -963,9 +963,9 @@
         align-items: flex-start;
         gap: 10px;
         margin-top: 16px;
-        border: 1px solid #eadfc9;
+        border: 1px solid var(--sari-dark-d8c2716225, #eadfc9);
         border-radius: 14px;
-        background: #fffaf1;
+        background: var(--sari-dark-950baec030, #fffaf1);
         padding: 13px 14px;
     }
 
@@ -979,41 +979,41 @@
 
     .sari-track-reminder strong {
         display: block;
-        color: #61513a;
+        color: var(--sari-dark-e23e64dd1e, #61513a);
         font-size: 9.5px;
     }
 
     .sari-track-reminder p {
         margin: 3px 0 0;
-        color: #8a7657;
+        color: var(--sari-dark-a63aa16d7c, #8a7657);
         font-size: 8.5px;
         line-height: 1.5;
     }
 
     .sari-track-cancelled {
-        border: 1px solid #efd1d1;
+        border: 1px solid var(--sari-dark-d8c2716225, #efd1d1);
         border-radius: 17px;
-        background: #fffafa;
+        background: var(--sari-dark-950baec030, #fffafa);
         padding: 18px;
     }
 
     .sari-track-cancelled-title {
         margin: 0;
-        color: #944848;
+        color: var(--sari-dark-a63aa16d7c, #944848);
         font-size: 14px;
         font-weight: 700;
     }
 
     .sari-track-cancelled-copy {
         margin: 5px 0 0;
-        color: #946f6f;
+        color: var(--sari-dark-a63aa16d7c, #946f6f);
         font-size: 9.5px;
         line-height: 1.55;
     }
 
     .sari-track-cancelled-time {
         margin: 8px 0 0;
-        color: #a98c8c;
+        color: var(--sari-dark-a63aa16d7c, #a98c8c);
         font-size: 8px;
     }
 
@@ -1092,7 +1092,7 @@
 
         .sari-track-timeline {
             border-right: 0;
-            border-bottom: 1px solid #eee9e3;
+            border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
         }
 
         .sari-track-side {
@@ -1162,7 +1162,7 @@
         align-items: center;
         border: 1px solid var(--sari-border);
         border-radius: 18px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 16px 18px;
     }
 
@@ -1172,10 +1172,10 @@
         height: 92px;
         place-items: center;
         overflow: hidden;
-        border: 1px solid #e8e3dc;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e3dc);
         border-radius: 14px;
-        background: #f8f7f5;
-        color: #aaa29a;
+        background: var(--sari-dark-950baec030, #f8f7f5);
+        color: var(--sari-dark-a63aa16d7c, #aaa29a);
     }
 
     .sari-track-product-media img {
@@ -1202,7 +1202,7 @@
     }
 
     .sari-track-product-label {
-        color: #9a9188;
+        color: var(--sari-dark-a63aa16d7c, #9a9188);
         font-size: 8.5px;
         font-weight: 650;
         letter-spacing: .08em;
@@ -1212,7 +1212,7 @@
     .sari-track-product-name {
         margin: 8px 0 0;
         overflow: hidden;
-        color: #2f2a26;
+        color: var(--sari-dark-e23e64dd1e, #2f2a26);
         font-size: clamp(20px, 2.3vw, 27px);
         line-height: 1.2;
         font-weight: 700;
@@ -1226,7 +1226,7 @@
         flex-wrap: wrap;
         gap: 6px;
         margin: 7px 0 0;
-        color: #837b73;
+        color: var(--sari-dark-a63aa16d7c, #837b73);
         font-size: 9.5px;
         line-height: 1.5;
     }
@@ -1237,24 +1237,24 @@
         align-items: center;
         gap: 7px;
         margin-top: 9px;
-        color: #9a9188;
+        color: var(--sari-dark-a63aa16d7c, #9a9188);
         font-size: 8.5px;
         font-weight: 500;
     }
 
     .sari-track-product-order-dot {
-        color: #c9c2ba;
+        color: var(--sari-dark-a63aa16d7c, #c9c2ba);
     }
 
     .sari-track-product-side {
         min-width: 0;
-        border-left: 1px solid #eee9e3;
+        border-left: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
         padding-left: 18px;
     }
 
     .sari-track-product-side-label {
         display: block;
-        color: #978e85;
+        color: var(--sari-dark-a63aa16d7c, #978e85);
         font-size: 7.5px;
         font-weight: 650;
         letter-spacing: .08em;
@@ -1264,7 +1264,7 @@
     .sari-track-product-side strong {
         display: block;
         margin-top: 6px;
-        color: #3c3631;
+        color: var(--sari-dark-e23e64dd1e, #3c3631);
         font-size: 11.5px;
         line-height: 1.45;
         font-weight: 700;
@@ -1273,7 +1273,7 @@
     .sari-track-product-side small {
         display: block;
         margin-top: 4px;
-        color: #8c837a;
+        color: var(--sari-dark-a63aa16d7c, #8c837a);
         font-size: 8.5px;
         line-height: 1.5;
     }
@@ -1293,7 +1293,7 @@
 
         .sari-track-product-side {
             grid-column: 1 / -1;
-            border-top: 1px solid #eee9e3;
+            border-top: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
             border-left: 0;
             padding-top: 12px;
             padding-left: 0;
@@ -1321,11 +1321,11 @@
        DELIVERY JOURNEY — SARI GOLD PROGRESS PALETTE
     ============================================================ */
     .sari-track-timeline {
-        background: #ffffff;
+        background: var(--sari-dark-950baec030, #ffffff);
     }
 
     .sari-track-event::before {
-        background: #eadfc9 !important;
+        background: var(--sari-dark-4d21eb669b, #eadfc9) !important;
     }
 
     .sari-track-event.is-complete::before {
@@ -1333,9 +1333,9 @@
     }
 
     .sari-track-event-dot {
-        border-color: #e2dbd1 !important;
-        background: #ffffff !important;
-        color: #a69c91 !important;
+        border-color: var(--sari-dark-d8c2716225, #e2dbd1) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        color: var(--sari-dark-a63aa16d7c, #a69c91) !important;
         box-shadow: none !important;
     }
 
@@ -1349,45 +1349,45 @@
         border-color: #b87905 !important;
         background: #b87905 !important;
         color: #ffffff !important;
-        box-shadow: 0 0 0 5px rgba(201, 135, 17, .10) !important;
+        box-shadow: 0 0 0 5px var(--sari-dark-8eadf403a5, rgba(201, 135, 17, .10)) !important;
     }
 
     .sari-track-event.is-complete .sari-track-event-title {
-        color: #453821 !important;
+        color: var(--sari-dark-e23e64dd1e, #453821) !important;
     }
 
     .sari-track-event.is-current .sari-track-event-title {
-        color: #8d5d08 !important;
+        color: var(--sari-dark-af18afcaa4, #8d5d08) !important;
     }
 
     .sari-track-event:not(.is-complete) .sari-track-event-title {
-        color: #9c948c !important;
+        color: var(--sari-dark-a63aa16d7c, #9c948c) !important;
     }
 
     .sari-track-event.is-complete .sari-track-event-time {
-        color: #b17a18 !important;
+        color: var(--sari-dark-685eb4fc40, #b17a18) !important;
         font-weight: 600 !important;
     }
 
     .sari-track-event.is-current .sari-track-event-time {
-        color: #9b6509 !important;
+        color: var(--sari-dark-6e784b4931, #9b6509) !important;
         font-weight: 700 !important;
     }
 
     .sari-track-event.is-complete .sari-track-event-copy {
-        color: #76664d !important;
+        color: var(--sari-dark-a63aa16d7c, #76664d) !important;
     }
 
     .sari-track-event.is-current .sari-track-event-copy {
-        color: #72582d !important;
+        color: var(--sari-dark-e23e64dd1e, #72582d) !important;
     }
 
     .sari-track-event.is-current {
         margin: 2px -8px 14px;
         padding: 10px 8px 18px;
-        border: 1px solid #eadfcd;
+        border: 1px solid var(--sari-dark-d8c2716225, #eadfcd);
         border-radius: 12px;
-        background: #ffffff;
+        background: var(--sari-dark-950baec030, #ffffff);
     }
 
     .sari-track-event.is-current::before {
@@ -1407,7 +1407,7 @@
         position: relative;
         min-height: 430px;
         overflow: hidden;
-        background: #eef1ed;
+        background: var(--sari-dark-4d21eb669b, #eef1ed);
     }
 
     #sariBuyerDeliveryMap {
@@ -1423,7 +1423,7 @@
         inset: 0;
         width: 100%;
         height: 100%;
-        background: #eef1ed;
+        background: var(--sari-dark-4d21eb669b, #eef1ed);
     }
 
     #sariBuyerDeliveryMap .maplibregl-canvas {
@@ -1437,10 +1437,10 @@
 
     #sariBuyerDeliveryMap .maplibregl-ctrl-group {
         overflow: hidden;
-        border: 1px solid #e2dbd2;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2dbd2);
         border-radius: 10px;
-        background: rgba(255,255,255,.96);
-        box-shadow: 0 6px 18px rgba(48,40,31,.08);
+        background: var(--sari-dark-c86bd35395, rgba(255,255,255,.96));
+        box-shadow: 0 6px 18px var(--sari-dark-c33e3d1bb4, rgba(48,40,31,.08));
     }
 
     #sariBuyerDeliveryMap .maplibregl-ctrl-group button {
@@ -1450,13 +1450,13 @@
 
     #sariBuyerDeliveryMap .maplibregl-ctrl-attrib {
         border-radius: 7px 0 0 0;
-        background: rgba(255,255,255,.84);
-        color: #7e766e;
+        background: var(--sari-dark-d2f4798e68, rgba(255,255,255,.84));
+        color: var(--sari-dark-a63aa16d7c, #7e766e);
         font-size: 7px;
     }
 
     #sariBuyerDeliveryMap .maplibregl-ctrl-attrib a {
-        color: #996813;
+        color: var(--sari-dark-af18afcaa4, #996813);
     }
 
     .sari-buyer-map-marker {
@@ -1464,19 +1464,19 @@
         width: 31px;
         height: 31px;
         place-items: center;
-        border: 3px solid #fff;
+        border: 3px solid var(--sari-dark-d8c2716225, #fff);
         border-radius: 999px;
         background: #c98913;
         color: #fff;
         font-size: 8px;
         font-weight: 800;
         box-shadow:
-            0 0 0 1px rgba(130,88,15,.18),
-            0 6px 16px rgba(45,35,22,.22);
+            0 0 0 1px var(--sari-dark-3793f9e558, rgba(130,88,15,.18)),
+            0 6px 16px var(--sari-dark-e267f3cebc, rgba(45,35,22,.22));
     }
 
     .sari-buyer-map-marker.is-buyer {
-        background: #2f2b27;
+        background: var(--sari-dark-fbb35de0d1, #2f2b27);
     }
 
     .sari-buyer-map-marker.is-future {
@@ -1485,8 +1485,8 @@
 
     .sari-buyer-map-marker.is-current {
         box-shadow:
-            0 0 0 6px rgba(201,137,19,.14),
-            0 6px 16px rgba(45,35,22,.22);
+            0 0 0 6px var(--sari-dark-59ed29fe9d, rgba(201,137,19,.14)),
+            0 6px 16px var(--sari-dark-e267f3cebc, rgba(45,35,22,.22));
     }
 
     .sari-map-route-notice {
@@ -1508,14 +1508,14 @@
         display: inline-flex;
         align-items: center;
         gap: 7px;
-        border: 1px solid rgba(230,223,214,.96);
+        border: 1px solid var(--sari-dark-fbe66f89c9, rgba(230,223,214,.96));
         border-radius: 999px;
-        background: rgba(255,255,255,.94);
+        background: var(--sari-dark-fa7f649147, rgba(255,255,255,.94));
         padding: 7px 10px;
-        color: #837970;
+        color: var(--sari-dark-a63aa16d7c, #837970);
         font-size: 7.5px;
         font-weight: 650;
-        box-shadow: 0 6px 18px rgba(44,37,30,.07);
+        box-shadow: 0 6px 18px var(--sari-dark-7c935c8886, rgba(44,37,30,.07));
         backdrop-filter: blur(6px);
         pointer-events: none;
         transition: opacity .2s ease, visibility .2s ease;
@@ -1525,7 +1525,7 @@
         content: '';
         width: 8px;
         height: 8px;
-        border: 2px solid #ead7b1;
+        border: 2px solid var(--sari-dark-d8c2716225, #ead7b1);
         border-top-color: #c98913;
         border-radius: 50%;
         animation: sariMapSpin .75s linear infinite;
@@ -1543,48 +1543,48 @@
 
     /* Order details road route: full unobstructed map, clear progress, compact legend. */
     .sari-track-map-wrap { padding: 14px !important; }
-    .sari-track-map { min-height: 430px; border-color: #dfe5eb; border-radius: 16px; background: #edf2f5; }
+    .sari-track-map { min-height: 430px; border-color: var(--sari-dark-d8c2716225, #dfe5eb); border-radius: 16px; background: var(--sari-dark-4d21eb669b, #edf2f5); }
     #sariBuyerDeliveryMap { min-height: 430px; }
     #sariBuyerDeliveryMap .maplibregl-ctrl-top-right { top: 10px; right: 10px; }
-    .sari-road-map-key { display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;min-height:40px;padding:11px 2px 1px;color:#64748b;font:500 10px/1.5 Poppins,ui-sans-serif,system-ui,sans-serif; }
+    .sari-road-map-key { display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;min-height:40px;padding:11px 2px 1px;color:var(--sari-dark-a63aa16d7c, #64748b);font:500 10px/1.5 Poppins,ui-sans-serif,system-ui,sans-serif; }
     .sari-road-map-key-item { display:inline-flex;align-items:center;gap:7px;white-space:nowrap; }
-    .sari-road-map-key-line { display:inline-block;width:20px;height:0;border-top:4px solid #64748b;border-radius:5px; }
+    .sari-road-map-key-line { display:inline-block;width:20px;height:0;border-top:4px solid var(--sari-dark-d8c2716225, #64748b);border-radius:5px; }
     .sari-road-map-key-line.is-complete { border-top-color:#c88912; }
     .sari-road-map-key-line.is-next { border-top:3px dashed #c88912; }
-    .sari-road-map-key small { margin-left:auto;max-width:100%;color:#738193;font:500 9px/1.5 Poppins,ui-sans-serif,system-ui,sans-serif; }
+    .sari-road-map-key small { margin-left:auto;max-width:100%;color:var(--sari-dark-a63aa16d7c, #738193);font:500 9px/1.5 Poppins,ui-sans-serif,system-ui,sans-serif; }
     .sari-buyer-map-marker {width:34px;height:34px;font-size:10px;border-width:3px;cursor:pointer;}
-    .sari-buyer-map-marker.is-current { box-shadow:0 0 0 5px rgba(200,137,18,.20),0 4px 15px rgba(15,23,42,.23); }
+    .sari-buyer-map-marker.is-current { box-shadow:0 0 0 5px var(--sari-dark-ef22e61893, rgba(200,137,18,.20)),0 4px 15px var(--sari-dark-fcc85d970f, rgba(15,23,42,.23)); }
     .sari-map-loading { bottom: 14px; right: 14px; }
-    .sari-map-route-notice {position:absolute;z-index:13;left:15px;bottom:15px;max-width:min(410px,calc(100% - 30px));display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid #e2e8f0;border-radius:13px;background:rgba(255,255,255,.96);box-shadow:0 7px 24px rgba(15,23,42,.09);}
+    .sari-map-route-notice {position:absolute;z-index:13;left:15px;bottom:15px;max-width:min(410px,calc(100% - 30px));display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid var(--sari-dark-d8c2716225, #e2e8f0);border-radius:13px;background:var(--sari-dark-c86bd35395, rgba(255,255,255,.96));box-shadow:0 7px 24px var(--sari-dark-b12a5e9552, rgba(15,23,42,.09));}
     .sari-map-route-notice[hidden] {display:none !important;}
-    .sari-map-route-notice-icon {flex:0 0 19px;color:#b77911;}
+    .sari-map-route-notice-icon {flex:0 0 19px;color:var(--sari-dark-6e784b4931, #b77911);}
     .sari-map-route-notice-icon svg {width:19px;height:19px;}
-    .sari-map-route-notice strong {display:block;color:#334155;font-size:11px;font-weight:700;}
-    .sari-map-route-notice small {display:block;margin-top:4px;color:#64748b;font-size:10px;line-height:1.55;}
+    .sari-map-route-notice strong {display:block;color:var(--sari-dark-e23e64dd1e, #334155);font-size:11px;font-weight:700;}
+    .sari-map-route-notice small {display:block;margin-top:4px;color:var(--sari-dark-a63aa16d7c, #64748b);font-size:10px;line-height:1.55;}
     @media(max-width:560px){.sari-track-map,#sariBuyerDeliveryMap{min-height:345px}.sari-road-map-key{gap:7px 13px}.sari-road-map-key small{width:100%;margin-left:0}}
     @media(prefers-reduced-motion:reduce){.sari-buyer-map-marker{transition:none}}
 
     /* Buyer order details: actual purchased product photo and assigned rider profile. */
-    .sari-track-product-media { background:#fff; }
+    .sari-track-product-media { background:var(--sari-dark-950baec030, #fff); }
     .sari-track-product-media img { width:100%;height:100%;object-fit:cover;object-position:center;display:block; }
     .sari-track-product-fallback[hidden] { display:none !important; }
     .sari-track-product-fallback { width:25px;height:25px; }
 
     .sari-track-courier { padding:19px 20px; }
     .sari-track-courier-profile { display:flex;align-items:center;gap:14px;min-width:0; }
-    .sari-track-courier-avatar { display:grid;place-items:center;width:66px;height:66px;flex:0 0 66px;overflow:hidden;border:1px solid #e5e9ef;border-radius:50%;background:#f6f7f9;box-shadow:0 4px 14px rgba(31,41,55,.06); }
+    .sari-track-courier-avatar { display:grid;place-items:center;width:66px;height:66px;flex:0 0 66px;overflow:hidden;border:1px solid var(--sari-dark-d8c2716225, #e5e9ef);border-radius:50%;background:var(--sari-dark-950baec030, #f6f7f9);box-shadow:0 4px 14px var(--sari-dark-361b571631, rgba(31,41,55,.06)); }
     .sari-track-courier-avatar img { width:100%;height:100%;display:block;object-fit:cover; }
     .sari-track-courier-profile-copy { min-width:0; }
-    .sari-track-courier-profile-copy .sari-track-courier-label { color:#8893a2;font-size:10px;line-height:1.4;letter-spacing:.07em; }
-    .sari-track-courier-profile-copy .sari-track-courier-value { margin-top:5px;color:#202a38;font-size:15px;font-weight:750;line-height:1.4;overflow-wrap:anywhere; }
-    .sari-track-courier-role { display:inline-block;margin-top:5px;color:#a57424;font-size:9px;font-weight:650; }
-    .sari-track-courier-info { display:grid;gap:0;margin-top:17px;padding-top:3px;border-top:1px solid #edf0f3; }
-    .sari-track-courier-info-row { display:grid;grid-template-columns:102px minmax(0,1fr);gap:9px;align-items:start;padding:12px 0;border-bottom:1px solid #f1f3f5; }
+    .sari-track-courier-profile-copy .sari-track-courier-label { color:var(--sari-dark-a63aa16d7c, #8893a2);font-size:10px;line-height:1.4;letter-spacing:.07em; }
+    .sari-track-courier-profile-copy .sari-track-courier-value { margin-top:5px;color:var(--sari-dark-e23e64dd1e, #202a38);font-size:15px;font-weight:750;line-height:1.4;overflow-wrap:anywhere; }
+    .sari-track-courier-role { display:inline-block;margin-top:5px;color:var(--sari-dark-a63aa16d7c, #a57424);font-size:9px;font-weight:650; }
+    .sari-track-courier-info { display:grid;gap:0;margin-top:17px;padding-top:3px;border-top:1px solid var(--sari-dark-d8c2716225, #edf0f3); }
+    .sari-track-courier-info-row { display:grid;grid-template-columns:102px minmax(0,1fr);gap:9px;align-items:start;padding:12px 0;border-bottom:1px solid var(--sari-dark-d8c2716225, #f1f3f5); }
     .sari-track-courier-info-row:last-child { border-bottom:0;padding-bottom:0; }
-    .sari-track-courier-info-label { color:#8792a0;font-size:10px;font-weight:550;line-height:1.55; }
-    .sari-track-courier-info-value { color:#344051;font-size:10.5px;font-weight:650;line-height:1.55;text-align:right;text-decoration:none;overflow-wrap:anywhere; }
-    .sari-track-courier-info-value:hover { color:#a96f0e;text-decoration:underline;text-underline-offset:3px; }
-    .sari-track-courier-notice { margin:12px 0 0;color:#8591a0;font-size:10px;line-height:1.6; }
+    .sari-track-courier-info-label { color:var(--sari-dark-a63aa16d7c, #8792a0);font-size:10px;font-weight:550;line-height:1.55; }
+    .sari-track-courier-info-value { color:var(--sari-dark-e23e64dd1e, #344051);font-size:10.5px;font-weight:650;line-height:1.55;text-align:right;text-decoration:none;overflow-wrap:anywhere; }
+    .sari-track-courier-info-value:hover { color:var(--sari-dark-6e784b4931, #a96f0e);text-decoration:underline;text-underline-offset:3px; }
+    .sari-track-courier-notice { margin:12px 0 0;color:var(--sari-dark-a63aa16d7c, #8591a0);font-size:10px;line-height:1.6; }
     @media(max-width:560px) { .sari-track-courier{padding:16px}.sari-track-courier-avatar{width:56px;height:56px;flex-basis:56px}.sari-track-courier-info-row{grid-template-columns:92px minmax(0,1fr)} }
 
     /* ============================================================
@@ -1595,30 +1595,30 @@
     .sari-track-page .sari-track-action {
         min-height: 40px;
         padding-inline: 15px;
-        color: #596574;
+        color: var(--sari-dark-a63aa16d7c, #596574);
         font-size: 12px;
         font-weight: 600;
     }
     .sari-track-page .sari-track-actions a.sari-track-action--primary {
-        border: 1px solid #dfe5ea;
-        background: #fff;
-        color: #596574;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe5ea);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #596574);
         box-shadow: none;
     }
     .sari-track-page .sari-track-actions a.sari-track-action--primary svg {
-        color: #596574;
+        color: var(--sari-dark-a63aa16d7c, #596574);
         stroke: currentColor;
     }
     .sari-track-page .sari-track-actions a.sari-track-action--primary:hover,
     .sari-track-page .sari-track-actions a.sari-track-action--primary:focus-visible {
-        border-color: #cdd5de;
-        background: #f7f9fb;
-        color: #374151;
+        border-color: var(--sari-dark-d8c2716225, #cdd5de);
+        background: var(--sari-dark-950baec030, #f7f9fb);
+        color: var(--sari-dark-e23e64dd1e, #374151);
         outline: none;
     }
     .sari-track-page .sari-track-actions a.sari-track-action--primary:hover svg,
     .sari-track-page .sari-track-actions a.sari-track-action--primary:focus-visible svg {
-        color: #374151;
+        color: var(--sari-dark-e23e64dd1e, #374151);
     }
 
     /* The full image stays visible: no crop for portrait, landscape, or square photos. */
@@ -1626,7 +1626,7 @@
         min-width: 0;
         min-height: 0;
         padding: 0;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
     .sari-track-page .sari-track-product-media img {
         display: block;
@@ -1647,7 +1647,7 @@
     /* Top order card. */
     .sari-track-page .sari-track-product-label,
     .sari-track-page .sari-track-product-side-label {
-        color: #687484;
+        color: var(--sari-dark-a63aa16d7c, #687484);
         font-size: 10.5px;
         font-weight: 650;
     }
@@ -1658,13 +1658,13 @@
     }
     .sari-track-page .sari-track-product-meta {
         margin-top: 9px;
-        color: #667386;
+        color: var(--sari-dark-a63aa16d7c, #667386);
         font-size: 12px;
         line-height: 1.55;
     }
     .sari-track-page .sari-track-product-order-meta {
         margin-top: 11px;
-        color: #6b7787;
+        color: var(--sari-dark-a63aa16d7c, #6b7787);
         font-size: 11.5px;
         line-height: 1.5;
         overflow-wrap: anywhere;
@@ -1682,7 +1682,7 @@
     .sari-track-page .sari-track-panel-head { padding: 18px 20px; }
     .sari-track-page .sari-track-panel-eyebrow { font-size: 10px; }
     .sari-track-page .sari-track-panel-title { font-size: 17px; }
-    .sari-track-page .sari-track-panel-note { color: #718095; font-size: 10.5px; }
+    .sari-track-page .sari-track-panel-note { color: var(--sari-dark-a63aa16d7c, #718095); font-size: 10.5px; }
     .sari-track-page .sari-track-journey {
         grid-template-columns: minmax(265px, 315px) minmax(0, 1fr);
     }
@@ -1697,7 +1697,7 @@
     }
     .sari-track-page .sari-track-event-copy {
         margin-top: 5px;
-        color: #736b63;
+        color: var(--sari-dark-a63aa16d7c, #736b63);
         font-size: 11px;
         line-height: 1.6;
     }
@@ -1715,11 +1715,11 @@
         line-height: 1.55;
         overflow-wrap: anywhere;
     }
-    .sari-track-page .sari-track-summary-row dt { color: #697586; }
-    .sari-track-page .sari-track-summary-address-label { color: #697586; font-size: 11px; }
+    .sari-track-page .sari-track-summary-row dt { color: var(--sari-dark-a63aa16d7c, #697586); }
+    .sari-track-page .sari-track-summary-address-label { color: var(--sari-dark-a63aa16d7c, #697586); font-size: 11px; }
     .sari-track-page .sari-track-summary-address-name { font-size: 12.5px; }
     .sari-track-page .sari-track-summary-address-copy {
-        color: #697586;
+        color: var(--sari-dark-a63aa16d7c, #697586);
         font-size: 11px;
         line-height: 1.6;
         overflow-wrap: anywhere;
@@ -1771,18 +1771,18 @@
        Elevate top-level cards only; nested route, row and form UI stays flat.
     ============================================================ */
     .sari-track-page {
-        --sari-floating-border: #e5e7eb;
+        --sari-floating-border: var(--sari-dark-d8c2716225, #e5e7eb);
         --sari-floating-shadow:
-            0 2px 5px rgba(15, 23, 42, .045),
-            0 10px 24px rgba(15, 23, 42, .075),
-            0 24px 54px rgba(15, 23, 42, .095),
-            inset 0 1px 0 rgba(255, 255, 255, .92);
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
         --sari-floating-shadow-soft:
-            0 1px 3px rgba(15, 23, 42, .035),
-            0 7px 18px rgba(15, 23, 42, .06),
-            0 15px 32px rgba(15, 23, 42, .065),
-            inset 0 1px 0 rgba(255, 255, 255, .90);
-        background: #f4f5f7;
+            0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
+        background: var(--sari-dark-4d21eb669b, #f4f5f7);
     }
 
     /* Product being tracked and the delivery journey are main surfaces. */
@@ -1790,7 +1790,7 @@
     .sari-track-page .sari-track-grid > .sari-track-panel {
         border: 1px solid var(--sari-floating-border);
         border-radius: 18px;
-        background: #ffffff;
+        background: var(--sari-dark-950baec030, #ffffff);
         box-shadow: var(--sari-floating-shadow);
     }
 
@@ -1798,7 +1798,7 @@
     .sari-track-page .sari-track-side > .sari-track-panel {
         border: 1px solid var(--sari-floating-border);
         border-radius: 18px;
-        background: #ffffff;
+        background: var(--sari-dark-950baec030, #ffffff);
         box-shadow: var(--sari-floating-shadow-soft);
     }
 
@@ -1825,10 +1825,10 @@
         .sari-track-page .sari-track-items {
             border-radius: 15px;
             box-shadow:
-                0 2px 5px rgba(15, 23, 42, .035),
-                0 8px 20px rgba(15, 23, 42, .06),
-                0 14px 30px rgba(15, 23, 42, .055),
-                inset 0 1px 0 rgba(255, 255, 255, .90);
+                0 2px 5px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+                0 8px 20px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+                0 14px 30px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
         }
     }
 </style>

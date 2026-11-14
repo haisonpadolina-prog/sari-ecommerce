@@ -1,21 +1,21 @@
 /* Extracted from resources/views/seller/inventory.blade.php — original style block 1. */
 .inventory-shell {
 
-        --inv-bg: #f4f6f8;
+        --inv-bg: var(--sari-dark-4d21eb669b, #f4f6f8);
 
-        --inv-surface: #ffffff;
+        --inv-surface: var(--sari-dark-950baec030, #ffffff);
 
-        --inv-surface-soft: #f8fafc;
+        --inv-surface-soft: var(--sari-dark-950baec030, #f8fafc);
 
-        --inv-border: #e3e8ef;
+        --inv-border: var(--sari-dark-d8c2716225, #e3e8ef);
 
-        --inv-border-soft: #edf1f5;
+        --inv-border-soft: var(--sari-dark-d8c2716225, #edf1f5);
 
-        --inv-text: #111827;
+        --inv-text: var(--sari-dark-e23e64dd1e, #111827);
 
-        --inv-text-2: #475569;
+        --inv-text-2: var(--sari-dark-e23e64dd1e, #475569);
 
-        --inv-muted: #7c8797;
+        --inv-muted: var(--sari-dark-a63aa16d7c, #7c8797);
 
         --inv-gold: #d08c0b;
 
@@ -79,7 +79,7 @@
 
         margin: 0;
 
-        color: #a86f0b;
+        color: var(--sari-dark-af18afcaa4, #a86f0b);
 
         font-size: 9.5px;
 
@@ -99,7 +99,7 @@
 
         margin: 7px 0 0;
 
-        color: #1d1915;
+        color: var(--sari-dark-e23e64dd1e, #1d1915);
 
         font-size: clamp(30px, 2.35vw, 38px);
 
@@ -119,7 +119,7 @@
 
         margin: 10px 0 0;
 
-        color: #697586;
+        color: var(--sari-dark-a63aa16d7c, #697586);
 
         font-size: 10.5px;
 
@@ -137,11 +137,11 @@
 
         border-radius: 16px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 14px 15px 13px;
 
-        box-shadow: 0 7px 20px rgba(15, 23, 42, .035);
+        box-shadow: 0 7px 20px var(--sari-dark-7593018246, rgba(15, 23, 42, .035));
 
     }
 
@@ -155,7 +155,7 @@
 
         gap: 8px;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 11px;
 
@@ -209,7 +209,7 @@
 
         transform: translateY(-50%);
 
-        color: #7b8796;
+        color: var(--sari-dark-a63aa16d7c, #7b8796);
 
         pointer-events: none;
 
@@ -225,13 +225,13 @@
 
         height: 38px;
 
-        border: 1px solid #d9e0e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #d9e0e8);
 
         border-radius: 9px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        color: #243041;
+        color: var(--sari-dark-e23e64dd1e, #243041);
 
         outline: none;
 
@@ -253,7 +253,7 @@
 
     .inventory-search-input::placeholder,
 
-    .inventory-table-search::placeholder { color: #94a0af; }
+    .inventory-table-search::placeholder { color: var(--sari-dark-a63aa16d7c, #94a0af); }
 
 
 
@@ -267,7 +267,7 @@
 
         border-color: #c99835;
 
-        box-shadow: 0 0 0 3px rgba(201, 152, 53, .08);
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(201, 152, 53, .08));
 
     }
 
@@ -279,7 +279,7 @@
 
         border-radius: 9px;
 
-        background: #20252c;
+        background: var(--sari-dark-fbb35de0d1, #20252c);
 
         color: #fff;
 
@@ -297,7 +297,7 @@
 
     .inventory-search-button:hover {
 
-        background: #11161d;
+        background: var(--sari-dark-f3318ab620, #11161d);
 
         transform: translateY(-1px);
 
@@ -321,7 +321,7 @@
 
         cursor: pointer;
 
-        box-shadow: 0 5px 12px rgba(191, 128, 8, .16);
+        box-shadow: 0 5px 12px var(--sari-dark-b5c2a2270e, rgba(191, 128, 8, .16));
 
         transition:
 
@@ -345,7 +345,7 @@
 
         background: #c98d0e;
 
-        box-shadow: 0 7px 16px rgba(175, 116, 8, .20);
+        box-shadow: 0 7px 16px var(--sari-dark-ef22e61893, rgba(175, 116, 8, .20));
 
         transform: translateY(-1px);
 
@@ -371,7 +371,7 @@
 
         margin: 8px 0 0;
 
-        color: #7c8797;
+        color: var(--sari-dark-a63aa16d7c, #7c8797);
 
         font-size: 8px;
 
@@ -407,11 +407,11 @@
 
         border-radius: 14px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 16px 64px 15px 17px;
 
-        box-shadow: 0 6px 18px rgba(15, 23, 42, .03);
+        box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03));
 
     }
 
@@ -445,9 +445,9 @@
 
     .inventory-stat-icon--products { background: var(--inv-blue-soft); color: var(--inv-blue); }
 
-    .inventory-stat-icon--units { background: #f1f4f7; color: #5c6876; }
+    .inventory-stat-icon--units { background: var(--sari-dark-4d21eb669b, #f1f4f7); color: var(--sari-dark-a63aa16d7c, #5c6876); }
 
-    .inventory-stat-icon--low { background: var(--inv-amber-soft); color: #e18e00; }
+    .inventory-stat-icon--low { background: var(--inv-amber-soft); color: var(--sari-dark-6e784b4931, #e18e00); }
 
     .inventory-stat-icon--out { background: var(--inv-red-soft); color: var(--inv-red); }
 
@@ -457,7 +457,7 @@
 
         margin: 0;
 
-        color: #475569;
+        color: var(--sari-dark-e23e64dd1e, #475569);
 
         font-size: 10px;
 
@@ -471,7 +471,7 @@
 
         margin: 5px 0 0;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 26px;
 
@@ -489,7 +489,7 @@
 
         margin: 7px 0 0;
 
-        color: #7d8898;
+        color: var(--sari-dark-a63aa16d7c, #7d8898);
 
         font-size: 8.5px;
 
@@ -517,9 +517,9 @@
 
         border-radius: 14px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        box-shadow: 0 6px 18px rgba(15, 23, 42, .03);
+        box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03));
 
     }
 
@@ -551,7 +551,7 @@
 
         place-items: center;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
     }
 
@@ -565,7 +565,7 @@
 
         margin: 0;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 12px;
 
@@ -581,7 +581,7 @@
 
         margin: 3px 0 0;
 
-        color: #7c8797;
+        color: var(--sari-dark-a63aa16d7c, #7c8797);
 
         font-size: 9px;
 
@@ -611,7 +611,7 @@
 
         border-radius: 10px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 12px 12px 11px;
 
@@ -627,7 +627,7 @@
 
         gap: 8px;
 
-        color: #263244;
+        color: var(--sari-dark-e23e64dd1e, #263244);
 
         font-size: 10px;
 
@@ -673,7 +673,7 @@
 
     .inventory-health-value strong {
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 23px;
 
@@ -687,7 +687,7 @@
 
     .inventory-health-value span {
 
-        color: #7c8797;
+        color: var(--sari-dark-a63aa16d7c, #7c8797);
 
         font-size: 8.5px;
 
@@ -719,7 +719,7 @@
 
         border-radius: 999px;
 
-        background: #edf1f5;
+        background: var(--sari-dark-4d21eb669b, #edf1f5);
 
     }
 
@@ -749,7 +749,7 @@
 
         min-width: 30px;
 
-        color: #263244;
+        color: var(--sari-dark-e23e64dd1e, #263244);
 
         font-size: 9px;
 
@@ -815,7 +815,7 @@
 
         border-radius: 50%;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
     }
 
@@ -843,7 +843,7 @@
 
         display: block;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 27px;
 
@@ -861,7 +861,7 @@
 
         margin-top: 5px;
 
-        color: #7c8797;
+        color: var(--sari-dark-a63aa16d7c, #7c8797);
 
         font-size: 8.5px;
 
@@ -885,9 +885,9 @@
 
         min-height: 28px;
 
-        border-bottom: 1px solid #eef1f4;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eef1f4);
 
-        color: #657184;
+        color: var(--sari-dark-a63aa16d7c, #657184);
 
         font-size: 8.5px;
 
@@ -901,7 +901,7 @@
 
     .inventory-legend-row strong {
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 8.5px;
 
@@ -915,7 +915,7 @@
 
     .inventory-legend-row em {
 
-        color: #536174;
+        color: var(--sari-dark-a63aa16d7c, #536174);
 
         font-size: 8.5px;
 
@@ -939,9 +939,9 @@
 
         border-radius: 14px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        box-shadow: 0 6px 18px rgba(15, 23, 42, .03);
+        box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03));
 
     }
 
@@ -987,7 +987,7 @@
 
         place-items: center;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
     }
 
@@ -1001,7 +1001,7 @@
 
         margin: 0;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 12px;
 
@@ -1015,7 +1015,7 @@
 
         margin: 3px 0 0;
 
-        color: #7c8797;
+        color: var(--sari-dark-a63aa16d7c, #7c8797);
 
         font-size: 9px;
 
@@ -1047,7 +1047,7 @@
 
         transform: translateY(-50%);
 
-        color: #708094;
+        color: var(--sari-dark-a63aa16d7c, #708094);
 
         pointer-events: none;
 
@@ -1105,9 +1105,9 @@
 
         min-height: 38px;
 
-        background: #fbfcfd;
+        background: var(--sari-dark-950baec030, #fbfcfd);
 
-        color: #455268;
+        color: var(--sari-dark-e23e64dd1e, #455268);
 
         font-size: 8.5px;
 
@@ -1159,11 +1159,11 @@
 
         overflow: hidden;
 
-        border: 1px solid #e4e9ef;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e9ef);
 
         border-radius: 9px;
 
-        background: #f3f5f7;
+        background: var(--sari-dark-4d21eb669b, #f3f5f7);
 
     }
 
@@ -1187,7 +1187,7 @@
 
         height: 17px;
 
-        color: #99a4b1;
+        color: var(--sari-dark-a63aa16d7c, #99a4b1);
 
     }
 
@@ -1199,7 +1199,7 @@
 
         margin: 0;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 10px;
 
@@ -1219,7 +1219,7 @@
 
         margin: 3px 0 0;
 
-        color: #7c8797;
+        color: var(--sari-dark-a63aa16d7c, #7c8797);
 
         font-size: 8.4px;
 
@@ -1235,7 +1235,7 @@
 
         overflow: hidden;
 
-        color: #677387;
+        color: var(--sari-dark-a63aa16d7c, #677387);
 
         font-size: 8.5px;
 
@@ -1287,15 +1287,15 @@
 
 
 
-    .inventory-badge.healthy { background: var(--inv-green-soft); color: #198452; }
+    .inventory-badge.healthy { background: var(--inv-green-soft); color: var(--sari-dark-81f4316fad, #198452); }
 
     .inventory-badge.healthy::before { background: var(--inv-green); }
 
-    .inventory-badge.low { background: var(--inv-amber-soft); color: #a86f00; }
+    .inventory-badge.low { background: var(--inv-amber-soft); color: var(--sari-dark-9db03b407c, #a86f00); }
 
     .inventory-badge.low::before { background: var(--inv-amber); }
 
-    .inventory-badge.out { background: var(--inv-red-soft); color: #b8242e; }
+    .inventory-badge.out { background: var(--inv-red-soft); color: var(--sari-dark-ed5fd0e601, #b8242e); }
 
     .inventory-badge.out::before { background: var(--inv-red); }
 
@@ -1303,7 +1303,7 @@
 
     .inventory-stock-number {
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 10px;
 
@@ -1321,15 +1321,15 @@
 
         height: 34px;
 
-        border: 1px solid #dbe2ea;
+        border: 1px solid var(--sari-dark-d8c2716225, #dbe2ea);
 
         border-radius: 8px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 0 9px;
 
-        color: #536174;
+        color: var(--sari-dark-a63aa16d7c, #536174);
 
         font-size: 8.5px;
 
@@ -1357,7 +1357,7 @@
 
         text-align: center;
 
-        color: #7c8797;
+        color: var(--sari-dark-a63aa16d7c, #7c8797);
 
         font-size: 9px;
 
@@ -1379,11 +1379,11 @@
 
         border-radius: 14px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 13px 16px 16px;
 
-        box-shadow: 0 6px 18px rgba(15, 23, 42, .03);
+        box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03));
 
     }
 
@@ -1407,7 +1407,7 @@
 
         height: 17px;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
     }
 
@@ -1417,7 +1417,7 @@
 
         margin: 0;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 12px;
 
@@ -1431,7 +1431,7 @@
 
         margin: 3px 0 0;
 
-        color: #7c8797;
+        color: var(--sari-dark-a63aa16d7c, #7c8797);
 
         font-size: 9px;
 
@@ -1465,7 +1465,7 @@
 
         border-radius: 9px;
 
-        background: #fbfcfd;
+        background: var(--sari-dark-950baec030, #fbfcfd);
 
         padding: 9px 11px;
 
@@ -1475,7 +1475,7 @@
 
     .inventory-activity-name {
 
-        color: #263244;
+        color: var(--sari-dark-e23e64dd1e, #263244);
 
         font-size: 7.8px;
 
@@ -1489,7 +1489,7 @@
 
         margin-top: 2px;
 
-        color: #8791a0;
+        color: var(--sari-dark-a63aa16d7c, #8791a0);
 
         font-size: 6.8px;
 
@@ -1499,7 +1499,7 @@
 
     .inventory-activity-value {
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 8px;
 
@@ -1537,7 +1537,7 @@
 
         place-items: center;
 
-        color: #c0c8d2;
+        color: var(--sari-dark-a63aa16d7c, #c0c8d2);
 
     }
 
@@ -1553,7 +1553,7 @@
 
         margin-top: 4px;
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 10px;
 
@@ -1567,7 +1567,7 @@
 
         margin-top: 4px;
 
-        color: #7c8797;
+        color: var(--sari-dark-a63aa16d7c, #7c8797);
 
         font-size: 8.5px;
 
@@ -1668,7 +1668,7 @@
     gap: 0 !important;
     min-height: 66px;
     padding: 2px 2px 14px;
-    border-bottom: 1px solid #e7ebf0;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e7ebf0);
 }
 
 .inventory-head--single {
@@ -1678,7 +1678,7 @@
 .inventory-eyebrow {
     font-size: 8px !important;
     letter-spacing: .16em !important;
-    color: #b87605 !important;
+    color: var(--sari-dark-6e784b4931, #b87605) !important;
 }
 
 .inventory-title {
@@ -1693,7 +1693,7 @@
     margin-top: 7px !important;
     font-size: 10px !important;
     line-height: 1.5 !important;
-    color: #7c8592 !important;
+    color: var(--sari-dark-a63aa16d7c, #7c8592) !important;
 }
 
 /* Summary cards: shorter, but keep the hierarchy readable. */
@@ -1706,7 +1706,7 @@
     min-height: 78px !important;
     border-radius: 13px !important;
     padding: 11px 54px 10px 13px !important;
-    box-shadow: 0 5px 16px rgba(15, 23, 42, .028) !important;
+    box-shadow: 0 5px 16px var(--sari-dark-7888fe3028, rgba(15, 23, 42, .028)) !important;
 }
 
 .inventory-stat-icon {
@@ -1748,7 +1748,7 @@
 
 .inventory-panel {
     border-radius: 13px !important;
-    box-shadow: 0 5px 16px rgba(15, 23, 42, .028) !important;
+    box-shadow: 0 5px 16px var(--sari-dark-7888fe3028, rgba(15, 23, 42, .028)) !important;
 }
 
 .inventory-panel-head {
@@ -1870,7 +1870,7 @@
 .inventory-table-panel {
     margin-top: 10px !important;
     border-radius: 13px !important;
-    box-shadow: 0 5px 16px rgba(15, 23, 42, .028) !important;
+    box-shadow: 0 5px 16px var(--sari-dark-7888fe3028, rgba(15, 23, 42, .028)) !important;
 }
 
 .inventory-table-head {
@@ -2022,7 +2022,7 @@
     margin-top: 10px !important;
     border-radius: 13px !important;
     padding: 11px 13px 12px !important;
-    box-shadow: 0 5px 16px rgba(15, 23, 42, .028) !important;
+    box-shadow: 0 5px 16px var(--sari-dark-7888fe3028, rgba(15, 23, 42, .028)) !important;
 }
 
 .inventory-activity-head {
@@ -2098,7 +2098,7 @@
 .inventory-select:focus,
 .inventory-qty:focus {
     border-color: #d59617 !important;
-    box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08)) !important;
 }
 
 @media (max-width: 1280px) {
@@ -2171,16 +2171,16 @@
    ====================================================================== */
 
 .inventory-shell {
-    --inv-float-border: #E2E7ED;
-    --inv-float-border-soft: #E9EDF2;
+    --inv-float-border: var(--sari-dark-d8c2716225, #E2E7ED);
+    --inv-float-border-soft: var(--sari-dark-d8c2716225, #E9EDF2);
     --inv-float-shadow:
-        0 1px 2px rgba(15, 23, 42, .035),
-        0 10px 26px rgba(15, 23, 42, .075),
-        inset 0 1px 0 rgba(255, 255, 255, .86);
+        0 1px 2px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 10px 26px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .86));
     --inv-float-shadow-soft:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 6px 16px rgba(15, 23, 42, .05),
-        inset 0 1px 0 rgba(255, 255, 255, .82);
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 6px 16px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .82));
 }
 
 /* Main inventory surfaces — consistent elevated card system. */
@@ -2190,7 +2190,7 @@
 .inventory-shell .inventory-activity-panel,
 .inventory-shell .inventory-search-panel {
     border-color: var(--inv-float-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inv-float-shadow) !important;
     transform: none !important;
 }
@@ -2218,31 +2218,31 @@
 .inventory-shell .inventory-health-card,
 .inventory-shell .inventory-activity-item {
     border-color: var(--inv-float-border-soft) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inv-float-shadow-soft) !important;
     transform: none !important;
 }
 
 /* Table header stays visually attached to its main floating panel. */
 .inventory-shell .inventory-table-head {
-    border-bottom-color: #E9EDF2 !important;
-    background: #FFFFFF !important;
+    border-bottom-color: var(--sari-dark-d8c2716225, #E9EDF2) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* Table rows remain flat for scanability; only the outer table floats. */
 .inventory-shell .inventory-grid-head {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
 }
 
 .inventory-shell .inventory-row {
-    border-top-color: #EDF1F5 !important;
-    background: #FFFFFF !important;
+    border-top-color: var(--sari-dark-d8c2716225, #EDF1F5) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* Product thumbnails have subtle depth without becoming mini-cards. */
 .inventory-shell .inventory-product-thumb {
-    border-color: #E2E7ED !important;
-    box-shadow: 0 3px 9px rgba(15, 23, 42, .035) !important;
+    border-color: var(--sari-dark-d8c2716225, #E2E7ED) !important;
+    box-shadow: 0 3px 9px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
 }
 
 /* Keep empty and informational states secondary. */
@@ -2269,16 +2269,16 @@
     .inventory-shell .inventory-activity-panel,
     .inventory-shell .inventory-search-panel {
         box-shadow:
-            0 1px 2px rgba(15, 23, 42, .03),
-            0 7px 18px rgba(15, 23, 42, .06),
-            inset 0 1px 0 rgba(255, 255, 255, .84) !important;
+            0 1px 2px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .84)) !important;
     }
 
     .inventory-shell .inventory-health-card,
     .inventory-shell .inventory-activity-item {
         box-shadow:
-            0 1px 2px rgba(15, 23, 42, .02),
-            0 5px 13px rgba(15, 23, 42, .045) !important;
+            0 1px 2px var(--sari-dark-f6fe7319d9, rgba(15, 23, 42, .02)),
+            0 5px 13px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)) !important;
     }
 }
 
@@ -2291,27 +2291,27 @@
    ====================================================================== */
 
 .inventory-shell {
-    --inventory-dashboard-border: #E5E7EB;
-    --inventory-dashboard-border-strong: #D1D5DB;
-    --inventory-dashboard-divider: #ECEFF2;
+    --inventory-dashboard-border: var(--sari-dark-d8c2716225, #E5E7EB);
+    --inventory-dashboard-border-strong: var(--sari-dark-d8c2716225, #D1D5DB);
+    --inventory-dashboard-divider: var(--sari-dark-d8c2716225, #ECEFF2);
 
     /* Dashboard-style layered elevation:
        contact shadow + middle separation + broad ambient float. */
     --inventory-dashboard-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
 
     --inventory-dashboard-shadow-soft:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065),
-        inset 0 1px 0 rgba(255, 255, 255, .90);
+        0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+        0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
 
     --inventory-dashboard-shadow-inner:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 5px 14px rgba(15, 23, 42, .045);
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 5px 14px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045));
 }
 
 /* Header stays document-like; only divider is neutral. */
@@ -2324,21 +2324,21 @@
    ------------------------------------------------------------ */
 .inventory-shell .inventory-stat-card {
     border: 1px solid var(--inventory-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inventory-dashboard-shadow-soft) !important;
     transform: none !important;
 }
 
 .inventory-shell .inventory-stat-card:hover {
     border-color: var(--inventory-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inventory-dashboard-shadow-soft) !important;
     transform: none !important;
 }
 
 .inventory-shell .inventory-stat-icon {
-    border: 1px solid rgba(15, 23, 42, .045) !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+    border: 1px solid var(--sari-dark-41bf82af0d, rgba(15, 23, 42, .045)) !important;
+    box-shadow: 0 4px 12px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
 }
 
 /* ------------------------------------------------------------
@@ -2349,7 +2349,7 @@
 .inventory-shell .inventory-table-panel,
 .inventory-shell .inventory-activity-panel {
     border: 1px solid var(--inventory-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inventory-dashboard-shadow) !important;
     transform: none !important;
 }
@@ -2359,7 +2359,7 @@
 .inventory-shell .inventory-table-panel:hover,
 .inventory-shell .inventory-activity-panel:hover {
     border-color: var(--inventory-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inventory-dashboard-shadow) !important;
     transform: none !important;
 }
@@ -2369,16 +2369,16 @@
    ------------------------------------------------------------ */
 .inventory-shell .inventory-health-card,
 .inventory-shell .inventory-activity-item {
-    border-color: #E7EAEE !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAEE) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inventory-dashboard-shadow-inner) !important;
     transform: none !important;
 }
 
 .inventory-shell .inventory-health-card:hover,
 .inventory-shell .inventory-activity-item:hover {
-    border-color: #E7EAEE !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAEE) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inventory-dashboard-shadow-inner) !important;
     transform: none !important;
 }
@@ -2389,23 +2389,23 @@
    ------------------------------------------------------------ */
 .inventory-shell .inventory-table-head {
     border-bottom-color: var(--inventory-dashboard-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .inventory-shell .inventory-grid-head {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     border-color: var(--inventory-dashboard-divider) !important;
 }
 
 .inventory-shell .inventory-row {
     border-top-color: var(--inventory-dashboard-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: none !important;
     transform: none !important;
 }
 
 .inventory-shell .inventory-row:hover {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     border-top-color: var(--inventory-dashboard-divider) !important;
     box-shadow: none !important;
     transform: none !important;
@@ -2414,8 +2414,8 @@
 /* Product thumbnails remain subtle secondary surfaces. */
 .inventory-shell .inventory-product-thumb {
     border-color: var(--inventory-dashboard-border) !important;
-    background: #F8FAFC !important;
-    box-shadow: 0 3px 9px rgba(15, 23, 42, .035) !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
+    box-shadow: 0 3px 9px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
 }
 
 /* ------------------------------------------------------------
@@ -2426,18 +2426,18 @@
 .inventory-shell .inventory-select,
 .inventory-shell .inventory-qty {
     border-color: var(--inventory-dashboard-border-strong) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 4px 10px rgba(15, 23, 42, .03) !important;
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 4px 10px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)) !important;
 }
 
 .inventory-shell .inventory-search-input:hover,
 .inventory-shell .inventory-table-search:hover,
 .inventory-shell .inventory-select:hover,
 .inventory-shell .inventory-qty:hover {
-    border-color: #C9D0D9 !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #C9D0D9) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .inventory-shell .inventory-search-input:focus,
@@ -2445,10 +2445,10 @@
 .inventory-shell .inventory-select:focus,
 .inventory-shell .inventory-qty:focus {
     border-color: #C4A35B !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 0 0 3px rgba(196, 163, 91, .08),
-        0 5px 14px rgba(15, 23, 42, .04) !important;
+        0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(196, 163, 91, .08)),
+        0 5px 14px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)) !important;
 }
 
 /* Search / update buttons remain static; color change only. */
@@ -2469,8 +2469,8 @@
 .inventory-shell .inventory-panel-icon,
 .inventory-shell .inventory-table-head-icon {
     border-radius: 8px;
-    background: #FFFFFF !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .03) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    box-shadow: 0 4px 12px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)) !important;
 }
 
 .inventory-shell .inventory-empty,
@@ -2480,13 +2480,13 @@
 
 .inventory-shell .inventory-activity-empty-icon {
     border-radius: 10px;
-    background: #F8FAFC !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .03) !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
+    box-shadow: 0 4px 12px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)) !important;
 }
 
 .inventory-shell .inventory-table-panel > .border-t {
     border-color: var(--inventory-dashboard-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .inventory-shell .inventory-table-panel nav a,
@@ -2509,9 +2509,9 @@
 @media (max-width: 640px) {
     .inventory-shell .inventory-stat-card {
         box-shadow:
-            0 1px 3px rgba(15, 23, 42, .03),
-            0 6px 14px rgba(15, 23, 42, .05),
-            0 12px 26px rgba(15, 23, 42, .055) !important;
+            0 1px 3px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)),
+            0 6px 14px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
+            0 12px 26px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)) !important;
     }
 
     .inventory-shell .inventory-search-panel,
@@ -2519,16 +2519,16 @@
     .inventory-shell .inventory-table-panel,
     .inventory-shell .inventory-activity-panel {
         box-shadow:
-            0 2px 4px rgba(15, 23, 42, .035),
-            0 8px 18px rgba(15, 23, 42, .06),
-            0 18px 38px rgba(15, 23, 42, .07) !important;
+            0 2px 4px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 8px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            0 18px 38px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)) !important;
     }
 
     .inventory-shell .inventory-health-card,
     .inventory-shell .inventory-activity-item {
         box-shadow:
-            0 1px 2px rgba(15, 23, 42, .02),
-            0 5px 13px rgba(15, 23, 42, .045) !important;
+            0 1px 2px var(--sari-dark-f6fe7319d9, rgba(15, 23, 42, .02)),
+            0 5px 13px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)) !important;
     }
 }
 
@@ -2545,74 +2545,74 @@
     margin-top: 12px !important;
     margin-bottom: 18px !important;
 
-    border: 1px solid #E2E6EB !important;
-    background: #FFFFFF !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E6EB) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 
     /* Stronger than the generic page shadow because this panel is wide.
        The extra contact shadow keeps it visibly separated from the page. */
     box-shadow:
-        0 3px 7px rgba(15, 23, 42, .055),
-        0 14px 32px rgba(15, 23, 42, .095),
-        0 30px 68px rgba(15, 23, 42, .11),
-        inset 0 1px 0 rgba(255, 255, 255, .96) !important;
+        0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+        0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        0 30px 68px var(--sari-dark-71f44bdb16, rgba(15, 23, 42, .11)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .96)) !important;
 
     transform: none !important;
 }
 
 /* Keep exactly the same depth on hover — no physical lift. */
 .inventory-shell .inventory-table-panel:hover {
-    border-color: #E2E6EB !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E2E6EB) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 3px 7px rgba(15, 23, 42, .055),
-        0 14px 32px rgba(15, 23, 42, .095),
-        0 30px 68px rgba(15, 23, 42, .11),
-        inset 0 1px 0 rgba(255, 255, 255, .96) !important;
+        0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+        0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        0 30px 68px var(--sari-dark-71f44bdb16, rgba(15, 23, 42, .11)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .96)) !important;
     transform: none !important;
 }
 
 /* Crisp top/header separation helps the large panel read like one
    floating dashboard workspace instead of a flat table block. */
 .inventory-shell .inventory-table-head {
-    background: #FFFFFF !important;
-    border-bottom: 1px solid #E9EDF2 !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF2) !important;
 }
 
 /* The column header remains a quiet inset surface. */
 .inventory-shell .inventory-grid-head {
-    background: #F8FAFC !important;
-    border-color: #ECEFF2 !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
+    border-color: var(--sari-dark-d8c2716225, #ECEFF2) !important;
 }
 
 /* Rows stay flat inside the elevated parent. */
 .inventory-shell .inventory-row {
-    background: #FFFFFF !important;
-    border-top-color: #ECEFF2 !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    border-top-color: var(--sari-dark-d8c2716225, #ECEFF2) !important;
     box-shadow: none !important;
     transform: none !important;
 }
 
 .inventory-shell .inventory-row:hover {
-    background: #F8FAFC !important;
-    border-top-color: #ECEFF2 !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
+    border-top-color: var(--sari-dark-d8c2716225, #ECEFF2) !important;
     box-shadow: none !important;
     transform: none !important;
 }
 
 /* Pagination/footer remains visually attached to the same elevated shell. */
 .inventory-shell .inventory-table-panel > .border-t {
-    border-color: #ECEFF2 !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #ECEFF2) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* Tablet/mobile: keep visible elevation without excessive shadow spread. */
 @media (max-width: 900px) {
     .inventory-shell .inventory-table-panel {
         box-shadow:
-            0 2px 5px rgba(15, 23, 42, .045),
-            0 10px 24px rgba(15, 23, 42, .08),
-            0 22px 48px rgba(15, 23, 42, .085),
-            inset 0 1px 0 rgba(255, 255, 255, .94) !important;
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+            0 10px 24px var(--sari-dark-c33e3d1bb4, rgba(15, 23, 42, .08)),
+            0 22px 48px var(--sari-dark-0a9e89f88f, rgba(15, 23, 42, .085)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .94)) !important;
     }
 }
 
@@ -2620,9 +2620,9 @@
     .inventory-shell .inventory-table-panel {
         margin-bottom: 14px !important;
         box-shadow:
-            0 2px 4px rgba(15, 23, 42, .04),
-            0 8px 18px rgba(15, 23, 42, .065),
-            0 16px 34px rgba(15, 23, 42, .075) !important;
+            0 2px 4px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)),
+            0 8px 18px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            0 16px 34px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)) !important;
     }
 }
 
@@ -2635,18 +2635,18 @@
    ====================================================================== */
 
 .inventory-shell {
-    --inventory-main-border: #E5E7EB;
-    --inventory-main-divider: #ECEFF2;
+    --inventory-main-border: var(--sari-dark-d8c2716225, #E5E7EB);
+    --inventory-main-divider: var(--sari-dark-d8c2716225, #ECEFF2);
     --inventory-main-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
     --inventory-summary-shadow:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065),
-        inset 0 1px 0 rgba(255, 255, 255, .90);
+        0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+        0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
 }
 
 /* ------------------------------------------------------------
@@ -2654,7 +2654,7 @@
    ------------------------------------------------------------ */
 .inventory-shell .inventory-stat-card {
     border: 1px solid var(--inventory-main-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inventory-summary-shadow) !important;
     transform: none !important;
 }
@@ -2664,7 +2664,7 @@
 .inventory-shell .inventory-activity-panel,
 .inventory-shell .inventory-search-panel {
     border: 1px solid var(--inventory-main-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--inventory-main-shadow) !important;
     transform: none !important;
 }
@@ -2673,10 +2673,10 @@
 .inventory-shell .inventory-table-panel,
 .inventory-shell .inventory-table-panel:hover {
     box-shadow:
-        0 3px 7px rgba(15, 23, 42, .055),
-        0 14px 32px rgba(15, 23, 42, .095),
-        0 30px 68px rgba(15, 23, 42, .11),
-        inset 0 1px 0 rgba(255, 255, 255, .96) !important;
+        0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+        0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        0 30px 68px var(--sari-dark-71f44bdb16, rgba(15, 23, 42, .11)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .96)) !important;
 }
 
 /* No main-container movement on hover. */
@@ -2686,7 +2686,7 @@
 .inventory-shell .inventory-activity-panel:hover,
 .inventory-shell .inventory-search-panel:hover {
     border-color: var(--inventory-main-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     transform: none !important;
 }
 
@@ -2696,8 +2696,8 @@
    ------------------------------------------------------------ */
 .inventory-shell .inventory-health-card,
 .inventory-shell .inventory-health-card:hover {
-    border: 1px solid #E7EAEE !important;
-    background: #FFFFFF !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E7EAEE) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: none !important;
     transform: none !important;
 }
@@ -2705,8 +2705,8 @@
 /* Recent adjustment rows are content rows inside one floating parent. */
 .inventory-shell .inventory-activity-item,
 .inventory-shell .inventory-activity-item:hover {
-    border-color: #E7EAEE !important;
-    background: #FAFBFC !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAEE) !important;
+    background: var(--sari-dark-950baec030, #FAFBFC) !important;
     box-shadow: none !important;
     transform: none !important;
 }
@@ -2714,8 +2714,8 @@
 /* Product thumbnails are media frames, not mini floating cards. */
 .inventory-shell .inventory-product-thumb,
 .inventory-shell .inventory-product-thumb:hover {
-    border-color: #E5E7EB !important;
-    background: #F8FAFC !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     box-shadow: none !important;
     transform: none !important;
 }
@@ -2736,8 +2736,8 @@
 .inventory-shell .inventory-table-search,
 .inventory-shell .inventory-select,
 .inventory-shell .inventory-qty {
-    border-color: #D1D5DB !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #D1D5DB) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: none !important;
 }
 
@@ -2745,8 +2745,8 @@
 .inventory-shell .inventory-table-search:hover,
 .inventory-shell .inventory-select:hover,
 .inventory-shell .inventory-qty:hover {
-    border-color: #C9D0D9 !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #C9D0D9) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: none !important;
 }
 
@@ -2755,8 +2755,8 @@
 .inventory-shell .inventory-select:focus,
 .inventory-shell .inventory-qty:focus {
     border-color: #C4A35B !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(196, 163, 91, .08)) !important;
 }
 
 /* ------------------------------------------------------------
@@ -2764,12 +2764,12 @@
    ------------------------------------------------------------ */
 .inventory-shell .inventory-table-head {
     border-bottom-color: var(--inventory-main-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: none !important;
 }
 
 .inventory-shell .inventory-grid-head {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     border-color: var(--inventory-main-divider) !important;
     box-shadow: none !important;
 }
@@ -2782,11 +2782,11 @@
 }
 
 .inventory-shell .inventory-row {
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .inventory-shell .inventory-row:hover {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
 }
 
 /* Legend/divider rows remain document-like. */
@@ -2804,7 +2804,7 @@
 /* Pagination/footer belongs to the table shell. */
 .inventory-shell .inventory-table-panel > .border-t {
     border-color: var(--inventory-main-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: none !important;
 }
 
@@ -2821,26 +2821,26 @@
 @media (max-width: 640px) {
     .inventory-shell .inventory-stat-card {
         box-shadow:
-            0 1px 3px rgba(15, 23, 42, .03),
-            0 6px 14px rgba(15, 23, 42, .05),
-            0 12px 26px rgba(15, 23, 42, .055) !important;
+            0 1px 3px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)),
+            0 6px 14px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
+            0 12px 26px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)) !important;
     }
 
     .inventory-shell .inventory-panel,
     .inventory-shell .inventory-search-panel,
     .inventory-shell .inventory-activity-panel {
         box-shadow:
-            0 2px 4px rgba(15, 23, 42, .035),
-            0 8px 18px rgba(15, 23, 42, .06),
-            0 18px 38px rgba(15, 23, 42, .07) !important;
+            0 2px 4px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 8px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            0 18px 38px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)) !important;
     }
 
     .inventory-shell .inventory-table-panel,
     .inventory-shell .inventory-table-panel:hover {
         box-shadow:
-            0 2px 4px rgba(15, 23, 42, .04),
-            0 8px 18px rgba(15, 23, 42, .065),
-            0 16px 34px rgba(15, 23, 42, .075) !important;
+            0 2px 4px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)),
+            0 8px 18px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            0 16px 34px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)) !important;
     }
 
     .inventory-shell .inventory-health-card,

@@ -29,7 +29,7 @@
 #sariCodRemittances .cod-heading-eyebrow {
     display: block;
     margin: 0 0 5px;
-    color: #ab771b;
+    color: var(--sari-dark-b7748d7361, #ab771b);
     font-size: 10px;
     line-height: 1.4;
     font-weight: 750;
@@ -38,7 +38,7 @@
 }
 #sariCodRemittances .cod-heading-title {
     margin: 0;
-    color: #222a35;
+    color: var(--sari-dark-e23e64dd1e, #222a35);
     font-size: clamp(25px, 2.1vw, 31px);
     font-weight: 750;
     letter-spacing: -.042em;
@@ -57,10 +57,10 @@
     align-items: center;
     min-height: 36px;
     padding: 0 12px;
-    border: 1px solid #e0e4e9;
+    border: 1px solid var(--sari-dark-d8c2716225, #e0e4e9);
     border-radius: 10px;
-    background: #f8fafb;
-    color: #657487;
+    background: var(--sari-dark-950baec030, #f8fafb);
+    color: var(--sari-dark-a63aa16d7c, #657487);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: .035em;
@@ -75,27 +75,27 @@
     width: 40px;
     height: 40px;
     padding: 0;
-    border: 1px solid #dfe4e9;
+    border: 1px solid var(--sari-dark-d8c2716225, #dfe4e9);
     border-radius: 12px;
-    background: #fff;
-    color: #647487;
-    box-shadow: 0 2px 7px rgba(15,23,42,.035);
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-a63aa16d7c, #647487);
+    box-shadow: 0 2px 7px var(--sari-dark-7593018246, rgba(15,23,42,.035));
     cursor: pointer;
     transition: background .15s ease, border-color .15s ease;
 }
-#sariCodRemittances .cod-help-trigger:hover { background: #f3f5f7; border-color: #b9c2ce; }
+#sariCodRemittances .cod-help-trigger:hover { background: var(--sari-dark-4d21eb669b, #f3f5f7); border-color: var(--sari-dark-d8c2716225, #b9c2ce); }
 #sariCodRemittances .cod-help-trigger:focus-visible,
 #sariCodRemittances .cod-help-close:focus-visible {
-    outline: 3px solid rgba(100,116,139,.32);
+    outline: 3px solid var(--sari-dark-7571452add, rgba(100,116,139,.32));
     outline-offset: 2px;
 }
 #sariCodRemittances .cod-help-trigger svg { display:block; width:21px; height:21px; }
 /* Dropdown is anchored to the help icon instead of blocking the page. */
 #sariCodRemittances .cod-help-anchor { position: relative; flex: 0 0 auto; }
 #sariCodRemittances .cod-help-trigger[aria-expanded="true"] {
-    background: #f2f5f8;
-    color: #253244;
-    border-color: #cbd5df;
+    background: var(--sari-dark-4d21eb669b, #f2f5f8);
+    color: var(--sari-dark-e23e64dd1e, #253244);
+    border-color: var(--sari-dark-d8c2716225, #cbd5df);
 }
 #sariCodRemittances .cod-help-panel {
     position: absolute;
@@ -109,11 +109,11 @@
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
-    border: 1px solid #e3e8ed;
+    border: 1px solid var(--sari-dark-d8c2716225, #e3e8ed);
     border-radius: 16px;
-    background: #fff;
-    color: #263243;
-    box-shadow: 0 18px 50px rgba(19, 31, 46, .15), 0 3px 12px rgba(19, 31, 46, .05);
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-e23e64dd1e, #263243);
+    box-shadow: 0 18px 50px var(--sari-dark-f4efbbfaa5, rgba(19, 31, 46, .15)), 0 3px 12px var(--sari-dark-1df26971b5, rgba(19, 31, 46, .05));
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -136,9 +136,9 @@
     height: 9px;
     top: -5px;
     right: 15px;
-    background: #fff;
-    border-top: 1px solid #e3e8ed;
-    border-left: 1px solid #e3e8ed;
+    background: var(--sari-dark-950baec030, #fff);
+    border-top: 1px solid var(--sari-dark-d8c2716225, #e3e8ed);
+    border-left: 1px solid var(--sari-dark-d8c2716225, #e3e8ed);
     transform: rotate(45deg);
 }
 #sariCodRemittances .cod-help-panel-head {
@@ -147,11 +147,11 @@
     justify-content: space-between;
     gap: 12px;
     padding: 19px 20px 14px;
-    border-bottom: 1px solid #eef0f2;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #eef0f2);
 }
 #sariCodRemittances .cod-help-panel-tag {
     margin: 0 0 5px;
-    color: #a87318;
+    color: var(--sari-dark-bf0424e596, #a87318);
     font-size: 10px;
     line-height: 1.4;
     font-weight: 750;
@@ -160,7 +160,7 @@
 }
 #sariCodRemittances .cod-help-panel-title {
     margin: 0;
-    color: #263243;
+    color: var(--sari-dark-e23e64dd1e, #263243);
     font-size: 17px;
     line-height: 1.4;
     font-weight: 750;
@@ -174,17 +174,17 @@
     width: 32px;
     height: 32px;
     padding: 0;
-    border: 1px solid #e2e7ec;
+    border: 1px solid var(--sari-dark-d8c2716225, #e2e7ec);
     border-radius: 9px;
-    background: #fff;
-    color: #64748b;
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-a63aa16d7c, #64748b);
     cursor: pointer;
 }
-#sariCodRemittances .cod-help-close:hover { background: #f3f5f7; }
+#sariCodRemittances .cod-help-close:hover { background: var(--sari-dark-4d21eb669b, #f3f5f7); }
 #sariCodRemittances .cod-help-copy {
     margin: 0;
     padding: 16px 20px 20px;
-    color: #596579;
+    color: var(--sari-dark-a63aa16d7c, #596579);
     font-size: 13px;
     line-height: 1.8;
     overflow-wrap: anywhere;
@@ -216,14 +216,14 @@
     padding: 11px 16px;
     font-size: 12px;
     font-weight: 700;
-    border: 1px solid #222b36;
+    border: 1px solid var(--sari-dark-d8c2716225, #222b36);
     border-radius: 11px;
-    background: #222b36;
+    background: var(--sari-dark-fbb35de0d1, #222b36);
     color: #fff;
-    box-shadow: 0 4px 11px rgba(21,30,41,.1);
+    box-shadow: 0 4px 11px var(--sari-dark-8eadf403a5, rgba(21,30,41,.1));
     transition: background .16s ease, transform .16s ease;
 }
-#sariCodRemittances #startRemittanceScanner:hover { background: #334155; }
+#sariCodRemittances #startRemittanceScanner:hover { background: var(--sari-dark-fbb35de0d1, #334155); }
 #sariCodRemittances #remittanceScannerWrap { margin-top: 20px; }
 #sariCodRemittances #remittanceScannerStatus { font-size: 12px; line-height: 1.6; }
 #sariCodRemittances #stopRemittanceScanner { font-size: 11px; }
@@ -261,10 +261,10 @@
     gap: 0 !important;
     min-height: 300px;
     padding: 55px 22px !important;
-    border: 1px solid #e5e9ed !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e9ed) !important;
     border-radius: 18px !important;
-    background: #fff !important;
-    box-shadow: 0 9px 27px rgba(18, 31, 46, .05) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    box-shadow: 0 9px 27px var(--sari-dark-1df26971b5, rgba(18, 31, 46, .05)) !important;
     text-align: center !important;
 }
 #sariCodRemittances .cod-empty-icon {
@@ -276,7 +276,7 @@
     border: 0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    color: #b3bdc8;
+    color: var(--sari-dark-a63aa16d7c, #b3bdc8);
 }
 #sariCodRemittances .cod-empty-icon svg {
     display: block;
@@ -287,7 +287,7 @@
 }
 #sariCodRemittances .cod-empty-title {
     margin: 0;
-    color: #334155;
+    color: var(--sari-dark-e23e64dd1e, #334155);
     font-size: 22px;
     line-height: 1.35;
     letter-spacing: -.025em;
@@ -296,7 +296,7 @@
 #sariCodRemittances .cod-empty-description {
     max-width: 410px;
     margin: 8px 0 0;
-    color: #94a3b8;
+    color: var(--sari-dark-a63aa16d7c, #94a3b8);
     font-size: 12px;
     line-height: 1.65;
 }

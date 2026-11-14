@@ -7,10 +7,10 @@
 <style>
 /* Buyer Account-inspired Logistics page; page-scoped to avoid shared CSS conflicts. */
 #lgAccountBuyerParity {
-    --ap-ink: #27313d;
-    --ap-muted: #8390a0;
-    --ap-line: #e5e8ed;
-    --ap-soft-line: #edf0f4;
+    --ap-ink: var(--sari-dark-e23e64dd1e, #27313d);
+    --ap-muted: var(--sari-dark-a63aa16d7c, #8390a0);
+    --ap-line: var(--sari-dark-d8c2716225, #e5e8ed);
+    --ap-soft-line: var(--sari-dark-d8c2716225, #edf0f4);
     --ap-gold: #d9950b;
     width: 100%;
     max-width: 1480px;
@@ -31,33 +31,33 @@
 }
 #lgAccountBuyerParity .lg-account-heading::before, #lgAccountBuyerParity .lg-account-heading::after { content: none !important; }
 #lgAccountBuyerParity .lg-account-eyebrow {
-    margin: 0 0 6px; color: #a87316; font-size: 10.5px;
+    margin: 0 0 6px; color: var(--sari-dark-685eb4fc40, #a87316); font-size: 10.5px;
     font-weight: 800; letter-spacing: .14em; line-height: 1.3; text-transform: uppercase;
 }
 #lgAccountBuyerParity .lg-account-heading h1 {
-    margin: 0; color: #2e343b; font-size: clamp(27px,2.25vw,31px);
+    margin: 0; color: var(--sari-dark-e23e64dd1e, #2e343b); font-size: clamp(27px,2.25vw,31px);
     font-weight: 760; line-height: 1.08; letter-spacing: -.035em;
 }
-#lgAccountBuyerParity .lg-account-heading h1 span { color: #c88912; }
+#lgAccountBuyerParity .lg-account-heading h1 span { color: var(--sari-dark-19b301f69a, #c88912); }
 #lgAccountBuyerParity .lg-account-layout {
     display: grid; grid-template-columns: minmax(245px,285px) minmax(0,1fr);
     align-items: start; gap: 16px; min-width: 0;
 }
 #lgAccountBuyerParity .lg-account-card {
     min-width: 0; overflow: hidden;
-    border: 1px solid #e5e7eb; border-radius: 17px; background: #fff;
-    box-shadow: 0 3px 7px rgba(15,23,42,.045), 0 12px 30px rgba(15,23,42,.07), 0 26px 58px rgba(15,23,42,.075);
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb); border-radius: 17px; background: var(--sari-dark-950baec030, #fff);
+    box-shadow: 0 3px 7px var(--sari-dark-1190f58155, rgba(15,23,42,.045)), 0 12px 30px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)), 0 26px 58px var(--sari-dark-e07575a086, rgba(15,23,42,.075));
 }
 #lgAccountBuyerParity .lg-account-profile { position: sticky; top: 86px; }
 #lgAccountBuyerParity .lg-account-card-header {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 15px 17px; border-bottom: 1px solid var(--ap-soft-line); background: #fff;
+    padding: 15px 17px; border-bottom: 1px solid var(--ap-soft-line); background: var(--sari-dark-950baec030, #fff);
 }
 #lgAccountBuyerParity .lg-account-card-header h2 {
-    margin: 0; color: #293444; font-size: 14px; font-weight: 750; line-height: 1.35;
+    margin: 0; color: var(--sari-dark-e23e64dd1e, #293444); font-size: 14px; font-weight: 750; line-height: 1.35;
 }
 #lgAccountBuyerParity .lg-account-profile-badge {
-    color: #8e99a6; font-size: 8.5px; font-weight: 750; letter-spacing: .05em;
+    color: var(--sari-dark-a63aa16d7c, #8e99a6); font-size: 8.5px; font-weight: 750; letter-spacing: .05em;
     text-transform: uppercase; white-space: nowrap;
 }
 #lgAccountBuyerParity .lg-account-profile-body { padding: 20px 18px 18px; text-align: center; }
@@ -66,35 +66,35 @@
 }
 #lgAccountBuyerParity .lg-account-avatar {
     display: grid; width: 116px; height: 116px; overflow: hidden; place-items: center;
-    border: 1px solid #dee4eb; border-radius: 19px; background: #f3f6f9;
-    color: #9ba5b1; font-size: 32px; font-weight: 740;
+    border: 1px solid var(--sari-dark-d8c2716225, #dee4eb); border-radius: 19px; background: var(--sari-dark-4d21eb669b, #f3f6f9);
+    color: var(--sari-dark-a63aa16d7c, #9ba5b1); font-size: 32px; font-weight: 740;
 }
 #lgAccountBuyerParity .lg-account-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
 #lgAccountBuyerParity .lg-account-photo-trigger {
     position: absolute; right: -7px; bottom: -7px; display: grid; place-items: center;
-    width: 35px; height: 35px; border: 3px solid white; border-radius: 11px;
+    width: 35px; height: 35px; border: 3px solid var(--sari-dark-d8c2716225, white); border-radius: 11px;
     background: #c88912; color: white; cursor: pointer;
-    box-shadow: 0 5px 13px rgba(200,137,18,.2);
+    box-shadow: 0 5px 13px var(--sari-dark-ef22e61893, rgba(200,137,18,.2));
 }
 #lgAccountBuyerParity .lg-account-photo-trigger:hover { background: #ad760f; }
 #lgAccountBuyerParity .lg-account-photo-trigger svg { width: 16px; height: 16px; }
 #lgAccountBuyerParity .lg-account-profile-name {
-    margin: 17px 0 0; color: #283340; font-size: 16px; font-weight: 750; line-height: 1.35;
+    margin: 17px 0 0; color: var(--sari-dark-e23e64dd1e, #283340); font-size: 16px; font-weight: 750; line-height: 1.35;
     overflow-wrap: anywhere;
 }
 #lgAccountBuyerParity .lg-account-profile-email {
-    margin: 4px 0 0; color: #8591a0; font-size: 10px; line-height: 1.45;
+    margin: 4px 0 0; color: var(--sari-dark-a63aa16d7c, #8591a0); font-size: 10px; line-height: 1.45;
     overflow-wrap: anywhere;
 }
 #lgAccountBuyerParity .lg-account-role {
     display: inline-block; margin-top: 10px; padding: 5px 10px;
-    border: 1px solid #e5eaf0; border-radius: 100px; background: #f8fafc;
-    color: #677586; font-size: 9px; font-weight: 700;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5eaf0); border-radius: 100px; background: var(--sari-dark-950baec030, #f8fafc);
+    color: var(--sari-dark-a63aa16d7c, #677586); font-size: 9px; font-weight: 700;
 }
 #lgAccountBuyerParity .lg-account-photo-help {
-    margin: 14px auto 0; max-width: 230px; color: #98a2ae; font-size: 9px; line-height: 1.65;
+    margin: 14px auto 0; max-width: 230px; color: var(--sari-dark-a63aa16d7c, #98a2ae); font-size: 9px; line-height: 1.65;
 }
-#lgAccountBuyerParity .lg-account-photo-file { color: #66758a; overflow-wrap: anywhere; }
+#lgAccountBuyerParity .lg-account-photo-file { color: var(--sari-dark-a63aa16d7c, #66758a); overflow-wrap: anywhere; }
 #lgAccountBuyerParity input[data-profile-input] {
     position: absolute !important; width: 1px !important; height: 1px !important;
     margin: -1px !important; padding: 0 !important; border: 0 !important;
@@ -104,23 +104,23 @@
 #lgAccountBuyerParity .lg-account-meta { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--ap-soft-line); text-align: left; }
 #lgAccountBuyerParity .lg-account-meta-row {
     display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;
-    padding: 10px 0; border-bottom: 1px solid #f0f2f5;
+    padding: 10px 0; border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0f2f5);
 }
 #lgAccountBuyerParity .lg-account-meta-row:last-child { border-bottom: 0; padding-bottom: 0; }
-#lgAccountBuyerParity .lg-account-meta-row span { color: #83909e; font-size: 10px; }
+#lgAccountBuyerParity .lg-account-meta-row span { color: var(--sari-dark-a63aa16d7c, #83909e); font-size: 10px; }
 #lgAccountBuyerParity .lg-account-meta-row strong {
-    color: #465466; font-size: 10px; font-weight: 680; text-align: right; overflow-wrap: anywhere;
+    color: var(--sari-dark-e23e64dd1e, #465466); font-size: 10px; font-weight: 680; text-align: right; overflow-wrap: anywhere;
 }
 #lgAccountBuyerParity .lg-account-settings > .lg-account-section + .lg-account-section { border-top: 1px solid var(--ap-soft-line); }
 #lgAccountBuyerParity .lg-account-section-head {
     display: flex; align-items: center; gap: 15px; padding: 18px 19px 12px;
 }
 #lgAccountBuyerParity .lg-account-section-head h2 {
-    margin: 0; font-size: 15.5px; font-weight: 750; line-height: 1.35; color: #293444;
+    margin: 0; font-size: 15.5px; font-weight: 750; line-height: 1.35; color: var(--sari-dark-e23e64dd1e, #293444);
 }
-#lgAccountBuyerParity .lg-account-section-head .lg-account-head-rule { flex: 1; height: 1px; background: #e4e8ed; }
+#lgAccountBuyerParity .lg-account-section-head .lg-account-head-rule { flex: 1; height: 1px; background: var(--sari-dark-4d21eb669b, #e4e8ed); }
 #lgAccountBuyerParity .lg-account-section-copy {
-    margin: 3px 0 0; padding: 0 19px; color: #8793a2; font-size: 10px; line-height: 1.55;
+    margin: 3px 0 0; padding: 0 19px; color: var(--sari-dark-a63aa16d7c, #8793a2); font-size: 10px; line-height: 1.55;
 }
 #lgAccountBuyerParity .lg-account-fields { padding: 13px 19px 20px; }
 #lgAccountBuyerParity .account-fields-grid {
@@ -129,20 +129,20 @@
 #lgAccountBuyerParity .account-field { display: block; min-width: 0; }
 #lgAccountBuyerParity .account-field-wide { grid-column: 1 / -1; }
 #lgAccountBuyerParity .account-field > span {
-    display: block; margin-bottom: 6px; font-size: 10.5px; font-weight: 700; color: #47566a;
+    display: block; margin-bottom: 6px; font-size: 10.5px; font-weight: 700; color: var(--sari-dark-e23e64dd1e, #47566a);
 }
 #lgAccountBuyerParity .account-field input, #lgAccountBuyerParity .account-field textarea {
     display: block; width: 100%; height: 44px; min-height: 44px;
-    padding: 10px 12px; border: 1px solid #d9e0e8; border-radius: 10px;
-    background: white; color: #334155; font-family: inherit;
+    padding: 10px 12px; border: 1px solid var(--sari-dark-d8c2716225, #d9e0e8); border-radius: 10px;
+    background: var(--sari-dark-950baec030, white); color: var(--sari-dark-e23e64dd1e, #334155); font-family: inherit;
     font-size: 11.5px; line-height: 1.5; outline: none; box-shadow: none;
     transition: border-color .15s ease, box-shadow .15s ease;
 }
 #lgAccountBuyerParity .account-field textarea { min-height: 85px; height: auto; resize: vertical; }
-#lgAccountBuyerParity .account-field :is(input,textarea):hover { border-color: #cbd4de; }
-#lgAccountBuyerParity .account-field :is(input,textarea):focus { border-color: #c88912; box-shadow: 0 0 0 3px rgba(200,137,18,.08); }
-#lgAccountBuyerParity .account-field-help { display: block; margin-top: 6px; color: #96a0ad; font-size: 9px; line-height: 1.55; }
-#lgAccountBuyerParity .account-field-error { display: block; margin-top: 5px; color: #b45454; font-size: 9px; }
+#lgAccountBuyerParity .account-field :is(input,textarea):hover { border-color: var(--sari-dark-d8c2716225, #cbd4de); }
+#lgAccountBuyerParity .account-field :is(input,textarea):focus { border-color: #c88912; box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08)); }
+#lgAccountBuyerParity .account-field-help { display: block; margin-top: 6px; color: var(--sari-dark-a63aa16d7c, #96a0ad); font-size: 9px; line-height: 1.55; }
+#lgAccountBuyerParity .account-field-error { display: block; margin-top: 5px; color: var(--sari-dark-384406f848, #b45454); font-size: 9px; }
 #lgAccountBuyerParity .account-security-fields { display: grid; gap: 13px; }
 #lgAccountBuyerParity .account-password-field { position: relative; }
 #lgAccountBuyerParity .account-password-field input { padding-right: 48px; }
@@ -151,7 +151,7 @@
     display: inline-flex; align-items: center; justify-content: center;
     width: 34px; min-width: 34px; height: 34px; padding: 0;
     border: 0; border-radius: 8px; background: transparent;
-    color: #8894a3; cursor: pointer;
+    color: var(--sari-dark-a63aa16d7c, #8894a3); cursor: pointer;
     transition: color .15s ease, background-color .15s ease;
 }
 #lgAccountBuyerParity .account-password-field button svg {
@@ -159,37 +159,37 @@
     stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
 }
 #lgAccountBuyerParity .account-password-field button [hidden] { display: none !important; }
-#lgAccountBuyerParity .account-password-field button:hover { background: #f0f2f5; color: #556578; }
+#lgAccountBuyerParity .account-password-field button:hover { background: var(--sari-dark-4d21eb669b, #f0f2f5); color: var(--sari-dark-a63aa16d7c, #556578); }
 #lgAccountBuyerParity .account-password-field button:focus-visible { outline: 2px solid rgba(217,149,11,.6); outline-offset: 2px; }
 #lgAccountBuyerParity .lg-account-save {
     display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
     border-top: 1px solid var(--ap-soft-line); padding: 16px 19px 18px;
 }
-#lgAccountBuyerParity .lg-account-save p { margin: 0; color: #8794a2; font-size: 10px; }
+#lgAccountBuyerParity .lg-account-save p { margin: 0; color: var(--sari-dark-a63aa16d7c, #8794a2); font-size: 10px; }
 #lgAccountBuyerParity .account-save-button {
     min-height: 43px; padding: 0 20px; border: 1px solid #d9950b; border-radius: 10px;
     background: #d9950b; color: white; cursor: pointer;
     font-family: inherit; font-size: 11px; font-weight: 750;
-    box-shadow: 0 5px 13px rgba(217,149,11,.15);
+    box-shadow: 0 5px 13px var(--sari-dark-f4efbbfaa5, rgba(217,149,11,.15));
 }
 #lgAccountBuyerParity .account-save-button:hover { background: #be8208; border-color: #be8208; }
 #lgAccountBuyerParity .account-save-button:disabled { cursor: wait; opacity: .65; }
 #lgAccountBuyerParity .account-alert {
     border-radius: 11px; margin: 0 0 14px; padding: 12px 15px; font-size: 11px; line-height: 1.5;
 }
-#lgAccountBuyerParity .account-alert-success { background: #f6fbf8; border: 1px solid #d9eadf; color: #447a58; }
-#lgAccountBuyerParity .account-alert-danger { background: #fff7f7; border: 1px solid #efd5d5; color: #a54f4f; }
+#lgAccountBuyerParity .account-alert-success { background: var(--sari-dark-950baec030, #f6fbf8); border: 1px solid var(--sari-dark-d8c2716225, #d9eadf); color: var(--sari-dark-a63aa16d7c, #447a58); }
+#lgAccountBuyerParity .account-alert-danger { background: var(--sari-dark-950baec030, #fff7f7); border: 1px solid var(--sari-dark-d8c2716225, #efd5d5); color: var(--sari-dark-ccbc4097f3, #a54f4f); }
 #lgAccountBuyerParity .account-alert strong { font-size: 11px; }
 #lgAccountBuyerParity .account-alert p, #lgAccountBuyerParity .account-alert li { margin-top: 4px; font-size: 10px; }
 #lgAccountBuyerParity .lg-account-support { margin-top: 17px; }
 #lgAccountBuyerParity .lg-account-support .lg-account-card-header { border-bottom: 1px solid var(--ap-soft-line); }
-#lgAccountBuyerParity .lg-account-support .lg-account-card-header p { margin: 4px 0 0; color: #8995a2; font-size: 10px; }
+#lgAccountBuyerParity .lg-account-support .lg-account-card-header p { margin: 4px 0 0; color: var(--sari-dark-a63aa16d7c, #8995a2); font-size: 10px; }
 #lgAccountBuyerParity .account-support-component { padding: 17px 19px 20px; }
 #lgAccountBuyerParity .account-support-component > * { max-width: none !important; margin-top: 0 !important; }
 #lgAccountBuyerParity .lg-account-no-account { padding: 45px 20px; text-align: center; }
-#lgAccountBuyerParity .lg-account-no-account svg { width: 56px; height: 56px; margin: 0 auto 14px; color: #b1bac4; }
-#lgAccountBuyerParity .lg-account-no-account h2 { margin: 0; font-size: 21px; color: #778595; }
-#lgAccountBuyerParity .lg-account-no-account p { max-width: 470px; margin: 9px auto 0; font-size: 11px; color: #8a96a4; line-height: 1.6; }
+#lgAccountBuyerParity .lg-account-no-account svg { width: 56px; height: 56px; margin: 0 auto 14px; color: var(--sari-dark-a63aa16d7c, #b1bac4); }
+#lgAccountBuyerParity .lg-account-no-account h2 { margin: 0; font-size: 21px; color: var(--sari-dark-a63aa16d7c, #778595); }
+#lgAccountBuyerParity .lg-account-no-account p { max-width: 470px; margin: 9px auto 0; font-size: 11px; color: var(--sari-dark-a63aa16d7c, #8a96a4); line-height: 1.6; }
 #lgAccountBuyerParity :is(button,input,textarea,a):focus-visible { outline: 2px solid rgba(200,137,18,.6); outline-offset: 2px; }
 @media(max-width:1000px) { #lgAccountBuyerParity .lg-account-layout { grid-template-columns: minmax(230px,260px) minmax(0,1fr); } }
 @media(max-width:760px) {
@@ -220,14 +220,14 @@
 #lgAccountBuyerParity .lg-account-support-close {
     display: inline-flex !important; align-items: center; justify-content: center;
     flex: 0 0 auto; width: 40px; height: 40px; padding: 0 !important;
-    border: 1px solid #dfe5ec !important; border-radius: 11px !important;
-    background: #fff !important; color: #728093 !important;
-    box-shadow: 0 3px 8px rgba(25,35,50,.035) !important; cursor: pointer;
+    border: 1px solid var(--sari-dark-d8c2716225, #dfe5ec) !important; border-radius: 11px !important;
+    background: var(--sari-dark-950baec030, #fff) !important; color: var(--sari-dark-a63aa16d7c, #728093) !important;
+    box-shadow: 0 3px 8px var(--sari-dark-7593018246, rgba(25,35,50,.035)) !important; cursor: pointer;
     transition: background-color .17s ease, color .17s ease, border-color .17s ease;
 }
 #lgAccountBuyerParity .lg-account-help-trigger:hover,
 #lgAccountBuyerParity .lg-account-support-close:hover {
-    background: #f4f6f9 !important; color: #344256 !important; border-color: #cdd6e1 !important;
+    background: var(--sari-dark-950baec030, #f4f6f9) !important; color: var(--sari-dark-e23e64dd1e, #344256) !important; border-color: var(--sari-dark-d8c2716225, #cdd6e1) !important;
 }
 #lgAccountBuyerParity :is(.lg-account-help-trigger,.lg-account-support-close) svg {
     display: block; width: 20px; height: 20px;
@@ -244,15 +244,15 @@
     visibility: visible; opacity: 1; pointer-events: auto;
 }
 #lgAccountBuyerParity .lg-account-support-backdrop {
-    position: absolute; inset: 0; background: rgba(24,33,45,.52);
+    position: absolute; inset: 0; background: var(--sari-dark-d328e98a00, rgba(24,33,45,.52));
     backdrop-filter: blur(3px);
 }
 #lgAccountBuyerParity .lg-account-support-panel {
     position: relative; z-index: 1; display: flex; flex-direction: column;
     width: min(100%, 540px); max-height: min(90dvh, 740px);
     overflow: auto; overscroll-behavior: contain;
-    border: 1px solid #e5e9ef; border-radius: 18px; background: #fff;
-    box-shadow: 0 28px 75px rgba(13,24,38,.22);
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e9ef); border-radius: 18px; background: var(--sari-dark-950baec030, #fff);
+    box-shadow: 0 28px 75px var(--sari-dark-e267f3cebc, rgba(13,24,38,.22));
     transform: translateY(13px) scale(.985);
     transition: transform .24s cubic-bezier(.22,1,.36,1);
 }
@@ -261,18 +261,18 @@
 }
 #lgAccountBuyerParity .lg-account-support-modal-header {
     display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 12px; padding: 20px 22px 17px; border-bottom: 1px solid #edf0f4;
-    background: white;
+    gap: 12px; padding: 20px 22px 17px; border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f4);
+    background: var(--sari-dark-950baec030, white);
 }
 #lgAccountBuyerParity .lg-account-support-overline {
-    margin: 0 0 5px; color: #b27b16; font-size: 9px; font-weight: 750;
+    margin: 0 0 5px; color: var(--sari-dark-c8bdcce6ab, #b27b16); font-size: 9px; font-weight: 750;
     letter-spacing: .12em;
 }
 #lgAccountBuyerParity .lg-account-support-modal-header h2 {
-    margin: 0; font-size: 19px; font-weight: 750; line-height: 1.3; color: #293444;
+    margin: 0; font-size: 19px; font-weight: 750; line-height: 1.3; color: var(--sari-dark-e23e64dd1e, #293444);
 }
 #lgAccountBuyerParity .lg-account-support-modal-header p:not(.lg-account-support-overline) {
-    margin: 6px 0 0; color: #8390a0; font-size: 11px; line-height: 1.55;
+    margin: 6px 0 0; color: var(--sari-dark-a63aa16d7c, #8390a0); font-size: 11px; line-height: 1.55;
 }
 #lgAccountBuyerParity .lg-account-support-close {
     width: 34px; height: 34px; box-shadow: none !important;
@@ -287,24 +287,24 @@
     background: transparent !important; box-shadow: none !important;
 }
 #lgAccountBuyerParity .lg-account-support-modal .account-support-component h3 {
-    font-size: 14px !important; font-weight: 700 !important; color: #354256 !important;
+    font-size: 14px !important; font-weight: 700 !important; color: var(--sari-dark-e23e64dd1e, #354256) !important;
 }
 #lgAccountBuyerParity .lg-account-support-modal .account-support-component section > p {
-    font-size: 10px !important; line-height: 1.6; color: #8290a0 !important;
+    font-size: 10px !important; line-height: 1.6; color: var(--sari-dark-a63aa16d7c, #8290a0) !important;
 }
 #lgAccountBuyerParity .lg-account-support-modal .account-support-component form {
     display: grid !important; gap: 13px !important; margin-top: 16px !important;
 }
 #lgAccountBuyerParity .lg-account-support-modal .account-support-component :is(input,textarea) {
     display: block; width: 100%; min-height: 43px;
-    padding: 11px 13px !important; border: 1px solid #dce3ea !important;
-    border-radius: 10px !important; background: white !important;
-    color: #334155 !important; font: inherit !important; font-size: 12px !important;
+    padding: 11px 13px !important; border: 1px solid var(--sari-dark-d8c2716225, #dce3ea) !important;
+    border-radius: 10px !important; background: var(--sari-dark-950baec030, white) !important;
+    color: var(--sari-dark-e23e64dd1e, #334155) !important; font: inherit !important; font-size: 12px !important;
     line-height: 1.5; outline: none;
 }
 #lgAccountBuyerParity .lg-account-support-modal .account-support-component textarea { min-height: 105px; resize: vertical; }
 #lgAccountBuyerParity .lg-account-support-modal .account-support-component :is(input,textarea):focus {
-    border-color: #c88912 !important; box-shadow: 0 0 0 3px rgba(200,137,18,.09);
+    border-color: #c88912 !important; box-shadow: 0 0 0 3px var(--sari-dark-b12a5e9552, rgba(200,137,18,.09));
 }
 #lgAccountBuyerParity .lg-account-support-modal .account-support-component form button {
     min-height: 42px !important; padding: 0 18px !important;

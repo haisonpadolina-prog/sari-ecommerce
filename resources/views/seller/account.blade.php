@@ -10,11 +10,11 @@
 .seller-account-enterprise {
     --sa-gold: #c88912;
     --sa-gold-dark: #aa730f;
-    --sa-ink: #273140;
+    --sa-ink: var(--sari-dark-e23e64dd1e, #273140);
     --sa-body: #5f6b79;
-    --sa-muted: #83909e;
-    --sa-line: #e2e7ed;
-    --sa-line-soft: #edf0f4;
+    --sa-muted: var(--sari-dark-a63aa16d7c, #83909e);
+    --sa-line: var(--sari-dark-d8c2716225, #e2e7ed);
+    --sa-line-soft: var(--sari-dark-d8c2716225, #edf0f4);
     --sa-float: 0 2px 5px rgba(15, 23, 42, .045), 0 10px 24px rgba(15, 23, 42, .075), 0 24px 54px rgba(15, 23, 42, .095), inset 0 1px 0 rgba(255, 255, 255, .92);
     width: 100%; max-width: 1380px; margin: 0 auto;
     color: var(--sa-ink); font-family: Poppins, ui-sans-serif, system-ui, sans-serif;
@@ -22,41 +22,41 @@
 .seller-account-enterprise *, .seller-account-enterprise *::before, .seller-account-enterprise *::after {box-sizing:border-box}
 .seller-account-enterprise [hidden] { display: none !important; }
 .sa-page-head {padding:2px 2px 17px}
-.sa-eyebrow {margin:0;color:#a87316;font-size:10.5px;font-weight:800;line-height:1.2;letter-spacing:.14em;text-transform:uppercase}
-.sa-page-title {margin:5px 0 0;color:#2e343b;font-size:clamp(27px,2.3vw,33px);font-weight:760;letter-spacing:-.035em;line-height:1.1}
+.sa-eyebrow {margin:0;color:var(--sari-dark-685eb4fc40, #a87316);font-size:10.5px;font-weight:800;line-height:1.2;letter-spacing:.14em;text-transform:uppercase}
+.sa-page-title {margin:5px 0 0;color:var(--sari-dark-e23e64dd1e, #2e343b);font-size:clamp(27px,2.3vw,33px);font-weight:760;letter-spacing:-.035em;line-height:1.1}
 .sa-page-title span {color:var(--sa-gold)}
 .sa-alert {margin-bottom:14px;border:1px solid;border-radius:11px;padding:11px 14px;font-size:12px;font-weight:550;line-height:1.5}
-.sa-alert--success {border-color:#d5e5db;background:#f7fbf8;color:#4e765e}
-.sa-alert--error {border-color:#edd4d4;background:#fff8f8;color:#a74e4e}
+.sa-alert--success {border-color:var(--sari-dark-d8c2716225, #d5e5db);background:var(--sari-dark-950baec030, #f7fbf8);color:var(--sari-dark-a63aa16d7c, #4e765e)}
+.sa-alert--error {border-color:var(--sari-dark-d8c2716225, #edd4d4);background:var(--sari-dark-950baec030, #fff8f8);color:var(--sari-dark-9461867b05, #a74e4e)}
 .sa-layout {display:grid;grid-template-columns:286px minmax(0,1fr);gap:14px;align-items:start}
 .sa-left-column {position:sticky;top:84px;display:grid;gap:14px;min-width:0}
-.sa-card {min-width:0;border:1px solid #e5e7eb;border-radius:17px;background:#fff;box-shadow:var(--sa-float)}
+.sa-card {min-width:0;border:1px solid var(--sari-dark-d8c2716225, #e5e7eb);border-radius:17px;background:var(--sari-dark-950baec030, #fff);box-shadow:var(--sa-float)}
 .sa-profile-card {overflow:hidden}
 .sa-profile-card__head {display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 16px;border-bottom:1px solid var(--sa-line-soft)}
-.sa-profile-card__title {margin:0;color:#2d3642;font-size:14px;font-weight:760}
-.sa-profile-card__type {color:#919ba8;font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.06em}
+.sa-profile-card__title {margin:0;color:var(--sari-dark-e23e64dd1e, #2d3642);font-size:14px;font-weight:760}
+.sa-profile-card__type {color:var(--sari-dark-a63aa16d7c, #919ba8);font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.06em}
 .sa-profile-card__body {padding:20px 16px 17px}
 .sa-avatar-wrap {position:relative;width:118px;height:118px;margin:0 auto}
-.sa-avatar {display:grid;width:118px;height:118px;overflow:hidden;place-items:center;border:1px solid #dbe1e8;border-radius:20px;background:#f4f6f8;color:#8d98a6;font-size:30px;font-weight:720;letter-spacing:-.05em}
+.sa-avatar {display:grid;width:118px;height:118px;overflow:hidden;place-items:center;border:1px solid var(--sari-dark-d8c2716225, #dbe1e8);border-radius:20px;background:var(--sari-dark-4d21eb669b, #f4f6f8);color:var(--sari-dark-a63aa16d7c, #8d98a6);font-size:30px;font-weight:720;letter-spacing:-.05em}
 .sa-avatar img {display:block;width:100%;height:100%;object-fit:cover}
-.sa-avatar-edit {position:absolute;right:-7px;bottom:-7px;display:grid;width:36px;height:36px;place-items:center;border:3px solid #fff;border-radius:11px;background:var(--sa-gold);color:#fff;cursor:pointer}
+.sa-avatar-edit {position:absolute;right:-7px;bottom:-7px;display:grid;width:36px;height:36px;place-items:center;border:3px solid var(--sari-dark-d8c2716225, #fff);border-radius:11px;background:var(--sa-gold);color:#fff;cursor:pointer}
 .sa-avatar-edit:hover,.sa-avatar-edit:focus-visible {background:var(--sa-gold-dark);outline:none}
 .sa-avatar-edit svg {width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.sa-profile-name {margin:19px 0 0;color:#242d38;font-size:17px;font-weight:760;line-height:1.35;text-align:center;overflow-wrap:anywhere}
-.sa-profile-email {margin:5px 0 0;overflow-wrap:anywhere;color:#8792a0;font-size:11.5px;text-align:center;line-height:1.5}
-.sa-profile-role {display:table;margin:11px auto 0;border:1px solid #e6eaf0;border-radius:999px;background:#f8f9fb;padding:5px 11px;color:#697586;font-size:10px;font-weight:750}
+.sa-profile-name {margin:19px 0 0;color:var(--sari-dark-e23e64dd1e, #242d38);font-size:17px;font-weight:760;line-height:1.35;text-align:center;overflow-wrap:anywhere}
+.sa-profile-email {margin:5px 0 0;overflow-wrap:anywhere;color:var(--sari-dark-a63aa16d7c, #8792a0);font-size:11.5px;text-align:center;line-height:1.5}
+.sa-profile-role {display:table;margin:11px auto 0;border:1px solid var(--sari-dark-d8c2716225, #e6eaf0);border-radius:999px;background:var(--sari-dark-950baec030, #f8f9fb);padding:5px 11px;color:var(--sari-dark-a63aa16d7c, #697586);font-size:10px;font-weight:750}
 .sa-profile-meta {display:grid;gap:11px;margin-top:17px;border-top:1px solid var(--sa-line-soft);padding-top:14px}
 .sa-profile-meta-row {display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.sa-profile-meta-label {color:#929caa;font-size:10.5px}
-.sa-profile-meta-value {max-width:62%;color:#4e5a69;font-size:11px;font-weight:650;overflow-wrap:anywhere;text-align:right}
+.sa-profile-meta-label {color:var(--sari-dark-a63aa16d7c, #929caa);font-size:10.5px}
+.sa-profile-meta-value {max-width:62%;color:var(--sari-dark-e23e64dd1e, #4e5a69);font-size:11px;font-weight:650;overflow-wrap:anywhere;text-align:right}
 .sa-sidebar-panel {overflow:hidden}
 .sa-sidebar-head {padding:15px 16px 12px;border-bottom:1px solid var(--sa-line-soft)}
-.sa-sidebar-head h2 {margin:0;font-size:14px;font-weight:750;color:#2b3642}
+.sa-sidebar-head h2 {margin:0;font-size:14px;font-weight:750;color:var(--sari-dark-e23e64dd1e, #2b3642)}
 .sa-detail-list {margin:0;padding:1px 16px 8px;display:grid}
-.sa-detail-row {display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid #f0f2f5;padding:11px 0}
+.sa-detail-row {display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid var(--sari-dark-d8c2716225, #f0f2f5);padding:11px 0}
 .sa-detail-row:last-child {border:0}
-.sa-detail-row dt {color:#8b96a4;font-size:10.5px;line-height:1.5}
-.sa-detail-row dd {max-width:60%;margin:0;color:#4b5765;font-size:11px;font-weight:650;text-align:right;line-height:1.5;overflow-wrap:anywhere}
+.sa-detail-row dt {color:var(--sari-dark-a63aa16d7c, #8b96a4);font-size:10.5px;line-height:1.5}
+.sa-detail-row dd {max-width:60%;margin:0;color:var(--sari-dark-e23e64dd1e, #4b5765);font-size:11px;font-weight:650;text-align:right;line-height:1.5;overflow-wrap:anywhere}
 .sa-unified-account {
     overflow: visible; /* preserve custom Sex dropdown visibility */
     border-radius: 20px; /* main Personal Information -> Password & Security card */
@@ -71,25 +71,25 @@
 .sa-unified-account > #sellerPasswordForm > .sa-section-footer {
     border-radius: 0 0 19px 19px; /* actual bottom corners of the whole account card */
 }
-.sa-unified-section {min-width:0;background:#fff}
+.sa-unified-section {min-width:0;background:var(--sari-dark-950baec030, #fff)}
 .sa-unified-section--bordered {border-top:1px solid var(--sa-line-soft)}
 .sa-section-head {display:flex;align-items:flex-start;gap:16px;padding:19px 20px 13px}
 .sa-section-heading {min-width:0;flex:0 1 auto}
-.sa-section-title {margin:0;color:#273140;font-size:17px;font-weight:760;line-height:1.3;letter-spacing:-.015em}
-.sa-section-line {height:1px;min-width:60px;flex:1;margin-top:13px;background:#e4e9ee}
+.sa-section-title {margin:0;color:var(--sari-dark-e23e64dd1e, #273140);font-size:17px;font-weight:760;line-height:1.3;letter-spacing:-.015em}
+.sa-section-line {height:1px;min-width:60px;flex:1;margin-top:13px;background:var(--sari-dark-4d21eb669b, #e4e9ee)}
 .sa-section-body {padding:0 20px 21px}
 .sa-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 15px}
 .sa-field {min-width:0}
 .sa-field--full {grid-column:1/-1}
-.sa-field label,.sa-label {display:block;margin-bottom:7px;color:#40506a;font-size:11.5px;font-weight:690;line-height:1.4}
-.sa-control {display:block;width:100%;min-height:47px;border:1px solid #d7dee7;border-radius:11px;background:#fff;padding:0 13px;color:#2f3948;font-family:inherit;font-size:12.5px;font-weight:500;line-height:1.4;outline:0;box-shadow:none;transition:border-color .14s ease,box-shadow .14s ease}
-.sa-control:hover {border-color:#c9d1db}
-.sa-control:focus,.sa-sex.is-open .sa-sex__button,.sa-sex__button:focus-visible {border-color:var(--sa-gold);box-shadow:0 0 0 3px rgba(200,137,18,.08);outline:0}
-.sa-control::placeholder {color:#a0aab6}
+.sa-field label,.sa-label {display:block;margin-bottom:7px;color:var(--sari-dark-e23e64dd1e, #40506a);font-size:11.5px;font-weight:690;line-height:1.4}
+.sa-control {display:block;width:100%;min-height:47px;border:1px solid var(--sari-dark-d8c2716225, #d7dee7);border-radius:11px;background:var(--sari-dark-950baec030, #fff);padding:0 13px;color:var(--sari-dark-e23e64dd1e, #2f3948);font-family:inherit;font-size:12.5px;font-weight:500;line-height:1.4;outline:0;box-shadow:none;transition:border-color .14s ease,box-shadow .14s ease}
+.sa-control:hover {border-color:var(--sari-dark-d8c2716225, #c9d1db)}
+.sa-control:focus,.sa-sex.is-open .sa-sex__button,.sa-sex__button:focus-visible {border-color:var(--sa-gold);box-shadow:0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08));outline:0}
+.sa-control::placeholder {color:var(--sari-dark-a63aa16d7c, #a0aab6)}
 .sa-control--textarea {min-height:87px;resize:vertical;padding:11px 13px;line-height:1.6}
-.sa-help {margin:6px 0 0;color:#929caa;font-size:10.5px;line-height:1.55}
-#sellerContactCounter {float:right;color:#667381;font-weight:700;font-variant-numeric:tabular-nums}
-.sa-section-footer {display:flex;justify-content:flex-end;align-items:center;gap:14px;border-top:1px solid var(--sa-line-soft);background:#fbfcfd;padding:15px 20px;border-radius:0 0 17px 17px}
+.sa-help {margin:6px 0 0;color:var(--sari-dark-a63aa16d7c, #929caa);font-size:10.5px;line-height:1.55}
+#sellerContactCounter {float:right;color:var(--sari-dark-a63aa16d7c, #667381);font-weight:700;font-variant-numeric:tabular-nums}
+.sa-section-footer {display:flex;justify-content:flex-end;align-items:center;gap:14px;border-top:1px solid var(--sa-line-soft);background:var(--sari-dark-950baec030, #fbfcfd);padding:15px 20px;border-radius:0 0 17px 17px}
 .sa-primary {display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid var(--sa-gold);border-radius:10px;background:var(--sa-gold);padding:0 18px;color:#fff;font-family:inherit;font-size:11.5px;font-weight:750;cursor:pointer;white-space:nowrap}
 .sa-primary:hover,.sa-primary:focus-visible {border-color:var(--sa-gold-dark);background:var(--sa-gold-dark);outline:0}
 .sa-primary svg {width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
@@ -97,41 +97,41 @@
 .sa-doc-list {display:grid;padding:0 20px 6px}
 .sa-doc-row {display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px 13px;align-items:center;border-top:1px solid var(--sa-line-soft);padding:15px 0}
 .sa-doc-row:first-child {border-top:0}
-.sa-doc-name {margin:0;color:#344052;font-size:12px;font-weight:760}
+.sa-doc-name {margin:0;color:var(--sari-dark-e23e64dd1e, #344052);font-size:12px;font-weight:760}
 .sa-doc-state {display:inline-flex;align-items:center;border:1px solid;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:750;white-space:nowrap}
-.sa-doc-state--available {border-color:#d7e5dc;background:#f7fbf8;color:#4f7d63}
-.sa-doc-state--missing {border-color:#efcece;background:#fff8f8;color:#a65353}
+.sa-doc-state--available {border-color:var(--sari-dark-d8c2716225, #d7e5dc);background:var(--sari-dark-950baec030, #f7fbf8);color:var(--sari-dark-a63aa16d7c, #4f7d63)}
+.sa-doc-state--missing {border-color:var(--sari-dark-d8c2716225, #efcece);background:var(--sari-dark-950baec030, #fff8f8);color:var(--sari-dark-58dd29f069, #a65353)}
 .sa-doc-actions {display:flex;justify-content:flex-end;align-items:center;gap:7px}
-.sa-doc-link {display:inline-flex;align-items:center;gap:5px;justify-content:center;min-height:35px;border:1px solid #dfe4ea;border-radius:8px;background:#fff;padding:0 12px;color:#586475;font-size:10.5px;font-weight:700;text-decoration:none}
-.sa-doc-link:hover {border-color:#d1b576;color:#9b6812}
+.sa-doc-link {display:inline-flex;align-items:center;gap:5px;justify-content:center;min-height:35px;border:1px solid var(--sari-dark-d8c2716225, #dfe4ea);border-radius:8px;background:var(--sari-dark-950baec030, #fff);padding:0 12px;color:var(--sari-dark-a63aa16d7c, #586475);font-size:10.5px;font-weight:700;text-decoration:none}
+.sa-doc-link:hover {border-color:#d1b576;color:var(--sari-dark-6e784b4931, #9b6812)}
 .sa-doc-link svg {width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8}
-.sa-icon-action {display:grid;place-items:center;width:35px;height:35px;border:1px solid #dfe4ea;border-radius:9px;background:#fff;color:#9b6812;cursor:pointer}
+.sa-icon-action {display:grid;place-items:center;width:35px;height:35px;border:1px solid var(--sari-dark-d8c2716225, #dfe4ea);border-radius:9px;background:var(--sari-dark-950baec030, #fff);color:var(--sari-dark-6e784b4931, #9b6812);cursor:pointer}
 .sa-icon-action:hover,.sa-icon-action:focus-visible {border-color:#d1b576;outline:none}
 .sa-icon-action svg {width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.sa-doc-selected {grid-column:1/-1;margin:-3px 0 0;color:#929caa;font-size:10px;line-height:1.5;overflow-wrap:anywhere}
-.sa-doc-selected.is-ready {color:#996511;font-weight:690}
+.sa-doc-selected {grid-column:1/-1;margin:-3px 0 0;color:var(--sari-dark-a63aa16d7c, #929caa);font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+.sa-doc-selected.is-ready {color:var(--sari-dark-9b2ca2d764, #996511);font-weight:690}
 /* Password is a separate form: never nested with the account update form. */
 .sa-password-stack {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
 .sa-password-wrap {position:relative;min-width:0}
 .sa-password-wrap:first-child {grid-column:1/-1;max-width:440px;width:100%}
 .sa-password-wrap .sa-control {padding-right:48px}
-.sa-password-toggle {position:absolute;right:7px;top:29px;display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:8px;background:transparent;color:#7c8998;cursor:pointer}
-.sa-password-toggle:hover {background:#f3f5f7;color:#4b5563}
+.sa-password-toggle {position:absolute;right:7px;top:29px;display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:8px;background:transparent;color:var(--sari-dark-a63aa16d7c, #7c8998);cursor:pointer}
+.sa-password-toggle:hover {background:var(--sari-dark-4d21eb669b, #f3f5f7);color:var(--sari-dark-e23e64dd1e, #4b5563)}
 .sa-password-toggle svg {width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .sa-file-input,.sa-sr-only {position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 /* Custom sex select retains the original native select as the form value. */
 .sa-sex {position:relative}
 .sa-sex__button,.sa-sex__menu {display:none}
 .sa-sex.is-ready > .sa-control {position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
-.sa-sex.is-ready .sa-sex__button {display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:47px;border:1px solid #d7dee7;border-radius:11px;background:#fff;padding:0 13px;color:#2f3948;font:inherit;font-size:12.5px;font-weight:500;cursor:pointer}
-.sa-sex__button svg {width:16px;height:16px;fill:none;stroke:#687482;stroke-width:1.9;transition:transform .15s ease}
+.sa-sex.is-ready .sa-sex__button {display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:47px;border:1px solid var(--sari-dark-d8c2716225, #d7dee7);border-radius:11px;background:var(--sari-dark-950baec030, #fff);padding:0 13px;color:var(--sari-dark-e23e64dd1e, #2f3948);font:inherit;font-size:12.5px;font-weight:500;cursor:pointer}
+.sa-sex__button svg {width:16px;height:16px;fill:none;stroke:var(--sari-dark-a63aa16d7c, #687482);stroke-width:1.9;transition:transform .15s ease}
 .sa-sex.is-open {z-index:50}
 .sa-sex.is-open .sa-sex__button svg {transform:rotate(180deg)}
-.sa-sex.is-ready .sa-sex__menu {position:absolute;z-index:60;top:calc(100% + 6px);left:0;right:0;display:block;overflow:hidden;border:1px solid #dfe4ea;border-radius:12px;background:#fff;padding:6px;box-shadow:0 18px 40px rgba(22,29,37,.12)}
+.sa-sex.is-ready .sa-sex__menu {position:absolute;z-index:60;top:calc(100% + 6px);left:0;right:0;display:block;overflow:hidden;border:1px solid var(--sari-dark-d8c2716225, #dfe4ea);border-radius:12px;background:var(--sari-dark-950baec030, #fff);padding:6px;box-shadow:0 18px 40px var(--sari-dark-3b2338cbf0, rgba(22,29,37,.12))}
 .sa-sex__menu[hidden]{display:none!important}
-.sa-sex__option {display:block;width:100%;border:0;border-radius:8px;background:#fff;padding:10px 12px;color:#354151;font:inherit;font-size:12px;text-align:left;cursor:pointer}
-.sa-sex__option:hover,.sa-sex__option:focus-visible {background:#f3f5f7;outline:none}
-.sa-sex__option.is-selected {background:#f7f8fa;color:#9b6812;font-weight:700}
+.sa-sex__option {display:block;width:100%;border:0;border-radius:8px;background:var(--sari-dark-950baec030, #fff);padding:10px 12px;color:var(--sari-dark-e23e64dd1e, #354151);font:inherit;font-size:12px;text-align:left;cursor:pointer}
+.sa-sex__option:hover,.sa-sex__option:focus-visible {background:var(--sari-dark-4d21eb669b, #f3f5f7);outline:none}
+.sa-sex__option.is-selected {background:var(--sari-dark-950baec030, #f7f8fa);color:var(--sari-dark-6e784b4931, #9b6812);font-weight:700}
 @media(max-width:980px) {.sa-layout{grid-template-columns:240px minmax(0,1fr)}}
 @media(max-width:760px) {
     .sa-layout{grid-template-columns:1fr}
@@ -173,7 +173,7 @@
     }
 }
 @media(max-width:767px) {
-    .sa-card {box-shadow:0 1px 3px rgba(15, 23, 42, .035), 0 6px 16px rgba(15, 23, 42, .055), 0 13px 28px rgba(15, 23, 42, .065), inset 0 1px 0 rgba(255, 255, 255, .90)}
+    .sa-card {box-shadow:0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)), 0 6px 16px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)), 0 13px 28px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)), inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90))}
 }
 @media(prefers-reduced-motion:reduce){.seller-account-enterprise *{transition-duration:.01ms!important}}
 @endverbatim
@@ -621,7 +621,7 @@
                                 </svg>
                             </button>
                             @error('current_password', 'password')
-                                <p class="sa-help" style="color:#a65353;">{{ $message }}</p>
+                                <p class="sa-help" style="color:var(--sari-dark-58dd29f069, #a65353);">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -648,7 +648,7 @@
                                 </svg>
                             </button>
                             @error('password', 'password')
-                                <p class="sa-help" style="color:#a65353;">{{ $message }}</p>
+                                <p class="sa-help" style="color:var(--sari-dark-58dd29f069, #a65353);">{{ $message }}</p>
                             @enderror
                         </div>
 

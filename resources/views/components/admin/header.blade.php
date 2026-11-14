@@ -608,6 +608,7 @@
             RIGHT SIDE
         ======================================================= --}}
         <div class="admin-header-actions flex shrink-0 items-center gap-1.5 sm:gap-2">
+            @include('components.shared.theme-toggle')
 
 
             @include('components.admin.notification-menu')

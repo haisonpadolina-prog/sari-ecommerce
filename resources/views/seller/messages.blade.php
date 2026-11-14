@@ -44,8 +44,8 @@
         position: relative;
         z-index: 20;
         flex: 0 0 auto;
-        background: #fff;
-        box-shadow: 0 -8px 24px rgba(35, 28, 20, .035);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 -8px 24px var(--sari-dark-7593018246, rgba(35, 28, 20, .035));
     }
 
     .seller-platform-status {
@@ -53,11 +53,11 @@
         height: 24px;
         align-items: center;
         gap: 6px;
-        border: 1px solid #dce7df;
+        border: 1px solid var(--sari-dark-d8c2716225, #dce7df);
         border-radius: 999px;
-        background: #f6f9f6;
+        background: var(--sari-dark-950baec030, #f6f9f6);
         padding: 0 9px;
-        color: #617568;
+        color: var(--sari-dark-a63aa16d7c, #617568);
         font-size: 10px;
         font-weight: 700;
     }
@@ -75,11 +75,11 @@
         height: 24px;
         align-items: center;
         gap: 6px;
-        border: 1px solid #e4e8ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e8ec);
         border-radius: 999px;
-        background: #f7f9fb;
+        background: var(--sari-dark-950baec030, #f7f9fb);
         padding: 0 9px;
-        color: #647888;
+        color: var(--sari-dark-a63aa16d7c, #647888);
         font-size: 10px;
         font-weight: 700;
     }
@@ -95,7 +95,7 @@
         z-index: 40;
         display: grid;
         place-items: center;
-        background: rgba(255,255,255,.96);
+        background: var(--sari-dark-c86bd35395, rgba(255,255,255,.96));
     }
 
     #sellerPlatformChat[data-ready="1"] .seller-platform-loading { display: none; }
@@ -126,7 +126,7 @@
         align-items: center;
         gap: 10px;
         margin-top: 8px;
-        border-top: 1px solid #eee8df;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee8df);
         padding-top: 10px;
     }
 
@@ -155,7 +155,7 @@
         min-width: 0;
         font-size: 9px;
         line-height: 1.3;
-        color: #958c80;
+        color: var(--sari-dark-a63aa16d7c, #958c80);
     }
 
     #sellerPlatformSend {
@@ -226,11 +226,11 @@
         display: grid;
         place-items: center;
         flex: 0 0 auto;
-        border: 1px solid #dce8ef;
+        border: 1px solid var(--sari-dark-d8c2716225, #dce8ef);
         border-radius: 999px;
-        background: #f2f7fa;
-        color: #5d788b;
-        box-shadow: 0 4px 12px rgba(52, 78, 96, .06);
+        background: var(--sari-dark-4d21eb669b, #f2f7fa);
+        color: var(--sari-dark-a63aa16d7c, #5d788b);
+        box-shadow: 0 4px 12px var(--sari-dark-361b571631, rgba(52, 78, 96, .06));
     }
 
     .sari-bot-avatar svg {
@@ -247,11 +247,11 @@
 
     .sari-assistant-typing__bubble {
         min-width: 72px;
-        border: 1px solid #dce8ef;
+        border: 1px solid var(--sari-dark-d8c2716225, #dce8ef);
         border-radius: 14px 14px 14px 5px;
-        background: #f4f8fa;
+        background: var(--sari-dark-950baec030, #f4f8fa);
         padding: 11px 14px;
-        box-shadow: 0 7px 18px rgba(35, 28, 20, .045);
+        box-shadow: 0 7px 18px var(--sari-dark-1190f58155, rgba(35, 28, 20, .045));
     }
 
     .sari-assistant-typing__dots {
@@ -301,7 +301,7 @@
         overflow: hidden;
         border: 0 !important;
         border-radius: 0 !important;
-        background: #fbfaf7 !important;
+        background: var(--sari-dark-950baec030, #fbfaf7) !important;
         box-shadow: none !important;
     }
 
@@ -309,26 +309,26 @@
         width: 100%;
         height: 100%;
         min-height: 0;
-        background: #fbfaf7;
+        background: var(--sari-dark-950baec030, #fbfaf7);
     }
 
     #sellerConversationPane {
-        background: #fff !important;
-        border-color: #ece5dc !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        border-color: var(--sari-dark-d8c2716225, #ece5dc) !important;
     }
 
     #sellerCenterPane {
         min-width: 0;
-        background: #fbfaf7 !important;
+        background: var(--sari-dark-950baec030, #fbfaf7) !important;
     }
 
     #sellerDetailsPane {
-        background: #fff !important;
-        border-color: #ece5dc !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        border-color: var(--sari-dark-d8c2716225, #ece5dc) !important;
     }
 
     #sellerPlatformMessages {
-        background: #fbfaf7 !important;
+        background: var(--sari-dark-950baec030, #fbfaf7) !important;
         padding-top: 18px !important;
         padding-bottom: 18px !important;
     }
@@ -338,28 +338,28 @@
         min-height: 64px;
         padding-top: 10px !important;
         padding-bottom: 10px !important;
-        background: #fff !important;
-        border-color: #ece5dc !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        border-color: var(--sari-dark-d8c2716225, #ece5dc) !important;
     }
 
     /* Bottom composer stays attached to the conversation surface. */
     .seller-platform-composer {
-        border-color: #ece5dc !important;
-        background: #fff !important;
-        box-shadow: 0 -6px 18px rgba(35, 28, 20, .025) !important;
+        border-color: var(--sari-dark-d8c2716225, #ece5dc) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 -6px 18px var(--sari-dark-e1384eb7fc, rgba(35, 28, 20, .025)) !important;
     }
 
     #sellerPlatformMessageForm {
-        border: 1px solid #e7dfd5 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7dfd5) !important;
         border-radius: 13px !important;
-        background: #fbfaf7 !important;
+        background: var(--sari-dark-950baec030, #fbfaf7) !important;
         box-shadow: none !important;
     }
 
     #sellerPlatformMessageForm:focus-within {
         border-color: #d3aa59 !important;
-        background: #fff !important;
-        box-shadow: 0 0 0 3px rgba(201, 145, 40, .07) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-7c935c8886, rgba(201, 145, 40, .07)) !important;
     }
 
     /* Let the actual conversation be the dominant background. */
@@ -475,16 +475,16 @@
         min-height: 54px !important;
         align-items: center !important;
         gap: 8px !important;
-        border: 1px solid #e6ded4 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e6ded4) !important;
         border-radius: 16px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 6px 8px !important;
-        box-shadow: 0 3px 12px rgba(35, 28, 20, .035) !important;
+        box-shadow: 0 3px 12px var(--sari-dark-7593018246, rgba(35, 28, 20, .035)) !important;
     }
 
     #sellerPlatformMessageForm:focus-within {
         border-color: #d9c49a !important;
-        box-shadow: 0 0 0 3px rgba(201, 145, 40, .06) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-361b571631, rgba(201, 145, 40, .06)) !important;
     }
 
     #sellerPlatformInput {
@@ -507,14 +507,14 @@
         z-index: 30 !important;
         max-width: min(420px, 70vw) !important;
         margin: 0 !important;
-        border: 1px solid #e7dfd5 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7dfd5) !important;
         border-radius: 9px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 6px 9px !important;
-        color: #655d54 !important;
+        color: var(--sari-dark-a63aa16d7c, #655d54) !important;
         font-size: 8px !important;
         line-height: 1.3 !important;
-        box-shadow: 0 7px 18px rgba(35, 28, 20, .07) !important;
+        box-shadow: 0 7px 18px var(--sari-dark-7c935c8886, rgba(35, 28, 20, .07)) !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
@@ -537,16 +537,16 @@
         height: 38px !important;
         flex: 0 0 38px !important;
         place-items: center !important;
-        border: 1px solid #e8e0d6 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e0d6) !important;
         border-radius: 11px !important;
-        background: #faf8f5 !important;
-        color: #7e756b !important;
+        background: var(--sari-dark-950baec030, #faf8f5) !important;
+        color: var(--sari-dark-a63aa16d7c, #7e756b) !important;
     }
 
     .seller-composer-attachment-label:hover {
         border-color: #dac59f !important;
-        background: #fff8eb !important;
-        color: #a8731f !important;
+        background: var(--sari-dark-4d21eb669b, #fff8eb) !important;
+        color: var(--sari-dark-5d5ad776eb, #a8731f) !important;
     }
 
     .seller-composer-attachment-label svg {
@@ -569,7 +569,7 @@
         border-radius: 12px !important;
         padding: 0 !important;
         background: #d39412 !important;
-        box-shadow: 0 5px 12px rgba(201, 145, 40, .15) !important;
+        box-shadow: 0 5px 12px var(--sari-dark-f4efbbfaa5, rgba(201, 145, 40, .15)) !important;
         font-size: 0 !important;
     }
 
@@ -629,13 +629,13 @@
         --chat-gold: #d59617;
         --chat-gold-hover: #c9890f;
         --chat-gold-soft: #fffaf0;
-        --chat-ink: #111827;
-        --chat-text: #344054;
-        --chat-muted: #7c8592;
-        --chat-soft-muted: #98a2b3;
-        --chat-line: #e5e7eb;
-        --chat-canvas: #f7f8fa;
-        --chat-panel: #ffffff;
+        --chat-ink: var(--sari-dark-e23e64dd1e, #111827);
+        --chat-text: var(--sari-dark-e23e64dd1e, #344054);
+        --chat-muted: var(--sari-dark-a63aa16d7c, #7c8592);
+        --chat-soft-muted: var(--sari-dark-a63aa16d7c, #98a2b3);
+        --chat-line: var(--sari-dark-d8c2716225, #e5e7eb);
+        --chat-canvas: var(--sari-dark-950baec030, #f7f8fa);
+        --chat-panel: var(--sari-dark-950baec030, #ffffff);
         --chat-ai: #5f7788;
 
         background: var(--chat-canvas) !important;
@@ -667,46 +667,46 @@
     /* Left conversation rail */
     #sellerConversationPane {
         border-color: var(--chat-line) !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     #sellerConversationPane > div:first-child {
         padding: 14px 14px 12px !important;
-        border-color: #edf0f3 !important;
+        border-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
     }
 
     #sellerConversationPane h3 {
-        color: #1f2937 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size: 13px !important;
         font-weight: 700 !important;
     }
 
     #sellerConversationPane h3 + p {
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 8.5px !important;
     }
 
     #sellerMessageSearch {
         height: 40px !important;
-        border-color: #d8dee6 !important;
+        border-color: var(--sari-dark-d8c2716225, #d8dee6) !important;
         border-radius: 9px !important;
-        background: #f8fafc !important;
+        background: var(--sari-dark-950baec030, #f8fafc) !important;
         padding-left: 36px !important;
         font-size: 9.5px !important;
-        color: #344054 !important;
+        color: var(--sari-dark-e23e64dd1e, #344054) !important;
         box-shadow: none !important;
     }
 
     #sellerMessageSearch:focus {
         border-color: var(--chat-gold) !important;
-        background: #fff !important;
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08)) !important;
     }
 
     #sellerConversationPane > div:nth-child(2) {
         border-left: 0 !important;
-        border-bottom: 1px solid #edf0f3 !important;
-        background: #fffaf0 !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3) !important;
+        background: var(--sari-dark-950baec030, #fffaf0) !important;
         padding: 12px 14px !important;
     }
 
@@ -718,24 +718,24 @@
         width: 36px !important;
         height: 36px !important;
         flex-basis: 36px !important;
-        background: #fff !important;
-        color: #a96f06 !important;
-        box-shadow: inset 0 0 0 1px #efd9a7 !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-c8bdcce6ab, #a96f06) !important;
+        box-shadow: inset 0 0 0 1px var(--sari-dark-f30a5f9061, #efd9a7) !important;
     }
 
     #sellerConversationPane > div:nth-child(2) p.text-\[13px\] {
-        color: #344054 !important;
+        color: var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size: 9.8px !important;
     }
 
     #sellerConversationPane > div:nth-child(2) p.text-\[10px\] {
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 7.8px !important;
     }
 
     #sellerLastMessagePreview {
         margin-top: 5px !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 8.5px !important;
         line-height: 1.45 !important;
     }
@@ -749,27 +749,27 @@
         min-height: 62px !important;
         border-color: var(--chat-line) !important;
         padding: 9px 14px !important;
-        box-shadow: 0 1px 0 rgba(15, 23, 42, .01) !important;
+        box-shadow: 0 1px 0 var(--sari-dark-598e5165eb, rgba(15, 23, 42, .01)) !important;
     }
 
     #sellerCenterPane > div:first-child .h-11.w-11 {
         width: 36px !important;
         height: 36px !important;
         flex-basis: 36px !important;
-        background: #fffaf0 !important;
-        color: #a96f06 !important;
-        box-shadow: inset 0 0 0 1px #efd9a7 !important;
+        background: var(--sari-dark-950baec030, #fffaf0) !important;
+        color: var(--sari-dark-c8bdcce6ab, #a96f06) !important;
+        box-shadow: inset 0 0 0 1px var(--sari-dark-f30a5f9061, #efd9a7) !important;
     }
 
     #sellerCenterPane > div:first-child p.text-\[14px\] {
-        color: #1f2937 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size: 11px !important;
         font-weight: 700 !important;
     }
 
     #sellerCenterPane > div:first-child p.text-\[10px\] {
         margin-top: 2px !important;
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 8px !important;
     }
 
@@ -783,9 +783,9 @@
     }
 
     .seller-platform-status {
-        border-color: #dce7df !important;
-        background: #f4f9f6 !important;
-        color: #4f7d63 !important;
+        border-color: var(--sari-dark-d8c2716225, #dce7df) !important;
+        background: var(--sari-dark-950baec030, #f4f9f6) !important;
+        color: var(--sari-dark-a63aa16d7c, #4f7d63) !important;
     }
 
     .seller-platform-status::before {
@@ -796,28 +796,28 @@
 
     .seller-platform-status[data-state="connecting"],
     .seller-platform-status[data-state="syncing"] {
-        border-color: #eadfc9 !important;
-        background: #fff9ef !important;
-        color: #a8731f !important;
+        border-color: var(--sari-dark-d8c2716225, #eadfc9) !important;
+        background: var(--sari-dark-950baec030, #fff9ef) !important;
+        color: var(--sari-dark-5d5ad776eb, #a8731f) !important;
     }
 
     .seller-platform-status[data-state="fallback"] {
-        border-color: #d8e2eb !important;
-        background: #f5f8fb !important;
-        color: #5d768a !important;
+        border-color: var(--sari-dark-d8c2716225, #d8e2eb) !important;
+        background: var(--sari-dark-950baec030, #f5f8fb) !important;
+        color: var(--sari-dark-a63aa16d7c, #5d768a) !important;
     }
 
     .seller-platform-status[data-state="offline"],
     .seller-platform-status[data-state="unavailable"] {
-        border-color: #efcece !important;
-        background: #fff5f5 !important;
-        color: #a65353 !important;
+        border-color: var(--sari-dark-d8c2716225, #efcece) !important;
+        background: var(--sari-dark-950baec030, #fff5f5) !important;
+        color: var(--sari-dark-58dd29f069, #a65353) !important;
     }
 
     .seller-platform-ai {
-        border-color: #dde5eb !important;
-        background: #f6f9fb !important;
-        color: #617889 !important;
+        border-color: var(--sari-dark-d8c2716225, #dde5eb) !important;
+        background: var(--sari-dark-950baec030, #f6f9fb) !important;
+        color: var(--sari-dark-a63aa16d7c, #617889) !important;
     }
 
     .seller-platform-ai[data-disabled="1"] {
@@ -843,19 +843,19 @@
         padding: 9px 11px !important;
         font-size: 10px !important;
         line-height: 1.55 !important;
-        box-shadow: 0 2px 7px rgba(15, 23, 42, .035) !important;
+        box-shadow: 0 2px 7px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
     }
 
     .seller-message-row.justify-end .seller-message-bubble {
         background: var(--chat-gold) !important;
         color: #fff !important;
-        box-shadow: 0 4px 10px rgba(213, 150, 23, .12) !important;
+        box-shadow: 0 4px 10px var(--sari-dark-3b2338cbf0, rgba(213, 150, 23, .12)) !important;
     }
 
     .seller-message-row:not(.justify-end) .seller-message-bubble {
-        border-color: #e1e6eb !important;
-        background: #fff !important;
-        color: #475467 !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e6eb) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-e23e64dd1e, #475467) !important;
     }
 
     .seller-message-row .max-w-\[84\%\] {
@@ -863,9 +863,9 @@
     }
 
     .sari-bot-avatar {
-        border-color: #dce5eb !important;
-        background: #f2f7fa !important;
-        color: #5f7788 !important;
+        border-color: var(--sari-dark-d8c2716225, #dce5eb) !important;
+        background: var(--sari-dark-4d21eb669b, #f2f7fa) !important;
+        color: var(--sari-dark-a63aa16d7c, #5f7788) !important;
         box-shadow: none !important;
     }
 
@@ -876,9 +876,9 @@
 
     .sari-assistant-typing__bubble {
         min-width: 62px !important;
-        border-color: #dde6ec !important;
+        border-color: var(--sari-dark-d8c2716225, #dde6ec) !important;
         border-radius: 12px 12px 12px 4px !important;
-        background: #f4f8fa !important;
+        background: var(--sari-dark-950baec030, #f4f8fa) !important;
         padding: 9px 11px !important;
         box-shadow: none !important;
     }
@@ -886,31 +886,31 @@
     /* Composer */
     .seller-platform-composer {
         border-color: var(--chat-line) !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 9px 12px !important;
-        box-shadow: 0 -4px 14px rgba(15, 23, 42, .025) !important;
+        box-shadow: 0 -4px 14px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)) !important;
     }
 
     #sellerPlatformMessageForm {
         min-height: 50px !important;
         gap: 7px !important;
-        border-color: #d8dee6 !important;
+        border-color: var(--sari-dark-d8c2716225, #d8dee6) !important;
         border-radius: 13px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 5px 6px !important;
-        box-shadow: 0 1px 2px rgba(15, 23, 42, .02) !important;
+        box-shadow: 0 1px 2px var(--sari-dark-f6fe7319d9, rgba(15, 23, 42, .02)) !important;
     }
 
     #sellerPlatformMessageForm:focus-within {
         border-color: var(--chat-gold) !important;
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08)) !important;
     }
 
     #sellerPlatformInput {
         min-height: 38px !important;
         max-height: 112px !important;
         padding: 8px 6px !important;
-        color: #344054 !important;
+        color: var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size: 10px !important;
         line-height: 1.5 !important;
     }
@@ -919,17 +919,17 @@
         width: 38px !important;
         height: 38px !important;
         flex-basis: 38px !important;
-        border-color: #e1e6eb !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e6eb) !important;
         border-radius: 10px !important;
-        background: #f8fafc !important;
-        color: #667085 !important;
+        background: var(--sari-dark-950baec030, #f8fafc) !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
     }
 
     .seller-composer-attachment-label:hover,
     .seller-composer-attachment-label:focus-within {
         border-color: #efd9a7 !important;
-        background: #fffaf0 !important;
-        color: #9b6505 !important;
+        background: var(--sari-dark-950baec030, #fffaf0) !important;
+        color: var(--sari-dark-af18afcaa4, #9b6505) !important;
     }
 
     #sellerPlatformSend {
@@ -940,7 +940,7 @@
         border-radius: 10px !important;
         background: var(--chat-gold) !important;
         color: #fff !important;
-        box-shadow: 0 5px 12px rgba(213, 150, 23, .14) !important;
+        box-shadow: 0 5px 12px var(--sari-dark-59ed29fe9d, rgba(213, 150, 23, .14)) !important;
     }
 
     #sellerPlatformSend svg {
@@ -961,11 +961,11 @@
     #sellerAttachmentName {
         left: 10px !important;
         bottom: calc(100% + 6px) !important;
-        border-color: #e1e6eb !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e6eb) !important;
         border-radius: 9px !important;
-        color: #475467 !important;
+        color: var(--sari-dark-e23e64dd1e, #475467) !important;
         font-size: 8px !important;
-        box-shadow: 0 8px 20px rgba(15,23,42,.07) !important;
+        box-shadow: 0 8px 20px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)) !important;
     }
 
     #sellerPlatformError {
@@ -980,7 +980,7 @@
         align-items: center;
         gap: 5px;
         margin-top: 5px;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 7.8px;
         font-weight: 600;
     }
@@ -999,11 +999,11 @@
         align-items: center;
         gap: 8px;
         margin-top: 6px;
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
         border-radius: 10px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 8px 9px;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         font-size: 8.5px;
     }
 
@@ -1011,7 +1011,7 @@
         width: 13px;
         height: 13px;
         flex: 0 0 auto;
-        color: #b97805;
+        color: var(--sari-dark-af18afcaa4, #b97805);
     }
 
     @keyframes sariMessagePendingPulse {
@@ -1029,21 +1029,21 @@
     /* Right context */
     #sellerDetailsPane {
         border-color: var(--chat-line) !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     #sellerDetailsPane > div:first-child {
-        border-color: #edf0f3 !important;
+        border-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
         padding: 13px !important;
     }
 
     #sellerDetailsPane > div:first-child p:first-child {
-        color: #344054 !important;
+        color: var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size: 10px !important;
     }
 
     #sellerDetailsPane > div:first-child p:last-child {
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 8px !important;
     }
 
@@ -1054,19 +1054,19 @@
     #sellerDetailsPane > div:last-child .h-16.w-16 {
         width: 48px !important;
         height: 48px !important;
-        background: #f3f6f8 !important;
-        color: #5f7788 !important;
+        background: var(--sari-dark-4d21eb669b, #f3f6f8) !important;
+        color: var(--sari-dark-a63aa16d7c, #5f7788) !important;
         font-size: 11px !important;
     }
 
     #sellerDetailsPane > div:last-child > div:first-child p.mt-3 {
         margin-top: 8px !important;
-        color: #344054 !important;
+        color: var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size: 10px !important;
     }
 
     #sellerDetailsPane > div:last-child > div:first-child p.mt-1 {
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 7.8px !important;
     }
 
@@ -1075,20 +1075,20 @@
     }
 
     #sellerDetailsPane .mt-6.space-y-3 > div {
-        border-color: #e5e7eb !important;
+        border-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 10px !important;
-        background: #fafbfc !important;
+        background: var(--sari-dark-950baec030, #fafbfc) !important;
         padding: 10px !important;
     }
 
     /* Search/reaction/accessory polish */
     [data-reaction-picker] {
-        border-color: #e1e6eb !important;
-        box-shadow: 0 12px 30px rgba(15,23,42,.12) !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e6eb) !important;
+        box-shadow: 0 12px 30px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)) !important;
     }
 
     [data-reaction-toggle] {
-        border-color: #e1e6eb !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e6eb) !important;
         box-shadow: none !important;
     }
 
@@ -1165,9 +1165,9 @@
         place-items: center;
         overflow: hidden;
         flex: 0 0 auto;
-        border: 1px solid #e1e5ea;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e5ea);
         border-radius: 11px;
-        background: #202329;
+        background: var(--sari-dark-fbb35de0d1, #202329);
         box-shadow: none;
     }
 
@@ -1189,14 +1189,14 @@
         bottom: -1px;
         width: 9px;
         height: 9px;
-        border: 2px solid #fff;
+        border: 2px solid var(--sari-dark-d8c2716225, #fff);
         border-radius: 999px;
         background: #49a36f;
     }
 
     .sari-admin-avatar {
         border-radius: 9px;
-        background: #202329;
+        background: var(--sari-dark-fbb35de0d1, #202329);
     }
 
     .sari-bot-avatar {
@@ -1217,9 +1217,9 @@
 
     .seller-platform-ai {
         gap: 5px !important;
-        border-color: #e1e5e9 !important;
-        background: #fff !important;
-        color: #667085 !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e5e9) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
     }
 
     .seller-platform-ai img {
@@ -1231,7 +1231,7 @@
 
     #sellerConversationPane > div:nth-child(2) {
         border-left-width: 0 !important;
-        background: #fbfcfd !important;
+        background: var(--sari-dark-950baec030, #fbfcfd) !important;
     }
 
     #sellerConversationPane > div:nth-child(2) .sari-support-brand-avatar,
@@ -1243,7 +1243,7 @@
     }
 
     #sellerCenterPane > div:first-child {
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     #sellerCenterPane > div:first-child p:first-of-type,
@@ -1275,8 +1275,8 @@
    ====================================================================== */
 
 .seller-platform-page {
-    --chat-float-border: #E5E7EB;
-    --chat-float-divider: #ECEFF2;
+    --chat-float-border: var(--sari-dark-d8c2716225, #E5E7EB);
+    --chat-float-divider: var(--sari-dark-d8c2716225, #ECEFF2);
     --chat-float-center:
         0 3px 7px rgba(15, 23, 42, .055),
         0 14px 32px rgba(15, 23, 42, .095),
@@ -1291,9 +1291,9 @@
 #sellerPlatformChat {
     border-color: var(--chat-float-border) !important;
     box-shadow:
-        0 2px 5px rgba(15, 23, 42, .035),
-        0 10px 24px rgba(15, 23, 42, .055),
-        0 22px 48px rgba(15, 23, 42, .06) !important;
+        0 2px 5px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 10px 24px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+        0 22px 48px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)) !important;
 }
 
 /* ------------------------------------------------------------
@@ -1305,7 +1305,7 @@
     z-index: 3 !important;
     border-left: 1px solid var(--chat-float-divider) !important;
     border-right: 1px solid var(--chat-float-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--chat-float-center) !important;
     transform: none !important;
 }
@@ -1315,17 +1315,17 @@
 .seller-platform-composer {
     position: relative !important;
     z-index: 1 !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: none !important;
 }
 
 /* The actual message canvas gets a soft inset separation,
    not another independent floating card. */
 #sellerPlatformMessages {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.9),
-        inset 0 -1px 0 rgba(226,232,240,.72) !important;
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.9)),
+        inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(226,232,240,.72)) !important;
 }
 
 /* ------------------------------------------------------------
@@ -1337,7 +1337,7 @@
     position: relative !important;
     z-index: 1 !important;
     border-color: var(--chat-float-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--chat-float-side) !important;
     transform: none !important;
 }
@@ -1370,20 +1370,20 @@
 
 /* Composer shell is part of center pane, not a second floating card. */
 #sellerPlatformMessageForm {
-    border-color: #D8DEE6 !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #D8DEE6) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* Focus feedback only. */
 #sellerPlatformMessageForm:focus-within,
 #sellerMessageSearch:focus {
-    box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08)) !important;
 }
 
 /* Account detail blocks remain flat inside the right pane. */
 #sellerDetailsPane .mt-6.space-y-3 > div {
-    border-color: #E5E7EB !important;
-    background: #FAFBFC !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
+    background: var(--sari-dark-950baec030, #FAFBFC) !important;
 }
 
 /* Search/control surfaces stay flat. */
@@ -1398,14 +1398,14 @@
 /* True overlays can still float. */
 #sellerAttachmentName {
     box-shadow:
-        0 4px 10px rgba(15,23,42,.045),
-        0 14px 30px rgba(15,23,42,.09) !important;
+        0 4px 10px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+        0 14px 30px var(--sari-dark-b12a5e9552, rgba(15,23,42,.09)) !important;
 }
 
 [data-reaction-picker] {
     box-shadow:
-        0 4px 10px rgba(15,23,42,.05),
-        0 16px 36px rgba(15,23,42,.13) !important;
+        0 4px 10px var(--sari-dark-1df26971b5, rgba(15,23,42,.05)),
+        0 16px 36px var(--sari-dark-3e32d50f5e, rgba(15,23,42,.13)) !important;
 }
 
 /* No lift/movement anywhere. */
@@ -1421,16 +1421,16 @@
 @media (max-width: 639px) {
     #sellerCenterPane {
         box-shadow:
-            0 2px 4px rgba(15,23,42,.04),
-            0 8px 18px rgba(15,23,42,.07),
-            0 16px 34px rgba(15,23,42,.08) !important;
+            0 2px 4px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04)),
+            0 8px 18px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)),
+            0 16px 34px var(--sari-dark-c33e3d1bb4, rgba(15,23,42,.08)) !important;
     }
 
     #sellerConversationPane,
     #sellerDetailsPane {
         box-shadow:
-            0 1px 3px rgba(15,23,42,.03),
-            0 6px 14px rgba(15,23,42,.045) !important;
+            0 1px 3px var(--sari-dark-b13200ac05, rgba(15,23,42,.03)),
+            0 6px 14px var(--sari-dark-1190f58155, rgba(15,23,42,.045)) !important;
     }
 }
 
@@ -1441,14 +1441,14 @@
     .seller-conversation-list {
         display: grid;
         align-content: start;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     #sellerConversationPane .seller-conversation-item {
         display: block;
         border-left: 0 !important;
-        border-bottom: 1px solid #edf0f3 !important;
-        background: #fff !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 12px 14px !important;
         color: inherit;
         text-decoration: none;
@@ -1457,11 +1457,11 @@
     }
 
     #sellerConversationPane .seller-conversation-item:hover {
-        background: #f8fafc !important;
+        background: var(--sari-dark-950baec030, #f8fafc) !important;
     }
 
     #sellerConversationPane .seller-conversation-item.is-active {
-        background: #fbfcfd !important;
+        background: var(--sari-dark-950baec030, #fbfcfd) !important;
         box-shadow: inset 3px 0 0 var(--chat-gold) !important;
     }
 
@@ -1471,10 +1471,10 @@
         height: 36px;
         flex: 0 0 36px;
         place-items: center;
-        border: 1px solid #e1e6eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e6eb);
         border-radius: 50%;
-        background: #f3f6f8;
-        color: #52697a;
+        background: var(--sari-dark-4d21eb669b, #f3f6f8);
+        color: var(--sari-dark-a63aa16d7c, #52697a);
         font-size: 9px;
         font-weight: 800;
         letter-spacing: -.02em;
@@ -1497,7 +1497,7 @@
         display: flex;
         align-items: center;
         gap: 7px;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 8px;
     }
 
@@ -1505,11 +1505,11 @@
         display: inline-flex;
         height: 25px;
         align-items: center;
-        border: 1px solid #e1e6eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e6eb);
         border-radius: 999px;
-        background: #f8fafc;
+        background: var(--sari-dark-950baec030, #f8fafc);
         padding: 0 9px;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         font-size: 7.8px;
         font-weight: 700;
     }
@@ -1519,16 +1519,16 @@
         min-height: 50px !important;
         align-items: center !important;
         gap: 7px !important;
-        border: 1px solid #d8dee6 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #d8dee6) !important;
         border-radius: 13px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 5px 6px !important;
         box-shadow: none !important;
     }
 
     #sellerBuyerMessageForm:focus-within {
         border-color: var(--chat-gold) !important;
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08)) !important;
     }
 
     #sellerBuyerInput {
@@ -1540,7 +1540,7 @@
         border: 0;
         background: transparent;
         padding: 8px 6px;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-size: 10px;
         line-height: 1.5;
         outline: none;
@@ -1602,14 +1602,14 @@
         --message-bubble-pad-x: 12px;
 
         --message-shadow:
-            0 1px 2px rgba(15, 23, 42, .035),
-            0 5px 14px rgba(15, 23, 42, .055),
-            0 13px 28px rgba(15, 23, 42, .06);
+            0 1px 2px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 5px 14px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+            0 13px 28px var(--sari-dark-361b571631, rgba(15, 23, 42, .06));
 
         --message-shadow-out:
-            0 1px 2px rgba(15, 23, 42, .04),
-            0 6px 16px rgba(15, 23, 42, .07),
-            0 14px 30px rgba(15, 23, 42, .075);
+            0 1px 2px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)),
+            0 6px 16px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)),
+            0 14px 30px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075));
     }
 
     /* One row rhythm for all chat sources. */
@@ -1704,10 +1704,10 @@
     > .seller-message-content
     > .seller-message-bubble {
         align-self: flex-start !important;
-        border: 1px solid #DFE4EA !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #DFE4EA) !important;
         border-radius: 12px 12px 12px 4px !important;
-        background: #FFFFFF !important;
-        color: #3F4B5A !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        color: var(--sari-dark-e23e64dd1e, #3F4B5A) !important;
         box-shadow: var(--message-shadow) !important;
     }
 
@@ -1715,21 +1715,21 @@
     #sellerPlatformMessages .seller-message-row:not(.justify-end)
     > .seller-message-content
     > .seller-message-bubble.bg-\[\#f4f8fa\] {
-        border-color: #DCE4EA !important;
-        background: #F8FAFC !important;
-        color: #526A79 !important;
+        border-color: var(--sari-dark-d8c2716225, #DCE4EA) !important;
+        background: var(--sari-dark-950baec030, #F8FAFC) !important;
+        color: var(--sari-dark-a63aa16d7c, #526A79) !important;
     }
 
     #sellerPlatformMessages .seller-message-label {
         margin-bottom: 5px !important;
-        color: #7C7369 !important;
+        color: var(--sari-dark-a63aa16d7c, #7C7369) !important;
         font-size: 8.5px !important;
         font-weight: 600 !important;
         line-height: 1.3 !important;
     }
 
     #sellerPlatformMessages .seller-message-label--assistant {
-        color: #6E899C !important;
+        color: var(--sari-dark-a63aa16d7c, #6E899C) !important;
         font-size: 8px !important;
         font-weight: 700 !important;
         letter-spacing: .06em !important;
@@ -1740,7 +1740,7 @@
         width: auto !important;
         min-width: 0 !important;
         margin-top: 4px !important;
-        color: #98A2B3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98A2B3) !important;
         font-size: 7.5px !important;
         font-weight: 400 !important;
         line-height: 1.25 !important;
@@ -1768,12 +1768,12 @@
     }
 
     #sellerPlatformMessages .seller-message-uploading {
-        border: 1px solid #E2E6EB !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E2E6EB) !important;
         border-radius: 10px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         box-shadow:
-            0 1px 2px rgba(15,23,42,.03),
-            0 5px 12px rgba(15,23,42,.05) !important;
+            0 1px 2px var(--sari-dark-b13200ac05, rgba(15,23,42,.03)),
+            0 5px 12px var(--sari-dark-1df26971b5, rgba(15,23,42,.05)) !important;
         transform: none !important;
     }
 
@@ -1837,14 +1837,14 @@
         --chat-final-pad-x: 12px;
 
         --chat-final-shadow:
-            0 1px 2px rgba(15,23,42,.035),
-            0 5px 14px rgba(15,23,42,.055),
-            0 13px 28px rgba(15,23,42,.06);
+            0 1px 2px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+            0 5px 14px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+            0 13px 28px var(--sari-dark-361b571631, rgba(15,23,42,.06));
 
         --chat-final-shadow-out:
-            0 1px 2px rgba(15,23,42,.04),
-            0 6px 16px rgba(15,23,42,.07),
-            0 14px 30px rgba(15,23,42,.075);
+            0 1px 2px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04)),
+            0 6px 16px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)),
+            0 14px 30px var(--sari-dark-e07575a086, rgba(15,23,42,.075));
     }
 
     /*
@@ -1902,11 +1902,11 @@
             var(--chat-final-pad-y)
             var(--chat-final-pad-x) !important;
 
-        border: 1px solid #DFE4EA !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #DFE4EA) !important;
         border-radius: 12px !important;
 
-        background: #FFFFFF !important;
-        color: #3F4B5A !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        color: var(--sari-dark-e23e64dd1e, #3F4B5A) !important;
 
         font-family:
             "Poppins",
@@ -1951,19 +1951,19 @@
     [data-chat-bubble][data-chat-side="incoming"] {
         justify-self: start !important;
 
-        border-color: #DFE4EA !important;
+        border-color: var(--sari-dark-d8c2716225, #DFE4EA) !important;
         border-radius: 12px 12px 12px 4px !important;
 
-        background: #FFFFFF !important;
-        color: #3F4B5A !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        color: var(--sari-dark-e23e64dd1e, #3F4B5A) !important;
     }
 
     /* SARI Assistant — same exact geometry, subtle neutral identity only. */
     #sellerPlatformMessages
     [data-chat-bubble][data-chat-kind="assistant"] {
-        border-color: #DCE4EA !important;
-        background: #F8FAFC !important;
-        color: #526A79 !important;
+        border-color: var(--sari-dark-d8c2716225, #DCE4EA) !important;
+        background: var(--sari-dark-950baec030, #F8FAFC) !important;
+        color: var(--sari-dark-a63aa16d7c, #526A79) !important;
     }
 
     /* Keep spacing consistent across every conversation source. */
@@ -2156,14 +2156,14 @@
     --parity-gold: #C99128;
     --parity-gold-hover: #AE7A1E;
     --parity-gold-soft: #FFF7E7;
-    --parity-ink: #303740;
-    --parity-text: #3A424D;
-    --parity-muted: #8E99A6;
-    --parity-border: #EBEDF0;
-    --parity-canvas: #F7F8FA;
+    --parity-ink: var(--sari-dark-e23e64dd1e, #303740);
+    --parity-text: var(--sari-dark-e23e64dd1e, #3A424D);
+    --parity-muted: var(--sari-dark-a63aa16d7c, #8E99A6);
+    --parity-border: var(--sari-dark-d8c2716225, #EBEDF0);
+    --parity-canvas: var(--sari-dark-950baec030, #F7F8FA);
     color: var(--parity-text) !important;
     font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
 }
 .seller-platform-page *,
 .seller-platform-page *::before,
@@ -2178,7 +2178,7 @@
     overflow: hidden !important;
     border: 0 !important;
     border-radius: 0 !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow: none !important;
     isolation: isolate;
 }
@@ -2190,7 +2190,7 @@
     display: grid !important;
     grid-template-columns: 310px minmax(0, 1fr) !important;
     overflow: hidden !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
 }
 
 /* Inbox — 310px, independent scroll, exactly like Buyer Messages. */
@@ -2202,14 +2202,14 @@
     overflow: hidden !important;
     border: 0 !important;
     border-right: 1px solid var(--parity-border) !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow: none !important;
 }
 #sellerPlatformChat #sellerConversationPane > div:first-child {
     flex: 0 0 auto !important;
     padding: 24px 18px 16px !important;
     border-bottom: 1px solid var(--parity-border) !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
 }
 #sellerPlatformChat #sellerConversationPane h3 {
     margin: 0 !important;
@@ -2221,7 +2221,7 @@
 }
 #sellerPlatformChat #sellerConversationPane h3 + p {
     margin-top: 6px !important;
-    color: #9AA3AF !important;
+    color: var(--sari-dark-a63aa16d7c, #9AA3AF) !important;
     font-size: 10.5px !important;
     line-height: 1.55 !important;
 }
@@ -2230,22 +2230,22 @@
     width: 100% !important;
     height: 43px !important;
     padding: 0 35px 0 42px !important;
-    border: 1px solid #E7EAEE !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E7EAEE) !important;
     border-radius: 100px !important;
     outline: none !important;
-    background: #F5F6F8 !important;
+    background: var(--sari-dark-950baec030, #F5F6F8) !important;
     color: var(--parity-ink) !important;
     font-size: 11px !important;
     box-shadow: none !important;
 }
 #sellerPlatformChat #sellerConversationPane > div:first-child .relative.mt-4 { margin-top: 20px !important; }
-#sellerPlatformChat #sellerConversationPane #sellerMessageSearch::placeholder { color: #9BA5B0 !important; }
+#sellerPlatformChat #sellerConversationPane #sellerMessageSearch::placeholder { color: var(--sari-dark-a63aa16d7c, #9BA5B0) !important; }
 #sellerPlatformChat #sellerConversationPane #sellerMessageSearch:focus {
     border-color: #E4BF75 !important;
-    background: #fff !important;
-    box-shadow: 0 0 0 3px rgba(201,145,40,.10) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-8eadf403a5, rgba(201,145,40,.10)) !important;
 }
-#sellerPlatformChat #sellerConversationPane #sellerMessageSearch ~ button { color: #929AA5 !important; }
+#sellerPlatformChat #sellerConversationPane #sellerMessageSearch ~ button { color: var(--sari-dark-a63aa16d7c, #929AA5) !important; }
 #sellerPlatformChat #sellerConversationPane > div:first-child .relative.mt-4 > svg {
     left: 14px !important;
     width: 17px !important;
@@ -2263,7 +2263,7 @@
     overscroll-behavior: contain;
     padding: 11px 8px 18px !important;
     border: 0 !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow: none !important;
     scrollbar-width: thin;
     scrollbar-color: #D7DCE2 transparent;
@@ -2278,16 +2278,16 @@
     border: 0 !important;
     border-left: 3px solid transparent !important;
     border-radius: 12px !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     color: var(--parity-text) !important;
     box-shadow: none !important;
     text-decoration: none !important;
     transition: background .15s ease, border-color .15s ease;
 }
-#sellerPlatformChat #sellerConversationPane .seller-conversation-item:hover { background: #F8F9FA !important; }
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item:hover { background: var(--sari-dark-950baec030, #F8F9FA) !important; }
 #sellerPlatformChat #sellerConversationPane .seller-conversation-item.is-active {
-    border-left-color: #C8CED6 !important;
-    background: #EEF1F4 !important;
+    border-left-color: var(--sari-dark-d8c2716225, #C8CED6) !important;
+    background: var(--sari-dark-4d21eb669b, #EEF1F4) !important;
     box-shadow: none !important;
 }
 #sellerPlatformChat #sellerConversationPane .seller-conversation-item > .flex { gap: 12px !important; }
@@ -2296,10 +2296,10 @@
     width: 50px !important;
     height: 50px !important;
     flex: 0 0 50px !important;
-    border: 1px solid #E6E9ED !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E6E9ED) !important;
     border-radius: 50% !important;
-    background: #F1F4F7 !important;
-    color: #697886 !important;
+    background: var(--sari-dark-4d21eb669b, #F1F4F7) !important;
+    color: var(--sari-dark-a63aa16d7c, #697886) !important;
     font-size: 14px !important;
     font-weight: 750 !important;
     box-shadow: none !important;
@@ -2309,7 +2309,7 @@
 }
 #sellerPlatformChat #sellerConversationPane .seller-conversation-item .sari-support-online-dot {
     width: 10px !important; height: 10px !important;
-    background: #46A371 !important; border: 2px solid #fff !important;
+    background: #46A371 !important; border: 2px solid var(--sari-dark-d8c2716225, #fff) !important;
 }
 #sellerPlatformChat #sellerConversationPane .seller-conversation-item p.font-bold,
 #sellerPlatformChat #sellerConversationPane .seller-conversation-item p.text-\[12px\] {
@@ -2321,7 +2321,7 @@
 }
 #sellerPlatformChat #sellerConversationPane .seller-conversation-item p:not(.font-bold):not(#sellerLastMessagePreview) {
     margin-top: 4px !important;
-    color: #98A1AD !important;
+    color: var(--sari-dark-a63aa16d7c, #98A1AD) !important;
     font-size: 10px !important;
     font-weight: 450 !important;
     line-height: 1.55 !important;
@@ -2329,7 +2329,7 @@
 #sellerPlatformChat #sellerConversationPane .seller-conversation-item #sellerLastMessagePreview,
 #sellerPlatformChat #sellerConversationPane .seller-conversation-item p.line-clamp-2:not(.font-bold) {
     margin-top: 5px !important;
-    color: #98A1AD !important;
+    color: var(--sari-dark-a63aa16d7c, #98A1AD) !important;
     font-size: 10px !important;
     font-weight: 450 !important;
     line-height: 1.55 !important;
@@ -2368,7 +2368,7 @@
     flex-shrink: 0 !important;
     padding: 12px 22px !important;
     border-bottom: 1px solid var(--parity-border) !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow: none !important;
 }
 #sellerPlatformChat #sellerCenterPane > div:first-child .seller-buyer-avatar,
@@ -2376,10 +2376,10 @@
     width: 42px !important;
     height: 42px !important;
     flex: 0 0 42px !important;
-    border: 1px solid #E6E9ED !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E6E9ED) !important;
     border-radius: 50% !important;
-    background: #F1F4F7 !important;
-    color: #697886 !important;
+    background: var(--sari-dark-4d21eb669b, #F1F4F7) !important;
+    color: var(--sari-dark-a63aa16d7c, #697886) !important;
     font-size: 12px !important;
     box-shadow: none !important;
 }
@@ -2396,7 +2396,7 @@
 #sellerPlatformChat #sellerCenterPane > div:first-child p:not(.font-bold),
 #sellerPlatformChat #sellerCenterPane .seller-buyer-thread-meta {
     margin-top: 5px !important;
-    color: #9AA3AE !important;
+    color: var(--sari-dark-a63aa16d7c, #9AA3AE) !important;
     font-size: 10px !important;
     line-height: 1.35 !important;
 }
@@ -2405,10 +2405,10 @@
     min-height: 26px !important;
     height: 26px !important;
     padding: 0 10px !important;
-    border: 1px solid #E7EAEE !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E7EAEE) !important;
     border-radius: 999px !important;
-    background: #F5F6F8 !important;
-    color: #758291 !important;
+    background: var(--sari-dark-950baec030, #F5F6F8) !important;
+    color: var(--sari-dark-a63aa16d7c, #758291) !important;
     font-size: 10px !important;
     font-weight: 650 !important;
 }
@@ -2418,15 +2418,15 @@
     height: 25px !important;
     padding: 0 8px !important;
     border-radius: 999px !important;
-    border-color: #E7EAEE !important;
-    background: #F8F9FA !important;
-    color: #88939F !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAEE) !important;
+    background: var(--sari-dark-950baec030, #F8F9FA) !important;
+    color: var(--sari-dark-a63aa16d7c, #88939F) !important;
     font-size: 9px !important;
     font-weight: 600 !important;
 }
-#sellerPlatformChat .seller-platform-status[data-state="live"] { color: #648976 !important; }
+#sellerPlatformChat .seller-platform-status[data-state="live"] { color: var(--sari-dark-a63aa16d7c, #648976) !important; }
 #sellerPlatformChat .seller-platform-status[data-state="offline"],
-#sellerPlatformChat .seller-platform-status[data-state="unavailable"] { color: #A65353 !important; }
+#sellerPlatformChat .seller-platform-status[data-state="unavailable"] { color: var(--sari-dark-58dd29f069, #A65353) !important; }
 #sellerPlatformChat .seller-platform-status::before { width: 7px !important; height: 7px !important; }
 #sellerPlatformChat .seller-platform-ai img { width: 15px !important; height: 15px !important; }
 #sellerPlatformChat .seller-parity-info-button {
@@ -2444,8 +2444,8 @@
 }
 #sellerPlatformChat .seller-parity-info-button:hover,
 #sellerPlatformChat .seller-parity-info-button[aria-expanded="true"] {
-    border-color: #F0E1C3 !important;
-    background: #FFF7E8 !important;
+    border-color: var(--sari-dark-d8c2716225, #F0E1C3) !important;
+    background: var(--sari-dark-4d21eb669b, #FFF7E8) !important;
     color: var(--parity-gold-hover) !important;
 }
 #sellerPlatformChat .seller-parity-info-button svg { width: 19px; height: 19px; }
@@ -2480,10 +2480,10 @@
     height: auto !important;
     margin: 0 !important;
     padding: 12px 15px !important;
-    border: 1px solid #ECEEF1 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #ECEEF1) !important;
     border-radius: 17px 17px 17px 5px !important;
-    background: #fff !important;
-    color: #3C4652 !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    color: var(--sari-dark-e23e64dd1e, #3C4652) !important;
     font-size: 11.5px !important;
     font-weight: 450 !important;
     line-height: 1.65 !important;
@@ -2491,22 +2491,22 @@
     white-space: pre-wrap !important;
     overflow-wrap: anywhere !important;
     word-break: normal !important;
-    box-shadow: 0 2px 8px rgba(22,34,49,.04) !important;
+    box-shadow: 0 2px 8px var(--sari-dark-25b2da5e49, rgba(22,34,49,.04)) !important;
     transform: none !important;
 }
 #sellerPlatformChat #sellerPlatformMessages [data-chat-bubble][data-chat-side="outgoing"] {
     align-self: flex-end !important;
-    border-color: #E9E7E1 !important;
+    border-color: var(--sari-dark-d8c2716225, #E9E7E1) !important;
     border-radius: 17px 17px 5px 17px !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     color: var(--parity-ink) !important;
-    box-shadow: 0 3px 10px rgba(22,34,49,.05) !important;
+    box-shadow: 0 3px 10px var(--sari-dark-1df26971b5, rgba(22,34,49,.05)) !important;
 }
 #sellerPlatformChat #sellerPlatformMessages [data-chat-bubble][data-chat-side="incoming"] { align-self: flex-start !important; }
-#sellerPlatformChat #sellerPlatformMessages [data-chat-bubble][data-chat-kind="assistant"] { background: #fff !important; color: #3C4652 !important; }
+#sellerPlatformChat #sellerPlatformMessages [data-chat-bubble][data-chat-kind="assistant"] { background: var(--sari-dark-950baec030, #fff) !important; color: var(--sari-dark-e23e64dd1e, #3C4652) !important; }
 #sellerPlatformChat #sellerPlatformMessages .seller-message-label {
     margin: 0 0 6px !important;
-    color: #89929E !important;
+    color: var(--sari-dark-a63aa16d7c, #89929E) !important;
     font-size: 10px !important;
     font-weight: 650 !important;
     line-height: 1.4 !important;
@@ -2514,7 +2514,7 @@
 #sellerPlatformChat #sellerPlatformMessages .seller-message-time,
 #sellerPlatformChat #sellerPlatformMessages .seller-message-row .mt-2 > p:last-child {
     margin-top: 6px !important;
-    color: #A3ABB5 !important;
+    color: var(--sari-dark-a63aa16d7c, #A3ABB5) !important;
     font-size: 9px !important;
     line-height: 1.4 !important;
 }
@@ -2524,9 +2524,9 @@
     width: 32px !important;
     height: 32px !important;
     flex: 0 0 32px !important;
-    border: 1px solid #E2E7ED !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E7ED) !important;
     border-radius: 50% !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow: none !important;
 }
 #sellerPlatformChat #sellerPlatformMessages .sari-admin-avatar img,
@@ -2538,7 +2538,7 @@
     flex: 0 0 auto !important;
     padding: 13px 17px 15px !important;
     border-top: 1px solid var(--parity-border) !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow: none !important;
 }
 #sellerPlatformChat #sellerPlatformMessageForm,
@@ -2571,7 +2571,7 @@
     cursor: pointer;
     box-shadow: none !important;
 }
-#sellerPlatformChat .seller-composer-attachment-label:hover { background: #FFF3DD !important; color: var(--parity-gold-hover) !important; }
+#sellerPlatformChat .seller-composer-attachment-label:hover { background: var(--sari-dark-4d21eb669b, #FFF3DD) !important; color: var(--parity-gold-hover) !important; }
 #sellerPlatformChat .seller-composer-attachment-label svg { width: 18px !important; height: 18px !important; }
 #sellerPlatformChat .seller-parity-compose-main {
     display: flex !important;
@@ -2583,11 +2583,11 @@
     padding: 0 14px !important;
     border: 1px solid #D5A64A !important;
     border-radius: 18px !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
 }
 #sellerPlatformChat .seller-parity-compose-main:focus-within {
     border-color: var(--parity-gold) !important;
-    box-shadow: 0 0 0 3px rgba(201,145,40,.10) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-8eadf403a5, rgba(201,145,40,.10)) !important;
 }
 #sellerPlatformChat #sellerPlatformInput,
 #sellerPlatformChat #sellerBuyerInput {
@@ -2609,7 +2609,7 @@
     box-shadow: none !important;
 }
 #sellerPlatformChat #sellerPlatformInput::placeholder,
-#sellerPlatformChat #sellerBuyerInput::placeholder { color: #9EA7B2 !important; }
+#sellerPlatformChat #sellerBuyerInput::placeholder { color: var(--sari-dark-a63aa16d7c, #9EA7B2) !important; }
 #sellerPlatformChat #sellerAttachmentName {
     display: block;
     position: static !important;
@@ -2617,10 +2617,10 @@
     overflow: hidden !important;
     margin: 8px 0 0 !important;
     padding: 7px 9px !important;
-    border: 1px solid #D9DDE3 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #D9DDE3) !important;
     border-radius: 14px !important;
-    background: #F5F7F9 !important;
-    color: #778390 !important;
+    background: var(--sari-dark-950baec030, #F5F7F9) !important;
+    color: var(--sari-dark-a63aa16d7c, #778390) !important;
     font-size: 10px !important;
     line-height: 1.4 !important;
     text-overflow: ellipsis !important;
@@ -2642,7 +2642,7 @@
     background: var(--parity-gold) !important;
     color: #fff !important;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(201,145,40,.2) !important;
+    box-shadow: 0 4px 10px var(--sari-dark-ef22e61893, rgba(201,145,40,.2)) !important;
     transition: background .15s ease, transform .15s ease;
 }
 #sellerPlatformChat #sellerPlatformSend:hover:not(:disabled),
@@ -2657,26 +2657,26 @@
 
 /* Attachments and reaction chips are dynamically rendered by existing JS. */
 #sellerPlatformChat #sellerPlatformMessages .seller-message-content > .mt-2.overflow-hidden {
-    border-color: #ECEEF2 !important;
+    border-color: var(--sari-dark-d8c2716225, #ECEEF2) !important;
     border-radius: 16px !important;
-    background: #fff !important;
-    box-shadow: 0 2px 8px rgba(22,34,49,.04) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    box-shadow: 0 2px 8px var(--sari-dark-25b2da5e49, rgba(22,34,49,.04)) !important;
 }
-#sellerPlatformChat #sellerPlatformMessages .seller-message-content > .mt-2.overflow-hidden a { background: #fff !important; }
+#sellerPlatformChat #sellerPlatformMessages .seller-message-content > .mt-2.overflow-hidden a { background: var(--sari-dark-950baec030, #fff) !important; }
 #sellerPlatformChat #sellerPlatformMessages .seller-message-content > .mt-2.overflow-hidden a > div:first-child {
     border-radius: 12px !important;
-    background: #F5F6F8 !important;
+    background: var(--sari-dark-950baec030, #F5F6F8) !important;
     color: var(--parity-gold) !important;
 }
 #sellerPlatformChat #sellerPlatformMessages [data-reaction-toggle] {
-    border-color: #E7EAEE !important;
-    background: #fff !important;
-    color: #8E99A6 !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAEE) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    color: var(--sari-dark-a63aa16d7c, #8E99A6) !important;
 }
 #sellerPlatformChat #sellerPlatformMessages [data-reaction-picker] {
-    border-color: #E7EAEE !important;
-    background: #fff !important;
-    box-shadow: 0 12px 30px rgba(15,23,42,.12) !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAEE) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    box-shadow: 0 12px 30px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)) !important;
 }
 
 /* Empty chat: centered, no floating container, 62px icon ring. */
@@ -2690,13 +2690,13 @@
     margin: 0 auto 15px !important;
     border: 0 !important;
     border-radius: 50% !important;
-    background: #F1F3F6 !important;
+    background: var(--sari-dark-4d21eb669b, #F1F3F6) !important;
     color: var(--parity-gold) !important;
     box-shadow: none !important;
 }
 #sellerPlatformChat #sellerEmptyChat > div > div:first-child svg { width: 26px !important; height: 26px !important; }
-#sellerPlatformChat #sellerEmptyChat > div > p.font-bold { color: #4B5563 !important; font-size: 13px !important; font-weight: 700 !important; }
-#sellerPlatformChat #sellerEmptyChat > div > p:not(.font-bold) { color: #97A2AE !important; font-size: 11px !important; line-height: 1.7 !important; margin-top: 9px !important; }
+#sellerPlatformChat #sellerEmptyChat > div > p.font-bold { color: var(--sari-dark-e23e64dd1e, #4B5563) !important; font-size: 13px !important; font-weight: 700 !important; }
+#sellerPlatformChat #sellerEmptyChat > div > p:not(.font-bold) { color: var(--sari-dark-a63aa16d7c, #97A2AE) !important; font-size: 11px !important; line-height: 1.7 !important; margin-top: 9px !important; }
 
 /* Seller/Buyer contextual information as on-demand right-side drawer. */
 #sellerPlatformChat #sellerDetailsPane {
@@ -2714,9 +2714,9 @@
     overflow-y: auto !important;
     overflow-x: hidden !important;
     border: 0 !important;
-    border-left: 1px solid #E4E8ED !important;
-    background: #F5F7FA !important;
-    box-shadow: -18px 0 45px rgba(28,35,45,.14) !important;
+    border-left: 1px solid var(--sari-dark-d8c2716225, #E4E8ED) !important;
+    background: var(--sari-dark-950baec030, #F5F7FA) !important;
+    box-shadow: -18px 0 45px var(--sari-dark-59ed29fe9d, rgba(28,35,45,.14)) !important;
     transform: translateX(102%) !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -2739,7 +2739,7 @@
     height: 100% !important;
     padding: 0 !important;
     border: 0 !important;
-    background: rgba(255,255,255,.06) !important;
+    background: var(--sari-dark-4cd63dc51a, rgba(255,255,255,.06)) !important;
     backdrop-filter: blur(2px) !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -2761,18 +2761,18 @@
     gap: 12px !important;
     padding: 16px 18px 14px !important;
     border-bottom: 1px solid var(--parity-border) !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
 }
 #sellerPlatformChat .seller-parity-context-title { margin: 0 !important; color: var(--parity-ink) !important; font-size: 12.5px !important; font-weight: 750 !important; }
-#sellerPlatformChat .seller-parity-context-subtitle { margin: 5px 0 0 !important; color: #9BA4AE !important; font-size: 10px !important; line-height: 1.45 !important; }
+#sellerPlatformChat .seller-parity-context-subtitle { margin: 5px 0 0 !important; color: var(--sari-dark-a63aa16d7c, #9BA4AE) !important; font-size: 10px !important; line-height: 1.45 !important; }
 #sellerPlatformChat .seller-parity-context-close {
     display: grid; place-items: center;
     flex: 0 0 34px; width: 34px; height: 34px;
     border: 0; border-radius: 50%;
-    background: #F5F6F8; color: #606C78;
+    background: var(--sari-dark-950baec030, #F5F6F8); color: var(--sari-dark-a63aa16d7c, #606C78);
     cursor: pointer;
 }
-#sellerPlatformChat .seller-parity-context-close:hover { background: #ECEFF3; color: #374151; }
+#sellerPlatformChat .seller-parity-context-close:hover { background: var(--sari-dark-4d21eb669b, #ECEFF3); color: var(--sari-dark-e23e64dd1e, #374151); }
 #sellerPlatformChat .seller-parity-context-close svg { width: 16px; height: 16px; }
 #sellerPlatformChat #sellerDetailsPane > div:last-child { padding: 18px 18px 24px !important; }
 #sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child .seller-buyer-avatar,
@@ -2782,23 +2782,23 @@
     width: 84px !important;
     height: 84px !important;
     flex: 0 0 84px !important;
-    border: 3px solid #fff !important;
+    border: 3px solid var(--sari-dark-d8c2716225, #fff) !important;
     border-radius: 50% !important;
-    background: #F1F4F7 !important;
+    background: var(--sari-dark-4d21eb669b, #F1F4F7) !important;
     color: var(--parity-gold) !important;
     font-size: 26px !important;
-    box-shadow: 0 0 0 2px #F0DFBB, 0 8px 24px rgba(38,45,55,.08) !important;
+    box-shadow: 0 0 0 2px var(--sari-dark-f30a5f9061, #F0DFBB), 0 8px 24px var(--sari-dark-c33e3d1bb4, rgba(38,45,55,.08)) !important;
 }
 #sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child p.mt-3 { margin-top: 12px !important; color: var(--parity-ink) !important; font-size: 16px !important; font-weight: 750 !important; }
-#sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child p.mt-1 { color: #9AA3AE !important; font-size: 10px !important; }
+#sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child p.mt-1 { color: var(--sari-dark-a63aa16d7c, #9AA3AE) !important; font-size: 10px !important; }
 #sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child span.mt-3 {
     min-height: 28px !important;
     margin-top: 10px !important;
     padding: 5px 16px !important;
-    border: 1px solid #EEDCB8 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #EEDCB8) !important;
     border-radius: 999px !important;
-    background: #FFF9EE !important;
-    color: #A67819 !important;
+    background: var(--sari-dark-950baec030, #FFF9EE) !important;
+    color: var(--sari-dark-15cfff5077, #A67819) !important;
     font-size: 10px !important;
     font-weight: 700 !important;
     text-transform: uppercase;
@@ -2807,13 +2807,13 @@
 #sellerPlatformChat #sellerDetailsPane .mt-6.space-y-3 > div {
     margin: 0 !important;
     padding: 14px 15px !important;
-    border: 1px solid #E5E9EF !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E5E9EF) !important;
     border-radius: 16px !important;
-    background: #fff !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
     box-shadow: none !important;
 }
-#sellerPlatformChat #sellerDetailsPane .mt-6.space-y-3 > div p:first-child { color: #607488 !important; font-size: 11px !important; font-weight: 700 !important; }
-#sellerPlatformChat #sellerDetailsPane .mt-6.space-y-3 > div p:not(:first-child) { color: #6F7A87 !important; font-size: 11px !important; line-height: 1.75 !important; }
+#sellerPlatformChat #sellerDetailsPane .mt-6.space-y-3 > div p:first-child { color: var(--sari-dark-a63aa16d7c, #607488) !important; font-size: 11px !important; font-weight: 700 !important; }
+#sellerPlatformChat #sellerDetailsPane .mt-6.space-y-3 > div p:not(:first-child) { color: var(--sari-dark-a63aa16d7c, #6F7A87) !important; font-size: 11px !important; line-height: 1.75 !important; }
 
 /* Source-like responsive behavior: 275px tablet, 230px narrow, horizontal mobile inbox. */
 @media (max-width: 1320px) and (min-width: 851px) {
@@ -2867,9 +2867,9 @@
         border-radius: 10px !important;
     }
     #sellerPlatformChat #sellerConversationPane .seller-conversation-item.is-active {
-        border: 1px solid #D6DDE5 !important;
-        border-bottom: 3px solid #AEB7C2 !important;
-        background: #EEF1F4 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #D6DDE5) !important;
+        border-bottom: 3px solid var(--sari-dark-d8c2716225, #AEB7C2) !important;
+        background: var(--sari-dark-4d21eb669b, #EEF1F4) !important;
     }
     #sellerPlatformChat #sellerConversationPane .seller-conversation-item .sari-support-brand-avatar,
     #sellerPlatformChat #sellerConversationPane .seller-conversation-item .seller-buyer-avatar {

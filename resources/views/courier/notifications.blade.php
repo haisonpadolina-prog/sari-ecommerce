@@ -6,87 +6,87 @@
 @push('styles')
 <style>
 @verbatim
-#courierNotificationsBuyerUI { --activity-panel:#fff; --activity-border:#e3e7eb; --activity-border-soft:#edf0f3; --activity-text:#20252b; --activity-muted:#747d87; --activity-gold:#c99128; --activity-gold-dark:#ad781b; width:100%; max-width:1480px; margin-inline:auto; padding:22px 24px 44px; color:var(--activity-text); font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size:13px; line-height:1.55; }
+#courierNotificationsBuyerUI { --activity-panel:var(--sari-dark-950baec030, #fff); --activity-border:var(--sari-dark-d8c2716225, #e3e7eb); --activity-border-soft:var(--sari-dark-d8c2716225, #edf0f3); --activity-text:var(--sari-dark-e23e64dd1e, #20252b); --activity-muted:var(--sari-dark-a63aa16d7c, #747d87); --activity-gold:#c99128; --activity-gold-dark:#ad781b; width:100%; max-width:1480px; margin-inline:auto; padding:22px 24px 44px; color:var(--activity-text); font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size:13px; line-height:1.55; }
 /* SARI-RIDER-NOTIFICATIONS-LIGHT-GRAY-V8: neutral workspace, no cream background */
 body:has(#courierNotificationsBuyerUI),
 body:has(#courierNotificationsBuyerUI) #courierMain,
-body:has(#courierNotificationsBuyerUI) #courierMain > main { background-color:#f5f6f8 !important; }
+body:has(#courierNotificationsBuyerUI) #courierMain > main { background-color:var(--sari-dark-950baec030, #f5f6f8) !important; }
 #courierNotificationsBuyerUI, #courierNotificationsBuyerUI * { box-sizing:border-box; }
 #courierNotificationsBuyerUI .sari-activity-header {padding:2px 2px 14px;}
 #courierNotificationsBuyerUI .sari-activity-header-inner {display:flex;align-items:flex-end;justify-content:space-between;gap:16px;}
-#courierNotificationsBuyerUI .sari-activity-eyebrow {margin:0;color:#a87316;font-size:10.5px;font-weight:800;letter-spacing:.14em;line-height:1.2;text-transform:uppercase;}
-#courierMain #courierNotificationsBuyerUI .sari-activity-title {margin:5px 0 0;color:#2e343b;font-size:clamp(27px,2.25vw,31px);font-weight:760;line-height:1.04;letter-spacing:-.035em;}
+#courierNotificationsBuyerUI .sari-activity-eyebrow {margin:0;color:var(--sari-dark-685eb4fc40, #a87316);font-size:10.5px;font-weight:800;letter-spacing:.14em;line-height:1.2;text-transform:uppercase;}
+#courierMain #courierNotificationsBuyerUI .sari-activity-title {margin:5px 0 0;color:var(--sari-dark-e23e64dd1e, #2e343b);font-size:clamp(27px,2.25vw,31px);font-weight:760;line-height:1.04;letter-spacing:-.035em;}
 #courierNotificationsBuyerUI .sari-activity-title span {color:var(--activity-gold);}
-#courierNotificationsBuyerUI .sari-activity-header-link {position:relative;top:-12px;display:inline-flex;align-items:center;gap:8px;color:#59636e;font-size:11.5px;font-weight:750;text-decoration:none;}
-#courierNotificationsBuyerUI .sari-activity-header-link:hover {color:#c88912;}
+#courierNotificationsBuyerUI .sari-activity-header-link {position:relative;top:-12px;display:inline-flex;align-items:center;gap:8px;color:var(--sari-dark-a63aa16d7c, #59636e);font-size:11.5px;font-weight:750;text-decoration:none;}
+#courierNotificationsBuyerUI .sari-activity-header-link:hover {color:var(--sari-dark-19b301f69a, #c88912);}
 #courierNotificationsBuyerUI .sari-activity-header-arrow {font-size:18px;font-weight:800;line-height:.8;}
 #courierNotificationsBuyerUI .sari-activity-actions {display:flex;align-items:center;gap:24px;margin:9px 2px 15px;}
 #courierNotificationsBuyerUI .sari-activity-filters {display:flex;align-items:center;flex-wrap:wrap;gap:24px;}
-#courierNotificationsBuyerUI .sari-activity-filter {display:inline-flex;align-items:center;min-height:36px;padding:6px 0;border:0;background:transparent;color:#7f8995;font-size:12px;font-weight:650;text-decoration:none;transition:color .16s;}
-#courierNotificationsBuyerUI .sari-activity-filter:hover,#courierNotificationsBuyerUI .sari-activity-filter[aria-current="page"] {color:#c88912;font-weight:750;}
-#courierNotificationsBuyerUI .sari-activity-shell {position:relative;margin-top:0;border:1px solid #e5e7eb;border-radius:22px;background:#fff;box-shadow:0 3px 7px rgba(15,23,42,.055),0 14px 32px rgba(15,23,42,.095),0 30px 68px rgba(15,23,42,.11);}
-#courierNotificationsBuyerUI .sari-activity-toolbar {display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:54px;padding:0 20px;border-bottom:1px solid var(--activity-border-soft);background:#fff;border-radius:22px 22px 0 0;}
-#courierNotificationsBuyerUI .sari-activity-toolbar h2 {margin:0;color:#303740;font-size:15px;font-weight:800;line-height:1.2;}
+#courierNotificationsBuyerUI .sari-activity-filter {display:inline-flex;align-items:center;min-height:36px;padding:6px 0;border:0;background:transparent;color:var(--sari-dark-a63aa16d7c, #7f8995);font-size:12px;font-weight:650;text-decoration:none;transition:color .16s;}
+#courierNotificationsBuyerUI .sari-activity-filter:hover,#courierNotificationsBuyerUI .sari-activity-filter[aria-current="page"] {color:var(--sari-dark-19b301f69a, #c88912);font-weight:750;}
+#courierNotificationsBuyerUI .sari-activity-shell {position:relative;margin-top:0;border:1px solid var(--sari-dark-d8c2716225, #e5e7eb);border-radius:22px;background:var(--sari-dark-950baec030, #fff);box-shadow:0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11));}
+#courierNotificationsBuyerUI .sari-activity-toolbar {display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:54px;padding:0 20px;border-bottom:1px solid var(--activity-border-soft);background:var(--sari-dark-950baec030, #fff);border-radius:22px 22px 0 0;}
+#courierNotificationsBuyerUI .sari-activity-toolbar h2 {margin:0;color:var(--sari-dark-e23e64dd1e, #303740);font-size:15px;font-weight:800;line-height:1.2;}
 #courierNotificationsBuyerUI .sari-activity-toolbar-right {display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:9px 20px;}
-#courierNotificationsBuyerUI .sari-activity-count {color:#7d8792;font-size:10.5px;font-weight:650;}
+#courierNotificationsBuyerUI .sari-activity-count {color:var(--sari-dark-a63aa16d7c, #7d8792);font-size:10.5px;font-weight:650;}
 #courierNotificationsBuyerUI .sari-activity-read-all-form {margin:0;}
 #courierNotificationsBuyerUI .sari-activity-read-all {display:inline-flex;align-items:center;border:0;background:transparent;padding:9px 0;color:var(--activity-gold-dark);cursor:pointer;font:inherit;font-size:12px;font-weight:750;white-space:nowrap;}
-#courierNotificationsBuyerUI .sari-activity-read-all:hover:not(:disabled) {color:#8e5b0a;}
+#courierNotificationsBuyerUI .sari-activity-read-all:hover:not(:disabled) {color:var(--sari-dark-4b8b580e58, #8e5b0a);}
 #courierNotificationsBuyerUI .sari-activity-read-all:disabled {opacity:.48;cursor:default;}
 #courierNotificationsBuyerUI .sari-activity-items {position:relative;}
-#courierNotificationsBuyerUI .sari-activity-row {position:relative;display:grid;grid-template-columns:48px minmax(0,1fr) auto 34px;gap:14px;align-items:center;min-height:104px;padding:16px 18px;border-bottom:1px solid #e7eaee;background:#fff;transition:background-color .14s;}
+#courierNotificationsBuyerUI .sari-activity-row {position:relative;display:grid;grid-template-columns:48px minmax(0,1fr) auto 34px;gap:14px;align-items:center;min-height:104px;padding:16px 18px;border-bottom:1px solid var(--sari-dark-d8c2716225, #e7eaee);background:var(--sari-dark-950baec030, #fff);transition:background-color .14s;}
 #courierNotificationsBuyerUI .sari-activity-row:last-child {border-bottom:0;border-radius:0 0 22px 22px;}
-#courierNotificationsBuyerUI .sari-activity-row.is-unread {background:#fff;}
-#courierNotificationsBuyerUI .sari-activity-row:hover,#courierNotificationsBuyerUI .sari-activity-row:focus-within {background:#f4f5f6;}
+#courierNotificationsBuyerUI .sari-activity-row.is-unread {background:var(--sari-dark-950baec030, #fff);}
+#courierNotificationsBuyerUI .sari-activity-row:hover,#courierNotificationsBuyerUI .sari-activity-row:focus-within {background:var(--sari-dark-4d21eb669b, #f4f5f6);}
 #courierNotificationsBuyerUI .sari-activity-row[data-row-url] {cursor:pointer;}
-#courierNotificationsBuyerUI .sari-activity-avatar {display:grid;width:48px;height:48px;flex:0 0 48px;place-items:center;overflow:hidden;border:2px solid #e5c78d;border-radius:50%;background:#151515;padding:0;box-shadow:0 2px 8px rgba(37,43,49,.08);}
+#courierNotificationsBuyerUI .sari-activity-avatar {display:grid;width:48px;height:48px;flex:0 0 48px;place-items:center;overflow:hidden;border:2px solid #e5c78d;border-radius:50%;background:var(--sari-dark-f3318ab620, #151515);padding:0;box-shadow:0 2px 8px var(--sari-dark-c33e3d1bb4, rgba(37,43,49,.08));}
 #courierNotificationsBuyerUI .sari-activity-avatar img {display:block;width:100%;height:100%;max-width:none;object-fit:cover;border-radius:0;transform:scale(1.45);transform-origin:center;}
 #courierNotificationsBuyerUI .sari-activity-main {min-width:0;padding-right:8px;}
-#courierNotificationsBuyerUI .sari-activity-event-title {margin:0;overflow:hidden;color:#1e2329;font-size:15px;font-weight:760;line-height:1.3;letter-spacing:-.012em;text-overflow:ellipsis;white-space:nowrap;}
-#courierNotificationsBuyerUI .sari-activity-event-message {margin:4px 0 0;overflow:hidden;color:#707985;font-size:12px;font-weight:500;line-height:1.45;text-overflow:ellipsis;white-space:nowrap;}
-#courierNotificationsBuyerUI .sari-activity-event-meta {display:flex;min-width:0;flex-wrap:wrap;gap:5px;margin-top:4px;color:#7f8892;font-size:11px;font-weight:520;line-height:1.35;}
+#courierNotificationsBuyerUI .sari-activity-event-title {margin:0;overflow:hidden;color:var(--sari-dark-e23e64dd1e, #1e2329);font-size:15px;font-weight:760;line-height:1.3;letter-spacing:-.012em;text-overflow:ellipsis;white-space:nowrap;}
+#courierNotificationsBuyerUI .sari-activity-event-message {margin:4px 0 0;overflow:hidden;color:var(--sari-dark-a63aa16d7c, #707985);font-size:12px;font-weight:500;line-height:1.45;text-overflow:ellipsis;white-space:nowrap;}
+#courierNotificationsBuyerUI .sari-activity-event-meta {display:flex;min-width:0;flex-wrap:wrap;gap:5px;margin-top:4px;color:var(--sari-dark-a63aa16d7c, #7f8892);font-size:11px;font-weight:520;line-height:1.35;}
 #courierNotificationsBuyerUI .sari-activity-event-meta span {display:inline-flex;min-width:0;align-items:center;}
-#courierNotificationsBuyerUI .sari-activity-event-meta span:not(:last-child):after {content:"·";margin-left:5px;color:#a7afb7;}
+#courierNotificationsBuyerUI .sari-activity-event-meta span:not(:last-child):after {content:"·";margin-left:5px;color:var(--sari-dark-a63aa16d7c, #a7afb7);}
 #courierNotificationsBuyerUI .sari-activity-view-wrap {display:flex;align-items:center;justify-content:flex-end;}
 #courierNotificationsBuyerUI .sari-activity-view-wrap form {margin:0;}
-#courierNotificationsBuyerUI .sari-activity-view {display:inline-flex;min-width:70px;height:36px;align-items:center;justify-content:center;border:0;border-radius:13px;background:#f1f2f4;padding:0 16px;color:#24292f;cursor:pointer;font:inherit;font-size:11px;font-weight:760;line-height:1;text-decoration:none;transition:background-color .14s,color .14s,transform .14s;}
-#courierNotificationsBuyerUI .sari-activity-view:hover {background:#e7e9ec;color:#171b20;}
+#courierNotificationsBuyerUI .sari-activity-view {display:inline-flex;min-width:70px;height:36px;align-items:center;justify-content:center;border:0;border-radius:13px;background:var(--sari-dark-4d21eb669b, #f1f2f4);padding:0 16px;color:var(--sari-dark-e23e64dd1e, #24292f);cursor:pointer;font:inherit;font-size:11px;font-weight:760;line-height:1;text-decoration:none;transition:background-color .14s,color .14s,transform .14s;}
+#courierNotificationsBuyerUI .sari-activity-view:hover {background:var(--sari-dark-4d21eb669b, #e7e9ec);color:var(--sari-dark-e23e64dd1e, #171b20);}
 #courierNotificationsBuyerUI .sari-activity-menu-wrap {position:relative;display:flex;justify-content:flex-end;}
-#courierNotificationsBuyerUI .sari-activity-menu-toggle {display:grid;width:34px;height:36px;place-items:center;border:0;border-radius:10px;background:transparent;color:#69727c;cursor:pointer;}
-#courierNotificationsBuyerUI .sari-activity-menu-toggle:hover,#courierNotificationsBuyerUI .sari-activity-menu-toggle[aria-expanded="true"] {background:rgba(31,41,55,.06);color:#24292f;}
+#courierNotificationsBuyerUI .sari-activity-menu-toggle {display:grid;width:34px;height:36px;place-items:center;border:0;border-radius:10px;background:transparent;color:var(--sari-dark-a63aa16d7c, #69727c);cursor:pointer;}
+#courierNotificationsBuyerUI .sari-activity-menu-toggle:hover,#courierNotificationsBuyerUI .sari-activity-menu-toggle[aria-expanded="true"] {background:var(--sari-dark-bc8af743f0, rgba(31,41,55,.06));color:var(--sari-dark-e23e64dd1e, #24292f);}
 #courierNotificationsBuyerUI .sari-activity-menu-toggle svg {width:18px;height:18px;fill:currentColor;}
-#courierNotificationsBuyerUI .sari-activity-menu {position:absolute;z-index:55;top:42px;right:0;width:218px;overflow:hidden;border:1px solid #e0e4e8;border-radius:18px;background:#fff;padding:8px;box-shadow:0 22px 48px rgba(31,41,55,.16),0 5px 14px rgba(31,41,55,.06);}
+#courierNotificationsBuyerUI .sari-activity-menu {position:absolute;z-index:55;top:42px;right:0;width:218px;overflow:hidden;border:1px solid var(--sari-dark-d8c2716225, #e0e4e8);border-radius:18px;background:var(--sari-dark-950baec030, #fff);padding:8px;box-shadow:0 22px 48px var(--sari-dark-b5c2a2270e, rgba(31,41,55,.16)),0 5px 14px var(--sari-dark-361b571631, rgba(31,41,55,.06));}
 #courierNotificationsBuyerUI .sari-activity-menu[hidden] {display:none;}
-#courierNotificationsBuyerUI .sari-activity-menu-item {display:flex;width:100%;min-height:44px;align-items:center;gap:11px;border:0;border-radius:11px;background:transparent;padding:0 12px;color:#2b3138;cursor:pointer;font:inherit;font-size:12px;font-weight:600;text-align:left;text-decoration:none;}
-#courierNotificationsBuyerUI .sari-activity-menu-item:hover,#courierNotificationsBuyerUI .sari-activity-menu-item:focus-visible {background:#f4f5f7;color:#171b20;}
+#courierNotificationsBuyerUI .sari-activity-menu-item {display:flex;width:100%;min-height:44px;align-items:center;gap:11px;border:0;border-radius:11px;background:transparent;padding:0 12px;color:var(--sari-dark-e23e64dd1e, #2b3138);cursor:pointer;font:inherit;font-size:12px;font-weight:600;text-align:left;text-decoration:none;}
+#courierNotificationsBuyerUI .sari-activity-menu-item:hover,#courierNotificationsBuyerUI .sari-activity-menu-item:focus-visible {background:var(--sari-dark-4d21eb669b, #f4f5f7);color:var(--sari-dark-e23e64dd1e, #171b20);}
 #courierNotificationsBuyerUI .sari-activity-menu-item svg {width:19px;height:19px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
 #courierNotificationsBuyerUI .sari-activity-menu form {margin:0;}
-#courierNotificationsBuyerUI .sari-activity-menu-item.is-danger {color:#e12535;}
-#courierNotificationsBuyerUI .sari-activity-menu-item.is-danger:hover {background:#fff0f1;color:#c91529;}
-#courierNotificationsBuyerUI .sari-activity-menu-divider {height:1px;margin:7px 4px;background:#eceff2;}
+#courierNotificationsBuyerUI .sari-activity-menu-item.is-danger {color:var(--sari-dark-f0275c819d, #e12535);}
+#courierNotificationsBuyerUI .sari-activity-menu-item.is-danger:hover {background:var(--sari-dark-950baec030, #fff0f1);color:var(--sari-dark-9b9f9d008d, #c91529);}
+#courierNotificationsBuyerUI .sari-activity-menu-divider {height:1px;margin:7px 4px;background:var(--sari-dark-4d21eb669b, #eceff2);}
 #courierNotificationsBuyerUI .sari-activity-menu-item:disabled {opacity:.55;cursor:wait;}
 #courierNotificationsBuyerUI .sari-activity-time-mobile {display:none;}
-#courierNotificationsBuyerUI .sari-activity-feedback {margin:4px 0 16px;padding:11px 15px;border:1px solid #dfe4eb;border-radius:11px;background:#f1f3f6;color:#475467;font-size:12px;font-weight:550;}
+#courierNotificationsBuyerUI .sari-activity-feedback {margin:4px 0 16px;padding:11px 15px;border:1px solid var(--sari-dark-d8c2716225, #dfe4eb);border-radius:11px;background:var(--sari-dark-4d21eb669b, #f1f3f6);color:var(--sari-dark-e23e64dd1e, #475467);font-size:12px;font-weight:550;}
 #courierNotificationsBuyerUI .sari-activity-footer {display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px;width:100%;margin-top:22px;padding:4px 2px 0;}
-#courierNotificationsBuyerUI .sari-activity-range {grid-column:1;grid-row:1;justify-self:start;margin:0;color:#9aa3ae;font-size:12px;font-weight:450;line-height:1.5;white-space:nowrap;}
+#courierNotificationsBuyerUI .sari-activity-range {grid-column:1;grid-row:1;justify-self:start;margin:0;color:var(--sari-dark-a63aa16d7c, #9aa3ae);font-size:12px;font-weight:450;line-height:1.5;white-space:nowrap;}
 #courierNotificationsBuyerUI .sari-activity-pagination {grid-column:2;grid-row:1;display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;max-width:100%;}
-#courierNotificationsBuyerUI .sari-activity-page-link,#courierNotificationsBuyerUI .sari-activity-page-arrow {display:inline-flex;min-width:40px;height:36px;flex:0 0 auto;align-items:center;justify-content:center;border:1px solid transparent;border-radius:12px;background:#f0f2f6;padding:0 10px;color:#929aa6;font-size:12px;font-weight:600;line-height:1;text-decoration:none;}
-#courierNotificationsBuyerUI .sari-activity-page-link:hover,#courierNotificationsBuyerUI .sari-activity-page-arrow:hover {background:#e7ebf1;color:#687381;}
-#courierNotificationsBuyerUI .sari-activity-page-link[aria-current="page"] {border-color:#c99128;background:#c99128;color:#fff;box-shadow:0 3px 12px rgba(201,145,40,.24);pointer-events:none;}
+#courierNotificationsBuyerUI .sari-activity-page-link,#courierNotificationsBuyerUI .sari-activity-page-arrow {display:inline-flex;min-width:40px;height:36px;flex:0 0 auto;align-items:center;justify-content:center;border:1px solid transparent;border-radius:12px;background:var(--sari-dark-4d21eb669b, #f0f2f6);padding:0 10px;color:var(--sari-dark-a63aa16d7c, #929aa6);font-size:12px;font-weight:600;line-height:1;text-decoration:none;}
+#courierNotificationsBuyerUI .sari-activity-page-link:hover,#courierNotificationsBuyerUI .sari-activity-page-arrow:hover {background:var(--sari-dark-4d21eb669b, #e7ebf1);color:var(--sari-dark-a63aa16d7c, #687381);}
+#courierNotificationsBuyerUI .sari-activity-page-link[aria-current="page"] {border-color:#c99128;background:#c99128;color:#fff;box-shadow:0 3px 12px var(--sari-dark-7edf1b5a37, rgba(201,145,40,.24));pointer-events:none;}
 #courierNotificationsBuyerUI .sari-activity-page-arrow svg {width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
-#courierNotificationsBuyerUI .sari-activity-page-arrow.is-disabled {color:#b5bcc6;cursor:default;}
-#courierNotificationsBuyerUI .sari-activity-page-ellipsis {display:inline-flex;min-width:16px;height:36px;align-items:center;justify-content:center;color:#a7afba;font-size:13px;user-select:none;}
-#courierNotificationsBuyerUI .sari-activity-empty-state {display:grid;min-height:430px;place-items:center;border:1px solid #e5e7eb;border-radius:18px;background:#fff;padding:72px 24px;text-align:center;box-shadow:0 3px 7px rgba(15,23,42,.055),0 14px 32px rgba(15,23,42,.095),0 30px 68px rgba(15,23,42,.11);}
-#courierNotificationsBuyerUI .sari-activity-empty-icon {display:grid;width:82px;height:82px;margin:0 auto;place-items:center;color:#b4bbc3;}
+#courierNotificationsBuyerUI .sari-activity-page-arrow.is-disabled {color:var(--sari-dark-a63aa16d7c, #b5bcc6);cursor:default;}
+#courierNotificationsBuyerUI .sari-activity-page-ellipsis {display:inline-flex;min-width:16px;height:36px;align-items:center;justify-content:center;color:var(--sari-dark-a63aa16d7c, #a7afba);font-size:13px;user-select:none;}
+#courierNotificationsBuyerUI .sari-activity-empty-state {display:grid;min-height:430px;place-items:center;border:1px solid var(--sari-dark-d8c2716225, #e5e7eb);border-radius:18px;background:var(--sari-dark-950baec030, #fff);padding:72px 24px;text-align:center;box-shadow:0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11));}
+#courierNotificationsBuyerUI .sari-activity-empty-icon {display:grid;width:82px;height:82px;margin:0 auto;place-items:center;color:var(--sari-dark-a63aa16d7c, #b4bbc3);}
 #courierNotificationsBuyerUI .sari-activity-empty-icon svg {width:54px;height:54px;fill:none;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round;}
-#courierNotificationsBuyerUI .sari-activity-empty-title {margin:16px 0 0;color:#9099a3;font-size:21px;font-weight:750;line-height:1.2;letter-spacing:-.025em;}
-#courierNotificationsBuyerUI .sari-activity-empty-copy {max-width:520px;margin:7px auto 0;color:#a8b0b8;font-size:12px;font-weight:500;line-height:1.55;}
+#courierNotificationsBuyerUI .sari-activity-empty-title {margin:16px 0 0;color:var(--sari-dark-a63aa16d7c, #9099a3);font-size:21px;font-weight:750;line-height:1.2;letter-spacing:-.025em;}
+#courierNotificationsBuyerUI .sari-activity-empty-copy {max-width:520px;margin:7px auto 0;color:var(--sari-dark-a63aa16d7c, #a8b0b8);font-size:12px;font-weight:500;line-height:1.55;}
 #courierNotificationsBuyerUI .sari-activity-empty-button {display:inline-flex;min-width:170px;height:46px;align-items:center;justify-content:center;margin-top:22px;border:1px solid var(--activity-gold);border-radius:11px;background:var(--activity-gold);padding:0 24px;color:#fff;font-size:11px;font-weight:800;text-decoration:none;}
 #courierNotificationsBuyerUI .sari-activity-empty-button:hover {background:var(--activity-gold-dark);color:#fff;}
 #courierNotificationsBuyerUI :is(a,button):focus-visible {outline:2px solid #c99128;outline-offset:3px;}
 @media(max-width:900px) {#courierNotificationsBuyerUI .sari-activity-footer {grid-template-columns:minmax(0,1fr);justify-items:center;gap:13px;margin-top:18px;}#courierNotificationsBuyerUI .sari-activity-pagination {grid-column:1;grid-row:1;max-width:100%;overflow-x:auto;justify-content:safe center;padding:3px 2px 8px;}#courierNotificationsBuyerUI .sari-activity-range {grid-column:1;grid-row:2;width:100%;white-space:normal;text-align:left;}#courierNotificationsBuyerUI .sari-activity-row {gap:11px;padding-inline:13px;}#courierNotificationsBuyerUI .sari-activity-avatar {width:46px;height:46px;}}
 @media(max-width:700px) {#courierNotificationsBuyerUI {padding:16px 14px 30px;}#courierNotificationsBuyerUI .sari-activity-header-inner {align-items:flex-start;flex-direction:column;gap:8px;}#courierMain #courierNotificationsBuyerUI .sari-activity-title {font-size:25px;}#courierNotificationsBuyerUI .sari-activity-header-link {top:0;font-size:10.5px;}#courierNotificationsBuyerUI .sari-activity-shell {border-radius:16px;}#courierNotificationsBuyerUI .sari-activity-toolbar {min-height:50px;padding:11px 14px;border-radius:16px 16px 0 0;flex-wrap:wrap;}#courierNotificationsBuyerUI .sari-activity-toolbar-right {gap:5px 14px;}#courierNotificationsBuyerUI .sari-activity-row {grid-template-columns:44px minmax(0,1fr) 30px;gap:10px;min-height:96px;padding:13px 12px;}#courierNotificationsBuyerUI .sari-activity-avatar {width:42px;height:42px;flex-basis:42px;}#courierNotificationsBuyerUI .sari-activity-main {padding-right:0;}#courierNotificationsBuyerUI .sari-activity-event-title {font-size:13px;}#courierNotificationsBuyerUI .sari-activity-event-message {font-size:10.5px;}#courierNotificationsBuyerUI .sari-activity-event-meta {font-size:9.5px;}#courierNotificationsBuyerUI .sari-activity-view-wrap {display:none;}#courierNotificationsBuyerUI .sari-activity-menu-wrap {grid-column:3;grid-row:1;}#courierNotificationsBuyerUI .sari-activity-menu-toggle {width:30px;}#courierNotificationsBuyerUI .sari-activity-menu {right:-2px;width:202px;}#courierNotificationsBuyerUI .sari-activity-time-mobile {display:inline;}#courierNotificationsBuyerUI .sari-activity-empty-state {min-height:360px;padding:56px 20px;}#courierNotificationsBuyerUI .sari-activity-pagination {gap:5px;}#courierNotificationsBuyerUI .sari-activity-page-link,#courierNotificationsBuyerUI .sari-activity-page-arrow {min-width:36px;height:35px;padding:0 8px;border-radius:10px;}}
-@media(max-width:760px) {#courierNotificationsBuyerUI .sari-activity-shell,#courierNotificationsBuyerUI .sari-activity-empty-state {box-shadow:0 2px 4px rgba(15,23,42,.035),0 8px 18px rgba(15,23,42,.06),0 18px 38px rgba(15,23,42,.07);}}
+@media(max-width:760px) {#courierNotificationsBuyerUI .sari-activity-shell,#courierNotificationsBuyerUI .sari-activity-empty-state {box-shadow:0 2px 4px var(--sari-dark-7593018246, rgba(15,23,42,.035)),0 8px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),0 18px 38px var(--sari-dark-7c935c8886, rgba(15,23,42,.07));}}
 @media(prefers-reduced-motion:reduce) {#courierNotificationsBuyerUI * {transition:none!important;}}
 @endverbatim
 </style>

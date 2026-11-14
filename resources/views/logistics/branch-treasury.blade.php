@@ -6,55 +6,55 @@
 @push('styles')
 <style>
 /* SARI Logistics — Branch Treasury | Scoped UI only. No shared stylesheet required. */
-#sariBranchTreasury { --bt-gold:#d9950b; --bt-ink:#213044; --bt-muted:#7b899a; --bt-line:#e3e8ee; --bt-shadow:0 9px 28px rgba(31,41,55,.07); width:100%; max-width:1600px; margin-inline:auto; color:var(--bt-ink); font-size:13px; }
+#sariBranchTreasury { --bt-gold:#d9950b; --bt-ink:var(--sari-dark-e23e64dd1e, #213044); --bt-muted:var(--sari-dark-a63aa16d7c, #7b899a); --bt-line:var(--sari-dark-d8c2716225, #e3e8ee); --bt-shadow:0 9px 28px var(--sari-dark-7c935c8886, rgba(31,41,55,.07)); width:100%; max-width:1600px; margin-inline:auto; color:var(--bt-ink); font-size:13px; }
 #sariBranchTreasury, #sariBranchTreasury * { box-sizing:border-box; }
 #sariBranchTreasury [hidden], #sariBranchTreasury .hidden { display:none !important; }
-#sariBranchTreasury :is(button,input,select,a):focus-visible { outline:2px solid #6c839a; outline-offset:3px; }
+#sariBranchTreasury :is(button,input,select,a):focus-visible { outline:2px solid var(--sari-dark-d8c2716225, #6c839a); outline-offset:3px; }
 #sariBranchTreasury button { cursor:pointer; }
 #sariBranchTreasury .bt-header { position:relative; display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:16px; margin:0 0 21px; padding:4px 0 16px; border:0; background:transparent; box-shadow:none; }
-#sariBranchTreasury .bt-eyebrow { margin:0 0 6px; font-size:11px; font-weight:750; letter-spacing:.12em; text-transform:uppercase; color:#ad7519; }
-#sariBranchTreasury .bt-page-title { margin:0; font-size:clamp(25px,2.2vw,32px); font-weight:760; letter-spacing:-.045em; line-height:1.2; color:#1f2d3d; }
+#sariBranchTreasury .bt-eyebrow { margin:0 0 6px; font-size:11px; font-weight:750; letter-spacing:.12em; text-transform:uppercase; color:var(--sari-dark-6f4497714c, #ad7519); }
+#sariBranchTreasury .bt-page-title { margin:0; font-size:clamp(25px,2.2vw,32px); font-weight:760; letter-spacing:-.045em; line-height:1.2; color:var(--sari-dark-e23e64dd1e, #1f2d3d); }
 #sariBranchTreasury .bt-header-tools { display:flex; align-items:center; gap:10px; margin-left:auto; }
-#sariBranchTreasury .bt-branch-role { display:inline-flex; align-items:center; padding:9px 12px; border:1px solid #e1e6ec; border-radius:10px; background:#f6f8fa; color:#526275; font-size:11px; font-weight:650; white-space:nowrap; }
+#sariBranchTreasury .bt-branch-role { display:inline-flex; align-items:center; padding:9px 12px; border:1px solid var(--sari-dark-d8c2716225, #e1e6ec); border-radius:10px; background:var(--sari-dark-950baec030, #f6f8fa); color:var(--sari-dark-a63aa16d7c, #526275); font-size:11px; font-weight:650; white-space:nowrap; }
 #sariBranchTreasury .bt-help-anchor { position:relative; }
-#sariBranchTreasury .bt-help-trigger { display:grid; place-items:center; width:39px; height:39px; padding:0; background:#fff; border:1px solid #dae1e9; border-radius:11px; color:#536578; transition:background .16s ease,border-color .16s ease; }
+#sariBranchTreasury .bt-help-trigger { display:grid; place-items:center; width:39px; height:39px; padding:0; background:var(--sari-dark-950baec030, #fff); border:1px solid var(--sari-dark-d8c2716225, #dae1e9); border-radius:11px; color:var(--sari-dark-a63aa16d7c, #536578); transition:background .16s ease,border-color .16s ease; }
 #sariBranchTreasury .bt-help-trigger svg { width:20px; height:20px; }
-#sariBranchTreasury .bt-help-trigger:hover, #sariBranchTreasury .bt-help-trigger[aria-expanded=true] { background:#f2f5f8; border-color:#bcc8d5; }
-#sariBranchTreasury .bt-help-panel { position:absolute; top:calc(100% + 13px); right:0; width:min(420px,calc(100vw - 34px)); z-index:100; overflow:visible; padding:0; border:1px solid #e0e6ed; border-radius:15px; background:#fff; box-shadow:0 20px 56px rgba(30,42,57,.17); opacity:0; visibility:hidden; transform:translateY(-10px) scale(.985); transform-origin:top right; pointer-events:none; transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),visibility 0s linear .25s; }
+#sariBranchTreasury .bt-help-trigger:hover, #sariBranchTreasury .bt-help-trigger[aria-expanded=true] { background:var(--sari-dark-4d21eb669b, #f2f5f8); border-color:var(--sari-dark-d8c2716225, #bcc8d5); }
+#sariBranchTreasury .bt-help-panel { position:absolute; top:calc(100% + 13px); right:0; width:min(420px,calc(100vw - 34px)); z-index:100; overflow:visible; padding:0; border:1px solid var(--sari-dark-d8c2716225, #e0e6ed); border-radius:15px; background:var(--sari-dark-950baec030, #fff); box-shadow:0 20px 56px var(--sari-dark-3135cb7628, rgba(30,42,57,.17)); opacity:0; visibility:hidden; transform:translateY(-10px) scale(.985); transform-origin:top right; pointer-events:none; transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),visibility 0s linear .25s; }
 #sariBranchTreasury .bt-help-panel.is-open { opacity:1; visibility:visible; transform:translateY(0) scale(1); pointer-events:auto; transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),visibility 0s; }
-#sariBranchTreasury .bt-help-panel::before { content:''; position:absolute; top:-5px; right:14px; width:9px; height:9px; transform:rotate(45deg); background:#fff; border-top:1px solid #e0e6ed; border-left:1px solid #e0e6ed; }
-#sariBranchTreasury .bt-help-top { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:18px 19px 14px; border-bottom:1px solid #edf0f3; }
-#sariBranchTreasury .bt-help-title { margin:0; font-size:16px; line-height:1.35; font-weight:750; color:#253244; }
-#sariBranchTreasury .bt-help-close { display:grid;place-items:center; flex:0 0 32px; width:32px; height:32px; padding:0; border-radius:9px; border:1px solid #e2e7ec; background:#fff; color:#5c6a7a; }
-#sariBranchTreasury .bt-help-close:hover { background:#f3f5f7; }
-#sariBranchTreasury .bt-help-copy { margin:0; padding:16px 19px 19px; color:#5b697a; font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
+#sariBranchTreasury .bt-help-panel::before { content:''; position:absolute; top:-5px; right:14px; width:9px; height:9px; transform:rotate(45deg); background:var(--sari-dark-950baec030, #fff); border-top:1px solid var(--sari-dark-d8c2716225, #e0e6ed); border-left:1px solid var(--sari-dark-d8c2716225, #e0e6ed); }
+#sariBranchTreasury .bt-help-top { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:18px 19px 14px; border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f3); }
+#sariBranchTreasury .bt-help-title { margin:0; font-size:16px; line-height:1.35; font-weight:750; color:var(--sari-dark-e23e64dd1e, #253244); }
+#sariBranchTreasury .bt-help-close { display:grid;place-items:center; flex:0 0 32px; width:32px; height:32px; padding:0; border-radius:9px; border:1px solid var(--sari-dark-d8c2716225, #e2e7ec); background:var(--sari-dark-950baec030, #fff); color:var(--sari-dark-a63aa16d7c, #5c6a7a); }
+#sariBranchTreasury .bt-help-close:hover { background:var(--sari-dark-4d21eb669b, #f3f5f7); }
+#sariBranchTreasury .bt-help-copy { margin:0; padding:16px 19px 19px; color:var(--sari-dark-a63aa16d7c, #5b697a); font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
 #sariBranchTreasury .bt-help-copy p { margin:0 0 10px; }
 #sariBranchTreasury .bt-help-copy p:last-child { margin-bottom:0; }
 #sariBranchTreasury .bt-notice { margin:0 0 16px; border-radius:11px; padding:12px 15px; font-size:12px; }
-#sariBranchTreasury .bt-notice-success { background:#eaf7ee; color:#247d4a; border:1px solid #cfead8; }
-#sariBranchTreasury .bt-notice-error { background:#fff0ef; color:#ad3a32; border:1px solid #f4d0cb; }
+#sariBranchTreasury .bt-notice-success { background:var(--sari-dark-4d21eb669b, #eaf7ee); color:var(--sari-dark-e23e64dd1e, #247d4a); border:1px solid var(--sari-dark-d8c2716225, #cfead8); }
+#sariBranchTreasury .bt-notice-error { background:var(--sari-dark-950baec030, #fff0ef); color:var(--sari-dark-a63aa16d7c, #ad3a32); border:1px solid var(--sari-dark-d8c2716225, #f4d0cb); }
 #sariBranchTreasury .bt-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:13px; margin-bottom:26px; }
-#sariBranchTreasury .bt-stat { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; min-width:0; min-height:107px; padding:17px 18px; border:1px solid #e6e9ee; border-radius:17px; background:#fff; box-shadow:var(--bt-shadow); }
-#sariBranchTreasury .bt-stat-label { margin:0; font-size:12px; font-weight:650; color:#657387; line-height:1.45; }
-#sariBranchTreasury .bt-stat-value { margin:9px 0 0; font-weight:780; font-size:clamp(17px,1.55vw,24px); line-height:1.22; letter-spacing:-.035em; color:#1f2d3d; overflow-wrap:anywhere; }
+#sariBranchTreasury .bt-stat { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; min-width:0; min-height:107px; padding:17px 18px; border:1px solid var(--sari-dark-d8c2716225, #e6e9ee); border-radius:17px; background:var(--sari-dark-950baec030, #fff); box-shadow:var(--bt-shadow); }
+#sariBranchTreasury .bt-stat-label { margin:0; font-size:12px; font-weight:650; color:var(--sari-dark-a63aa16d7c, #657387); line-height:1.45; }
+#sariBranchTreasury .bt-stat-value { margin:9px 0 0; font-weight:780; font-size:clamp(17px,1.55vw,24px); line-height:1.22; letter-spacing:-.035em; color:var(--sari-dark-e23e64dd1e, #1f2d3d); overflow-wrap:anywhere; }
 #sariBranchTreasury .bt-stat-icon { flex:0 0 auto; display:block; padding:0; margin:1px 0 0; border:0; border-radius:0; background:transparent !important; box-shadow:none !important; }
 #sariBranchTreasury .bt-stat-icon svg { display:block; width:30px; height:30px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-#sariBranchTreasury .bt-tone-gold { color:#c18a25; } #sariBranchTreasury .bt-tone-blue { color:#4e86b5; } #sariBranchTreasury .bt-tone-green { color:#42946c; } #sariBranchTreasury .bt-tone-rose { color:#bd7180; }
+#sariBranchTreasury .bt-tone-gold { color:var(--sari-dark-8d64d3d835, #c18a25); } #sariBranchTreasury .bt-tone-blue { color:var(--sari-dark-e7182483dc, #4e86b5); } #sariBranchTreasury .bt-tone-green { color:var(--sari-dark-a63aa16d7c, #42946c); } #sariBranchTreasury .bt-tone-rose { color:var(--sari-dark-5921214d71, #bd7180); }
 #sariBranchTreasury .bt-scanner { display:flex; justify-content:flex-end; align-items:center; padding:0; margin:0 0 24px; min-height:42px; background:transparent; border:0; box-shadow:none; border-radius:0; }
 #sariBranchTreasury .bt-scanner:has(#branchTreasuryScannerWrap:not(.hidden)) { display:block; }
 #sariBranchTreasury .bt-scanner-actions { display:flex; justify-content:flex-end; }
-#sariBranchTreasury .bt-button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:40px; padding:10px 15px; border:1px solid #d7dfe8; border-radius:10px; font-size:12px; line-height:1.3; font-weight:700; text-decoration:none; white-space:normal; text-align:center; transition:background .16s ease, border-color .16s ease; }
-#sariBranchTreasury .bt-button-charcoal { background:#222b36; color:#fff; border-color:#222b36; } #sariBranchTreasury .bt-button-charcoal:hover { background:#334155; color:#fff; }
+#sariBranchTreasury .bt-button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:40px; padding:10px 15px; border:1px solid var(--sari-dark-d8c2716225, #d7dfe8); border-radius:10px; font-size:12px; line-height:1.3; font-weight:700; text-decoration:none; white-space:normal; text-align:center; transition:background .16s ease, border-color .16s ease; }
+#sariBranchTreasury .bt-button-charcoal { background:var(--sari-dark-fbb35de0d1, #222b36); color:#fff; border-color:var(--sari-dark-d8c2716225, #222b36); } #sariBranchTreasury .bt-button-charcoal:hover { background:var(--sari-dark-fbb35de0d1, #334155); color:#fff; }
 #sariBranchTreasury .bt-button-gold { background:#d9950b; border-color:#d9950b; color:#fff; } #sariBranchTreasury .bt-button-gold:hover { background:#c88908; border-color:#c88908; color:#fff; }
-#sariBranchTreasury .bt-button-plain { background:#fff; color:#526274; } #sariBranchTreasury .bt-button-plain:hover { background:#f3f6f9; }
+#sariBranchTreasury .bt-button-plain { background:var(--sari-dark-950baec030, #fff); color:var(--sari-dark-a63aa16d7c, #526274); } #sariBranchTreasury .bt-button-plain:hover { background:var(--sari-dark-4d21eb669b, #f3f6f9); }
 #sariBranchTreasury .bt-button:disabled { cursor:not-allowed; opacity:.48; }
 #sariBranchTreasury #branchTreasuryScannerWrap { max-width:700px; margin:16px auto 0; }
-#sariBranchTreasury #branchTreasuryQrReader { border:1px solid #2d3641; overflow:hidden; border-radius:13px; background:#111821; }
+#sariBranchTreasury #branchTreasuryQrReader { border:1px solid var(--sari-dark-d8c2716225, #2d3641); overflow:hidden; border-radius:13px; background:var(--sari-dark-f3318ab620, #111821); }
 #sariBranchTreasury .bt-scanner-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; }
-#sariBranchTreasury .bt-scanner-status { font-size:12px; color:#718096; line-height:1.5; }
-#sariBranchTreasury .bt-card { min-width:0; overflow:hidden; margin-top:18px; border:1px solid #e4e8ee; border-radius:17px; background:#fff; box-shadow:var(--bt-shadow); }
-#sariBranchTreasury .bt-card-head { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:17px 19px; border-bottom:1px solid #edf0f3; }
-#sariBranchTreasury .bt-section-title { margin:0; color:#263246; font-size:18px; letter-spacing:-.02em; line-height:1.35; font-weight:740; }
+#sariBranchTreasury .bt-scanner-status { font-size:12px; color:var(--sari-dark-a63aa16d7c, #718096); line-height:1.5; }
+#sariBranchTreasury .bt-card { min-width:0; overflow:hidden; margin-top:18px; border:1px solid var(--sari-dark-d8c2716225, #e4e8ee); border-radius:17px; background:var(--sari-dark-950baec030, #fff); box-shadow:var(--bt-shadow); }
+#sariBranchTreasury .bt-card-head { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:17px 19px; border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f3); }
+#sariBranchTreasury .bt-section-title { margin:0; color:var(--sari-dark-e23e64dd1e, #263246); font-size:18px; letter-spacing:-.02em; line-height:1.35; font-weight:740; }
 /* Compact Treasury History heading only; protects against shared layout type overrides. */
 #logisticsContent #sariBranchTreasury #btHistoryHeading.bt-section-title {
     font-size: 16px !important;
@@ -68,47 +68,47 @@
     }
 }
 
-#sariBranchTreasury .bt-count { flex:0 0 auto; border-radius:9px; border:1px solid #e3e8ee; padding:8px 11px; background:#f7f9fb; color:#627084; font-weight:750; font-size:10px; }
-#sariBranchTreasury .bt-card-description { padding:0 19px 14px; color:#8090a1; font-size:12px; }
+#sariBranchTreasury .bt-count { flex:0 0 auto; border-radius:9px; border:1px solid var(--sari-dark-d8c2716225, #e3e8ee); padding:8px 11px; background:var(--sari-dark-950baec030, #f7f9fb); color:var(--sari-dark-a63aa16d7c, #627084); font-weight:750; font-size:10px; }
+#sariBranchTreasury .bt-card-description { padding:0 19px 14px; color:var(--sari-dark-a63aa16d7c, #8090a1); font-size:12px; }
 #sariBranchTreasury .bt-form { padding:18px 19px 20px; }
 #sariBranchTreasury .bt-form-footer { display:flex; align-items:end; gap:14px; justify-content:space-between; flex-wrap:wrap; margin-top:16px; }
 #sariBranchTreasury .bt-form-footer > label { flex:1 1 280px; }
-#sariBranchTreasury .bt-field-label { display:block; margin:0 0 7px; color:#647488; font-size:11px; font-weight:700; }
-#sariBranchTreasury .bt-input, #sariBranchTreasury .bt-select { display:block; width:100%; min-height:42px; padding:10px 12px; background:#fff; border:1px solid #dce3eb; border-radius:10px; font-size:12px; color:#334155; }
-#sariBranchTreasury .bt-input:focus, #sariBranchTreasury .bt-select:focus { border-color:#9fb0c0; outline:2px solid rgba(100,116,139,.12); }
+#sariBranchTreasury .bt-field-label { display:block; margin:0 0 7px; color:var(--sari-dark-a63aa16d7c, #647488); font-size:11px; font-weight:700; }
+#sariBranchTreasury .bt-input, #sariBranchTreasury .bt-select { display:block; width:100%; min-height:42px; padding:10px 12px; background:var(--sari-dark-950baec030, #fff); border:1px solid var(--sari-dark-d8c2716225, #dce3eb); border-radius:10px; font-size:12px; color:var(--sari-dark-e23e64dd1e, #334155); }
+#sariBranchTreasury .bt-input:focus, #sariBranchTreasury .bt-select:focus { border-color:var(--sari-dark-d8c2716225, #9fb0c0); outline:2px solid var(--sari-dark-0d02a17c1b, rgba(100,116,139,.12)); }
 #sariBranchTreasury .bt-table-wrap { width:100%; overflow-x:auto; }
 #sariBranchTreasury .bt-table { width:100%; border-collapse:collapse; table-layout:auto; font-size:12px; text-align:left; }
-#sariBranchTreasury .bt-table thead { background:#f7f9fb; }
-#sariBranchTreasury .bt-table th { padding:12px 15px; color:#6e7b8d; font-size:10px; font-weight:750; line-height:1.35; text-transform:uppercase; letter-spacing:.055em; white-space:nowrap; }
-#sariBranchTreasury .bt-table td { padding:14px 15px; border-top:1px solid #edf0f3; color:#526073; line-height:1.45; vertical-align:middle; overflow-wrap:anywhere; }
-#sariBranchTreasury .bt-table tbody tr { transition:background-color .13s ease; } #sariBranchTreasury .bt-table tbody tr:hover { background:#f3f5f7; }
-#sariBranchTreasury .bt-primary-text { display:block; font-weight:740; color:#253346; font-size:12px; }
-#sariBranchTreasury .bt-secondary-text { display:block; margin-top:3px; color:#8793a3; font-size:11px; line-height:1.4; }
-#sariBranchTreasury .bt-money { font-weight:760; color:#253346; font-size:13px; white-space:nowrap; }
+#sariBranchTreasury .bt-table thead { background:var(--sari-dark-950baec030, #f7f9fb); }
+#sariBranchTreasury .bt-table th { padding:12px 15px; color:var(--sari-dark-a63aa16d7c, #6e7b8d); font-size:10px; font-weight:750; line-height:1.35; text-transform:uppercase; letter-spacing:.055em; white-space:nowrap; }
+#sariBranchTreasury .bt-table td { padding:14px 15px; border-top:1px solid var(--sari-dark-d8c2716225, #edf0f3); color:var(--sari-dark-a63aa16d7c, #526073); line-height:1.45; vertical-align:middle; overflow-wrap:anywhere; }
+#sariBranchTreasury .bt-table tbody tr { transition:background-color .13s ease; } #sariBranchTreasury .bt-table tbody tr:hover { background:var(--sari-dark-4d21eb669b, #f3f5f7); }
+#sariBranchTreasury .bt-primary-text { display:block; font-weight:740; color:var(--sari-dark-e23e64dd1e, #253346); font-size:12px; }
+#sariBranchTreasury .bt-secondary-text { display:block; margin-top:3px; color:var(--sari-dark-a63aa16d7c, #8793a3); font-size:11px; line-height:1.4; }
+#sariBranchTreasury .bt-money { font-weight:760; color:var(--sari-dark-e23e64dd1e, #253346); font-size:13px; white-space:nowrap; }
 #sariBranchTreasury .bt-status { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-size:11px; line-height:1.2; font-weight:750; white-space:nowrap; }
 #sariBranchTreasury .bt-status::before { content:''; flex:0 0 7px; height:7px; width:7px; border-radius:50%; background:currentColor; opacity:.8; }
-#sariBranchTreasury .bt-status-verified { background:#eaf7ef; color:#24844f; } #sariBranchTreasury .bt-status-discrepancy { background:#fff0ec; color:#b35c48; } #sariBranchTreasury .bt-status-submitted { background:#fff6e8; color:#a97820; }
-#sariBranchTreasury .bt-status-default { background:#f2f4f6; color:#617186; }
+#sariBranchTreasury .bt-status-verified { background:var(--sari-dark-4d21eb669b, #eaf7ef); color:var(--sari-dark-e23e64dd1e, #24844f); } #sariBranchTreasury .bt-status-discrepancy { background:var(--sari-dark-4d21eb669b, #fff0ec); color:var(--sari-dark-aef3033b43, #b35c48); } #sariBranchTreasury .bt-status-submitted { background:var(--sari-dark-4d21eb669b, #fff6e8); color:var(--sari-dark-451cc54b95, #a97820); }
+#sariBranchTreasury .bt-status-default { background:var(--sari-dark-4d21eb669b, #f2f4f6); color:var(--sari-dark-a63aa16d7c, #617186); }
 #sariBranchTreasury .bt-filter-bar { display:grid; grid-template-columns:minmax(0,1fr) 180px auto auto; gap:11px; align-items:center; margin:22px 0 13px; }
 #sariBranchTreasury .bt-search-wrap { position:relative; min-width:0; }
-#sariBranchTreasury .bt-search-wrap svg { position:absolute; width:18px; height:18px; top:12px; left:13px; pointer-events:none; fill:none; stroke:#8b9aab; stroke-width:1.8; stroke-linecap:round; }
+#sariBranchTreasury .bt-search-wrap svg { position:absolute; width:18px; height:18px; top:12px; left:13px; pointer-events:none; fill:none; stroke:var(--sari-dark-a63aa16d7c, #8b9aab); stroke-width:1.8; stroke-linecap:round; }
 #sariBranchTreasury .bt-search-wrap .bt-input { padding-left:40px; }
-#sariBranchTreasury .bt-history-footer { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-top:1px solid #edf0f3; padding:14px 18px; color:#8190a0; font-size:12px; }
+#sariBranchTreasury .bt-history-footer { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-top:1px solid var(--sari-dark-d8c2716225, #edf0f3); padding:14px 18px; color:var(--sari-dark-a63aa16d7c, #8190a0); font-size:12px; }
 #sariBranchTreasury .bt-empty { display:flex; align-items:center; flex-direction:column; justify-content:center; gap:10px; min-height:240px; padding:38px 20px 40px; text-align:center; }
-#sariBranchTreasury .bt-empty-icon { display:grid; place-items:center; width:58px; height:58px; margin:0 auto 1px; color:#bac3cc; background:transparent; border:0; }
+#sariBranchTreasury .bt-empty-icon { display:grid; place-items:center; width:58px; height:58px; margin:0 auto 1px; color:var(--sari-dark-a63aa16d7c, #bac3cc); background:transparent; border:0; }
 #sariBranchTreasury .bt-empty-icon svg { width:58px; height:58px; stroke:currentColor; stroke-width:1.55; fill:none; stroke-linecap:round; stroke-linejoin:round; }
-#sariBranchTreasury .bt-empty h3 { margin:0; font-size:22px; font-weight:750; letter-spacing:-.03em; color:#9aa8b8; }
-#sariBranchTreasury .bt-empty p { margin:0; font-size:12px; color:#9aa8b8; }
+#sariBranchTreasury .bt-empty h3 { margin:0; font-size:22px; font-weight:750; letter-spacing:-.03em; color:var(--sari-dark-a63aa16d7c, #9aa8b8); }
+#sariBranchTreasury .bt-empty p { margin:0; font-size:12px; color:var(--sari-dark-a63aa16d7c, #9aa8b8); }
 #sariBranchTreasury .bt-pagination { display:flex; justify-content:center; padding:14px 0 6px; } #sariBranchTreasury .bt-pagination nav { max-width:100%; }
 #sariBranchTreasury .bt-pagination :is(a,span)[aria-current] { color:#fff; background:#d9950b; border-radius:8px; }
-#sariBranchTreasury .bt-qr-overlay { position:fixed; inset:0; z-index:99999; display:grid; place-items:center; padding:18px; background:rgba(25,34,46,.55); backdrop-filter:blur(3px); }
-#sariBranchTreasury .bt-qr-dialog { width:min(100%,430px); max-height:min(90vh,700px); overflow-y:auto; padding:23px 22px; border:1px solid #e2e7ed; border-radius:18px; background:#fff; box-shadow:0 28px 64px rgba(20,25,37,.23); text-align:center; }
+#sariBranchTreasury .bt-qr-overlay { position:fixed; inset:0; z-index:99999; display:grid; place-items:center; padding:18px; background:var(--sari-dark-8b1dee3588, rgba(25,34,46,.55)); backdrop-filter:blur(3px); }
+#sariBranchTreasury .bt-qr-dialog { width:min(100%,430px); max-height:min(90vh,700px); overflow-y:auto; padding:23px 22px; border:1px solid var(--sari-dark-d8c2716225, #e2e7ed); border-radius:18px; background:var(--sari-dark-950baec030, #fff); box-shadow:0 28px 64px var(--sari-dark-fcc85d970f, rgba(20,25,37,.23)); text-align:center; }
 #sariBranchTreasury .bt-qr-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
-#sariBranchTreasury .bt-qr-top strong { color:#293649; font-size:17px; } #sariBranchTreasury .bt-qr-top button { background:#f4f6f8; border:1px solid #e4e8ed; border-radius:9px; height:33px; width:33px; display:grid;place-items:center; }
-#sariBranchTreasury .bt-qr-box { display:grid; place-items:center; margin:20px auto 12px; width:220px; height:220px; background:#fff; padding:8px; border:1px solid #e6eaf0; border-radius:10px; }
-#sariBranchTreasury .bt-qr-help { font-size:12px; line-height:1.6; color:#79889a; margin-top:6px; }
+#sariBranchTreasury .bt-qr-top strong { color:var(--sari-dark-e23e64dd1e, #293649); font-size:17px; } #sariBranchTreasury .bt-qr-top button { background:var(--sari-dark-4d21eb669b, #f4f6f8); border:1px solid var(--sari-dark-d8c2716225, #e4e8ed); border-radius:9px; height:33px; width:33px; display:grid;place-items:center; }
+#sariBranchTreasury .bt-qr-box { display:grid; place-items:center; margin:20px auto 12px; width:220px; height:220px; background:var(--sari-dark-950baec030, #fff); padding:8px; border:1px solid var(--sari-dark-d8c2716225, #e6eaf0); border-radius:10px; }
+#sariBranchTreasury .bt-qr-help { font-size:12px; line-height:1.6; color:var(--sari-dark-a63aa16d7c, #79889a); margin-top:6px; }
 @media(max-width:1150px){ #sariBranchTreasury .bt-stats {grid-template-columns:repeat(2,minmax(0,1fr));} }
-@media(max-width:850px){ #sariBranchTreasury .bt-filter-bar { grid-template-columns:minmax(0,1fr) minmax(140px,.45fr); } #sariBranchTreasury .bt-filter-bar .bt-button { width:100%; } #sariBranchTreasury .bt-history-table thead { display:none; } #sariBranchTreasury .bt-history-table,#sariBranchTreasury .bt-history-table tbody {display:block;} #sariBranchTreasury .bt-history-table tbody tr {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); padding:11px 15px; border-top:1px solid #edf0f3;} #sariBranchTreasury .bt-history-table tbody td {display:block; padding:8px 6px; border-top:0;} #sariBranchTreasury .bt-history-table tbody td::before {content:attr(data-label); display:block; margin-bottom:4px; font-size:10px; color:#8793a3; font-weight:700; text-transform:uppercase;} #sariBranchTreasury .bt-history-table tbody td:last-child {grid-column:1 / -1;} }
+@media(max-width:850px){ #sariBranchTreasury .bt-filter-bar { grid-template-columns:minmax(0,1fr) minmax(140px,.45fr); } #sariBranchTreasury .bt-filter-bar .bt-button { width:100%; } #sariBranchTreasury .bt-history-table thead { display:none; } #sariBranchTreasury .bt-history-table,#sariBranchTreasury .bt-history-table tbody {display:block;} #sariBranchTreasury .bt-history-table tbody tr {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); padding:11px 15px; border-top:1px solid var(--sari-dark-d8c2716225, #edf0f3);} #sariBranchTreasury .bt-history-table tbody td {display:block; padding:8px 6px; border-top:0;} #sariBranchTreasury .bt-history-table tbody td::before {content:attr(data-label); display:block; margin-bottom:4px; font-size:10px; color:var(--sari-dark-a63aa16d7c, #8793a3); font-weight:700; text-transform:uppercase;} #sariBranchTreasury .bt-history-table tbody td:last-child {grid-column:1 / -1;} }
 @media(max-width:600px){ #sariBranchTreasury .bt-header {gap:12px;} #sariBranchTreasury .bt-header-tools {width:100%; justify-content:space-between;} #sariBranchTreasury .bt-page-title {font-size:26px;} #sariBranchTreasury .bt-stats {gap:9px;margin-bottom:22px;} #sariBranchTreasury .bt-stat {min-height:110px; padding:13px 12px; border-radius:14px;} #sariBranchTreasury .bt-stat-icon svg {width:25px;height:25px;} #sariBranchTreasury .bt-stat-label {font-size:11px;} #sariBranchTreasury .bt-stat-value {font-size:16px;letter-spacing:-.045em;} #sariBranchTreasury .bt-scanner {margin-bottom:23px;} #sariBranchTreasury .bt-scanner-actions .bt-button {width:100%;} #sariBranchTreasury .bt-scanner-actions {width:100%;} #sariBranchTreasury .bt-filter-bar {grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(82px,.8fr);} #sariBranchTreasury .bt-filter-bar .bt-button {width:100%;padding:9px 6px;font-size:11px;} #sariBranchTreasury .bt-search-wrap {grid-column:1 / -1;} #sariBranchTreasury .bt-section-title {font-size:16px;} #sariBranchTreasury .bt-history-table tbody tr {grid-template-columns:1fr 1fr;} #sariBranchTreasury .bt-history-table tbody td {min-width:0;} #sariBranchTreasury .bt-history-table tbody td:nth-child(1), #sariBranchTreasury .bt-history-table tbody td:nth-child(2) {grid-column:1 / -1;} #sariBranchTreasury .bt-scanner-footer {flex-wrap:wrap;} #sariBranchTreasury .bt-scanner-footer .bt-button {width:100%;} #sariBranchTreasury .bt-help-panel { width:min(420px,calc(100vw - 28px)); } #sariBranchTreasury .bt-empty { min-height:230px; } #sariBranchTreasury .bt-empty h3 { font-size:20px; } }
 @media(prefers-reduced-motion:reduce){#sariBranchTreasury .bt-help-panel,#sariBranchTreasury .bt-help-trigger,#sariBranchTreasury .bt-button {transition:none!important;} }
 

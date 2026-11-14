@@ -1795,3 +1795,12 @@ require __DIR__.'/messaging.php';
 
 // Admin AI endpoints retain the web session and CSRF middleware.
 require __DIR__.'/admin-ai.php';
+
+/* SARI_STRUCTURED_SIZE_CHARTS_ROUTES_V1 */
+/* Product-specific seller measurements for deterministic Buyer size matching. */
+Route::middleware(\App\Http\Middleware\Seller\EnsureSellerNotRestricted::class)->group(function () {
+    Route::get('/seller/product-size-charts', [\App\Http\Controllers\Seller\SellerProductSizeChartController::class, 'index'])->name('seller.products.size-charts');
+    Route::get('/seller/products/{product}/size-chart', [\App\Http\Controllers\Seller\SellerProductSizeChartController::class, 'edit'])->name('seller.products.size-chart.edit');
+    Route::put('/seller/products/{product}/size-chart', [\App\Http\Controllers\Seller\SellerProductSizeChartController::class, 'update'])->middleware('throttle:30,1')->name('seller.products.size-chart.update');
+    Route::delete('/seller/products/{product}/size-chart', [\App\Http\Controllers\Seller\SellerProductSizeChartController::class, 'destroy'])->middleware('throttle:30,1')->name('seller.products.size-chart.destroy');
+});

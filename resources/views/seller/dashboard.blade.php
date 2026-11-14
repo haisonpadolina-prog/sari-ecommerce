@@ -64,18 +64,18 @@
     .seller-greeting-hero {
         position: relative;
         overflow: hidden;
-        border: 1px solid #2f2a23;
+        border: 1px solid var(--sari-dark-d8c2716225, #2f2a23);
         background:
             radial-gradient(circle at 100% 50%, rgba(214,149,14,.10) 0, rgba(214,149,14,.05) 18%, rgba(214,149,14,0) 34%),
-            linear-gradient(135deg, #1f1e1b 0%, #22211e 50%, #1a1917 100%);
-        box-shadow: 0 8px 22px rgba(20, 17, 13, .08);
+            linear-gradient(135deg, var(--sari-dark-f3318ab620, #1f1e1b) 0%, var(--sari-dark-fbb35de0d1, #22211e) 50%, var(--sari-dark-f3318ab620, #1a1917) 100%);
+        box-shadow: 0 8px 22px var(--sari-dark-c33e3d1bb4, rgba(20, 17, 13, .08));
     }
 
     .seller-greeting-hero::before {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,0) 32%);
+        background: linear-gradient(90deg, var(--sari-dark-f02d16aa86, rgba(255,255,255,.04)), rgba(255,255,255,0) 32%);
         pointer-events: none;
     }
 
@@ -109,23 +109,23 @@
     .seller-greeting-divider {
         width: 1px;
         align-self: stretch;
-        background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.14), rgba(255,255,255,0));
+        background: linear-gradient(to bottom, rgba(255,255,255,0), var(--sari-dark-7a9dbf4e62, rgba(255,255,255,.14)), rgba(255,255,255,0));
     }
 
     .seller-greeting-chip {
         display: inline-flex;
         align-items: center;
         gap: .45rem;
-        border: 1px solid rgba(255,255,255,.12);
-        background: rgba(255,255,255,.055);
-        box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        border: 1px solid var(--sari-dark-0d02a17c1b, rgba(255,255,255,.12));
+        background: var(--sari-dark-d68bd54549, rgba(255,255,255,.055));
+        box-shadow: 0 2px 8px var(--sari-dark-c33e3d1bb4, rgba(0,0,0,.08));
         backdrop-filter: blur(4px);
     }
 
     .seller-greeting-icon-shell {
         background: linear-gradient(180deg, rgba(236, 173, 38, .18), rgba(236, 173, 38, .06));
         border: 1px solid rgba(230, 173, 59, .18);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 4px 10px rgba(0,0,0,.08);
+        box-shadow: inset 0 1px 0 var(--sari-dark-0d18deb7fd, rgba(255,255,255,.06)), 0 4px 10px var(--sari-dark-c33e3d1bb4, rgba(0,0,0,.08));
     }
 
     .seller-greeting-stat {
@@ -145,13 +145,13 @@
     | without looking like three extra cards inside the main card.
     */
     .seller-greeting-stat + .seller-greeting-stat {
-        border-left: 1px solid rgba(255,255,255,.10) !important;
+        border-left: 1px solid var(--sari-dark-bec9be7eea, rgba(255,255,255,.10)) !important;
     }
 
     @media (max-width: 639px) {
         .seller-greeting-stat + .seller-greeting-stat {
             border-left: 0 !important;
-            border-top: 1px solid rgba(255,255,255,.08) !important;
+            border-top: 1px solid var(--sari-dark-6da278ba55, rgba(255,255,255,.08)) !important;
             padding-top: 12px !important;
         }
     }
@@ -178,15 +178,15 @@
     .seller-greeting-stat > div > span:not(.seller-greeting-weather-pulse) {
         border-color: rgba(214,143,8,.34) !important;
         background: rgba(212,143,8,.08) !important;
-        color: #e1a21f !important;
-        box-shadow: 0 2px 7px rgba(0,0,0,.08);
+        color: var(--sari-dark-5f597ae940, #e1a21f) !important;
+        box-shadow: 0 2px 7px var(--sari-dark-c33e3d1bb4, rgba(0,0,0,.08));
     }
 
     .seller-greeting-stat .seller-greeting-weather-pulse {
         border-color: rgba(86,168,245,.28) !important;
-        background: rgba(25,48,69,.55) !important;
+        background: var(--sari-dark-8b1dee3588, rgba(25,48,69,.55)) !important;
         color: #63aff5 !important;
-        box-shadow: 0 2px 7px rgba(0,0,0,.08);
+        box-shadow: 0 2px 7px var(--sari-dark-c33e3d1bb4, rgba(0,0,0,.08));
     }
 
     .seller-greeting-weather-pulse {
@@ -223,13 +223,13 @@
     }
 
     #sellerProductsPanel .seller-responsive-product-card {
-        border-color: #e8e2da;
-        box-shadow: 0 5px 16px rgba(39, 31, 22, .025);
+        border-color: var(--sari-dark-d8c2716225, #e8e2da);
+        box-shadow: 0 5px 16px var(--sari-dark-e1384eb7fc, rgba(39, 31, 22, .025));
     }
 
     #sellerProductsPanel .seller-responsive-product-card:hover {
-        border-color: #d8ccb9;
-        box-shadow: 0 14px 30px rgba(43, 33, 21, .055);
+        border-color: var(--sari-dark-d8c2716225, #d8ccb9);
+        box-shadow: 0 14px 30px var(--sari-dark-fbd3b3b9f6, rgba(43, 33, 21, .055));
     }
 
     .seller-market-badge {
@@ -244,21 +244,21 @@
         font-weight: 600;
         letter-spacing: .01em;
         white-space: nowrap;
-        box-shadow: 0 3px 10px rgba(30, 24, 18, .08);
+        box-shadow: 0 3px 10px var(--sari-dark-c33e3d1bb4, rgba(30, 24, 18, .08));
         backdrop-filter: blur(6px);
     }
 
     .seller-market-badge--trend {
         border: 1px solid #f0d36d;
-        background: rgba(255, 249, 223, .98);
-        color: #b27700;
+        background: var(--sari-dark-d048a78d92, rgba(255, 249, 223, .98));
+        color: var(--sari-dark-9db03b407c, #b27700);
     }
 
     .seller-market-badge--mall {
         gap: 6px;
         min-height: 29px;
-        border: 1px solid rgba(255,255,255,.18);
-        background: rgba(41, 35, 30, .96);
+        border: 1px solid var(--sari-dark-ab70a14a3e, rgba(255,255,255,.18));
+        background: var(--sari-dark-e97baa5d3e, rgba(41, 35, 30, .96));
         color: #fffdf7;
         padding-inline: 12px;
         font-size: 10.2px;
@@ -272,7 +272,7 @@
         flex: 0 0 5px;
         border-radius: 999px;
         background: #f1b51d;
-        box-shadow: 0 0 0 2px rgba(241,181,29,.14);
+        box-shadow: 0 0 0 2px var(--sari-dark-59ed29fe9d, rgba(241,181,29,.14));
     }
 
     .seller-market-badge--sale {
@@ -284,7 +284,7 @@
         color: #5a4200;
         font-size: 10.2px;
         font-weight: 650;
-        box-shadow: 0 4px 10px rgba(221, 165, 0, .14);
+        box-shadow: 0 4px 10px var(--sari-dark-59ed29fe9d, rgba(221, 165, 0, .14));
     }
 
     .seller-free-shipping-badge {
@@ -292,29 +292,29 @@
         align-items: center;
         gap: 5px;
         min-height: 23px;
-        border: 1px solid #b9dfc8;
+        border: 1px solid var(--sari-dark-d8c2716225, #b9dfc8);
         border-radius: 999px;
-        background: #eef9f2;
+        background: var(--sari-dark-4d21eb669b, #eef9f2);
         padding: 0 8px;
-        color: #2f7a4d;
+        color: var(--sari-dark-e23e64dd1e, #2f7a4d);
         font-size: 8px;
         font-weight: 500;
         line-height: 1;
     }
 
     .seller-free-shipping-badge svg {
-        color: #2f8a58;
+        color: var(--sari-dark-a63aa16d7c, #2f8a58);
         stroke-width: 1.9;
     }
 
     .seller-product-sale-price {
-        color: #efa900 !important;
+        color: var(--sari-dark-994b57e3b3, #efa900) !important;
         font-weight: 500 !important;
         letter-spacing: -.025em;
     }
 
     .seller-product-original-price {
-        color: #a8a097;
+        color: var(--sari-dark-a63aa16d7c, #a8a097);
         font-size: 9px;
         font-weight: 400;
         text-decoration: line-through;
@@ -322,13 +322,13 @@
     }
 
     .seller-product-rating-row {
-        color: #8f877e;
+        color: var(--sari-dark-a63aa16d7c, #8f877e);
         font-size: 8.5px;
         font-weight: 400;
     }
 
     .seller-product-rating-row .seller-rating-star {
-        color: #ffb800;
+        color: var(--sari-dark-b78aa78968, #ffb800);
     }
 
     .seller-promo-toggle {
@@ -339,7 +339,7 @@
         flex-shrink: 0;
         cursor: pointer;
         border-radius: 999px;
-        background: #e7e3dc;
+        background: var(--sari-dark-4d21eb669b, #e7e3dc);
         transition: background .18s ease;
     }
 
@@ -351,8 +351,8 @@
         width: 17px;
         height: 17px;
         border-radius: 999px;
-        background: #fff;
-        box-shadow: 0 2px 5px rgba(0,0,0,.12);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 2px 5px var(--sari-dark-3b2338cbf0, rgba(0,0,0,.12));
         transition: transform .18s ease;
     }
 
@@ -383,8 +383,8 @@
         border-radius: 9999px;
         background: var(--seller-category-gradient);
         box-shadow:
-            inset 0 0 0 1px rgba(61, 50, 37, .06),
-            0 10px 28px rgba(38, 29, 19, .055);
+            inset 0 0 0 1px var(--sari-dark-361b571631, rgba(61, 50, 37, .06)),
+            0 10px 28px var(--sari-dark-fbd3b3b9f6, rgba(38, 29, 19, .055));
     }
 
     .seller-category-donut::before {
@@ -392,9 +392,9 @@
         position: absolute;
         inset: 27%;
         border-radius: inherit;
-        border: 1px solid #eee7dd;
-        background: #ffffff;
-        box-shadow: 0 5px 18px rgba(45, 34, 21, .04);
+        border: 1px solid var(--sari-dark-d8c2716225, #eee7dd);
+        background: var(--sari-dark-950baec030, #ffffff);
+        box-shadow: 0 5px 18px var(--sari-dark-25b2da5e49, rgba(45, 34, 21, .04));
     }
 
     .seller-category-donut-center {
@@ -421,16 +421,16 @@
     .seller-category-legend-button.is-active {
         transform: translateY(-1px);
         border-color: #d7c49c;
-        background: #fffaf1;
-        box-shadow: 0 6px 16px rgba(44, 34, 21, .05);
+        background: var(--sari-dark-950baec030, #fffaf1);
+        box-shadow: 0 6px 16px var(--sari-dark-1df26971b5, rgba(44, 34, 21, .05));
     }
 
     .seller-category-legend-button.is-active {
-        color: #805a17;
+        color: var(--sari-dark-e13523fe23, #805a17);
     }
 
     .seller-category-stat-row + .seller-category-stat-row {
-        border-top: 1px solid #eee8df;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee8df);
     }
 
     @media (max-width: 639px) {
@@ -574,7 +574,7 @@
     #sellerSalesPerformanceCard {
         min-width: 0 !important;
         border-radius: 16px !important;
-        box-shadow: 0 6px 18px rgba(33, 24, 14, .03) !important;
+        box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(33, 24, 14, .03)) !important;
     }
 
     #sellerCategoryBreakdownCard > div:first-child {
@@ -617,7 +617,7 @@
 
     .seller-category-donut {
         width: min(100%, 174px) !important;
-        box-shadow: inset 0 0 0 1px rgba(61,50,37,.05), 0 6px 16px rgba(38,29,19,.04) !important;
+        box-shadow: inset 0 0 0 1px var(--sari-dark-1df26971b5, rgba(61,50,37,.05)), 0 6px 16px var(--sari-dark-25b2da5e49, rgba(38,29,19,.04)) !important;
     }
 
     .seller-category-donut::before {
@@ -802,7 +802,7 @@
         margin: 0 !important;
         padding: 12px !important;
         border-radius: 14px !important;
-        box-shadow: 0 5px 15px rgba(33,24,14,.028) !important;
+        box-shadow: 0 5px 15px var(--sari-dark-7888fe3028, rgba(33,24,14,.028)) !important;
     }
 
     #sellerCommerceSideColumn .seller-panel-title {
@@ -1250,22 +1250,22 @@
     */
     :root {
         --seller-card-shadow-soft:
-            0 10px 24px rgba(37, 29, 20, .055),
-            0 2px 7px rgba(37, 29, 20, .028),
-            inset 0 1px 0 rgba(255, 255, 255, .92),
-            inset 0 -1px 0 rgba(230, 223, 213, .62);
+            0 10px 24px var(--sari-dark-fbd3b3b9f6, rgba(37, 29, 20, .055)),
+            0 2px 7px var(--sari-dark-7888fe3028, rgba(37, 29, 20, .028)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)),
+            inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230, 223, 213, .62));
 
         --seller-card-shadow-soft-hover:
-            0 14px 30px rgba(37, 29, 20, .075),
-            0 4px 10px rgba(37, 29, 20, .035),
-            inset 0 1px 0 rgba(255, 255, 255, .95),
-            inset 0 -1px 0 rgba(230, 223, 213, .68);
+            0 14px 30px var(--sari-dark-e07575a086, rgba(37, 29, 20, .075)),
+            0 4px 10px var(--sari-dark-7593018246, rgba(37, 29, 20, .035)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .95)),
+            inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230, 223, 213, .68));
     }
 
     /* SUMMARY CARDS */
     #sellerDashboardContent > section.mt-4.grid.grid-cols-1.gap-3.sm\:grid-cols-2.xl\:grid-cols-5 > a {
         box-shadow: var(--seller-card-shadow-soft) !important;
-        border-color: #e6ddd1 !important;
+        border-color: var(--sari-dark-d8c2716225, #e6ddd1) !important;
         transition:
             box-shadow .18s ease,
             transform .18s ease,
@@ -1275,7 +1275,7 @@
     #sellerDashboardContent > section.mt-4.grid.grid-cols-1.gap-3.sm\:grid-cols-2.xl\:grid-cols-5 > a:hover {
         box-shadow: var(--seller-card-shadow-soft-hover) !important;
         transform: translateY(-1px);
-        border-color: #dccfbd !important;
+        border-color: var(--sari-dark-d8c2716225, #dccfbd) !important;
     }
 
     /* ANALYTICS + SIDE PANELS */
@@ -1283,7 +1283,7 @@
     #sellerSalesPerformanceCard,
     #sellerCommerceSideColumn > .seller-side-panel {
         box-shadow: var(--seller-card-shadow-soft) !important;
-        border-color: #e8dfd3 !important;
+        border-color: var(--sari-dark-d8c2716225, #e8dfd3) !important;
         transition:
             box-shadow .18s ease,
             transform .18s ease,
@@ -1295,7 +1295,7 @@
     #sellerCommerceSideColumn > .seller-side-panel:hover {
         box-shadow: var(--seller-card-shadow-soft-hover) !important;
         transform: translateY(-1px);
-        border-color: #ddd0bf !important;
+        border-color: var(--sari-dark-d8c2716225, #ddd0bf) !important;
     }
 
     /* INNER MINI CONTAINERS — very light only */
@@ -1306,8 +1306,8 @@
     #sellerCommerceSideColumn .seller-order-row,
     #sellerCommerceSideColumn .seller-inventory-row {
         box-shadow:
-            0 3px 10px rgba(37, 29, 20, .035),
-            inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+            0 3px 10px var(--sari-dark-7593018246, rgba(37, 29, 20, .035)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90)) !important;
     }
 
     /* Keep mobile subtle so it does not feel heavy */
@@ -1317,10 +1317,10 @@
         #sellerSalesPerformanceCard,
         #sellerCommerceSideColumn > .seller-side-panel {
             box-shadow:
-                0 8px 18px rgba(37, 29, 20, .05),
-                0 2px 6px rgba(37, 29, 20, .025),
-                inset 0 1px 0 rgba(255,255,255,.90),
-                inset 0 -1px 0 rgba(230,223,213,.56) !important;
+                0 8px 18px var(--sari-dark-1df26971b5, rgba(37, 29, 20, .05)),
+                0 2px 6px var(--sari-dark-e1384eb7fc, rgba(37, 29, 20, .025)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90)),
+                inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230,223,213,.56)) !important;
         }
     }
 
@@ -1349,10 +1349,10 @@
     #sellerSalesPerformanceCard,
     #sellerCommerceSideColumn > .seller-side-panel {
         box-shadow:
-            0 14px 30px rgba(37, 29, 20, .072),
-            0 4px 10px rgba(37, 29, 20, .034),
-            inset 0 1px 0 rgba(255, 255, 255, .95),
-            inset 0 -1px 0 rgba(230, 223, 213, .66) !important;
+            0 14px 30px var(--sari-dark-72324eb23f, rgba(37, 29, 20, .072)),
+            0 4px 10px var(--sari-dark-0beea602f4, rgba(37, 29, 20, .034)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .95)),
+            inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230, 223, 213, .66)) !important;
     }
 
     #sellerCategoryBreakdownCard:hover,
@@ -1360,10 +1360,10 @@
     #sellerCommerceSideColumn > .seller-side-panel:hover,
     #sellerDashboardContent > section.mt-4.grid.grid-cols-1.gap-3.sm\:grid-cols-2.xl\:grid-cols-5 > a:hover {
         box-shadow:
-            0 18px 38px rgba(37, 29, 20, .088),
-            0 6px 13px rgba(37, 29, 20, .042),
-            inset 0 1px 0 rgba(255, 255, 255, .98),
-            inset 0 -1px 0 rgba(230, 223, 213, .70) !important;
+            0 18px 38px var(--sari-dark-fa7478e57d, rgba(37, 29, 20, .088)),
+            0 6px 13px var(--sari-dark-6301903fc7, rgba(37, 29, 20, .042)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .98)),
+            inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230, 223, 213, .70)) !important;
     }
 
     /* Make the two main analytics cards feel roomier */
@@ -1505,16 +1505,16 @@
 
     :root {
         --seller-elevated-card-shadow:
-            0 16px 34px rgba(37, 29, 20, .078),
-            0 5px 12px rgba(37, 29, 20, .036),
-            inset 0 1px 0 rgba(255, 255, 255, .96),
-            inset 0 -1px 0 rgba(230, 223, 213, .68);
+            0 16px 34px var(--sari-dark-86621b26b6, rgba(37, 29, 20, .078)),
+            0 5px 12px var(--sari-dark-09297ea786, rgba(37, 29, 20, .036)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .96)),
+            inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230, 223, 213, .68));
 
         --seller-elevated-card-shadow-hover:
-            0 20px 42px rgba(37, 29, 20, .095),
-            0 7px 15px rgba(37, 29, 20, .044),
-            inset 0 1px 0 rgba(255, 255, 255, .98),
-            inset 0 -1px 0 rgba(230, 223, 213, .72);
+            0 20px 42px var(--sari-dark-a2f72dee3d, rgba(37, 29, 20, .095)),
+            0 7px 15px var(--sari-dark-6e48bf7f83, rgba(37, 29, 20, .044)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .98)),
+            inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230, 223, 213, .72));
     }
 
     /* Make all main dashboard cards visually consistent */
@@ -1523,7 +1523,7 @@
     #sellerSalesPerformanceCard,
     #sellerCommerceSideColumn > .seller-side-panel {
         box-shadow: var(--seller-elevated-card-shadow) !important;
-        border-color: #e7ddd0 !important;
+        border-color: var(--sari-dark-d8c2716225, #e7ddd0) !important;
     }
 
     #sellerDashboardContent > section.mt-4.grid.grid-cols-1.gap-3.sm\:grid-cols-2.xl\:grid-cols-5 > a:hover,
@@ -1531,7 +1531,7 @@
     #sellerSalesPerformanceCard:hover,
     #sellerCommerceSideColumn > .seller-side-panel:hover {
         box-shadow: var(--seller-elevated-card-shadow-hover) !important;
-        border-color: #ddcfbc !important;
+        border-color: var(--sari-dark-d8c2716225, #ddcfbc) !important;
     }
 
     /* Slightly stronger but still clean depth for inner stat areas */
@@ -1542,8 +1542,8 @@
     #sellerCommerceSideColumn .seller-order-row,
     #sellerCommerceSideColumn .seller-inventory-row {
         box-shadow:
-            0 4px 11px rgba(37, 29, 20, .04),
-            inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+            0 4px 11px var(--sari-dark-25b2da5e49, rgba(37, 29, 20, .04)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)) !important;
     }
 
     /* Donut area: more room and cleaner label/value separation */
@@ -1611,10 +1611,10 @@
         #sellerSalesPerformanceCard,
         #sellerCommerceSideColumn > .seller-side-panel {
             box-shadow:
-                0 10px 22px rgba(37, 29, 20, .06),
-                0 3px 8px rgba(37, 29, 20, .03),
-                inset 0 1px 0 rgba(255,255,255,.94),
-                inset 0 -1px 0 rgba(230,223,213,.60) !important;
+                0 10px 22px var(--sari-dark-361b571631, rgba(37, 29, 20, .06)),
+                0 3px 8px var(--sari-dark-b13200ac05, rgba(37, 29, 20, .03)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.94)),
+                inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230,223,213,.60)) !important;
         }
     }
 
@@ -1631,8 +1631,8 @@
     /* Product preview cards: keep the resting appearance on hover. */
     #sellerProductsPanel .seller-responsive-product-card:hover {
         transform: none !important;
-        border-color: #e8e2da !important;
-        box-shadow: 0 5px 16px rgba(39, 31, 22, .025) !important;
+        border-color: var(--sari-dark-d8c2716225, #e8e2da) !important;
+        box-shadow: 0 5px 16px var(--sari-dark-e1384eb7fc, rgba(39, 31, 22, .025)) !important;
     }
 
     /* Main analytics / operations containers: no hover lift or shadow change. */
@@ -1640,25 +1640,25 @@
     #sellerSalesPerformanceCard:hover,
     #sellerCommerceSideColumn > .seller-side-panel:hover {
         transform: none !important;
-        border-color: #e7ddd0 !important;
+        border-color: var(--sari-dark-d8c2716225, #e7ddd0) !important;
         box-shadow: var(--seller-elevated-card-shadow) !important;
     }
 
     /* Product Library cards are static; their action buttons still react. */
     #sellerAllProductsModal [data-library-product]:hover {
         transform: none !important;
-        border-color: #ebe5dd !important;
+        border-color: var(--sari-dark-d8c2716225, #ebe5dd) !important;
         box-shadow: none !important;
     }
 
     /* Workflow rows are information rows, not hover cards. */
     #sellerCommerceSideColumn .seller-order-row:hover {
         transform: none !important;
-        background-color: #ffffff !important;
-        border-color: #eee8df !important;
+        background-color: var(--sari-dark-950baec030, #ffffff) !important;
+        border-color: var(--sari-dark-d8c2716225, #eee8df) !important;
         box-shadow:
-            0 4px 11px rgba(37, 29, 20, .04),
-            inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+            0 4px 11px var(--sari-dark-25b2da5e49, rgba(37, 29, 20, .04)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)) !important;
     }
 
     /* Inventory rows and financial mini-cards remain completely still. */
@@ -2212,7 +2212,7 @@
         border-radius: 0 !important;
         background: transparent !important;
         box-shadow: none !important;
-        color: #efb43a !important;
+        color: var(--sari-dark-094fd3764c, #efb43a) !important;
         line-height: 1 !important;
         position: relative !important;
         top: 1px !important;
@@ -2281,26 +2281,26 @@
     #sellerSalesPerformanceCard.seller-sales-admin-card {
         min-width: 0 !important;
         min-height: 0 !important;
-        border: 1px solid #e3dbcf !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e3dbcf) !important;
         border-radius: 16px !important;
-        background: linear-gradient(145deg, #ffffff 0%, #fdfbf7 100%) !important;
+        background: linear-gradient(145deg, var(--sari-dark-950baec030, #ffffff) 0%, var(--sari-dark-950baec030, #fdfbf7) 100%) !important;
         padding: 14px 15px 12px !important;
         box-shadow:
-            0 16px 34px rgba(37,29,20,.078),
-            0 5px 12px rgba(37,29,20,.036),
-            inset 0 1px 0 rgba(255,255,255,.96),
-            inset 0 -1px 0 rgba(230,223,213,.68) !important;
+            0 16px 34px var(--sari-dark-86621b26b6, rgba(37,29,20,.078)),
+            0 5px 12px var(--sari-dark-09297ea786, rgba(37,29,20,.036)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+            inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230,223,213,.68)) !important;
         overflow: visible !important;
         transform: none !important;
     }
 
     #sellerSalesPerformanceCard.seller-sales-admin-card:hover {
-        border-color: #e3dbcf !important;
+        border-color: var(--sari-dark-d8c2716225, #e3dbcf) !important;
         box-shadow:
-            0 16px 34px rgba(37,29,20,.078),
-            0 5px 12px rgba(37,29,20,.036),
-            inset 0 1px 0 rgba(255,255,255,.96),
-            inset 0 -1px 0 rgba(230,223,213,.68) !important;
+            0 16px 34px var(--sari-dark-86621b26b6, rgba(37,29,20,.078)),
+            0 5px 12px var(--sari-dark-09297ea786, rgba(37,29,20,.036)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)),
+            inset 0 -1px 0 var(--sari-dark-f30a5f9061, rgba(230,223,213,.68)) !important;
         transform: none !important;
     }
 
@@ -2317,7 +2317,7 @@
         line-height: 1.25 !important;
         font-weight: 700 !important;
         letter-spacing: -.025em !important;
-        color: #211d17 !important;
+        color: var(--sari-dark-e23e64dd1e, #211d17) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-subtitle {
@@ -2325,7 +2325,7 @@
         font-size: 8.8px !important;
         line-height: 1.45 !important;
         font-weight: 400 !important;
-        color: #978f84 !important;
+        color: var(--sari-dark-a63aa16d7c, #978f84) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-periods {
@@ -2334,11 +2334,11 @@
         flex: 0 0 auto !important;
         align-items: center !important;
         gap: 2px !important;
-        border: 1px solid #e7e0d7 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e0d7) !important;
         border-radius: 10px !important;
-        background: #faf8f4 !important;
+        background: var(--sari-dark-950baec030, #faf8f4) !important;
         padding: 2px !important;
-        box-shadow: inset 0 1px 2px rgba(61,47,31,.025) !important;
+        box-shadow: inset 0 1px 2px var(--sari-dark-e1384eb7fc, rgba(61,47,31,.025)) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-period-button {
@@ -2351,7 +2351,7 @@
         font-size: 8.3px !important;
         line-height: 1 !important;
         font-weight: 550 !important;
-        color: #8b8277 !important;
+        color: var(--sari-dark-a63aa16d7c, #8b8277) !important;
         box-shadow: none !important;
         transform: none !important;
         transition:
@@ -2363,15 +2363,15 @@
 
     #sellerSalesPerformanceCard .seller-sales-period-button:hover {
         background: transparent !important;
-        color: #5e554c !important;
+        color: var(--sari-dark-e23e64dd1e, #5e554c) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-period-button.is-active,
     #sellerSalesPerformanceCard .seller-sales-period-button[aria-pressed="true"] {
-        background: #ffffff !important;
-        color: #302a24 !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        color: var(--sari-dark-e23e64dd1e, #302a24) !important;
         font-weight: 700 !important;
-        box-shadow: 0 2px 7px rgba(57,44,28,.07) !important;
+        box-shadow: 0 2px 7px var(--sari-dark-7c935c8886, rgba(57,44,28,.07)) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metrics {
@@ -2400,7 +2400,7 @@
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metric + .seller-sales-admin-metric {
-        border-left: 1px solid #f0ebe5 !important;
+        border-left: 1px solid var(--sari-dark-d8c2716225, #f0ebe5) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metric-label {
@@ -2410,7 +2410,7 @@
         font-weight: 500 !important;
         letter-spacing: 0 !important;
         text-transform: none !important;
-        color: #7f776e !important;
+        color: var(--sari-dark-a63aa16d7c, #7f776e) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metric-value {
@@ -2419,7 +2419,7 @@
         line-height: 1 !important;
         font-weight: 700 !important;
         letter-spacing: -.04em !important;
-        color: #211d17 !important;
+        color: var(--sari-dark-e23e64dd1e, #211d17) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metric-note {
@@ -2427,13 +2427,13 @@
         font-size: 7.5px !important;
         line-height: 1.35 !important;
         font-weight: 500 !important;
-        color: #9a9288 !important;
+        color: var(--sari-dark-a63aa16d7c, #9a9288) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-divider {
         height: 1px !important;
         margin-top: 2px !important;
-        background: #f0ebe5 !important;
+        background: var(--sari-dark-4d21eb669b, #f0ebe5) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-chart-head {
@@ -2449,14 +2449,14 @@
         font-size: 10px !important;
         line-height: 1.3 !important;
         font-weight: 700 !important;
-        color: #302a24 !important;
+        color: var(--sari-dark-e23e64dd1e, #302a24) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-chart-copy {
         margin: 2px 0 0 !important;
         font-size: 7.5px !important;
         line-height: 1.4 !important;
-        color: #9a9288 !important;
+        color: var(--sari-dark-a63aa16d7c, #9a9288) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-legend {
@@ -2473,7 +2473,7 @@
         font-size: 8px !important;
         line-height: 1 !important;
         font-weight: 500 !important;
-        color: #746c63 !important;
+        color: var(--sari-dark-a63aa16d7c, #746c63) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-legend-item > i {
@@ -2505,7 +2505,7 @@
 
     #sellerSalesPerformanceCard .seller-sales-admin-line {
         fill: none !important;
-        stroke: #c79229 !important;
+        stroke: var(--sari-dark-8e839fb2d1, #c79229) !important;
         stroke-width: 2.3 !important;
         stroke-linecap: round !important;
         stroke-linejoin: round !important;
@@ -2519,11 +2519,11 @@
         position: absolute !important;
         z-index: 12 !important;
         min-width: 128px !important;
-        border: 1px solid #e7dfd6 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7dfd6) !important;
         border-radius: 10px !important;
-        background: rgba(255,255,255,.98) !important;
+        background: var(--sari-dark-ad56cde17e, rgba(255,255,255,.98)) !important;
         padding: 8px 9px !important;
-        box-shadow: 0 10px 24px rgba(57,44,28,.10) !important;
+        box-shadow: 0 10px 24px var(--sari-dark-8eadf403a5, rgba(57,44,28,.10)) !important;
         opacity: 0 !important;
         transform: translateY(5px) !important;
         pointer-events: none !important;
@@ -2540,7 +2540,7 @@
         font-size: 7.5px !important;
         line-height: 1 !important;
         font-weight: 700 !important;
-        color: #756c62 !important;
+        color: var(--sari-dark-a63aa16d7c, #756c62) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row {
@@ -2550,7 +2550,7 @@
         gap: 12px !important;
         margin: 0 !important;
         font-size: 7.5px !important;
-        color: #8a8178 !important;
+        color: var(--sari-dark-a63aa16d7c, #8a8178) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row span {
@@ -2569,7 +2569,7 @@
 
     #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row strong {
         font-size: 8px !important;
-        color: #2b261f !important;
+        color: var(--sari-dark-e23e64dd1e, #2b261f) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-empty {
@@ -2594,8 +2594,8 @@
         flex: 0 0 31px !important;
         place-items: center !important;
         border-radius: 50% !important;
-        background: #fff4da !important;
-        color: #b67d18 !important;
+        background: var(--sari-dark-4d21eb669b, #fff4da) !important;
+        color: var(--sari-dark-685eb4fc40, #b67d18) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-empty-icon svg {
@@ -2608,7 +2608,7 @@
         font-size: 8.5px !important;
         line-height: 1.3 !important;
         font-weight: 700 !important;
-        color: #302a24 !important;
+        color: var(--sari-dark-e23e64dd1e, #302a24) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-empty span:not(.seller-sales-admin-empty-icon) {
@@ -2616,7 +2616,7 @@
         margin-top: 2px !important;
         font-size: 7.4px !important;
         line-height: 1.35 !important;
-        color: #928a80 !important;
+        color: var(--sari-dark-a63aa16d7c, #928a80) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-footer {
@@ -2627,7 +2627,7 @@
         gap: 7px 12px !important;
         margin-top: 2px !important;
         padding-top: 8px !important;
-        border-top: 1px solid #f2ede7 !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #f2ede7) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-footer p {
@@ -2635,11 +2635,11 @@
         font-size: 7.5px !important;
         line-height: 1.35 !important;
         font-weight: 500 !important;
-        color: #918980 !important;
+        color: var(--sari-dark-a63aa16d7c, #918980) !important;
     }
 
     #sellerSalesPerformanceCard #sellerSalesBestPeriod {
-        color: #756c62 !important;
+        color: var(--sari-dark-a63aa16d7c, #756c62) !important;
     }
 
     @media (max-width: 639px) {
@@ -2669,7 +2669,7 @@
 
         #sellerSalesPerformanceCard .seller-sales-admin-metric + .seller-sales-admin-metric {
             border-left: 0 !important;
-            border-top: 1px solid #f0ebe5 !important;
+            border-top: 1px solid var(--sari-dark-d8c2716225, #f0ebe5) !important;
         }
 
         #sellerSalesPerformanceCard .seller-sales-admin-chart-head {
@@ -2710,7 +2710,7 @@
         line-height: 1.25 !important;
         font-weight: 450 !important;
         letter-spacing: .01em !important;
-        color: #857d74 !important;
+        color: var(--sari-dark-a63aa16d7c, #857d74) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metric-note {
@@ -2719,7 +2719,7 @@
         line-height: 1.35 !important;
         font-weight: 400 !important;
         letter-spacing: 0 !important;
-        color: #a19a91 !important;
+        color: var(--sari-dark-a63aa16d7c, #a19a91) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metric-value {
@@ -2731,14 +2731,14 @@
     #sellerSalesPerformanceCard .seller-sales-admin-chart-copy {
         font-size: 7px !important;
         font-weight: 400 !important;
-        color: #9f978e !important;
+        color: var(--sari-dark-a63aa16d7c, #9f978e) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-footer p,
     #sellerSalesPerformanceCard #sellerSalesBestPeriod {
         font-size: 7px !important;
         font-weight: 400 !important;
-        color: #958d84 !important;
+        color: var(--sari-dark-a63aa16d7c, #958d84) !important;
     }
 
     @media (max-width: 639px) {
@@ -2767,7 +2767,7 @@
         line-height: 1.2 !important;
         font-weight: 400 !important;
         letter-spacing: .01em !important;
-        color: #8d857c !important;
+        color: var(--sari-dark-a63aa16d7c, #8d857c) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metric-note {
@@ -2776,7 +2776,7 @@
         line-height: 1.3 !important;
         font-weight: 400 !important;
         letter-spacing: 0 !important;
-        color: #a59e95 !important;
+        color: var(--sari-dark-a63aa16d7c, #a59e95) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metric-value {
@@ -2792,7 +2792,7 @@
         line-height: 1.25 !important;
         font-weight: 600 !important;
         letter-spacing: -.018em !important;
-        color: #2d2721 !important;
+        color: var(--sari-dark-e23e64dd1e, #2d2721) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-chart-copy {
@@ -2800,7 +2800,7 @@
         font-size: 6.6px !important;
         line-height: 1.35 !important;
         font-weight: 400 !important;
-        color: #a19a91 !important;
+        color: var(--sari-dark-a63aa16d7c, #a19a91) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-legend-item {
@@ -2854,7 +2854,7 @@
         font-size: 7.2px !important;
         line-height: 1.2 !important;
         font-weight: 450 !important;
-        color: #877f76 !important;
+        color: var(--sari-dark-a63aa16d7c, #877f76) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-metric-value {
@@ -2864,7 +2864,7 @@
         line-height: 1 !important;
         font-weight: 650 !important;
         letter-spacing: -.042em !important;
-        color: #211d17 !important;
+        color: var(--sari-dark-e23e64dd1e, #211d17) !important;
     }
 
     #sellerSalesPerformanceCard .seller-sales-admin-chart-head {
@@ -2942,14 +2942,14 @@
         width:158px !important;
         height:158px !important;
         flex:0 0 158px !important;
-        box-shadow:0 10px 22px rgba(58,45,29,.065),0 3px 8px rgba(58,45,29,.035) !important;
+        box-shadow:0 10px 22px var(--sari-dark-4fc908fafe, rgba(58,45,29,.065)),0 3px 8px var(--sari-dark-7593018246, rgba(58,45,29,.035)) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-donut::before {
         inset:29px !important;
-        border:1px solid #eee7dd !important;
-        background:linear-gradient(145deg,#fff 0%,#fffdf9 100%) !important;
-        box-shadow:0 4px 10px rgba(58,45,29,.035),inset 0 1px 0 rgba(255,255,255,.95) !important;
+        border:1px solid var(--sari-dark-d8c2716225, #eee7dd) !important;
+        background:linear-gradient(145deg,var(--sari-dark-950baec030, #fff) 0%,var(--sari-dark-950baec030, #fffdf9) 100%) !important;
+        box-shadow:0 4px 10px var(--sari-dark-7593018246, rgba(58,45,29,.035)),inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.95)) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-donut-center {
@@ -2969,7 +2969,7 @@
         font-weight:500 !important;
         letter-spacing:.08em !important;
         text-transform:uppercase !important;
-        color:#9a9289 !important;
+        color:var(--sari-dark-a63aa16d7c, #9a9289) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-center-value {
@@ -2979,7 +2979,7 @@
         line-height:.95 !important;
         font-weight:650 !important;
         letter-spacing:-.05em !important;
-        color:#211d17 !important;
+        color:var(--sari-dark-e23e64dd1e, #211d17) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-center-sub {
@@ -2988,7 +2988,7 @@
         font-size:7px !important;
         line-height:1.35 !important;
         font-weight:400 !important;
-        color:#938b82 !important;
+        color:var(--sari-dark-a63aa16d7c, #938b82) !important;
         text-align:center !important;
     }
 
@@ -2996,7 +2996,7 @@
 
     #sellerCategoryBreakdownCard .seller-category-executive-list-head {
         padding-bottom:8px !important;
-        border-bottom:1px solid #f0ebe4 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #f0ebe4) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-executive-kicker {
@@ -3006,7 +3006,7 @@
         font-weight:600 !important;
         letter-spacing:.10em !important;
         text-transform:uppercase !important;
-        color:#b07a1b !important;
+        color:var(--sari-dark-7f4828a5f5, #b07a1b) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-executive-title {
@@ -3015,7 +3015,7 @@
         line-height:1.3 !important;
         font-weight:600 !important;
         letter-spacing:-.015em !important;
-        color:#302a24 !important;
+        color:var(--sari-dark-e23e64dd1e, #302a24) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-ranked-list {
@@ -3029,7 +3029,7 @@
         width:100% !important;
         min-height:44px !important;
         border:0 !important;
-        border-bottom:1px solid #f2ede7 !important;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #f2ede7) !important;
         border-radius:0 !important;
         background:transparent !important;
         padding:8px 0 9px !important;
@@ -3067,7 +3067,7 @@
         font-size:8.3px !important;
         line-height:1.25 !important;
         font-weight:500 !important;
-        color:#4c453e !important;
+        color:var(--sari-dark-e23e64dd1e, #4c453e) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-ranked-name > i {
@@ -3092,7 +3092,7 @@
         font-size:8.5px !important;
         line-height:1 !important;
         font-weight:600 !important;
-        color:#5e564e !important;
+        color:var(--sari-dark-e23e64dd1e, #5e564e) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-ranked-track {
@@ -3101,7 +3101,7 @@
         margin-top:7px !important;
         overflow:hidden !important;
         border-radius:999px !important;
-        background:#f0ece6 !important;
+        background:var(--sari-dark-4d21eb669b, #f0ece6) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-ranked-track > span {
@@ -3114,9 +3114,9 @@
 
     #sellerCategoryBreakdownCard .seller-category-ranked-empty {
         margin-top:10px !important;
-        border:1px dashed #e2d9cd !important;
+        border:1px dashed var(--sari-dark-d8c2716225, #e2d9cd) !important;
         border-radius:10px !important;
-        background:#fcfbf8 !important;
+        background:var(--sari-dark-950baec030, #fcfbf8) !important;
         padding:14px !important;
         text-align:center !important;
     }
@@ -3126,8 +3126,8 @@
         align-items:center !important;
         justify-content:space-between !important;
         gap:12px !important;
-        border-top:1px solid #eee8df !important;
-        background:#fffefa !important;
+        border-top:1px solid var(--sari-dark-d8c2716225, #eee8df) !important;
+        background:var(--sari-dark-950baec030, #fffefa) !important;
         padding:10px 18px !important;
     }
 
@@ -3136,7 +3136,7 @@
         font-size:7.2px !important;
         line-height:1.4 !important;
         font-weight:400 !important;
-        color:#918980 !important;
+        color:var(--sari-dark-a63aa16d7c, #918980) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-executive-action {
@@ -3153,7 +3153,7 @@
         font-size:7.8px !important;
         line-height:1 !important;
         font-weight:600 !important;
-        color:#a56f16 !important;
+        color:var(--sari-dark-5b23b431c8, #a56f16) !important;
         box-shadow:none !important;
         cursor:pointer !important;
     }
@@ -3257,22 +3257,22 @@
         height:208px !important;
         flex:0 0 208px !important;
         isolation:isolate !important;
-        border:1px solid rgba(218,207,191,.58) !important;
+        border:1px solid var(--sari-dark-b5cb43d8de, rgba(218,207,191,.58)) !important;
         background:var(--seller-category-gradient) !important;
         box-shadow:
-            0 18px 36px rgba(58,45,29,.085),
-            0 5px 12px rgba(58,45,29,.045),
-            inset 0 1px 0 rgba(255,255,255,.28) !important;
+            0 18px 36px var(--sari-dark-0a9e89f88f, rgba(58,45,29,.085)),
+            0 5px 12px var(--sari-dark-1190f58155, rgba(58,45,29,.045)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.28)) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-donut::before {
         z-index:2 !important;
         inset:42px !important;
-        border:1px solid #e8dfd2 !important;
-        background:linear-gradient(145deg,#ffffff 0%,#fffdf8 100%) !important;
+        border:1px solid var(--sari-dark-d8c2716225, #e8dfd2) !important;
+        background:linear-gradient(145deg,var(--sari-dark-950baec030, #ffffff) 0%,var(--sari-dark-950baec030, #fffdf8) 100%) !important;
         box-shadow:
-            0 8px 18px rgba(58,45,29,.065),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
+            0 8px 18px var(--sari-dark-4fc908fafe, rgba(58,45,29,.065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.98)) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-donut::after {
@@ -3283,8 +3283,8 @@
         border-radius:inherit !important;
         pointer-events:none !important;
         background:
-            radial-gradient(circle at 30% 24%,rgba(255,255,255,.20),transparent 29%),
-            radial-gradient(circle at 70% 78%,rgba(54,41,26,.045),transparent 40%) !important;
+            radial-gradient(circle at 30% 24%,var(--sari-dark-006bd90be7, rgba(255,255,255,.20)),transparent 29%),
+            radial-gradient(circle at 70% 78%,var(--sari-dark-5b44951c87, rgba(54,41,26,.045)),transparent 40%) !important;
     }
 
     #sellerCategoryBreakdownCard .seller-category-donut-center {
@@ -3405,7 +3405,7 @@
     }
 
     .seller-greeting-hero .seller-greeting-stat + .seller-greeting-stat {
-        border-left: 1px solid rgba(255,255,255,.11) !important;
+        border-left: 1px solid var(--sari-dark-8c2e03469a, rgba(255,255,255,.11)) !important;
     }
 
     .seller-greeting-hero .seller-greeting-stat-label {
@@ -3460,7 +3460,7 @@
         width: 13px !important;
         height: 13px !important;
         flex: 0 0 13px !important;
-        color: #e1a21f !important;
+        color: var(--sari-dark-5f597ae940, #e1a21f) !important;
         opacity: .92 !important;
     }
 
@@ -3529,7 +3529,7 @@
 
         .seller-greeting-hero .seller-greeting-stat + .seller-greeting-stat {
             border-left: 0 !important;
-            border-top: 1px solid rgba(255,255,255,.09) !important;
+            border-top: 1px solid var(--sari-dark-adc0ef4882, rgba(255,255,255,.09)) !important;
         }
 
         .seller-greeting-hero .seller-greeting-stat-copy {
@@ -3551,15 +3551,15 @@
     */
     .seller-greeting-hero {
         background:
-            linear-gradient(135deg, #1f1e1b 0%, #23211d 52%, #1a1917 100%) !important;
+            linear-gradient(135deg, var(--sari-dark-f3318ab620, #1f1e1b) 0%, var(--sari-dark-fbb35de0d1, #23211d) 52%, var(--sari-dark-f3318ab620, #1a1917) 100%) !important;
     }
 
     .seller-greeting-hero::before {
         background:
             linear-gradient(
                 90deg,
-                rgba(255,255,255,.035) 0%,
-                rgba(255,255,255,.012) 34%,
+                var(--sari-dark-81dadeff47, rgba(255,255,255,.035)) 0%,
+                var(--sari-dark-ecc5b43cd0, rgba(255,255,255,.012)) 34%,
                 rgba(255,255,255,0) 70%
             ) !important;
     }
@@ -3679,15 +3679,15 @@
         min-height: 168px !important;
         overflow: hidden !important;
         padding: 25px 30px !important;
-        border: 1px solid #302d28 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #302d28) !important;
         border-radius: 21px !important;
         background:
             radial-gradient(circle at 10% 35%, rgba(214,150,17,.07), transparent 24%),
             radial-gradient(circle at 86% 52%, rgba(214,150,17,.045), transparent 22%),
-            linear-gradient(115deg,#1f1f1c 0%,#211f1c 52%,#191917 100%) !important;
+            linear-gradient(115deg,var(--sari-dark-f3318ab620, #1f1f1c) 0%,var(--sari-dark-f3318ab620, #211f1c) 52%,var(--sari-dark-f3318ab620, #191917) 100%) !important;
         box-shadow:
-            0 14px 32px rgba(29,24,18,.085),
-            inset 0 1px 0 rgba(255,255,255,.035) !important;
+            0 14px 32px var(--sari-dark-0a9e89f88f, rgba(29,24,18,.085)),
+            inset 0 1px 0 var(--sari-dark-e1384eb7fc, rgba(255,255,255,.035)) !important;
     }
 
     .seller-greeting-hero.seller-hero-reference::before {
@@ -3698,7 +3698,7 @@
         background:
             linear-gradient(
                 90deg,
-                rgba(255,255,255,.018) 0%,
+                var(--sari-dark-b3d7b355e9, rgba(255,255,255,.018)) 0%,
                 transparent 34%,
                 transparent 100%
             ) !important;
@@ -3741,10 +3741,10 @@
         border-radius: 17px !important;
         background:
             linear-gradient(145deg,rgba(218,155,28,.19),rgba(218,155,28,.075)) !important;
-        color: #e5a41a !important;
+        color: var(--sari-dark-7f7834ccc9, #e5a41a) !important;
         box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.055),
-            0 7px 16px rgba(0,0,0,.10) !important;
+            inset 0 1px 0 var(--sari-dark-ca9e264852, rgba(255,255,255,.055)),
+            0 7px 16px var(--sari-dark-8eadf403a5, rgba(0,0,0,.10)) !important;
     }
 
     .seller-hero-store-icon svg {
@@ -3776,7 +3776,7 @@
         height: 25px !important;
         flex-basis: 25px !important;
         margin-left: 0 !important;
-        color: #e6a20f !important;
+        color: var(--sari-dark-7f7834ccc9, #e6a20f) !important;
     }
 
     .seller-hero-reference-title .seller-greeting-wave .fi {
@@ -3832,7 +3832,7 @@
 
     .seller-hero-status--active > i {
         background: #35e45f !important;
-        box-shadow: 0 0 0 3px rgba(53,228,95,.08) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(53,228,95,.08)) !important;
     }
 
     .seller-hero-status--restricted {
@@ -3849,7 +3849,7 @@
         display: block !important;
         width: 1px !important;
         height: 25px !important;
-        background: rgba(255,255,255,.15) !important;
+        background: var(--sari-dark-ac1ab30256, rgba(255,255,255,.15)) !important;
     }
 
     .seller-hero-verified {
@@ -3878,8 +3878,8 @@
             linear-gradient(
                 to bottom,
                 transparent 0%,
-                rgba(255,255,255,.13) 16%,
-                rgba(255,255,255,.13) 84%,
+                var(--sari-dark-a76ba55f11, rgba(255,255,255,.13)) 16%,
+                var(--sari-dark-a76ba55f11, rgba(255,255,255,.13)) 84%,
                 transparent 100%
             ) !important;
     }
@@ -3910,7 +3910,7 @@
     }
 
     .seller-greeting-hero.seller-hero-reference .seller-greeting-stat + .seller-greeting-stat {
-        border-left: 1px solid rgba(255,255,255,.11) !important;
+        border-left: 1px solid var(--sari-dark-8c2e03469a, rgba(255,255,255,.11)) !important;
     }
 
     .seller-greeting-hero.seller-hero-reference .seller-greeting-stat-heading {
@@ -3923,7 +3923,7 @@
         width: 19px !important;
         height: 19px !important;
         flex: 0 0 19px !important;
-        color: #e2a10f !important;
+        color: var(--sari-dark-bc0de3730f, #e2a10f) !important;
         opacity: 1 !important;
         stroke-width: 1.9 !important;
     }
@@ -4007,31 +4007,31 @@
         background: linear-gradient(180deg,#e6a006 0%,#d68e02 100%) !important;
         color: #fff !important;
         box-shadow:
-            0 11px 24px rgba(215,144,4,.22),
-            inset 0 1px 0 rgba(255,255,255,.16) !important;
+            0 11px 24px var(--sari-dark-e267f3cebc, rgba(215,144,4,.22)),
+            inset 0 1px 0 var(--sari-dark-7a3762baa2, rgba(255,255,255,.16)) !important;
     }
 
     .seller-hero-action--primary:hover {
         transform: translateY(-1px) !important;
         background: linear-gradient(180deg,#eba60b 0%,#dc9405 100%) !important;
         box-shadow:
-            0 13px 28px rgba(215,144,4,.25),
-            inset 0 1px 0 rgba(255,255,255,.18) !important;
+            0 13px 28px var(--sari-dark-f846f23b59, rgba(215,144,4,.25)),
+            inset 0 1px 0 var(--sari-dark-3ab7594414, rgba(255,255,255,.18)) !important;
     }
 
     .seller-hero-action--secondary {
-        border: 1px solid rgba(255,255,255,.18) !important;
-        background: rgba(255,255,255,.045) !important;
+        border: 1px solid var(--sari-dark-ab70a14a3e, rgba(255,255,255,.18)) !important;
+        background: var(--sari-dark-15c602788a, rgba(255,255,255,.045)) !important;
         color: #fff !important;
         box-shadow:
-            0 5px 13px rgba(0,0,0,.10),
-            inset 0 1px 0 rgba(255,255,255,.025) !important;
+            0 5px 13px var(--sari-dark-8eadf403a5, rgba(0,0,0,.10)),
+            inset 0 1px 0 var(--sari-dark-7672bb207e, rgba(255,255,255,.025)) !important;
     }
 
     .seller-hero-action--secondary:hover {
         transform: translateY(-1px) !important;
-        border-color: rgba(255,255,255,.26) !important;
-        background: rgba(255,255,255,.075) !important;
+        border-color: var(--sari-dark-0703557e55, rgba(255,255,255,.26)) !important;
+        background: var(--sari-dark-a69f3a730c, rgba(255,255,255,.075)) !important;
     }
 
     .seller-greeting-rings,
@@ -4069,7 +4069,7 @@
 
         .seller-hero-reference-meta {
             padding-top: 16px !important;
-            border-top: 1px solid rgba(255,255,255,.09) !important;
+            border-top: 1px solid var(--sari-dark-adc0ef4882, rgba(255,255,255,.09)) !important;
         }
 
         .seller-hero-reference-actions {
@@ -4129,7 +4129,7 @@
 
         .seller-greeting-hero.seller-hero-reference .seller-greeting-stat + .seller-greeting-stat {
             border-left: 0 !important;
-            border-top: 1px solid rgba(255,255,255,.08) !important;
+            border-top: 1px solid var(--sari-dark-6da278ba55, rgba(255,255,255,.08)) !important;
         }
 
         .seller-hero-reference-actions {
@@ -4339,8 +4339,8 @@
         padding: 14px 18px !important;
         border-radius: 17px !important;
         box-shadow:
-            0 9px 22px rgba(29,24,18,.07),
-            inset 0 1px 0 rgba(255,255,255,.03) !important;
+            0 9px 22px var(--sari-dark-7c935c8886, rgba(29,24,18,.07)),
+            inset 0 1px 0 var(--sari-dark-8b55c62547, rgba(255,255,255,.03)) !important;
     }
 
     .seller-hero-reference-layout {
@@ -4364,8 +4364,8 @@
         flex: 0 0 46px !important;
         border-radius: 12px !important;
         box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.045),
-            0 4px 10px rgba(0,0,0,.075) !important;
+            inset 0 1px 0 var(--sari-dark-2d78d45c63, rgba(255,255,255,.045)),
+            0 4px 10px var(--sari-dark-e07575a086, rgba(0,0,0,.075)) !important;
     }
 
     .seller-hero-store-icon svg {
@@ -4502,7 +4502,7 @@
     }
 
     .seller-hero-action--primary {
-        box-shadow: 0 5px 13px rgba(215,144,4,.14) !important;
+        box-shadow: 0 5px 13px var(--sari-dark-59ed29fe9d, rgba(215,144,4,.14)) !important;
     }
 
     .seller-hero-action--secondary {
@@ -4607,17 +4607,17 @@
        ============================================================ */
     #sellerRecentActivityCard {
         font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
-        border: 1px solid #e7ddd0;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7ddd0);
         border-radius: 18px;
-        background: #ffffff;
-        box-shadow: var(--seller-elevated-card-shadow, 0 12px 28px rgba(37,29,20,.07));
+        background: var(--sari-dark-950baec030, #ffffff);
+        box-shadow: var(--seller-elevated-card-shadow, 0 12px 28px var(--sari-dark-7c935c8886, rgba(37,29,20,.07)));
         overflow: hidden;
     }
 
     #sellerRecentActivityCard:hover {
         transform: none !important;
-        border-color: #e7ddd0 !important;
-        box-shadow: var(--seller-elevated-card-shadow, 0 12px 28px rgba(37,29,20,.07)) !important;
+        border-color: var(--sari-dark-d8c2716225, #e7ddd0) !important;
+        box-shadow: var(--seller-elevated-card-shadow, 0 12px 28px var(--sari-dark-7c935c8886, rgba(37,29,20,.07))) !important;
     }
 
     .seller-recent-head {
@@ -4626,7 +4626,7 @@
         justify-content: space-between;
         gap: 16px;
         padding: 14px 16px;
-        border-bottom: 1px solid #eee8df;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8df);
     }
 
     .seller-recent-live {
@@ -4634,13 +4634,13 @@
         align-items: center;
         gap: 7px;
         min-height: 28px;
-        border: 1px solid #d5e7dc;
+        border: 1px solid var(--sari-dark-d8c2716225, #d5e7dc);
         border-radius: 999px;
-        background: #f5fbf7;
+        background: var(--sari-dark-950baec030, #f5fbf7);
         padding: 0 10px;
         font-size: 8px;
         font-weight: 600;
-        color: #4d7e60;
+        color: var(--sari-dark-a63aa16d7c, #4d7e60);
         white-space: nowrap;
     }
 
@@ -4665,14 +4665,14 @@
         gap: 10px;
         min-width: 0;
         padding: 11px 8px;
-        border-bottom: 1px solid #f1ece5;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f1ece5);
         text-decoration: none;
     }
 
     .seller-recent-item:nth-child(odd) {
         padding-left: 0;
         padding-right: 14px;
-        border-right: 1px solid #f1ece5;
+        border-right: 1px solid var(--sari-dark-d8c2716225, #f1ece5);
     }
 
     .seller-recent-item:nth-child(even) {
@@ -4685,7 +4685,7 @@
     }
 
     .seller-recent-item:hover {
-        background: #fdfbf8;
+        background: var(--sari-dark-950baec030, #fdfbf8);
     }
 
     .seller-recent-avatar {
@@ -4695,10 +4695,10 @@
         height: 42px;
         place-items: center;
         overflow: hidden;
-        border: 1px solid #e8dfd4;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8dfd4);
         border-radius: 12px;
-        background: #fff9ed;
-        color: #9a6a18;
+        background: var(--sari-dark-4d21eb669b, #fff9ed);
+        color: var(--sari-dark-99f0de07d3, #9a6a18);
         font-size: 10px;
         font-weight: 700;
     }
@@ -4715,7 +4715,7 @@
         bottom: -1px;
         width: 10px;
         height: 10px;
-        border: 2px solid #fff;
+        border: 2px solid var(--sari-dark-d8c2716225, #fff);
         border-radius: 999px;
         background: #45a66b;
     }
@@ -4728,7 +4728,7 @@
         font-size: 10px;
         line-height: 1.35;
         font-weight: 650;
-        color: #332d27;
+        color: var(--sari-dark-e23e64dd1e, #332d27);
     }
 
     .seller-recent-product {
@@ -4740,7 +4740,7 @@
         font-size: 8.5px;
         line-height: 1.4;
         font-weight: 450;
-        color: #71685f;
+        color: var(--sari-dark-a63aa16d7c, #71685f);
     }
 
     .seller-recent-meta {
@@ -4750,7 +4750,7 @@
         align-items: center;
         gap: 5px;
         font-size: 7.4px;
-        color: #9a9187;
+        color: var(--sari-dark-a63aa16d7c, #9a9187);
     }
 
     .seller-recent-status {
@@ -4765,11 +4765,11 @@
         white-space: nowrap;
     }
 
-    .seller-recent-status--new { background: #fff5df; color: #a66e11; }
-    .seller-recent-status--progress { background: #eef5fb; color: #527795; }
-    .seller-recent-status--courier { background: #f4f0f8; color: #735f86; }
-    .seller-recent-status--success { background: #edf8f1; color: #4d7d60; }
-    .seller-recent-status--danger { background: #fff0f0; color: #a75a5a; }
+    .seller-recent-status--new { background: var(--sari-dark-4d21eb669b, #fff5df); color: var(--sari-dark-9b2ca2d764, #a66e11); }
+    .seller-recent-status--progress { background: var(--sari-dark-4d21eb669b, #eef5fb); color: var(--sari-dark-a63aa16d7c, #527795); }
+    .seller-recent-status--courier { background: var(--sari-dark-4d21eb669b, #f4f0f8); color: var(--sari-dark-a63aa16d7c, #735f86); }
+    .seller-recent-status--success { background: var(--sari-dark-4d21eb669b, #edf8f1); color: var(--sari-dark-a63aa16d7c, #4d7d60); }
+    .seller-recent-status--danger { background: var(--sari-dark-950baec030, #fff0f0); color: var(--sari-dark-f2c20e1c95, #a75a5a); }
 
     .seller-recent-side {
         min-width: 82px;
@@ -4781,7 +4781,7 @@
         font-size: 10px;
         line-height: 1.2;
         font-weight: 700;
-        color: #2f2923;
+        color: var(--sari-dark-e23e64dd1e, #2f2923);
     }
 
     .seller-recent-time {
@@ -4789,7 +4789,7 @@
         margin-top: 5px;
         font-size: 7px;
         line-height: 1.3;
-        color: #9b9389;
+        color: var(--sari-dark-a63aa16d7c, #9b9389);
         white-space: nowrap;
     }
 
@@ -4799,14 +4799,14 @@
         justify-content: space-between;
         gap: 12px;
         padding: 10px 16px;
-        border-top: 1px solid #eee8df;
-        background: #fffefa;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee8df);
+        background: var(--sari-dark-950baec030, #fffefa);
     }
 
     .seller-recent-footer p {
         margin: 0;
         font-size: 7.5px;
-        color: #978f86;
+        color: var(--sari-dark-a63aa16d7c, #978f86);
     }
 
     .seller-recent-footer a {
@@ -4815,7 +4815,7 @@
         gap: 6px;
         font-size: 8px;
         font-weight: 650;
-        color: #9d6c18;
+        color: var(--sari-dark-99f0de07d3, #9d6c18);
     }
 
     @media (max-width: 900px) {
@@ -4826,7 +4826,7 @@
         .seller-recent-item:nth-child(even) {
             padding: 11px 0;
             border-right: 0;
-            border-bottom: 1px solid #f1ece5;
+            border-bottom: 1px solid var(--sari-dark-d8c2716225, #f1ece5);
         }
 
         .seller-recent-item:last-child { border-bottom: 0; }
@@ -4867,10 +4867,10 @@
     #sellerActivityOrdersRow .seller-activity-panel {
         min-width: 0;
         overflow: hidden;
-        border: 1px solid #e7ddd0;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7ddd0);
         border-radius: 18px;
-        background: #fff;
-        box-shadow: 0 9px 22px rgba(37,29,20,.04);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 9px 22px var(--sari-dark-25b2da5e49, rgba(37,29,20,.04));
     }
 
     #sellerActivityOrdersRow .seller-activity-panel:hover {
@@ -4881,13 +4881,13 @@
         display: inline-flex;
         min-height: 28px;
         align-items: center;
-        border: 1px solid #dfe7ee;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe7ee);
         border-radius: 999px;
-        background: #f7f9fb;
+        background: var(--sari-dark-950baec030, #f7f9fb);
         padding: 0 10px;
         font-size: 8px;
         font-weight: 600;
-        color: #63778b;
+        color: var(--sari-dark-a63aa16d7c, #63778b);
         white-space: nowrap;
     }
 
@@ -4903,7 +4903,7 @@
         gap: 10px;
         min-width: 0;
         padding: 11px 0;
-        border-bottom: 1px solid #f1ece5;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f1ece5);
         text-decoration: none;
     }
 
@@ -4914,7 +4914,7 @@
 
     .seller-activity-item:hover,
     .seller-order-feed-item:hover {
-        background: #fdfbf8;
+        background: var(--sari-dark-950baec030, #fdfbf8);
     }
 
     .seller-activity-icon {
@@ -4933,27 +4933,27 @@
     }
 
     .seller-activity-icon--created {
-        border-color: #d9eadf;
-        background: #f2faf5;
-        color: #4e8161;
+        border-color: var(--sari-dark-d8c2716225, #d9eadf);
+        background: var(--sari-dark-4d21eb669b, #f2faf5);
+        color: var(--sari-dark-a63aa16d7c, #4e8161);
     }
 
     .seller-activity-icon--edited {
-        border-color: #dce7f0;
-        background: #f4f8fb;
-        color: #557793;
+        border-color: var(--sari-dark-d8c2716225, #dce7f0);
+        background: var(--sari-dark-950baec030, #f4f8fb);
+        color: var(--sari-dark-a63aa16d7c, #557793);
     }
 
     .seller-activity-icon--order {
-        border-color: #eee0c6;
-        background: #fff9ef;
-        color: #a9741d;
+        border-color: var(--sari-dark-d8c2716225, #eee0c6);
+        background: var(--sari-dark-950baec030, #fff9ef);
+        color: var(--sari-dark-00a00a0e12, #a9741d);
     }
 
     .seller-activity-icon--neutral {
-        border-color: #e6e0d8;
-        background: #f8f6f3;
-        color: #7d746a;
+        border-color: var(--sari-dark-d8c2716225, #e6e0d8);
+        background: var(--sari-dark-4d21eb669b, #f8f6f3);
+        color: var(--sari-dark-a63aa16d7c, #7d746a);
     }
 
     .seller-activity-title {
@@ -4963,7 +4963,7 @@
         white-space: nowrap;
         font-size: 9.5px;
         font-weight: 650;
-        color: #3a342e;
+        color: var(--sari-dark-e23e64dd1e, #3a342e);
     }
 
     .seller-activity-description {
@@ -4973,7 +4973,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         font-size: 8px;
-        color: #756d64;
+        color: var(--sari-dark-a63aa16d7c, #756d64);
     }
 
     .seller-activity-meta {
@@ -4983,7 +4983,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         font-size: 7.2px;
-        color: #a0978d;
+        color: var(--sari-dark-a63aa16d7c, #a0978d);
     }
 
     .seller-activity-time {
@@ -4991,7 +4991,7 @@
         align-self: flex-start;
         margin-top: 2px;
         font-size: 7px;
-        color: #9d958b;
+        color: var(--sari-dark-a63aa16d7c, #9d958b);
         white-space: nowrap;
     }
 
@@ -5032,25 +5032,25 @@
         overflow: hidden !important;
         min-height: 236px !important;
         max-height: 286px !important;
-        border: 1px solid #eadfce !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #eadfce) !important;
         border-radius: 14px !important;
-        background: #fff !important;
-        box-shadow: 0 6px 17px rgba(75, 52, 20, .035) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 6px 17px var(--sari-dark-7593018246, rgba(75, 52, 20, .035)) !important;
     }
 
     #sellerCommerceSideColumn > #sellerRecentActivityCard:hover,
     #sellerCommerceSideColumn > #sellerRecentOrdersCard:hover {
         transform: none !important;
-        border-color: #e6d6bd !important;
-        box-shadow: 0 8px 20px rgba(75, 52, 20, .045) !important;
+        border-color: var(--sari-dark-d8c2716225, #e6d6bd) !important;
+        box-shadow: 0 8px 20px var(--sari-dark-1190f58155, rgba(75, 52, 20, .045)) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head {
         padding: 12px 12px 10px !important;
         gap: 10px !important;
-        border-bottom: 1px solid #f0e7da !important;
-        background: linear-gradient(180deg, #fffaf1 0%, #fff 100%) !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0e7da) !important;
+        background: linear-gradient(180deg, var(--sari-dark-950baec030, #fffaf1) 0%, var(--sari-dark-950baec030, #fff) 100%) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head > div:first-child > span:first-child,
@@ -5059,9 +5059,9 @@
         height: 34px !important;
         flex: 0 0 34px !important;
         border-radius: 10px !important;
-        border-color: #eddab9 !important;
-        background: #fff7e8 !important;
-        color: #b77917 !important;
+        border-color: var(--sari-dark-d8c2716225, #eddab9) !important;
+        background: var(--sari-dark-4d21eb669b, #fff7e8) !important;
+        color: var(--sari-dark-4b8b580e58, #b77917) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head h3,
@@ -5070,7 +5070,7 @@
         font-size: clamp(14.5px, .26vw + 11px, 16px) !important;
         line-height: 1.2 !important;
         font-weight: 700 !important;
-        color: #28221b !important;
+        color: var(--sari-dark-e23e64dd1e, #28221b) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head p,
@@ -5078,7 +5078,7 @@
         margin-top: 3px !important;
         font-size: clamp(8.6px, .12vw + 7px, 9.5px) !important;
         line-height: 1.35 !important;
-        color: #91877b !important;
+        color: var(--sari-dark-a63aa16d7c, #91877b) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-owner-badge,
@@ -5086,9 +5086,9 @@
         min-height: 24px !important;
         padding: 0 8px !important;
         border-radius: 999px !important;
-        border: 1px solid #ead8b7 !important;
-        background: #fff7e7 !important;
-        color: #a87318 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #ead8b7) !important;
+        background: var(--sari-dark-4d21eb669b, #fff7e7) !important;
+        color: var(--sari-dark-bf0424e596, #a87318) !important;
         font-size: 7.2px !important;
         font-weight: 700 !important;
         white-space: nowrap !important;
@@ -5126,7 +5126,7 @@
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item {
         gap: 8px !important;
         padding: 8px 0 !important;
-        border-bottom: 1px solid #f2ebdf !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f2ebdf) !important;
         background: transparent !important;
     }
 
@@ -5137,7 +5137,7 @@
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item:hover,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:hover {
-        background: #fffdf9 !important;
+        background: var(--sari-dark-950baec030, #fffdf9) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-icon {
@@ -5145,9 +5145,9 @@
         height: 31px !important;
         flex: 0 0 31px !important;
         border-radius: 9px !important;
-        border-color: #ead9bd !important;
-        background: #fff8eb !important;
-        color: #ad771a !important;
+        border-color: var(--sari-dark-d8c2716225, #ead9bd) !important;
+        background: var(--sari-dark-4d21eb669b, #fff8eb) !important;
+        color: var(--sari-dark-7f4828a5f5, #ad771a) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-icon svg {
@@ -5160,7 +5160,7 @@
         font-size: 8.8px !important;
         line-height: 1.25 !important;
         font-weight: 700 !important;
-        color: #39322b !important;
+        color: var(--sari-dark-e23e64dd1e, #39322b) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-description,
@@ -5168,7 +5168,7 @@
         margin-top: 2px !important;
         font-size: 7.4px !important;
         line-height: 1.3 !important;
-        color: #756c61 !important;
+        color: var(--sari-dark-a63aa16d7c, #756c61) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-meta,
@@ -5176,13 +5176,13 @@
         margin-top: 2px !important;
         font-size: 6.7px !important;
         line-height: 1.25 !important;
-        color: #a2988c !important;
+        color: var(--sari-dark-a63aa16d7c, #a2988c) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-time,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-time {
         font-size: 6.5px !important;
-        color: #a1988d !important;
+        color: var(--sari-dark-a63aa16d7c, #a1988d) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item {
@@ -5193,9 +5193,9 @@
         width: 34px !important;
         height: 34px !important;
         border-radius: 10px !important;
-        border-color: #eadbc3 !important;
-        background: #fff8eb !important;
-        color: #a9741c !important;
+        border-color: var(--sari-dark-d8c2716225, #eadbc3) !important;
+        background: var(--sari-dark-4d21eb669b, #fff8eb) !important;
+        color: var(--sari-dark-cd21db0299, #a9741c) !important;
         font-size: 8.5px !important;
     }
 
@@ -5212,7 +5212,7 @@
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-total {
         font-size: 8.8px !important;
         font-weight: 700 !important;
-        color: #2f2923 !important;
+        color: var(--sari-dark-e23e64dd1e, #2f2923) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status {
@@ -5224,18 +5224,18 @@
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--new,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--progress {
-        background: #fff4dc !important;
-        color: #a66f13 !important;
+        background: var(--sari-dark-4d21eb669b, #fff4dc) !important;
+        color: var(--sari-dark-6e784b4931, #a66f13) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--courier {
-        background: #f7f1e7 !important;
-        color: #866d45 !important;
+        background: var(--sari-dark-4d21eb669b, #f7f1e7) !important;
+        color: var(--sari-dark-a63aa16d7c, #866d45) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--success {
-        background: #eef7ef !important;
-        color: #507353 !important;
+        background: var(--sari-dark-4d21eb669b, #eef7ef) !important;
+        color: var(--sari-dark-a63aa16d7c, #507353) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer,
@@ -5243,21 +5243,21 @@
         margin-top: auto !important;
         padding: 8px 11px !important;
         gap: 8px !important;
-        border-top: 1px solid #f0e7da !important;
-        background: #fffdf9 !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #f0e7da) !important;
+        background: var(--sari-dark-950baec030, #fffdf9) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer p,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer p {
         font-size: 6.6px !important;
-        color: #999085 !important;
+        color: var(--sari-dark-a63aa16d7c, #999085) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer a,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a {
         font-size: 7.4px !important;
         font-weight: 700 !important;
-        color: #a66f15 !important;
+        color: var(--sari-dark-9b2ca2d764, #a66f15) !important;
     }
 
     /* Financial Snapshot + Order Management moved below; keep them intact and polished. */
@@ -5265,10 +5265,10 @@
         min-width: 0 !important;
         min-height: 236px !important;
         padding: 14px !important;
-        border: 1px solid #ebe1d3 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #ebe1d3) !important;
         border-radius: 16px !important;
-        background: #fff !important;
-        box-shadow: 0 7px 18px rgba(54, 38, 18, .035) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 7px 18px var(--sari-dark-7593018246, rgba(54, 38, 18, .035)) !important;
         font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
     }
 
@@ -5322,37 +5322,37 @@
     /* ---------- Recent Activity + Recent Orders: neutral white ---------- */
     #sellerCommerceSideColumn > #sellerRecentActivityCard,
     #sellerCommerceSideColumn > #sellerRecentOrdersCard {
-        background: #ffffff !important;
-        border-color: #e7e1d8 !important;
-        box-shadow: 0 6px 16px rgba(31, 27, 22, .035) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        border-color: var(--sari-dark-d8c2716225, #e7e1d8) !important;
+        box-shadow: 0 6px 16px var(--sari-dark-7593018246, rgba(31, 27, 22, .035)) !important;
     }
 
     #sellerCommerceSideColumn > #sellerRecentActivityCard:hover,
     #sellerCommerceSideColumn > #sellerRecentOrdersCard:hover {
-        background: #ffffff !important;
-        border-color: #ddd4c8 !important;
-        box-shadow: 0 8px 18px rgba(31, 27, 22, .045) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        border-color: var(--sari-dark-d8c2716225, #ddd4c8) !important;
+        box-shadow: 0 8px 18px var(--sari-dark-1190f58155, rgba(31, 27, 22, .045)) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head {
-        background: #ffffff !important;
-        border-bottom-color: #ece7e0 !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #ece7e0) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head > div:first-child > span:first-child,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head > div:first-child > span:first-child {
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         border-color: #dfc58f !important;
-        color: #b87910 !important;
+        color: var(--sari-dark-6e784b4931, #b87910) !important;
         box-shadow: none !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-owner-badge,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live {
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         border-color: #dfc58f !important;
-        color: #a96f12 !important;
+        color: var(--sari-dark-9b2ca2d764, #a96f12) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live::before {
@@ -5361,26 +5361,26 @@
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item {
-        background: #ffffff !important;
-        border-bottom-color: #efebe5 !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #efebe5) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item:hover,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:hover {
-        background: #fafafa !important;
+        background: var(--sari-dark-950baec030, #fafafa) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-icon,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar {
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         border-color: #e0c995 !important;
-        color: #ad7515 !important;
+        color: var(--sari-dark-6e784b4931, #ad7515) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer {
-        background: #ffffff !important;
-        border-top-color: #ece7e0 !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        border-top-color: var(--sari-dark-d8c2716225, #ece7e0) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-list,
@@ -5404,9 +5404,9 @@
         min-height: 158px !important;
         padding: 11px !important;
         border-radius: 14px !important;
-        border-color: #e7e1d8 !important;
-        box-shadow: 0 5px 14px rgba(31, 27, 22, .03) !important;
-        background: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #e7e1d8) !important;
+        box-shadow: 0 5px 14px var(--sari-dark-b13200ac05, rgba(31, 27, 22, .03)) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     #sellerFinancialOrdersRow .seller-panel-title {
@@ -5419,7 +5419,7 @@
         margin-top: 2px !important;
         font-size: 8px !important;
         line-height: 1.3 !important;
-        color: #91887d !important;
+        color: var(--sari-dark-a63aa16d7c, #91887d) !important;
     }
 
     /* Financial Snapshot: 3 metrics in one compact desktop row */
@@ -5496,12 +5496,12 @@
         min-height: 30px !important;
         padding: 5px 7px !important;
         border-radius: 8px !important;
-        border-color: #e9e4dd !important;
-        background: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #e9e4dd) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     #sellerFinancialOrdersRow .seller-order-row:hover {
-        background: #fafafa !important;
+        background: var(--sari-dark-950baec030, #fafafa) !important;
     }
 
     #sellerFinancialOrdersRow .seller-order-row span:first-child {
@@ -5527,13 +5527,13 @@
         height: 31px !important;
         border-radius: 8px !important;
         font-size: 8px !important;
-        background: #ffffff !important;
-        border-color: #ddd4c7 !important;
-        color: #9b6b1c !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        border-color: var(--sari-dark-d8c2716225, #ddd4c7) !important;
+        color: var(--sari-dark-f5e3dbeebd, #9b6b1c) !important;
     }
 
     #sellerFinancialOrdersRow .seller-order-view-all:hover {
-        background: #fafafa !important;
+        background: var(--sari-dark-950baec030, #fafafa) !important;
     }
 
     @media (max-width: 900px) {
@@ -5565,7 +5565,7 @@
     #sellerCommerceSideColumn > #sellerRecentActivityCard,
     #sellerCommerceSideColumn > #sellerRecentOrdersCard {
         overflow: hidden !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-list,
@@ -5621,17 +5621,17 @@
 
     #sellerFinancialOrdersRow > .seller-side-panel {
         padding: 13px !important;
-        border: 1px solid #e7e1d9 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e1d9) !important;
         border-radius: 14px !important;
-        background: #ffffff !important;
-        box-shadow: 0 6px 16px rgba(31, 27, 22, .035) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        box-shadow: 0 6px 16px var(--sari-dark-7593018246, rgba(31, 27, 22, .035)) !important;
         overflow: hidden !important;
     }
 
     #sellerFinancialOrdersRow > .seller-side-panel:hover {
         transform: none !important;
-        border-color: #ddd4c8 !important;
-        box-shadow: 0 8px 18px rgba(31, 27, 22, .045) !important;
+        border-color: var(--sari-dark-d8c2716225, #ddd4c8) !important;
+        box-shadow: 0 8px 18px var(--sari-dark-1190f58155, rgba(31, 27, 22, .045)) !important;
     }
 
     #sellerFinancialOrdersRow .seller-panel-title {
@@ -5640,14 +5640,14 @@
         line-height: 1.2 !important;
         font-weight: 700 !important;
         letter-spacing: -.02em !important;
-        color: #28221b !important;
+        color: var(--sari-dark-e23e64dd1e, #28221b) !important;
     }
 
     #sellerFinancialOrdersRow > .seller-side-panel > div:first-child > p {
         margin-top: 3px !important;
         font-size: 8.4px !important;
         line-height: 1.35 !important;
-        color: #91887d !important;
+        color: var(--sari-dark-a63aa16d7c, #91887d) !important;
     }
 
     /* Financial Snapshot: compact stacked metrics for balanced card height */
@@ -5661,9 +5661,9 @@
     #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) > div {
         min-width: 0 !important;
         padding: 7px 9px !important;
-        border: 1px solid #ece5db !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #ece5db) !important;
         border-radius: 9px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) > div > div {
@@ -5675,20 +5675,20 @@
         height: 29px !important;
         border: 1px solid #e7cf9e !important;
         border-radius: 8px !important;
-        background: #fff9ee !important;
-        color: #b77917 !important;
+        background: var(--sari-dark-950baec030, #fff9ee) !important;
+        color: var(--sari-dark-4b8b580e58, #b77917) !important;
     }
 
     #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) > div > div > div:first-child span {
         font-size: 11px !important;
-        color: #b77917 !important;
+        color: var(--sari-dark-4b8b580e58, #b77917) !important;
     }
 
     #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) p:first-child {
         font-size: 7.4px !important;
         line-height: 1.2 !important;
         font-weight: 500 !important;
-        color: #8d8378 !important;
+        color: var(--sari-dark-a63aa16d7c, #8d8378) !important;
     }
 
     #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) p:last-child {
@@ -5696,7 +5696,7 @@
         font-size: 12px !important;
         line-height: 1.12 !important;
         font-weight: 700 !important;
-        color: #302a24 !important;
+        color: var(--sari-dark-e23e64dd1e, #302a24) !important;
     }
 
     #sellerFinancialOrdersRow .seller-financial-panel > .mt-auto {
@@ -5735,21 +5735,21 @@
     #sellerFinancialOrdersRow .seller-order-row {
         min-height: 34px !important;
         padding: 6px 8px !important;
-        border: 1px solid #ebe5dd !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #ebe5dd) !important;
         border-radius: 8px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     #sellerFinancialOrdersRow .seller-order-row:hover {
-        background: #fafafa !important;
-        border-color: #dfd6ca !important;
+        background: var(--sari-dark-950baec030, #fafafa) !important;
+        border-color: var(--sari-dark-d8c2716225, #dfd6ca) !important;
     }
 
     #sellerFinancialOrdersRow .seller-order-row span:first-child {
         font-size: 8.2px !important;
         line-height: 1.15 !important;
         font-weight: 500 !important;
-        color: #4b443d !important;
+        color: var(--sari-dark-e23e64dd1e, #4b443d) !important;
     }
 
     #sellerFinancialOrdersRow .seller-order-row span:last-child {
@@ -5758,8 +5758,8 @@
         height: 22px !important;
         padding-inline: 6px !important;
         border-radius: 7px !important;
-        background: #fff5e3 !important;
-        color: #a96e10 !important;
+        background: var(--sari-dark-4d21eb669b, #fff5e3) !important;
+        color: var(--sari-dark-4b8b580e58, #a96e10) !important;
         font-size: 7.2px !important;
         font-weight: 700 !important;
     }
@@ -5772,16 +5772,16 @@
         min-height: 31px !important;
         height: 31px !important;
         border-radius: 8px !important;
-        border-color: #dfd6ca !important;
-        background: #ffffff !important;
-        color: #9d6c17 !important;
+        border-color: var(--sari-dark-d8c2716225, #dfd6ca) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        color: var(--sari-dark-bf0424e596, #9d6c17) !important;
         font-size: 8px !important;
         font-weight: 700 !important;
     }
 
     #sellerFinancialOrdersRow .seller-order-view-all:hover {
         border-color: #d3b97e !important;
-        background: #fffdf9 !important;
+        background: var(--sari-dark-950baec030, #fffdf9) !important;
     }
 
     @media (max-width: 900px) {
@@ -5835,13 +5835,13 @@
     #sellerCommerceSideColumn #sellerRecentOrdersCard {
         display: flex !important;
         flex-direction: column !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head {
         flex: 0 0 auto !important;
         padding: 12px 14px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-orders-feed {
@@ -5862,8 +5862,8 @@
         align-items: center !important;
         gap: 9px !important;
         padding: 5px 0 !important;
-        border-bottom: 1px solid #eee9e2 !important;
-        background: #fff !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee9e2) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:last-child {
@@ -5871,7 +5871,7 @@
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:hover {
-        background: #fafafa !important;
+        background: var(--sari-dark-950baec030, #fafafa) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar {
@@ -5879,8 +5879,8 @@
         height: 32px !important;
         border-radius: 9px !important;
         border: 1px solid #dfc58f !important;
-        background: #fff !important;
-        color: #ab7314 !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-6e784b4931, #ab7314) !important;
         font-size: 8px !important;
         font-weight: 700 !important;
     }
@@ -5898,14 +5898,14 @@
         font-size: 8.8px !important;
         line-height: 1.2 !important;
         font-weight: 700 !important;
-        color: #342e28 !important;
+        color: var(--sari-dark-e23e64dd1e, #342e28) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-product {
         margin-top: 2px !important;
         font-size: 7.2px !important;
         line-height: 1.2 !important;
-        color: #746c63 !important;
+        color: var(--sari-dark-a63aa16d7c, #746c63) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-meta {
@@ -5913,7 +5913,7 @@
         gap: 4px !important;
         font-size: 6.4px !important;
         line-height: 1.15 !important;
-        color: #a1988e !important;
+        color: var(--sari-dark-a63aa16d7c, #a1988e) !important;
         flex-wrap: nowrap !important;
         overflow: hidden !important;
         white-space: nowrap !important;
@@ -5930,7 +5930,7 @@
         font-size: 8.8px !important;
         line-height: 1.1 !important;
         font-weight: 700 !important;
-        color: #29231e !important;
+        color: var(--sari-dark-e23e64dd1e, #29231e) !important;
         white-space: nowrap !important;
     }
 
@@ -5938,10 +5938,10 @@
         min-height: 18px !important;
         margin-top: 3px !important;
         padding: 0 6px !important;
-        border: 1px solid #ead8b3 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #ead8b3) !important;
         border-radius: 999px !important;
-        background: #fff8e9 !important;
-        color: #a56f15 !important;
+        background: var(--sari-dark-4d21eb669b, #fff8e9) !important;
+        color: var(--sari-dark-9b2ca2d764, #a56f15) !important;
         font-size: 6px !important;
         font-weight: 700 !important;
         line-height: 1 !important;
@@ -5951,7 +5951,7 @@
         margin-top: 3px !important;
         font-size: 6.1px !important;
         line-height: 1.1 !important;
-        color: #a59c92 !important;
+        color: var(--sari-dark-a63aa16d7c, #a59c92) !important;
         white-space: nowrap !important;
     }
 
@@ -5959,19 +5959,19 @@
         flex: 0 0 auto !important;
         min-height: 34px !important;
         padding: 8px 13px !important;
-        background: #fff !important;
-        border-top: 1px solid #ece7e0 !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #ece7e0) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer p {
         font-size: 6.8px !important;
-        color: #9a9187 !important;
+        color: var(--sari-dark-a63aa16d7c, #9a9187) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a {
         font-size: 7.4px !important;
         font-weight: 700 !important;
-        color: #a36e13 !important;
+        color: var(--sari-dark-6e784b4931, #a36e13) !important;
     }
 
     /*
@@ -6033,21 +6033,21 @@
         width: 100% !important;
         min-width: 0 !important;
         overflow: hidden !important;
-        border: 1px solid #e5ded5 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ded5) !important;
         border-radius: 18px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 8px 22px rgba(37, 29, 20, .045),
-            inset 0 1px 0 rgba(255, 255, 255, .95) !important;
+            0 8px 22px var(--sari-dark-1190f58155, rgba(37, 29, 20, .045)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .95)) !important;
         transform: none !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard:hover {
-        border-color: #e0d7cc !important;
-        background: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #e0d7cc) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 8px 22px rgba(37, 29, 20, .045),
-            inset 0 1px 0 rgba(255, 255, 255, .95) !important;
+            0 8px 22px var(--sari-dark-1190f58155, rgba(37, 29, 20, .045)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .95)) !important;
         transform: none !important;
     }
 
@@ -6059,8 +6059,8 @@
         align-items: center !important;
         gap: 16px !important;
         padding: 15px 18px !important;
-        border-bottom: 1px solid #eee9e2 !important;
-        background: #ffffff !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee9e2) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head > div:first-child {
@@ -6074,8 +6074,8 @@
         flex: 0 0 42px !important;
         border: 1px solid #e2c181 !important;
         border-radius: 12px !important;
-        background: #fffdf8 !important;
-        color: #b87910 !important;
+        background: var(--sari-dark-950baec030, #fffdf8) !important;
+        color: var(--sari-dark-6e784b4931, #b87910) !important;
         box-shadow: none !important;
     }
 
@@ -6091,7 +6091,7 @@
         line-height: 1.25 !important;
         font-weight: 700 !important;
         letter-spacing: -.025em !important;
-        color: #28221b !important;
+        color: var(--sari-dark-e23e64dd1e, #28221b) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head p {
@@ -6100,7 +6100,7 @@
         font-size: 8.5px !important;
         line-height: 1.45 !important;
         font-weight: 400 !important;
-        color: #91887d !important;
+        color: var(--sari-dark-a63aa16d7c, #91887d) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live {
@@ -6111,12 +6111,12 @@
         gap: 7px !important;
         border: 1px solid #e2ba72 !important;
         border-radius: 999px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         padding: 0 11px !important;
         font-size: 7.5px !important;
         line-height: 1 !important;
         font-weight: 700 !important;
-        color: #a86f12 !important;
+        color: var(--sari-dark-9b2ca2d764, #a86f12) !important;
         white-space: nowrap !important;
     }
 
@@ -6127,7 +6127,7 @@
         flex: 0 0 6px !important;
         border-radius: 50% !important;
         background: #d59518 !important;
-        box-shadow: 0 0 0 3px rgba(213, 149, 24, .08) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 149, 24, .08)) !important;
     }
 
     /* Four fixed preview rows. */
@@ -6138,7 +6138,7 @@
         max-height: none !important;
         overflow: hidden !important;
         padding: 0 18px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         scrollbar-width: none !important;
     }
 
@@ -6159,8 +6159,8 @@
         max-height: 56px !important;
         gap: 11px !important;
         padding: 0 !important;
-        border-bottom: 1px solid #eee9e2 !important;
-        background: #ffffff !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee9e2) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         text-decoration: none !important;
         transform: none !important;
         transition: background-color .15s ease !important;
@@ -6171,7 +6171,7 @@
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:hover {
-        background: #fcfbf9 !important;
+        background: var(--sari-dark-950baec030, #fcfbf9) !important;
         transform: none !important;
     }
 
@@ -6185,8 +6185,8 @@
         place-items: center !important;
         border: 1px solid #dfc58f !important;
         border-radius: 11px !important;
-        background: #fffdf9 !important;
-        color: #aa7113 !important;
+        background: var(--sari-dark-950baec030, #fffdf9) !important;
+        color: var(--sari-dark-9b2ca2d764, #aa7113) !important;
         font-size: 8px !important;
         line-height: 1 !important;
         font-weight: 700 !important;
@@ -6207,7 +6207,7 @@
         bottom: -2px !important;
         width: 8px !important;
         height: 8px !important;
-        border: 2px solid #ffffff !important;
+        border: 2px solid var(--sari-dark-d8c2716225, #ffffff) !important;
         border-radius: 50% !important;
         background: #d59518 !important;
     }
@@ -6226,7 +6226,7 @@
         font-size: 9.5px !important;
         line-height: 1.25 !important;
         font-weight: 700 !important;
-        color: #302a24 !important;
+        color: var(--sari-dark-e23e64dd1e, #302a24) !important;
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
     }
@@ -6238,7 +6238,7 @@
         font-size: 7.8px !important;
         line-height: 1.25 !important;
         font-weight: 400 !important;
-        color: #756d64 !important;
+        color: var(--sari-dark-a63aa16d7c, #756d64) !important;
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
     }
@@ -6252,7 +6252,7 @@
         overflow: hidden !important;
         font-size: 6.6px !important;
         line-height: 1.2 !important;
-        color: #a1988e !important;
+        color: var(--sari-dark-a63aa16d7c, #a1988e) !important;
         white-space: nowrap !important;
     }
 
@@ -6276,7 +6276,7 @@
         line-height: 1.15 !important;
         font-weight: 700 !important;
         letter-spacing: -.015em !important;
-        color: #29231e !important;
+        color: var(--sari-dark-e23e64dd1e, #29231e) !important;
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
     }
@@ -6302,26 +6302,26 @@
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--new,
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--progress {
         border: 1px solid #efd59e !important;
-        background: #fff8e8 !important;
-        color: #9f6810 !important;
+        background: var(--sari-dark-4d21eb669b, #fff8e8) !important;
+        color: var(--sari-dark-4b8b580e58, #9f6810) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--courier {
-        border: 1px solid #ded7e8 !important;
-        background: #f7f4fa !important;
-        color: #735f86 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #ded7e8) !important;
+        background: var(--sari-dark-950baec030, #f7f4fa) !important;
+        color: var(--sari-dark-a63aa16d7c, #735f86) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--success {
-        border: 1px solid #cfe3d4 !important;
-        background: #f0f8f2 !important;
-        color: #4d7659 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #cfe3d4) !important;
+        background: var(--sari-dark-4d21eb669b, #f0f8f2) !important;
+        color: var(--sari-dark-a63aa16d7c, #4d7659) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--danger {
-        border: 1px solid #eccccc !important;
-        background: #fff2f2 !important;
-        color: #a55656 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #eccccc) !important;
+        background: var(--sari-dark-950baec030, #fff2f2) !important;
+        color: var(--sari-dark-2f9b0e3eed, #a55656) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-time {
@@ -6330,7 +6330,7 @@
         font-size: 6.2px !important;
         line-height: 1.1 !important;
         font-weight: 400 !important;
-        color: #a79e94 !important;
+        color: var(--sari-dark-a63aa16d7c, #a79e94) !important;
         white-space: nowrap !important;
     }
 
@@ -6344,15 +6344,15 @@
         min-height: 42px !important;
         margin: 0 !important;
         padding: 0 18px !important;
-        border-top: 1px solid #eee9e2 !important;
-        background: #ffffff !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee9e2) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer p {
         margin: 0 !important;
         font-size: 6.8px !important;
         line-height: 1.2 !important;
-        color: #9c9389 !important;
+        color: var(--sari-dark-a63aa16d7c, #9c9389) !important;
     }
 
     #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a {
@@ -6363,7 +6363,7 @@
         font-size: 7.3px !important;
         line-height: 1 !important;
         font-weight: 700 !important;
-        color: #a66f13 !important;
+        color: var(--sari-dark-6e784b4931, #a66f13) !important;
         white-space: nowrap !important;
     }
 
@@ -6480,17 +6480,17 @@
     --sari-soft-ivory: #F7F3EC;
     --sari-warm-white: #FCFAF6;
     --sari-sand-beige: #EDE3D2;
-    --sari-border-linen: #D9CBB6;
+    --sari-border-linen: var(--sari-dark-d8c2716225, #D9CBB6);
     --sari-charcoal: #222222;
-    --sari-muted-slate: #6B7280;
+    --sari-muted-slate: var(--sari-dark-a63aa16d7c, #6B7280);
     --sari-soft-green: #63A375;
     --sari-dusty-blue: #6C8FB5;
     --sari-soft-rose: #D97C6C;
     --sari-dark-olive: #4E5A4F;
 
     --sari-floating-shadow:
-        0 12px 28px rgba(34, 28, 22, .065),
-        0 2px 7px rgba(34, 28, 22, .025);
+        0 12px 28px var(--sari-dark-4fc908fafe, rgba(34, 28, 22, .065)),
+        0 2px 7px var(--sari-dark-e1384eb7fc, rgba(34, 28, 22, .025));
 }
 
 /* Page / typography */
@@ -6522,13 +6522,13 @@
 
 .seller-greeting-divider,
 .seller-hero-reference-divider {
-    background: rgba(255, 255, 255, .12) !important;
+    background: var(--sari-dark-fdb9476adb, rgba(255, 255, 255, .12)) !important;
 }
 
 .seller-greeting-icon-shell,
 .seller-hero-store-icon {
     border-color: rgba(216, 155, 16, .22) !important;
-    background: #342E25 !important;
+    background: var(--sari-dark-fbb35de0d1, #342E25) !important;
     box-shadow: none !important;
 }
 
@@ -6536,7 +6536,7 @@
 .seller-hero-action--primary:hover {
     border-color: var(--sari-primary-gold) !important;
     background: var(--sari-primary-gold) !important;
-    box-shadow: 0 7px 16px rgba(182, 122, 8, .16) !important;
+    box-shadow: 0 7px 16px var(--sari-dark-b5c2a2270e, rgba(182, 122, 8, .16)) !important;
     transform: none !important;
 }
 
@@ -6547,7 +6547,7 @@
 
 .seller-hero-action--secondary,
 .seller-hero-action--secondary:hover {
-    background: rgba(255,255,255,.06) !important;
+    background: var(--sari-dark-4cd63dc51a, rgba(255,255,255,.06)) !important;
     transform: none !important;
 }
 
@@ -6590,7 +6590,7 @@
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head {
     background: var(--sari-warm-white) !important;
     background-image: none !important;
-    border-bottom-color: rgba(217, 203, 182, .42) !important;
+    border-bottom-color: var(--sari-dark-fba097951c, rgba(217, 203, 182, .42)) !important;
 }
 
 #sellerCategoryBreakdownCard > div:first-child > div:first-child,
@@ -6610,9 +6610,9 @@
    CATALOG — flat center, palette-only category colors
    -------------------------------------------------------------------------- */
 #sellerCategoryBreakdownCard .seller-category-donut::before {
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     background-image: none !important;
-    border-color: rgba(217, 203, 182, .55) !important;
+    border-color: var(--sari-dark-12a267dbc3, rgba(217, 203, 182, .55)) !important;
     box-shadow: none !important;
 }
 
@@ -6623,7 +6623,7 @@
 
 #sellerCategoryBreakdownCard .seller-category-donut {
     /* var(--seller-category-gradient) is the actual chart, not decoration. */
-    box-shadow: 0 8px 20px rgba(34, 28, 22, .06) !important;
+    box-shadow: 0 8px 20px var(--sari-dark-361b571631, rgba(34, 28, 22, .06)) !important;
 }
 
 #sellerCategoryBreakdownCard .seller-category-ranked-row,
@@ -6646,7 +6646,7 @@
 
 #sellerSalesPerformanceCard .seller-sales-admin-metrics,
 #sellerSalesPerformanceCard .seller-sales-admin-chart-shell {
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     background-image: none !important;
     box-shadow: none !important;
 }
@@ -6660,14 +6660,14 @@
    -------------------------------------------------------------------------- */
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-owner-badge {
     border-color: transparent !important;
-    background: #F2F6F9 !important;
+    background: var(--sari-dark-4d21eb669b, #F2F6F9) !important;
     color: var(--sari-dusty-blue) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live {
     border-color: transparent !important;
-    background: #F1F7F3 !important;
-    color: #477B59 !important;
+    background: var(--sari-dark-4d21eb669b, #F1F7F3) !important;
+    color: var(--sari-dark-a63aa16d7c, #477B59) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live::before {
@@ -6681,7 +6681,7 @@
 
 .seller-activity-item:hover,
 .seller-order-feed-item:hover {
-    background: #FAF7F1 !important;
+    background: var(--sari-dark-4d21eb669b, #FAF7F1) !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -6693,8 +6693,8 @@
 #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) > div,
 #sellerFinancialOrdersRow .seller-order-row {
     border-color: transparent !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 3px 10px rgba(34, 28, 22, .035) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    box-shadow: 0 3px 10px var(--sari-dark-7593018246, rgba(34, 28, 22, .035)) !important;
     transform: none !important;
 }
 
@@ -6704,7 +6704,7 @@
 #sellerFinancialOrdersRow .seller-order-row:hover,
 #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) > div:hover {
     border-color: transparent !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     transform: none !important;
 }
 
@@ -6716,7 +6716,7 @@
     background: var(--sari-primary-gold) !important;
     background-image: none !important;
     color: #FFFFFF !important;
-    box-shadow: 0 6px 14px rgba(182, 122, 8, .13) !important;
+    box-shadow: 0 6px 14px var(--sari-dark-3e32d50f5e, rgba(182, 122, 8, .13)) !important;
 }
 
 .seller-inventory-button:hover,
@@ -6753,13 +6753,13 @@
 
 :root {
     --sari-floating-shadow:
-        0 18px 42px rgba(34, 28, 22, .085),
-        0 5px 14px rgba(34, 28, 22, .035),
-        0 1px 2px rgba(34, 28, 22, .018);
+        0 18px 42px var(--sari-dark-0a9e89f88f, rgba(34, 28, 22, .085)),
+        0 5px 14px var(--sari-dark-7593018246, rgba(34, 28, 22, .035)),
+        0 1px 2px var(--sari-dark-7672bb207e, rgba(34, 28, 22, .018));
 
     --sari-floating-shadow-small:
-        0 10px 24px rgba(34, 28, 22, .060),
-        0 3px 8px rgba(34, 28, 22, .025);
+        0 10px 24px var(--sari-dark-361b571631, rgba(34, 28, 22, .060)),
+        0 3px 8px var(--sari-dark-e1384eb7fc, rgba(34, 28, 22, .025));
 }
 
 /* Give the white surfaces enough contrast to visually float. */
@@ -6781,7 +6781,7 @@
 #sellerCommerceSideColumn > #sellerRecentOrdersCard,
 #sellerFinancialOrdersRow > .seller-side-panel {
     border: 1px solid transparent !important;
-    background: #FCFAF6 !important;
+    background: var(--sari-dark-950baec030, #FCFAF6) !important;
     box-shadow: var(--sari-floating-shadow) !important;
     transform: none !important;
     filter: none !important;
@@ -6798,7 +6798,7 @@
 #sellerCommerceSideColumn > #sellerRecentOrdersCard:hover,
 #sellerFinancialOrdersRow > .seller-side-panel:hover {
     border-color: transparent !important;
-    background: #FCFAF6 !important;
+    background: var(--sari-dark-950baec030, #FCFAF6) !important;
     box-shadow: var(--sari-floating-shadow) !important;
     transform: none !important;
 }
@@ -6837,8 +6837,8 @@
 /* Summary cards use a slightly lighter depth than the analytics panels. */
 #sellerDashboardContent > section.mt-4.grid.grid-cols-1.gap-3.sm\:grid-cols-2.xl\:grid-cols-5 > a {
     box-shadow:
-        0 13px 30px rgba(34, 28, 22, .068),
-        0 4px 10px rgba(34, 28, 22, .028) !important;
+        0 13px 30px var(--sari-dark-2b6be1e5b6, rgba(34, 28, 22, .068)),
+        0 4px 10px var(--sari-dark-7888fe3028, rgba(34, 28, 22, .028)) !important;
 }
 
 /* Keep paint work cheap: no filter, blur, or animated shadows. */
@@ -6862,8 +6862,8 @@
     #sellerCommerceSideColumn > #sellerRecentOrdersCard,
     #sellerFinancialOrdersRow > .seller-side-panel {
         box-shadow:
-            0 12px 28px rgba(34, 28, 22, .070),
-            0 3px 9px rgba(34, 28, 22, .028) !important;
+            0 12px 28px var(--sari-dark-7c935c8886, rgba(34, 28, 22, .070)),
+            0 3px 9px var(--sari-dark-7888fe3028, rgba(34, 28, 22, .028)) !important;
     }
 }
 
@@ -6878,19 +6878,19 @@
    ========================================================================== */
 
 :root {
-    --sari-dashboard-canvas: #F6F4F0;
-    --sari-card-surface: #FFFFFF;
-    --sari-card-border: rgba(217, 203, 182, .52);
+    --sari-dashboard-canvas: var(--sari-dark-4d21eb669b, #F6F4F0);
+    --sari-card-surface: var(--sari-dark-950baec030, #FFFFFF);
+    --sari-card-border: var(--sari-dark-65fc647aab, rgba(217, 203, 182, .52));
 
     --sari-reference-shadow:
-        0 1px 2px rgba(34, 34, 34, .025),
-        0 8px 20px rgba(34, 34, 34, .060),
-        0 20px 46px rgba(34, 34, 34, .070);
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(34, 34, 34, .025)),
+        0 8px 20px var(--sari-dark-361b571631, rgba(34, 34, 34, .060)),
+        0 20px 46px var(--sari-dark-7c935c8886, rgba(34, 34, 34, .070));
 
     --sari-reference-shadow-soft:
-        0 1px 2px rgba(34, 34, 34, .020),
-        0 6px 14px rgba(34, 34, 34, .045),
-        0 12px 26px rgba(34, 34, 34, .045);
+        0 1px 2px var(--sari-dark-f6fe7319d9, rgba(34, 34, 34, .020)),
+        0 6px 14px var(--sari-dark-1190f58155, rgba(34, 34, 34, .045)),
+        0 12px 26px var(--sari-dark-1190f58155, rgba(34, 34, 34, .045));
 }
 
 /* Slightly warmer neutral canvas makes the white cards visibly float. */
@@ -6947,18 +6947,18 @@
 #sellerDashboardContent > section.mt-4.grid.grid-cols-1.gap-3.sm\:grid-cols-2.xl\:grid-cols-5 > a {
     border-radius: 17px !important;
     box-shadow:
-        0 1px 2px rgba(34, 34, 34, .020),
-        0 7px 17px rgba(34, 34, 34, .052),
-        0 15px 32px rgba(34, 34, 34, .055) !important;
+        0 1px 2px var(--sari-dark-f6fe7319d9, rgba(34, 34, 34, .020)),
+        0 7px 17px var(--sari-dark-a49f9eb969, rgba(34, 34, 34, .052)),
+        0 15px 32px var(--sari-dark-fbd3b3b9f6, rgba(34, 34, 34, .055)) !important;
 }
 
 /* Hero remains dark, but gets the same soft floating depth. */
 .seller-greeting-hero,
 .seller-greeting-hero.seller-hero-reference {
     box-shadow:
-        0 2px 5px rgba(20, 18, 16, .075),
-        0 12px 28px rgba(20, 18, 16, .105),
-        0 24px 48px rgba(20, 18, 16, .080) !important;
+        0 2px 5px var(--sari-dark-e07575a086, rgba(20, 18, 16, .075)),
+        0 12px 28px var(--sari-dark-03e9d0debe, rgba(20, 18, 16, .105)),
+        0 24px 48px var(--sari-dark-c33e3d1bb4, rgba(20, 18, 16, .080)) !important;
     transform: none !important;
 }
 
@@ -6971,8 +6971,8 @@
 #sellerCommerceSideColumn .seller-inventory-row,
 #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) > div,
 #sellerFinancialOrdersRow .seller-order-row {
-    border-color: rgba(217, 203, 182, .34) !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-c1934bd3a9, rgba(217, 203, 182, .34)) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--sari-reference-shadow-soft) !important;
     transform: none !important;
 }
@@ -6981,7 +6981,7 @@
 #sellerCategoryBreakdownCard > div:first-child,
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head,
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head {
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     background-image: none !important;
     box-shadow: none !important;
 }
@@ -6989,22 +6989,22 @@
 /* Product cards get a lighter elevation so the page does not become too busy. */
 #sellerProductsPanel .seller-responsive-product-card,
 #sellerProductsPanel .seller-responsive-add-card {
-    border-color: rgba(217, 203, 182, .42) !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-fba097951c, rgba(217, 203, 182, .42)) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 1px 2px rgba(34,34,34,.018),
-        0 5px 14px rgba(34,34,34,.040),
-        0 10px 24px rgba(34,34,34,.035) !important;
+        0 1px 2px var(--sari-dark-7672bb207e, rgba(34,34,34,.018)),
+        0 5px 14px var(--sari-dark-25b2da5e49, rgba(34,34,34,.040)),
+        0 10px 24px var(--sari-dark-7593018246, rgba(34,34,34,.035)) !important;
     transform: none !important;
 }
 
 #sellerProductsPanel .seller-responsive-product-card:hover,
 #sellerProductsPanel .seller-responsive-add-card:hover {
-    border-color: rgba(217, 203, 182, .42) !important;
+    border-color: var(--sari-dark-fba097951c, rgba(217, 203, 182, .42)) !important;
     box-shadow:
-        0 1px 2px rgba(34,34,34,.018),
-        0 5px 14px rgba(34,34,34,.040),
-        0 10px 24px rgba(34,34,34,.035) !important;
+        0 1px 2px var(--sari-dark-7672bb207e, rgba(34,34,34,.018)),
+        0 5px 14px var(--sari-dark-25b2da5e49, rgba(34,34,34,.040)),
+        0 10px 24px var(--sari-dark-7593018246, rgba(34,34,34,.035)) !important;
     transform: none !important;
 }
 
@@ -7038,9 +7038,9 @@
     #sellerCommerceSideColumn > #sellerRecentOrdersCard,
     #sellerFinancialOrdersRow > .seller-side-panel {
         box-shadow:
-            0 1px 2px rgba(34,34,34,.020),
-            0 7px 18px rgba(34,34,34,.050),
-            0 13px 28px rgba(34,34,34,.045) !important;
+            0 1px 2px var(--sari-dark-f6fe7319d9, rgba(34,34,34,.020)),
+            0 7px 18px var(--sari-dark-1df26971b5, rgba(34,34,34,.050)),
+            0 13px 28px var(--sari-dark-1190f58155, rgba(34,34,34,.045)) !important;
     }
 }
 
@@ -7052,14 +7052,14 @@
    ========================================================================== */
 
 :root {
-    --sari-dashboard-canvas: #F4F5F7;
-    --sari-card-surface: #FFFFFF;
-    --sari-card-surface-soft: #FAFAFB;
-    --sari-card-border: #E7E9EE;
+    --sari-dashboard-canvas: var(--sari-dark-4d21eb669b, #F4F5F7);
+    --sari-card-surface: var(--sari-dark-950baec030, #FFFFFF);
+    --sari-card-surface-soft: var(--sari-dark-950baec030, #FAFAFB);
+    --sari-card-border: var(--sari-dark-d8c2716225, #E7E9EE);
 
-    --sari-dashboard-text: #202124;
+    --sari-dashboard-text: var(--sari-dark-e23e64dd1e, #202124);
     --sari-dashboard-secondary: #4B5563;
-    --sari-dashboard-muted: #8A919B;
+    --sari-dashboard-muted: var(--sari-dark-a63aa16d7c, #8A919B);
 
     --sari-dashboard-gold: #D89B10;
     --sari-dashboard-gold-dark: #B67A08;
@@ -7070,14 +7070,14 @@
     --sari-dashboard-danger: #D97C6C;
 
     --sari-dashboard-shadow:
-        0 1px 2px rgba(32, 33, 36, .025),
-        0 8px 20px rgba(32, 33, 36, .050),
-        0 18px 38px rgba(32, 33, 36, .055);
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(32, 33, 36, .025)),
+        0 8px 20px var(--sari-dark-1df26971b5, rgba(32, 33, 36, .050)),
+        0 18px 38px var(--sari-dark-fbd3b3b9f6, rgba(32, 33, 36, .055));
 
     --sari-dashboard-shadow-soft:
-        0 1px 2px rgba(32, 33, 36, .020),
-        0 5px 13px rgba(32, 33, 36, .035),
-        0 10px 24px rgba(32, 33, 36, .035);
+        0 1px 2px var(--sari-dark-f6fe7319d9, rgba(32, 33, 36, .020)),
+        0 5px 13px var(--sari-dark-7593018246, rgba(32, 33, 36, .035)),
+        0 10px 24px var(--sari-dark-7593018246, rgba(32, 33, 36, .035));
 }
 
 #sellerDashboardStage {
@@ -7125,7 +7125,7 @@
 #sellerCommerceSideColumn .seller-inventory-row,
 #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) > div,
 #sellerFinancialOrdersRow .seller-order-row {
-    border-color: rgba(231, 233, 238, .9) !important;
+    border-color: var(--sari-dark-bf6dec1266, rgba(231, 233, 238, .9)) !important;
     background: var(--sari-card-surface-soft) !important;
     box-shadow: var(--sari-dashboard-shadow-soft) !important;
 }
@@ -7155,7 +7155,7 @@
     border-color: var(--sari-dashboard-gold) !important;
     background: var(--sari-dashboard-gold) !important;
     color: #FFFFFF !important;
-    box-shadow: 0 6px 14px rgba(182, 122, 8, .12) !important;
+    box-shadow: 0 6px 14px var(--sari-dark-3b2338cbf0, rgba(182, 122, 8, .12)) !important;
 }
 
 .seller-inventory-button:hover,
@@ -7168,8 +7168,8 @@
 
 /* Status palette */
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live {
-    background: #F1F7F3 !important;
-    color: #477B59 !important;
+    background: var(--sari-dark-4d21eb669b, #F1F7F3) !important;
+    color: var(--sari-dark-a63aa16d7c, #477B59) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live::before {
@@ -7177,7 +7177,7 @@
 }
 
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-owner-badge {
-    background: #F2F6FA !important;
+    background: var(--sari-dark-4d21eb669b, #F2F6FA) !important;
     color: var(--sari-dashboard-info) !important;
 }
 
@@ -7203,12 +7203,12 @@
    ========================================================================== */
 
 #sellerDashboardContent > section.mt-4.grid.grid-cols-1.gap-3.sm\:grid-cols-2.xl\:grid-cols-5 > a {
-    border-color: #E7E9EE !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E7E9EE) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 1px 2px rgba(32, 33, 36, .020),
-        0 7px 17px rgba(32, 33, 36, .048),
-        0 15px 32px rgba(32, 33, 36, .052) !important;
+        0 1px 2px var(--sari-dark-f6fe7319d9, rgba(32, 33, 36, .020)),
+        0 7px 17px var(--sari-dark-378abf7631, rgba(32, 33, 36, .048)),
+        0 15px 32px var(--sari-dark-a49f9eb969, rgba(32, 33, 36, .052)) !important;
     transform: translateY(0) !important;
     transition:
         transform .14s cubic-bezier(.22, 1, .36, 1),
@@ -7217,13 +7217,13 @@
 }
 
 #sellerDashboardContent > section.mt-4.grid.grid-cols-1.gap-3.sm\:grid-cols-2.xl\:grid-cols-5 > a:hover {
-    border-color: #E7E9EE !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E7E9EE) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     transform: translateY(-4px) !important;
     box-shadow:
-        0 2px 4px rgba(32, 33, 36, .025),
-        0 11px 25px rgba(32, 33, 36, .060),
-        0 24px 48px rgba(32, 33, 36, .075) !important;
+        0 2px 4px var(--sari-dark-e1384eb7fc, rgba(32, 33, 36, .025)),
+        0 11px 25px var(--sari-dark-361b571631, rgba(32, 33, 36, .060)),
+        0 24px 48px var(--sari-dark-e07575a086, rgba(32, 33, 36, .075)) !important;
 }
 
 #sellerDashboardContent > section.mt-4.grid.grid-cols-1.gap-3.sm\:grid-cols-2.xl\:grid-cols-5 > a:active {
@@ -7270,15 +7270,15 @@
     overflow: hidden !important;
 
     padding: 18px 24px !important;
-    border: 1px solid #31302e !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #31302e) !important;
     border-radius: 19px !important;
 
-    background: #20201f !important;
+    background: var(--sari-dark-fbb35de0d1, #20201f) !important;
     background-image: none !important;
 
     box-shadow:
-        0 13px 30px rgba(20, 18, 16, .12),
-        inset 0 1px 0 rgba(255,255,255,.035) !important;
+        0 13px 30px var(--sari-dark-3b2338cbf0, rgba(20, 18, 16, .12)),
+        inset 0 1px 0 var(--sari-dark-e1384eb7fc, rgba(255,255,255,.035)) !important;
 
     align-items: initial !important;
 }
@@ -7290,7 +7290,7 @@
     pointer-events: none !important;
     background:
         radial-gradient(circle at 5% 50%, rgba(220,158,23,.05), transparent 23%),
-        linear-gradient(90deg, rgba(255,255,255,.018), transparent 30%) !important;
+        linear-gradient(90deg, var(--sari-dark-b3d7b355e9, rgba(255,255,255,.018)), transparent 30%) !important;
 }
 
 .seller-greeting-hero.seller-hero-reference.seller-hero-admin-safe::after {
@@ -7365,7 +7365,7 @@
     background: transparent !important;
     box-shadow: none !important;
 
-    color: #e6a61e !important;
+    color: var(--sari-dark-7f7834ccc9, #e6a61e) !important;
 }
 
 .seller-hero-admin-safe .seller-greeting-wave .fi {
@@ -7422,7 +7422,7 @@
 
 .seller-hero-admin-safe .seller-hero-status--active > i {
     background: #57c875 !important;
-    box-shadow: 0 0 0 3px rgba(87,200,117,.08) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(87,200,117,.08)) !important;
 }
 
 .seller-hero-admin-safe .seller-hero-status--restricted > i {
@@ -7433,7 +7433,7 @@
 .seller-hero-admin-safe .seller-hero-status-divider {
     width: 1px !important;
     height: 13px !important;
-    background: rgba(255,255,255,.14) !important;
+    background: var(--sari-dark-7a9dbf4e62, rgba(255,255,255,.14)) !important;
 }
 
 .seller-hero-admin-safe .seller-hero-verified {
@@ -7463,8 +7463,8 @@
     background: linear-gradient(
         to bottom,
         transparent,
-        rgba(255,255,255,.13) 18%,
-        rgba(255,255,255,.13) 82%,
+        var(--sari-dark-a76ba55f11, rgba(255,255,255,.13)) 18%,
+        var(--sari-dark-a76ba55f11, rgba(255,255,255,.13)) 82%,
         transparent
     ) !important;
 }
@@ -7504,7 +7504,7 @@
 }
 
 .seller-hero-admin-safe .seller-greeting-stat + .seller-greeting-stat {
-    border-left: 1px solid rgba(255,255,255,.11) !important;
+    border-left: 1px solid var(--sari-dark-8c2e03469a, rgba(255,255,255,.11)) !important;
 }
 
 .seller-hero-admin-safe .seller-greeting-stat-heading {
@@ -7519,12 +7519,12 @@
     height: 13px !important;
     flex: 0 0 13px !important;
 
-    color: #dca01c !important;
+    color: var(--sari-dark-7f7834ccc9, #dca01c) !important;
     opacity: 1 !important;
 }
 
 .seller-hero-admin-safe .seller-greeting-stat-icon-weather {
-    color: #9da9b4 !important;
+    color: var(--sari-dark-a63aa16d7c, #9da9b4) !important;
 }
 
 .seller-hero-admin-safe .seller-greeting-stat-label {
@@ -7623,7 +7623,7 @@
 
     .seller-hero-admin-safe .seller-hero-reference-meta {
         padding-top: 14px !important;
-        border-top: 1px solid rgba(255,255,255,.09) !important;
+        border-top: 1px solid var(--sari-dark-adc0ef4882, rgba(255,255,255,.09)) !important;
     }
 }
 
@@ -7648,7 +7648,7 @@
     }
 
     .seller-hero-admin-safe .seller-greeting-stat + .seller-greeting-stat {
-        border-top: 1px solid rgba(255,255,255,.08) !important;
+        border-top: 1px solid var(--sari-dark-6da278ba55, rgba(255,255,255,.08)) !important;
         border-left: 0 !important;
     }
 }
@@ -7663,8 +7663,8 @@
 #sellerSalesPerformanceCard.seller-sales-admin-card,
 #sellerSalesPerformanceCard.seller-sales-admin-card:hover,
 #sellerSalesPerformanceCard {
-    background: #FFFFFF !important;
-    background-color: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    background-color: var(--sari-dark-950baec030, #FFFFFF) !important;
     background-image: none !important;
 }
 
@@ -7673,8 +7673,8 @@
 #sellerSalesPerformanceCard .seller-sales-admin-chart-shell,
 #sellerSalesPerformanceCard > div:nth-child(2),
 #sellerSalesPerformanceCard > div:nth-child(3) {
-    background: #FFFFFF !important;
-    background-color: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    background-color: var(--sari-dark-950baec030, #FFFFFF) !important;
     background-image: none !important;
 }
 
@@ -7704,16 +7704,16 @@
 
 #sellerCommerceSideColumn,
 #sellerFinancialOrdersRow {
-    --seller-ops-border: #E6E9EE;
-    --seller-ops-border-soft: #EEF1F4;
-    --seller-ops-text: #172033;
-    --seller-ops-muted: #7A8594;
+    --seller-ops-border: var(--sari-dark-d8c2716225, #E6E9EE);
+    --seller-ops-border-soft: var(--sari-dark-d8c2716225, #EEF1F4);
+    --seller-ops-text: var(--sari-dark-e23e64dd1e, #172033);
+    --seller-ops-muted: var(--sari-dark-a63aa16d7c, #7A8594);
     --seller-ops-subtle: #98A1AE;
-    --seller-ops-surface: #FFFFFF;
+    --seller-ops-surface: var(--sari-dark-950baec030, #FFFFFF);
     --seller-ops-soft: #FAFBFC;
     --seller-ops-shadow:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 10px 28px rgba(15, 23, 42, .055);
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 10px 28px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055));
     --seller-ops-gold: #D99A0B;
     --seller-ops-gold-hover: #C78906;
 }
@@ -7796,7 +7796,7 @@
     min-height: 78px !important;
     padding: 16px 18px 14px !important;
     border-bottom: 1px solid var(--seller-ops-border-soft) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     background-image: none !important;
 }
 
@@ -7853,28 +7853,28 @@
 }
 
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-owner-badge {
-    border: 1px solid #DCE8F8 !important;
-    background: #F2F7FD !important;
-    color: #4D77A5 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #DCE8F8) !important;
+    background: var(--sari-dark-950baec030, #F2F7FD) !important;
+    color: var(--sari-dark-1196b4ba1a, #4D77A5) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live {
-    border: 1px solid #D8EDDF !important;
-    background: #F0F8F3 !important;
-    color: #3D7D55 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #D8EDDF) !important;
+    background: var(--sari-dark-4d21eb669b, #F0F8F3) !important;
+    color: var(--sari-dark-a63aa16d7c, #3D7D55) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live::before {
     width: 5px !important;
     height: 5px !important;
     background: #55AA72 !important;
-    box-shadow: 0 0 0 3px rgba(85, 170, 114, .10) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-8eadf403a5, rgba(85, 170, 114, .10)) !important;
 }
 
 #sellerCommerceSideColumn > .seller-inventory-panel > div:first-child > .seller-inventory-count {
-    border: 1px solid #F3DEDE !important;
-    background: #FFF3F3 !important;
-    color: #C15151 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #F3DEDE) !important;
+    background: var(--sari-dark-950baec030, #FFF3F3) !important;
+    color: var(--sari-dark-81bbb600e0, #C15151) !important;
 }
 
 /* ----- Recent Activity: simple text rows, no item icons ----- */
@@ -7889,7 +7889,7 @@
     max-height: none !important;
     overflow: hidden !important;
     padding: 2px 18px !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item {
@@ -7924,7 +7924,7 @@
     font-size: 9.2px !important;
     line-height: 1.3 !important;
     font-weight: 700 !important;
-    color: #273142 !important;
+    color: var(--sari-dark-e23e64dd1e, #273142) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-description {
@@ -7932,7 +7932,7 @@
     margin-top: 3px !important;
     font-size: 7.6px !important;
     line-height: 1.35 !important;
-    color: #687386 !important;
+    color: var(--sari-dark-a63aa16d7c, #687386) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-meta {
@@ -7940,7 +7940,7 @@
     margin-top: 3px !important;
     font-size: 6.8px !important;
     line-height: 1.3 !important;
-    color: #A0A8B3 !important;
+    color: var(--sari-dark-a63aa16d7c, #A0A8B3) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-time {
@@ -7948,7 +7948,7 @@
     margin-top: 1px !important;
     font-size: 6.8px !important;
     line-height: 1.3 !important;
-    color: #9AA3AF !important;
+    color: var(--sari-dark-a63aa16d7c, #9AA3AF) !important;
     white-space: nowrap !important;
 }
 
@@ -7966,7 +7966,7 @@
     display: flex !important;
     flex-direction: column !important;
     padding: 2px 18px !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item {
@@ -8001,10 +8001,10 @@
     flex: 0 0 44px !important;
     place-items: center !important;
     overflow: hidden !important;
-    border: 1px solid #E2E6EB !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E6EB) !important;
     border-radius: 10px !important;
-    background: #F5F7F9 !important;
-    color: #8A94A2 !important;
+    background: var(--sari-dark-950baec030, #F5F7F9) !important;
+    color: var(--sari-dark-a63aa16d7c, #8A94A2) !important;
     box-shadow: none !important;
 }
 
@@ -8024,7 +8024,7 @@
     font-size: 10px !important;
     line-height: 1 !important;
     font-weight: 700 !important;
-    color: #7A8594 !important;
+    color: var(--sari-dark-a63aa16d7c, #7A8594) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-new-dot {
@@ -8032,7 +8032,7 @@
     bottom: -2px !important;
     width: 8px !important;
     height: 8px !important;
-    border: 2px solid #FFFFFF !important;
+    border: 2px solid var(--sari-dark-d8c2716225, #FFFFFF) !important;
     background: #3E8DD8 !important;
     box-shadow: none !important;
 }
@@ -8041,14 +8041,14 @@
     font-size: 9.2px !important;
     line-height: 1.25 !important;
     font-weight: 700 !important;
-    color: #273142 !important;
+    color: var(--sari-dark-e23e64dd1e, #273142) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-product {
     margin-top: 3px !important;
     font-size: 7.5px !important;
     line-height: 1.3 !important;
-    color: #687386 !important;
+    color: var(--sari-dark-a63aa16d7c, #687386) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-meta {
@@ -8058,7 +8058,7 @@
     flex-wrap: nowrap !important;
     font-size: 6.6px !important;
     line-height: 1.2 !important;
-    color: #9AA3AF !important;
+    color: var(--sari-dark-a63aa16d7c, #9AA3AF) !important;
     white-space: nowrap !important;
 }
 
@@ -8073,7 +8073,7 @@
     font-size: 9.2px !important;
     line-height: 1.1 !important;
     font-weight: 700 !important;
-    color: #202938 !important;
+    color: var(--sari-dark-e23e64dd1e, #202938) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status {
@@ -8092,40 +8092,40 @@
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--new {
-    border-color: #D9E9FA !important;
-    background: #EEF6FE !important;
-    color: #3477B7 !important;
+    border-color: var(--sari-dark-d8c2716225, #D9E9FA) !important;
+    background: var(--sari-dark-4d21eb669b, #EEF6FE) !important;
+    color: var(--sari-dark-a63aa16d7c, #3477B7) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--progress {
-    border-color: #F0DEB4 !important;
-    background: #FFF7E6 !important;
-    color: #A76B05 !important;
+    border-color: var(--sari-dark-d8c2716225, #F0DEB4) !important;
+    background: var(--sari-dark-4d21eb669b, #FFF7E6) !important;
+    color: var(--sari-dark-6e784b4931, #A76B05) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--courier {
-    border-color: #DEE5EE !important;
-    background: #F2F5F9 !important;
-    color: #64748B !important;
+    border-color: var(--sari-dark-d8c2716225, #DEE5EE) !important;
+    background: var(--sari-dark-4d21eb669b, #F2F5F9) !important;
+    color: var(--sari-dark-a63aa16d7c, #64748B) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--success {
-    border-color: #D5EBDD !important;
-    background: #EDF8F1 !important;
-    color: #347A50 !important;
+    border-color: var(--sari-dark-d8c2716225, #D5EBDD) !important;
+    background: var(--sari-dark-4d21eb669b, #EDF8F1) !important;
+    color: var(--sari-dark-e23e64dd1e, #347A50) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--danger {
-    border-color: #F1D8D8 !important;
-    background: #FFF1F1 !important;
-    color: #B94B4B !important;
+    border-color: var(--sari-dark-d8c2716225, #F1D8D8) !important;
+    background: var(--sari-dark-950baec030, #FFF1F1) !important;
+    color: var(--sari-dark-2a778702e9, #B94B4B) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-time {
     margin-top: 4px !important;
     font-size: 6.4px !important;
     line-height: 1.15 !important;
-    color: #A0A8B3 !important;
+    color: var(--sari-dark-a63aa16d7c, #A0A8B3) !important;
 }
 
 /* ----- Shared lightweight footer ----- */
@@ -8136,13 +8136,13 @@
     margin-top: auto !important;
     padding: 10px 18px !important;
     border-top: 1px solid var(--seller-ops-border-soft) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer p,
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer p {
     font-size: 6.8px !important;
-    color: #98A1AE !important;
+    color: var(--sari-dark-a63aa16d7c, #98A1AE) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer a,
@@ -8150,12 +8150,12 @@
     gap: 5px !important;
     font-size: 7.4px !important;
     font-weight: 700 !important;
-    color: #A86F08 !important;
+    color: var(--sari-dark-c8bdcce6ab, #A86F08) !important;
 }
 
 #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer a:hover,
 #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a:hover {
-    color: #845605 !important;
+    color: var(--sari-dark-af18afcaa4, #845605) !important;
 }
 
 /* ----- Inventory Alerts: real product thumbnails ----- */
@@ -8178,16 +8178,16 @@
 #sellerCommerceSideColumn .seller-inventory-row {
     min-height: 58px !important;
     padding: 8px 9px !important;
-    border: 1px solid #E6E9EE !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E6E9EE) !important;
     border-radius: 11px !important;
-    background: #FBFCFD !important;
+    background: var(--sari-dark-950baec030, #FBFCFD) !important;
     box-shadow: none !important;
     transform: none !important;
 }
 
 #sellerCommerceSideColumn .seller-inventory-row:hover {
-    border-color: #E6E9EE !important;
-    background: #FBFCFD !important;
+    border-color: var(--sari-dark-d8c2716225, #E6E9EE) !important;
+    background: var(--sari-dark-950baec030, #FBFCFD) !important;
     box-shadow: none !important;
     transform: none !important;
 }
@@ -8212,10 +8212,10 @@
     flex: 0 0 42px !important;
     place-items: center !important;
     overflow: hidden !important;
-    border: 1px solid #E2E6EB !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E6EB) !important;
     border-radius: 9px !important;
-    background: #F4F6F8 !important;
-    color: #88929F !important;
+    background: var(--sari-dark-4d21eb669b, #F4F6F8) !important;
+    color: var(--sari-dark-a63aa16d7c, #88929F) !important;
 }
 
 #sellerCommerceSideColumn .seller-inventory-thumb img {
@@ -8234,21 +8234,21 @@
     font-size: 9px !important;
     line-height: 1 !important;
     font-weight: 700 !important;
-    color: #7A8594 !important;
+    color: var(--sari-dark-a63aa16d7c, #7A8594) !important;
 }
 
 #sellerCommerceSideColumn .seller-inventory-row p:first-child {
     font-size: 9px !important;
     line-height: 1.25 !important;
     font-weight: 700 !important;
-    color: #273142 !important;
+    color: var(--sari-dark-e23e64dd1e, #273142) !important;
 }
 
 #sellerCommerceSideColumn .seller-inventory-row p + p {
     margin-top: 3px !important;
     font-size: 6.8px !important;
     line-height: 1.25 !important;
-    color: #98A1AE !important;
+    color: var(--sari-dark-a63aa16d7c, #98A1AE) !important;
 }
 
 #sellerCommerceSideColumn .seller-inventory-row .seller-inventory-count {
@@ -8311,7 +8311,7 @@
     font-size: 7.4px !important;
     line-height: 1.25 !important;
     font-weight: 500 !important;
-    color: #7D8794 !important;
+    color: var(--sari-dark-a63aa16d7c, #7D8794) !important;
 }
 
 #sellerFinancialOrdersRow .seller-financial-metric-value {
@@ -8320,7 +8320,7 @@
     line-height: 1.1 !important;
     font-weight: 700 !important;
     letter-spacing: -.03em !important;
-    color: #202938 !important;
+    color: var(--sari-dark-e23e64dd1e, #202938) !important;
 }
 
 #sellerFinancialOrdersRow .seller-financial-panel > .mt-auto {
@@ -8356,16 +8356,16 @@
 #sellerFinancialOrdersRow .seller-order-row {
     min-height: 40px !important;
     padding: 7px 9px !important;
-    border: 1px solid #E6E9EE !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E6E9EE) !important;
     border-radius: 9px !important;
-    background: #FBFCFD !important;
+    background: var(--sari-dark-950baec030, #FBFCFD) !important;
     box-shadow: none !important;
     transform: none !important;
 }
 
 #sellerFinancialOrdersRow .seller-order-row:hover {
-    border-color: #DDE2E8 !important;
-    background: #F8FAFC !important;
+    border-color: var(--sari-dark-d8c2716225, #DDE2E8) !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     box-shadow: none !important;
     transform: none !important;
 }
@@ -8374,7 +8374,7 @@
     font-size: 8.3px !important;
     line-height: 1.2 !important;
     font-weight: 500 !important;
-    color: #3E4857 !important;
+    color: var(--sari-dark-e23e64dd1e, #3E4857) !important;
 }
 
 #sellerFinancialOrdersRow .seller-order-row > span:last-child {
@@ -8391,19 +8391,19 @@
 #sellerFinancialOrdersRow .seller-order-view-all {
     min-height: 40px !important;
     height: 40px !important;
-    border: 1px solid #D8DEE6 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #D8DEE6) !important;
     border-radius: 9px !important;
-    background: #FFFFFF !important;
-    color: #344054 !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    color: var(--sari-dark-e23e64dd1e, #344054) !important;
     box-shadow: none !important;
     font-size: 8.5px !important;
     font-weight: 700 !important;
 }
 
 #sellerFinancialOrdersRow .seller-order-view-all:hover {
-    border-color: #C8D0DA !important;
-    background: #F9FAFB !important;
-    color: #1F2937 !important;
+    border-color: var(--sari-dark-d8c2716225, #C8D0DA) !important;
+    background: var(--sari-dark-950baec030, #F9FAFB) !important;
+    color: var(--sari-dark-e23e64dd1e, #1F2937) !important;
 }
 
 @media (max-width: 640px) {
@@ -8468,12 +8468,12 @@
    ========================================================================== */
 
 #sellerSalesPerformanceCard.seller-sales-admin-card {
-    --sales-border: #E5E9EF;
-    --sales-border-soft: #EDF0F4;
-    --sales-text: #172033;
-    --sales-muted: #6F7A89;
+    --sales-border: var(--sari-dark-d8c2716225, #E5E9EF);
+    --sales-border-soft: var(--sari-dark-d8c2716225, #EDF0F4);
+    --sales-text: var(--sari-dark-e23e64dd1e, #172033);
+    --sales-muted: var(--sari-dark-a63aa16d7c, #6F7A89);
     --sales-subtle: #98A1AE;
-    --sales-surface: #FFFFFF;
+    --sales-surface: var(--sari-dark-950baec030, #FFFFFF);
     --sales-soft: #FAFBFC;
     --sales-accent: #C88C16;
 
@@ -8485,8 +8485,8 @@
     background: var(--sales-surface) !important;
     padding: 0 !important;
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 10px 28px rgba(15, 23, 42, .055) !important;
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 10px 28px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)) !important;
     color: var(--sales-text) !important;
 }
 
@@ -8494,8 +8494,8 @@
     border-color: var(--sales-border) !important;
     background: var(--sales-surface) !important;
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 10px 28px rgba(15, 23, 42, .055) !important;
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 10px 28px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)) !important;
     transform: none !important;
 }
 
@@ -8538,7 +8538,7 @@
     gap: 3px !important;
     border: 1px solid var(--sales-border) !important;
     border-radius: 10px !important;
-    background: #F5F7F9 !important;
+    background: var(--sari-dark-950baec030, #F5F7F9) !important;
     padding: 3px !important;
     box-shadow: none !important;
 }
@@ -8554,7 +8554,7 @@
     font-size: 8.5px !important;
     line-height: 1 !important;
     font-weight: 500 !important;
-    color: #758090 !important;
+    color: var(--sari-dark-a63aa16d7c, #758090) !important;
     box-shadow: none !important;
     white-space: nowrap !important;
     transform: none !important;
@@ -8562,17 +8562,17 @@
 }
 
 #sellerSalesPerformanceCard .seller-sales-period-button:hover {
-    background: rgba(255,255,255,.62) !important;
-    color: #3C4655 !important;
+    background: var(--sari-dark-b8cd1f6870, rgba(255,255,255,.62)) !important;
+    color: var(--sari-dark-e23e64dd1e, #3C4655) !important;
 }
 
 #sellerSalesPerformanceCard .seller-sales-period-button.is-active,
 #sellerSalesPerformanceCard .seller-sales-period-button[aria-pressed="true"] {
-    border-color: #E1E5EA !important;
-    background: #FFFFFF !important;
-    color: #202938 !important;
+    border-color: var(--sari-dark-d8c2716225, #E1E5EA) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    color: var(--sari-dark-e23e64dd1e, #202938) !important;
     font-weight: 600 !important;
-    box-shadow: 0 1px 3px rgba(15,23,42,.06) !important;
+    box-shadow: 0 1px 3px var(--sari-dark-361b571631, rgba(15,23,42,.06)) !important;
 }
 
 #sellerSalesPerformanceCard .seller-sales-period-button:focus-visible {
@@ -8658,7 +8658,7 @@
     line-height: 1.3 !important;
     font-weight: 600 !important;
     letter-spacing: -.015em !important;
-    color: #2D3644 !important;
+    color: var(--sari-dark-e23e64dd1e, #2D3644) !important;
 }
 
 #sellerSalesPerformanceCard .seller-sales-admin-chart-copy {
@@ -8762,7 +8762,7 @@
     font-size: 11.5px !important;
     line-height: 1.4 !important;
     font-weight: 600 !important;
-    color: #354052 !important;
+    color: var(--sari-dark-e23e64dd1e, #354052) !important;
 }
 
 #sellerSalesPerformanceCard .seller-sales-admin-empty span:not(.seller-sales-admin-empty-icon) {
@@ -8778,19 +8778,19 @@
 
 #sellerSalesPerformanceCard .seller-sales-admin-tooltip {
     min-width: 132px !important;
-    border: 1px solid #E2E7ED !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E7ED) !important;
     border-radius: 9px !important;
-    background: rgba(255,255,255,.985) !important;
+    background: var(--sari-dark-56c375634d, rgba(255,255,255,.985)) !important;
     padding: 8px 9px !important;
-    box-shadow: 0 10px 24px rgba(15,23,42,.10) !important;
+    box-shadow: 0 10px 24px var(--sari-dark-8eadf403a5, rgba(15,23,42,.10)) !important;
 }
 
 #sellerSalesPerformanceCard .seller-sales-admin-tooltip-period {
-    color: #677282 !important;
+    color: var(--sari-dark-a63aa16d7c, #677282) !important;
 }
 
 #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row {
-    color: #8A94A3 !important;
+    color: var(--sari-dark-a63aa16d7c, #8A94A3) !important;
 }
 
 #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row span > i {
@@ -8820,11 +8820,11 @@
     font-size: 7.8px !important;
     line-height: 1.4 !important;
     font-weight: 400 !important;
-    color: #929BA8 !important;
+    color: var(--sari-dark-a63aa16d7c, #929BA8) !important;
 }
 
 #sellerSalesPerformanceCard #sellerSalesBestPeriod {
-    color: #697586 !important;
+    color: var(--sari-dark-a63aa16d7c, #697586) !important;
     font-weight: 500 !important;
 }
 
@@ -9006,14 +9006,14 @@
 #sellerDashboardStage.seller-dashboard-ref {
     --dashboard-ref-gold: #C88912;
     --dashboard-ref-gold-hover: #B47B0E;
-    --dashboard-ref-ink: #2F3742;
+    --dashboard-ref-ink: var(--sari-dark-e23e64dd1e, #2F3742);
     --dashboard-ref-strong: #1F2937;
-    --dashboard-ref-muted: #637081;
+    --dashboard-ref-muted: var(--sari-dark-a63aa16d7c, #637081);
     --dashboard-ref-subtle: #8995A3;
-    --dashboard-ref-border: #E5E7EB;
-    --dashboard-ref-divider: #E9EDF1;
+    --dashboard-ref-border: var(--sari-dark-d8c2716225, #E5E7EB);
+    --dashboard-ref-divider: var(--sari-dark-d8c2716225, #E9EDF1);
     --dashboard-ref-soft: #F8FAFC;
-    --dashboard-ref-shadow: 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055);
+    --dashboard-ref-shadow: 0 3px 10px var(--sari-dark-7593018246, rgba(15,23,42,.035)), 0 12px 30px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055));
     width: 100% !important;
     max-width: 1520px !important;
     margin-inline: auto !important;
@@ -9044,13 +9044,13 @@
     padding: 14px 16px !important;
     border: 1px solid var(--dashboard-ref-border) !important;
     border-radius: 18px !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--dashboard-ref-shadow) !important;
     transform: none !important;
     transition: border-color .15s ease, background-color .15s ease !important;
 }
 #sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card:hover {
-    border-color: #D1D8E0 !important;
+    border-color: var(--sari-dark-d8c2716225, #D1D8E0) !important;
     background: var(--dashboard-ref-soft) !important;
 }
 #sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card:focus-visible {
@@ -9130,7 +9130,7 @@
     min-width: 0 !important;
     border: 1px solid var(--dashboard-ref-border) !important;
     border-radius: 18px !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     background-image: none !important;
     box-shadow: var(--dashboard-ref-shadow) !important;
     transform: none !important;
@@ -9141,7 +9141,7 @@
 #sellerDashboardStage #sellerCommerceSideColumn > .seller-inventory-panel:hover,
 #sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel:hover {
     border-color: var(--dashboard-ref-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--dashboard-ref-shadow) !important;
     transform: none !important;
 }
@@ -9149,7 +9149,7 @@
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-head {
     padding: 19px 21px !important;
     border-bottom: 1px solid var(--dashboard-ref-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 #sellerDashboardStage #sellerCategoryBreakdownCard > div:first-child h3,
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-title,
@@ -9176,9 +9176,9 @@
     line-height: 1.5 !important;
 }
 #sellerDashboardStage #sellerCategoryBreakdownCard > div:first-child > span {
-    border-color: #E9D7B7 !important;
-    background: #FFF9EE !important;
-    color: #A87316 !important;
+    border-color: var(--sari-dark-d8c2716225, #E9D7B7) !important;
+    background: var(--sari-dark-950baec030, #FFF9EE) !important;
+    color: var(--sari-dark-685eb4fc40, #A87316) !important;
     font-size: 10.5px !important;
     font-weight: 650 !important;
 }
@@ -9204,7 +9204,7 @@
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-center-sub {
     font-size: 9px !important;
     line-height: 1.35 !important;
-    color: #7B8794 !important;
+    color: var(--sari-dark-a63aa16d7c, #7B8794) !important;
 }
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-center-value {
     font-size: 30px !important;
@@ -9228,11 +9228,11 @@
     font-size: 11.5px !important;
     line-height: 1.4 !important;
     font-weight: 600 !important;
-    color: #475467 !important;
+    color: var(--sari-dark-e23e64dd1e, #475467) !important;
 }
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-footer {
     border-top-color: var(--dashboard-ref-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     padding: 14px 21px !important;
 }
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-footer > p,
@@ -9240,7 +9240,7 @@
     font-size: 11px !important;
     line-height: 1.45 !important;
 }
-#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-action { color: #A87316 !important; }
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-action { color: var(--sari-dark-685eb4fc40, #A87316) !important; }
 
 /* Sales chart retains its SVG, tooltip and active-period JS behavior. */
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-periods {
@@ -9312,7 +9312,7 @@
     min-height: 82px !important;
     padding: 19px 20px 16px !important;
     border-bottom: 1px solid var(--dashboard-ref-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn .seller-recent-head .seller-activity-owner-badge,
 #sellerDashboardStage #sellerCommerceSideColumn .seller-recent-head .seller-recent-live,
@@ -9359,10 +9359,10 @@
 }
 #sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer p,
 #sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer a { font-size: 11px !important; }
-#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer a { color: #A87316 !important; }
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer a { color: var(--sari-dark-685eb4fc40, #A87316) !important; }
 #sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-row {
     border-color: var(--dashboard-ref-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     border-radius: 10px !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-button,
@@ -9405,7 +9405,7 @@
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row {
     min-height: 42px !important;
     border-color: var(--dashboard-ref-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     border-radius: 10px !important;
     padding: 8px 11px !important;
 }
@@ -9423,10 +9423,10 @@
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-view-all {
     min-height: 44px !important;
     height: 44px !important;
-    border: 1px solid #DCE2E8 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8) !important;
     border-radius: 12px !important;
-    background: #FFFFFF !important;
-    color: #A87316 !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    color: var(--sari-dark-685eb4fc40, #A87316) !important;
     font-size: 12px !important;
     font-weight: 700 !important;
 }
@@ -9523,7 +9523,7 @@
     min-height: 96px !important;
     max-height: none !important;
     padding: 12px 0 !important;
-    border-bottom: 1px solid #ECEFF2 !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     text-decoration: none !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:last-child {
@@ -9539,9 +9539,9 @@
     min-width: 54px !important;
     flex: 0 0 54px !important;
     overflow: hidden !important;
-    border: 1px solid #E2E7ED !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E7ED) !important;
     border-radius: 11px !important;
-    background: #F3F5F8 !important;
+    background: var(--sari-dark-4d21eb669b, #F3F5F8) !important;
     line-height: 0 !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar > img {
@@ -9566,8 +9566,8 @@
     place-items: center !important;
     font-size: 15px !important;
     line-height: 1 !important;
-    color: #8B96A4 !important;
-    background: #F3F5F8 !important;
+    color: var(--sari-dark-a63aa16d7c, #8B96A4) !important;
+    background: var(--sari-dark-4d21eb669b, #F3F5F8) !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-new-dot {
     z-index: 2 !important;
@@ -9667,18 +9667,18 @@
     background: transparent !important;
     padding: 24px 10px !important;
     box-shadow: none !important;
-    color: #8A95A3 !important;
+    color: var(--sari-dark-a63aa16d7c, #8A95A3) !important;
     text-align: center !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-panel .seller-inventory-empty svg {
     width: 20px !important;
     height: 20px !important;
     flex: 0 0 20px !important;
-    color: #98A2B3 !important;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3) !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-panel .seller-inventory-empty p {
     margin: 0 !important;
-    color: #7B8794 !important;
+    color: var(--sari-dark-a63aa16d7c, #7B8794) !important;
     font-size: 11.5px !important;
     line-height: 1.5 !important;
     font-weight: 500 !important;
@@ -9744,26 +9744,26 @@
     max-height: none !important;
     padding: 20px 22px !important;
     overflow: visible !important;
-    border: 1px solid #E5E7EB !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
     border-radius: 18px !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--dashboard-ref-shadow, 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055)) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    box-shadow: var(--dashboard-ref-shadow, 0 3px 10px var(--sari-dark-7593018246, rgba(15,23,42,.035)), 0 12px 30px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055))) !important;
     transform: none !important;
 }
 #sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel:hover {
-    border-color: #E5E7EB !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--dashboard-ref-shadow, 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055)) !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    box-shadow: var(--dashboard-ref-shadow, 0 3px 10px var(--sari-dark-7593018246, rgba(15,23,42,.035)), 0 12px 30px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055))) !important;
     transform: none !important;
 }
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-panel-title {
-    color: #2F3742 !important;
+    color: var(--sari-dark-e23e64dd1e, #2F3742) !important;
     font-size: 18px !important;
     font-weight: 700 !important;
     line-height: 1.3 !important;
 }
 #sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel > div:first-child > p {
-    color: #8995A3 !important;
+    color: var(--sari-dark-a63aa16d7c, #8995A3) !important;
     font-size: 11.5px !important;
     line-height: 1.5 !important;
 }
@@ -9782,7 +9782,7 @@
     margin: 0 !important;
     padding: 10px 0 !important;
     border: 0 !important;
-    border-bottom: 1px solid #ECEFF2 !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -9804,7 +9804,7 @@
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-    color: #98A2B3 !important;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3) !important;
 }
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-icon svg {
     display: block !important;
@@ -9817,14 +9817,14 @@
 }
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-label {
     margin: 0 !important;
-    color: #637081 !important;
+    color: var(--sari-dark-a63aa16d7c, #637081) !important;
     font-size: 11px !important;
     font-weight: 550 !important;
     line-height: 1.35 !important;
 }
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-value {
     margin-top: 5px !important;
-    color: #1F2937 !important;
+    color: var(--sari-dark-e23e64dd1e, #1F2937) !important;
     font-size: 19px !important;
     font-weight: 700 !important;
     line-height: 1.2 !important;
@@ -9851,7 +9851,7 @@
     min-height: 48px !important;
     padding: 9px 0 !important;
     border: 0 !important;
-    border-bottom: 1px solid #ECEFF2 !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -9859,7 +9859,7 @@
     text-decoration: none !important;
 }
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover {
-    border-bottom-color: #DDE3E9 !important;
+    border-bottom-color: var(--sari-dark-d8c2716225, #DDE3E9) !important;
     background: transparent !important;
     box-shadow: none !important;
     transform: none !important;
@@ -9874,7 +9874,7 @@
     flex: 1 1 auto !important;
     align-items: center !important;
     gap: 9px !important;
-    color: #475467 !important;
+    color: var(--sari-dark-e23e64dd1e, #475467) !important;
     font-size: 11.5px !important;
     font-weight: 600 !important;
     line-height: 1.4 !important;
@@ -9884,7 +9884,7 @@
     width: 18px !important;
     height: 18px !important;
     flex: 0 0 18px !important;
-    color: #98A2B3 !important;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3) !important;
 }
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-name {
     display: block !important;
@@ -9915,7 +9915,7 @@
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-    color: #475467 !important;
+    color: var(--sari-dark-e23e64dd1e, #475467) !important;
     font-size: 12px !important;
     font-weight: 700 !important;
     line-height: 1.3 !important;
@@ -9924,7 +9924,7 @@
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover .seller-order-line-icon,
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover .seller-order-name,
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover .seller-order-count {
-    color: #A87316 !important;
+    color: var(--sari-dark-685eb4fc40, #A87316) !important;
 }
 @media (max-width: 767px) {
     #sellerDashboardStage #sellerFinancialOrdersRow {
@@ -9958,17 +9958,17 @@
 #sellerDashboardStage #sellerCategoryBreakdownCard {
     min-width: 0 !important;
     min-height: 355px !important;
-    border: 1px solid #E5E7EB !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
     border-radius: 20px !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 9px 26px rgba(29,41,57,.055) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    box-shadow: 0 9px 26px var(--sari-dark-fbd3b3b9f6, rgba(29,41,57,.055)) !important;
     transform: none !important;
     font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
 }
 #sellerDashboardStage #sellerSalesPerformanceCard:hover,
 #sellerDashboardStage #sellerCategoryBreakdownCard:hover {
-    border-color: #E5E7EB !important;
-    box-shadow: 0 9px 26px rgba(29,41,57,.055) !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
+    box-shadow: 0 9px 26px var(--sari-dark-fbd3b3b9f6, rgba(29,41,57,.055)) !important;
     transform: none !important;
 }
 #sellerDashboardStage #sellerSalesPerformanceCard.seller-sales-admin-card {
@@ -10001,7 +10001,7 @@
     height: 26px;
     flex: 0 0 26px;
     margin-top: 1px;
-    color: #252B33;
+    color: var(--sari-dark-e23e64dd1e, #252B33);
 }
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-title,
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-heading h3 {
@@ -10010,12 +10010,12 @@
     line-height: 1.25 !important;
     font-weight: 700 !important;
     letter-spacing: -.035em !important;
-    color: #202734 !important;
+    color: var(--sari-dark-e23e64dd1e, #202734) !important;
 }
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-subtitle,
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-heading p {
     margin-top: 5px !important;
-    color: #7B8794 !important;
+    color: var(--sari-dark-a63aa16d7c, #7B8794) !important;
     font-size: 11.5px !important;
     line-height: 1.5 !important;
     font-weight: 400 !important;
@@ -10029,7 +10029,7 @@
     gap: 2px !important;
     border: 0 !important;
     border-radius: 999px !important;
-    background: #F4F5F7 !important;
+    background: var(--sari-dark-4d21eb669b, #F4F5F7) !important;
     box-shadow: none !important;
 }
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button {
@@ -10039,7 +10039,7 @@
     border: 0 !important;
     border-radius: 999px !important;
     background: transparent !important;
-    color: #697586 !important;
+    color: var(--sari-dark-a63aa16d7c, #697586) !important;
     font-size: 11px !important;
     line-height: 1 !important;
     font-weight: 600 !important;
@@ -10047,9 +10047,9 @@
 }
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button.is-active,
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button[aria-pressed="true"] {
-    background: #222831 !important;
+    background: var(--sari-dark-fbb35de0d1, #222831) !important;
     color: #FFFFFF !important;
-    box-shadow: 0 2px 5px rgba(18,24,32,.12) !important;
+    box-shadow: 0 2px 5px var(--sari-dark-3b2338cbf0, rgba(18,24,32,.12)) !important;
 }
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-chart-shell {
     position: relative !important;
@@ -10072,7 +10072,7 @@
     overflow: visible !important;
 }
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-line {
-    stroke: #C88912 !important;
+    stroke: var(--sari-dark-19b301f69a, #C88912) !important;
     stroke-width: 3 !important;
     stroke-linejoin: round !important;
     stroke-linecap: round !important;
@@ -10084,9 +10084,9 @@
 }
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip {
     border: 1px solid #C88912 !important;
-    background: #252B33 !important;
+    background: var(--sari-dark-fbb35de0d1, #252B33) !important;
     color: #FFFFFF !important;
-    box-shadow: 0 8px 20px rgba(25,30,39,.14) !important;
+    box-shadow: 0 8px 20px var(--sari-dark-59ed29fe9d, rgba(25,30,39,.14)) !important;
 }
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-period,
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row,
@@ -10141,13 +10141,13 @@
     font-size: clamp(29px, 2.5vw, 40px);
     line-height: 1;
     font-weight: 700;
-    color: #202734;
+    color: var(--sari-dark-e23e64dd1e, #202734);
 }
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-center span {
     font-size: 10.5px;
     line-height: 1.3;
     font-weight: 500;
-    color: #697586;
+    color: var(--sari-dark-a63aa16d7c, #697586);
 }
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-detail {
     display: flex;
@@ -10171,7 +10171,7 @@
     font-size: 13px;
     line-height: 1.4;
     font-weight: 700;
-    color: #202734;
+    color: var(--sari-dark-e23e64dd1e, #202734);
 }
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-note,
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-empty span {
@@ -10180,14 +10180,14 @@
     font-size: 11px;
     line-height: 1.5;
     font-weight: 400;
-    color: #7B8794;
+    color: var(--sari-dark-a63aa16d7c, #7B8794);
 }
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-empty p {
     margin: 0;
     font-size: 12px;
     line-height: 1.5;
     font-weight: 600;
-    color: #475467;
+    color: var(--sari-dark-e23e64dd1e, #475467);
 }
 @media (min-width: 1180px) {
     #sellerDashboardStage #sellerAnalyticsRow {
@@ -10276,7 +10276,7 @@
 }
 #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-divider {
     height: 91px !important;
-    background: rgba(255,255,255,.14) !important;
+    background: var(--sari-dark-7a9dbf4e62, rgba(255,255,255,.14)) !important;
 }
 #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat {
     min-width: 0 !important;
@@ -10370,7 +10370,7 @@
     }
     #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat + .seller-greeting-stat {
         border-left: 0 !important;
-        border-top: 1px solid rgba(255,255,255,.10) !important;
+        border-top: 1px solid var(--sari-dark-bec9be7eea, rgba(255,255,255,.10)) !important;
     }
     #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-value {
         font-size: 21px !important;
@@ -10413,7 +10413,7 @@
 #sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card:active {
     transform: none !important;
     border-color: var(--dashboard-ref-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--dashboard-ref-shadow) !important;
     transition: none !important;
 }
@@ -10422,9 +10422,9 @@
 #sellerDashboardStage #sellerCategoryBreakdownCard:hover,
 #sellerDashboardStage #sellerSalesPerformanceCard:hover,
 #sellerDashboardStage #sellerSalesPerformanceCard.seller-sales-admin-card:hover {
-    border-color: #E5E7EB !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 9px 26px rgba(29,41,57,.055) !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    box-shadow: 0 9px 26px var(--sari-dark-fbd3b3b9f6, rgba(29,41,57,.055)) !important;
     transform: none !important;
 }
 
@@ -10434,7 +10434,7 @@
 #sellerDashboardStage #sellerCommerceSideColumn > #sellerRecentOrdersCard:hover,
 #sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel:hover {
     border-color: var(--dashboard-ref-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--dashboard-ref-shadow) !important;
     transform: none !important;
 }
@@ -10448,12 +10448,12 @@
 }
 #sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-row:hover {
     border-color: var(--dashboard-ref-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: none !important;
 }
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover {
-    border-color: #ECEFF2 !important;
-    border-bottom-color: #ECEFF2 !important;
+    border-color: var(--sari-dark-d8c2716225, #ECEFF2) !important;
+    border-bottom-color: var(--sari-dark-d8c2716225, #ECEFF2) !important;
     background: transparent !important;
     box-shadow: none !important;
 }
@@ -10472,13 +10472,13 @@
     box-shadow: none !important;
 }
 #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-view-all:hover {
-    border-color: #D8DEE6 !important;
-    background: #FFFFFF !important;
-    color: #344054 !important;
+    border-color: var(--sari-dark-d8c2716225, #D8DEE6) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    color: var(--sari-dark-e23e64dd1e, #344054) !important;
     box-shadow: none !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer a:hover {
-    color: #A87316 !important;
+    color: var(--sari-dark-685eb4fc40, #A87316) !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer a:hover svg,
 #sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-action:hover svg {
@@ -10489,7 +10489,7 @@
 #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button:hover:not(.is-active):not([aria-pressed="true"]) {
     border-color: transparent !important;
     background: transparent !important;
-    color: #697586 !important;
+    color: var(--sari-dark-a63aa16d7c, #697586) !important;
     box-shadow: none !important;
     transform: none !important;
 }
@@ -10505,11 +10505,11 @@
 }
 #sellerDashboardStage #sellerProductsPanel .seller-responsive-product-card:hover,
 #sellerDashboardStage #sellerProductsPanel .seller-responsive-add-card:hover {
-    border-color: rgba(217,203,182,.42) !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 1px 2px rgba(34,34,34,.018),
-                0 5px 14px rgba(34,34,34,.040),
-                0 10px 24px rgba(34,34,34,.035) !important;
+    border-color: var(--sari-dark-fba097951c, rgba(217,203,182,.42)) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    box-shadow: 0 1px 2px var(--sari-dark-7672bb207e, rgba(34,34,34,.018)),
+                0 5px 14px var(--sari-dark-25b2da5e49, rgba(34,34,34,.040)),
+                0 10px 24px var(--sari-dark-7593018246, rgba(34,34,34,.035)) !important;
     transform: none !important;
 }
 
@@ -10638,7 +10638,7 @@
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
         gap: 0 !important;
         padding-top: 10px !important;
-        border-top: 1px solid rgba(255,255,255,.10) !important;
+        border-top: 1px solid var(--sari-dark-bec9be7eea, rgba(255,255,255,.10)) !important;
     }
     #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat,
     #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat:first-child,
@@ -10653,7 +10653,7 @@
     }
     #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat + .seller-greeting-stat {
         border-top: 0 !important;
-        border-left: 1px solid rgba(255,255,255,.10) !important;
+        border-left: 1px solid var(--sari-dark-bec9be7eea, rgba(255,255,255,.10)) !important;
     }
     #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-heading {
         gap: 5px !important;
@@ -10755,7 +10755,7 @@
     margin: 0 !important;
     padding: 10px 0 !important;
     border: 0 !important;
-    border-bottom: 1px solid #E9EDF2 !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF2) !important;
     background: transparent !important;
     box-shadow: none !important;
     transform: none !important;
@@ -10773,7 +10773,7 @@
     display: block !important;
     min-width: 0 !important;
     overflow: hidden !important;
-    color: #273142 !important;
+    color: var(--sari-dark-e23e64dd1e, #273142) !important;
     font-size: 12px !important;
     font-weight: 650 !important;
     line-height: 1.35 !important;
@@ -10785,7 +10785,7 @@
     min-width: 0 !important;
     overflow: hidden !important;
     margin-top: 4px !important;
-    color: #738091 !important;
+    color: var(--sari-dark-a63aa16d7c, #738091) !important;
     font-size: 10px !important;
     font-weight: 400 !important;
     line-height: 1.4 !important;
@@ -10799,7 +10799,7 @@
     display: block !important;
     align-self: center !important;
     margin: 0 !important;
-    color: #98A2B3 !important;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3) !important;
     font-size: 9px !important;
     line-height: 1.3 !important;
     white-space: nowrap !important;
@@ -10832,7 +10832,7 @@
     margin: 0 !important;
     padding: 10px 0 !important;
     border: 0 !important;
-    border-bottom: 1px solid #E9EDF2 !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF2) !important;
     background: transparent !important;
     box-shadow: none !important;
     transform: none !important;
@@ -10861,7 +10861,7 @@
     display: block !important;
     min-width: 0 !important;
     overflow: hidden !important;
-    color: #273142 !important;
+    color: var(--sari-dark-e23e64dd1e, #273142) !important;
     font-size: 12px !important;
     font-weight: 650 !important;
     line-height: 1.3 !important;
@@ -10873,7 +10873,7 @@
     min-width: 0 !important;
     overflow: hidden !important;
     margin-top: 4px !important;
-    color: #6F7B8C !important;
+    color: var(--sari-dark-a63aa16d7c, #6F7B8C) !important;
     font-size: 10px !important;
     line-height: 1.4 !important;
     text-overflow: ellipsis !important;
@@ -10884,7 +10884,7 @@
     min-width: 0 !important;
     overflow: hidden !important;
     margin-top: 4px !important;
-    color: #9AA4B1 !important;
+    color: var(--sari-dark-a63aa16d7c, #9AA4B1) !important;
     font-size: 9px !important;
     line-height: 1.3 !important;
     text-overflow: ellipsis !important;
@@ -10909,7 +10909,7 @@
 #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-total {
     display: block !important;
     width: auto !important;
-    color: #1F2937 !important;
+    color: var(--sari-dark-e23e64dd1e, #1F2937) !important;
     font-size: 12px !important;
     font-weight: 700 !important;
     line-height: 1.25 !important;
@@ -10932,7 +10932,7 @@
 #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-time {
     display: block !important;
     margin: 0 !important;
-    color: #98A2B3 !important;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3) !important;
     font-size: 9px !important;
     line-height: 1.25 !important;
 }
@@ -10946,14 +10946,14 @@
     gap: 10px !important;
     min-height: 45px !important;
     padding: 8px 18px !important;
-    border-top: 1px solid #E9EDF2 !important;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #E9EDF2) !important;
 }
 #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer a,
 #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a {
     display: inline-flex !important;
     align-items: center !important;
     gap: 5px !important;
-    color: #A87316 !important;
+    color: var(--sari-dark-685eb4fc40, #A87316) !important;
     font-size: 10.5px !important;
     line-height: 1.3 !important;
     font-weight: 650 !important;
@@ -10961,7 +10961,7 @@
 }
 #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer a:hover,
 #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a:hover {
-    color: #A87316 !important;
+    color: var(--sari-dark-685eb4fc40, #A87316) !important;
     transform: none !important;
 }
 @media (max-width: 640px) {

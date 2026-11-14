@@ -33,19 +33,19 @@
    ========================================================================== */
 
 .pickup-page {
-    --pickup-bg: #f4f5f7;
+    --pickup-bg: var(--sari-dark-4d21eb669b, #f4f5f7);
 
-    --pickup-surface: #ffffff;
-    --pickup-surface-soft: #fcfaf7;
-    --pickup-surface-warm: #fffaf1;
+    --pickup-surface: var(--sari-dark-950baec030, #ffffff);
+    --pickup-surface-soft: var(--sari-dark-950baec030, #fcfaf7);
+    --pickup-surface-warm: var(--sari-dark-950baec030, #fffaf1);
 
-    --pickup-ink: #2f2a23;
-    --pickup-ink-soft: #51483d;
-    --pickup-muted: #8f877d;
-    --pickup-muted-light: #aaa198;
+    --pickup-ink: var(--sari-dark-e23e64dd1e, #2f2a23);
+    --pickup-ink-soft: var(--sari-dark-e23e64dd1e, #51483d);
+    --pickup-muted: var(--sari-dark-a63aa16d7c, #8f877d);
+    --pickup-muted-light: var(--sari-dark-a63aa16d7c, #aaa198);
 
-    --pickup-line: #e8e2da;
-    --pickup-line-soft: #f0ebe4;
+    --pickup-line: var(--sari-dark-d8c2716225, #e8e2da);
+    --pickup-line-soft: var(--sari-dark-d8c2716225, #f0ebe4);
 
     --pickup-gold: #d89b10;
     --pickup-gold-dark: #b97805;
@@ -53,21 +53,21 @@
 
     --pickup-green: #327a53;
     --pickup-green-soft: #f1faf5;
-    --pickup-green-line: #c9e0d2;
+    --pickup-green-line: var(--sari-dark-d8c2716225, #c9e0d2);
 
     --pickup-red: #b75b55;
     --pickup-red-soft: #fff5f4;
-    --pickup-red-line: #ebd1ce;
+    --pickup-red-line: var(--sari-dark-d8c2716225, #ebd1ce);
 
     --pickup-blue: #4f7899;
     --pickup-blue-soft: #f1f6fb;
-    --pickup-blue-line: #d7e3ed;
+    --pickup-blue-line: var(--sari-dark-d8c2716225, #d7e3ed);
 
     --pickup-shadow:
-        0 6px 18px rgba(33, 24, 14, .03);
+        0 6px 18px var(--sari-dark-b13200ac05, rgba(33, 24, 14, .03));
 
     --pickup-shadow-hover:
-        0 14px 30px rgba(43, 33, 21, .055);
+        0 14px 30px var(--sari-dark-fbd3b3b9f6, rgba(43, 33, 21, .055));
 
     --pickup-radius-lg: 19px;
     --pickup-radius-md: 13px;
@@ -189,7 +189,7 @@
 
     overflow: hidden;
 
-    border: 1px solid #2f2a23;
+    border: 1px solid var(--sari-dark-d8c2716225, #2f2a23);
     border-radius: var(--pickup-radius-lg);
 
     background:
@@ -201,13 +201,13 @@
         ),
         linear-gradient(
             135deg,
-            #211f1c 0%,
-            #25231f 48%,
-            #1b1917 100%
+            var(--sari-dark-f3318ab620, #211f1c) 0%,
+            var(--sari-dark-fbb35de0d1, #25231f) 48%,
+            var(--sari-dark-f3318ab620, #1b1917) 100%
         );
 
     box-shadow:
-        0 8px 22px rgba(20, 17, 13, .08);
+        0 8px 22px var(--sari-dark-c33e3d1bb4, rgba(20, 17, 13, .08));
 }
 
 
@@ -222,7 +222,7 @@
     background:
         linear-gradient(
             90deg,
-            rgba(255, 255, 255, .035),
+            var(--sari-dark-81dadeff47, rgba(255, 255, 255, .035)),
             rgba(255, 255, 255, 0) 38%
         );
 }
@@ -247,8 +247,8 @@
     border-radius: 999px;
 
     box-shadow:
-        0 0 0 24px rgba(216, 155, 16, .035),
-        0 0 0 50px rgba(216, 155, 16, .018);
+        0 0 0 24px var(--sari-dark-7593018246, rgba(216, 155, 16, .035)),
+        0 0 0 50px var(--sari-dark-7672bb207e, rgba(216, 155, 16, .018));
 
     pointer-events: none;
 }
@@ -263,7 +263,7 @@
 .pickup-eyebrow {
     margin: 0 0 5px;
 
-    color: #c5a35c;
+    color: var(--sari-dark-0004b33b46, #c5a35c);
 
     font-size: 7px;
     line-height: 1.2;
@@ -275,7 +275,7 @@
 
 
 .pickup-page-header .pickup-eyebrow {
-    color: rgba(226, 161, 15, .92);
+    color: var(--sari-dark-96d3882d09, rgba(226, 161, 15, .92));
 }
 
 
@@ -293,7 +293,7 @@
 
 
 .pickup-page h1 span {
-    color: #e2a10f;
+    color: var(--sari-dark-bc0de3730f, #e2a10f);
 }
 
 
@@ -325,12 +325,12 @@
 
     padding: 8px 14px;
 
-    border: 1px solid #dfd7cc;
+    border: 1px solid var(--sari-dark-d8c2716225, #dfd7cc);
     border-radius: 10px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
-    color: #62594f;
+    color: var(--sari-dark-e23e64dd1e, #62594f);
 
     font-size: 8px;
     line-height: 1;
@@ -355,9 +355,9 @@
 
     border-color: #d7c49c;
 
-    background: #fffaf1;
+    background: var(--sari-dark-950baec030, #fffaf1);
 
-    color: #946611;
+    color: var(--sari-dark-c8bdcce6ab, #946611);
 }
 
 
@@ -369,7 +369,7 @@
     color: #ffffff;
 
     box-shadow:
-        0 5px 13px rgba(215, 144, 4, .14);
+        0 5px 13px var(--sari-dark-59ed29fe9d, rgba(215, 144, 4, .14));
 }
 
 
@@ -386,9 +386,9 @@
 
 
 .pickup-page-header .pickup-button:not(.pickup-button-primary) {
-    border-color: rgba(255, 255, 255, .13);
+    border-color: var(--sari-dark-70334c7f17, rgba(255, 255, 255, .13));
 
-    background: rgba(255, 255, 255, .055);
+    background: var(--sari-dark-d68bd54549, rgba(255, 255, 255, .055));
 
     color: rgba(255, 255, 255, .82);
 
@@ -401,7 +401,7 @@
 
     background: rgba(216, 155, 16, .08);
 
-    color: #f0ba45;
+    color: var(--sari-dark-7f7834ccc9, #f0ba45);
 }
 
 
@@ -421,7 +421,7 @@
     border-radius: 14px;
 
     box-shadow:
-        0 5px 16px rgba(39, 31, 22, .025);
+        0 5px 16px var(--sari-dark-e1384eb7fc, rgba(39, 31, 22, .025));
 }
 
 
@@ -461,7 +461,7 @@
 
 
 .pickup-alert-success {
-    color: #427259;
+    color: var(--sari-dark-e23e64dd1e, #427259);
 
     border-color: var(--pickup-green-line);
 
@@ -470,7 +470,7 @@
 
 
 .pickup-alert-danger {
-    color: #a65353;
+    color: var(--sari-dark-58dd29f069, #a65353);
 
     border-color: var(--pickup-red-line);
 
@@ -479,11 +479,11 @@
 
 
 .pickup-alert-warning {
-    color: #977020;
+    color: var(--sari-dark-b1c65e5614, #977020);
 
-    border-color: #ead9b5;
+    border-color: var(--sari-dark-d8c2716225, #ead9b5);
 
-    background: #fff9ec;
+    background: var(--sari-dark-4d21eb669b, #fff9ec);
 }
 
 
@@ -510,13 +510,13 @@
 
     overflow: hidden;
 
-    border: 1px solid #e8e2da;
+    border: 1px solid var(--sari-dark-d8c2716225, #e8e2da);
     border-radius: 16px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     box-shadow:
-        0 5px 16px rgba(39, 31, 22, .025);
+        0 5px 16px var(--sari-dark-e1384eb7fc, rgba(39, 31, 22, .025));
 
     transition:
         transform .16s ease,
@@ -528,7 +528,7 @@
 .pickup-stat:hover {
     transform: translateY(-1px);
 
-    border-color: #d8ccb9;
+    border-color: var(--sari-dark-d8c2716225, #d8ccb9);
 
     box-shadow: var(--pickup-shadow-hover);
 }
@@ -547,14 +547,14 @@
 
     border-radius: 999px;
 
-    background: #d7d0c7;
+    background: var(--sari-dark-4d21eb669b, #d7d0c7);
 }
 
 
 .pickup-stat p {
     margin: 0;
 
-    color: #81786e;
+    color: var(--sari-dark-a63aa16d7c, #81786e);
 
     font-size: 7px;
     line-height: 1.25;
@@ -570,7 +570,7 @@
 
     margin: 5px 0 2px;
 
-    color: #302a23;
+    color: var(--sari-dark-e23e64dd1e, #302a23);
 
     font-size: 23px;
     line-height: 1.12;
@@ -583,7 +583,7 @@
 .pickup-stat span {
     display: block;
 
-    color: #978f85;
+    color: var(--sari-dark-a63aa16d7c, #978f85);
 
     font-size: 7px;
     line-height: 1.45;
@@ -596,7 +596,7 @@
 
 
 .pickup-stat-amber {
-    border-color: #eadfc9;
+    border-color: var(--sari-dark-d8c2716225, #eadfc9);
 }
 
 
@@ -606,12 +606,12 @@
 
 
 .pickup-stat-amber strong {
-    color: #ad7713;
+    color: var(--sari-dark-c8bdcce6ab, #ad7713);
 }
 
 
 .pickup-stat-green {
-    border-color: #d5e5da;
+    border-color: var(--sari-dark-d8c2716225, #d5e5da);
 }
 
 
@@ -621,12 +621,12 @@
 
 
 .pickup-stat-green strong {
-    color: #4f7c5b;
+    color: var(--sari-dark-a63aa16d7c, #4f7c5b);
 }
 
 
 .pickup-stat-red {
-    border-color: #ead8d5;
+    border-color: var(--sari-dark-d8c2716225, #ead8d5);
 }
 
 
@@ -636,12 +636,12 @@
 
 
 .pickup-stat-red strong {
-    color: #a95e57;
+    color: var(--sari-dark-f04621a054, #a95e57);
 }
 
 
 .pickup-stat-blue {
-    border-color: #d7e3ed;
+    border-color: var(--sari-dark-d8c2716225, #d7e3ed);
 }
 
 
@@ -651,7 +651,7 @@
 
 
 .pickup-stat-blue strong {
-    color: #587b99;
+    color: var(--sari-dark-a63aa16d7c, #587b99);
 }
 
 
@@ -675,10 +675,10 @@
     border: 1px solid var(--pickup-line);
     border-radius: 11px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     box-shadow:
-        0 4px 14px rgba(42, 32, 21, .022);
+        0 4px 14px var(--sari-dark-cd8ef5542e, rgba(42, 32, 21, .022));
 }
 
 
@@ -694,7 +694,7 @@
 
     border-radius: 8px;
 
-    color: #938a80;
+    color: var(--sari-dark-a63aa16d7c, #938a80);
 
     font-size: 7.5px;
     font-weight: 500;
@@ -709,9 +709,9 @@
 
 
 .pickup-flow a:hover {
-    background: #faf7f1;
+    background: var(--sari-dark-4d21eb669b, #faf7f1);
 
-    color: #796647;
+    color: var(--sari-dark-a63aa16d7c, #796647);
 }
 
 
@@ -725,12 +725,12 @@
 
     flex: 0 0 20px;
 
-    border: 1px solid #e5ded5;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5ded5);
     border-radius: 999px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
-    color: #948a7f;
+    color: var(--sari-dark-a63aa16d7c, #948a7f);
 
     font-size: 6.5px;
     font-weight: 600;
@@ -738,9 +738,9 @@
 
 
 .pickup-flow .is-current {
-    background: #fff6df;
+    background: var(--sari-dark-4d21eb669b, #fff6df);
 
-    color: #9c6a0e;
+    color: var(--sari-dark-c8bdcce6ab, #9c6a0e);
 
     font-weight: 600;
 }
@@ -765,7 +765,7 @@
     border: 1px solid var(--pickup-line);
     border-radius: var(--pickup-radius-lg);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     box-shadow: var(--pickup-shadow);
 }
@@ -789,7 +789,7 @@
 .pickup-toolbar h2 {
     margin: 0;
 
-    color: #302a23;
+    color: var(--sari-dark-e23e64dd1e, #302a23);
 
     font-size: 13px;
     line-height: 1.3;
@@ -822,10 +822,10 @@
 
     padding: 8px 11px;
 
-    border: 1px solid #e5ded5;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5ded5);
     border-radius: 9px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     color: var(--pickup-ink);
 
@@ -839,17 +839,17 @@
 
 
 .pickup-search input::placeholder {
-    color: #aaa198;
+    color: var(--sari-dark-a63aa16d7c, #aaa198);
 }
 
 
 .pickup-search input:focus {
     border-color: #d6b46d;
 
-    background: #fffefa;
+    background: var(--sari-dark-950baec030, #fffefa);
 
     box-shadow:
-        0 0 0 4px rgba(216, 155, 16, .075);
+        0 0 0 4px var(--sari-dark-e07575a086, rgba(216, 155, 16, .075));
 
     outline: none;
 }
@@ -895,7 +895,7 @@
 
     background: transparent;
 
-    color: #887f75;
+    color: var(--sari-dark-a63aa16d7c, #887f75);
 
     font-size: 7.5px;
     font-weight: 500;
@@ -910,18 +910,18 @@
 
 
 .pickup-tabs button:hover {
-    background: #faf7f1;
+    background: var(--sari-dark-4d21eb669b, #faf7f1);
 
-    color: #675d51;
+    color: var(--sari-dark-a63aa16d7c, #675d51);
 }
 
 
 .pickup-tabs button[aria-pressed="true"] {
-    border-color: #ead7b3;
+    border-color: var(--sari-dark-d8c2716225, #ead7b3);
 
-    background: #fff6e5;
+    background: var(--sari-dark-4d21eb669b, #fff6e5);
 
-    color: #a07121;
+    color: var(--sari-dark-01abbb34dc, #a07121);
 
     font-weight: 600;
 }
@@ -940,9 +940,9 @@
 
     border-radius: 6px;
 
-    background: #f0ece6;
+    background: var(--sari-dark-4d21eb669b, #f0ece6);
 
-    color: #81786e;
+    color: var(--sari-dark-a63aa16d7c, #81786e);
 
     font-size: 6.5px;
     line-height: 1;
@@ -951,9 +951,9 @@
 
 
 .pickup-tabs button[aria-pressed="true"] span {
-    background: #ecd8ad;
+    background: var(--sari-dark-a19bde6a70, #ecd8ad);
 
-    color: #8a5b0d;
+    color: var(--sari-dark-9b2ca2d764, #8a5b0d);
 }
 
 
@@ -971,7 +971,7 @@
 
     background: transparent;
 
-    color: #b2770f;
+    color: var(--sari-dark-af18afcaa4, #b2770f);
 
     font-size: 7.5px;
     font-weight: 600;
@@ -985,7 +985,7 @@
 
 
 .pickup-text-link:hover {
-    color: #84580a;
+    color: var(--sari-dark-af18afcaa4, #84580a);
 
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -1008,7 +1008,7 @@
 
     border-bottom: 1px solid var(--pickup-line);
 
-    background: #faf9f6;
+    background: var(--sari-dark-950baec030, #faf9f6);
 }
 
 
@@ -1019,7 +1019,7 @@
 
     gap: 7px;
 
-    color: #71685f;
+    color: var(--sari-dark-a63aa16d7c, #71685f);
 
     font-size: 7.5px;
     font-weight: 500;
@@ -1027,7 +1027,7 @@
 
 
 .pickup-selection-bar > span {
-    color: #9a9187;
+    color: var(--sari-dark-a63aa16d7c, #9a9187);
 
     font-size: 7px;
 }
@@ -1067,7 +1067,7 @@
 
 
 .pickup-table thead {
-    background: #fcfbf9;
+    background: var(--sari-dark-950baec030, #fcfbf9);
 }
 
 
@@ -1076,7 +1076,7 @@
 
     border-bottom: 1px solid var(--pickup-line);
 
-    color: #988f85;
+    color: var(--sari-dark-a63aa16d7c, #988f85);
 
     font-size: 6.5px;
     line-height: 1.3;
@@ -1098,7 +1098,7 @@
 
     vertical-align: top;
 
-    color: #61584f;
+    color: var(--sari-dark-e23e64dd1e, #61584f);
 }
 
 
@@ -1109,7 +1109,7 @@
 
 
 .pickup-table tbody tr:hover {
-    background: #fffdf9;
+    background: var(--sari-dark-950baec030, #fffdf9);
 }
 
 
@@ -1129,7 +1129,7 @@
 .pickup-table td strong {
     display: block;
 
-    color: #443c33;
+    color: var(--sari-dark-e23e64dd1e, #443c33);
 
     font-size: 8px;
     line-height: 1.45;
@@ -1140,7 +1140,7 @@
 .pickup-table td p {
     margin: 3px 0 0;
 
-    color: #91887e;
+    color: var(--sari-dark-a63aa16d7c, #91887e);
 
     font-size: 7px;
     line-height: 1.5;
@@ -1151,7 +1151,7 @@
     min-width: 160px;
     max-width: 250px;
 
-    color: #837a70;
+    color: var(--sari-dark-a63aa16d7c, #837a70);
 
     line-height: 1.65;
 }
@@ -1193,38 +1193,38 @@
 
 
 .pickup-badge-pending {
-    color: #9a6b16;
+    color: var(--sari-dark-1ebe099830, #9a6b16);
 
-    border-color: #ead9b2;
+    border-color: var(--sari-dark-d8c2716225, #ead9b2);
 
-    background: #fff8e8;
+    background: var(--sari-dark-4d21eb669b, #fff8e8);
 }
 
 
 .pickup-badge-verified {
-    color: #4e7a59;
+    color: var(--sari-dark-a63aa16d7c, #4e7a59);
 
-    border-color: #d4e4d8;
+    border-color: var(--sari-dark-d8c2716225, #d4e4d8);
 
-    background: #f0f8f2;
+    background: var(--sari-dark-4d21eb669b, #f0f8f2);
 }
 
 
 .pickup-badge-attention {
-    color: #a85f58;
+    color: var(--sari-dark-376a4962b9, #a85f58);
 
-    border-color: #ecd5cf;
+    border-color: var(--sari-dark-d8c2716225, #ecd5cf);
 
-    background: #fff4f2;
+    background: var(--sari-dark-950baec030, #fff4f2);
 }
 
 
 .pickup-badge-active {
-    color: #587892;
+    color: var(--sari-dark-a63aa16d7c, #587892);
 
-    border-color: #d7e3ed;
+    border-color: var(--sari-dark-d8c2716225, #d7e3ed);
 
-    background: #f1f6fa;
+    background: var(--sari-dark-4d21eb669b, #f1f6fa);
 }
 
 
@@ -1238,7 +1238,7 @@
     margin: 6px 0 0;
     padding-left: 14px;
 
-    color: #a9695c;
+    color: var(--sari-dark-ef6f8d4f7a, #a9695c);
 
     font-size: 7px;
     line-height: 1.55;
@@ -1268,7 +1268,7 @@
 
     list-style: none;
 
-    color: #9d752f;
+    color: var(--sari-dark-a63aa16d7c, #9d752f);
 
     font-size: 7px;
     font-weight: 500;
@@ -1292,7 +1292,7 @@
 
     border-radius: 6px;
 
-    background: #f7f1e7;
+    background: var(--sari-dark-4d21eb669b, #f7f1e7);
 
     transition:
         transform .17s ease;
@@ -1316,10 +1316,10 @@
 
     overflow-wrap: anywhere;
 
-    border: 1px solid #e8dfd2;
+    border: 1px solid var(--sari-dark-d8c2716225, #e8dfd2);
     border-radius: 10px;
 
-    background: #faf8f4;
+    background: var(--sari-dark-950baec030, #faf8f4);
 }
 
 
@@ -1333,7 +1333,7 @@
 .pickup-detail-grid strong {
     display: block;
 
-    color: #50473d;
+    color: var(--sari-dark-e23e64dd1e, #50473d);
 
     font-size: 7px;
     line-height: 1.45;
@@ -1344,7 +1344,7 @@
 .pickup-detail-grid p {
     margin: 3px 0 0;
 
-    color: #8f8276;
+    color: var(--sari-dark-a63aa16d7c, #8f8276);
 
     font-size: 6.5px;
     line-height: 1.55;
@@ -1356,7 +1356,7 @@
 
     margin-bottom: 4px;
 
-    color: #a08e75;
+    color: var(--sari-dark-a63aa16d7c, #a08e75);
 
     font-size: 6px;
     line-height: 1.2;
@@ -1377,7 +1377,7 @@
     margin: 9px 0 0;
     padding: 0;
 
-    border-top: 1px solid #e7ded0;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #e7ded0);
 }
 
 
@@ -1389,7 +1389,7 @@
 
     padding-top: 8px;
 
-    color: #6f665d;
+    color: var(--sari-dark-a63aa16d7c, #6f665d);
 
     font-size: 6.5px;
     line-height: 1.5;
@@ -1399,7 +1399,7 @@
 .pickup-products li strong {
     flex-shrink: 0;
 
-    color: #4f473f;
+    color: var(--sari-dark-e23e64dd1e, #4f473f);
 
     font-size: inherit;
 }
@@ -1419,7 +1419,7 @@
 .pickup-empty h3 {
     margin: 0 0 6px;
 
-    color: #5e554b;
+    color: var(--sari-dark-e23e64dd1e, #5e554b);
 
     font-size: 11px;
     line-height: 1.35;
@@ -1432,7 +1432,7 @@
 
     margin: 0 auto 14px;
 
-    color: #999086;
+    color: var(--sari-dark-a63aa16d7c, #999086);
 
     font-size: 7.5px;
     line-height: 1.6;
@@ -1449,12 +1449,12 @@
 
     margin: 0 auto 12px;
 
-    border: 1px solid #ead9b8;
+    border: 1px solid var(--sari-dark-d8c2716225, #ead9b8);
     border-radius: 12px;
 
-    background: #fff6e3;
+    background: var(--sari-dark-4d21eb669b, #fff6e3);
 
-    color: #b78327;
+    color: var(--sari-dark-a63aa16d7c, #b78327);
 
     font-size: 14px;
 }
@@ -1480,9 +1480,9 @@
 
     border-top: 1px solid var(--pickup-line);
 
-    background: #fcfbf9;
+    background: var(--sari-dark-950baec030, #fcfbf9);
 
-    color: #9a9288;
+    color: var(--sari-dark-a63aa16d7c, #9a9288);
 
     font-size: 6.5px;
 }
@@ -1499,7 +1499,7 @@
 
     padding: 14px;
 
-    background: #f7f7f6;
+    background: var(--sari-dark-950baec030, #f7f7f6);
 }
 
 
@@ -1514,10 +1514,10 @@
     border: 1px solid var(--pickup-line);
     border-radius: 16px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     box-shadow:
-        0 4px 14px rgba(43, 33, 21, .022);
+        0 4px 14px var(--sari-dark-cd8ef5542e, rgba(43, 33, 21, .022));
 
     transition:
         border-color .16s ease,
@@ -1527,10 +1527,10 @@
 
 
 .pickup-batch:hover {
-    border-color: #d8ccb9;
+    border-color: var(--sari-dark-d8c2716225, #d8ccb9);
 
     box-shadow:
-        0 10px 26px rgba(43, 33, 21, .045);
+        0 10px 26px var(--sari-dark-1190f58155, rgba(43, 33, 21, .045));
 }
 
 
@@ -1538,8 +1538,8 @@
     border-color: #d7b767;
 
     box-shadow:
-        0 0 0 2px rgba(216, 155, 16, .16),
-        0 8px 24px rgba(43, 33, 21, .04);
+        0 0 0 2px var(--sari-dark-b5c2a2270e, rgba(216, 155, 16, .16)),
+        0 8px 24px var(--sari-dark-25b2da5e49, rgba(43, 33, 21, .04));
 }
 
 
@@ -1560,7 +1560,7 @@
 
     border-bottom: 1px solid var(--pickup-line);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 }
 
 
@@ -1584,17 +1584,17 @@
 
     flex: 0 0 36px;
 
-    border: 1px solid #ead8b4;
+    border: 1px solid var(--sari-dark-d8c2716225, #ead8b4);
     border-radius: 10px;
 
     background:
         linear-gradient(
             180deg,
-            #fff7e9,
-            #fff2d5
+            var(--sari-dark-4d21eb669b, #fff7e9),
+            var(--sari-dark-4d21eb669b, #fff2d5)
         );
 
-    color: #ad781b;
+    color: var(--sari-dark-7f4828a5f5, #ad781b);
 
     font-size: 8px;
     font-weight: 600;
@@ -1604,7 +1604,7 @@
 .pickup-seller-heading .pickup-eyebrow {
     margin-bottom: 2px;
 
-    color: #a68c61;
+    color: var(--sari-dark-a63aa16d7c, #a68c61);
 
     font-size: 5.8px;
 }
@@ -1615,7 +1615,7 @@
 
     overflow: hidden;
 
-    color: #373029;
+    color: var(--sari-dark-e23e64dd1e, #373029);
 
     font-size: 10px;
     line-height: 1.4;
@@ -1633,7 +1633,7 @@
 
     gap: 7px;
 
-    color: #8f8579;
+    color: var(--sari-dark-a63aa16d7c, #8f8579);
 
     font-size: 6.5px;
 }
@@ -1647,10 +1647,10 @@
 
     padding: 4px 8px;
 
-    border: 1px solid #e9e2d8;
+    border: 1px solid var(--sari-dark-d8c2716225, #e9e2d8);
     border-radius: 999px;
 
-    background: #faf8f4;
+    background: var(--sari-dark-950baec030, #faf8f4);
 }
 
 
@@ -1701,7 +1701,7 @@
 .pickup-route-summary strong {
     display: block;
 
-    color: #4b433a;
+    color: var(--sari-dark-e23e64dd1e, #4b433a);
 
     font-size: 8px;
     line-height: 1.5;
@@ -1712,7 +1712,7 @@
 .pickup-route-summary p {
     margin: 3px 0 0;
 
-    color: #91877b;
+    color: var(--sari-dark-a63aa16d7c, #91877b);
 
     font-size: 7px;
     line-height: 1.55;
@@ -1729,12 +1729,12 @@
 
     margin-top: 17px;
 
-    border: 1px solid #eadfcf;
+    border: 1px solid var(--sari-dark-d8c2716225, #eadfcf);
     border-radius: 999px;
 
-    background: #fffaf1;
+    background: var(--sari-dark-950baec030, #fffaf1);
 
-    color: #c4963f;
+    color: var(--sari-dark-b839947d6a, #c4963f);
 
     font-size: 13px;
 }
@@ -1758,7 +1758,7 @@
 .pickup-parcel-heading h4 {
     margin: 0;
 
-    color: #4c443b;
+    color: var(--sari-dark-e23e64dd1e, #4c443b);
 
     font-size: 8px;
     line-height: 1.4;
@@ -1788,10 +1788,10 @@
 
     padding: 10px;
 
-    border: 1px solid #ece6de;
+    border: 1px solid var(--sari-dark-d8c2716225, #ece6de);
     border-radius: 10px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     transition:
         border-color .15s ease,
@@ -1800,9 +1800,9 @@
 
 
 .pickup-parcel:hover {
-    border-color: #dfd4c5;
+    border-color: var(--sari-dark-d8c2716225, #dfd4c5);
 
-    background: #fffdf9;
+    background: var(--sari-dark-950baec030, #fffdf9);
 }
 
 
@@ -1822,7 +1822,7 @@
 
 
 .pickup-parcel strong {
-    color: #50483f;
+    color: var(--sari-dark-e23e64dd1e, #50483f);
 
     font-size: 7.5px;
     line-height: 1.45;
@@ -1835,7 +1835,7 @@
 
     margin-top: 2px;
 
-    color: #978d80;
+    color: var(--sari-dark-a63aa16d7c, #978d80);
 
     font-size: 6.5px;
     line-height: 1.5;
@@ -1843,7 +1843,7 @@
 
 
 .pickup-parcel-value {
-    color: #51483d;
+    color: var(--sari-dark-e23e64dd1e, #51483d);
 
     font-size: 7.5px;
     font-weight: 600;
@@ -1877,8 +1877,8 @@
     background:
         linear-gradient(
             180deg,
-            #fffdf8 0%,
-            #fbf8f1 100%
+            var(--sari-dark-950baec030, #fffdf8) 0%,
+            var(--sari-dark-4d21eb669b, #fbf8f1) 100%
         );
 }
 
@@ -1886,7 +1886,7 @@
 .pickup-dispatch-panel h4 {
     margin: 0;
 
-    color: #383129;
+    color: var(--sari-dark-e23e64dd1e, #383129);
 
     font-size: 10px;
     line-height: 1.35;
@@ -1897,7 +1897,7 @@
 .pickup-dispatch-note {
     margin: 5px 0 14px;
 
-    color: #918679;
+    color: var(--sari-dark-a63aa16d7c, #918679);
 
     font-size: 7px;
     line-height: 1.55;
@@ -1910,12 +1910,12 @@
 
     padding: 8px 10px;
 
-    border: 1px solid #dfd5c5;
+    border: 1px solid var(--sari-dark-d8c2716225, #dfd5c5);
     border-radius: 9px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
-    color: #5f5548;
+    color: var(--sari-dark-e23e64dd1e, #5f5548);
 
     font-size: 7.5px;
 
@@ -1931,7 +1931,7 @@
     border-color: #d4ad61;
 
     box-shadow:
-        0 0 0 4px rgba(216, 155, 16, .075);
+        0 0 0 4px var(--sari-dark-e07575a086, rgba(216, 155, 16, .075));
 }
 
 
@@ -1943,15 +1943,15 @@
     margin-top: 10px;
     padding: 10px;
 
-    border: 1px solid #e6dccb;
+    border: 1px solid var(--sari-dark-d8c2716225, #e6dccb);
     border-radius: 10px;
 
-    background: rgba(255, 255, 255, .75);
+    background: var(--sari-dark-fd77681c51, rgba(255, 255, 255, .75));
 }
 
 
 .pickup-rider-preview strong {
-    color: #443c33;
+    color: var(--sari-dark-e23e64dd1e, #443c33);
 
     font-size: 8px;
     line-height: 1.45;
@@ -1962,7 +1962,7 @@
 .pickup-rider-preview p {
     margin: 2px 0;
 
-    color: #8d8172;
+    color: var(--sari-dark-a63aa16d7c, #8d8172);
 
     font-size: 6.5px;
     line-height: 1.5;
@@ -1982,14 +1982,14 @@
 
     padding: 13px 0 10px;
 
-    color: #93856f;
+    color: var(--sari-dark-a63aa16d7c, #93856f);
 
     font-size: 7px;
 }
 
 
 .pickup-dispatch-total strong {
-    color: #9e721b;
+    color: var(--sari-dark-e6c55ee9d6, #9e721b);
 
     font-size: 16px;
     line-height: 1;
@@ -2011,7 +2011,7 @@
 .pickup-dispatch-footnote {
     margin: 8px 0 0;
 
-    color: #9e917e;
+    color: var(--sari-dark-a63aa16d7c, #9e917e);
 
     font-size: 6px;
     line-height: 1.5;
@@ -2422,9 +2422,9 @@
 #lgPickupRequests {
     --pickup-gold: #d9950b;
     --pickup-gold-dark: #c88708;
-    --pickup-ink: #25211c;
-    --pickup-line: #e8e2d9;
-    --pickup-shadow: 0 6px 18px rgba(33,24,14,.035);
+    --pickup-ink: var(--sari-dark-e23e64dd1e, #25211c);
+    --pickup-line: var(--sari-dark-d8c2716225, #e8e2d9);
+    --pickup-shadow: 0 6px 18px var(--sari-dark-7593018246, rgba(33,24,14,.035));
 
     max-width: 1620px;
     font-size: 10px;
@@ -2439,7 +2439,7 @@
     overflow: visible;
 
     border: 0;
-    border-bottom: 1px solid #e4e1dc;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e4e1dc);
     border-radius: 0;
 
     background: transparent;
@@ -2454,14 +2454,14 @@
 
 #lgPickupRequests .pickup-page-header .pickup-eyebrow {
     margin-bottom: 5px;
-    color: #a76f11;
+    color: var(--sari-dark-6e784b4931, #a76f11);
     font-size: 9px;
     font-weight: 700;
     letter-spacing: .14em;
 }
 
 #lgPickupRequests .pickup-page-header h1 {
-    color: #24201b;
+    color: var(--sari-dark-e23e64dd1e, #24201b);
     font-size: clamp(23px,2.15vw,30px);
     font-weight: 750;
     line-height: 1.2;
@@ -2469,13 +2469,13 @@
 }
 
 #lgPickupRequests .pickup-page-header h1 span {
-    color: #d9950b;
+    color: var(--sari-dark-094fd3764c, #d9950b);
 }
 
 #lgPickupRequests .pickup-subtitle {
     margin-top: 6px;
     max-width: 720px;
-    color: #897f75;
+    color: var(--sari-dark-a63aa16d7c, #897f75);
     font-size: 10px;
     line-height: 1.7;
 }
@@ -2515,11 +2515,11 @@
     gap: 10px;
     overflow: visible;
 
-    border: 1px solid #e8e2d9;
+    border: 1px solid var(--sari-dark-d8c2716225, #e8e2d9);
     border-radius: 16px;
-    background: white;
+    background: var(--sari-dark-950baec030, white);
 
-    box-shadow: 0 6px 18px rgba(33,24,14,.035);
+    box-shadow: 0 6px 18px var(--sari-dark-7593018246, rgba(33,24,14,.035));
 
     transition:
         transform .18s cubic-bezier(.22,1,.36,1),
@@ -2532,7 +2532,7 @@
 }
 
 #lgPickupRequests .pickup-stat p {
-    color: #756b60;
+    color: var(--sari-dark-a63aa16d7c, #756b60);
     font-size: 10px;
     font-weight: 600;
     letter-spacing: normal;
@@ -2541,7 +2541,7 @@
 
 #lgPickupRequests .pickup-stat strong {
     margin: 7px 0 4px;
-    color: #211d18;
+    color: var(--sari-dark-e23e64dd1e, #211d18);
     font-size: 25px;
     font-weight: 750;
     line-height: 1.15;
@@ -2549,7 +2549,7 @@
 }
 
 #lgPickupRequests .pickup-stat span:not(.pickup-stat-icon) {
-    color: #8d8378;
+    color: var(--sari-dark-a63aa16d7c, #8d8378);
     font-size: 9px;
     line-height: 1.45;
 }
@@ -2566,7 +2566,7 @@
     border: 0;
     border-radius: 0;
     background: transparent;
-    color: #aab3bd;
+    color: var(--sari-dark-a63aa16d7c, #aab3bd);
     box-shadow: none;
 }
 
@@ -2583,9 +2583,9 @@
 
 #lgPickupRequests .pickup-workspace {
     border-radius: 17px;
-    border-color: #e8e2d9;
-    background: white;
-    box-shadow: 0 6px 18px rgba(33,24,14,.035);
+    border-color: var(--sari-dark-d8c2716225, #e8e2d9);
+    background: var(--sari-dark-950baec030, white);
+    box-shadow: 0 6px 18px var(--sari-dark-7593018246, rgba(33,24,14,.035));
 }
 
 #lgPickupRequests .pickup-toolbar {
@@ -2597,12 +2597,12 @@
     font-size: 16px;
     font-weight: 700;
     letter-spacing: -.035em;
-    color: #29231d;
+    color: var(--sari-dark-e23e64dd1e, #29231d);
 }
 
 #lgPickupRequests .pickup-toolbar p {
     margin-top: 4px;
-    color: #93897e;
+    color: var(--sari-dark-a63aa16d7c, #93897e);
     font-size: 9px;
     line-height: 1.55;
 }
@@ -2616,15 +2616,15 @@
 #lgPickupRequests .pickup-search input {
     height: 39px;
     padding: 0 12px;
-    border-color: #dfe2e6;
+    border-color: var(--sari-dark-d8c2716225, #dfe2e6);
     border-radius: 10px;
     font-size: 10px;
-    background: white;
+    background: var(--sari-dark-950baec030, white);
 }
 
 #lgPickupRequests .pickup-search input:focus {
     border-color: #d9950b;
-    box-shadow: 0 0 0 3px rgba(217,149,11,.09);
+    box-shadow: 0 0 0 3px var(--sari-dark-b12a5e9552, rgba(217,149,11,.09));
 }
 
 /* STATUS FILTERS */
@@ -2637,9 +2637,9 @@
 #lgPickupRequests .pickup-tabs {
     gap: 4px;
     padding: 4px;
-    border: 1px solid #e6e1d9;
+    border: 1px solid var(--sari-dark-d8c2716225, #e6e1d9);
     border-radius: 10px;
-    background: #f7f8fa;
+    background: var(--sari-dark-950baec030, #f7f8fa);
 }
 
 #lgPickupRequests .pickup-tabs button {
@@ -2650,10 +2650,10 @@
 }
 
 #lgPickupRequests .pickup-tabs button[aria-pressed="true"] {
-    border-color: #e9dfce;
-    background: white;
-    color: #a36c0a;
-    box-shadow: 0 2px 5px rgba(35,29,22,.035);
+    border-color: var(--sari-dark-d8c2716225, #e9dfce);
+    background: var(--sari-dark-950baec030, white);
+    color: var(--sari-dark-af18afcaa4, #a36c0a);
+    box-shadow: 0 2px 5px var(--sari-dark-7593018246, rgba(35,29,22,.035));
 }
 
 #lgPickupRequests .pickup-tabs span {
@@ -2663,7 +2663,7 @@
 }
 
 #lgPickupRequests .pickup-text-link {
-    color: #a66d0b;
+    color: var(--sari-dark-6e784b4931, #a66d0b);
     font-size: 9px;
     font-weight: 650;
 }
@@ -2674,7 +2674,7 @@
     min-height: 49px;
     padding: 9px 17px;
     gap: 11px;
-    background: #fbfbfc;
+    background: var(--sari-dark-950baec030, #fbfbfc);
 }
 
 #lgPickupRequests .pickup-selection-bar label,
@@ -2721,12 +2721,12 @@
 }
 
 #lgPickupRequests .pickup-table thead {
-    background: #f7f8fa;
+    background: var(--sari-dark-950baec030, #f7f8fa);
 }
 
 #lgPickupRequests .pickup-table th {
     padding: 12px;
-    color: #81776d;
+    color: var(--sari-dark-a63aa16d7c, #81776d);
     font-size: 8.5px;
     font-weight: 650;
     letter-spacing: .05em;
@@ -2753,14 +2753,14 @@
 #lgPickupRequests .pickup-table td strong {
     font-size: 10px;
     font-weight: 650;
-    color: #443c33;
+    color: var(--sari-dark-e23e64dd1e, #443c33);
 }
 
 #lgPickupRequests .pickup-table td p {
     margin-top: 4px;
     font-size: 9px;
     line-height: 1.6;
-    color: #91887e;
+    color: var(--sari-dark-a63aa16d7c, #91887e);
 }
 
 #lgPickupRequests .pickup-table td .pickup-address {
@@ -2770,7 +2770,7 @@
 }
 
 #lgPickupRequests .pickup-table tbody tr:hover {
-    background: #fffaf2;
+    background: var(--sari-dark-950baec030, #fffaf2);
 }
 
 /* STATUS AND ISSUES */
@@ -2802,8 +2802,8 @@
 #lgPickupRequests .pickup-detail-body {
     min-width: 0;
     padding: 11px;
-    background: #fbfbfc;
-    border-color: #e9e3db;
+    background: var(--sari-dark-950baec030, #fbfbfc);
+    border-color: var(--sari-dark-d8c2716225, #e9e3db);
 }
 
 #lgPickupRequests .pickup-detail-grid strong {
@@ -2837,7 +2837,7 @@
     border: 0;
     border-radius: 0;
     background: transparent;
-    color: #b4bbc3;
+    color: var(--sari-dark-a63aa16d7c, #b4bbc3);
     box-shadow: none;
 }
 
@@ -2854,7 +2854,7 @@
 
 #lgPickupRequests .pickup-empty h3 {
     margin: 18px 0 0;
-    color: #9ca4ad;
+    color: var(--sari-dark-a63aa16d7c, #9ca4ad);
     font-size: 22px;
     font-weight: 750;
     line-height: 1.2;
@@ -2864,7 +2864,7 @@
 #lgPickupRequests .pickup-empty p {
     max-width: 520px;
     margin: 7px auto 0;
-    color: #b0b7bf;
+    color: var(--sari-dark-a63aa16d7c, #b0b7bf);
     font-size: 12px;
     font-weight: 500;
     line-height: 1.55;
@@ -2878,7 +2878,7 @@
 
 #lgPickupRequests .pickup-list-footer {
     padding: 12px 16px;
-    background: white;
+    background: var(--sari-dark-950baec030, white);
     font-size: 9px;
 }
 
@@ -2898,8 +2898,8 @@
 @media (hover:hover) and (pointer:fine) {
     #lgPickupRequests .pickup-stat:hover {
         transform: translateY(-2px);
-        border-color: #d8c9b2;
-        box-shadow: 0 13px 28px rgba(43,33,21,.06);
+        border-color: var(--sari-dark-d8c2716225, #d8c9b2);
+        box-shadow: 0 13px 28px var(--sari-dark-361b571631, rgba(43,33,21,.06));
     }
 }
 
@@ -2981,7 +2981,7 @@
 
 <style>
 /* PICKUP REQUESTS — SORTING FACILITIES DIRECTORY PARITY (UI ONLY) */
-#logisticsContent #lgPickupRequests.pickup-page { --pickup-ui-line:#e4e9ee; --pickup-ui-ink:#26313d; }
+#logisticsContent #lgPickupRequests.pickup-page { --pickup-ui-line:var(--sari-dark-d8c2716225, #e4e9ee); --pickup-ui-ink:var(--sari-dark-e23e64dd1e, #26313d); }
 #logisticsContent #lgPickupRequests .pickup-admin-filters {
     display:grid; grid-template-columns:minmax(0,1fr) 205px 148px 94px;
     gap:12px; align-items:center; margin:14px 0 14px; min-width:0;
@@ -2990,13 +2990,13 @@
 #logisticsContent #lgPickupRequests .pickup-admin-select { position:relative; display:block; min-width:0; }
 #logisticsContent #lgPickupRequests .pickup-admin-search > svg {
     position:absolute; left:16px; top:50%; transform:translateY(-50%);
-    width:17px; height:17px; pointer-events:none; color:#94a0ad;
+    width:17px; height:17px; pointer-events:none; color:var(--sari-dark-a63aa16d7c, #94a0ad);
 }
 #logisticsContent #lgPickupRequests .pickup-admin-search input,
 #logisticsContent #lgPickupRequests .pickup-admin-select select {
-    display:block; width:100%; height:46px; border:1px solid #dfe5eb; border-radius:13px;
-    background:#fff; box-shadow:0 5px 13px rgba(24,34,45,.025);
-    color:#374151; font:500 11px/1.4 Poppins, sans-serif; outline:0;
+    display:block; width:100%; height:46px; border:1px solid var(--sari-dark-d8c2716225, #dfe5eb); border-radius:13px;
+    background:var(--sari-dark-950baec030, #fff); box-shadow:0 5px 13px var(--sari-dark-e1384eb7fc, rgba(24,34,45,.025));
+    color:var(--sari-dark-e23e64dd1e, #374151); font:500 11px/1.4 Poppins, sans-serif; outline:0;
     transition:border-color .15s ease,box-shadow .15s ease;
 }
 #logisticsContent #lgPickupRequests .pickup-admin-search input { padding:0 14px 0 43px; }
@@ -3005,13 +3005,13 @@
 }
 #logisticsContent #lgPickupRequests .pickup-admin-select > svg {
     position:absolute; top:50%; right:12px; width:15px; height:15px;
-    transform:translateY(-50%); pointer-events:none; color:#87929e;
+    transform:translateY(-50%); pointer-events:none; color:var(--sari-dark-a63aa16d7c, #87929e);
 }
 #logisticsContent #lgPickupRequests .pickup-admin-search input:focus,
 #logisticsContent #lgPickupRequests .pickup-admin-select select:focus {
-    border-color:#a9b4c0; background:#fff; box-shadow:0 0 0 3px rgba(83,101,118,.08);
+    border-color:var(--sari-dark-d8c2716225, #a9b4c0); background:var(--sari-dark-950baec030, #fff); box-shadow:0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(83,101,118,.08));
 }
-#logisticsContent #lgPickupRequests .pickup-admin-search input::placeholder {color:#9ba6b4;opacity:1;}
+#logisticsContent #lgPickupRequests .pickup-admin-search input::placeholder {color:var(--sari-dark-a63aa16d7c, #9ba6b4);opacity:1;}
 #logisticsContent #lgPickupRequests .pickup-admin-apply,
 #logisticsContent #lgPickupRequests .pickup-admin-reset {
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -3020,36 +3020,36 @@
 }
 #logisticsContent #lgPickupRequests .pickup-admin-apply {
     border:1px solid #d9950b; background:#d9950b; color:#fff;
-    box-shadow:0 6px 14px rgba(217,149,11,.13);
+    box-shadow:0 6px 14px var(--sari-dark-3e32d50f5e, rgba(217,149,11,.13));
 }
 #logisticsContent #lgPickupRequests .pickup-admin-apply:hover {background:#bc7e06;border-color:#bc7e06;}
 #logisticsContent #lgPickupRequests .pickup-admin-apply svg {width:15px;height:15px;}
 #logisticsContent #lgPickupRequests .pickup-admin-reset {
-    border:1px solid #dfe5eb; background:#fff;color:#647083;
+    border:1px solid var(--sari-dark-d8c2716225, #dfe5eb); background:var(--sari-dark-950baec030, #fff);color:var(--sari-dark-a63aa16d7c, #647083);
 }
-#logisticsContent #lgPickupRequests .pickup-admin-reset:hover {background:#f4f6f8;}
+#logisticsContent #lgPickupRequests .pickup-admin-reset:hover {background:var(--sari-dark-4d21eb669b, #f4f6f8);}
 #logisticsContent #lgPickupRequests .pickup-admin-directory {
     border:1px solid var(--pickup-ui-line); border-radius:19px;
-    background:#fff; overflow:hidden;
-    box-shadow:0 10px 28px rgba(31,41,55,.06),0 3px 9px rgba(31,41,55,.025);
+    background:var(--sari-dark-950baec030, #fff); overflow:hidden;
+    box-shadow:0 10px 28px var(--sari-dark-361b571631, rgba(31,41,55,.06)),0 3px 9px var(--sari-dark-e1384eb7fc, rgba(31,41,55,.025));
 }
 #logisticsContent #lgPickupRequests .pickup-admin-table-head {
     display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
-    gap:10px; padding:17px 20px; border-bottom:1px solid #e9edf1;
+    gap:10px; padding:17px 20px; border-bottom:1px solid var(--sari-dark-d8c2716225, #e9edf1);
 }
 #logisticsContent #lgPickupRequests .pickup-admin-table-head h2 {
     margin:0;color:var(--pickup-ui-ink);font-size:16px;font-weight:750;letter-spacing:-.03em;
 }
 #logisticsContent #lgPickupRequests .pickup-admin-table-head p {
-    margin:4px 0 0;color:#929cab;font-size:10px;line-height:1.5;
+    margin:4px 0 0;color:var(--sari-dark-a63aa16d7c, #929cab);font-size:10px;line-height:1.5;
 }
 #logisticsContent #lgPickupRequests .pickup-admin-counter {
     display:inline-flex;align-items:center;min-height:31px;padding:0 11px;
-    border:1px solid #e3e8ee;border-radius:9px;background:#f8fafc;
-    color:#637188;font-size:10px;font-weight:700;white-space:nowrap;
+    border:1px solid var(--sari-dark-d8c2716225, #e3e8ee);border-radius:9px;background:var(--sari-dark-950baec030, #f8fafc);
+    color:var(--sari-dark-a63aa16d7c, #637188);font-size:10px;font-weight:700;white-space:nowrap;
 }
 #logisticsContent #lgPickupRequests .pickup-selection-bar {
-    min-height:47px;padding:10px 20px;gap:12px;background:#fff;border-bottom:1px solid #e9edf1;
+    min-height:47px;padding:10px 20px;gap:12px;background:var(--sari-dark-950baec030, #fff);border-bottom:1px solid var(--sari-dark-d8c2716225, #e9edf1);
 }
 #logisticsContent #lgPickupRequests .pickup-selection-bar label,
 #logisticsContent #lgPickupRequests .pickup-selection-bar > span {font-size:10px;}
@@ -3058,9 +3058,9 @@
 #logisticsContent #lgPickupRequests table.pickup-table {
     width:100%;min-width:0;table-layout:fixed;border-collapse:collapse;font-size:11px;
 }
-#logisticsContent #lgPickupRequests .pickup-table thead {background:#f7f9fb;}
+#logisticsContent #lgPickupRequests .pickup-table thead {background:var(--sari-dark-950baec030, #f7f9fb);}
 #logisticsContent #lgPickupRequests .pickup-table th {
-    padding:13px 12px; color:#697687; border-bottom:1px solid #e6ebef;
+    padding:13px 12px; color:var(--sari-dark-a63aa16d7c, #697687); border-bottom:1px solid var(--sari-dark-d8c2716225, #e6ebef);
     font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
 }
 #logisticsContent #lgPickupRequests .pickup-table th:nth-child(1){width:5%;}
@@ -3071,27 +3071,27 @@
 #logisticsContent #lgPickupRequests .pickup-table th:nth-child(6){width:18%;}
 #logisticsContent #lgPickupRequests .pickup-table td {
     min-width:0;padding:15px 12px;vertical-align:top;
-    border-bottom:1px solid #edf0f3;color:#586473;font-size:11px;
+    border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f3);color:var(--sari-dark-a63aa16d7c, #586473);font-size:11px;
     overflow-wrap:anywhere;
 }
 #logisticsContent #lgPickupRequests .pickup-table td:first-child:has(input[type="checkbox"]){min-width:0;padding-left:17px;padding-right:0;}
 #logisticsContent #lgPickupRequests .pickup-table td:last-child {min-width:0;}
-#logisticsContent #lgPickupRequests .pickup-table td strong {color:#273441;font-size:11px;font-weight:700;}
+#logisticsContent #lgPickupRequests .pickup-table td strong {color:var(--sari-dark-e23e64dd1e, #273441);font-size:11px;font-weight:700;}
 #logisticsContent #lgPickupRequests .pickup-table td p,
-#logisticsContent #lgPickupRequests .pickup-table td .pickup-address {font-size:10px;line-height:1.55;color:#8894a2;min-width:0;max-width:100%;}
-#logisticsContent #lgPickupRequests .pickup-table tbody tr:hover {background:#f3f5f7;box-shadow:none;}
-#logisticsContent #lgPickupRequests .pickup-table tbody tr:hover td {border-color:#e9edf1;}
+#logisticsContent #lgPickupRequests .pickup-table td .pickup-address {font-size:10px;line-height:1.55;color:var(--sari-dark-a63aa16d7c, #8894a2);min-width:0;max-width:100%;}
+#logisticsContent #lgPickupRequests .pickup-table tbody tr:hover {background:var(--sari-dark-4d21eb669b, #f3f5f7);box-shadow:none;}
+#logisticsContent #lgPickupRequests .pickup-table tbody tr:hover td {border-color:var(--sari-dark-d8c2716225, #e9edf1);}
 #logisticsContent #lgPickupRequests .pickup-badge {min-height:25px;padding:5px 9px;font-size:9px;}
 #logisticsContent #lgPickupRequests .pickup-text-link {font-size:10px;}
 #logisticsContent #lgPickupRequests .pickup-admin-footer {
     display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;
-    gap:10px;padding:12px 20px;border-top:1px solid #e9edf1;
-    background:#fff;color:#7d8996;font-size:10px;
+    gap:10px;padding:12px 20px;border-top:1px solid var(--sari-dark-d8c2716225, #e9edf1);
+    background:var(--sari-dark-950baec030, #fff);color:var(--sari-dark-a63aa16d7c, #7d8996);font-size:10px;
 }
 #logisticsContent #lgPickupRequests .pickup-page-size-label {display:inline-flex;align-items:center;gap:10px;font-size:10px;}
 #logisticsContent #lgPickupRequests .pickup-page-size-label select {
-    height:34px;min-width:60px;padding:0 8px;border:1px solid #dfe5eb;border-radius:9px;
-    background:#fff;color:#526073;font-size:10px;
+    height:34px;min-width:60px;padding:0 8px;border:1px solid var(--sari-dark-d8c2716225, #dfe5eb);border-radius:9px;
+    background:var(--sari-dark-950baec030, #fff);color:var(--sari-dark-a63aa16d7c, #526073);font-size:10px;
 }
 #logisticsContent #lgPickupRequests .pickup-pagination-nav {
     display:flex;align-items:center;justify-content:center;gap:8px;
@@ -3102,17 +3102,17 @@
 #logisticsContent #lgPickupRequests .pickup-page-number,
 #logisticsContent #lgPickupRequests .pickup-page-arrow {
     display:grid;place-items:center;width:34px;height:34px;padding:0;
-    border:1px solid #e7ebf0;border-radius:10px;background:#f7f9fb;
-    color:#8090a2;font-size:11px;font-weight:700;line-height:1;
+    border:1px solid var(--sari-dark-d8c2716225, #e7ebf0);border-radius:10px;background:var(--sari-dark-950baec030, #f7f9fb);
+    color:var(--sari-dark-a63aa16d7c, #8090a2);font-size:11px;font-weight:700;line-height:1;
     transition:background-color .15s ease,color .15s ease;
 }
 #logisticsContent #lgPickupRequests .pickup-page-arrow svg {width:15px;height:15px;}
 #logisticsContent #lgPickupRequests .pickup-page-number.is-current {
     background:#cc901f;border-color:#cc901f;color:#fff;
-    box-shadow:0 5px 13px rgba(178,121,18,.16);
+    box-shadow:0 5px 13px var(--sari-dark-b5c2a2270e, rgba(178,121,18,.16));
 }
 #logisticsContent #lgPickupRequests .pickup-page-number:not(.is-current):hover,
-#logisticsContent #lgPickupRequests .pickup-page-arrow:not(:disabled):hover {background:#ecf0f4;color:#435366;}
+#logisticsContent #lgPickupRequests .pickup-page-arrow:not(:disabled):hover {background:var(--sari-dark-4d21eb669b, #ecf0f4);color:var(--sari-dark-e23e64dd1e, #435366);}
 #logisticsContent #lgPickupRequests .pickup-page-arrow:disabled {opacity:.38;cursor:not-allowed;}
 #logisticsContent #lgPickupRequests .pickup-page-number:focus-visible,
 #logisticsContent #lgPickupRequests .pickup-page-arrow:focus-visible {outline:2px solid #b8872b;outline-offset:2px;}
@@ -3133,7 +3133,7 @@
     #logisticsContent #lgPickupRequests .pickup-table td {display:block;width:100%;}
     #logisticsContent #lgPickupRequests .pickup-table tbody tr {
         display:grid;grid-template-columns:1fr 1fr;gap:0 16px;padding:11px 16px;
-        border-bottom:1px solid #e9edf1;
+        border-bottom:1px solid var(--sari-dark-d8c2716225, #e9edf1);
     }
     #logisticsContent #lgPickupRequests .pickup-table tbody tr[hidden] {display:none!important;}
     #logisticsContent #lgPickupRequests .pickup-table td,
@@ -3141,7 +3141,7 @@
         padding:9px 0!important;border:0!important;min-width:0!important;
     }
     #logisticsContent #lgPickupRequests .pickup-table td::before {
-        content:attr(data-label);display:block;margin-bottom:5px;color:#8a95a2;
+        content:attr(data-label);display:block;margin-bottom:5px;color:var(--sari-dark-a63aa16d7c, #8a95a2);
         font-size:9px;letter-spacing:.05em;font-weight:700;text-transform:uppercase;
     }
     #logisticsContent #lgPickupRequests .pickup-table td:first-child {grid-column:1/-1;}
@@ -3171,46 +3171,46 @@
 /* PICKUP REQUESTS — BUYER BUTTON + CLEAN TABLE REFINEMENT */
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button {
     display:inline-flex; align-items:center; justify-content:center; gap:10px;
-    min-height:44px; padding:0 16px; border:1px solid #d8e0e8; border-radius:12px;
-    background:#fff; color:#516172; text-decoration:none; font-size:13px; font-weight:700;
-    line-height:1; box-shadow:0 6px 16px rgba(24,34,45,.035);
+    min-height:44px; padding:0 16px; border:1px solid var(--sari-dark-d8c2716225, #d8e0e8); border-radius:12px;
+    background:var(--sari-dark-950baec030, #fff); color:var(--sari-dark-a63aa16d7c, #516172); text-decoration:none; font-size:13px; font-weight:700;
+    line-height:1; box-shadow:0 6px 16px var(--sari-dark-7593018246, rgba(24,34,45,.035));
     transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease, color .15s ease;
 }
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button span {
     display:inline-flex; align-items:center; justify-content:center; font-size:16px; font-weight:700;
-    color:#657487;
+    color:var(--sari-dark-a63aa16d7c, #657487);
 }
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button:hover {
-    transform:translateY(-1px); border-color:#cfd7e0; box-shadow:0 10px 22px rgba(24,34,45,.06);
-    color:#3f4f61;
+    transform:translateY(-1px); border-color:var(--sari-dark-d8c2716225, #cfd7e0); box-shadow:0 10px 22px var(--sari-dark-361b571631, rgba(24,34,45,.06));
+    color:var(--sari-dark-e23e64dd1e, #3f4f61);
 }
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button:focus-visible {
-    outline:none; border-color:#d89b10; box-shadow:0 0 0 3px rgba(216,155,16,.12);
+    outline:none; border-color:#d89b10; box-shadow:0 0 0 3px var(--sari-dark-3b2338cbf0, rgba(216,155,16,.12));
 }
 #logisticsContent #lgPickupRequests .pickup-stats { gap:14px; }
 #logisticsContent #lgPickupRequests .pickup-stat {
     min-height:108px; padding:16px 16px 15px; border-radius:18px;
 }
 #logisticsContent #lgPickupRequests .pickup-stat p {
-    color:#667585; font-size:11px; font-weight:700;
+    color:var(--sari-dark-a63aa16d7c, #667585); font-size:11px; font-weight:700;
 }
 #logisticsContent #lgPickupRequests .pickup-stat strong {
-    margin:8px 0 5px; color:#1f2937; font-size:28px; font-weight:700; letter-spacing:-.04em;
+    margin:8px 0 5px; color:var(--sari-dark-e23e64dd1e, #1f2937); font-size:28px; font-weight:700; letter-spacing:-.04em;
 }
 #logisticsContent #lgPickupRequests .pickup-stat span:not(.pickup-stat-icon) {
-    color:#8a97a6; font-size:10px; line-height:1.5;
+    color:var(--sari-dark-a63aa16d7c, #8a97a6); font-size:10px; line-height:1.5;
 }
 #logisticsContent #lgPickupRequests .pickup-stat-icon {
-    width:38px; height:38px; flex:0 0 38px; border-radius:12px; background:#f5f7fa; color:#7b8794;
+    width:38px; height:38px; flex:0 0 38px; border-radius:12px; background:var(--sari-dark-950baec030, #f5f7fa); color:var(--sari-dark-a63aa16d7c, #7b8794);
 }
 #logisticsContent #lgPickupRequests .pickup-stat-icon svg { width:20px; height:20px; stroke-width:1.9; }
-#logisticsContent #lgPickupRequests .pickup-stat-amber .pickup-stat-icon { background:#fff5db; color:#c98706; }
-#logisticsContent #lgPickupRequests .pickup-stat-green .pickup-stat-icon { background:#edf8f1; color:#2c8a57; }
-#logisticsContent #lgPickupRequests .pickup-stat-red .pickup-stat-icon { background:#fff0ef; color:#cf5e57; }
-#logisticsContent #lgPickupRequests .pickup-stat-neutral .pickup-stat-icon { background:#eef2f6; color:#66788b; }
-#logisticsContent #lgPickupRequests .pickup-stat-amber strong { color:#b97706; }
-#logisticsContent #lgPickupRequests .pickup-stat-green strong { color:#216a43; }
-#logisticsContent #lgPickupRequests .pickup-stat-red strong { color:#b54844; }
+#logisticsContent #lgPickupRequests .pickup-stat-amber .pickup-stat-icon { background:var(--sari-dark-4d21eb669b, #fff5db); color:var(--sari-dark-9db03b407c, #c98706); }
+#logisticsContent #lgPickupRequests .pickup-stat-green .pickup-stat-icon { background:var(--sari-dark-4d21eb669b, #edf8f1); color:var(--sari-dark-e23e64dd1e, #2c8a57); }
+#logisticsContent #lgPickupRequests .pickup-stat-red .pickup-stat-icon { background:var(--sari-dark-950baec030, #fff0ef); color:var(--sari-dark-8167feae9c, #cf5e57); }
+#logisticsContent #lgPickupRequests .pickup-stat-neutral .pickup-stat-icon { background:var(--sari-dark-4d21eb669b, #eef2f6); color:var(--sari-dark-a63aa16d7c, #66788b); }
+#logisticsContent #lgPickupRequests .pickup-stat-amber strong { color:var(--sari-dark-6e784b4931, #b97706); }
+#logisticsContent #lgPickupRequests .pickup-stat-green strong { color:var(--sari-dark-e23e64dd1e, #216a43); }
+#logisticsContent #lgPickupRequests .pickup-stat-red strong { color:var(--sari-dark-4d499cbcf0, #b54844); }
 #logisticsContent #lgPickupRequests .pickup-admin-table-head {
     padding:18px 22px 15px; align-items:flex-end;
 }
@@ -3225,34 +3225,34 @@
 }
 #logisticsContent #lgPickupRequests .pickup-selection-bar label,
 #logisticsContent #lgPickupRequests .pickup-selection-bar > span {
-    display:inline-flex; align-items:center; gap:8px; color:#677689; font-size:10.5px; font-weight:600;
+    display:inline-flex; align-items:center; gap:8px; color:var(--sari-dark-a63aa16d7c, #677689); font-size:10.5px; font-weight:600;
 }
 #logisticsContent #lgPickupRequests .pickup-selection-bar .pickup-button {
     min-height:37px; padding:0 14px; border-radius:11px; font-size:10.5px; font-weight:700;
 }
-#logisticsContent #lgPickupRequests .pickup-table thead { background:#f6f8fa; }
+#logisticsContent #lgPickupRequests .pickup-table thead { background:var(--sari-dark-950baec030, #f6f8fa); }
 #logisticsContent #lgPickupRequests .pickup-table th {
-    padding:14px 12px; color:#748193; font-size:10px; font-weight:800; letter-spacing:.08em;
+    padding:14px 12px; color:var(--sari-dark-a63aa16d7c, #748193); font-size:10px; font-weight:800; letter-spacing:.08em;
 }
 #logisticsContent #lgPickupRequests .pickup-table td {
-    padding:16px 12px; color:#5f6c7a; font-size:11px;
+    padding:16px 12px; color:var(--sari-dark-a63aa16d7c, #5f6c7a); font-size:11px;
 }
 #logisticsContent #lgPickupRequests .pickup-table td strong {
-    color:#243140; font-size:11.5px; font-weight:700;
+    color:var(--sari-dark-e23e64dd1e, #243140); font-size:11.5px; font-weight:700;
 }
 #logisticsContent #lgPickupRequests .pickup-table td p,
 #logisticsContent #lgPickupRequests .pickup-table td .pickup-address,
 #logisticsContent #lgPickupRequests .pickup-products li,
 #logisticsContent #lgPickupRequests .pickup-detail-grid p {
-    color:#8793a1; font-size:10.5px; line-height:1.62;
+    color:var(--sari-dark-a63aa16d7c, #8793a1); font-size:10.5px; line-height:1.62;
 }
 #logisticsContent #lgPickupRequests .pickup-detail-body {
-    border-radius:12px; background:#fafbfc;
+    border-radius:12px; background:var(--sari-dark-950baec030, #fafbfc);
 }
 #logisticsContent #lgPickupRequests .pickup-text-link {
-    color:#b37a0e; font-size:10.5px; font-weight:700; text-decoration:none;
+    color:var(--sari-dark-19b301f69a, #b37a0e); font-size:10.5px; font-weight:700; text-decoration:none;
 }
-#logisticsContent #lgPickupRequests .pickup-text-link:hover { color:#935f05; }
+#logisticsContent #lgPickupRequests .pickup-text-link:hover { color:var(--sari-dark-af18afcaa4, #935f05); }
 #logisticsContent #lgPickupRequests .pickup-badge {
     min-height:26px; padding:5px 10px; border-radius:999px; font-size:9px; font-weight:700;
 }
@@ -3260,7 +3260,7 @@
     padding:14px 22px; font-size:10.5px;
 }
 #logisticsContent #lgPickupRequests .pickup-page-size-label {
-    gap:8px; color:#6f7d8d; font-weight:600; font-size:10.5px;
+    gap:8px; color:var(--sari-dark-a63aa16d7c, #6f7d8d); font-weight:600; font-size:10.5px;
 }
 #logisticsContent #lgPickupRequests .pickup-page-size-label select {
     height:36px; min-width:68px; border-radius:10px; font-size:10.5px;
@@ -3286,24 +3286,24 @@
    Preserve all verification, selection and routing behavior.
    =========================================================== */
 #logisticsContent:has(#lgPickupRequests) {
-    background: #f4f5f7;
+    background: var(--sari-dark-4d21eb669b, #f4f5f7);
 }
 #logisticsContent #lgPickupRequests {
     --pickup-gold: #c88912;
     --pickup-gold-dark: #b47b0e;
-    --pickup-ink: #2f3742;
-    --pickup-line: #e5e7eb;
-    --pickup-shadow: 0 2px 5px rgba(15,23,42,.045),
-        0 10px 24px rgba(15,23,42,.075),
-        0 24px 54px rgba(15,23,42,.095),
-        inset 0 1px 0 rgba(255,255,255,.92);
+    --pickup-ink: var(--sari-dark-e23e64dd1e, #2f3742);
+    --pickup-line: var(--sari-dark-d8c2716225, #e5e7eb);
+    --pickup-shadow: 0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     display: grid;
     gap: 20px;
     width: 100%;
     max-width: 1520px;
     margin: 0 auto;
     padding-bottom: 28px;
-    color: #2f3742;
+    color: var(--sari-dark-e23e64dd1e, #2f3742);
     font: 400 13px/1.65 Poppins, ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -3327,7 +3327,7 @@
 #logisticsContent #lgPickupRequests .pickup-page-header::after { display: none; }
 #logisticsContent #lgPickupRequests .pickup-page-header .pickup-eyebrow {
     margin: 0 0 6px;
-    color: #a87316;
+    color: var(--sari-dark-685eb4fc40, #a87316);
     font-size: 10.5px;
     font-weight: 800;
     letter-spacing: .14em;
@@ -3335,13 +3335,13 @@
 }
 #logisticsContent #lgPickupRequests .pickup-page-header h1 {
     margin: 0;
-    color: #2e343b;
+    color: var(--sari-dark-e23e64dd1e, #2e343b);
     font-size: clamp(27px,2.3vw,31px);
     font-weight: 760;
     letter-spacing: -.04em;
     line-height: 1.08;
 }
-#logisticsContent #lgPickupRequests .pickup-page-header h1 span { color: #c88912; }
+#logisticsContent #lgPickupRequests .pickup-page-header h1 span { color: var(--sari-dark-19b301f69a, #c88912); }
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button {
     display: inline-flex;
     align-items: center;
@@ -3355,7 +3355,7 @@
     border-radius: 0;
     background: transparent;
     box-shadow: none;
-    color: #59636e;
+    color: var(--sari-dark-a63aa16d7c, #59636e);
     font-size: 11.5px;
     font-weight: 750;
     line-height: 1.35;
@@ -3371,7 +3371,7 @@
     transition: transform .16s ease;
 }
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button:hover {
-    color: #c88912;
+    color: var(--sari-dark-19b301f69a, #c88912);
     background: transparent;
     border-color: transparent;
     box-shadow: none;
@@ -3397,13 +3397,13 @@
     gap: 12px;
     min-height: 110px;
     padding: 14px 16px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
     border-radius: 18px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
     box-shadow: var(--pickup-shadow);
 }
 #logisticsContent #lgPickupRequests .pickup-stat p {
-    color: #5f6d7c;
+    color: var(--sari-dark-a63aa16d7c, #5f6d7c);
     font-size: 15px;
     font-weight: 600;
     line-height: 1.4;
@@ -3414,7 +3414,7 @@
 #logisticsContent #lgPickupRequests .pickup-stat-red strong {
     display: block;
     margin: 8px 0 5px;
-    color: #1f2937;
+    color: var(--sari-dark-e23e64dd1e, #1f2937);
     font-size: clamp(25px,1.9vw,30px);
     font-weight: 650;
     letter-spacing: -.045em;
@@ -3422,7 +3422,7 @@
     font-variant-numeric: tabular-nums;
 }
 #logisticsContent #lgPickupRequests .pickup-stat span:not(.pickup-stat-icon) {
-    color: #8995a3;
+    color: var(--sari-dark-a63aa16d7c, #8995a3);
     font-size: 12.5px;
     font-weight: 400;
     line-height: 1.5;
@@ -3442,7 +3442,7 @@
     border: 0;
     border-radius: 0;
     background: transparent;
-    color: #9aa5b1;
+    color: var(--sari-dark-a63aa16d7c, #9aa5b1);
     box-shadow: none;
 }
 #logisticsContent #lgPickupRequests .pickup-stat-icon svg {
@@ -3450,9 +3450,9 @@
     height: 27px;
     stroke-width: 1.8;
 }
-#logisticsContent #lgPickupRequests .pickup-stat-amber .pickup-stat-icon { color: #c88912; }
-#logisticsContent #lgPickupRequests .pickup-stat-green .pickup-stat-icon { color: #0f8a6b; }
-#logisticsContent #lgPickupRequests .pickup-stat-red .pickup-stat-icon { color: #cc4b37; }
+#logisticsContent #lgPickupRequests .pickup-stat-amber .pickup-stat-icon { color: var(--sari-dark-19b301f69a, #c88912); }
+#logisticsContent #lgPickupRequests .pickup-stat-green .pickup-stat-icon { color: var(--sari-dark-03a543331f, #0f8a6b); }
+#logisticsContent #lgPickupRequests .pickup-stat-red .pickup-stat-icon { color: var(--sari-dark-8445ea8cc1, #cc4b37); }
 
 /* Delivery History: standalone search, filter, and action controls. */
 #logisticsContent #lgPickupRequests .pickup-admin-filters {
@@ -3467,32 +3467,32 @@
     left: 16px;
     width: 21px;
     height: 21px;
-    color: #97a3b2;
+    color: var(--sari-dark-a63aa16d7c, #97a3b2);
 }
 #logisticsContent #lgPickupRequests .pickup-admin-search input,
 #logisticsContent #lgPickupRequests .pickup-admin-select select {
     width: 100%;
     height: 48px;
-    border: 1px solid #dce2e8;
+    border: 1px solid var(--sari-dark-d8c2716225, #dce2e8);
     border-radius: 14px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
     box-shadow: none;
-    color: #3f4b59;
+    color: var(--sari-dark-e23e64dd1e, #3f4b59);
     font: 600 11.5px/1.4 Poppins, sans-serif;
     transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
 }
 #logisticsContent #lgPickupRequests .pickup-admin-search input { padding: 0 16px 0 46px; }
 #logisticsContent #lgPickupRequests .pickup-admin-select select { padding: 0 40px 0 16px; }
-#logisticsContent #lgPickupRequests .pickup-admin-search input::placeholder { color: #a0aab6; }
-#logisticsContent #lgPickupRequests .pickup-admin-select > svg { right: 17px; color: #6b7280; }
+#logisticsContent #lgPickupRequests .pickup-admin-search input::placeholder { color: var(--sari-dark-a63aa16d7c, #a0aab6); }
+#logisticsContent #lgPickupRequests .pickup-admin-select > svg { right: 17px; color: var(--sari-dark-a63aa16d7c, #6b7280); }
 #logisticsContent #lgPickupRequests .pickup-admin-search input:hover,
-#logisticsContent #lgPickupRequests .pickup-admin-select select:hover { background: #f3f4f6; border-color: #cfd6de; }
+#logisticsContent #lgPickupRequests .pickup-admin-select select:hover { background: var(--sari-dark-4d21eb669b, #f3f4f6); border-color: var(--sari-dark-d8c2716225, #cfd6de); }
 #logisticsContent #lgPickupRequests .pickup-admin-search input:focus,
 #logisticsContent #lgPickupRequests .pickup-admin-select select:focus {
     outline: 0;
     border-color: #c88912;
-    background: #fff;
-    box-shadow: 0 0 0 1px rgba(200,137,18,.12);
+    background: var(--sari-dark-950baec030, #fff);
+    box-shadow: 0 0 0 1px var(--sari-dark-3b2338cbf0, rgba(200,137,18,.12));
 }
 #logisticsContent #lgPickupRequests .pickup-admin-apply,
 #logisticsContent #lgPickupRequests .pickup-admin-reset {
@@ -3507,15 +3507,15 @@
 }
 #logisticsContent #lgPickupRequests .pickup-admin-apply { border-color: #c88912; background: #c88912; color: #fff; }
 #logisticsContent #lgPickupRequests .pickup-admin-apply:hover { border-color: #b47b0e; background: #b47b0e; }
-#logisticsContent #lgPickupRequests .pickup-admin-reset { border-color: #dce2e8; background: #fff; color: #5f6d7c; }
-#logisticsContent #lgPickupRequests .pickup-admin-reset:hover { border-color: #cfd6de; background: #f3f4f6; }
+#logisticsContent #lgPickupRequests .pickup-admin-reset { border-color: var(--sari-dark-d8c2716225, #dce2e8); background: var(--sari-dark-950baec030, #fff); color: var(--sari-dark-a63aa16d7c, #5f6d7c); }
+#logisticsContent #lgPickupRequests .pickup-admin-reset:hover { border-color: var(--sari-dark-d8c2716225, #cfd6de); background: var(--sari-dark-4d21eb669b, #f3f4f6); }
 
 /* Completed Trips: floating white table with readable rows. */
 #logisticsContent #lgPickupRequests .pickup-admin-directory {
     overflow: hidden;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
     border-radius: 18px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
     box-shadow: var(--pickup-shadow);
 }
 #logisticsContent #lgPickupRequests .pickup-admin-table-head {
@@ -3525,11 +3525,11 @@
     flex-wrap: wrap;
     gap: 14px;
     padding: 21px 23px;
-    border-bottom: 1px solid #e9edf1;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
 }
 #logisticsContent #lgPickupRequests .pickup-admin-table-head h2 {
     margin: 0;
-    color: #2f3742;
+    color: var(--sari-dark-e23e64dd1e, #2f3742);
     font-size: 18px;
     font-weight: 780;
     letter-spacing: -.03em;
@@ -3537,7 +3537,7 @@
 }
 #logisticsContent #lgPickupRequests .pickup-admin-table-head p {
     margin: 4px 0 0;
-    color: #8b96a4;
+    color: var(--sari-dark-a63aa16d7c, #8b96a4);
     font-size: 11.5px;
     line-height: 1.5;
 }
@@ -3548,7 +3548,7 @@
     border: 0;
     border-radius: 0;
     background: none;
-    color: #7b8794;
+    color: var(--sari-dark-a63aa16d7c, #7b8794);
     font-size: 12px;
     font-weight: 600;
     white-space: nowrap;
@@ -3557,12 +3557,12 @@
     min-height: 49px;
     padding: 10px 23px;
     gap: 12px;
-    background: #fff;
-    border-bottom: 1px solid #e9edf1;
+    background: var(--sari-dark-950baec030, #fff);
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
 }
 #logisticsContent #lgPickupRequests .pickup-selection-bar label,
 #logisticsContent #lgPickupRequests .pickup-selection-bar > span {
-    color: #667383;
+    color: var(--sari-dark-a63aa16d7c, #667383);
     font-size: 11.5px;
     font-weight: 600;
 }
@@ -3590,11 +3590,11 @@
     border-collapse: collapse;
     text-align: left;
 }
-#logisticsContent #lgPickupRequests .pickup-table thead { background: #f8fafc; }
+#logisticsContent #lgPickupRequests .pickup-table thead { background: var(--sari-dark-950baec030, #f8fafc); }
 #logisticsContent #lgPickupRequests .pickup-table th {
     padding: 13px 16px;
-    border-bottom: 1px solid #e9edf1;
-    color: #8591a0;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
+    color: var(--sari-dark-a63aa16d7c, #8591a0);
     font-size: 11px;
     font-weight: 750;
     letter-spacing: .075em;
@@ -3606,19 +3606,19 @@
     min-width: 0;
     padding: 17px 16px;
     vertical-align: top;
-    border-bottom: 1px solid #edf0f3;
-    color: #667383;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
+    color: var(--sari-dark-a63aa16d7c, #667383);
     font-size: 12.5px;
     line-height: 1.6;
     overflow-wrap: anywhere;
 }
-#logisticsContent #lgPickupRequests .pickup-table tbody tr:hover { background: #f6f7f9; }
-#logisticsContent #lgPickupRequests .pickup-table td strong { color: #293440; font-size: 12.5px; font-weight: 750; }
+#logisticsContent #lgPickupRequests .pickup-table tbody tr:hover { background: var(--sari-dark-950baec030, #f6f7f9); }
+#logisticsContent #lgPickupRequests .pickup-table td strong { color: var(--sari-dark-e23e64dd1e, #293440); font-size: 12.5px; font-weight: 750; }
 #logisticsContent #lgPickupRequests .pickup-table td p,
 #logisticsContent #lgPickupRequests .pickup-table td .pickup-address,
 #logisticsContent #lgPickupRequests .pickup-products li,
 #logisticsContent #lgPickupRequests .pickup-detail-grid p {
-    color: #8793a1;
+    color: var(--sari-dark-a63aa16d7c, #8793a1);
     font-size: 11.5px;
     line-height: 1.6;
 }
@@ -3642,9 +3642,9 @@
     height: 17px;
     flex: 0 0 17px;
     margin: 0;
-    border: 1.5px solid #c6cbd2;
+    border: 1.5px solid var(--sari-dark-d8c2716225, #c6cbd2);
     border-radius: 5px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
     cursor: pointer;
 }
 #logisticsContent #lgPickupRequests input[type="checkbox"]::after {
@@ -3653,8 +3653,8 @@
     width: 8px;
     height: 5px;
     margin-top: -2px;
-    border-left: 2px solid #fff;
-    border-bottom: 2px solid #fff;
+    border-left: 2px solid var(--sari-dark-d8c2716225, #fff);
+    border-bottom: 2px solid var(--sari-dark-d8c2716225, #fff);
     transform: rotate(-45deg) scale(0);
 }
 #logisticsContent #lgPickupRequests input[type="checkbox"]:checked,
@@ -3665,7 +3665,7 @@
     height: 0;
     margin-top: 0;
     border-left: 0;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid var(--sari-dark-d8c2716225, #fff);
     transform: none;
 }
 #logisticsContent #lgPickupRequests input[type="checkbox"]:focus-visible { outline: 2px solid #c88912; outline-offset: 3px; }
@@ -3689,20 +3689,20 @@
     border-radius: 50%;
     background: currentColor;
 }
-#logisticsContent #lgPickupRequests .pickup-badge-pending { color: #97690e; border-color: #f0dea8; background: #fff9e9; }
-#logisticsContent #lgPickupRequests .pickup-badge-verified { color: #18794e; border-color: #bde7c9; background: #effcf3; }
-#logisticsContent #lgPickupRequests .pickup-badge-attention { color: #a84e46; border-color: #f0cfcb; background: #fff4f2; }
-#logisticsContent #lgPickupRequests .pickup-details summary { color: #9a6c13; font-size: 11.5px; font-weight: 650; }
-#logisticsContent #lgPickupRequests .pickup-detail-body { border-color: #e9edf1; border-radius: 10px; background: #fafbfc; }
-#logisticsContent #lgPickupRequests .pickup-detail-grid strong { color: #293440; font-size: 11.5px; }
-#logisticsContent #lgPickupRequests .pickup-label { color: #8591a0; font-size: 10px; }
-#logisticsContent #lgPickupRequests .pickup-text-link { color: #b2770f; font-size: 11.5px; font-weight: 700; }
+#logisticsContent #lgPickupRequests .pickup-badge-pending { color: var(--sari-dark-9db03b407c, #97690e); border-color: #f0dea8; background: var(--sari-dark-4d21eb669b, #fff9e9); }
+#logisticsContent #lgPickupRequests .pickup-badge-verified { color: var(--sari-dark-bef1dc8dc1, #18794e); border-color: var(--sari-dark-d8c2716225, #bde7c9); background: var(--sari-dark-4d21eb669b, #effcf3); }
+#logisticsContent #lgPickupRequests .pickup-badge-attention { color: var(--sari-dark-a63aa16d7c, #a84e46); border-color: var(--sari-dark-d8c2716225, #f0cfcb); background: var(--sari-dark-950baec030, #fff4f2); }
+#logisticsContent #lgPickupRequests .pickup-details summary { color: var(--sari-dark-19b301f69a, #9a6c13); font-size: 11.5px; font-weight: 650; }
+#logisticsContent #lgPickupRequests .pickup-detail-body { border-color: var(--sari-dark-d8c2716225, #e9edf1); border-radius: 10px; background: var(--sari-dark-950baec030, #fafbfc); }
+#logisticsContent #lgPickupRequests .pickup-detail-grid strong { color: var(--sari-dark-e23e64dd1e, #293440); font-size: 11.5px; }
+#logisticsContent #lgPickupRequests .pickup-label { color: var(--sari-dark-a63aa16d7c, #8591a0); font-size: 10px; }
+#logisticsContent #lgPickupRequests .pickup-text-link { color: var(--sari-dark-af18afcaa4, #b2770f); font-size: 11.5px; font-weight: 700; }
 
 /* Buyer Cart: generous no-data treatment, no icon tile, real CTA. */
 #logisticsContent #lgPickupRequests .pickup-empty {
     padding: 72px 20px;
     text-align: center;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
 }
 #logisticsContent #lgPickupRequests .pickup-empty-icon {
     display: grid;
@@ -3714,7 +3714,7 @@
     border: 0;
     border-radius: 0;
     background: transparent;
-    color: #b4bbc3;
+    color: var(--sari-dark-a63aa16d7c, #b4bbc3);
     box-shadow: none;
 }
 #logisticsContent #lgPickupRequests .pickup-empty-icon svg {
@@ -3728,7 +3728,7 @@
 }
 #logisticsContent #lgPickupRequests .pickup-empty h3 {
     margin: 12px 0 0;
-    color: #9ca4ad;
+    color: var(--sari-dark-a63aa16d7c, #9ca4ad);
     font-size: 22px;
     font-weight: 750;
     line-height: 1.2;
@@ -3737,7 +3737,7 @@
 #logisticsContent #lgPickupRequests .pickup-empty p {
     max-width: 520px;
     margin: 7px auto 0;
-    color: #a2acb8;
+    color: var(--sari-dark-a63aa16d7c, #a2acb8);
     font-size: 12px;
     font-weight: 500;
     line-height: 1.55;
@@ -3770,22 +3770,22 @@
     gap: 12px 18px;
     min-height: 60px;
     padding: 13px 20px;
-    border-top: 1px solid #edf0f4;
-    background: #fff;
-    color: #8a96a6;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f4);
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-a63aa16d7c, #8a96a6);
     font-size: 11px;
     font-weight: 550;
 }
 #logisticsContent #lgPickupRequests .pickup-footer-info { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; }
-#logisticsContent #lgPickupRequests .pickup-page-size-label { color: #8a96a6; gap: 8px; font-size: 11px; font-weight: 550; }
+#logisticsContent #lgPickupRequests .pickup-page-size-label { color: var(--sari-dark-a63aa16d7c, #8a96a6); gap: 8px; font-size: 11px; font-weight: 550; }
 #logisticsContent #lgPickupRequests .pickup-page-size-label select {
     height: 34px;
     min-width: 64px;
     padding: 0 7px;
-    border: 1px solid #dce2e8;
+    border: 1px solid var(--sari-dark-d8c2716225, #dce2e8);
     border-radius: 9px;
-    background: #fff;
-    color: #526073;
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-a63aa16d7c, #526073);
     font-size: 11px;
 }
 #logisticsContent #lgPickupRequests .pickup-pagination-nav {
@@ -3810,8 +3810,8 @@
     padding: 0;
     border: 1px solid transparent;
     border-radius: 10px;
-    background: #f7f8fa;
-    color: #8795a6;
+    background: var(--sari-dark-950baec030, #f7f8fa);
+    color: var(--sari-dark-a63aa16d7c, #8795a6);
     font-size: 11.5px;
     font-weight: 700;
     line-height: 1;
@@ -3820,14 +3820,14 @@
     border-color: #c88912;
     background: #c88912;
     color: #fff;
-    box-shadow: 0 3px 9px rgba(200,137,18,.17);
+    box-shadow: 0 3px 9px var(--sari-dark-3135cb7628, rgba(200,137,18,.17));
 }
 #logisticsContent #lgPickupRequests .pickup-page-arrow:disabled { opacity: .45; }
 #logisticsContent #lgPickupRequests .pickup-page-number:not(.is-current):hover,
 #logisticsContent #lgPickupRequests .pickup-page-arrow:not(:disabled):hover {
-    border-color: #e6eaef;
-    background: #edf0f3;
-    color: #4b596a;
+    border-color: var(--sari-dark-d8c2716225, #e6eaef);
+    background: var(--sari-dark-4d21eb669b, #edf0f3);
+    color: var(--sari-dark-e23e64dd1e, #4b596a);
 }
 
 @media (max-width: 1180px) {
@@ -3857,7 +3857,7 @@
         width: auto;
         min-width: 0;
         padding: 17px 16px;
-        border-bottom: 1px solid #edf0f3;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
     }
     #logisticsContent #lgPickupRequests .pickup-table td:first-child:has(input[type="checkbox"]) {
         width: 54px;
@@ -3917,21 +3917,21 @@
    Scoped to the existing page; routes and form semantics preserved.
    ============================================================== */
 #logisticsContent #lgPickupRequests {
-    --pickup-shadow: 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055);
-    color: #2f3742;
+    --pickup-shadow: 0 3px 10px var(--sari-dark-7593018246, rgba(15,23,42,.035)), 0 12px 30px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055));
+    color: var(--sari-dark-e23e64dd1e, #2f3742);
 }
 #logisticsContent #lgPickupRequests .pickup-stat {
-    border-color: #e5e9ee;
+    border-color: var(--sari-dark-d8c2716225, #e5e9ee);
     box-shadow: var(--pickup-shadow);
 }
 #logisticsContent #lgPickupRequests .pickup-stat:hover {
     transform: translateY(-1px);
-    border-color: #dce2e9;
-    box-shadow: 0 6px 18px rgba(15,23,42,.06);
+    border-color: var(--sari-dark-d8c2716225, #dce2e9);
+    box-shadow: 0 6px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06));
 }
 /* Smaller label typography than the previous 15px treatment. */
 #logisticsContent #lgPickupRequests .pickup-stat p {
-    color: #637081;
+    color: var(--sari-dark-a63aa16d7c, #637081);
     font-size: 13px;
     font-weight: 650;
     letter-spacing: -.01em;
@@ -3955,11 +3955,11 @@
     width: auto;
     gap: 9px;
     padding: 0 15px 0 17px;
-    border: 1px solid #dce2e8;
+    border: 1px solid var(--sari-dark-d8c2716225, #dce2e8);
     border-radius: 12px;
-    background: #fff;
-    color: #475569;
-    box-shadow: 0 2px 6px rgba(15,23,42,.025);
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-e23e64dd1e, #475569);
+    box-shadow: 0 2px 6px var(--sari-dark-e1384eb7fc, rgba(15,23,42,.025));
     font-size: 12px;
     font-weight: 700;
     line-height: 1.2;
@@ -3969,11 +3969,11 @@
 }
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button svg {
     display: block; flex: none; width: 17px; height: 17px;
-    color: #c88912; transition: transform .16s ease;
+    color: var(--sari-dark-19b301f69a, #c88912); transition: transform .16s ease;
 }
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button:hover {
-    transform: none; border-color: #c88912; background: #f8fafc;
-    color: #a56d0a; box-shadow: 0 2px 6px rgba(15,23,42,.025);
+    transform: none; border-color: #c88912; background: var(--sari-dark-950baec030, #f8fafc);
+    color: var(--sari-dark-af18afcaa4, #a56d0a); box-shadow: 0 2px 6px var(--sari-dark-e1384eb7fc, rgba(15,23,42,.025));
 }
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button:hover svg { transform: translateX(3px); }
 #logisticsContent #lgPickupRequests .pickup-buyer-link-button:focus-visible {
@@ -3982,20 +3982,20 @@
 /* Keep all requested inputs white/gray, even when hovered or focused. */
 #logisticsContent #lgPickupRequests .pickup-admin-search input,
 #logisticsContent #lgPickupRequests .pickup-admin-select select,
-#logisticsContent #lgPickupRequests .pickup-page-size-label select { background-color: #fff; }
+#logisticsContent #lgPickupRequests .pickup-page-size-label select { background-color: var(--sari-dark-950baec030, #fff); }
 #logisticsContent #lgPickupRequests .pickup-admin-search input:hover,
-#logisticsContent #lgPickupRequests .pickup-admin-select select:hover { background-color: #f8fafc; }
+#logisticsContent #lgPickupRequests .pickup-admin-select select:hover { background-color: var(--sari-dark-950baec030, #f8fafc); }
 #logisticsContent #lgPickupRequests .pickup-admin-search input:focus,
-#logisticsContent #lgPickupRequests .pickup-admin-select select:focus { background-color: #fff; }
+#logisticsContent #lgPickupRequests .pickup-admin-select select:focus { background-color: var(--sari-dark-950baec030, #fff); }
 #logisticsContent #lgPickupRequests .pickup-admin-directory {
-    border-color: #e5e9ee; box-shadow: var(--pickup-shadow);
+    border-color: var(--sari-dark-d8c2716225, #e5e9ee); box-shadow: var(--pickup-shadow);
 }
 #logisticsContent #lgPickupRequests .pickup-table tbody tr[data-pickup-item]:hover {
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 }
 #logisticsContent #lgPickupRequests .pickup-table tbody tr[data-pickup-item].is-expanded,
 #logisticsContent #lgPickupRequests .pickup-table tbody tr[data-pickup-item].is-expanded:hover {
-    background: #f6f8fb;
+    background: var(--sari-dark-950baec030, #f6f8fb);
 }
 #logisticsContent #lgPickupRequests .pickup-table td { vertical-align: middle; }
 #logisticsContent #lgPickupRequests .pickup-table td p { margin-top: 5px; }
@@ -4027,90 +4027,90 @@
     border-color: #b47b0e; background: #b47b0e; color: #fff;
 }
 #logisticsContent #lgPickupRequests .pickup-action--outline {
-    border-color: #dce2e8; background: #fff; color: #536173;
+    border-color: var(--sari-dark-d8c2716225, #dce2e8); background: var(--sari-dark-950baec030, #fff); color: var(--sari-dark-a63aa16d7c, #536173);
 }
 #logisticsContent #lgPickupRequests .pickup-action--outline:hover {
-    border-color: #c88912; background: #f8fafc; color: #a56d0a;
+    border-color: #c88912; background: var(--sari-dark-950baec030, #f8fafc); color: var(--sari-dark-af18afcaa4, #a56d0a);
 }
 #logisticsContent #lgPickupRequests .pickup-action:focus-visible,
 #logisticsContent #lgPickupRequests .pickup-details-trigger:focus-visible,
 #logisticsContent #lgPickupRequests .pickup-details-close:focus-visible { outline: 2px solid #c88912; outline-offset: 3px; }
 #logisticsContent #lgPickupRequests .pickup-details-trigger {
     justify-content: flex-start; min-height: 30px; padding: 2px 0;
-    border: 0; border-radius: 0; background: transparent; color: #a56d0a;
+    border: 0; border-radius: 0; background: transparent; color: var(--sari-dark-af18afcaa4, #a56d0a);
     font-size: 11px; font-weight: 700; white-space: normal; text-align: left;
 }
 #logisticsContent #lgPickupRequests .pickup-details-trigger:hover {
-    background: transparent; color: #865a0d; text-decoration: underline;
+    background: transparent; color: var(--sari-dark-af18afcaa4, #865a0d); text-decoration: underline;
     text-underline-offset: 3px;
 }
 #logisticsContent #lgPickupRequests .pickup-details-trigger svg { transition: transform .15s ease; }
 #logisticsContent #lgPickupRequests .is-expanded .pickup-details-trigger svg { transform: rotate(180deg); }
 #logisticsContent #lgPickupRequests .pickup-badge-pending {
-    color: #986b13; border-color: #e7d5a6; background: #f8f9fb;
+    color: var(--sari-dark-9db03b407c, #986b13); border-color: #e7d5a6; background: var(--sari-dark-950baec030, #f8f9fb);
 }
 #logisticsContent #lgPickupRequests .pickup-badge-verified {
-    color: #18794e; border-color: #bde7c9; background: #effcf3;
+    color: var(--sari-dark-bef1dc8dc1, #18794e); border-color: var(--sari-dark-d8c2716225, #bde7c9); background: var(--sari-dark-4d21eb669b, #effcf3);
 }
 #logisticsContent #lgPickupRequests .pickup-badge-attention {
-    color: #a84e46; border-color: #f0cfcb; background: #fff4f2;
+    color: var(--sari-dark-a63aa16d7c, #a84e46); border-color: var(--sari-dark-d8c2716225, #f0cfcb); background: var(--sari-dark-950baec030, #fff4f2);
 }
 #logisticsContent #lgPickupRequests .pickup-issues {
-    margin: 0; padding-left: 17px; color: #9f4c45; font-size: 11px; line-height: 1.5;
+    margin: 0; padding-left: 17px; color: var(--sari-dark-a63aa16d7c, #9f4c45); font-size: 11px; line-height: 1.5;
 }
-#logisticsContent #lgPickupRequests .pickup-subtext { color: #718096; font-size: 11px; line-height: 1.5; }
+#logisticsContent #lgPickupRequests .pickup-subtext { color: var(--sari-dark-a63aa16d7c, #718096); font-size: 11px; line-height: 1.5; }
 /* Detail row expands to full table width instead of squeezing payment/address into a single cell. */
-#logisticsContent #lgPickupRequests tr.pickup-expanded-row { background: #f8fafc; }
-#logisticsContent #lgPickupRequests tr.pickup-expanded-row:hover { background: #f8fafc; }
+#logisticsContent #lgPickupRequests tr.pickup-expanded-row { background: var(--sari-dark-950baec030, #f8fafc); }
+#logisticsContent #lgPickupRequests tr.pickup-expanded-row:hover { background: var(--sari-dark-950baec030, #f8fafc); }
 #logisticsContent #lgPickupRequests tr.pickup-expanded-row > td {
-    padding: 0 22px 20px; border-bottom: 1px solid #e5e9ee; vertical-align: top;
+    padding: 0 22px 20px; border-bottom: 1px solid var(--sari-dark-d8c2716225, #e5e9ee); vertical-align: top;
     overflow-wrap: normal;
 }
 #logisticsContent #lgPickupRequests .pickup-expanded-panel {
-    padding: 20px 22px; border: 1px solid #e3e8ef; border-radius: 13px;
-    background: #fff; box-shadow: 0 2px 8px rgba(15,23,42,.025);
+    padding: 20px 22px; border: 1px solid var(--sari-dark-d8c2716225, #e3e8ef); border-radius: 13px;
+    background: var(--sari-dark-950baec030, #fff); box-shadow: 0 2px 8px var(--sari-dark-e1384eb7fc, rgba(15,23,42,.025));
 }
 #logisticsContent #lgPickupRequests .pickup-expanded-head {
     display: flex; justify-content: space-between; align-items: flex-start; gap: 15px;
-    padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid #edf0f4;
+    padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f4);
 }
 #logisticsContent #lgPickupRequests .pickup-expanded-kicker,
 #logisticsContent #lgPickupRequests .pickup-info-label {
-    display: block; margin-bottom: 8px; color: #8591a0; font-size: 10px;
+    display: block; margin-bottom: 8px; color: var(--sari-dark-a63aa16d7c, #8591a0); font-size: 10px;
     line-height: 1.35; font-weight: 750; text-transform: uppercase; letter-spacing: .075em;
 }
 #logisticsContent #lgPickupRequests .pickup-expanded-head h3 {
-    margin: 0; color: #293440; font-size: 15px; font-weight: 750; letter-spacing: -.02em;
+    margin: 0; color: var(--sari-dark-e23e64dd1e, #293440); font-size: 15px; font-weight: 750; letter-spacing: -.02em;
 }
 #logisticsContent #lgPickupRequests .pickup-details-close {
-    border: 1px solid #e0e6ec; background: #fff; color: #637081; font-size: 10.5px;
+    border: 1px solid var(--sari-dark-d8c2716225, #e0e6ec); background: var(--sari-dark-950baec030, #fff); color: var(--sari-dark-a63aa16d7c, #637081); font-size: 10.5px;
 }
-#logisticsContent #lgPickupRequests .pickup-details-close:hover { background: #f5f7fa; color: #334155; }
+#logisticsContent #lgPickupRequests .pickup-details-close:hover { background: var(--sari-dark-950baec030, #f5f7fa); color: var(--sari-dark-e23e64dd1e, #334155); }
 #logisticsContent #lgPickupRequests .pickup-expanded-grid {
     display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px;
 }
 #logisticsContent #lgPickupRequests .pickup-info-block { min-width: 0; }
 #logisticsContent #lgPickupRequests .pickup-info-block strong {
-    display: block; color: #293440; font-size: 12px; font-weight: 700;
+    display: block; color: var(--sari-dark-e23e64dd1e, #293440); font-size: 12px; font-weight: 700;
     line-height: 1.5; overflow-wrap: anywhere;
 }
 #logisticsContent #lgPickupRequests .pickup-info-block p {
-    margin: 6px 0 0; color: #7b8794; font-size: 11px; line-height: 1.65;
+    margin: 6px 0 0; color: var(--sari-dark-a63aa16d7c, #7b8794); font-size: 11px; line-height: 1.65;
     overflow-wrap: anywhere;
 }
-#logisticsContent #lgPickupRequests .pickup-info-price { color: #293440; font-weight: 750; white-space: nowrap; }
+#logisticsContent #lgPickupRequests .pickup-info-price { color: var(--sari-dark-e23e64dd1e, #293440); font-weight: 750; white-space: nowrap; }
 #logisticsContent #lgPickupRequests .pickup-expanded-products {
-    margin-top: 18px; padding-top: 17px; border-top: 1px solid #edf0f4;
+    margin-top: 18px; padding-top: 17px; border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f4);
 }
 #logisticsContent #lgPickupRequests .pickup-expanded-products ul { list-style: none; margin: 0; padding: 0; }
 #logisticsContent #lgPickupRequests .pickup-expanded-products li {
     display: flex; align-items: flex-start; justify-content: space-between; gap: 18px;
-    padding: 9px 0; color: #637081; font-size: 11.5px; line-height: 1.55;
-    border-bottom: 1px solid #f0f2f5;
+    padding: 9px 0; color: var(--sari-dark-a63aa16d7c, #637081); font-size: 11.5px; line-height: 1.55;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0f2f5);
 }
 #logisticsContent #lgPickupRequests .pickup-expanded-products li:last-child { border-bottom: 0; }
-#logisticsContent #lgPickupRequests .pickup-expanded-products li strong { color: #293440; font-weight: 750; white-space: nowrap; }
-#logisticsContent #lgPickupRequests .pickup-variant { color: #8591a0; }
+#logisticsContent #lgPickupRequests .pickup-expanded-products li strong { color: var(--sari-dark-e23e64dd1e, #293440); font-weight: 750; white-space: nowrap; }
+#logisticsContent #lgPickupRequests .pickup-variant { color: var(--sari-dark-a63aa16d7c, #8591a0); }
 #logisticsContent #lgPickupRequests .pickup-expanded-actions { display: flex; margin-top: 16px; }
 @media (max-width: 820px) {
     /* Keep the history-style scrollable table, but fit opened information in the viewport. */
@@ -4159,7 +4159,7 @@
     border-radius: 0;
     background: transparent;
     box-shadow: none;
-    color: #59636e;
+    color: var(--sari-dark-a63aa16d7c, #59636e);
     font-size: 11.5px;
     font-weight: 750;
     line-height: 1.4;
@@ -4180,7 +4180,7 @@
     border: 0;
     background: transparent;
     box-shadow: none;
-    color: #c88912;
+    color: var(--sari-dark-19b301f69a, #c88912);
     transform: none;
 }
 #logisticsContent #lgPickupRequests .pickup-page-header .pickup-buyer-link-button:hover svg { transform: translateX(3px); }
@@ -4200,8 +4200,8 @@
     gap: 10px 16px;
     min-height: 58px;
     padding: 10px 22px;
-    border-bottom: 1px solid #e9edf1;
-    background: #f8fafc;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
+    background: var(--sari-dark-950baec030, #f8fafc);
 }
 #logisticsContent #lgPickupRequests .pickup-selection-summary,
 #logisticsContent #lgPickupRequests .pickup-selection-actions {
@@ -4210,7 +4210,7 @@
     gap: 10px;
 }
 #logisticsContent #lgPickupRequests .pickup-selection-summary {
-    color: #334155;
+    color: var(--sari-dark-e23e64dd1e, #334155);
     font-size: 12px;
     font-weight: 700;
 }
@@ -4218,21 +4218,21 @@
     width: 18px;
     height: 18px;
     padding: 3px;
-    color: #c88912;
-    border: 1px solid #e0e6ec;
+    color: var(--sari-dark-19b301f69a, #c88912);
+    border: 1px solid var(--sari-dark-d8c2716225, #e0e6ec);
     border-radius: 50%;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
 }
 #logisticsContent #lgPickupRequests .pickup-clear-selection {
     padding: 8px 6px;
     border: 0;
     background: transparent;
-    color: #64748b;
+    color: var(--sari-dark-a63aa16d7c, #64748b);
     font-size: 11px;
     font-weight: 650;
     cursor: pointer;
 }
-#logisticsContent #lgPickupRequests .pickup-clear-selection:hover { color: #a56d0a; }
+#logisticsContent #lgPickupRequests .pickup-clear-selection:hover { color: var(--sari-dark-af18afcaa4, #a56d0a); }
 #logisticsContent #lgPickupRequests .pickup-selection-bar .pickup-button {
     display: inline-flex;
     align-items: center;
@@ -4268,25 +4268,25 @@
     min-height: 23px;
     gap: 6px;
     padding: 4px 9px;
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
     font-size: 10px;
     font-weight: 700;
     line-height: 1.35;
 }
 #logisticsContent #lgPickupRequests .pickup-row-actions .pickup-badge-pending {
-    color: #a56d0a;
-    border-color: #e9dfcd;
-    background: #f8fafc;
+    color: var(--sari-dark-af18afcaa4, #a56d0a);
+    border-color: var(--sari-dark-d8c2716225, #e9dfcd);
+    background: var(--sari-dark-950baec030, #f8fafc);
 }
 #logisticsContent #lgPickupRequests .pickup-row-actions .pickup-badge-verified {
-    color: #18794e;
-    border-color: #bde7c9;
-    background: #effcf3;
+    color: var(--sari-dark-bef1dc8dc1, #18794e);
+    border-color: var(--sari-dark-d8c2716225, #bde7c9);
+    background: var(--sari-dark-4d21eb669b, #effcf3);
 }
 #logisticsContent #lgPickupRequests .pickup-row-actions .pickup-badge-attention {
-    color: #a84e46;
-    border-color: #f0cfcb;
-    background: #fff4f2;
+    color: var(--sari-dark-a63aa16d7c, #a84e46);
+    border-color: var(--sari-dark-d8c2716225, #f0cfcb);
+    background: var(--sari-dark-950baec030, #fff4f2);
 }
 #logisticsContent #lgPickupRequests .pickup-row-actions .pickup-action,
 #logisticsContent #lgPickupRequests .pickup-row-actions .pickup-action--primary,
@@ -4302,7 +4302,7 @@
     border-radius: 0;
     background: transparent;
     box-shadow: none;
-    color: #a56d0a;
+    color: var(--sari-dark-af18afcaa4, #a56d0a);
     font: 700 11px/1.4 Poppins, sans-serif;
     text-decoration: none;
     text-align: left;
@@ -4319,7 +4319,7 @@
 #logisticsContent #lgPickupRequests .pickup-row-actions .pickup-action:hover {
     border: 0;
     background: transparent;
-    color: #865a0d;
+    color: var(--sari-dark-af18afcaa4, #865a0d);
     text-decoration: underline;
     text-underline-offset: 3px;
 }
@@ -4328,7 +4328,7 @@
 #logisticsContent #lgPickupRequests .pickup-action-issues summary {
     width: fit-content;
     max-width: 100%;
-    color: #687789;
+    color: var(--sari-dark-a63aa16d7c, #687789);
     font-size: 10.5px;
     font-weight: 600;
     line-height: 1.5;
@@ -4340,7 +4340,7 @@
     max-width: 220px;
     margin: 0;
     padding-left: 15px;
-    color: #8b5760;
+    color: var(--sari-dark-a63aa16d7c, #8b5760);
     font-size: 10px;
     line-height: 1.5;
     overflow-wrap: anywhere;
@@ -4382,10 +4382,10 @@
     height: 32px;
     padding: 0;
     margin: 0;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--sari-dark-d8c2716225, #e2e8f0);
     border-radius: 9px;
-    background: #fff;
-    color: #64748b;
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-a63aa16d7c, #64748b);
     box-shadow: none;
     cursor: pointer;
     transition: border-color .15s ease, background-color .15s ease, color .15s ease;
@@ -4394,8 +4394,8 @@
 #logisticsContent #lgPickupRequests .pickup-more-trigger:hover,
 #logisticsContent #lgPickupRequests .pickup-more-trigger[aria-expanded="true"] {
     border-color: #e5d2aa;
-    background: #f8fafc;
-    color: #c88912;
+    background: var(--sari-dark-950baec030, #f8fafc);
+    color: var(--sari-dark-19b301f69a, #c88912);
 }
 #logisticsContent #lgPickupRequests .pickup-more-trigger:focus-visible {
     outline: 2px solid #c88912;
@@ -4411,11 +4411,11 @@
     max-width: calc(100vw - 24px);
     margin: 0;
     padding: 6px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--sari-dark-d8c2716225, #e2e8f0);
     border-radius: 12px;
-    background: #fff;
-    color: #334155;
-    box-shadow: 0 14px 34px rgba(15,23,42,.13), 0 2px 7px rgba(15,23,42,.045);
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-e23e64dd1e, #334155);
+    box-shadow: 0 14px 34px var(--sari-dark-3e32d50f5e, rgba(15,23,42,.13)), 0 2px 7px var(--sari-dark-1190f58155, rgba(15,23,42,.045));
     z-index: 1000;
 }
 #logisticsContent #lgPickupRequests .pickup-more-menu:popover-open,
@@ -4433,7 +4433,7 @@
     border: 0;
     border-radius: 8px;
     background: transparent;
-    color: #475569;
+    color: var(--sari-dark-e23e64dd1e, #475569);
     font: 600 11.5px/1.45 Poppins, ui-sans-serif, sans-serif;
     text-decoration: none;
     text-align: left;
@@ -4445,33 +4445,33 @@
     flex: 0 0 17px;
     width: 17px;
     height: 17px;
-    color: #94a3b8;
+    color: var(--sari-dark-a63aa16d7c, #94a3b8);
 }
 #logisticsContent #lgPickupRequests .pickup-more-menu .pickup-menu-item--emphasis {
-    color: #a56d0a;
+    color: var(--sari-dark-af18afcaa4, #a56d0a);
     font-weight: 700;
 }
-#logisticsContent #lgPickupRequests .pickup-more-menu .pickup-menu-item--emphasis svg { color: #c88912; }
+#logisticsContent #lgPickupRequests .pickup-more-menu .pickup-menu-item--emphasis svg { color: var(--sari-dark-19b301f69a, #c88912); }
 #logisticsContent #lgPickupRequests .pickup-more-menu .pickup-menu-item:hover,
 #logisticsContent #lgPickupRequests .pickup-more-menu .pickup-menu-item:focus-visible {
-    background: #f1f5f9;
-    color: #a56d0a;
+    background: var(--sari-dark-4d21eb669b, #f1f5f9);
+    color: var(--sari-dark-af18afcaa4, #a56d0a);
     outline: 0;
 }
 #logisticsContent #lgPickupRequests .pickup-more-menu .pickup-menu-item:focus-visible {
-    box-shadow: inset 0 0 0 2px rgba(200,137,18,.38);
+    box-shadow: inset 0 0 0 2px var(--sari-dark-152c2221a5, rgba(200,137,18,.38));
 }
 #logisticsContent #lgPickupRequests .pickup-expanded-issues {
     margin-top: 18px;
     padding: 15px;
-    border: 1px solid #f0cfcb;
+    border: 1px solid var(--sari-dark-d8c2716225, #f0cfcb);
     border-radius: 10px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
 }
 #logisticsContent #lgPickupRequests .pickup-expanded-issues ul {
     margin: 0;
     padding-left: 19px;
-    color: #9f4c45;
+    color: var(--sari-dark-a63aa16d7c, #9f4c45);
     font-size: 11px;
     line-height: 1.65;
     overflow-wrap: anywhere;
@@ -4479,7 +4479,7 @@
 #logisticsContent #lgPickupRequests .pickup-expanded-issues p {
     margin: 8px 0 0;
     font-size: 11px;
-    color: #64748b;
+    color: var(--sari-dark-a63aa16d7c, #64748b);
 }
 @media (prefers-reduced-motion: reduce) {
     #logisticsContent #lgPickupRequests .pickup-more-trigger,
@@ -4503,30 +4503,30 @@
     width: 100%;
     height: 48px;
     padding: 0 16px;
-    border: 1px solid #dce2e8;
+    border: 1px solid var(--sari-dark-d8c2716225, #dce2e8);
     border-radius: 14px;
-    background: #fff;
-    color: #3f4b59;
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-e23e64dd1e, #3f4b59);
     font: 600 11.5px/1.4 Poppins, sans-serif;
     cursor: pointer;
     transition: border-color .16s ease, box-shadow .16s ease, background-color .16s ease;
 }
 #logisticsContent #lgPickupRequests .pickup-admin-select-trigger:hover {
-    background: #f8fafc;
-    border-color: #cfd6de;
+    background: var(--sari-dark-950baec030, #f8fafc);
+    border-color: var(--sari-dark-d8c2716225, #cfd6de);
 }
 #logisticsContent #lgPickupRequests .pickup-admin-select-trigger:focus-visible,
 #logisticsContent #lgPickupRequests .pickup-filter-dropdown.is-open .pickup-admin-select-trigger,
 #logisticsContent #lgPickupRequests .pickup-admin-select-trigger[aria-expanded="true"] {
     outline: 0;
     border-color: #c88912;
-    box-shadow: 0 0 0 1px rgba(200,137,18,.12);
+    box-shadow: 0 0 0 1px var(--sari-dark-3b2338cbf0, rgba(200,137,18,.12));
 }
 #logisticsContent #lgPickupRequests .pickup-admin-select-trigger svg {
     flex: 0 0 17px;
     width: 17px;
     height: 17px;
-    color: #6b7280;
+    color: var(--sari-dark-a63aa16d7c, #6b7280);
 }
 #logisticsContent #lgPickupRequests .pickup-admin-select-panel {
     position: absolute;
@@ -4535,10 +4535,10 @@
     right: 0;
     z-index: 40;
     padding: 8px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--sari-dark-d8c2716225, #e2e8f0);
     border-radius: 14px;
-    background: #fff;
-    box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05);
+    background: var(--sari-dark-950baec030, #fff);
+    box-shadow: 0 16px 32px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)), 0 2px 6px var(--sari-dark-1df26971b5, rgba(15,23,42,.05));
 }
 #logisticsContent #lgPickupRequests .pickup-admin-option {
     display: flex;
@@ -4549,7 +4549,7 @@
     border: 0;
     border-radius: 10px;
     background: transparent;
-    color: #475569;
+    color: var(--sari-dark-e23e64dd1e, #475569);
     font: 600 11.5px/1.4 Poppins, sans-serif;
     text-align: left;
     cursor: pointer;
@@ -4557,13 +4557,13 @@
 }
 #logisticsContent #lgPickupRequests .pickup-admin-option:hover,
 #logisticsContent #lgPickupRequests .pickup-admin-option:focus-visible {
-    background: #f8fafc;
-    color: #a56d0a;
+    background: var(--sari-dark-950baec030, #f8fafc);
+    color: var(--sari-dark-af18afcaa4, #a56d0a);
     outline: 0;
 }
 #logisticsContent #lgPickupRequests .pickup-admin-option.is-active {
-    background: #f8fafc;
-    color: #2f3742;
+    background: var(--sari-dark-950baec030, #f8fafc);
+    color: var(--sari-dark-e23e64dd1e, #2f3742);
     font-weight: 700;
 }
 #logisticsContent #lgPickupRequests .pickup-table {
@@ -4629,7 +4629,7 @@
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-    color: #59636e !important;
+    color: var(--sari-dark-a63aa16d7c, #59636e) !important;
     font-family: "Poppins", ui-sans-serif, sans-serif !important;
     font-size: 11.5px !important;
     font-weight: 750 !important;
@@ -4653,7 +4653,7 @@
 
 #logisticsContent #lgPickupRequests .pickup-page-header a.pickup-buyer-link-button:hover,
 #logisticsContent #lgPickupRequests .pickup-page-header a.pickup-buyer-link-button:focus-visible {
-    color: #c88912 !important;
+    color: var(--sari-dark-19b301f69a, #c88912) !important;
     border: 0 !important;
     background: transparent !important;
     box-shadow: none !important;

@@ -15,19 +15,19 @@
     .turnover-page {
         --sh-gold: #c88912;
         --sh-gold-dark: #a96f0e;
-        --sh-ink: #20252b;
-        --sh-text: #2e343b;
+        --sh-ink: var(--sari-dark-e23e64dd1e, #20252b);
+        --sh-text: var(--sari-dark-e23e64dd1e, #2e343b);
         --sh-body: #29323b;
-        --sh-muted: #707b86;
+        --sh-muted: var(--sari-dark-a63aa16d7c, #707b86);
         --sh-soft: #818995;
-        --sh-border: #e5e7eb;
-        --sh-divider: #eceef1;
-        --sh-row-divider: #eef0f2;
+        --sh-border: var(--sari-dark-d8c2716225, #e5e7eb);
+        --sh-divider: var(--sari-dark-d8c2716225, #eceef1);
+        --sh-row-divider: var(--sari-dark-d8c2716225, #eef0f2);
         --sh-shadow:
-            0 2px 5px rgba(15, 23, 42, .045),
-            0 10px 24px rgba(15, 23, 42, .075),
-            0 24px 54px rgba(15, 23, 42, .095),
-            inset 0 1px 0 rgba(255, 255, 255, .92);
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
 
         width: 100%;
         max-width: 1440px;
@@ -55,15 +55,15 @@
         font-weight: 650;
         line-height: 1.5;
     }
-    .tt-alert-success { border: 1px solid #d5e6da; background: #f4faf6; color: #36805a; }
-    .tt-alert-error { border: 1px solid #f1d3d3; background: #fff5f5; color: #b04545; }
+    .tt-alert-success { border: 1px solid var(--sari-dark-d8c2716225, #d5e6da); background: var(--sari-dark-950baec030, #f4faf6); color: var(--sari-dark-e23e64dd1e, #36805a); }
+    .tt-alert-error { border: 1px solid var(--sari-dark-d8c2716225, #f1d3d3); background: var(--sari-dark-950baec030, #fff5f5); color: var(--sari-dark-2a778702e9, #b04545); }
 
     /* ---------------- Open page header ---------------- */
     .tt-hero { padding: 0 2px 12px; }
 
     .tt-eyebrow {
         margin: 0;
-        color: #a87316;
+        color: var(--sari-dark-685eb4fc40, #a87316);
         font-size: 10.5px;
         font-weight: 800;
         line-height: 1.2;
@@ -84,7 +84,7 @@
     .tt-lead {
         max-width: 860px;
         margin: 8px 0 0;
-        color: #7d8792;
+        color: var(--sari-dark-a63aa16d7c, #7d8792);
         font-size: 11.5px;
         font-weight: 450;
         line-height: 1.6;
@@ -96,18 +96,18 @@
         align-items: center;
         gap: 5px;
         margin-top: 10px;
-        color: #a96f0e;
+        color: var(--sari-dark-6e784b4931, #a96f0e);
         font-size: 11.5px;
         font-weight: 700;
         text-decoration: none;
     }
-    .tt-back:hover { color: #7d5007; }
+    .tt-back:hover { color: var(--sari-dark-9b2ca2d764, #7d5007); }
 
     /* ---------------- Floating card surface ---------------- */
     .tt-card {
         border: 1px solid var(--sh-border);
         border-radius: 17px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         box-shadow: var(--sh-shadow);
     }
 
@@ -166,14 +166,14 @@
     }
 
     .tt-table thead tr {
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
         border-bottom: 1px solid var(--sh-divider);
     }
 
     .tt-table th {
         padding: 0 16px;
         height: 52px;
-        color: #4b5560;
+        color: var(--sari-dark-e23e64dd1e, #4b5560);
         font-size: 10.5px;
         font-weight: 800;
         letter-spacing: .07em;
@@ -183,7 +183,7 @@
 
     .tt-table td {
         padding: 12px 16px;
-        color: #3f4852;
+        color: var(--sari-dark-e23e64dd1e, #3f4852);
         font-size: 12px;
         font-weight: 500;
         line-height: 1.4;
@@ -194,7 +194,7 @@
         transition: background-color .16s ease;
     }
     .tt-table tbody tr:last-child { border-bottom: 0; }
-    .tt-table tbody tr:hover { background: #fcfcfd; }
+    .tt-table tbody tr:hover { background: var(--sari-dark-950baec030, #fcfcfd); }
 
     .tt-code { color: var(--sh-body); font-weight: 700; }
     .tt-amount { color: var(--sh-ink); font-weight: 750; white-space: nowrap; }
@@ -219,19 +219,19 @@
         border-radius: 999px;
         background: currentColor;
     }
-    .tt-status-received { border: 1px solid #d6e9dc; background: #eef8f1; color: #36805a; }
-    .tt-status-discrepancy { border: 1px solid #f1d3d3; background: #fff5f5; color: #b04545; }
-    .tt-status-pending { border: 1px solid #efd9b0; background: #fff8e9; color: #a87019; }
+    .tt-status-received { border: 1px solid var(--sari-dark-d8c2716225, #d6e9dc); background: var(--sari-dark-4d21eb669b, #eef8f1); color: var(--sari-dark-e23e64dd1e, #36805a); }
+    .tt-status-discrepancy { border: 1px solid var(--sari-dark-d8c2716225, #f1d3d3); background: var(--sari-dark-950baec030, #fff5f5); color: var(--sari-dark-2a778702e9, #b04545); }
+    .tt-status-pending { border: 1px solid var(--sari-dark-d8c2716225, #efd9b0); background: var(--sari-dark-4d21eb669b, #fff8e9); color: var(--sari-dark-f382da8334, #a87019); }
 
     .tt-action {
         display: inline-flex;
         min-height: 34px;
         align-items: center;
-        border: 1px solid #dfe3e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8);
         border-radius: 9px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 12px;
-        color: #865709;
+        color: var(--sari-dark-9b2ca2d764, #865709);
         font-size: 11px;
         font-weight: 800;
         text-decoration: none;
@@ -240,8 +240,8 @@
     .tt-action:hover,
     .tt-action:focus-visible {
         outline: none;
-        border-color: #eadfc9;
-        background: #fffaf1;
+        border-color: var(--sari-dark-d8c2716225, #eadfc9);
+        background: var(--sari-dark-950baec030, #fffaf1);
         color: var(--sh-gold);
     }
 
@@ -253,7 +253,7 @@
         text-align: center;
     }
 
-    .tt-queue-foot { padding: 12px 18px; border-top: 1px solid var(--sh-divider); background: #fafbfc; }
+    .tt-queue-foot { padding: 12px 18px; border-top: 1px solid var(--sh-divider); background: var(--sari-dark-950baec030, #fafbfc); }
     .tt-queue-foot:empty { display: none; }
 
     .turnover-page nav[role="navigation"] { font-size: 11px; }

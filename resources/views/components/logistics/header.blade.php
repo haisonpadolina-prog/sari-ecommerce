@@ -155,6 +155,7 @@
         {{-- RIGHT: SEARCH, PERSISTENT NOTIFICATIONS, PROFILE --}}
 
         <div class="flex shrink-0 items-center gap-2">
+            @include('components.shared.theme-toggle')
 
             @if(! $headerIsHub && $headerOperatingFacility)
                 <form method="POST" action="{{ route('logistics.branch.change', [], false) }}" class="hidden lg:block">

@@ -15,21 +15,21 @@
     .treasury-page {
         --sh-gold: #c88912;
         --sh-gold-dark: #a96f0e;
-        --sh-gold-text: #89580c;
-        --sh-ink: #20252b;
-        --sh-text: #2e343b;
+        --sh-gold-text: var(--sari-dark-4b8b580e58, #89580c);
+        --sh-ink: var(--sari-dark-e23e64dd1e, #20252b);
+        --sh-text: var(--sari-dark-e23e64dd1e, #2e343b);
         --sh-body: #29323b;
-        --sh-muted: #707b86;
+        --sh-muted: var(--sari-dark-a63aa16d7c, #707b86);
         --sh-soft: #818995;
-        --sh-border: #e5e7eb;
-        --sh-control-border: #dfe3e8;
-        --sh-divider: #eceef1;
-        --sh-row-divider: #eef0f2;
+        --sh-border: var(--sari-dark-d8c2716225, #e5e7eb);
+        --sh-control-border: var(--sari-dark-d8c2716225, #dfe3e8);
+        --sh-divider: var(--sari-dark-d8c2716225, #eceef1);
+        --sh-row-divider: var(--sari-dark-d8c2716225, #eef0f2);
         --sh-shadow:
-            0 2px 5px rgba(15, 23, 42, .045),
-            0 10px 24px rgba(15, 23, 42, .075),
-            0 24px 54px rgba(15, 23, 42, .095),
-            inset 0 1px 0 rgba(255, 255, 255, .92);
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
 
         width: 100%;
         max-width: 1440px;
@@ -61,15 +61,15 @@
         font-weight: 650;
         line-height: 1.5;
     }
-    .ft-alert-success { border: 1px solid #d5e6da; background: #f4faf6; color: #36805a; }
-    .ft-alert-error { border: 1px solid #f1d3d3; background: #fff5f5; color: #b04545; }
+    .ft-alert-success { border: 1px solid var(--sari-dark-d8c2716225, #d5e6da); background: var(--sari-dark-950baec030, #f4faf6); color: var(--sari-dark-e23e64dd1e, #36805a); }
+    .ft-alert-error { border: 1px solid var(--sari-dark-d8c2716225, #f1d3d3); background: var(--sari-dark-950baec030, #fff5f5); color: var(--sari-dark-2a778702e9, #b04545); }
 
     /* ---------------- Open page header ---------------- */
     .ft-hero { padding: 0 2px 12px; }
 
     .ft-eyebrow {
         margin: 0;
-        color: #a87316;
+        color: var(--sari-dark-685eb4fc40, #a87316);
         font-size: 10.5px;
         font-weight: 800;
         line-height: 1.2;
@@ -90,7 +90,7 @@
     .ft-lead {
         max-width: 860px;
         margin: 8px 0 0;
-        color: #7d8792;
+        color: var(--sari-dark-a63aa16d7c, #7d8792);
         font-size: 11.5px;
         font-weight: 450;
         line-height: 1.6;
@@ -99,12 +99,12 @@
     /* Platform balance (charcoal, same as active category chip) */
     .ft-balance {
         min-width: 260px;
-        border: 1px solid #2f2f2f;
+        border: 1px solid var(--sari-dark-d8c2716225, #2f2f2f);
         border-radius: 17px;
-        background: linear-gradient(180deg, #363636 0%, #292929 100%);
+        background: linear-gradient(180deg, var(--sari-dark-fbb35de0d1, #363636) 0%, var(--sari-dark-fbb35de0d1, #292929) 100%);
         padding: 18px 22px;
         color: #fff;
-        box-shadow: 0 8px 18px rgba(24, 24, 24, .17), inset 0 1px 0 rgba(255, 255, 255, .06);
+        box-shadow: 0 8px 18px var(--sari-dark-3135cb7628, rgba(24, 24, 24, .17)), inset 0 1px 0 var(--sari-dark-0d18deb7fd, rgba(255, 255, 255, .06));
     }
     .ft-balance-label {
         margin: 0;
@@ -127,12 +127,12 @@
     .ft-card {
         border: 1px solid var(--sh-border);
         border-radius: 17px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 20px;
         box-shadow: var(--sh-shadow);
     }
 
-    .ft-card-accent { background: #fffaf1; border-color: #eadfc9; }
+    .ft-card-accent { background: var(--sari-dark-950baec030, #fffaf1); border-color: var(--sari-dark-d8c2716225, #eadfc9); }
 
     .ft-h3 {
         margin: 0;
@@ -153,7 +153,7 @@
 
     .ft-kicker {
         margin: 0;
-        color: #a87316;
+        color: var(--sari-dark-685eb4fc40, #a87316);
         font-size: 10px;
         font-weight: 800;
         letter-spacing: .12em;
@@ -197,27 +197,27 @@
         text-decoration: none;
     }
     .ft-btn-dark {
-        border-color: #2f2f2f;
-        background: linear-gradient(180deg, #363636 0%, #292929 100%);
-        box-shadow: 0 8px 18px rgba(24, 24, 24, .17), inset 0 1px 0 rgba(255, 255, 255, .06);
+        border-color: var(--sari-dark-d8c2716225, #2f2f2f);
+        background: linear-gradient(180deg, var(--sari-dark-fbb35de0d1, #363636) 0%, var(--sari-dark-fbb35de0d1, #292929) 100%);
+        box-shadow: 0 8px 18px var(--sari-dark-3135cb7628, rgba(24, 24, 24, .17)), inset 0 1px 0 var(--sari-dark-0d18deb7fd, rgba(255, 255, 255, .06));
     }
-    .ft-btn-dark:hover { background: linear-gradient(180deg, #333 0%, #262626 100%); }
+    .ft-btn-dark:hover { background: linear-gradient(180deg, var(--sari-dark-fbb35de0d1, #333) 0%, var(--sari-dark-fbb35de0d1, #262626) 100%); }
     .ft-btn-gold {
         border-color: #d79a28;
         background: var(--sh-gold);
-        box-shadow: 0 5px 12px rgba(200, 137, 18, .14);
+        box-shadow: 0 5px 12px var(--sari-dark-59ed29fe9d, rgba(200, 137, 18, .14));
     }
     .ft-btn-gold:hover { border-color: var(--sh-gold-dark); background: var(--sh-gold-dark); }
     .ft-btn-green { border-color: #2f9e63; background: #2f9e63; }
     .ft-btn-green:hover { border-color: #268650; background: #268650; }
     .ft-btn-red { border-color: #dc4a4a; background: #dc4a4a; }
     .ft-btn-red:hover { border-color: #c03b3b; background: #c03b3b; }
-    .ft-btn:focus-visible { outline: 2px solid rgba(47, 47, 47, .28); outline-offset: 2px; }
+    .ft-btn:focus-visible { outline: 2px solid var(--sari-dark-dd32a0938d, rgba(47, 47, 47, .28)); outline-offset: 2px; }
 
     /* ---------------- Inputs ---------------- */
     .ft-label {
         display: block;
-        color: #4b5560;
+        color: var(--sari-dark-e23e64dd1e, #4b5560);
         font-size: 10.5px;
         font-weight: 750;
         letter-spacing: .045em;
@@ -230,7 +230,7 @@
         height: 42px;
         border: 1px solid var(--sh-control-border);
         border-radius: 10px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 12px;
         color: var(--sh-body);
         font-size: 12px;
@@ -238,13 +238,13 @@
         box-shadow: none;
     }
     .ft-label .ft-input { margin-top: 6px; text-transform: none; letter-spacing: 0; }
-    .ft-input::placeholder { color: #79838e; font-size: 11.5px; font-weight: 450; opacity: 1; }
-    .ft-input:hover { border-color: #cfd5dc; background: #fbfcfd; }
+    .ft-input::placeholder { color: var(--sari-dark-a63aa16d7c, #79838e); font-size: 11.5px; font-weight: 450; opacity: 1; }
+    .ft-input:hover { border-color: var(--sari-dark-d8c2716225, #cfd5dc); background: var(--sari-dark-950baec030, #fbfcfd); }
     .ft-input:focus {
         outline: none;
         border-color: var(--sh-gold);
-        background: #fff;
-        box-shadow: 0 0 0 3px rgba(200, 137, 18, .08);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200, 137, 18, .08));
     }
 
     /* ---------------- Tinted pills / tiles ---------------- */
@@ -257,9 +257,9 @@
         font-size: 11px;
         font-weight: 700;
     }
-    .ft-pill-amber { background: #fff8e9; color: #a87019; border: 1px solid #efd9b0; }
-    .ft-pill-blue { background: #eff6ff; color: #1d4ed8; border: 1px solid #d6e4fb; }
-    .ft-pill-green { background: #eef8f1; color: #36805a; border: 1px solid #d6e9dc; }
+    .ft-pill-amber { background: var(--sari-dark-4d21eb669b, #fff8e9); color: var(--sari-dark-f382da8334, #a87019); border: 1px solid var(--sari-dark-d8c2716225, #efd9b0); }
+    .ft-pill-blue { background: var(--sari-dark-950baec030, #eff6ff); color: var(--sari-dark-7a41191112, #1d4ed8); border: 1px solid var(--sari-dark-d8c2716225, #d6e4fb); }
+    .ft-pill-green { background: var(--sari-dark-4d21eb669b, #eef8f1); color: var(--sari-dark-e23e64dd1e, #36805a); border: 1px solid var(--sari-dark-d8c2716225, #d6e9dc); }
 
     .ft-tile {
         border-radius: 12px;
@@ -278,17 +278,17 @@
         letter-spacing: -.02em;
         text-transform: none;
     }
-    .ft-tile-blue { background: #eff6ff; color: #1d4ed8; }
-    .ft-tile-violet { background: #f5f3ff; color: #6d28d9; }
-    .ft-tile-green { background: #eef8f1; color: #36805a; }
-    .ft-tile-neutral { background: #f8f9fa; color: var(--sh-muted); border: 1px solid var(--sh-row-divider); }
+    .ft-tile-blue { background: var(--sari-dark-950baec030, #eff6ff); color: var(--sari-dark-7a41191112, #1d4ed8); }
+    .ft-tile-violet { background: var(--sari-dark-950baec030, #f5f3ff); color: var(--sari-dark-a8c9d62a39, #6d28d9); }
+    .ft-tile-green { background: var(--sari-dark-4d21eb669b, #eef8f1); color: var(--sari-dark-e23e64dd1e, #36805a); }
+    .ft-tile-neutral { background: var(--sari-dark-950baec030, #f8f9fa); color: var(--sh-muted); border: 1px solid var(--sh-row-divider); }
     .ft-tile-neutral strong { color: var(--sh-ink); }
 
     /* ---------------- Payout rows (flat inside floating card) ---------------- */
     .ft-payout {
         border: 1px solid var(--sh-row-divider);
         border-radius: 14px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 16px;
     }
     .ft-payout-code {
@@ -308,9 +308,9 @@
         margin-top: 10px;
         border: 1px solid var(--sh-row-divider);
         border-radius: 10px;
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
         padding: 9px 12px;
-        color: #3f4852;
+        color: var(--sari-dark-e23e64dd1e, #3f4852);
         font-size: 11px;
         font-weight: 500;
         line-height: 1.5;
@@ -318,11 +318,11 @@
     .ft-transfer span { font-weight: 750; color: var(--sh-ink); }
 
     .ft-note { margin-top: 12px; border-radius: 10px; padding: 9px 12px; font-size: 11px; font-weight: 500; }
-    .ft-note-green { background: #eef8f1; color: #36805a; border: 1px solid #d6e9dc; }
-    .ft-note-red { background: #fff5f5; color: #b04545; border: 1px solid #f1d3d3; }
+    .ft-note-green { background: var(--sari-dark-4d21eb669b, #eef8f1); color: var(--sari-dark-e23e64dd1e, #36805a); border: 1px solid var(--sari-dark-d8c2716225, #d6e9dc); }
+    .ft-note-red { background: var(--sari-dark-950baec030, #fff5f5); color: var(--sari-dark-2a778702e9, #b04545); border: 1px solid var(--sari-dark-d8c2716225, #f1d3d3); }
 
     .ft-empty {
-        border: 1px dashed #d9dde2;
+        border: 1px dashed var(--sari-dark-d8c2716225, #d9dde2);
         border-radius: 14px;
         padding: 36px 16px;
         color: var(--sh-muted);
@@ -485,7 +485,7 @@
     </section>
 
     <section class="grid gap-[18px] xl:grid-cols-2">
-        <div class="ft-card"><h3 class="ft-h3">COD Reconciliation Snapshot</h3><div class="mt-4 grid grid-cols-3 gap-3"><div class="ft-tile ft-tile-neutral"><span>Awaiting</span><strong>₱{{ number_format($remittanceStats['awaiting'],2) }}</strong></div><div class="ft-tile ft-tile-green"><span>Verified</span><strong>₱{{ number_format($remittanceStats['verified'],2) }}</strong></div><div class="ft-tile" style="background:#fff5f5;color:#b04545;"><span>Discrepancies</span><strong>{{ number_format($remittanceStats['discrepancy_count']) }}</strong></div></div></div>
+        <div class="ft-card"><h3 class="ft-h3">COD Reconciliation Snapshot</h3><div class="mt-4 grid grid-cols-3 gap-3"><div class="ft-tile ft-tile-neutral"><span>Awaiting</span><strong>₱{{ number_format($remittanceStats['awaiting'],2) }}</strong></div><div class="ft-tile ft-tile-green"><span>Verified</span><strong>₱{{ number_format($remittanceStats['verified'],2) }}</strong></div><div class="ft-tile" style="background:var(--sari-dark-950baec030, #fff5f5);color:var(--sari-dark-2a778702e9, #b04545);"><span>Discrepancies</span><strong>{{ number_format($remittanceStats['discrepancy_count']) }}</strong></div></div></div>
         <div class="ft-card"><h3 class="ft-h3">Platform Wallet Ledger</h3><div class="mt-4 space-y-2">@forelse($platformEntries as $entry)<div class="ft-ledger-row"><div><strong>{{ strtoupper(str_replace('_',' ',$entry->category)) }}</strong><div class="ft-ledger-desc">{{ $entry->description }}</div></div><div class="ft-ledger-amt">{{ $entry->available_delta >= 0 ? '+' : '' }}₱{{ number_format((float)$entry->available_delta,2) }}</div></div>@empty<p class="ft-muted">No platform wallet entries yet.</p>@endforelse</div></div>
     </section>
 </div>

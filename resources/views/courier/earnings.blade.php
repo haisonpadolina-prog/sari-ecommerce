@@ -28,13 +28,13 @@ body:has(#sariRiderEarnings),
 
 body:has(#sariRiderEarnings) #courierMain,
 
-body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important; }
+body:has(#sariRiderEarnings) #courierPageContent { background:var(--sari-dark-4d21eb669b, #f4f5f7) !important; }
 
 #courierMain > main:has(#sariRiderEarnings),
 
 #courierPageContent:has(#sariRiderEarnings) { padding:clamp(16px,2.2vw,30px) !important; }
 
-#sariRiderEarnings { --re-ink:#1c2a3e; --re-muted:#728095; --re-light:#98a4b2; --re-line:#e7ebf1; --re-gold:#c88912; --re-shadow:0 3px 12px rgba(26,39,57,.025),0 13px 33px rgba(26,39,57,.057); max-width:1620px; margin:0 auto; color:var(--re-ink); font:400 13px/1.65 'Poppins',system-ui,sans-serif; }
+#sariRiderEarnings { --re-ink:var(--sari-dark-e23e64dd1e, #1c2a3e); --re-muted:var(--sari-dark-a63aa16d7c, #728095); --re-light:#98a4b2; --re-line:var(--sari-dark-d8c2716225, #e7ebf1); --re-gold:#c88912; --re-shadow:0 3px 12px var(--sari-dark-e1384eb7fc, rgba(26,39,57,.025)),0 13px 33px var(--sari-dark-5b5634790c, rgba(26,39,57,.057)); max-width:1620px; margin:0 auto; color:var(--re-ink); font:400 13px/1.65 'Poppins',system-ui,sans-serif; }
 
 #sariRiderEarnings, #sariRiderEarnings *, #sariRiderEarnings *::before, #sariRiderEarnings *::after { box-sizing:border-box; }
 
@@ -44,23 +44,23 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
 
 #sariRiderEarnings :is(a,button,input,select):focus-visible { outline:2px solid #c88912; outline-offset:3px; }
 
-#sariRiderEarnings .re-card { min-width:0; background:#fff; border:1px solid var(--re-line); border-radius:17px; box-shadow:var(--re-shadow); }
+#sariRiderEarnings .re-card { min-width:0; background:var(--sari-dark-950baec030, #fff); border:1px solid var(--re-line); border-radius:17px; box-shadow:var(--re-shadow); }
 
 #sariRiderEarnings .re-head { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:20px; margin:0 0 20px; }
 
-#sariRiderEarnings .re-eyebrow { display:flex; align-items:center; gap:8px; margin:0 0 7px; color:#8793a3; font-size:11px; font-weight:500; }
+#sariRiderEarnings .re-eyebrow { display:flex; align-items:center; gap:8px; margin:0 0 7px; color:var(--sari-dark-a63aa16d7c, #8793a3); font-size:11px; font-weight:500; }
 
 #sariRiderEarnings .re-eyebrow::before { content:''; height:7px; width:7px; border-radius:50%; background:#c88912; }
 
-#courierMain #sariRiderEarnings .re-page-title, #courierPageContent #sariRiderEarnings .re-page-title { margin:0; font-size:clamp(29px,2.7vw,38px); line-height:1.2; letter-spacing:-.045em; font-weight:600; color:#152235; }
+#courierMain #sariRiderEarnings .re-page-title, #courierPageContent #sariRiderEarnings .re-page-title { margin:0; font-size:clamp(29px,2.7vw,38px); line-height:1.2; letter-spacing:-.045em; font-weight:600; color:var(--sari-dark-e23e64dd1e, #152235); }
 
 #sariRiderEarnings .re-intro { max-width:760px; margin:9px 0 0; color:var(--re-muted); font-size:13px; line-height:1.75; }
 
 #sariRiderEarnings .re-actions { display:flex; flex-wrap:wrap; align-items:center; gap:9px; }
 
-#sariRiderEarnings .re-btn { min-height:43px; padding:10px 16px; border:1px solid #dfe5ec; border-radius:11px; background:#fff; color:#425169; display:inline-flex; gap:9px; align-items:center; justify-content:center; font-size:12px; font-weight:500; line-height:1.4; cursor:pointer; transition:background-color .16s ease,border-color .16s ease,transform .16s ease; }
+#sariRiderEarnings .re-btn { min-height:43px; padding:10px 16px; border:1px solid var(--sari-dark-d8c2716225, #dfe5ec); border-radius:11px; background:var(--sari-dark-950baec030, #fff); color:var(--sari-dark-e23e64dd1e, #425169); display:inline-flex; gap:9px; align-items:center; justify-content:center; font-size:12px; font-weight:500; line-height:1.4; cursor:pointer; transition:background-color .16s ease,border-color .16s ease,transform .16s ease; }
 
-#sariRiderEarnings .re-btn:hover { background:#f7f9fc; border-color:#c6d0dc; }
+#sariRiderEarnings .re-btn:hover { background:var(--sari-dark-950baec030, #f7f9fc); border-color:var(--sari-dark-d8c2716225, #c6d0dc); }
 
 #sariRiderEarnings .re-btn svg { height:17px; width:17px; stroke-width:1.7; flex:none; }
 
@@ -72,9 +72,9 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
 
 #sariRiderEarnings .re-alert { padding:13px 16px; border-radius:12px; margin-bottom:17px; font-size:12px; }
 
-#sariRiderEarnings .re-alert-success { background:#ecf8f0; border:1px solid #c6e6d0; color:#31724c; }
+#sariRiderEarnings .re-alert-success { background:var(--sari-dark-4d21eb669b, #ecf8f0); border:1px solid var(--sari-dark-d8c2716225, #c6e6d0); color:var(--sari-dark-e23e64dd1e, #31724c); }
 
-#sariRiderEarnings .re-alert-error { background:#fff0f1; border:1px solid #efc7cc; color:#a13e4b; }
+#sariRiderEarnings .re-alert-error { background:var(--sari-dark-950baec030, #fff0f1); border:1px solid var(--sari-dark-d8c2716225, #efc7cc); color:var(--sari-dark-a63aa16d7c, #a13e4b); }
 
 #sariRiderEarnings .re-metrics { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; }
 
@@ -82,31 +82,31 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
 
 #sariRiderEarnings .re-metric-top { display:flex; align-items:flex-start; justify-content:space-between; gap:9px; }
 
-#sariRiderEarnings .re-metric-label { margin:0; color:#66768b; font-weight:400; font-size:13px; }
+#sariRiderEarnings .re-metric-label { margin:0; color:var(--sari-dark-a63aa16d7c, #66768b); font-weight:400; font-size:13px; }
 
-#sariRiderEarnings .re-metric-icon { display:grid; place-items:center; height:29px; width:29px; flex:none; color:#8591a2; }
+#sariRiderEarnings .re-metric-icon { display:grid; place-items:center; height:29px; width:29px; flex:none; color:var(--sari-dark-a63aa16d7c, #8591a2); }
 
 #sariRiderEarnings .re-metric-icon svg { height:23px; width:23px; stroke-width:1.65; }
 
-#sariRiderEarnings .re-metric-number { margin:0; color:#172439; font-size:clamp(21px,1.85vw,28px); font-weight:600; line-height:1.3; letter-spacing:-.045em; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+#sariRiderEarnings .re-metric-number { margin:0; color:var(--sari-dark-e23e64dd1e, #172439); font-size:clamp(21px,1.85vw,28px); font-weight:600; line-height:1.3; letter-spacing:-.045em; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
 
-#sariRiderEarnings .re-metric-feature .re-metric-icon { color:#c88912; }
+#sariRiderEarnings .re-metric-feature .re-metric-icon { color:var(--sari-dark-19b301f69a, #c88912); }
 
-#sariRiderEarnings .re-help { display:flex; align-items:flex-start; gap:10px; margin:14px 0 17px; padding:13px 15px; background:#fff; border:1px solid #e8edf2; border-radius:12px; color:#78869a; font-size:12px; line-height:1.65; }
+#sariRiderEarnings .re-help { display:flex; align-items:flex-start; gap:10px; margin:14px 0 17px; padding:13px 15px; background:var(--sari-dark-950baec030, #fff); border:1px solid var(--sari-dark-d8c2716225, #e8edf2); border-radius:12px; color:var(--sari-dark-a63aa16d7c, #78869a); font-size:12px; line-height:1.65; }
 
 #sariRiderEarnings .re-help svg { width:17px; height:17px; flex:none; margin-top:2px; stroke-width:1.7; }
 
-#sariRiderEarnings .re-help strong { font-weight:500; color:#354458; }
+#sariRiderEarnings .re-help strong { font-weight:500; color:var(--sari-dark-e23e64dd1e, #354458); }
 
 #sariRiderEarnings .re-submetrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:0 0 18px; }
 
 #sariRiderEarnings .re-submetric { padding:18px 20px; }
 
-#sariRiderEarnings .re-submetric-label { color:#728197; font-size:12px; margin:0; }
+#sariRiderEarnings .re-submetric-label { color:var(--sari-dark-a63aa16d7c, #728197); font-size:12px; margin:0; }
 
-#sariRiderEarnings .re-submetric-number { margin:7px 0 2px; color:#243348; font-size:22px; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.035em; overflow-wrap:anywhere; }
+#sariRiderEarnings .re-submetric-number { margin:7px 0 2px; color:var(--sari-dark-e23e64dd1e, #243348); font-size:22px; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.035em; overflow-wrap:anywhere; }
 
-#sariRiderEarnings .re-submetric-note { margin:4px 0 0; color:#96a1af; font-size:11px; line-height:1.65; }
+#sariRiderEarnings .re-submetric-note { margin:4px 0 0; color:var(--sari-dark-a63aa16d7c, #96a1af); font-size:11px; line-height:1.65; }
 
 #sariRiderEarnings .re-grid { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(310px,.8fr); gap:17px; align-items:start; }
 
@@ -114,17 +114,17 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
 
 #sariRiderEarnings .re-panel-header { display:flex; align-items:flex-start; justify-content:space-between; gap:13px; flex-wrap:wrap; margin-bottom:18px; }
 
-#courierMain #sariRiderEarnings .re-section-title, #courierPageContent #sariRiderEarnings .re-section-title { margin:0; color:#253448; font-size:18px; font-weight:600; letter-spacing:-.025em; line-height:1.4; }
+#courierMain #sariRiderEarnings .re-section-title, #courierPageContent #sariRiderEarnings .re-section-title { margin:0; color:var(--sari-dark-e23e64dd1e, #253448); font-size:18px; font-weight:600; letter-spacing:-.025em; line-height:1.4; }
 
-#sariRiderEarnings .re-section-description { margin:4px 0 0; color:#95a1af; font-size:12px; }
+#sariRiderEarnings .re-section-description { margin:4px 0 0; color:var(--sari-dark-a63aa16d7c, #95a1af); font-size:12px; }
 
-#sariRiderEarnings .re-tag { display:inline-flex; align-items:center; padding:5px 10px; border-radius:99px; background:#f1f4f8; color:#6b788a; font-size:11px; font-weight:500; }
+#sariRiderEarnings .re-tag { display:inline-flex; align-items:center; padding:5px 10px; border-radius:99px; background:var(--sari-dark-4d21eb669b, #f1f4f8); color:var(--sari-dark-a63aa16d7c, #6b788a); font-size:11px; font-weight:500; }
 
-#sariRiderEarnings .re-chart { height:240px; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:clamp(5px,1vw,18px); align-items:stretch; padding:16px 3px 0; border-bottom:1px solid #edf0f4; }
+#sariRiderEarnings .re-chart { height:240px; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:clamp(5px,1vw,18px); align-items:stretch; padding:16px 3px 0; border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f4); }
 
 #sariRiderEarnings .re-chart-col { min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:7px; }
 
-#sariRiderEarnings .re-chart-value { width:100%; text-align:center; color:#5c6b7e; font-size:10px; line-height:1.3; font-weight:500; white-space:nowrap; }
+#sariRiderEarnings .re-chart-value { width:100%; text-align:center; color:var(--sari-dark-a63aa16d7c, #5c6b7e); font-size:10px; line-height:1.3; font-weight:500; white-space:nowrap; }
 
 #sariRiderEarnings .re-chart-bar-track { width:min(100%,48px); height:175px; display:flex; align-items:end; justify-content:center; }
 
@@ -132,45 +132,45 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
 
 #sariRiderEarnings .re-chart-col:hover .re-chart-bar { background:#c88912; }
 
-#sariRiderEarnings .re-chart-bar.is-zero { background:#e6ebf0; }
+#sariRiderEarnings .re-chart-bar.is-zero { background:var(--sari-dark-4d21eb669b, #e6ebf0); }
 
-#sariRiderEarnings .re-chart-day { color:#8793a4; font-size:11px; font-weight:500; text-align:center; padding-bottom:9px; }
+#sariRiderEarnings .re-chart-day { color:var(--sari-dark-a63aa16d7c, #8793a4); font-size:11px; font-weight:500; text-align:center; padding-bottom:9px; }
 
-#sariRiderEarnings .re-balance { background:#f7f9fc; border:1px solid #e8edf3; border-radius:13px; padding:18px 19px; }
+#sariRiderEarnings .re-balance { background:var(--sari-dark-950baec030, #f7f9fc); border:1px solid var(--sari-dark-d8c2716225, #e8edf3); border-radius:13px; padding:18px 19px; }
 
-#sariRiderEarnings .re-balance-label { margin:0; color:#778699; font-size:12px; }
+#sariRiderEarnings .re-balance-label { margin:0; color:var(--sari-dark-a63aa16d7c, #778699); font-size:12px; }
 
-#sariRiderEarnings .re-balance-number { margin:7px 0; font-size:clamp(26px,2.6vw,34px); font-weight:600; letter-spacing:-.045em; line-height:1.3; color:#233247; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+#sariRiderEarnings .re-balance-number { margin:7px 0; font-size:clamp(26px,2.6vw,34px); font-weight:600; letter-spacing:-.045em; line-height:1.3; color:var(--sari-dark-e23e64dd1e, #233247); overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
 
-#sariRiderEarnings .re-balance-note { margin:0; color:#8c98a8; font-size:11px; line-height:1.65; }
+#sariRiderEarnings .re-balance-note { margin:0; color:var(--sari-dark-a63aa16d7c, #8c98a8); font-size:11px; line-height:1.65; }
 
 #sariRiderEarnings .re-form { margin-top:20px; display:grid; gap:13px; }
 
 #sariRiderEarnings .re-field { display:grid; gap:6px; }
 
-#sariRiderEarnings .re-field-label { color:#526176; font-size:11px; font-weight:500; }
+#sariRiderEarnings .re-field-label { color:var(--sari-dark-a63aa16d7c, #526176); font-size:11px; font-weight:500; }
 
-#sariRiderEarnings .re-field-input { display:block; min-height:45px; width:100%; padding:11px 13px; background:#fff; border:1px solid #dee5ed; border-radius:10px; color:#2b3b4e; font-size:12px; outline:none; }
+#sariRiderEarnings .re-field-input { display:block; min-height:45px; width:100%; padding:11px 13px; background:var(--sari-dark-950baec030, #fff); border:1px solid var(--sari-dark-d8c2716225, #dee5ed); border-radius:10px; color:var(--sari-dark-e23e64dd1e, #2b3b4e); font-size:12px; outline:none; }
 
-#sariRiderEarnings .re-field-input:focus { border-color:#d2a34b; box-shadow:0 0 0 3px rgba(201,141,25,.10); }
+#sariRiderEarnings .re-field-input:focus { border-color:#d2a34b; box-shadow:0 0 0 3px var(--sari-dark-8eadf403a5, rgba(201,141,25,.10)); }
 
-#sariRiderEarnings .re-field-input::placeholder { color:#a7b0bb; }
+#sariRiderEarnings .re-field-input::placeholder { color:var(--sari-dark-a63aa16d7c, #a7b0bb); }
 
 #sariRiderEarnings .re-form .re-btn { width:100%; margin-top:3px; }
 
-#sariRiderEarnings .re-payout-history { margin-top:20px; border-top:1px solid #edf0f4; padding-top:17px; }
+#sariRiderEarnings .re-payout-history { margin-top:20px; border-top:1px solid var(--sari-dark-d8c2716225, #edf0f4); padding-top:17px; }
 
-#sariRiderEarnings .re-payout-title { margin:0 0 11px; font-size:13px; font-weight:600; color:#344357; }
+#sariRiderEarnings .re-payout-title { margin:0 0 11px; font-size:13px; font-weight:600; color:var(--sari-dark-e23e64dd1e, #344357); }
 
-#sariRiderEarnings .re-payout-entry { padding:10px 0; display:flex; justify-content:space-between; align-items:center; gap:12px; border-bottom:1px solid #eff2f6; font-size:12px; }
+#sariRiderEarnings .re-payout-entry { padding:10px 0; display:flex; justify-content:space-between; align-items:center; gap:12px; border-bottom:1px solid var(--sari-dark-d8c2716225, #eff2f6); font-size:12px; }
 
 #sariRiderEarnings .re-payout-entry:last-child { border-bottom:0; }
 
-#sariRiderEarnings .re-payout-entry strong { color:#263649; font-weight:500; }
+#sariRiderEarnings .re-payout-entry strong { color:var(--sari-dark-e23e64dd1e, #263649); font-weight:500; }
 
-#sariRiderEarnings .re-payout-entry span { color:#6b7788; }
+#sariRiderEarnings .re-payout-entry span { color:var(--sari-dark-a63aa16d7c, #6b7788); }
 
-#sariRiderEarnings .re-payout-empty { padding:17px 8px; color:#929eab; background:#f9fafc; border:1px dashed #e1e6ed; border-radius:11px; text-align:center; font-size:12px; }
+#sariRiderEarnings .re-payout-empty { padding:17px 8px; color:var(--sari-dark-a63aa16d7c, #929eab); background:var(--sari-dark-950baec030, #f9fafc); border:1px dashed var(--sari-dark-d8c2716225, #e1e6ed); border-radius:11px; text-align:center; font-size:12px; }
 
 /* The ledger sits directly below Weekly Performance in the same left column. */
 
@@ -180,33 +180,33 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
 
 #sariRiderEarnings .re-recent-heading { padding:21px 23px 18px; margin:0; }
 
-#sariRiderEarnings .re-recent-list { list-style:none; padding:0; margin:0; border-top:1px solid #edf0f4; }
+#sariRiderEarnings .re-recent-list { list-style:none; padding:0; margin:0; border-top:1px solid var(--sari-dark-d8c2716225, #edf0f4); }
 
-#sariRiderEarnings .re-recent-row { min-width:0; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) auto; align-items:center; gap:12px 18px; padding:17px 23px; border-bottom:1px solid #f0f2f5; }
+#sariRiderEarnings .re-recent-row { min-width:0; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) auto; align-items:center; gap:12px 18px; padding:17px 23px; border-bottom:1px solid var(--sari-dark-d8c2716225, #f0f2f5); }
 
 #sariRiderEarnings .re-recent-row:last-child { border-bottom:0; }
 
-#sariRiderEarnings .re-recent-row:hover { background:#fafbfd; }
+#sariRiderEarnings .re-recent-row:hover { background:var(--sari-dark-950baec030, #fafbfd); }
 
 #sariRiderEarnings .re-recent-primary, #sariRiderEarnings .re-recent-secondary { display:grid; align-content:center; gap:5px; min-width:0; }
 
-#sariRiderEarnings .re-recent-order { font-size:12px; font-weight:600; color:#26374b; line-height:1.5; overflow-wrap:anywhere; }
+#sariRiderEarnings .re-recent-order { font-size:12px; font-weight:600; color:var(--sari-dark-e23e64dd1e, #26374b); line-height:1.5; overflow-wrap:anywhere; }
 
-#sariRiderEarnings .re-recent-date { font-size:11px; font-weight:400; color:#8794a4; line-height:1.55; overflow-wrap:anywhere; }
+#sariRiderEarnings .re-recent-date { font-size:11px; font-weight:400; color:var(--sari-dark-a63aa16d7c, #8794a4); line-height:1.55; overflow-wrap:anywhere; }
 
-#sariRiderEarnings .re-recent-type { font-size:11px; font-weight:500; color:#566579; line-height:1.5; overflow-wrap:anywhere; }
+#sariRiderEarnings .re-recent-type { font-size:11px; font-weight:500; color:var(--sari-dark-a63aa16d7c, #566579); line-height:1.5; overflow-wrap:anywhere; }
 
-#sariRiderEarnings .re-recent-status { display:inline-flex; align-items:center; align-self:start; width:fit-content; max-width:100%; border:1px solid #e8edf2; background:#f5f7fa; color:#68788b; border-radius:999px; padding:4px 9px; font-size:10px; font-weight:500; line-height:1.5; overflow-wrap:anywhere; }
+#sariRiderEarnings .re-recent-status { display:inline-flex; align-items:center; align-self:start; width:fit-content; max-width:100%; border:1px solid var(--sari-dark-d8c2716225, #e8edf2); background:var(--sari-dark-950baec030, #f5f7fa); color:var(--sari-dark-a63aa16d7c, #68788b); border-radius:999px; padding:4px 9px; font-size:10px; font-weight:500; line-height:1.5; overflow-wrap:anywhere; }
 
-#sariRiderEarnings .re-recent-amount { font-size:15px; font-weight:600; color:#26374b; font-variant-numeric:tabular-nums; letter-spacing:-.025em; white-space:nowrap; text-align:right; }
+#sariRiderEarnings .re-recent-amount { font-size:15px; font-weight:600; color:var(--sari-dark-e23e64dd1e, #26374b); font-variant-numeric:tabular-nums; letter-spacing:-.025em; white-space:nowrap; text-align:right; }
 
-#sariRiderEarnings .re-recent-empty { padding:36px 20px; color:#8c99a9; font-size:12px; text-align:center; }
+#sariRiderEarnings .re-recent-empty { padding:36px 20px; color:var(--sari-dark-a63aa16d7c, #8c99a9); font-size:12px; text-align:center; }
 #sariRiderEarnings .re-recent-row[hidden] { display:none !important; }
-#sariRiderEarnings .re-metric--today .re-metric-icon { color:#3b82f6; }
-#sariRiderEarnings .re-metric--week .re-metric-icon { color:#c88912; }
-#sariRiderEarnings .re-metric--month .re-metric-icon { color:#10b981; }
+#sariRiderEarnings .re-metric--today .re-metric-icon { color:var(--sari-dark-9865053083, #3b82f6); }
+#sariRiderEarnings .re-metric--week .re-metric-icon { color:var(--sari-dark-19b301f69a, #c88912); }
+#sariRiderEarnings .re-metric--month .re-metric-icon { color:var(--sari-dark-b6874f317b, #10b981); }
 #sariRiderEarnings .re-metric--potential .re-metric-icon { color:#8b5cf6; }
-#sariRiderEarnings .re-metric--available .re-metric-icon { color:#c88912; }
+#sariRiderEarnings .re-metric--available .re-metric-icon { color:var(--sari-dark-19b301f69a, #c88912); }
 
 @media(max-width:1220px) { #sariRiderEarnings .re-recent-row { grid-template-columns:minmax(0,1fr) auto; } #sariRiderEarnings .re-recent-secondary { grid-column:1/-1; grid-row:2; } #sariRiderEarnings .re-recent-amount { grid-column:2; grid-row:1; } }
 
@@ -232,15 +232,15 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
     padding:22px clamp(14px,2.2vw,30px) 42px !important;
 }
 #sariRiderEarnings {
-    --re-ink:#2f3742;
-    --re-muted:#7a8593;
+    --re-ink:var(--sari-dark-e23e64dd1e, #2f3742);
+    --re-muted:var(--sari-dark-a63aa16d7c, #7a8593);
     --re-light:#94a0ad;
-    --re-line:#e5e7eb;
+    --re-line:var(--sari-dark-d8c2716225, #e5e7eb);
     --re-gold:#c88912;
-    --re-shadow:0 2px 5px rgba(15,23,42,.045),
-                0 10px 24px rgba(15,23,42,.075),
-                0 24px 54px rgba(15,23,42,.095),
-                inset 0 1px 0 rgba(255,255,255,.92);
+    --re-shadow:0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+                0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+                0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     max-width:1400px;
     font:400 13px/1.65 'Poppins',ui-sans-serif,system-ui,sans-serif;
 }
@@ -283,12 +283,12 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
     min-height:43px;
     padding:10px 15px;
     border-radius:12px;
-    border-color:#dce2e8;
-    color:#465363;
+    border-color:var(--sari-dark-d8c2716225, #dce2e8);
+    color:var(--sari-dark-e23e64dd1e, #465363);
     font-size:11.5px;
     font-weight:700;
 }
-#sariRiderEarnings .re-btn:hover { background:#f3f4f6; border-color:#cbd5df; color:#293440; }
+#sariRiderEarnings .re-btn:hover { background:var(--sari-dark-4d21eb669b, #f3f4f6); border-color:var(--sari-dark-d8c2716225, #cbd5df); color:var(--sari-dark-e23e64dd1e, #293440); }
 #sariRiderEarnings .re-btn-gold { background:var(--re-gold); border-color:var(--re-gold); color:#fff; }
 #sariRiderEarnings .re-btn-gold:hover { background:#b47b0e; border-color:#b47b0e; color:#fff; }
 #sariRiderEarnings .re-btn svg { width:16px; height:16px; }
@@ -298,11 +298,11 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
     padding:14px 16px;
     gap:10px;
 }
-#sariRiderEarnings .re-metric-label { color:#5f6d7c; font-size:13px; font-weight:600; line-height:1.4; }
+#sariRiderEarnings .re-metric-label { color:var(--sari-dark-a63aa16d7c, #5f6d7c); font-size:13px; font-weight:600; line-height:1.4; }
 #sariRiderEarnings .re-metric-icon { width:27px; height:27px; }
 #sariRiderEarnings .re-metric-icon svg { width:23px; height:23px; stroke-width:1.8; }
 #sariRiderEarnings .re-metric-number {
-    color:#1f2937;
+    color:var(--sari-dark-e23e64dd1e, #1f2937);
     font-size:clamp(22px,1.9vw,30px);
     line-height:1.12;
     font-weight:650;
@@ -314,19 +314,19 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
     gap:10px;
     margin:14px 0 17px;
     padding:12px 15px;
-    border:1px solid #e2e8f0;
-    background:#f8fafc;
-    color:#64748b;
+    border:1px solid var(--sari-dark-d8c2716225, #e2e8f0);
+    background:var(--sari-dark-950baec030, #f8fafc);
+    color:var(--sari-dark-a63aa16d7c, #64748b);
     font-size:11.5px;
 }
 #sariRiderEarnings .re-help svg { color:var(--re-gold); }
-#sariRiderEarnings .re-help strong { color:#334155; font-weight:700; }
+#sariRiderEarnings .re-help strong { color:var(--sari-dark-e23e64dd1e, #334155); font-weight:700; }
 #sariRiderEarnings .re-submetrics { gap:14px; }
 #sariRiderEarnings .re-submetric { padding:15px 17px; }
-#sariRiderEarnings .re-submetric-label { color:#657487; font-size:11.5px; font-weight:600; }
+#sariRiderEarnings .re-submetric-label { color:var(--sari-dark-a63aa16d7c, #657487); font-size:11.5px; font-weight:600; }
 #sariRiderEarnings .re-submetric-number {
     margin:7px 0 3px;
-    color:#243348;
+    color:var(--sari-dark-e23e64dd1e, #243348);
     font-size:21px;
     font-weight:650;
     line-height:1.22;
@@ -338,21 +338,21 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
 #sariRiderEarnings .re-panel-header { margin-bottom:17px; }
 #courierMain #sariRiderEarnings .re-section-title,
 #courierPageContent #sariRiderEarnings .re-section-title {
-    color:#2f3742;
+    color:var(--sari-dark-e23e64dd1e, #2f3742);
     font-size:17px;
     font-weight:750;
     line-height:1.4;
     letter-spacing:-.025em;
 }
-#sariRiderEarnings .re-section-description { color:#8b96a4; font-size:11.5px; line-height:1.65; }
+#sariRiderEarnings .re-section-description { color:var(--sari-dark-a63aa16d7c, #8b96a4); font-size:11.5px; line-height:1.65; }
 #sariRiderEarnings .re-tag {
-    background:#fff8eb;
-    border:1px solid #efdfb8;
-    color:#9a6a12;
+    background:var(--sari-dark-4d21eb669b, #fff8eb);
+    border:1px solid var(--sari-dark-d8c2716225, #efdfb8);
+    color:var(--sari-dark-c8bdcce6ab, #9a6a12);
     font-size:10px;
     font-weight:700;
 }
-#sariRiderEarnings .re-chart-value { color:#7a8797; font-size:10px; font-weight:600; }
+#sariRiderEarnings .re-chart-value { color:var(--sari-dark-a63aa16d7c, #7a8797); font-size:10px; font-weight:600; }
 #sariRiderEarnings .re-chart-bar {
     background:linear-gradient(180deg,#dfb35a 0%, #c88912 100%);
 }
@@ -360,31 +360,31 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
     background:linear-gradient(180deg,#e7be69 0%, #b77b0d 100%);
 }
 #sariRiderEarnings .re-chart-bar.is-zero {
-    background:#e7edf4;
+    background:var(--sari-dark-4d21eb669b, #e7edf4);
 }
-#sariRiderEarnings .re-chart-day { color:#7f8a98; font-size:10.5px; }
-#sariRiderEarnings .re-balance { background:#f8fafc; border-color:#e5e7eb; border-radius:13px; padding:16px 17px; }
-#sariRiderEarnings .re-balance-label { color:#657487; font-size:11.5px; font-weight:600; }
-#sariRiderEarnings .re-balance-number { color:#243348; font-size:clamp(25px,2.35vw,30px); font-weight:650; line-height:1.18; }
+#sariRiderEarnings .re-chart-day { color:var(--sari-dark-a63aa16d7c, #7f8a98); font-size:10.5px; }
+#sariRiderEarnings .re-balance { background:var(--sari-dark-950baec030, #f8fafc); border-color:var(--sari-dark-d8c2716225, #e5e7eb); border-radius:13px; padding:16px 17px; }
+#sariRiderEarnings .re-balance-label { color:var(--sari-dark-a63aa16d7c, #657487); font-size:11.5px; font-weight:600; }
+#sariRiderEarnings .re-balance-number { color:var(--sari-dark-e23e64dd1e, #243348); font-size:clamp(25px,2.35vw,30px); font-weight:650; line-height:1.18; }
 #sariRiderEarnings .re-balance-note { font-size:10.5px; line-height:1.65; }
 #sariRiderEarnings .re-form { margin-top:18px; gap:12px; }
-#sariRiderEarnings .re-field-label { color:#465363; font-size:11.5px; font-weight:700; }
+#sariRiderEarnings .re-field-label { color:var(--sari-dark-e23e64dd1e, #465363); font-size:11.5px; font-weight:700; }
 #sariRiderEarnings .re-field-input {
     min-height:45px;
     padding:10px 13px;
-    border:1px solid #d7dee7;
+    border:1px solid var(--sari-dark-d8c2716225, #d7dee7);
     border-radius:11px;
-    color:#2e3948;
+    color:var(--sari-dark-e23e64dd1e, #2e3948);
     font-size:11.5px;
 }
 #sariRiderEarnings .re-field-input:focus,
 #sariRiderEarnings .re-field-input:focus-visible {
-    background:#fff;
+    background:var(--sari-dark-950baec030, #fff);
     border-color:var(--re-gold);
     outline:none;
     box-shadow:none;
 }
-#sariRiderEarnings .re-payout-title { color:#344357; font-size:12.5px; font-weight:750; }
+#sariRiderEarnings .re-payout-title { color:var(--sari-dark-e23e64dd1e, #344357); font-size:12.5px; font-weight:750; }
 #sariRiderEarnings .re-payout-entry { font-size:11.5px; }
 #sariRiderEarnings .re-payout-entry strong { font-weight:700; }
 #sariRiderEarnings .re-recent-heading {
@@ -402,19 +402,19 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
     gap:7px;
     min-height:36px;
     padding:8px 12px;
-    border:1px solid #e2e8f0;
+    border:1px solid var(--sari-dark-d8c2716225, #e2e8f0);
     border-radius:10px;
-    background:#fff;
-    color:#475569;
+    background:var(--sari-dark-950baec030, #fff);
+    color:var(--sari-dark-e23e64dd1e, #475569);
     font-size:11px;
     font-weight:700;
     cursor:pointer;
     transition:background-color .16s ease,border-color .16s ease,color .16s ease;
 }
 #sariRiderEarnings .re-recent-more:hover {
-    background:#f8fafc;
-    border-color:#cbd5e1;
-    color:#293440;
+    background:var(--sari-dark-950baec030, #f8fafc);
+    border-color:var(--sari-dark-d8c2716225, #cbd5e1);
+    color:var(--sari-dark-e23e64dd1e, #293440);
 }
 #sariRiderEarnings .re-recent-more svg {
     width:14px;
@@ -426,11 +426,11 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
     transform:rotate(180deg);
 }
 #sariRiderEarnings .re-recent-row { padding:15px 21px; gap:10px 16px; }
-#sariRiderEarnings .re-recent-order { color:#293440; font-size:11.5px; font-weight:750; }
-#sariRiderEarnings .re-recent-date { color:#8b96a4; font-size:10.5px; }
+#sariRiderEarnings .re-recent-order { color:var(--sari-dark-e23e64dd1e, #293440); font-size:11.5px; font-weight:750; }
+#sariRiderEarnings .re-recent-date { color:var(--sari-dark-a63aa16d7c, #8b96a4); font-size:10.5px; }
 #sariRiderEarnings .re-recent-type { font-size:11px; font-weight:600; }
-#sariRiderEarnings .re-recent-status { border-color:#e5e7eb; background:#f8fafc; font-size:10px; font-weight:650; }
-#sariRiderEarnings .re-recent-amount { color:#293440; font-size:14px; font-weight:750; }
+#sariRiderEarnings .re-recent-status { border-color:var(--sari-dark-d8c2716225, #e5e7eb); background:var(--sari-dark-950baec030, #f8fafc); font-size:10px; font-weight:650; }
+#sariRiderEarnings .re-recent-amount { color:var(--sari-dark-e23e64dd1e, #293440); font-size:14px; font-weight:750; }
 @media (max-width:767px) {
     #courierMain > main:has(#sariRiderEarnings),
     #courierPageContent:has(#sariRiderEarnings) { padding:16px 14px 28px !important; }

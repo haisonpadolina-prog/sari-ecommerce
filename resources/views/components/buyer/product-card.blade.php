@@ -1,4 +1,4 @@
-@props([
+﻿@props([
     'product',
     'priority' => false,
     'interactive' => false,
@@ -85,14 +85,14 @@
     .sari-product-card {
         min-height: 0;
         overflow: hidden;
-        border: 1px solid #e8e2da !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e2da) !important;
         border-radius: 20px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         padding: 0;
         box-shadow:
-            0 14px 32px rgba(43,34,24,.085),
-            0 4px 10px rgba(43,34,24,.038),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
+            0 14px 32px var(--sari-dark-0a9e89f88f, rgba(43,34,24,.085)),
+            0 4px 10px var(--sari-dark-e0ffb11e26, rgba(43,34,24,.038)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.96)) !important;
         transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
     }
 
@@ -117,7 +117,7 @@
         overflow: hidden;
         border: 0 !important;
         border-radius: 19px 19px 12px 12px;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     .sari-buyer-card-media img {
@@ -162,18 +162,18 @@
         font-weight: 700;
         letter-spacing: -.015em;
         white-space: nowrap;
-        box-shadow: 0 4px 12px rgba(25,22,18,.10);
+        box-shadow: 0 4px 12px var(--sari-dark-8eadf403a5, rgba(25,22,18,.10));
     }
 
     .sari-buyer-card-badge--active {
         min-height: 23px;
         padding: 0 9px;
-        border: 1px solid rgba(255,255,255,.06);
-        background: #2b2a28;
-        color: #e0a11a;
+        border: 1px solid var(--sari-dark-e9c7519020, rgba(255,255,255,.06));
+        background: var(--sari-dark-fbb35de0d1, #2b2a28);
+        color: var(--sari-dark-7f7834ccc9, #e0a11a);
         font-size: 7.2px;
         font-weight: 800;
-        box-shadow: 0 4px 10px rgba(28,25,22,.12);
+        box-shadow: 0 4px 10px var(--sari-dark-3b2338cbf0, rgba(28,25,22,.12));
     }
 
     .sari-buyer-discount-corner {
@@ -197,7 +197,7 @@
         letter-spacing: -.025em;
         font-variant-numeric: tabular-nums;
         white-space: nowrap;
-        box-shadow: 0 4px 10px rgba(126,84,7,.14);
+        box-shadow: 0 4px 10px var(--sari-dark-59ed29fe9d, rgba(126,84,7,.14));
         pointer-events: none;
     }
 
@@ -206,9 +206,9 @@
     }
 
     .sari-buyer-card-badge--out {
-        border: 1px solid #f0c8c8;
-        background: rgba(255,255,255,.96);
-        color: #bf4d4d;
+        border: 1px solid var(--sari-dark-d8c2716225, #f0c8c8);
+        background: var(--sari-dark-c86bd35395, rgba(255,255,255,.96));
+        color: var(--sari-dark-81bbb600e0, #bf4d4d);
     }
 
     .sari-buyer-card-offer-cluster {
@@ -227,7 +227,7 @@
     }
 
     .sari-buyer-card-offer-item {
-        --offer-bg: #333;
+        --offer-bg: var(--sari-dark-fbb35de0d1, #333);
         position: relative;
         z-index: 1;
         display: inline-flex;
@@ -253,7 +253,7 @@
         z-index: -1;
         background: var(--offer-bg);
         transform: skewX(-20deg);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.13);
+        box-shadow: inset 0 1px 0 var(--sari-dark-1d7c32dd5a, rgba(255,255,255,.13));
     }
 
     .sari-buyer-card-offer-item:first-child::before {
@@ -277,7 +277,7 @@
         width: 104px;
         padding-left: 19px !important;
         padding-right: 13px;
-        color: #201b13;
+        color: var(--sari-dark-e23e64dd1e, #201b13);
     }
 
     .sari-buyer-card-offer-item--cod .sari-buyer-card-offer-main {
@@ -286,7 +286,7 @@
     }
 
     .sari-buyer-card-offer-item--shipping {
-        --offer-bg: linear-gradient(135deg, #16283b 0%, #24384d 100%);
+        --offer-bg: linear-gradient(135deg, var(--sari-dark-fbb35de0d1, #16283b) 0%, var(--sari-dark-fbb35de0d1, #24384d) 100%);
         width: 96px;
     }
 
@@ -360,7 +360,7 @@
         display: -webkit-box;
         overflow: hidden;
         margin: 0;
-        color: #26211d;
+        color: var(--sari-dark-e23e64dd1e, #26211d);
         font-size: 13.5px;
         line-height: 1.32;
         font-weight: 650;
@@ -372,7 +372,7 @@
     .sari-buyer-card-meta {
         overflow: hidden;
         margin: 5px 0 0;
-        color: #91887e;
+        color: var(--sari-dark-a63aa16d7c, #91887e);
         font-size: 8.7px;
         line-height: 1.35;
         text-overflow: ellipsis;
@@ -386,7 +386,7 @@
 
     .sari-buyer-card-price {
         display: block;
-        color: #bd7b00;
+        color: var(--sari-dark-c8bdcce6ab, #bd7b00);
         font-size: 14.5px;
         line-height: 1.05;
         font-weight: 800;
@@ -396,7 +396,7 @@
     .sari-buyer-card-old-price {
         display: block;
         margin-top: 5px;
-        color: #aca49a;
+        color: var(--sari-dark-a63aa16d7c, #aca49a);
         font-size: 7.5px;
         line-height: 1;
         text-decoration: line-through;
@@ -417,7 +417,7 @@
         overflow: visible;
         border: 0;
         border-radius: 999px;
-        background-color: #202329;
+        background-color: var(--sari-dark-fbb35de0d1, #202329);
         background-image: url('{{ asset('images/seller/flash-sale-strip.png') }}');
         background-repeat: no-repeat;
         background-position: center;
@@ -445,7 +445,7 @@
         line-height: 1;
         white-space: nowrap;
         box-shadow: none;
-        text-shadow: 0 1px 2px rgba(0,0,0,.34);
+        text-shadow: 0 1px 2px var(--sari-dark-152c2221a5, rgba(0,0,0,.34));
     }
 
     .sari-buyer-card-promo-label {
@@ -481,7 +481,7 @@
         width: 100%;
         height: 1px;
         margin: 8px 0 9px;
-        background: #ebe5dd;
+        background: var(--sari-dark-4d21eb669b, #ebe5dd);
     }
 
     .sari-buyer-card-footer {
@@ -502,7 +502,7 @@
     .sari-buyer-card-secondary {
         overflow: hidden;
         margin: 5px 0 0;
-        color: #9b9389;
+        color: var(--sari-dark-a63aa16d7c, #9b9389);
         font-size: 7.5px;
         line-height: 1.3;
         text-overflow: ellipsis;
@@ -524,12 +524,12 @@
         flex: 0 0 31px;
         align-items: center;
         justify-content: center;
-        border: 1px solid #e5ddd4;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd4);
         border-radius: 8px;
-        background: #fff;
-        color: #d68f08;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-19b301f69a, #d68f08);
         text-decoration: none;
-        box-shadow: 0 3px 9px rgba(45,37,28,.035);
+        box-shadow: 0 3px 9px var(--sari-dark-7593018246, rgba(45,37,28,.035));
         transition: transform .16s ease,border-color .16s ease,color .16s ease,background .16s ease,box-shadow .16s ease;
     }
 
@@ -553,7 +553,7 @@
         line-height: 1;
         font-weight: 800;
         text-decoration: none;
-        box-shadow: 0 7px 16px rgba(205,137,11,.16);
+        box-shadow: 0 7px 16px var(--sari-dark-b5c2a2270e, rgba(205,137,11,.16));
         transition: transform .16s ease,background .16s ease,box-shadow .16s ease;
     }
 
@@ -564,9 +564,9 @@
         justify-content: center;
         border: 1px solid #e3cfaa;
         border-radius: 11px;
-        background: #fffaf0;
+        background: var(--sari-dark-950baec030, #fffaf0);
         padding: 0 14px;
-        color: #a86d08;
+        color: var(--sari-dark-6e784b4931, #a86d08);
         font-size: 7.5px;
         line-height: 1;
         font-weight: 800;
@@ -581,13 +581,13 @@
     }
 
     .sari-buyer-card-icon-action:disabled {
-        border-color: #ddd9d3;
-        background: #f4f2ef;
-        color: #aaa59d;
+        border-color: var(--sari-dark-d8c2716225, #ddd9d3);
+        background: var(--sari-dark-4d21eb669b, #f4f2ef);
+        color: var(--sari-dark-a63aa16d7c, #aaa59d);
     }
 
     .sari-buyer-card-buy:disabled {
-        background: #d3d0cb;
+        background: var(--sari-dark-4d21eb669b, #d3d0cb);
         color: #fff;
     }
 
@@ -604,10 +604,10 @@
     @media (hover:hover) and (pointer:fine) {
         .sari-product-card:hover {
             transform: none !important;
-            border-color: #ded5c9 !important;
+            border-color: var(--sari-dark-d8c2716225, #ded5c9) !important;
             box-shadow:
-                0 16px 32px rgba(43,34,24,.085),
-                0 5px 12px rgba(43,34,24,.04) !important;
+                0 16px 32px var(--sari-dark-0a9e89f88f, rgba(43,34,24,.085)),
+                0 5px 12px var(--sari-dark-25b2da5e49, rgba(43,34,24,.04)) !important;
         }
 
         .sari-product-card:hover .sari-buyer-card-media img {
@@ -615,21 +615,21 @@
         }
 
         .sari-buyer-card-title-link:hover .sari-buyer-card-title {
-            color: #a86d08;
+            color: var(--sari-dark-6e784b4931, #a86d08);
         }
 
         .sari-buyer-card-icon-action:hover {
             transform: translateY(-1px);
             border-color: #d8a63f;
-            background: #fffaf0;
-            color: #b67508;
-            box-shadow: 0 6px 13px rgba(201,137,14,.10);
+            background: var(--sari-dark-950baec030, #fffaf0);
+            color: var(--sari-dark-6e784b4931, #b67508);
+            box-shadow: 0 6px 13px var(--sari-dark-8eadf403a5, rgba(201,137,14,.10));
         }
 
         .sari-buyer-card-buy:hover {
             transform: translateY(-1px);
             background: #c58105;
-            box-shadow: 0 9px 18px rgba(193,123,5,.20);
+            box-shadow: 0 9px 18px var(--sari-dark-ef22e61893, rgba(193,123,5,.20));
         }
     }
 
@@ -785,7 +785,7 @@
     .sari-product-card .sari-buyer-card-meta {
         font-size: 10.5px;
         line-height: 1.45;
-        color: #75808b;
+        color: var(--sari-dark-a63aa16d7c, #75808b);
     }
 
     .sari-product-card .sari-buyer-card-price {
@@ -803,7 +803,7 @@
 
     .sari-product-card .sari-buyer-card-secondary {
         font-size: 9.5px;
-        color: #77818c;
+        color: var(--sari-dark-a63aa16d7c, #77818c);
     }
 
     .sari-product-card .sari-buyer-card-badge--active {

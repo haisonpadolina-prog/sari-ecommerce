@@ -39,16 +39,16 @@
     --chat-gold-hover: #c9890f;
     --chat-gold-soft: #fffaf0;
 
-    --chat-ink: #111827;
-    --chat-text: #344054;
-    --chat-muted: #7c8592;
-    --chat-soft-muted: #98a2b3;
+    --chat-ink: var(--sari-dark-e23e64dd1e, #111827);
+    --chat-text: var(--sari-dark-e23e64dd1e, #344054);
+    --chat-muted: var(--sari-dark-a63aa16d7c, #7c8592);
+    --chat-soft-muted: var(--sari-dark-a63aa16d7c, #98a2b3);
 
-    --chat-line: #e5e7eb;
-    --chat-divider: #eceff2;
+    --chat-line: var(--sari-dark-d8c2716225, #e5e7eb);
+    --chat-divider: var(--sari-dark-d8c2716225, #eceff2);
 
-    --chat-canvas: #f7f8fa;
-    --chat-panel: #ffffff;
+    --chat-canvas: var(--sari-dark-950baec030, #f7f8fa);
+    --chat-panel: var(--sari-dark-950baec030, #ffffff);
 
     /*
     |--------------------------------------------------------------------------
@@ -262,31 +262,31 @@
 
     max-width: 360px;
 
-    border: 1px solid #dce7df;
+    border: 1px solid var(--sari-dark-d8c2716225, #dce7df);
     border-radius: 10px;
 
-    background: #f4f9f6;
+    background: var(--sari-dark-950baec030, #f4f9f6);
 
     padding: 9px 12px;
 
-    color: #4f7d63;
+    color: var(--sari-dark-a63aa16d7c, #4f7d63);
 
     font-size: 9px;
     line-height: 1.45;
     font-weight: 600;
 
     box-shadow:
-        0 4px 10px rgba(15, 23, 42, .045),
-        0 14px 30px rgba(15, 23, 42, .09);
+        0 4px 10px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 14px 30px var(--sari-dark-b12a5e9552, rgba(15, 23, 42, .09));
 }
 
 
 .logistics-chat-alert.is-error {
-    border-color: #efcece;
+    border-color: var(--sari-dark-d8c2716225, #efcece);
 
-    background: #fff5f5;
+    background: var(--sari-dark-950baec030, #fff5f5);
 
-    color: #a65353;
+    color: var(--sari-dark-58dd29f069, #a65353);
 }
 
 
@@ -309,11 +309,11 @@
 
     border-right: 1px solid var(--chat-divider);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     box-shadow:
-        0 1px 3px rgba(15, 23, 42, .025),
-        0 7px 18px rgba(15, 23, 42, .045);
+        0 1px 3px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 7px 18px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045));
 }
 
 
@@ -329,16 +329,16 @@
         14px
         12px;
 
-    border-bottom: 1px solid #edf0f3;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 }
 
 
 .logistics-conversation-heading h3 {
     margin: 0;
 
-    color: #1f2937;
+    color: var(--sari-dark-e23e64dd1e, #1f2937);
 
     font-size: 13px;
     line-height: 1.35;
@@ -351,7 +351,7 @@
 .logistics-conversation-heading > p {
     margin: 2px 0 0;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 8.5px;
     line-height: 1.4;
@@ -382,7 +382,7 @@
 
     transform: translateY(-50%);
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     pointer-events: none;
 }
@@ -392,10 +392,10 @@
     width: 100%;
     height: 40px;
 
-    border: 1px solid #d8dee6;
+    border: 1px solid var(--sari-dark-d8c2716225, #d8dee6);
     border-radius: 9px;
 
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 
     padding:
         0
@@ -403,7 +403,7 @@
         0
         36px;
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-size: 9.5px;
 
@@ -419,18 +419,18 @@
 
 
 #logisticsMessageSearch::placeholder {
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 }
 
 
 #logisticsMessageSearch:focus {
     border-color: var(--chat-gold);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     box-shadow:
         0 0 0 3px
-        rgba(213, 150, 23, .08);
+        var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08));
 }
 
 
@@ -452,7 +452,7 @@
 
     overscroll-behavior: contain;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     scrollbar-width: thin;
     scrollbar-color:
@@ -469,9 +469,9 @@
     gap: 9px;
 
     border: 0;
-    border-bottom: 1px solid #edf0f3;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     padding:
         12px
@@ -491,12 +491,12 @@
 
 
 .logistics-conversation-item:hover {
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 }
 
 
 .logistics-conversation-item.is-active {
-    background: #fbfcfd;
+    background: var(--sari-dark-950baec030, #fbfcfd);
 
     box-shadow:
         inset 3px 0 0
@@ -527,12 +527,12 @@
 
     place-items: center;
 
-    border: 1px solid #e1e6eb;
+    border: 1px solid var(--sari-dark-d8c2716225, #e1e6eb);
     border-radius: 50%;
 
-    background: #f3f6f8;
+    background: var(--sari-dark-4d21eb669b, #f3f6f8);
 
-    color: #52697a;
+    color: var(--sari-dark-a63aa16d7c, #52697a);
 
     font-size: 9px;
     font-weight: 800;
@@ -550,7 +550,7 @@
     right: -1px;
     bottom: -1px;
 
-    border: 2px solid #ffffff;
+    border: 2px solid var(--sari-dark-d8c2716225, #ffffff);
     border-radius: 999px;
 
     background: #aeb6c1;
@@ -591,7 +591,7 @@
 
     overflow: hidden;
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-size: 9.8px;
     line-height: 1.4;
@@ -607,7 +607,7 @@
 
     overflow: hidden;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 7.8px;
     line-height: 1.45;
@@ -624,7 +624,7 @@
 
     overflow: hidden;
 
-    color: #667085;
+    color: var(--sari-dark-a63aa16d7c, #667085);
 
     font-size: 8.2px;
     line-height: 1.4;
@@ -679,7 +679,7 @@
 .logistics-conversation-empty strong {
     display: block;
 
-    color: #475467;
+    color: var(--sari-dark-e23e64dd1e, #475467);
 
     font-size: 9px;
 }
@@ -688,7 +688,7 @@
 .logistics-conversation-empty p {
     margin: 4px 0 0;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 8px;
     line-height: 1.5;
@@ -715,12 +715,12 @@
     border-left: 1px solid var(--chat-divider);
     border-right: 1px solid var(--chat-divider);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     box-shadow:
-        0 3px 7px rgba(15, 23, 42, .045),
-        0 14px 32px rgba(15, 23, 42, .075),
-        0 30px 68px rgba(15, 23, 42, .07);
+        0 3px 7px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 14px 32px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 30px 68px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07));
 
     transform: none;
 }
@@ -747,7 +747,7 @@
 
     border-bottom: 1px solid var(--chat-line);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     padding:
         9px
@@ -779,7 +779,7 @@
 
     overflow: hidden;
 
-    color: #1f2937;
+    color: var(--sari-dark-e23e64dd1e, #1f2937);
 
     font-size: 11px;
     line-height: 1.35;
@@ -801,7 +801,7 @@
 
     margin-top: 2px;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 8px;
     line-height: 1.4;
@@ -813,13 +813,13 @@
 
     border-radius: 11px;
 
-    background: #fffaf0;
+    background: var(--sari-dark-950baec030, #fffaf0);
 
-    color: #a96f06;
+    color: var(--sari-dark-c8bdcce6ab, #a96f06);
 
     box-shadow:
         inset 0 0 0 1px
-        #efd9a7;
+        var(--sari-dark-f30a5f9061, #efd9a7);
 }
 
 
@@ -835,16 +835,16 @@
 
     gap: 5px;
 
-    border: 1px solid #e4e8ec;
+    border: 1px solid var(--sari-dark-d8c2716225, #e4e8ec);
     border-radius: 999px;
 
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 
     padding:
         0
         8px;
 
-    color: #667085;
+    color: var(--sari-dark-a63aa16d7c, #667085);
 
     font-size: 7.8px;
     font-weight: 700;
@@ -864,20 +864,20 @@
 
 
 .logistics-platform-status.is-online {
-    border-color: #dce7df;
+    border-color: var(--sari-dark-d8c2716225, #dce7df);
 
-    background: #f4f9f6;
+    background: var(--sari-dark-950baec030, #f4f9f6);
 
-    color: #4f7d63;
+    color: var(--sari-dark-a63aa16d7c, #4f7d63);
 }
 
 
 .logistics-platform-status.is-offline {
-    border-color: #e4e8ec;
+    border-color: var(--sari-dark-d8c2716225, #e4e8ec);
 
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 }
 
 
@@ -889,16 +889,16 @@
 
     flex: 0 0 auto;
 
-    border: 1px solid #e1e6eb;
+    border: 1px solid var(--sari-dark-d8c2716225, #e1e6eb);
     border-radius: 999px;
 
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 
     padding:
         0
         9px;
 
-    color: #667085;
+    color: var(--sari-dark-a63aa16d7c, #667085);
 
     font-size: 7.8px;
     font-weight: 700;
@@ -920,7 +920,7 @@
 
     overscroll-behavior: contain;
 
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 
     padding:
         18px
@@ -934,10 +934,10 @@
 
     box-shadow:
         inset 0 1px 0
-        rgba(255, 255, 255, .9),
+        var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .9)),
 
         inset 0 -1px 0
-        rgba(226, 232, 240, .72);
+        var(--sari-dark-f30a5f9061, rgba(226, 232, 240, .72));
 }
 
 
@@ -964,7 +964,7 @@
 #logisticsDetailsPane::-webkit-scrollbar-thumb {
     border-radius: 999px;
 
-    background: #cfd6df;
+    background: var(--sari-dark-4d21eb669b, #cfd6df);
 }
 
 
@@ -1029,7 +1029,7 @@
 .logistics-message-label {
     margin-bottom: 5px;
 
-    color: #7c7369;
+    color: var(--sari-dark-a63aa16d7c, #7c7369);
 
     font-size: 8.5px;
     font-weight: 600;
@@ -1063,12 +1063,12 @@
         8px
         12px;
 
-    border: 1px solid #dfe4ea;
+    border: 1px solid var(--sari-dark-d8c2716225, #dfe4ea);
     border-radius: 12px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
-    color: #3f4b5a;
+    color: var(--sari-dark-e23e64dd1e, #3f4b5a);
 
     font-family:
         "Poppins",
@@ -1093,9 +1093,9 @@
     box-sizing: border-box;
 
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, .035),
-        0 5px 14px rgba(15, 23, 42, .055),
-        0 13px 28px rgba(15, 23, 42, .06);
+        0 1px 2px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 5px 14px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+        0 13px 28px var(--sari-dark-361b571631, rgba(15, 23, 42, .06));
 
     transform: none;
 }
@@ -1122,9 +1122,9 @@
     color: #ffffff;
 
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, .04),
-        0 6px 16px rgba(15, 23, 42, .07),
-        0 14px 30px rgba(15, 23, 42, .075);
+        0 1px 2px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)),
+        0 6px 16px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)),
+        0 14px 30px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075));
 }
 
 
@@ -1136,7 +1136,7 @@
 [data-chat-bubble][data-chat-side="incoming"] {
     align-self: flex-start;
 
-    border-color: #dfe4ea;
+    border-color: var(--sari-dark-d8c2716225, #dfe4ea);
 
     border-radius:
         12px
@@ -1144,9 +1144,9 @@
         12px
         4px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
-    color: #3f4b5a;
+    color: var(--sari-dark-e23e64dd1e, #3f4b5a);
 }
 
 
@@ -1168,7 +1168,7 @@
 
     margin-top: 4px;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 7.5px;
     font-weight: 400;
@@ -1209,7 +1209,7 @@
 
     padding: 30px;
 
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 
     text-align: center;
 }
@@ -1225,12 +1225,12 @@
 
     margin-bottom: 10px;
 
-    border: 1px solid #e1e6eb;
+    border: 1px solid var(--sari-dark-d8c2716225, #e1e6eb);
     border-radius: 50%;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
-    color: #667085;
+    color: var(--sari-dark-a63aa16d7c, #667085);
 }
 
 
@@ -1241,7 +1241,7 @@
 
 
 .logistics-thread-empty > strong {
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-size: 10px;
     font-weight: 700;
@@ -1253,7 +1253,7 @@
 
     margin: 4px 0 0;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 8px;
     line-height: 1.55;
@@ -1273,7 +1273,7 @@
 
     border-top: 1px solid var(--chat-line);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     padding:
         9px
@@ -1281,7 +1281,7 @@
 
     box-shadow:
         0 -4px 14px
-        rgba(15, 23, 42, .025);
+        var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025));
 }
 
 
@@ -1298,10 +1298,10 @@
 
     gap: 7px;
 
-    border: 1px solid #d8dee6;
+    border: 1px solid var(--sari-dark-d8c2716225, #d8dee6);
     border-radius: 13px;
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     padding:
         5px
@@ -1309,7 +1309,7 @@
 
     box-shadow:
         0 1px 2px
-        rgba(15, 23, 42, .02);
+        var(--sari-dark-f6fe7319d9, rgba(15, 23, 42, .02));
 
     transition:
         border-color .15s ease,
@@ -1322,7 +1322,7 @@
 
     box-shadow:
         0 0 0 3px
-        rgba(213, 150, 23, .08);
+        var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08));
 }
 
 
@@ -1350,7 +1350,7 @@
         8px
         6px;
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-size: 10px;
     line-height: 1.5;
@@ -1360,7 +1360,7 @@
 
 
 #logisticsPlatformInput::placeholder {
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 }
 
 
@@ -1445,7 +1445,7 @@
         0
         3px;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 7.5px;
     line-height: 1.3;
@@ -1453,7 +1453,7 @@
 
 
 .logistics-composer-meta b {
-    color: #667085;
+    color: var(--sari-dark-a63aa16d7c, #667085);
 
     font-weight: 600;
 }
@@ -1478,11 +1478,11 @@
 
     border-left: 1px solid var(--chat-divider);
 
-    background: #ffffff;
+    background: var(--sari-dark-950baec030, #ffffff);
 
     box-shadow:
-        0 1px 3px rgba(15, 23, 42, .025),
-        0 7px 18px rgba(15, 23, 42, .045);
+        0 1px 3px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 7px 18px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045));
 }
 
 
@@ -1491,7 +1491,7 @@
    ========================================================================== */
 
 .logistics-details-heading {
-    border-bottom: 1px solid #edf0f3;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
     padding: 13px;
 }
@@ -1500,7 +1500,7 @@
 .logistics-details-heading strong {
     display: block;
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-size: 10px;
     font-weight: 700;
@@ -1510,7 +1510,7 @@
 .logistics-details-heading p {
     margin: 2px 0 0;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 8px;
 }
@@ -1544,9 +1544,9 @@
 
     border-radius: 50%;
 
-    background: #f3f6f8;
+    background: var(--sari-dark-4d21eb669b, #f3f6f8);
 
-    color: #5f7788;
+    color: var(--sari-dark-a63aa16d7c, #5f7788);
 
     font-size: 11px;
     font-weight: 800;
@@ -1558,7 +1558,7 @@
 
     margin-top: 8px;
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-size: 10px;
     font-weight: 700;
@@ -1568,7 +1568,7 @@
 .logistics-details-profile > p {
     margin: 2px 0 0;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 7.8px;
 
@@ -1590,10 +1590,10 @@
 
 
 .logistics-details-list > div {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
     border-radius: 10px;
 
-    background: #fafbfc;
+    background: var(--sari-dark-950baec030, #fafbfc);
 
     padding: 10px;
 
@@ -1604,7 +1604,7 @@
 .logistics-details-list span {
     display: block;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 7px;
 }
@@ -1615,7 +1615,7 @@
 
     margin-top: 3px;
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-size: 8.5px;
     font-weight: 700;
@@ -1625,7 +1625,7 @@
 .logistics-details-list p {
     margin: 2px 0 0;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 7px;
 }

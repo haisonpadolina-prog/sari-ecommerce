@@ -6,7 +6,7 @@
 @push('styles')
 <style>
 /* Logistics-only presentation. The reusable scanner and its scan API are not modified. */
-#logisticsContent .sari-logistics-scanner { --qr-ink:#252e38; --qr-muted:#8793a1; --qr-border:#e4e9ef; --qr-gold:#d9950b; --qr-surface:#fff; }
+#logisticsContent .sari-logistics-scanner { --qr-ink:var(--sari-dark-e23e64dd1e, #252e38); --qr-muted:var(--sari-dark-a63aa16d7c, #8793a1); --qr-border:var(--sari-dark-d8c2716225, #e4e9ef); --qr-gold:#d9950b; --qr-surface:var(--sari-dark-950baec030, #fff); }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] {
   width:100%; max-width:1190px; margin-inline:auto;
   display:flex; flex-direction:column; gap:18px;
@@ -20,7 +20,7 @@
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:first-child > div { align-items:center; gap:16px; }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:first-child span {
   border:0 !important; border-radius:0; background:transparent !important;
-  padding:0 !important; color:#af7714 !important; font-size:10px !important;
+  padding:0 !important; color:var(--sari-dark-af18afcaa4, #af7714) !important; font-size:10px !important;
   font-weight:800; letter-spacing:.13em;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:first-child h2 {
@@ -30,14 +30,14 @@
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:first-child p {
   margin-top:7px; max-width:720px; font-size:11.5px !important; line-height:1.65 !important;
-  color:#7a8591 !important;
+  color:var(--sari-dark-a63aa16d7c, #7a8591) !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:first-child a {
-  min-height:39px; flex-shrink:0; border:1px solid #e0e5eb !important; border-radius:11px;
-  padding-inline:14px; background:white !important; color:#535f6e !important;
+  min-height:39px; flex-shrink:0; border:1px solid var(--sari-dark-d8c2716225, #e0e5eb) !important; border-radius:11px;
+  padding-inline:14px; background:var(--sari-dark-950baec030, white) !important; color:var(--sari-dark-a63aa16d7c, #535f6e) !important;
   font-size:11px; box-shadow:none !important;
 }
-#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:first-child a:hover {background:#f7f9fb !important; border-color:#ccd5df !important;}
+#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:first-child a:hover {background:var(--sari-dark-950baec030, #f7f9fb) !important; border-color:var(--sari-dark-d8c2716225, #ccd5df) !important;}
 /* Logistics-only heading is plain page content: no card, separator, or outline. */
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section.qr-compact-header,
 .sari-logistics-scanner [data-sari-qr-scanner] > section.qr-compact-header {
@@ -64,28 +64,28 @@
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-heading { gap:14px; }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-eyebrow {
-  display:block; color:#a87416 !important; background:none !important;
+  display:block; color:var(--sari-dark-685eb4fc40, #a87416) !important; background:none !important;
   border:0 !important; padding:0 !important;
   font-size:10px !important; font-weight:750 !important; letter-spacing:.13em !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-title {
   margin-top:6px !important;
-  color:#25303a !important; font-size:clamp(25px,2.3vw,30px) !important;
+  color:var(--sari-dark-e23e64dd1e, #25303a) !important; font-size:clamp(25px,2.3vw,30px) !important;
   line-height:1.13 !important; font-weight:760 !important; letter-spacing:-.035em !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-summary {
   max-width:550px !important; margin-top:6px !important;
-  font-size:12px !important; line-height:1.5 !important; color:#7a8794 !important;
+  font-size:12px !important; line-height:1.5 !important; color:var(--sari-dark-a63aa16d7c, #7a8794) !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-back {
   display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; gap:4px;
   padding:5px 0 !important; min-height:32px !important; border:0 !important;
   background:transparent !important; border-radius:0 !important; box-shadow:none !important;
-  color:#8a6530 !important; font-size:11px !important; font-weight:700 !important;
+  color:var(--sari-dark-a63aa16d7c, #8a6530) !important; font-size:11px !important; font-weight:700 !important;
   transition:color .12s ease !important;
 }
-#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-back:hover {color:#65502c !important; background:transparent !important;}
-#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-back:focus-visible {outline:2px solid #a5b0bd; outline-offset:4px; border-radius:4px !important;}
+#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-back:hover {color:var(--sari-dark-e23e64dd1e, #65502c) !important; background:transparent !important;}
+#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-back:focus-visible {outline:2px solid var(--sari-dark-d8c2716225, #a5b0bd); outline-offset:4px; border-radius:4px !important;}
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-back svg {width:15px; height:15px; flex-shrink:0;}
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > .qr-compact-header .qr-compact-back span {
   color:inherit !important; text-transform:none !important; letter-spacing:0 !important;
@@ -130,23 +130,23 @@
   align-items:start; gap:18px;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child {
-  min-width:0; overflow:hidden; border:1px solid #303a44 !important;
-  border-radius:21px !important; background:#151c24 !important;
-  box-shadow:0 4px 14px rgba(15,23,42,.07),0 18px 38px rgba(15,23,42,.11) !important;
+  min-width:0; overflow:hidden; border:1px solid var(--sari-dark-d8c2716225, #303a44) !important;
+  border-radius:21px !important; background:var(--sari-dark-f3318ab620, #151c24) !important;
+  box-shadow:0 4px 14px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)),0 18px 38px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11)) !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child > div:first-child {
-  padding:19px 21px; border-color:rgba(255,255,255,.09) !important;
+  padding:19px 21px; border-color:var(--sari-dark-adc0ef4882, rgba(255,255,255,.09)) !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child > div:first-child p:first-child {
   color:#f5f7f9 !important; font-size:14px !important; font-weight:700 !important;
   letter-spacing:-.02em !important; text-transform:none !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child > div:first-child p:nth-child(2) {
-  color:#98a6b5 !important; font-size:10.5px !important; margin-top:4px;
+  color:var(--sari-dark-a63aa16d7c, #98a6b5) !important; font-size:10.5px !important; margin-top:4px;
 }
 #logisticsContent .sari-logistics-scanner #sariQrCameraBadge {
   padding:7px 11px; font-size:10px; font-weight:650; color:#c9d4df;
-  border:1px solid rgba(255,255,255,.13); border-radius:999px;
+  border:1px solid var(--sari-dark-70334c7f17, rgba(255,255,255,.13)); border-radius:999px;
 }
 #logisticsContent .sari-logistics-scanner #sariQrCameraBadge.text-emerald-300 {color:#92e7b5;}
 #logisticsContent .sari-logistics-scanner #sariQrCameraBadge.text-rose-300 {color:#ffaaa1;}
@@ -154,24 +154,24 @@
 #logisticsContent .sari-logistics-scanner #sariQrReader {
   min-height:382px !important;
 }
-#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child > div:nth-child(2) { background:#10161d !important; }
-#logisticsContent .sari-logistics-scanner #sariQrReader { background:#10161d; }
+#logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child > div:nth-child(2) { background:var(--sari-dark-f3318ab620, #10161d) !important; }
+#logisticsContent .sari-logistics-scanner #sariQrReader { background:var(--sari-dark-f3318ab620, #10161d); }
 #logisticsContent .sari-logistics-scanner #sariQrReader video {object-fit:cover;}
-#logisticsContent .sari-logistics-scanner #sariQrCameraPlaceholder { padding:18px 22px; background:#10161d; }
+#logisticsContent .sari-logistics-scanner #sariQrCameraPlaceholder { padding:18px 22px; background:var(--sari-dark-f3318ab620, #10161d); }
 #logisticsContent .sari-logistics-scanner #sariQrCameraPlaceholder > div {width:100%; max-width:310px; margin-inline:auto;}
 #logisticsContent .sari-logistics-scanner #sariQrCameraPlaceholder > div > div:first-child {
-  width:70px; height:70px; border:1px solid #3c4855; border-radius:18px;
-  background:#202b37; color:#e8edf2;
+  width:70px; height:70px; border:1px solid var(--sari-dark-d8c2716225, #3c4855); border-radius:18px;
+  background:var(--sari-dark-fbb35de0d1, #202b37); color:#e8edf2;
 }
 #logisticsContent .sari-logistics-scanner #sariQrCameraPlaceholder > div > div:first-child svg {width:35px; height:35px;}
 #logisticsContent .sari-logistics-scanner #sariQrCameraPlaceholder p:nth-child(2) {
   margin-top:18px; color:#f5f7f9; font-size:16px; font-weight:650;
 }
 #logisticsContent .sari-logistics-scanner #sariQrCameraPlaceholder p:nth-child(3) {
-  margin-top:8px; font-size:11.5px; line-height:1.6; color:#91a0af;
+  margin-top:8px; font-size:11.5px; line-height:1.6; color:var(--sari-dark-a63aa16d7c, #91a0af);
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child > div:last-child {
-  padding:17px 20px; gap:10px; border-color:rgba(255,255,255,.08) !important;
+  padding:17px 20px; gap:10px; border-color:var(--sari-dark-6da278ba55, rgba(255,255,255,.08)) !important;
 }
 #logisticsContent .sari-logistics-scanner #sariQrStartButton,
 #logisticsContent .sari-logistics-scanner #sariQrStopButton,
@@ -181,30 +181,30 @@
 }
 #logisticsContent .sari-logistics-scanner #sariQrStartButton { background:var(--qr-gold) !important; color:#fff !important; }
 #logisticsContent .sari-logistics-scanner #sariQrStartButton:hover { background:#c18306 !important; }
-#logisticsContent .sari-logistics-scanner #sariQrStopButton { background:#26313d !important; border:1px solid #414e5c !important; color:#e0e8f0 !important; }
+#logisticsContent .sari-logistics-scanner #sariQrStopButton { background:var(--sari-dark-fbb35de0d1, #26313d) !important; border:1px solid var(--sari-dark-d8c2716225, #414e5c) !important; color:#e0e8f0 !important; }
 #logisticsContent .sari-logistics-scanner #sariQrStopButton:disabled { opacity:.45; cursor:not-allowed; }
 #logisticsContent .sari-logistics-scanner #sariQrScanAnotherButton { color:#ffdc92 !important; }
 /* White, elevated status card; response colors still come from the original JS. */
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:nth-child(2) {min-width:0; display:flex; flex-direction:column; gap:13px;}
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:nth-child(2) > section {
   margin:0 !important; border:1px solid var(--qr-border) !important;
-  border-radius:19px !important; background:#fff !important;
-  box-shadow:0 2px 7px rgba(15,23,42,.03),0 13px 29px rgba(15,23,42,.055) !important;
+  border-radius:19px !important; background:var(--sari-dark-950baec030, #fff) !important;
+  box-shadow:0 2px 7px var(--sari-dark-b13200ac05, rgba(15,23,42,.03)),0 13px 29px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)) !important;
   padding:20px !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:nth-child(2) > section > p:first-child {
-  font-size:12px !important; letter-spacing:0 !important; color:#303b46 !important;
+  font-size:12px !important; letter-spacing:0 !important; color:var(--sari-dark-e23e64dd1e, #303b46) !important;
   font-weight:700 !important; text-transform:none !important;
 }
 #logisticsContent .sari-logistics-scanner #sariQrResult {
   margin-top:14px; border-radius:13px !important; padding:17px !important;
-  border:1px solid #e7ebf0; background:#f8fafb;
+  border:1px solid var(--sari-dark-d8c2716225, #e7ebf0); background:var(--sari-dark-950baec030, #f8fafb);
 }
-#logisticsContent .sari-logistics-scanner #sariQrResult.bg-emerald-50 {background:#effaf4 !important; border-color:#bfe9cf !important;}
-#logisticsContent .sari-logistics-scanner #sariQrResult.bg-rose-50 {background:#fff3f2 !important; border-color:#f2cac5 !important;}
+#logisticsContent .sari-logistics-scanner #sariQrResult.bg-emerald-50 {background:var(--sari-dark-4d21eb669b, #effaf4) !important; border-color:var(--sari-dark-d8c2716225, #bfe9cf) !important;}
+#logisticsContent .sari-logistics-scanner #sariQrResult.bg-rose-50 {background:var(--sari-dark-950baec030, #fff3f2) !important; border-color:var(--sari-dark-d8c2716225, #f2cac5) !important;}
 #logisticsContent .sari-logistics-scanner #sariQrResultTitle {font-size:13px !important; font-weight:750;}
 #logisticsContent .sari-logistics-scanner #sariQrResultMessage {font-size:11px !important; line-height:1.65 !important;}
-#logisticsContent .sari-logistics-scanner #sariQrOrderBlock {border-color:#e1e6eb !important;}
+#logisticsContent .sari-logistics-scanner #sariQrOrderBlock {border-color:var(--sari-dark-d8c2716225, #e1e6eb) !important;}
 #logisticsContent .sari-logistics-scanner #sariQrOrderNumber {font-size:14px !important; overflow-wrap:anywhere;}
 #logisticsContent .sari-logistics-scanner #sariQrStage {font-size:11px !important;}
 #logisticsContent .sari-logistics-scanner #sariQrNextLink {border-radius:11px; font-size:11px; min-height:41px;}
@@ -212,35 +212,35 @@
 #logisticsContent .sari-logistics-scanner .qr-manual-toggle {
   width:100%; display:flex; justify-content:space-between; align-items:center;
   gap:12px; min-height:46px; border:1px solid var(--qr-border);
-  background:#fff; color:#465361; border-radius:13px;
+  background:var(--sari-dark-950baec030, #fff); color:var(--sari-dark-e23e64dd1e, #465361); border-radius:13px;
   padding:0 15px; font-size:11px; font-weight:700;
-  text-align:left; box-shadow:0 4px 11px rgba(15,23,42,.025);
+  text-align:left; box-shadow:0 4px 11px var(--sari-dark-e1384eb7fc, rgba(15,23,42,.025));
 }
-#logisticsContent .sari-logistics-scanner .qr-manual-toggle:hover {background:#f8fafb; border-color:#d5dce4;}
-#logisticsContent .sari-logistics-scanner .qr-manual-toggle svg {width:16px; height:16px; color:#86919d; transition:transform .15s ease;}
+#logisticsContent .sari-logistics-scanner .qr-manual-toggle:hover {background:var(--sari-dark-950baec030, #f8fafb); border-color:var(--sari-dark-d8c2716225, #d5dce4);}
+#logisticsContent .sari-logistics-scanner .qr-manual-toggle svg {width:16px; height:16px; color:var(--sari-dark-a63aa16d7c, #86919d); transition:transform .15s ease;}
 #logisticsContent .sari-logistics-scanner .qr-manual-toggle[aria-expanded="true"] svg {transform:rotate(180deg);}
 #logisticsContent .sari-logistics-scanner #sariQrFallbackPanel[hidden] {display:none !important;}
-#logisticsContent .sari-logistics-scanner #sariQrFallbackPanel > p:nth-child(2) {font-size:10.5px !important; line-height:1.6; color:#7e8996;}
+#logisticsContent .sari-logistics-scanner #sariQrFallbackPanel > p:nth-child(2) {font-size:10.5px !important; line-height:1.6; color:var(--sari-dark-a63aa16d7c, #7e8996);}
 #logisticsContent .sari-logistics-scanner #sariQrManualPayload {
-  width:100%; font-size:11px; border:1px solid #dce2e9 !important; border-radius:12px;
-  background:#fff !important; color:#2e3944 !important;
+  width:100%; font-size:11px; border:1px solid var(--sari-dark-d8c2716225, #dce2e9) !important; border-radius:12px;
+  background:var(--sari-dark-950baec030, #fff) !important; color:var(--sari-dark-e23e64dd1e, #2e3944) !important;
 }
-#logisticsContent .sari-logistics-scanner #sariQrManualPayload:focus {outline:none; border-color:#b1bdc9 !important; box-shadow:0 0 0 3px rgba(96,112,128,.1) !important;}
+#logisticsContent .sari-logistics-scanner #sariQrManualPayload:focus {outline:none; border-color:var(--sari-dark-d8c2716225, #b1bdc9) !important; box-shadow:0 0 0 3px var(--sari-dark-8eadf403a5, rgba(96,112,128,.1)) !important;}
 #logisticsContent .sari-logistics-scanner #sariQrManualForm button {
-  min-height:41px; border:1px solid #dce2e9 !important; border-radius:11px;
-  background:#f5f7fa !important; color:#394653 !important; font-size:11px;
+  min-height:41px; border:1px solid var(--sari-dark-d8c2716225, #dce2e9) !important; border-radius:11px;
+  background:var(--sari-dark-950baec030, #f5f7fa) !important; color:var(--sari-dark-e23e64dd1e, #394653) !important; font-size:11px;
 }
-#logisticsContent .sari-logistics-scanner #sariQrManualForm button:hover {background:#eaf0f5 !important;}
+#logisticsContent .sari-logistics-scanner #sariQrManualForm button:hover {background:var(--sari-dark-4d21eb669b, #eaf0f5) !important;}
 /* Replaces the redundant yellow camera warning block with a quiet support note. */
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:nth-child(2) > section:last-child {
   border:0 !important; border-radius:0 !important; background:transparent !important;
   box-shadow:none !important; padding:6px 3px !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:nth-child(2) > section:last-child > p:first-child {
-  color:#7e8996 !important; font-size:10px !important;
+  color:var(--sari-dark-a63aa16d7c, #7e8996) !important; font-size:10px !important;
 }
 #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) > div:nth-child(2) > section:last-child > p:last-child {
-  color:#9ba5af !important; font-size:10px !important; line-height:1.6;
+  color:var(--sari-dark-a63aa16d7c, #9ba5af) !important; font-size:10px !important; line-height:1.6;
 }
 @media (max-width:1150px) {
   #logisticsContent .sari-logistics-scanner [data-sari-qr-scanner] > section:nth-of-type(2) {grid-template-columns:minmax(0,1fr);}

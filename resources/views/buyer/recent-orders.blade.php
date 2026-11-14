@@ -38,9 +38,9 @@
         [data-sari-recent-orders-page] {
             --sari-gold:#c88912;
             --sari-gold-dark:#a96f0e;
-            --sari-text:#252b31;
-            --sari-muted:#747d87;
-            --sari-line:#e6e9ed;
+            --sari-text:var(--sari-dark-e23e64dd1e, #252b31);
+            --sari-muted:var(--sari-dark-a63aa16d7c, #747d87);
+            --sari-line:var(--sari-dark-d8c2716225, #e6e9ed);
             --sari-soft:#f5f6f7;
             width:100%;
             max-width:1480px;
@@ -51,8 +51,8 @@
         }
 
         .sari-orders-head { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; padding:2px 2px 14px; }
-        .sari-orders-eyebrow { margin:0; color:#a87316; font-size:10.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
-        .sari-orders-title { margin:5px 0 0; color:#2e343b; font-size:clamp(27px,2.25vw,31px); font-weight:760; line-height:1.04; letter-spacing:-.035em; }
+        .sari-orders-eyebrow { margin:0; color:var(--sari-dark-685eb4fc40, #a87316); font-size:10.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+        .sari-orders-title { margin:5px 0 0; color:var(--sari-dark-e23e64dd1e, #2e343b); font-size:clamp(27px,2.25vw,31px); font-weight:760; line-height:1.04; letter-spacing:-.035em; }
         .sari-orders-title span { color:var(--sari-gold); }
         .sari-orders-all-link {
             position:relative !important;
@@ -64,7 +64,7 @@
             border-radius:0 !important;
             background:transparent !important;
             padding:0 !important;
-            color:#59636e !important;
+            color:var(--sari-dark-a63aa16d7c, #59636e) !important;
             font-size:11.5px !important;
             font-weight:750 !important;
             line-height:1.35 !important;
@@ -85,16 +85,16 @@
 
         .sari-orders-all-link:hover,
         .sari-orders-all-link:focus-visible {
-            color:#c88912 !important;
+            color:var(--sari-dark-19b301f69a, #c88912) !important;
             background:transparent !important;
             outline:none !important;
             text-decoration:none !important;
             box-shadow:none !important;
         }
 
-        .sari-orders-alert { display:flex; align-items:flex-start; gap:10px; margin:0 0 12px; border:1px solid #dfe4e8; border-radius:12px; background:#fff; padding:12px 14px; color:#4d5863; font-size:11.5px; line-height:1.5; }
-        .sari-orders-alert.is-success { border-color:#dbe9df; color:#416f55; }
-        .sari-orders-alert.is-error { border-color:#f0dddd; color:#b64040; }
+        .sari-orders-alert { display:flex; align-items:flex-start; gap:10px; margin:0 0 12px; border:1px solid var(--sari-dark-d8c2716225, #dfe4e8); border-radius:12px; background:var(--sari-dark-950baec030, #fff); padding:12px 14px; color:var(--sari-dark-e23e64dd1e, #4d5863); font-size:11.5px; line-height:1.5; }
+        .sari-orders-alert.is-success { border-color:var(--sari-dark-d8c2716225, #dbe9df); color:var(--sari-dark-e23e64dd1e, #416f55); }
+        .sari-orders-alert.is-error { border-color:var(--sari-dark-d8c2716225, #f0dddd); color:var(--sari-dark-a09cb53d9e, #b64040); }
 
         .sari-orders-shell {
             overflow:visible;
@@ -118,14 +118,14 @@
 
         .sari-orders-toolbar h2 {
             margin:0;
-            color:#303740;
+            color:var(--sari-dark-e23e64dd1e, #303740);
             font-size:15px;
             font-weight:800;
             line-height:1.3;
         }
 
         .sari-orders-count {
-            color:#7d8792;
+            color:var(--sari-dark-a63aa16d7c, #7d8792);
             font-size:10.5px;
             font-weight:650;
             line-height:1.35;
@@ -136,17 +136,17 @@
         .sari-order-card {
             position:relative;
             overflow:hidden;
-            border:1px solid #e5e7eb;
+            border:1px solid var(--sari-dark-d8c2716225, #e5e7eb);
             border-radius:17px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             box-shadow:
-                0 2px 5px rgba(15,23,42,.045),
-                0 10px 24px rgba(15,23,42,.075),
-                0 24px 54px rgba(15,23,42,.095),
-                inset 0 1px 0 rgba(255,255,255,.92);
+                0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+                0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+                0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
             transition:border-color .16s ease;
         }
-        .sari-order-card:hover { border-color:#d5dbe0; }
+        .sari-order-card:hover { border-color:var(--sari-dark-d8c2716225, #d5dbe0); }
 
         .sari-order-card-head {
             display:flex;
@@ -155,15 +155,15 @@
             justify-content:space-between;
             gap:16px;
             padding:0 17px;
-            border-bottom:1px solid #edf0f2;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f2);
         }
-        .sari-order-store { display:flex; min-width:0; align-items:center; gap:8px; color:#252b31; font-size:13px; font-weight:800; }
-        .sari-order-store-badge { display:inline-flex; align-items:center; border:1px solid #e4c27d; border-radius:6px; background:#fff8e8; padding:3px 6px; color:#94630f; font-size:8.5px; font-weight:850; letter-spacing:.04em; line-height:1; text-transform:uppercase; }
+        .sari-order-store { display:flex; min-width:0; align-items:center; gap:8px; color:var(--sari-dark-e23e64dd1e, #252b31); font-size:13px; font-weight:800; }
+        .sari-order-store-badge { display:inline-flex; align-items:center; border:1px solid #e4c27d; border-radius:6px; background:var(--sari-dark-4d21eb669b, #fff8e8); padding:3px 6px; color:var(--sari-dark-6e784b4931, #94630f); font-size:8.5px; font-weight:850; letter-spacing:.04em; line-height:1; text-transform:uppercase; }
         .sari-order-store-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-        .sari-order-head-link { display:inline-flex; align-items:center; gap:5px; color:#737d87; font-size:10.5px; font-weight:650; text-decoration:none; }
+        .sari-order-head-link { display:inline-flex; align-items:center; gap:5px; color:var(--sari-dark-a63aa16d7c, #737d87); font-size:10.5px; font-weight:650; text-decoration:none; }
         .sari-order-head-link:hover,.sari-order-head-link:focus-visible { color:var(--sari-gold-dark); outline:none; }
 
-        .sari-order-status { display:flex; align-items:center; gap:7px; color:#555f69; font-size:12px; font-weight:760; white-space:nowrap; }
+        .sari-order-status { display:flex; align-items:center; gap:7px; color:var(--sari-dark-a63aa16d7c, #555f69); font-size:12px; font-weight:760; white-space:nowrap; }
         .sari-order-status-dot { width:7px; height:7px; border-radius:999px; background:#b9c0c7; }
         .sari-order-status.is-active .sari-order-status-dot { background:#b7862c; }
         .sari-order-status.is-shipping .sari-order-status-dot { background:#7c8791; }
@@ -176,58 +176,58 @@
             justify-content:space-between;
             gap:16px;
             margin:12px 16px 0;
-            border:1px solid #e7eaed;
+            border:1px solid var(--sari-dark-d8c2716225, #e7eaed);
             border-radius:12px;
-            background:#f7f8f9;
+            background:var(--sari-dark-950baec030, #f7f8f9);
             padding:10px 12px;
         }
         .sari-order-progress-main { display:flex; min-width:0; align-items:center; gap:10px; }
-        .sari-order-progress-icon { display:grid; width:30px; height:30px; flex:0 0 30px; place-items:center; color:#68737d; }
+        .sari-order-progress-icon { display:grid; width:30px; height:30px; flex:0 0 30px; place-items:center; color:var(--sari-dark-a63aa16d7c, #68737d); }
         .sari-order-progress-icon svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
         .sari-order-progress-copy { min-width:0; }
-        .sari-order-progress-title { margin:0; color:#4b555f; font-size:13px; font-weight:800; line-height:1.4; }
-        .sari-order-progress-text { overflow:visible; margin:3px 0 0; color:#747e88; font-size:11.5px; font-weight:520; line-height:1.5; white-space:normal; }
-        .sari-order-progress-arrow { color:#8d969f; font-size:18px; line-height:1; }
+        .sari-order-progress-title { margin:0; color:var(--sari-dark-e23e64dd1e, #4b555f); font-size:13px; font-weight:800; line-height:1.4; }
+        .sari-order-progress-text { overflow:visible; margin:3px 0 0; color:var(--sari-dark-a63aa16d7c, #747e88); font-size:11.5px; font-weight:520; line-height:1.5; white-space:normal; }
+        .sari-order-progress-arrow { color:var(--sari-dark-a63aa16d7c, #8d969f); font-size:18px; line-height:1; }
 
         .sari-order-product-area { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:24px; align-items:center; padding:15px 17px 13px; }
         .sari-order-product { display:flex; min-width:0; align-items:center; gap:13px; }
-        .sari-order-thumb { display:grid; width:72px; height:72px; flex:0 0 72px; place-items:center; overflow:hidden; border:1px solid #e1e5e9; border-radius:11px; background:#f2f4f6; color:#9aa3ad; font-size:9px; font-weight:800; }
+        .sari-order-thumb { display:grid; width:72px; height:72px; flex:0 0 72px; place-items:center; overflow:hidden; border:1px solid var(--sari-dark-d8c2716225, #e1e5e9); border-radius:11px; background:var(--sari-dark-4d21eb669b, #f2f4f6); color:var(--sari-dark-a63aa16d7c, #9aa3ad); font-size:9px; font-weight:800; }
         .sari-order-thumb img { width:100%; height:100%; object-fit:cover; }
         .sari-order-main { min-width:0; }
-        .sari-order-name { overflow:hidden; margin:0; color:#20262c; font-size:14.5px; font-weight:760; line-height:1.4; text-overflow:ellipsis; white-space:nowrap; }
-        .sari-order-meta,.sari-order-submeta { display:flex; min-width:0; flex-wrap:wrap; gap:5px; margin-top:4px; color:#717b86; font-size:11.5px; line-height:1.45; }
-        .sari-order-meta span:not(:last-child)::after,.sari-order-submeta span:not(:last-child)::after { content:'·'; margin-left:5px; color:#a9b0b7; }
-        .sari-order-submeta { color:#818a94; font-size:10.75px; }
+        .sari-order-name { overflow:hidden; margin:0; color:var(--sari-dark-e23e64dd1e, #20262c); font-size:14.5px; font-weight:760; line-height:1.4; text-overflow:ellipsis; white-space:nowrap; }
+        .sari-order-meta,.sari-order-submeta { display:flex; min-width:0; flex-wrap:wrap; gap:5px; margin-top:4px; color:var(--sari-dark-a63aa16d7c, #717b86); font-size:11.5px; line-height:1.45; }
+        .sari-order-meta span:not(:last-child)::after,.sari-order-submeta span:not(:last-child)::after { content:'·'; margin-left:5px; color:var(--sari-dark-a63aa16d7c, #a9b0b7); }
+        .sari-order-submeta { color:var(--sari-dark-a63aa16d7c, #818a94); font-size:10.75px; }
         .sari-order-product-price { text-align:right; }
-        .sari-order-product-price span { display:block; color:#7b8590; font-size:11px; font-weight:600; }
-        .sari-order-product-price strong { display:block; margin-top:3px; color:#3b4249; font-size:14.5px; font-weight:800; }
-        .sari-order-return-state { display:inline-flex; align-items:center; margin-left:7px; color:#8a6a2c; font-size:10.5px; font-weight:700; }
+        .sari-order-product-price span { display:block; color:var(--sari-dark-a63aa16d7c, #7b8590); font-size:11px; font-weight:600; }
+        .sari-order-product-price strong { display:block; margin-top:3px; color:var(--sari-dark-e23e64dd1e, #3b4249); font-size:14.5px; font-weight:800; }
+        .sari-order-return-state { display:inline-flex; align-items:center; margin-left:7px; color:var(--sari-dark-e23e64dd1e, #8a6a2c); font-size:10.5px; font-weight:700; }
 
         .sari-order-footer { display:flex; align-items:flex-end; justify-content:space-between; gap:18px; padding:0 17px 14px; }
-        .sari-order-number { color:#818a94; font-size:11px; font-weight:600; }
+        .sari-order-number { color:var(--sari-dark-a63aa16d7c, #818a94); font-size:11px; font-weight:600; }
         .sari-order-summary-actions { display:flex; align-items:center; justify-content:flex-end; gap:8px; flex-wrap:wrap; }
         .sari-order-total-wrap { margin-right:5px; text-align:right; }
-        .sari-order-total-label { color:#68727c; font-size:11px; font-weight:600; }
-        .sari-order-total { margin-left:4px; color:#343b42; font-size:16px; font-weight:850; white-space:nowrap; }
-        .sari-order-action { display:inline-flex; min-height:38px; align-items:center; justify-content:center; border:1px solid #dfe3e7; border-radius:11px; background:#f4f5f6; padding:0 15px; color:#363e46; cursor:pointer; font:inherit; font-size:10.5px; font-weight:780; text-decoration:none; transition:background-color .14s ease,border-color .14s ease,color .14s ease; }
-        .sari-order-action:hover,.sari-order-action:focus-visible { border-color:#d3d8dd; background:#eceeef; color:#20262c; outline:none; }
+        .sari-order-total-label { color:var(--sari-dark-a63aa16d7c, #68727c); font-size:11px; font-weight:600; }
+        .sari-order-total { margin-left:4px; color:var(--sari-dark-e23e64dd1e, #343b42); font-size:16px; font-weight:850; white-space:nowrap; }
+        .sari-order-action { display:inline-flex; min-height:38px; align-items:center; justify-content:center; border:1px solid var(--sari-dark-d8c2716225, #dfe3e7); border-radius:11px; background:var(--sari-dark-4d21eb669b, #f4f5f6); padding:0 15px; color:var(--sari-dark-e23e64dd1e, #363e46); cursor:pointer; font:inherit; font-size:10.5px; font-weight:780; text-decoration:none; transition:background-color .14s ease,border-color .14s ease,color .14s ease; }
+        .sari-order-action:hover,.sari-order-action:focus-visible { border-color:var(--sari-dark-d8c2716225, #d3d8dd); background:var(--sari-dark-4d21eb669b, #eceeef); color:var(--sari-dark-e23e64dd1e, #20262c); outline:none; }
         .sari-order-action.is-primary { border-color:var(--sari-gold); background:var(--sari-gold); color:#fff; }
         .sari-order-action.is-primary:hover,.sari-order-action.is-primary:focus-visible { border-color:var(--sari-gold-dark); background:var(--sari-gold-dark); color:#fff; }
 
-        .sari-quick-review { display:flex; align-items:center; justify-content:space-between; gap:14px; margin:0 16px 15px; border:1px solid #e6e9ec; border-radius:12px; background:#f7f8f9; padding:10px 12px; }
+        .sari-quick-review { display:flex; align-items:center; justify-content:space-between; gap:14px; margin:0 16px 15px; border:1px solid var(--sari-dark-d8c2716225, #e6e9ec); border-radius:12px; background:var(--sari-dark-950baec030, #f7f8f9); padding:10px 12px; }
         .sari-quick-review-copy { min-width:0; }
-        .sari-quick-review-label { margin:0; color:#535e69; font-size:12.5px; font-weight:800; }
-        .sari-quick-review-help { margin:2px 0 0; color:#75808a; font-size:11.5px; line-height:1.5; }
+        .sari-quick-review-label { margin:0; color:var(--sari-dark-a63aa16d7c, #535e69); font-size:12.5px; font-weight:800; }
+        .sari-quick-review-help { margin:2px 0 0; color:var(--sari-dark-a63aa16d7c, #75808a); font-size:11.5px; line-height:1.5; }
         .sari-quick-stars { display:flex; align-items:center; gap:2px; }
-        .sari-quick-star { display:grid; width:31px; height:31px; place-items:center; border:0; border-radius:8px; background:transparent; color:#aeb5bc; cursor:pointer; font-size:24px; line-height:1; transition:background-color .12s ease,color .12s ease,transform .12s ease; }
-        .sari-quick-star:hover,.sari-quick-star:focus-visible { background:#eceff1; color:var(--sari-gold); outline:none; transform:translateY(-1px); }
+        .sari-quick-star { display:grid; width:31px; height:31px; place-items:center; border:0; border-radius:8px; background:transparent; color:var(--sari-dark-a63aa16d7c, #aeb5bc); cursor:pointer; font-size:24px; line-height:1; transition:background-color .12s ease,color .12s ease,transform .12s ease; }
+        .sari-quick-star:hover,.sari-quick-star:focus-visible { background:var(--sari-dark-4d21eb669b, #eceff1); color:var(--sari-gold); outline:none; transform:translateY(-1px); }
         .sari-quick-star.is-filled { color:var(--sari-gold); }
 
         .sari-orders-pagination { display:flex; align-items:center; justify-content:center; gap:6px; padding:28px 12px 6px; }
-        .sari-page-link { display:grid; min-width:39px; height:36px; place-items:center; border:1px solid transparent; border-radius:12px; background:#f3f4f6; color:#252a30; font-size:11px; font-weight:750; text-decoration:none; transition:background-color .14s ease,border-color .14s ease,color .14s ease; }
-        .sari-page-link:hover,.sari-page-link:focus-visible { background:#e6e8eb; outline:none; }
+        .sari-page-link { display:grid; min-width:39px; height:36px; place-items:center; border:1px solid transparent; border-radius:12px; background:var(--sari-dark-4d21eb669b, #f3f4f6); color:var(--sari-dark-e23e64dd1e, #252a30); font-size:11px; font-weight:750; text-decoration:none; transition:background-color .14s ease,border-color .14s ease,color .14s ease; }
+        .sari-page-link:hover,.sari-page-link:focus-visible { background:var(--sari-dark-4d21eb669b, #e6e8eb); outline:none; }
         .sari-page-link.is-current { border-color:var(--sari-gold); background:var(--sari-gold); color:#fff; }
-        .sari-page-link.is-disabled { color:#a9afb6; cursor:not-allowed; opacity:.7; }
+        .sari-page-link.is-disabled { color:var(--sari-dark-a63aa16d7c, #a9afb6); cursor:not-allowed; opacity:.7; }
         .sari-page-link svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; }
 
         /* The empty list is a standalone floating surface, not a nested card. */
@@ -235,19 +235,19 @@
             display:grid;
             min-height:390px;
             place-items:center;
-            border:1px solid #e5e7eb;
+            border:1px solid var(--sari-dark-d8c2716225, #e5e7eb);
             border-radius:17px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:60px 24px;
             text-align:center;
             box-shadow:
-                0 2px 5px rgba(15,23,42,.045),
-                0 10px 24px rgba(15,23,42,.075),
-                0 24px 54px rgba(15,23,42,.095),
-                inset 0 1px 0 rgba(255,255,255,.92);
+                0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+                0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+                0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
         }
-        .sari-empty h2 { margin:0; color:#8f98a1; font-size:20px; }
-        .sari-empty p { margin:7px 0 0; color:#abb2b9; font-size:11px; }
+        .sari-empty h2 { margin:0; color:var(--sari-dark-a63aa16d7c, #8f98a1); font-size:20px; }
+        .sari-empty p { margin:7px 0 0; color:var(--sari-dark-a63aa16d7c, #abb2b9); font-size:11px; }
         .sari-empty a { display:inline-flex; height:44px; align-items:center; margin-top:20px; border-radius:11px; background:var(--sari-gold); padding:0 22px; color:#fff; font-size:10.5px; font-weight:800; text-decoration:none; }
 
         .sari-action-dialog {
@@ -259,12 +259,12 @@
             margin:0;
             overflow-x:hidden;
             overflow-y:auto;
-            border:1px solid #dde2e6;
+            border:1px solid var(--sari-dark-d8c2716225, #dde2e6);
             border-radius:24px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:0;
             color:var(--sari-text);
-            box-shadow:0 32px 88px rgba(22,29,37,.24);
+            box-shadow:0 32px 88px var(--sari-dark-7edf1b5a37, rgba(22,29,37,.24));
             transform:translate(-50%,-50%);
             scrollbar-width:none;
             -ms-overflow-style:none;
@@ -275,18 +275,18 @@
             height:0;
             display:none;
         }
-        .sari-action-dialog::backdrop { background:rgba(22,29,37,.42); backdrop-filter:blur(3px); }
+        .sari-action-dialog::backdrop { background:var(--sari-dark-416d70b0b2, rgba(22,29,37,.42)); backdrop-filter:blur(3px); }
         .sari-dialog-head {
             display:flex;
             align-items:flex-start;
             justify-content:space-between;
             gap:18px;
             padding:22px 24px 18px;
-            border-bottom:1px solid #eceff2;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #eceff2);
         }
-        .sari-dialog-eyebrow { margin:0; color:#a87316; font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+        .sari-dialog-eyebrow { margin:0; color:var(--sari-dark-685eb4fc40, #a87316); font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
         .sari-dialog-title { margin:6px 0 0; font-size:24px; font-weight:820; line-height:1.16; letter-spacing:-.03em; }
-        .sari-dialog-copy { margin:7px 0 0; color:#747e88; font-size:14px; line-height:1.5; }
+        .sari-dialog-copy { margin:7px 0 0; color:var(--sari-dark-a63aa16d7c, #747e88); font-size:14px; line-height:1.5; }
         .sari-dialog-close {
             display:grid;
             width:46px;
@@ -294,8 +294,8 @@
             place-items:center;
             border:0;
             border-radius:14px;
-            background:#f2f3f5;
-            color:#4f5963;
+            background:var(--sari-dark-4d21eb669b, #f2f3f5);
+            color:var(--sari-dark-e23e64dd1e, #4f5963);
             cursor:pointer;
             font-size:24px;
         }
@@ -314,19 +314,19 @@
         .sari-review-card + .sari-review-card {
             margin-top:20px;
             padding-top:20px;
-            border-top:1px solid #eceff2;
+            border-top:1px solid var(--sari-dark-d8c2716225, #eceff2);
         }
         .sari-review-product { display:flex; align-items:center; gap:11px; }
-        .sari-review-product-image { width:48px; height:48px; flex:0 0 48px; overflow:hidden; border:1px solid #e3e6e9; border-radius:10px; background:#f4f5f6; }
+        .sari-review-product-image { width:48px; height:48px; flex:0 0 48px; overflow:hidden; border:1px solid var(--sari-dark-d8c2716225, #e3e6e9); border-radius:10px; background:var(--sari-dark-4d21eb669b, #f4f5f6); }
         .sari-review-product-image img { width:100%; height:100%; object-fit:cover; }
         .sari-review-product-name { margin:0; font-size:14px; font-weight:760; line-height:1.3; }
-        .sari-review-product-meta { margin:3px 0 0; color:#7f8892; font-size:11px; line-height:1.35; }
-        .sari-review-form { margin-top:13px; padding-top:13px; border-top:1px solid #eceff1; }
-        .sari-field-label { display:block; margin-bottom:6px; color:#4b5560; font-size:12px; font-weight:760; line-height:1.3; }
-        .sari-field,.sari-textarea,.sari-select { width:100%; border:1px solid #dfe3e7; border-radius:11px; background:#fff; color:#2c333a; font:inherit; font-size:12.5px; outline:none; transition:border-color .14s ease,box-shadow .14s ease; }
+        .sari-review-product-meta { margin:3px 0 0; color:var(--sari-dark-a63aa16d7c, #7f8892); font-size:11px; line-height:1.35; }
+        .sari-review-form { margin-top:13px; padding-top:13px; border-top:1px solid var(--sari-dark-d8c2716225, #eceff1); }
+        .sari-field-label { display:block; margin-bottom:6px; color:var(--sari-dark-e23e64dd1e, #4b5560); font-size:12px; font-weight:760; line-height:1.3; }
+        .sari-field,.sari-textarea,.sari-select { width:100%; border:1px solid var(--sari-dark-d8c2716225, #dfe3e7); border-radius:11px; background:var(--sari-dark-950baec030, #fff); color:var(--sari-dark-e23e64dd1e, #2c333a); font:inherit; font-size:12.5px; outline:none; transition:border-color .14s ease,box-shadow .14s ease; }
         .sari-field,.sari-select { height:42px; padding:0 12px; }
         .sari-textarea { min-height:96px; resize:vertical; padding:11px 12px; line-height:1.5; }
-        .sari-field:focus,.sari-textarea:focus,.sari-select:focus { border-color:#d1a14a; box-shadow:0 0 0 3px rgba(200,137,18,.09); }
+        .sari-field:focus,.sari-textarea:focus,.sari-select:focus { border-color:#d1a14a; box-shadow:0 0 0 3px var(--sari-dark-b12a5e9552, rgba(200,137,18,.09)); }
         .sari-star-picker { display:flex; width:max-content; flex-direction:row-reverse; justify-content:flex-end; gap:2px; }
         .sari-star-picker input { position:absolute; opacity:0; pointer-events:none; }
         .sari-star-picker label { color:#d4d8dc; cursor:pointer; font-size:28px; line-height:1; transition:color .12s ease,transform .12s ease; }
@@ -334,43 +334,43 @@
         .sari-star-picker label:hover { transform:translateY(-1px); }
         .sari-primary-btn { display:inline-flex; min-height:42px; align-items:center; justify-content:center; border:1px solid var(--sari-gold); border-radius:10px; background:var(--sari-gold); padding:0 18px; color:#fff; cursor:pointer; font:inherit; font-size:12px; font-weight:800; }
         .sari-primary-btn:hover,.sari-primary-btn:focus-visible { border-color:var(--sari-gold-dark); background:var(--sari-gold-dark); outline:none; }
-        .sari-secondary-btn { display:inline-flex; min-height:42px; align-items:center; justify-content:center; border:1px solid #dfe3e7; border-radius:10px; background:#fff; padding:0 18px; color:#38414a; cursor:pointer; font:inherit; font-size:12px; font-weight:750; }
+        .sari-secondary-btn { display:inline-flex; min-height:42px; align-items:center; justify-content:center; border:1px solid var(--sari-dark-d8c2716225, #dfe3e7); border-radius:10px; background:var(--sari-dark-950baec030, #fff); padding:0 18px; color:var(--sari-dark-e23e64dd1e, #38414a); cursor:pointer; font:inherit; font-size:12px; font-weight:750; }
         .sari-form-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:11px; }
-        .sari-seller-reply { margin-top:10px; border-left:3px solid #dfbd77; background:#faf8f3; padding:10px 11px; color:#625b52; font-size:11.5px; line-height:1.5; }
+        .sari-seller-reply { margin-top:10px; border-left:3px solid #dfbd77; background:var(--sari-dark-950baec030, #faf8f3); padding:10px 11px; color:var(--sari-dark-e23e64dd1e, #625b52); font-size:11.5px; line-height:1.5; }
         /* Review composer — light web interpretation of the mobile reference. */
         .sari-review-card { padding:0; overflow:visible; }
-        .sari-review-product { padding:14px 15px; border-bottom:1px solid #edf0f2; background:#fff; }
+        .sari-review-product { padding:14px 15px; border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f2); background:var(--sari-dark-950baec030, #fff); }
         .sari-review-product-image { width:58px; height:58px; flex:0 0 58px; }
         .sari-review-product-name { font-size:15px; }
         .sari-review-product-meta { margin-top:4px; font-size:11.5px; }
         .sari-review-form { margin:0; padding:16px 15px 15px; border-top:0; }
         .sari-review-rating-block { display:grid; place-items:center; padding:2px 0 16px; text-align:center; }
-        .sari-review-rating-title { margin:0 0 9px; color:#4b555f; font-size:12px; font-weight:780; }
+        .sari-review-rating-title { margin:0 0 9px; color:var(--sari-dark-e23e64dd1e, #4b555f); font-size:12px; font-weight:780; }
         .sari-star-picker { gap:5px; }
         .sari-star-picker label { font-size:38px; color:#cfd4d9; }
         .sari-review-rating-label { min-height:22px; margin:8px 0 0; color:var(--sari-gold-dark); font-size:13px; font-weight:800; }
-        .sari-review-section-title { margin:0 0 8px; color:#343b42; font-size:13px; font-weight:800; }
-        .sari-review-quality-chip { display:inline-flex; align-items:center; min-height:30px; margin-bottom:9px; border:1px solid #dfe3e7; border-radius:9px; background:#fff; padding:0 10px; color:#59636d; font-size:10.5px; font-weight:700; }
+        .sari-review-section-title { margin:0 0 8px; color:var(--sari-dark-e23e64dd1e, #343b42); font-size:13px; font-weight:800; }
+        .sari-review-quality-chip { display:inline-flex; align-items:center; min-height:30px; margin-bottom:9px; border:1px solid var(--sari-dark-d8c2716225, #dfe3e7); border-radius:9px; background:var(--sari-dark-950baec030, #fff); padding:0 10px; color:var(--sari-dark-a63aa16d7c, #59636d); font-size:10.5px; font-weight:700; }
         .sari-review-textarea-wrap { position:relative; }
         .sari-review-textarea-wrap .sari-textarea { min-height:118px; padding:12px 13px 30px; }
-        .sari-review-counter { position:absolute; right:11px; bottom:9px; color:#9aa2aa; font-size:9.5px; font-weight:650; pointer-events:none; }
+        .sari-review-counter { position:absolute; right:11px; bottom:9px; color:var(--sari-dark-a63aa16d7c, #9aa2aa); font-size:9.5px; font-weight:650; pointer-events:none; }
         .sari-review-media-section { margin-top:15px; }
         .sari-review-upload {
             display:grid;
             min-height:96px;
             place-items:center;
-            border:1px dashed #d7dde2;
+            border:1px dashed var(--sari-dark-d8c2716225, #d7dde2);
             border-radius:14px;
-            background:#f7f8f9;
+            background:var(--sari-dark-950baec030, #f7f8f9);
             padding:0;
-            color:#aeb6be;
+            color:var(--sari-dark-a63aa16d7c, #aeb6be);
             cursor:pointer;
             transition:border-color .14s ease,background-color .14s ease,color .14s ease;
         }
         .sari-review-upload:hover,.sari-review-upload:focus-within {
-            border-color:#cfd5db;
-            background:#f1f3f4;
-            color:#939ca5;
+            border-color:var(--sari-dark-d8c2716225, #cfd5db);
+            background:var(--sari-dark-4d21eb669b, #f1f3f4);
+            color:var(--sari-dark-a63aa16d7c, #939ca5);
         }
         .sari-review-upload-icon { display:contents; }
         .sari-review-upload-icon svg {
@@ -384,40 +384,40 @@
         }
         .sari-review-upload-input { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; }
         .sari-review-media-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; margin-top:9px; }
-        .sari-review-media-item { position:relative; aspect-ratio:1; overflow:hidden; border:1px solid #e0e4e8; border-radius:10px; background:#f3f5f6; }
+        .sari-review-media-item { position:relative; aspect-ratio:1; overflow:hidden; border:1px solid var(--sari-dark-d8c2716225, #e0e4e8); border-radius:10px; background:var(--sari-dark-4d21eb669b, #f3f5f6); }
         .sari-review-media-item img { width:100%; height:100%; object-fit:cover; }
-        .sari-review-media-remove { position:absolute; top:5px; right:5px; display:grid; width:24px; height:24px; place-items:center; border:1px solid rgba(255,255,255,.82); border-radius:999px; background:rgba(28,34,40,.78); color:#fff; cursor:pointer; font-size:14px; line-height:1; box-shadow:0 2px 7px rgba(0,0,0,.14); }
+        .sari-review-media-remove { position:absolute; top:5px; right:5px; display:grid; width:24px; height:24px; place-items:center; border:1px solid var(--sari-dark-4f44862fc7, rgba(255,255,255,.82)); border-radius:999px; background:var(--sari-dark-1f959a1e8d, rgba(28,34,40,.78)); color:#fff; cursor:pointer; font-size:14px; line-height:1; box-shadow:0 2px 7px var(--sari-dark-59ed29fe9d, rgba(0,0,0,.14)); }
         .sari-review-media-empty { display:none; }
-        .sari-review-media-help { margin:7px 0 0; color:#929aa3; font-size:9.5px; line-height:1.45; }
+        .sari-review-media-help { margin:7px 0 0; color:var(--sari-dark-a63aa16d7c, #929aa3); font-size:9.5px; line-height:1.45; }
         .sari-review-submit { width:100%; min-height:46px; margin-top:15px; border-radius:11px; }
-        .sari-review-verified { display:flex; align-items:center; gap:6px; margin-top:10px; color:#858e97; font-size:9.5px; }
-        .sari-review-verified svg { width:15px; height:15px; fill:none; stroke:#5d8c6e; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+        .sari-review-verified { display:flex; align-items:center; gap:6px; margin-top:10px; color:var(--sari-dark-a63aa16d7c, #858e97); font-size:9.5px; }
+        .sari-review-verified svg { width:15px; height:15px; fill:none; stroke:var(--sari-dark-a63aa16d7c, #5d8c6e); stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
         .sari-return-summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-bottom:12px; }
-        .sari-return-summary div { border:1px solid #e4e7ea; border-radius:11px; background:#fafbfc; padding:10px; }
-        .sari-return-summary span { display:block; color:#858e98; font-size:10px; font-weight:720; text-transform:uppercase; letter-spacing:.055em; }
-        .sari-return-summary strong { display:block; margin-top:4px; color:#2f363d; font-size:13px; line-height:1.3; }
-        .sari-return-status { display:inline-flex; align-items:center; border:1px solid #dfc78f; border-radius:999px; background:#fffaf0; padding:6px 10px; color:#8d620f; font-size:11px; font-weight:780; }
-        .sari-return-timeline { margin-top:14px; border-top:1px solid #eceff1; padding-top:12px; }
-        .sari-return-event { position:relative; padding:0 0 12px 18px; color:#6d7781; font-size:11.5px; line-height:1.5; }
+        .sari-return-summary div { border:1px solid var(--sari-dark-d8c2716225, #e4e7ea); border-radius:11px; background:var(--sari-dark-950baec030, #fafbfc); padding:10px; }
+        .sari-return-summary span { display:block; color:var(--sari-dark-a63aa16d7c, #858e98); font-size:10px; font-weight:720; text-transform:uppercase; letter-spacing:.055em; }
+        .sari-return-summary strong { display:block; margin-top:4px; color:var(--sari-dark-e23e64dd1e, #2f363d); font-size:13px; line-height:1.3; }
+        .sari-return-status { display:inline-flex; align-items:center; border:1px solid #dfc78f; border-radius:999px; background:var(--sari-dark-950baec030, #fffaf0); padding:6px 10px; color:var(--sari-dark-19b301f69a, #8d620f); font-size:11px; font-weight:780; }
+        .sari-return-timeline { margin-top:14px; border-top:1px solid var(--sari-dark-d8c2716225, #eceff1); padding-top:12px; }
+        .sari-return-event { position:relative; padding:0 0 12px 18px; color:var(--sari-dark-a63aa16d7c, #6d7781); font-size:11.5px; line-height:1.5; }
         .sari-return-event::before { content:''; position:absolute; top:5px; left:1px; width:7px; height:7px; border-radius:999px; background:#b88a33; }
-        .sari-return-event:not(:last-child)::after { content:''; position:absolute; top:13px; bottom:0; left:4px; width:1px; background:#e2e5e8; }
-        .sari-return-event strong { display:block; color:#343b42; font-size:12px; line-height:1.35; }
-        .sari-help { margin:8px 0 0; color:#818a94; font-size:11.5px; line-height:1.5; }
+        .sari-return-event:not(:last-child)::after { content:''; position:absolute; top:13px; bottom:0; left:4px; width:1px; background:var(--sari-dark-4d21eb669b, #e2e5e8); }
+        .sari-return-event strong { display:block; color:var(--sari-dark-e23e64dd1e, #343b42); font-size:12px; line-height:1.35; }
+        .sari-help { margin:8px 0 0; color:var(--sari-dark-a63aa16d7c, #818a94); font-size:11.5px; line-height:1.5; }
 
         .sari-review-card { padding:0; overflow:hidden; }
         .sari-review-product {
             padding:0 0 18px;
-            border-bottom:1px solid #eceff2;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #eceff2);
             background:transparent;
         }
         .sari-review-product-image { width:64px; height:64px; flex:0 0 64px; border-radius:12px; }
         .sari-review-product-name { font-size:16px; }
         .sari-review-product-meta { margin-top:4px; font-size:12px; }
         .sari-review-form { margin:0; padding:18px 0 0; border-top:0; }
-        .sari-review-rating-title { margin:0 0 11px; color:#4b555f; font-size:13px; font-weight:780; }
+        .sari-review-rating-title { margin:0 0 11px; color:var(--sari-dark-e23e64dd1e, #4b555f); font-size:13px; font-weight:780; }
         .sari-star-picker label { font-size:40px; }
         .sari-review-rating-label { min-height:24px; margin:9px 0 0; color:var(--sari-gold-dark); font-size:14px; font-weight:800; }
-        .sari-review-section-title { margin:0 0 10px; color:#343b42; font-size:15px; font-weight:800; }
+        .sari-review-section-title { margin:0 0 10px; color:var(--sari-dark-e23e64dd1e, #343b42); font-size:15px; font-weight:800; }
         .sari-review-quality-chip { min-height:34px; margin-bottom:10px; border-radius:10px; padding:0 12px; font-size:11.5px; }
         .sari-review-textarea-wrap .sari-textarea { min-height:132px; padding:14px 14px 32px; }
         .sari-review-counter { right:12px; bottom:10px; font-size:10.5px; }
@@ -444,7 +444,7 @@
             margin-bottom:18px;
             padding:0 0 18px;
             border:0;
-            border-bottom:1px solid #eceff2;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #eceff2);
             border-radius:0;
             background:transparent;
         }
@@ -452,9 +452,9 @@
             width:78px;
             height:78px;
             overflow:hidden;
-            border:1px solid #e2e6ea;
+            border:1px solid var(--sari-dark-d8c2716225, #e2e6ea);
             border-radius:14px;
-            background:#f3f5f6;
+            background:var(--sari-dark-4d21eb669b, #f3f5f6);
         }
         .sari-return-product-image img {
             width:100%;
@@ -463,14 +463,14 @@
         }
         .sari-return-product-title {
             margin:0;
-            color:#2d343b;
+            color:var(--sari-dark-e23e64dd1e, #2d343b);
             font-size:16px;
             font-weight:780;
             line-height:1.35;
         }
         .sari-return-product-meta {
             margin:4px 0 0;
-            color:#7b848e;
+            color:var(--sari-dark-a63aa16d7c, #7b848e);
             font-size:12px;
             line-height:1.45;
         }
@@ -479,14 +479,14 @@
         }
         .sari-return-product-price span {
             display:block;
-            color:#8a939d;
+            color:var(--sari-dark-a63aa16d7c, #8a939d);
             font-size:11px;
             font-weight:650;
         }
         .sari-return-product-price strong {
             display:block;
             margin-top:3px;
-            color:#2f363d;
+            color:var(--sari-dark-e23e64dd1e, #2f363d);
             font-size:18px;
             font-weight:820;
         }
@@ -497,14 +497,14 @@
             margin-bottom:16px;
         }
         .sari-return-summary div {
-            border:1px solid #dfe4e8;
+            border:1px solid var(--sari-dark-d8c2716225, #dfe4e8);
             border-radius:12px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:13px 14px;
         }
         .sari-return-summary span {
             display:block;
-            color:#7e8792;
+            color:var(--sari-dark-a63aa16d7c, #7e8792);
             font-size:12px;
             font-weight:760;
             text-transform:uppercase;
@@ -513,16 +513,16 @@
         .sari-return-summary strong {
             display:block;
             margin-top:6px;
-            color:#2f363d;
+            color:var(--sari-dark-e23e64dd1e, #2f363d);
             font-size:16px;
             line-height:1.32;
         }
         .sari-return-status {
             border:1px solid #e2c98f;
             border-radius:999px;
-            background:#fffaf0;
+            background:var(--sari-dark-950baec030, #fffaf0);
             padding:6px 10px;
-            color:#8d620f;
+            color:var(--sari-dark-19b301f69a, #8d620f);
             font-size:12px;
             font-weight:780;
         }
@@ -546,7 +546,7 @@
             gap:10px;
             margin-top:20px;
             padding-top:16px;
-            border-top:1px solid #eceff2;
+            border-top:1px solid var(--sari-dark-d8c2716225, #eceff2);
         }
         .sari-primary-btn,
         .sari-secondary-btn {
@@ -559,7 +559,7 @@
             border-color:var(--sari-gold);
             background:var(--sari-gold);
             color:#fff;
-            box-shadow:0 4px 12px rgba(200,137,18,.14);
+            box-shadow:0 4px 12px var(--sari-dark-59ed29fe9d, rgba(200,137,18,.14));
         }
         .sari-primary-btn:hover,
         .sari-primary-btn:focus-visible {
@@ -568,15 +568,15 @@
             color:#fff;
         }
         .sari-secondary-btn {
-            border-color:#dfe3e7;
-            background:#f5f6f7;
-            color:#3e464f;
+            border-color:var(--sari-dark-d8c2716225, #dfe3e7);
+            background:var(--sari-dark-4d21eb669b, #f5f6f7);
+            color:var(--sari-dark-e23e64dd1e, #3e464f);
         }
         .sari-secondary-btn:hover,
         .sari-secondary-btn:focus-visible {
-            border-color:#d4d9de;
-            background:#eceff1;
-            color:#252c33;
+            border-color:var(--sari-dark-d8c2716225, #d4d9de);
+            background:var(--sari-dark-4d21eb669b, #eceff1);
+            color:var(--sari-dark-e23e64dd1e, #252c33);
         }
 
         .sari-custom-select {
@@ -589,11 +589,11 @@
             align-items:center;
             justify-content:space-between;
             gap:12px;
-            border:1px solid #dfe3e7;
+            border:1px solid var(--sari-dark-d8c2716225, #dfe3e7);
             border-radius:14px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:0 14px 0 16px;
-            color:#2c333a;
+            color:var(--sari-dark-e23e64dd1e, #2c333a);
             cursor:pointer;
             font:inherit;
             font-size:14px;
@@ -604,21 +604,21 @@
         .sari-custom-select-trigger:focus-visible {
             border-color:#d1a14a;
             outline:none;
-            box-shadow:0 0 0 3px rgba(200,137,18,.09);
+            box-shadow:0 0 0 3px var(--sari-dark-b12a5e9552, rgba(200,137,18,.09));
         }
         .sari-custom-select-trigger.is-invalid {
             border-color:#d26a6a;
-            box-shadow:0 0 0 3px rgba(210,106,106,.08);
+            box-shadow:0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(210,106,106,.08));
         }
         .sari-custom-select-value.is-placeholder {
-            color:#8c959e;
+            color:var(--sari-dark-a63aa16d7c, #8c959e);
         }
         .sari-custom-select-trigger svg {
             width:18px;
             height:18px;
             flex:0 0 auto;
             fill:none;
-            stroke:#616b75;
+            stroke:var(--sari-dark-a63aa16d7c, #616b75);
             stroke-width:1.9;
             stroke-linecap:round;
             stroke-linejoin:round;
@@ -634,10 +634,10 @@
             left:0;
             right:0;
             overflow:hidden;
-            border:1px solid #dfe3e7;
+            border:1px solid var(--sari-dark-d8c2716225, #dfe3e7);
             border-radius:14px;
-            background:#fff;
-            box-shadow:0 18px 42px rgba(22,29,37,.14);
+            background:var(--sari-dark-950baec030, #fff);
+            box-shadow:0 18px 42px var(--sari-dark-59ed29fe9d, rgba(22,29,37,.14));
             padding:8px;
         }
         .sari-custom-select-menu[hidden] {
@@ -650,9 +650,9 @@
             align-items:center;
             border:0;
             border-radius:10px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:0 12px;
-            color:#303740;
+            color:var(--sari-dark-e23e64dd1e, #303740);
             cursor:pointer;
             font:inherit;
             font-size:14px;
@@ -662,13 +662,13 @@
         .sari-custom-select-option:hover,
         .sari-custom-select-option:focus-visible,
         .sari-custom-select-option.is-selected {
-            background:#f4f6f8;
-            color:#1e252c;
+            background:var(--sari-dark-4d21eb669b, #f4f6f8);
+            color:var(--sari-dark-e23e64dd1e, #1e252c);
             outline:none;
         }
         .sari-return-reason-error {
             margin:8px 0 0;
-            color:#c05353;
+            color:var(--sari-dark-81bbb600e0, #c05353);
             font-size:11.5px;
             line-height:1.4;
         }
@@ -695,10 +695,10 @@
             .sari-empty {
                 border-radius:14px;
                 box-shadow:
-                    0 1px 3px rgba(15,23,42,.035),
-                    0 7px 18px rgba(15,23,42,.06),
-                    0 15px 32px rgba(15,23,42,.065),
-                    inset 0 1px 0 rgba(255,255,255,.90);
+                    0 1px 3px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+                    0 7px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),
+                    0 15px 32px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)),
+                    inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90));
             }
             .sari-order-card-head { min-height:46px; padding:0 13px; }
             .sari-order-store-badge { display:none; }

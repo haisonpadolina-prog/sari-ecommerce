@@ -12,11 +12,11 @@
     /* Marketplace Health partial: final graph-specific authority */
     #adminMarketplaceHealth {
         padding: 15px 16px !important;
-        border: 1px solid #E5E7EB !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
         border-radius: 18px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
-        box-shadow: 0 6px 18px rgba(17,24,39,.05) !important;
+        box-shadow: 0 6px 18px var(--sari-dark-1df26971b5, rgba(17,24,39,.05)) !important;
     }
 
     #adminMarketplaceHealth .sari-health-header {
@@ -25,21 +25,21 @@
         justify-content: space-between !important;
         gap: 12px !important;
         padding-bottom: 13px !important;
-        border-bottom: 1px solid #E5E7EB !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
     }
 
     #adminMarketplaceHealth .sari-health-title {
         font-size: 17px !important;
         line-height: 1.28 !important;
         font-weight: 700 !important;
-        color: #1F1B17 !important;
+        color: var(--sari-dark-e23e64dd1e, #1F1B17) !important;
     }
 
     #adminMarketplaceHealth .sari-health-subtitle {
         margin-top: 4px !important;
         font-size: 10px !important;
         line-height: 1.5 !important;
-        color: #7B8490 !important;
+        color: var(--sari-dark-a63aa16d7c, #7B8490) !important;
     }
 
     #adminMarketplaceHealth .sari-health-actions {
@@ -64,15 +64,15 @@
     }
 
     #adminMarketplaceHealth .sari-health-stable {
-        border: 1px solid #E5E7EB !important;
-        background: #FFFFFF !important;
-        color: #8A6214 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        color: var(--sari-dark-4c24c1ed19, #8A6214) !important;
     }
 
     #adminMarketplaceHealth .sari-health-action {
         border: 1px solid #D9C293 !important;
-        background: #FFFFFF !important;
-        color: #8A6214 !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        color: var(--sari-dark-4c24c1ed19, #8A6214) !important;
     }
 
     #adminMarketplaceHealth .sari-health-main--graph-only {
@@ -82,9 +82,9 @@
 
     #adminMarketplaceHealth .sari-health-graph-panel--compact {
         padding: 14px !important;
-        border: 1px solid #E5E7EB !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
         border-radius: 18px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
         box-shadow: none !important;
     }
@@ -103,7 +103,7 @@
         font-weight: 800 !important;
         letter-spacing: .14em !important;
         text-transform: uppercase !important;
-        color: #9B721E !important;
+        color: var(--sari-dark-1dc4d0fb93, #9B721E) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-score-line {
@@ -119,13 +119,13 @@
         line-height: 1 !important;
         font-weight: 700 !important;
         letter-spacing: -.05em !important;
-        color: #202124 !important;
+        color: var(--sari-dark-e23e64dd1e, #202124) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-score-line span {
         margin-bottom: 3px !important;
         font-size: 10px !important;
-        color: #7B8490 !important;
+        color: var(--sari-dark-a63aa16d7c, #7B8490) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-score-line em {
@@ -133,14 +133,14 @@
         min-height: 26px !important;
         margin-bottom: 3px !important;
         align-items: center !important;
-        border: 1px solid #E5E7EB !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
         border-radius: 999px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         padding: 0 10px !important;
         font-size: 9px !important;
         font-style: normal !important;
         font-weight: 700 !important;
-        color: #8A6214 !important;
+        color: var(--sari-dark-4c24c1ed19, #8A6214) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-description {
@@ -148,7 +148,7 @@
         margin-top: 3px !important;
         font-size: 8.8px !important;
         line-height: 1.55 !important;
-        color: #7B8490 !important;
+        color: var(--sari-dark-a63aa16d7c, #7B8490) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-side {
@@ -164,22 +164,22 @@
         font-weight: 700 !important;
         letter-spacing: .12em !important;
         text-transform: uppercase !important;
-        color: #9B9388 !important;
+        color: var(--sari-dark-a63aa16d7c, #9B9388) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-side strong {
         font-size: 16px !important;
         line-height: 1.1 !important;
         font-weight: 700 !important;
-        color: #8A6214 !important;
+        color: var(--sari-dark-4c24c1ed19, #8A6214) !important;
     }
 
     #adminMarketplaceHealth .sari-health-graph-canvas--white {
         overflow: hidden !important;
         padding: 10px 12px 8px !important;
-        border: 1px solid #E5E7EB !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
         border-radius: 18px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         background-image: none !important;
         box-shadow: none !important;
     }
@@ -212,22 +212,22 @@
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-order {
-        stroke: #A96F10 !important;
+        stroke: var(--sari-dark-9b2ca2d764, #A96F10) !important;
         stroke-width: 4.2 !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-fulfillment {
-        stroke: #D59617 !important;
+        stroke: var(--sari-dark-9db03b407c, #D59617) !important;
         stroke-width: 3.9 !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-seller {
-        stroke: #E2B24B !important;
+        stroke: var(--sari-dark-363c7920e8, #E2B24B) !important;
         stroke-width: 3.6 !important;
     }
 
     #adminMarketplaceHealth .sari-health-profile-line.is-approval {
-        stroke: #C79B45 !important;
+        stroke: var(--sari-dark-37730a05f5, #C79B45) !important;
         stroke-width: 3.2 !important;
     }
 

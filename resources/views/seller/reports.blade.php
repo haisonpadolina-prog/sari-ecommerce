@@ -33,11 +33,11 @@
         --report-gold: #d99500;
         --report-gold-hover: #bf8304;
         --report-gold-soft: #fff8eb;
-        --report-border: #e7ddd1;
-        --report-border-soft: #eee8df;
-        --report-text: #211c17;
-        --report-muted: #83796f;
-        --report-canvas: #fbfaf7;
+        --report-border: var(--sari-dark-d8c2716225, #e7ddd1);
+        --report-border-soft: var(--sari-dark-d8c2716225, #eee8df);
+        --report-text: var(--sari-dark-e23e64dd1e, #211c17);
+        --report-muted: var(--sari-dark-a63aa16d7c, #83796f);
+        --report-canvas: var(--sari-dark-950baec030, #fbfaf7);
     }
 
     .seller-report-page {
@@ -78,11 +78,11 @@
         height: 44px;
         flex: 0 0 44px;
         place-items: center;
-        border: 1px solid #eadfc9;
+        border: 1px solid var(--sari-dark-d8c2716225, #eadfc9);
         border-radius: 12px;
         background: var(--report-gold-soft);
-        color: #b77c18;
-        box-shadow: 0 4px 12px rgba(75, 54, 25, .045);
+        color: var(--sari-dark-5acaf64852, #b77c18);
+        box-shadow: 0 4px 12px var(--sari-dark-1190f58155, rgba(75, 54, 25, .045));
     }
 
     .seller-report-heading-icon svg {
@@ -92,7 +92,7 @@
 
     .seller-report-eyebrow {
         margin: 0;
-        color: #9a6f23;
+        color: var(--sari-dark-a63aa16d7c, #9a6f23);
         font-size: 8px;
         font-weight: 700;
         line-height: 1.15;
@@ -102,7 +102,7 @@
 
     .seller-report-title {
         margin: 5px 0 0;
-        color: #17130f;
+        color: var(--sari-dark-e23e64dd1e, #17130f);
         font-size: 29px;
         font-weight: 700;
         line-height: 1.02;
@@ -117,7 +117,7 @@
     .seller-report-subtitle {
         max-width: 820px;
         margin: 7px 0 0;
-        color: #7f756a;
+        color: var(--sari-dark-a63aa16d7c, #7f756a);
         font-size: 10.5px;
         line-height: 1.5;
     }
@@ -148,23 +148,23 @@
     }
 
     .seller-report-header-button--secondary {
-        border: 1px solid #e6ddd2;
-        background: #fff;
-        color: #5f574e;
-        box-shadow: 0 4px 10px rgba(63, 49, 32, .04);
+        border: 1px solid var(--sari-dark-d8c2716225, #e6ddd2);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #5f574e);
+        box-shadow: 0 4px 10px var(--sari-dark-25b2da5e49, rgba(63, 49, 32, .04));
     }
 
     .seller-report-header-button--secondary:hover {
         border-color: #d8c4a3;
-        background: #fffaf2;
-        color: #a8731f;
+        background: var(--sari-dark-950baec030, #fffaf2);
+        color: var(--sari-dark-5d5ad776eb, #a8731f);
     }
 
     .seller-report-header-button--primary {
         border: 1px solid var(--report-gold);
         background: var(--report-gold);
         color: #fff;
-        box-shadow: 0 5px 14px rgba(217,149,0,.14);
+        box-shadow: 0 5px 14px var(--sari-dark-59ed29fe9d, rgba(217,149,0,.14));
     }
 
     .seller-report-header-button--primary:hover {
@@ -177,9 +177,9 @@
         margin-bottom: 11px;
         border: 1px solid var(--report-border);
         border-radius: 14px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 9px;
-        box-shadow: 0 8px 24px rgba(61, 43, 22, .05);
+        box-shadow: 0 8px 24px var(--sari-dark-1df26971b5, rgba(61, 43, 22, .05));
     }
 
     .seller-report-filter-grid {
@@ -192,7 +192,7 @@
     .seller-report-filter-field label {
         display: block;
         margin: 0 0 5px 2px;
-        color: #70675d;
+        color: var(--sari-dark-a63aa16d7c, #70675d);
         font-size: 8px;
         font-weight: 600;
     }
@@ -210,19 +210,19 @@
 
     .seller-report-filter-field input,
     .seller-report-filter-field select {
-        border: 1px solid #e8e0d5;
-        background: #fff;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e0d5);
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 10px;
-        color: #403930;
+        color: var(--sari-dark-e23e64dd1e, #403930);
         outline: none;
-        box-shadow: 0 1px 2px rgba(61,43,22,.018), 0 4px 10px rgba(61,43,22,.025);
+        box-shadow: 0 1px 2px var(--sari-dark-7672bb207e, rgba(61,43,22,.018)), 0 4px 10px var(--sari-dark-e1384eb7fc, rgba(61,43,22,.025));
         transition: border-color .14s ease, box-shadow .14s ease;
     }
 
     .seller-report-filter-field input:focus,
     .seller-report-filter-field select:focus {
         border-color: #d4af67;
-        box-shadow: 0 0 0 3px rgba(217, 148, 0, .07);
+        box-shadow: 0 0 0 3px var(--sari-dark-7c935c8886, rgba(217, 148, 0, .07));
     }
 
     .seller-report-generate {
@@ -230,7 +230,7 @@
         background: var(--report-gold);
         color: #fff;
         font-weight: 700;
-        box-shadow: 0 5px 14px rgba(217,149,0,.13);
+        box-shadow: 0 5px 14px var(--sari-dark-3e32d50f5e, rgba(217,149,0,.13));
     }
 
     .seller-report-generate:hover {
@@ -245,23 +245,23 @@
         gap: 6px;
         margin-top: 8px;
         padding-top: 8px;
-        border-top: 1px solid #f0ebe4;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
     }
 
     .seller-report-ranges > span {
         margin-right: 2px;
-        color: #92887d;
+        color: var(--sari-dark-a63aa16d7c, #92887d);
         font-size: 8px;
         font-weight: 600;
     }
 
     .seller-report-ranges button {
         min-height: 27px;
-        border: 1px solid #e8e0d5;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e0d5);
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 4px 9px;
-        color: #766d63;
+        color: var(--sari-dark-a63aa16d7c, #766d63);
         font-size: 7.5px;
         font-weight: 600;
         transition: border-color .12s ease, background-color .12s ease, color .12s ease;
@@ -269,8 +269,8 @@
 
     .seller-report-ranges button:hover {
         border-color: #dcc79e;
-        background: #fff8ea;
-        color: #9b6c1c;
+        background: var(--sari-dark-4d21eb669b, #fff8ea);
+        color: var(--sari-dark-f5e3dbeebd, #9b6c1c);
     }
 
     /* Sales KPI cards are still useful, but much denser */
@@ -285,13 +285,13 @@
         min-height: 84px;
         border-radius: 13px !important;
         padding: 11px 13px !important;
-        box-shadow: 0 8px 24px rgba(61,43,22,.05);
+        box-shadow: 0 8px 24px var(--sari-dark-1df26971b5, rgba(61,43,22,.05));
         transform: none !important;
     }
 
     .seller-report-kpi-grid .seller-report-card:hover {
         transform: none !important;
-        box-shadow: 0 8px 24px rgba(61,43,22,.05);
+        box-shadow: 0 8px 24px var(--sari-dark-1df26971b5, rgba(61,43,22,.05));
     }
 
     .seller-report-kpi-grid .seller-report-card p:first-child {
@@ -329,8 +329,8 @@
         margin-bottom: 11px;
         border: 1px solid var(--report-border);
         border-radius: 14px;
-        background: #fff;
-        box-shadow: 0 8px 24px rgba(61,43,22,.05);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 8px 24px var(--sari-dark-1df26971b5, rgba(61,43,22,.05));
     }
 
     .seller-report-order-stat {
@@ -339,7 +339,7 @@
         align-items: center;
         gap: 10px;
         padding: 10px 13px;
-        border-right: 1px solid #eee8df;
+        border-right: 1px solid var(--sari-dark-d8c2716225, #eee8df);
     }
 
     .seller-report-order-stat:last-child {
@@ -366,7 +366,7 @@
 
     .seller-report-order-stat-label {
         margin: 0;
-        color: #746b61;
+        color: var(--sari-dark-a63aa16d7c, #746b61);
         font-size: 8px;
         font-weight: 600;
     }
@@ -374,7 +374,7 @@
     .seller-report-order-stat-value {
         display: inline-block;
         margin-top: 2px;
-        color: #211c17;
+        color: var(--sari-dark-e23e64dd1e, #211c17);
         font-size: 18px;
         font-weight: 700;
         line-height: 1;
@@ -382,7 +382,7 @@
 
     .seller-report-order-stat-desc {
         margin-left: 5px;
-        color: #9a9187;
+        color: var(--sari-dark-a63aa16d7c, #9a9187);
         font-size: 7.5px;
         white-space: nowrap;
     }
@@ -392,8 +392,8 @@
         overflow: hidden;
         border: 1px solid var(--report-border) !important;
         border-radius: 14px !important;
-        background: #fff !important;
-        box-shadow: 0 8px 24px rgba(61,43,22,.05) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 8px 24px var(--sari-dark-1df26971b5, rgba(61,43,22,.05)) !important;
     }
 
     .seller-report-panel-heading {
@@ -438,7 +438,7 @@
     }
 
     .seller-report-table-row:hover {
-        background: #fffdfa;
+        background: var(--sari-dark-950baec030, #fffdfa);
     }
 
     /* Compact common report sections using their existing markup */
@@ -451,7 +451,7 @@
     .seller-report-analysis-grid > div {
         border-radius: 14px !important;
         padding: 14px !important;
-        box-shadow: 0 8px 24px rgba(61,43,22,.05) !important;
+        box-shadow: 0 8px 24px var(--sari-dark-1df26971b5, rgba(61,43,22,.05)) !important;
     }
 
     .seller-report-products-section,
@@ -459,7 +459,7 @@
         margin-top: 0 !important;
         margin-bottom: 11px;
         border-radius: 14px !important;
-        box-shadow: 0 8px 24px rgba(61,43,22,.05) !important;
+        box-shadow: 0 8px 24px var(--sari-dark-1df26971b5, rgba(61,43,22,.05)) !important;
     }
 
     .seller-report-products-section > div:first-child,
@@ -529,7 +529,7 @@
         }
 
         .seller-report-order-stat:nth-child(-n+2) {
-            border-bottom: 1px solid #eee8df;
+            border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8df);
         }
     }
 
@@ -557,7 +557,7 @@
 
         .seller-report-order-stat {
             border-right: 0;
-            border-bottom: 1px solid #eee8df;
+            border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8df);
         }
 
         .seller-report-order-stat:last-child {
@@ -578,7 +578,7 @@
         }
 
         body {
-            background: #fff !important;
+            background: var(--sari-dark-950baec030, #fff) !important;
         }
 
         .seller-report-page {
@@ -612,11 +612,11 @@
         --report-gold: #d59617;
         --report-gold-hover: #c9890f;
         --report-gold-soft: #fffaf0;
-        --report-border: #e5e7eb;
-        --report-border-soft: #edf0f3;
-        --report-text: #111827;
-        --report-muted: #7c8592;
-        --report-canvas: #ffffff;
+        --report-border: var(--sari-dark-d8c2716225, #e5e7eb);
+        --report-border-soft: var(--sari-dark-d8c2716225, #edf0f3);
+        --report-text: var(--sari-dark-e23e64dd1e, #111827);
+        --report-muted: var(--sari-dark-a63aa16d7c, #7c8592);
+        --report-canvas: var(--sari-dark-950baec030, #ffffff);
     }
 
     .seller-report-page {
@@ -633,7 +633,7 @@
         align-items: flex-start !important;
         margin-bottom: 12px !important;
         padding: 2px 2px 13px !important;
-        border-bottom: 1px solid #e7ebf0 !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e7ebf0) !important;
     }
 
     .seller-report-heading {
@@ -645,7 +645,7 @@
     }
 
     .seller-report-eyebrow {
-        color: #b87605 !important;
+        color: var(--sari-dark-6e784b4931, #b87605) !important;
         font-size: 8px !important;
         font-weight: 800 !important;
         letter-spacing: .16em !important;
@@ -653,7 +653,7 @@
 
     .seller-report-title {
         margin-top: 5px !important;
-        color: #111827 !important;
+        color: var(--sari-dark-e23e64dd1e, #111827) !important;
         font-size: clamp(29px, 2.2vw, 36px) !important;
         font-weight: 650 !important;
         line-height: 1 !important;
@@ -662,13 +662,13 @@
 
     .seller-report-title-accent {
         margin-left: .18em !important;
-        color: #C9890B !important;
+        color: var(--sari-dark-9db03b407c, #C9890B) !important;
     }
 
     .seller-report-subtitle {
         max-width: 780px !important;
         margin-top: 7px !important;
-        color: #7c8592 !important;
+        color: var(--sari-dark-a63aa16d7c, #7c8592) !important;
         font-size: 10px !important;
         line-height: 1.5 !important;
     }
@@ -688,27 +688,27 @@
     }
 
     .seller-report-header-button--secondary {
-        border-color: #dfe3e8 !important;
-        color: #667085 !important;
-        box-shadow: 0 3px 9px rgba(15,23,42,.025) !important;
+        border-color: var(--sari-dark-d8c2716225, #dfe3e8) !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
+        box-shadow: 0 3px 9px var(--sari-dark-e1384eb7fc, rgba(15,23,42,.025)) !important;
     }
 
     .seller-report-header-button--secondary:hover,
     .seller-report-header-button--secondary:focus-visible {
         border-color: #efd9a7 !important;
-        background: #fffaf0 !important;
-        color: #9b6505 !important;
+        background: var(--sari-dark-950baec030, #fffaf0) !important;
+        color: var(--sari-dark-af18afcaa4, #9b6505) !important;
         outline: none !important;
     }
 
     /* Filter controls */
     .seller-report-filter-panel {
         margin-bottom: 10px !important;
-        border-color: #e5e7eb !important;
+        border-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 13px !important;
-        background: #f8fafc !important;
+        background: var(--sari-dark-950baec030, #f8fafc) !important;
         padding: 9px !important;
-        box-shadow: 0 5px 16px rgba(15,23,42,.028) !important;
+        box-shadow: 0 5px 16px var(--sari-dark-7888fe3028, rgba(15,23,42,.028)) !important;
     }
 
     .seller-report-filter-grid {
@@ -718,7 +718,7 @@
 
     .seller-report-filter-field label {
         margin-bottom: 5px !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 8.5px !important;
         font-weight: 650 !important;
     }
@@ -734,43 +734,43 @@
 
     .seller-report-filter-field input,
     .seller-report-filter-field select {
-        border-color: #d8dee6 !important;
-        color: #344054 !important;
-        box-shadow: 0 1px 2px rgba(15,23,42,.015) !important;
+        border-color: var(--sari-dark-d8c2716225, #d8dee6) !important;
+        color: var(--sari-dark-e23e64dd1e, #344054) !important;
+        box-shadow: 0 1px 2px var(--sari-dark-37396001f9, rgba(15,23,42,.015)) !important;
     }
 
     .seller-report-filter-field input:focus,
     .seller-report-filter-field select:focus {
         border-color: #d59617 !important;
-        box-shadow: 0 0 0 3px rgba(213,150,23,.08) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213,150,23,.08)) !important;
     }
 
     .seller-report-ranges {
         gap: 5px !important;
         margin-top: 7px !important;
         padding-top: 7px !important;
-        border-top-color: #edf0f3 !important;
+        border-top-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
     }
 
     .seller-report-ranges > span {
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 8px !important;
     }
 
     .seller-report-ranges button {
         min-height: 26px !important;
-        border-color: #dfe3e8 !important;
-        background: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #dfe3e8) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 3px 9px !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 7.8px !important;
     }
 
     .seller-report-ranges button:hover,
     .seller-report-ranges button:focus-visible {
         border-color: #efd9a7 !important;
-        background: #fffaf0 !important;
-        color: #9b6505 !important;
+        background: var(--sari-dark-950baec030, #fffaf0) !important;
+        color: var(--sari-dark-af18afcaa4, #9b6505) !important;
         outline: none !important;
     }
 
@@ -782,21 +782,21 @@
 
     .seller-report-kpi-grid .seller-report-card {
         min-height: 78px !important;
-        border-color: #e5e7eb !important;
+        border-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 13px !important;
         padding: 10px 12px !important;
-        box-shadow: 0 5px 16px rgba(15,23,42,.028) !important;
+        box-shadow: 0 5px 16px var(--sari-dark-7888fe3028, rgba(15,23,42,.028)) !important;
     }
 
     .seller-report-kpi-grid .seller-report-card p:first-child {
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 9.2px !important;
         font-weight: 600 !important;
     }
 
     .seller-report-kpi-grid .seller-report-card p:nth-child(2) {
         margin-top: 4px !important;
-        color: #111827 !important;
+        color: var(--sari-dark-e23e64dd1e, #111827) !important;
         font-size: 20px !important;
     }
 
@@ -816,9 +816,9 @@
     .seller-report-products-section,
     .seller-report-financial-section,
     .seller-report-order-strip {
-        border-color: #e5e7eb !important;
+        border-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 13px !important;
-        box-shadow: 0 6px 18px rgba(15,23,42,.03) !important;
+        box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(15,23,42,.03)) !important;
     }
 
     .seller-report-analysis-grid {
@@ -829,26 +829,26 @@
     .seller-report-analysis-grid > div {
         border-radius: 13px !important;
         padding: 12px !important;
-        box-shadow: 0 6px 18px rgba(15,23,42,.03) !important;
+        box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(15,23,42,.03)) !important;
     }
 
     .seller-report-panel-heading {
-        color: #1f2937 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size: 12px !important;
         font-weight: 700 !important;
     }
 
     .seller-report-panel-subtitle {
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 8.3px !important;
     }
 
     .seller-report-chart-shell {
         min-height: 224px !important;
         margin-top: 10px !important;
-        border-color: #edf0f3 !important;
+        border-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
         border-radius: 11px !important;
-        background: #fcfcfd !important;
+        background: var(--sari-dark-950baec030, #fcfcfd) !important;
         padding: 9px !important;
     }
 
@@ -864,7 +864,7 @@
     .seller-report-order-stat {
         gap: 8px !important;
         padding: 9px 11px !important;
-        border-right-color: #edf0f3 !important;
+        border-right-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
     }
 
     .seller-report-order-stat-icon {
@@ -875,17 +875,17 @@
     }
 
     .seller-report-order-stat-label {
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 8.3px !important;
     }
 
     .seller-report-order-stat-value {
-        color: #1f2937 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size: 17px !important;
     }
 
     .seller-report-order-stat-desc {
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 7.6px !important;
     }
 
@@ -897,18 +897,18 @@
 
     .seller-report-products-section > div:first-child {
         padding: 11px 13px !important;
-        border-bottom-color: #edf0f3 !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
     }
 
     .seller-report-products-section > div:first-child h2 {
-        color: #1f2937 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size: 11px !important;
         font-weight: 700 !important;
         letter-spacing: 0 !important;
     }
 
     .seller-report-products-section > div:first-child p {
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 8px !important;
         line-height: 1.4 !important;
     }
@@ -923,18 +923,18 @@
     .seller-report-product-card {
         min-width: 0;
         overflow: hidden;
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
         border-radius: 12px;
-        background: #fff;
-        box-shadow: 0 3px 10px rgba(15,23,42,.02);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 3px 10px var(--sari-dark-f6fe7319d9, rgba(15,23,42,.02));
     }
 
     .seller-report-product-media {
         position: relative;
         height: 120px;
         overflow: hidden;
-        border-bottom: 1px solid #edf0f3;
-        background: #f8fafc;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
+        background: var(--sari-dark-950baec030, #f8fafc);
     }
 
     .seller-report-product-media img {
@@ -949,7 +949,7 @@
         width: 100%;
         height: 100%;
         place-items: center;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
     }
 
     .seller-report-product-placeholder svg {
@@ -965,13 +965,13 @@
         width: 27px;
         height: 27px;
         place-items: center;
-        border: 1px solid rgba(255,255,255,.82);
+        border: 1px solid var(--sari-dark-4f44862fc7, rgba(255,255,255,.82));
         border-radius: 8px;
-        background: rgba(255,255,255,.94);
-        color: #9b6505;
+        background: var(--sari-dark-fa7f649147, rgba(255,255,255,.94));
+        color: var(--sari-dark-af18afcaa4, #9b6505);
         font-size: 8.5px;
         font-weight: 800;
-        box-shadow: 0 3px 9px rgba(15,23,42,.08);
+        box-shadow: 0 3px 9px var(--sari-dark-c33e3d1bb4, rgba(15,23,42,.08));
         backdrop-filter: blur(5px);
     }
 
@@ -990,18 +990,18 @@
         display: inline-flex;
         min-height: 22px;
         align-items: center;
-        border: 1px solid #efe3c7;
+        border: 1px solid var(--sari-dark-d8c2716225, #efe3c7);
         border-radius: 999px;
-        background: #fffaf0;
+        background: var(--sari-dark-950baec030, #fffaf0);
         padding: 0 7px;
-        color: #a96f06;
+        color: var(--sari-dark-c8bdcce6ab, #a96f06);
         font-size: 7.8px;
         font-weight: 700;
         white-space: nowrap;
     }
 
     .seller-report-product-share {
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 7.5px;
         font-weight: 600;
     }
@@ -1011,7 +1011,7 @@
         overflow: hidden;
         min-height: 29px;
         margin: 7px 0 0;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-size: 10px;
         font-weight: 700;
         line-height: 1.4;
@@ -1021,7 +1021,7 @@
 
     .seller-report-product-sales {
         margin: 5px 0 0;
-        color: #c9890f;
+        color: var(--sari-dark-19b301f69a, #c9890f);
         font-size: 13px;
         font-weight: 750;
         line-height: 1.2;
@@ -1033,7 +1033,7 @@
         margin-top: 8px;
         overflow: hidden;
         border-radius: 999px;
-        background: #edf0f3;
+        background: var(--sari-dark-4d21eb669b, #edf0f3);
     }
 
     .seller-report-product-progress > span {
@@ -1050,29 +1050,29 @@
 
     .seller-report-financial-section > div:first-child {
         padding: 11px 13px !important;
-        border-bottom-color: #edf0f3 !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
     }
 
     .seller-report-financial-section > div:first-child h2 {
-        color: #1f2937 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size: 11px !important;
         font-weight: 700 !important;
         letter-spacing: 0 !important;
     }
 
     .seller-report-financial-section > div:first-child p {
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 8px !important;
     }
 
     .seller-report-financial-section table thead tr {
-        border-bottom-color: #e8ebef !important;
-        background: #fafbfc !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #e8ebef) !important;
+        background: var(--sari-dark-950baec030, #fafbfc) !important;
     }
 
     .seller-report-financial-section table th {
         padding: 9px 13px !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 8px !important;
         font-weight: 700 !important;
         text-transform: uppercase;
@@ -1084,11 +1084,11 @@
     }
 
     .seller-report-table-row {
-        border-bottom-color: #edf0f3 !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
     }
 
     .seller-report-table-row:hover {
-        background: #fffdf8 !important;
+        background: var(--sari-dark-950baec030, #fffdf8) !important;
     }
 
     @media (max-width: 1180px) {
@@ -1187,31 +1187,31 @@
         align-items: center;
         justify-content: space-between;
         gap: 9px;
-        border: 1px solid #d8dee6;
+        border: 1px solid var(--sari-dark-d8c2716225, #d8dee6);
         border-radius: 9px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 10px 0 8px;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-family: inherit;
         font-size: 9.5px;
         font-weight: 650;
         text-align: left;
         cursor: pointer;
         outline: none;
-        box-shadow: 0 1px 2px rgba(15,23,42,.02);
+        box-shadow: 0 1px 2px var(--sari-dark-f6fe7319d9, rgba(15,23,42,.02));
         transition: border-color .14s ease, box-shadow .14s ease, background-color .14s ease;
     }
 
     .seller-report-type-button:hover {
-        border-color: #cfd6df;
-        background: #fdfefe;
+        border-color: var(--sari-dark-d8c2716225, #cfd6df);
+        background: var(--sari-dark-950baec030, #fdfefe);
     }
 
     .seller-report-type-button:focus-visible,
     .seller-report-type-button[aria-expanded="true"] {
         border-color: #d59617;
-        background: #fff;
-        box-shadow: 0 0 0 3px rgba(213,150,23,.08);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213,150,23,.08));
     }
 
     .seller-report-type-button-main {
@@ -1227,10 +1227,10 @@
         height: 24px;
         flex: 0 0 24px;
         place-items: center;
-        border: 1px solid #efe3c7;
+        border: 1px solid var(--sari-dark-d8c2716225, #efe3c7);
         border-radius: 7px;
-        background: #fffaf0;
-        color: #b97805;
+        background: var(--sari-dark-950baec030, #fffaf0);
+        color: var(--sari-dark-af18afcaa4, #b97805);
     }
 
     .seller-report-type-icon svg {
@@ -1248,13 +1248,13 @@
         width: 13px;
         height: 13px;
         flex: 0 0 auto;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         transition: transform .15s ease, color .15s ease;
     }
 
     .seller-report-type-button[aria-expanded="true"] .seller-report-type-chevron {
         transform: rotate(180deg);
-        color: #b97805;
+        color: var(--sari-dark-af18afcaa4, #b97805);
     }
 
     .seller-report-type-menu {
@@ -1265,11 +1265,11 @@
         z-index: 100;
         min-width: 270px;
         overflow: hidden;
-        border: 1px solid #e2e7ed;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2e7ed);
         border-radius: 12px;
-        background: rgba(255,255,255,.99);
+        background: var(--sari-dark-68ba16e186, rgba(255,255,255,.99));
         padding: 5px;
-        box-shadow: 0 18px 40px rgba(15,23,42,.12), 0 3px 9px rgba(15,23,42,.045);
+        box-shadow: 0 18px 40px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)), 0 3px 9px var(--sari-dark-1190f58155, rgba(15,23,42,.045));
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
     }
@@ -1289,7 +1289,7 @@
         border-radius: 9px;
         background: transparent;
         padding: 7px 8px 7px 10px;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-family: inherit;
         text-align: left;
         cursor: pointer;
@@ -1299,11 +1299,11 @@
     .seller-report-type-option:hover,
     .seller-report-type-option:focus-visible {
         outline: none;
-        background: #f8fafc;
+        background: var(--sari-dark-950baec030, #f8fafc);
     }
 
     .seller-report-type-option.is-selected {
-        background: #fff9ec;
+        background: var(--sari-dark-4d21eb669b, #fff9ec);
     }
 
     .seller-report-type-option-copy {
@@ -1313,20 +1313,20 @@
 
     .seller-report-type-option-copy strong {
         display: block;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-size: 9.3px;
         font-weight: 700;
         line-height: 1.3;
     }
 
     .seller-report-type-option.is-selected .seller-report-type-option-copy strong {
-        color: #9b6505;
+        color: var(--sari-dark-af18afcaa4, #9b6505);
     }
 
     .seller-report-type-option-copy small {
         display: block;
         margin-top: 2px;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 7.8px;
         font-weight: 400;
         line-height: 1.35;
@@ -1336,7 +1336,7 @@
         width: 14px;
         height: 14px;
         flex: 0 0 auto;
-        color: #c9890f;
+        color: var(--sari-dark-19b301f69a, #c9890f);
         opacity: 0;
     }
 
@@ -1357,11 +1357,11 @@
     .seller-report-trend-panel,
     .seller-report-performance-panel {
         overflow: hidden;
-        border: 1px solid #e5e7eb !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 13px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 0 !important;
-        box-shadow: 0 6px 18px rgba(15,23,42,.03) !important;
+        box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(15,23,42,.03)) !important;
     }
 
     .seller-report-analytics-head,
@@ -1372,7 +1372,7 @@
         gap: 12px;
         min-height: 58px;
         padding: 11px 13px 10px;
-        border-bottom: 1px solid #edf0f3;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
     }
 
     .seller-report-analytics-heading {
@@ -1382,7 +1382,7 @@
     .seller-report-analytics-head .seller-report-panel-heading,
     .seller-report-performance-head .seller-report-panel-heading {
         margin: 0 !important;
-        color: #1f2937 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size: 11px !important;
         font-weight: 700 !important;
         letter-spacing: 0 !important;
@@ -1391,7 +1391,7 @@
     .seller-report-analytics-head .seller-report-panel-subtitle,
     .seller-report-performance-head .seller-report-panel-subtitle {
         margin: 3px 0 0 !important;
-        color: #98a2b3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3) !important;
         font-size: 8px !important;
         line-height: 1.4 !important;
     }
@@ -1409,11 +1409,11 @@
         min-height: 25px;
         align-items: center;
         gap: 6px;
-        border: 1px solid #e7ebef;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7ebef);
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 8px;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         font-size: 7.8px;
         font-weight: 600;
         white-space: nowrap;
@@ -1431,7 +1431,7 @@
 
     .seller-report-legend-line--net {
         height: 0;
-        border-top: 2px dashed #7d93a5;
+        border-top: 2px dashed var(--sari-dark-d8c2716225, #7d93a5);
         border-radius: 0;
         background: transparent;
     }
@@ -1443,7 +1443,7 @@
         overflow-x: auto;
         border: 0 !important;
         border-radius: 0 !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 10px 10px 7px !important;
     }
 
@@ -1455,12 +1455,12 @@
         display: grid;
         justify-items: center;
         max-width: 230px;
-        border: 1px solid #e7ebef;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7ebef);
         border-radius: 12px;
-        background: rgba(255,255,255,.96);
+        background: var(--sari-dark-c86bd35395, rgba(255,255,255,.96));
         padding: 13px 16px;
         text-align: center;
-        box-shadow: 0 6px 20px rgba(15,23,42,.04);
+        box-shadow: 0 6px 20px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04));
     }
 
     .seller-report-chart-empty-icon {
@@ -1469,8 +1469,8 @@
         height: 28px;
         place-items: center;
         border-radius: 8px;
-        background: #fffaf0;
-        color: #b97805;
+        background: var(--sari-dark-950baec030, #fffaf0);
+        color: var(--sari-dark-af18afcaa4, #b97805);
     }
 
     .seller-report-chart-empty-icon svg {
@@ -1480,14 +1480,14 @@
 
     .seller-report-chart-empty-card p {
         margin: 7px 0 0;
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
         font-size: 9px;
         font-weight: 650;
     }
 
     .seller-report-chart-empty-card small {
         margin-top: 3px;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 7.8px;
         line-height: 1.4;
     }
@@ -1504,7 +1504,7 @@
 
     .seller-report-performance-row {
         padding: 11px 0;
-        border-bottom: 1px solid #edf0f3;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
     }
 
     .seller-report-performance-row-head {
@@ -1515,7 +1515,7 @@
     }
 
     .seller-report-performance-label {
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
         font-size: 8.8px;
         font-weight: 650;
         line-height: 1.35;
@@ -1529,11 +1529,11 @@
     }
 
     .seller-report-performance-value--completed {
-        color: #4f7d63;
+        color: var(--sari-dark-a63aa16d7c, #4f7d63);
     }
 
     .seller-report-performance-value--cancelled {
-        color: #a65353;
+        color: var(--sari-dark-58dd29f069, #a65353);
     }
 
     .seller-report-performance-track {
@@ -1541,7 +1541,7 @@
         margin-top: 8px;
         overflow: hidden;
         border-radius: 999px;
-        background: #eef1f4;
+        background: var(--sari-dark-4d21eb669b, #eef1f4);
     }
 
     .seller-report-performance-track > span {
@@ -1555,7 +1555,7 @@
     }
 
     .seller-report-rating-value {
-        color: #a8731f;
+        color: var(--sari-dark-5d5ad776eb, #a8731f);
         font-size: 9.5px;
         font-weight: 750;
         white-space: nowrap;
@@ -1566,13 +1566,13 @@
         align-items: center;
         gap: 5px;
         margin-top: 6px;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 7.8px;
         line-height: 1.4;
     }
 
     .seller-report-rating-star {
-        color: #d59617;
+        color: var(--sari-dark-9db03b407c, #d59617);
         font-size: 10px;
         line-height: 1;
     }
@@ -1582,9 +1582,9 @@
         grid-template-columns: 28px minmax(0, 1fr);
         gap: 8px;
         margin: auto 10px 10px;
-        border: 1px solid #e7ebef;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7ebef);
         border-radius: 10px;
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
         padding: 9px 10px;
     }
 
@@ -1594,9 +1594,9 @@
         height: 28px;
         place-items: center;
         border-radius: 8px;
-        background: #fff;
-        color: #7c8592;
-        box-shadow: inset 0 0 0 1px #e5e7eb;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #7c8592);
+        box-shadow: inset 0 0 0 1px var(--sari-dark-f30a5f9061, #e5e7eb);
     }
 
     .seller-report-revenue-note-icon svg {
@@ -1606,7 +1606,7 @@
 
     .seller-report-revenue-note strong {
         display: block;
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
         font-size: 8.5px;
         font-weight: 700;
         line-height: 1.3;
@@ -1614,7 +1614,7 @@
 
     .seller-report-revenue-note p {
         margin: 3px 0 0;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 7.7px;
         line-height: 1.5;
     }
@@ -1668,18 +1668,18 @@
    ====================================================================== */
 
 .seller-report-page {
-    --report-main-border: #E5E7EB;
-    --report-main-divider: #ECEFF2;
+    --report-main-border: var(--sari-dark-d8c2716225, #E5E7EB);
+    --report-main-divider: var(--sari-dark-d8c2716225, #ECEFF2);
     --report-main-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255,255,255,.92);
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     --report-main-shadow-soft:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065),
-        inset 0 1px 0 rgba(255,255,255,.90);
+        0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+        0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90));
 }
 
 /* ------------------------------------------------------------
@@ -1706,7 +1706,7 @@
 .seller-report-page .seller-report-order-strip,
 .seller-report-page .seller-report-financial-section {
     border-color: var(--report-main-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     transform: none !important;
     outline: 0 !important;
 }
@@ -1751,15 +1751,15 @@
 .seller-report-page .seller-report-filter-field input,
 .seller-report-page .seller-report-filter-field select,
 .seller-report-page .seller-report-type-button {
-    border-color: #D1D5DB !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #D1D5DB) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .seller-report-page .seller-report-filter-field input:hover,
 .seller-report-page .seller-report-filter-field select:hover,
 .seller-report-page .seller-report-type-button:hover,
 .seller-report-page .seller-report-ranges button:hover {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     transform: none !important;
 }
 
@@ -1769,8 +1769,8 @@
 .seller-report-page .seller-report-type-button:focus-visible,
 .seller-report-page .seller-report-type-button[aria-expanded="true"] {
     border-color: #C4A35B !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(196, 163, 91, .08)) !important;
 }
 
 /* Header buttons remain flat controls. */
@@ -1789,12 +1789,12 @@
 
 /* Dropdown menu remains elevated because it is a popover layer. */
 .seller-report-page .seller-report-type-menu {
-    border-color: #E1E5EA !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E1E5EA) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 4px 10px rgba(15, 23, 42, .05),
-        0 18px 42px rgba(15, 23, 42, .14),
-        0 32px 70px rgba(15, 23, 42, .08) !important;
+        0 4px 10px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
+        0 18px 42px var(--sari-dark-59ed29fe9d, rgba(15, 23, 42, .14)),
+        0 32px 70px var(--sari-dark-c33e3d1bb4, rgba(15, 23, 42, .08)) !important;
 }
 
 /* ------------------------------------------------------------
@@ -1826,12 +1826,12 @@
 .seller-report-page .seller-report-chart-shell,
 .seller-report-page .seller-report-chart-shell--modern {
     border: 0 !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .seller-report-page .seller-report-chart-empty-card {
-    border-color: #E5E7EB !important;
-    background: #FAFBFC !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
+    background: var(--sari-dark-950baec030, #FAFBFC) !important;
 }
 
 .seller-report-page .seller-report-chart-empty-icon,
@@ -1841,7 +1841,7 @@
 
 .seller-report-page .seller-report-revenue-note {
     border-color: var(--report-main-divider) !important;
-    background: #FAFBFC !important;
+    background: var(--sari-dark-950baec030, #FAFBFC) !important;
 }
 
 /* Performance rows stay document-like with dividers only. */
@@ -1863,13 +1863,13 @@
 }
 
 .seller-report-page .seller-report-product-card {
-    border-color: #E5E7EB !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .seller-report-page .seller-report-product-media {
     border-bottom-color: var(--report-main-divider) !important;
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
 }
 
 .seller-report-page .seller-report-product-rank {
@@ -1919,7 +1919,7 @@
 }
 
 .seller-report-page .seller-report-table-row:hover {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
 }
 
 .seller-report-page .seller-report-financial-section > div:first-child,
@@ -1959,16 +1959,16 @@
     .seller-report-page .seller-report-order-strip,
     .seller-report-page .seller-report-financial-section {
         box-shadow:
-            0 2px 4px rgba(15, 23, 42, .035),
-            0 8px 18px rgba(15, 23, 42, .06),
-            0 18px 38px rgba(15, 23, 42, .07) !important;
+            0 2px 4px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 8px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            0 18px 38px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)) !important;
     }
 
     .seller-report-page .seller-report-kpi-grid .seller-report-card {
         box-shadow:
-            0 1px 3px rgba(15, 23, 42, .03),
-            0 6px 14px rgba(15, 23, 42, .05),
-            0 12px 26px rgba(15, 23, 42, .055) !important;
+            0 1px 3px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)),
+            0 6px 14px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
+            0 12px 26px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)) !important;
     }
 
     .seller-report-page .seller-report-product-card,
@@ -1987,16 +1987,16 @@
 .seller-report-page {
     --report-orders-gold: #C88912;
     --report-orders-gold-hover: #B47B0E;
-    --report-orders-ink: #2F3742;
-    --report-orders-muted: #667383;
-    --report-orders-border: #E5E7EB;
+    --report-orders-ink: var(--sari-dark-e23e64dd1e, #2F3742);
+    --report-orders-muted: var(--sari-dark-a63aa16d7c, #667383);
+    --report-orders-border: var(--sari-dark-d8c2716225, #E5E7EB);
     --report-orders-soft: #F8FAFC;
     /* Exact Buyer Shopping Cart floating container shadow (desktop). */
     --report-orders-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
     width: 100% !important;
     max-width: 1520px !important;
     margin: 0 auto !important;
@@ -2019,7 +2019,7 @@
     margin: 0 0 20px !important;
     padding: 0 0 14px !important;
     border: 0 !important;
-    border-bottom: 1px solid #E9EDF1 !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF1) !important;
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -2027,7 +2027,7 @@
 .seller-report-page .seller-report-heading { display: block !important; min-width: 0; }
 .seller-report-page .seller-report-heading-icon { display: none !important; }
 .seller-report-page .seller-report-eyebrow {
-    color: #A87316 !important;
+    color: var(--sari-dark-685eb4fc40, #A87316) !important;
     font-size: 10.5px !important;
     font-weight: 800 !important;
     line-height: 1.4 !important;
@@ -2035,7 +2035,7 @@
 }
 .seller-report-page .seller-report-title {
     margin-top: 6px !important;
-    color: #2E343B !important;
+    color: var(--sari-dark-e23e64dd1e, #2E343B) !important;
     font-size: clamp(27px, 2.3vw, 31px) !important;
     font-weight: 760 !important;
     line-height: 1.08 !important;
@@ -2045,7 +2045,7 @@
 .seller-report-page .seller-report-subtitle {
     max-width: 780px !important;
     margin-top: 6px !important;
-    color: #8793A1 !important;
+    color: var(--sari-dark-a63aa16d7c, #8793A1) !important;
     font-size: 11.5px !important;
     line-height: 1.5 !important;
 }
@@ -2064,7 +2064,7 @@
     transform: none !important;
     font-size: 11.5px !important;
     font-weight: 750 !important;
-    color: #59636E !important;
+    color: var(--sari-dark-a63aa16d7c, #59636E) !important;
     text-decoration: none !important;
 }
 .seller-report-page .seller-report-header-button:hover,
@@ -2093,7 +2093,7 @@
 .seller-report-page .seller-report-filter-field { min-width: 0; }
 .seller-report-page .seller-report-filter-field label {
     margin: 0 0 7px 2px !important;
-    color: #637081 !important;
+    color: var(--sari-dark-a63aa16d7c, #637081) !important;
     font-size: 11px !important;
     font-weight: 650 !important;
 }
@@ -2107,9 +2107,9 @@
 }
 .seller-report-page .seller-report-filter-field input,
 .seller-report-page .seller-report-type-button {
-    border: 1px solid #DCE2E8 !important;
-    background: #FFF !important;
-    color: #3F4B59 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8) !important;
+    background: var(--sari-dark-950baec030, #FFF) !important;
+    color: var(--sari-dark-e23e64dd1e, #3F4B59) !important;
     box-shadow: none !important;
 }
 .seller-report-page .seller-report-filter-field input { padding: 0 15px !important; cursor: pointer; }
@@ -2117,13 +2117,13 @@
 .seller-report-page .seller-report-type-icon { display: none !important; }
 .seller-report-page .seller-report-type-chevron { width: 17px !important; height: 17px !important; }
 .seller-report-page .seller-report-filter-field input:hover,
-.seller-report-page .seller-report-type-button:hover { border-color: #CFD6DE !important; background: #F8FAFC !important; }
+.seller-report-page .seller-report-type-button:hover { border-color: var(--sari-dark-d8c2716225, #CFD6DE) !important; background: var(--sari-dark-950baec030, #F8FAFC) !important; }
 .seller-report-page .seller-report-filter-field input:focus,
 .seller-report-page .seller-report-type-button:focus-visible,
 .seller-report-page .seller-report-type-button[aria-expanded="true"] {
     border-color: var(--report-orders-gold) !important;
-    background: #FFF !important;
-    box-shadow: 0 0 0 2px rgba(200,137,18,.12) !important;
+    background: var(--sari-dark-950baec030, #FFF) !important;
+    box-shadow: 0 0 0 2px var(--sari-dark-3b2338cbf0, rgba(200,137,18,.12)) !important;
     outline: none !important;
 }
 .seller-report-page .seller-report-type-dropdown { position: relative; z-index: 25; }
@@ -2136,10 +2136,10 @@
     max-height: min(360px, 60vh);
     overflow-y: auto !important;
     padding: 8px !important;
-    border: 1px solid #E2E8F0 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E8F0) !important;
     border-radius: 14px !important;
-    background: #FFF !important;
-    box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05) !important;
+    background: var(--sari-dark-950baec030, #FFF) !important;
+    box-shadow: 0 16px 32px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)), 0 2px 6px var(--sari-dark-1df26971b5, rgba(15,23,42,.05)) !important;
     backdrop-filter: none !important;
 }
 .seller-report-page .seller-report-type-option {
@@ -2149,10 +2149,10 @@
 }
 .seller-report-page .seller-report-type-option:hover,
 .seller-report-page .seller-report-type-option:focus-visible,
-.seller-report-page .seller-report-type-option.is-selected { background: #F8FAFC !important; }
-.seller-report-page .seller-report-type-option-copy strong { color: #475569 !important; font-size: 11.5px !important; }
-.seller-report-page .seller-report-type-option-copy small { margin-top: 3px; color: #8B96A4 !important; font-size: 9px !important; }
-.seller-report-page .seller-report-type-option.is-selected strong { color: #A56D0A !important; }
+.seller-report-page .seller-report-type-option.is-selected { background: var(--sari-dark-950baec030, #F8FAFC) !important; }
+.seller-report-page .seller-report-type-option-copy strong { color: var(--sari-dark-e23e64dd1e, #475569) !important; font-size: 11.5px !important; }
+.seller-report-page .seller-report-type-option-copy small { margin-top: 3px; color: var(--sari-dark-a63aa16d7c, #8B96A4) !important; font-size: 9px !important; }
+.seller-report-page .seller-report-type-option.is-selected strong { color: var(--sari-dark-af18afcaa4, #A56D0A) !important; }
 .seller-report-page .seller-report-generate {
     width: 100% !important;
     padding: 0 18px !important;
@@ -2175,19 +2175,19 @@
     padding-top: 0 !important;
     border-top: 0 !important;
 }
-.seller-report-page .seller-report-ranges > span { color: #8793A1 !important; font-size: 11px !important; }
+.seller-report-page .seller-report-ranges > span { color: var(--sari-dark-a63aa16d7c, #8793A1) !important; font-size: 11px !important; }
 .seller-report-page .seller-report-ranges button {
     min-height: 32px !important;
-    border: 1px solid #DCE2E8 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8) !important;
     border-radius: 10px !important;
-    background: #FFF !important;
+    background: var(--sari-dark-950baec030, #FFF) !important;
     padding: 5px 12px !important;
-    color: #59636E !important;
+    color: var(--sari-dark-a63aa16d7c, #59636E) !important;
     font-size: 10.5px !important;
     font-weight: 650 !important;
 }
 .seller-report-page .seller-report-ranges button:hover,
-.seller-report-page .seller-report-ranges button:focus-visible { border-color: var(--report-orders-gold) !important; background: #F8FAFC !important; color: #A56D0A !important; }
+.seller-report-page .seller-report-ranges button:focus-visible { border-color: var(--report-orders-gold) !important; background: var(--sari-dark-950baec030, #F8FAFC) !important; color: var(--sari-dark-af18afcaa4, #A56D0A) !important; }
 
 /* 4 KPIs and the order status strip share Orders' readable card scale. */
 .seller-report-page .seller-report-kpi-grid { grid-template-columns: repeat(4,minmax(0,1fr)) !important; gap: 14px !important; margin-bottom: 20px !important; }
@@ -2196,14 +2196,14 @@
     min-height: 110px !important;
     border: 1px solid var(--report-orders-border) !important;
     border-radius: 20px !important;
-    background: #FFF !important;
+    background: var(--sari-dark-950baec030, #FFF) !important;
     padding: 14px 16px !important;
     box-shadow: var(--report-orders-shadow) !important;
     transform: none !important;
 }
-.seller-report-page .seller-report-kpi-grid .seller-report-card p:first-child { color: #637081 !important; font-size: 13px !important; font-weight: 650 !important; line-height: 1.4 !important; }
-.seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(2) { margin-top: 7px !important; color: #1F2937 !important; font-size: clamp(20px,1.9vw,30px) !important; font-weight: 650 !important; line-height: 1.12 !important; overflow-wrap: anywhere; }
-.seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(3) { margin-top: 6px !important; color: #8995A3 !important; font-size: 11.5px !important; line-height: 1.5 !important; white-space: normal !important; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card p:first-child { color: var(--sari-dark-a63aa16d7c, #637081) !important; font-size: 13px !important; font-weight: 650 !important; line-height: 1.4 !important; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(2) { margin-top: 7px !important; color: var(--sari-dark-e23e64dd1e, #1F2937) !important; font-size: clamp(20px,1.9vw,30px) !important; font-weight: 650 !important; line-height: 1.12 !important; overflow-wrap: anywhere; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(3) { margin-top: 6px !important; color: var(--sari-dark-a63aa16d7c, #8995A3) !important; font-size: 11.5px !important; line-height: 1.5 !important; white-space: normal !important; }
 .seller-report-page .seller-report-kpi-grid .seller-report-card span.grid {
     width: 28px !important; height: 28px !important; flex: 0 0 28px !important;
     border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important;
@@ -2216,19 +2216,19 @@
 .seller-report-page .seller-report-financial-section {
     border: 1px solid var(--report-orders-border) !important;
     border-radius: 20px !important;
-    background: #FFF !important;
+    background: var(--sari-dark-950baec030, #FFF) !important;
     box-shadow: var(--report-orders-shadow) !important;
     transform: none !important;
 }
 .seller-report-page .seller-report-analytics-head,
-.seller-report-page .seller-report-performance-head { min-height: 92px !important; padding: 23px 25px !important; border-bottom: 1px solid #E9EDF1 !important; }
-.seller-report-page .seller-report-panel-heading { color: #1F2937 !important; font-size: 21px !important; font-weight: 750 !important; letter-spacing: -.025em !important; }
-.seller-report-page .seller-report-panel-subtitle { margin-top: 7px !important; color: #738093 !important; font-size: 13px !important; line-height: 1.5 !important; }
+.seller-report-page .seller-report-performance-head { min-height: 92px !important; padding: 23px 25px !important; border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF1) !important; }
+.seller-report-page .seller-report-panel-heading { color: var(--sari-dark-e23e64dd1e, #1F2937) !important; font-size: 21px !important; font-weight: 750 !important; letter-spacing: -.025em !important; }
+.seller-report-page .seller-report-panel-subtitle { margin-top: 7px !important; color: var(--sari-dark-a63aa16d7c, #738093) !important; font-size: 13px !important; line-height: 1.5 !important; }
 .seller-report-page .seller-report-chart-shell--modern { min-height: 390px !important; padding: 19px 22px 22px !important; }
 .seller-report-page .seller-report-chart-shell--modern #sellerReportChart { height: 355px !important; }
-.seller-report-page .seller-report-legend-item { min-height: 36px !important; border: 1px solid #E5E9EF !important; background: #FFF !important; padding: 0 12px !important; color: #364152 !important; font-size: 12px !important; font-weight: 650 !important; }
+.seller-report-page .seller-report-legend-item { min-height: 36px !important; border: 1px solid var(--sari-dark-d8c2716225, #E5E9EF) !important; background: var(--sari-dark-950baec030, #FFF) !important; padding: 0 12px !important; color: var(--sari-dark-e23e64dd1e, #364152) !important; font-size: 12px !important; font-weight: 650 !important; }
 .seller-report-page .seller-report-legend-line--sales { width: 21px !important; background: #C88912 !important; }
-.seller-report-page .seller-report-legend-line--net { width: 21px !important; border-top-color: #8994A3 !important; }
+.seller-report-page .seller-report-legend-line--net { width: 21px !important; border-top-color: var(--sari-dark-d8c2716225, #8994A3) !important; }
 .seller-report-page .seller-report-performance-list { padding: 6px 22px 0 !important; }
 .seller-report-page .seller-report-performance-row { padding: 16px 0 !important; }
 .seller-report-page .seller-report-performance-label { font-size: 11.5px !important; }
@@ -2240,18 +2240,18 @@
 .seller-report-page .seller-report-revenue-note p { font-size: 9.5px !important; }
 .seller-report-page .seller-report-products-section { margin: 0 0 20px !important; overflow: hidden !important; }
 .seller-report-page .seller-report-products-section > div:first-child,
-.seller-report-page .seller-report-financial-section > div:first-child { padding: 20px 23px !important; border-bottom: 1px solid #E9EDF1 !important; }
+.seller-report-page .seller-report-financial-section > div:first-child { padding: 20px 23px !important; border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF1) !important; }
 .seller-report-page .seller-report-products-section > div:first-child h2 { font-size: 20px !important; font-weight: 750 !important; color: var(--report-orders-ink) !important; }
 .seller-report-page .seller-report-financial-section > div:first-child h2 { font-size: 18px !important; font-weight: 750 !important; color: var(--report-orders-ink) !important; }
 .seller-report-page .seller-report-products-section > div:first-child p,
-.seller-report-page .seller-report-financial-section > div:first-child p { margin-top: 4px !important; color: #8B96A4 !important; font-size: 11.5px !important; }
+.seller-report-page .seller-report-financial-section > div:first-child p { margin-top: 4px !important; color: var(--sari-dark-a63aa16d7c, #8B96A4) !important; font-size: 11.5px !important; }
 .seller-report-page .seller-report-product-grid { gap: 12px !important; padding: 16px !important; }
 .seller-report-page .seller-report-product-card { border-radius: 13px !important; }
 .seller-report-page .seller-report-product-media { height: 155px !important; }
 .seller-report-page .seller-report-product-media img { object-fit: cover !important; object-position: center !important; }
 .seller-report-page .seller-report-product-body { padding: 12px !important; }
 .seller-report-page .seller-report-product-name { margin-top: 0 !important; min-height: 0 !important; font-size: 12px !important; }
-.seller-report-page .seller-report-product-sales { font-size: 16px !important; color: #B47B0E !important; }
+.seller-report-page .seller-report-product-sales { font-size: 16px !important; color: var(--sari-dark-19b301f69a, #B47B0E) !important; }
 .seller-report-page .seller-report-product-sold,
 .seller-report-page .seller-report-product-share { font-size: 10px !important; }
 
@@ -2276,76 +2276,76 @@
     padding: 14px 16px !important;
     border: 1px solid var(--report-orders-border) !important;
     border-radius: 20px !important;
-    background: #FFF !important;
+    background: var(--sari-dark-950baec030, #FFF) !important;
     box-shadow: var(--report-orders-shadow) !important;
 }
 .seller-report-page .seller-report-order-stat-icon { width: 27px !important; height: 27px !important; flex: 0 0 27px !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; }
 .seller-report-page .seller-report-order-stat-icon svg { width: 27px !important; height: 27px !important; }
-.seller-report-page .seller-report-order-stat-label { font-size: 13px !important; line-height: 1.4 !important; color: #637081 !important; }
-.seller-report-page .seller-report-order-stat-value { display: block !important; margin-top: 7px !important; font-size: 27px !important; font-weight: 650 !important; color: #1F2937 !important; }
-.seller-report-page .seller-report-order-stat-desc { display: block !important; margin: 6px 0 0 !important; font-size: 11.5px !important; color: #8995A3 !important; }
+.seller-report-page .seller-report-order-stat-label { font-size: 13px !important; line-height: 1.4 !important; color: var(--sari-dark-a63aa16d7c, #637081) !important; }
+.seller-report-page .seller-report-order-stat-value { display: block !important; margin-top: 7px !important; font-size: 27px !important; font-weight: 650 !important; color: var(--sari-dark-e23e64dd1e, #1F2937) !important; }
+.seller-report-page .seller-report-order-stat-desc { display: block !important; margin: 6px 0 0 !important; font-size: 11.5px !important; color: var(--sari-dark-a63aa16d7c, #8995A3) !important; }
 
 /* Financial breakdown: Orders table spacing, search, pagination. */
 .seller-report-page .seller-report-financial-section { margin: 0 0 20px !important; overflow: hidden !important; }
 .seller-report-page .seller-report-transaction-count-badge {
     display: inline-flex; align-items: center; min-height: 32px;
-    border: 1px solid #E5E7EB !important; border-radius: 9px !important;
-    background: #F8FAFC !important; padding: 0 12px !important;
-    color: #667383 !important; font-size: 11px !important; font-weight: 600 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important; border-radius: 9px !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important; padding: 0 12px !important;
+    color: var(--sari-dark-a63aa16d7c, #667383) !important; font-size: 11px !important; font-weight: 600 !important;
 }
 .seller-report-page .seller-report-transaction-toolbar {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 14px 20px; border-bottom: 1px solid #E9EDF1;
+    padding: 14px 20px; border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF1);
 }
 .seller-report-page .seller-report-transaction-search-field { position: relative; display: block; flex: 1 1 auto; max-width: 580px; }
 .seller-report-page .seller-report-transaction-search-field > svg {
     position: absolute; left: 16px; top: 50%; width: 20px; height: 20px;
-    transform: translateY(-50%); color: #98A2B3; pointer-events: none;
+    transform: translateY(-50%); color: var(--sari-dark-a63aa16d7c, #98A2B3); pointer-events: none;
 }
 .seller-report-page #sellerReportTransactionSearch {
     display: block; width: 100%; height: 48px; min-height: 48px;
-    border: 1px solid #DCE2E8; border-radius: 14px; background: #FFF;
-    padding: 0 14px 0 46px; color: #3F4B59;
+    border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8); border-radius: 14px; background: var(--sari-dark-950baec030, #FFF);
+    padding: 0 14px 0 46px; color: var(--sari-dark-e23e64dd1e, #3F4B59);
     font-size: 11.5px; outline: none; box-shadow: none;
 }
-.seller-report-page #sellerReportTransactionSearch::placeholder { color: #A0AAB6; }
-.seller-report-page #sellerReportTransactionSearch:focus { border-color: #C88912; box-shadow: 0 0 0 2px rgba(200,137,18,.12); }
-.seller-report-page .seller-report-transaction-per-page { flex: 0 0 auto; color: #8793A1; font-size: 11px; }
+.seller-report-page #sellerReportTransactionSearch::placeholder { color: var(--sari-dark-a63aa16d7c, #A0AAB6); }
+.seller-report-page #sellerReportTransactionSearch:focus { border-color: #C88912; box-shadow: 0 0 0 2px var(--sari-dark-3b2338cbf0, rgba(200,137,18,.12)); }
+.seller-report-page .seller-report-transaction-per-page { flex: 0 0 auto; color: var(--sari-dark-a63aa16d7c, #8793A1); font-size: 11px; }
 .seller-report-page .seller-report-financial-section table { width: 100% !important; min-width: 1080px !important; border-collapse: collapse !important; }
-.seller-report-page .seller-report-financial-section table thead tr { background: #F8FAFC !important; }
+.seller-report-page .seller-report-financial-section table thead tr { background: var(--sari-dark-950baec030, #F8FAFC) !important; }
 .seller-report-page .seller-report-financial-section table th {
-    padding: 15px 16px !important; color: #8591A0 !important;
+    padding: 15px 16px !important; color: var(--sari-dark-a63aa16d7c, #8591A0) !important;
     font-size: 11px !important; font-weight: 750 !important;
     letter-spacing: .075em !important; text-transform: uppercase !important;
     white-space: nowrap;
 }
 .seller-report-page .seller-report-financial-section table td {
     padding: 17px 16px !important; font-size: 11.5px !important;
-    color: #475569; vertical-align: middle;
+    color: var(--sari-dark-e23e64dd1e, #475569); vertical-align: middle;
 }
-.seller-report-page .seller-report-financial-section table td:first-child { font-weight: 750 !important; color: #293440 !important; }
+.seller-report-page .seller-report-financial-section table td:first-child { font-weight: 750 !important; color: var(--sari-dark-e23e64dd1e, #293440) !important; }
 .seller-report-page .seller-report-financial-section table td span { font-size: 10.5px !important; font-weight: 700 !important; }
-.seller-report-page .seller-report-table-row { border-bottom: 1px solid #EDF0F3 !important; background: #FFF !important; }
-.seller-report-page .seller-report-table-row:hover { background: #F8FAFC !important; }
+.seller-report-page .seller-report-table-row { border-bottom: 1px solid var(--sari-dark-d8c2716225, #EDF0F3) !important; background: var(--sari-dark-950baec030, #FFF) !important; }
+.seller-report-page .seller-report-table-row:hover { background: var(--sari-dark-950baec030, #F8FAFC) !important; }
 .seller-report-page .seller-report-table-row[hidden],
 .seller-report-page .seller-report-transaction-no-match[hidden],
 .seller-report-page .seller-report-transaction-footer[hidden] { display: none !important; }
-.seller-report-page .seller-report-transaction-no-match { padding: 60px 20px; color: #8793A1; font-size: 12px; text-align: center; }
+.seller-report-page .seller-report-transaction-no-match { padding: 60px 20px; color: var(--sari-dark-a63aa16d7c, #8793A1); font-size: 12px; text-align: center; }
 .seller-report-page .seller-report-transaction-footer {
     display: flex; min-height: 64px; align-items: center;
     justify-content: space-between; gap: 12px;
-    padding: 13px 20px; border-top: 1px solid #E9EDF1; background: #FFF;
+    padding: 13px 20px; border-top: 1px solid var(--sari-dark-d8c2716225, #E9EDF1); background: var(--sari-dark-950baec030, #FFF);
 }
-.seller-report-page #sellerReportTransactionCount { margin: 0; color: #7B8794; font-size: 11px; font-weight: 550; }
+.seller-report-page #sellerReportTransactionCount { margin: 0; color: var(--sari-dark-a63aa16d7c, #7B8794); font-size: 11px; font-weight: 550; }
 .seller-report-page .seller-report-transaction-pagination { display: flex; align-items: center; gap: 6px; }
 .seller-report-page .seller-report-transaction-pages { display: flex; align-items: center; gap: 6px; }
 .seller-report-page .seller-report-transaction-pagination button {
     display: grid; width: 34px; min-width: 34px; height: 34px;
-    place-items: center; border: 1px solid #E5E7EB; border-radius: 10px;
-    background: #FFF; padding: 0; color: #8793A1;
+    place-items: center; border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB); border-radius: 10px;
+    background: var(--sari-dark-950baec030, #FFF); padding: 0; color: var(--sari-dark-a63aa16d7c, #8793A1);
     font-size: 11.5px; font-weight: 700; cursor: pointer;
 }
-.seller-report-page .seller-report-transaction-pagination button:hover:not(:disabled) { border-color: #C88912; color: #A56D0A; background: #F8FAFC; }
+.seller-report-page .seller-report-transaction-pagination button:hover:not(:disabled) { border-color: #C88912; color: var(--sari-dark-af18afcaa4, #A56D0A); background: var(--sari-dark-950baec030, #F8FAFC); }
 .seller-report-page .seller-report-transaction-pagination button:focus-visible { outline: 2px solid #C88912; outline-offset: 2px; }
 .seller-report-page .seller-report-transaction-pagination button.is-current {
     border-color: #C88912; background: #C88912; color: #FFF;
@@ -2477,13 +2477,13 @@
     min-width: 0 !important;
     min-height: 164px !important;
     padding: 14px !important;
-    border: 1px solid #E6EAF0 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E6EAF0) !important;
     border-radius: 16px !important;
-    background: #FFF !important;
+    background: var(--sari-dark-950baec030, #FFF) !important;
     box-shadow: none !important;
 }
 .seller-report-page .seller-report-dashboard-grid .seller-report-product-card:last-child {
-    border-bottom: 1px solid #E6EAF0 !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #E6EAF0) !important;
 }
 .seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
     width: 136px !important;
@@ -2491,7 +2491,7 @@
     min-width: 136px !important;
     border: 0 !important;
     border-radius: 12px !important;
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     overflow: hidden !important;
 }
 .seller-report-page .seller-report-dashboard-grid .seller-report-product-media img {
@@ -2508,8 +2508,8 @@
     height: 29px !important;
     border-radius: 9px !important;
     font-size: 11px !important;
-    color: #B47B0E !important;
-    background: rgba(255,255,255,.97) !important;
+    color: var(--sari-dark-19b301f69a, #B47B0E) !important;
+    background: var(--sari-dark-d2fbbe29b8, rgba(255,255,255,.97)) !important;
 }
 .seller-report-page .seller-report-dashboard-grid .seller-report-product-body {
     min-width: 0 !important;
@@ -2522,14 +2522,14 @@
 }
 .seller-report-page .seller-report-dashboard-grid .seller-report-product-share {
     flex: 0 0 auto !important;
-    color: #7E8998 !important;
+    color: var(--sari-dark-a63aa16d7c, #7E8998) !important;
     font-size: 11px !important;
     white-space: nowrap !important;
 }
 .seller-report-page .seller-report-dashboard-grid .seller-report-product-name {
     min-height: 0 !important;
     margin-top: 0 !important;
-    color: #202B3A !important;
+    color: var(--sari-dark-e23e64dd1e, #202B3A) !important;
     font-size: 14px !important;
     font-weight: 700 !important;
     line-height: 1.4 !important;
@@ -2537,14 +2537,14 @@
 }
 .seller-report-page .seller-report-dashboard-grid .seller-report-product-sales {
     margin-top: 10px !important;
-    color: #B47B0E !important;
+    color: var(--sari-dark-19b301f69a, #B47B0E) !important;
     font-size: clamp(18px, 1.45vw, 22px) !important;
     font-weight: 750 !important;
 }
 .seller-report-page .seller-report-dashboard-grid .seller-report-product-progress {
     height: 8px !important;
     margin-top: 15px !important;
-    background: #EDF0F3 !important;
+    background: var(--sari-dark-4d21eb669b, #EDF0F3) !important;
 }
 .seller-report-page .seller-report-dashboard-grid .seller-report-product-progress > span {
     background: #C88912 !important;
@@ -2595,7 +2595,7 @@
     .seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
         grid-template-columns: 112px minmax(0, 1fr) !important;
         gap: 12px !important;
-        border-right: 1px solid #E6EAF0 !important;
+        border-right: 1px solid var(--sari-dark-d8c2716225, #E6EAF0) !important;
     }
     .seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
         width: 112px !important;
@@ -2653,10 +2653,10 @@
 @media screen and (max-width: 767px) {
     .seller-report-page {
         --report-orders-shadow:
-            0 1px 3px rgba(15, 23, 42, .035),
-            0 6px 16px rgba(15, 23, 42, .055),
-            0 13px 28px rgba(15, 23, 42, .065),
-            inset 0 1px 0 rgba(255, 255, 255, .90);
+            0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 6px 16px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+            0 13px 28px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
     }
     .seller-report-page .seller-report-kpi-grid .seller-report-card,
     .seller-report-page .seller-report-order-stat,

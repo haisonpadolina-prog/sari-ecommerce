@@ -30,23 +30,23 @@
 
 
 
-        --ship-ink: #111827;
+        --ship-ink: var(--sari-dark-e23e64dd1e, #111827);
 
 
 
-        --ship-text: #344054;
+        --ship-text: var(--sari-dark-e23e64dd1e, #344054);
 
 
 
-        --ship-muted: #7c8592;
+        --ship-muted: var(--sari-dark-a63aa16d7c, #7c8592);
 
 
 
-        --ship-soft-muted: #98a2b3;
+        --ship-soft-muted: var(--sari-dark-a63aa16d7c, #98a2b3);
 
 
 
-        --ship-line: #e5e7eb;
+        --ship-line: var(--sari-dark-d8c2716225, #e5e7eb);
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-        border-bottom: 1px solid #e7ebf0;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e7ebf0);
 
 
 
@@ -146,7 +146,7 @@
 
 
 
-        color: #b87605;
+        color: var(--sari-dark-6e784b4931, #b87605);
 
 
 
@@ -206,7 +206,7 @@
 
 
 
-    .seller-shipping-detail-title span { color: #C9890B; }
+    .seller-shipping-detail-title span { color: var(--sari-dark-9db03b407c, #C9890B); }
 
 
 
@@ -254,7 +254,7 @@
 
 
 
-        color: #7c8592;
+        color: var(--sari-dark-a63aa16d7c, #7c8592);
 
 
 
@@ -274,7 +274,7 @@
 
 
 
-    .seller-shipping-back:hover { color: #a56b05; }
+    .seller-shipping-back:hover { color: var(--sari-dark-af18afcaa4, #a56b05); }
 
 
 
@@ -282,7 +282,7 @@
 
 
 
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
 
 
 
@@ -414,15 +414,15 @@
 
 
 
-        border: 1px solid #d4e7da;
+        border: 1px solid var(--sari-dark-d8c2716225, #d4e7da);
 
 
 
-        background: #f5faf7;
+        background: var(--sari-dark-950baec030, #f5faf7);
 
 
 
-        color: #4f7d63;
+        color: var(--sari-dark-a63aa16d7c, #4f7d63);
 
 
 
@@ -434,15 +434,15 @@
 
 
 
-        border: 1px solid #dfe3e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8);
 
 
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
 
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
 
 
@@ -466,11 +466,11 @@
 
 
 
-        background: #fffaf0;
+        background: var(--sari-dark-950baec030, #fffaf0);
 
 
 
-        color: #9b6505;
+        color: var(--sari-dark-af18afcaa4, #9b6505);
 
 
 
@@ -494,11 +494,11 @@
 
 
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
 
 
-        box-shadow: 0 8px 22px rgba(15,23,42,.035);
+        box-shadow: 0 8px 22px var(--sari-dark-7593018246, rgba(15,23,42,.035));
 
 
 
@@ -526,7 +526,7 @@
 
 
 
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
 
 
 
@@ -550,7 +550,7 @@
 
 
 
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
 
 
@@ -566,7 +566,7 @@
 
 
 
-        color: #b97805;
+        color: var(--sari-dark-af18afcaa4, #b97805);
 
 
 
@@ -602,7 +602,7 @@
 
 
 
-        background: #edf0f3;
+        background: var(--sari-dark-4d21eb669b, #edf0f3);
 
 
 
@@ -718,7 +718,7 @@
 
 
 
-        color: #b87605;
+        color: var(--sari-dark-6e784b4931, #b87605);
 
 
 
@@ -754,7 +754,7 @@
 
 
 
-        color: #1f2937;
+        color: var(--sari-dark-e23e64dd1e, #1f2937);
 
 
 
@@ -826,7 +826,7 @@
 
 
 
-        border: 1px solid #e7e9ee;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e9ee);
 
 
 
@@ -834,7 +834,7 @@
 
 
 
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
 
 
 
@@ -850,7 +850,7 @@
 
 
 
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
 
 
@@ -882,7 +882,7 @@
 
 
 
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
 
 
 
@@ -910,7 +910,7 @@
 
 
 
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
 
 
@@ -946,7 +946,7 @@
 
 
 
-        border: 1px solid #e4e4f0;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e4f0);
 
 
 
@@ -954,11 +954,11 @@
 
 
 
-        background: #f7f7fc;
+        background: var(--sari-dark-950baec030, #f7f7fc);
 
 
 
-        color: #63638d;
+        color: var(--sari-dark-a63aa16d7c, #63638d);
 
 
 
@@ -974,7 +974,7 @@
 
 
 
-        border: 1px solid #e7e9ee;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e9ee);
 
 
 
@@ -982,7 +982,7 @@
 
 
 
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
 
 
 
@@ -1014,7 +1014,7 @@
 
 
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
 
 
@@ -1030,7 +1030,7 @@
 
 
 
-    .seller-shipping-value-row strong { color: #344054; font-weight: 650; }
+    .seller-shipping-value-row strong { color: var(--sari-dark-e23e64dd1e, #344054); font-weight: 650; }
 
 
 
@@ -1058,7 +1058,7 @@
 
 
 
-        border-top: 1px solid #edf0f3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
 
 
@@ -1070,11 +1070,11 @@
 
 
 
-    .seller-shipping-total-row span { color: #344054; font-size: 10px; font-weight: 650; }
+    .seller-shipping-total-row span { color: var(--sari-dark-e23e64dd1e, #344054); font-size: 10px; font-weight: 650; }
 
 
 
-    .seller-shipping-total-row strong { color: #b97805; font-size: 17px; font-weight: 800; letter-spacing: -.03em; }
+    .seller-shipping-total-row strong { color: var(--sari-dark-af18afcaa4, #b97805); font-size: 17px; font-weight: 800; letter-spacing: -.03em; }
 
 
 
@@ -1168,35 +1168,35 @@
 
 .seller-shipping-detail-page {
 
-    --ship-detail-float-border: #E5E7EB;
+    --ship-detail-float-border: var(--sari-dark-d8c2716225, #E5E7EB);
 
-    --ship-detail-float-border-strong: #D1D5DB;
+    --ship-detail-float-border-strong: var(--sari-dark-d8c2716225, #D1D5DB);
 
-    --ship-detail-divider: #ECEFF2;
+    --ship-detail-divider: var(--sari-dark-d8c2716225, #ECEFF2);
 
     --ship-detail-shadow:
 
-        0 1px 2px rgba(15, 23, 42, .035),
+        0 1px 2px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
 
-        0 10px 26px rgba(15, 23, 42, .075),
+        0 10px 26px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
 
-        inset 0 1px 0 rgba(255, 255, 255, .86);
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .86));
 
     --ship-detail-shadow-strong:
 
-        0 1px 2px rgba(15, 23, 42, .04),
+        0 1px 2px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)),
 
-        0 14px 34px rgba(15, 23, 42, .085),
+        0 14px 34px var(--sari-dark-0a9e89f88f, rgba(15, 23, 42, .085)),
 
-        inset 0 1px 0 rgba(255, 255, 255, .88);
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .88));
 
     --ship-detail-shadow-soft:
 
-        0 1px 2px rgba(15, 23, 42, .025),
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
 
-        0 6px 16px rgba(15, 23, 42, .05),
+        0 6px 16px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
 
-        inset 0 1px 0 rgba(255, 255, 255, .82);
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .82));
 
 }
 
@@ -1218,7 +1218,7 @@
 
     border: 1px solid var(--ship-detail-float-border) !important;
 
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 
     box-shadow: var(--ship-detail-shadow) !important;
 
@@ -1282,9 +1282,9 @@
 
 .seller-shipping-detail-page .seller-shipping-hub-field {
 
-    border-color: #E7EAEE !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAEE) !important;
 
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 
     box-shadow: var(--ship-detail-shadow-soft) !important;
 
@@ -1308,11 +1308,11 @@
 
 .seller-shipping-detail-page .seller-shipping-detail-card .border-dashed {
 
-    border-color: #D9DEE5 !important;
+    border-color: var(--sari-dark-d8c2716225, #D9DEE5) !important;
 
-    background: #FAFBFC !important;
+    background: var(--sari-dark-950baec030, #FAFBFC) !important;
 
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .03) !important;
+    box-shadow: 0 4px 12px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)) !important;
 
 }
 
@@ -1322,11 +1322,11 @@
 
 .seller-shipping-detail-page .seller-shipping-hub-icon {
 
-    border-color: #E5E7EB !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
 
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
 
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+    box-shadow: 0 4px 12px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
 
 }
 
@@ -1336,7 +1336,7 @@
 
 .seller-shipping-detail-page .seller-shipping-progress-track {
 
-    background: #ECEFF2 !important;
+    background: var(--sari-dark-4d21eb669b, #ECEFF2) !important;
 
 }
 
@@ -1356,9 +1356,9 @@
 
     border-color: var(--ship-detail-float-border) !important;
 
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+    box-shadow: 0 4px 12px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
 
     transform: none !important;
 
@@ -1372,9 +1372,9 @@
 
     border-color: var(--ship-detail-float-border-strong) !important;
 
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
 
-    color: #9B6505 !important;
+    color: var(--sari-dark-af18afcaa4, #9B6505) !important;
 
     transform: none !important;
 
@@ -1386,7 +1386,7 @@
 
 .seller-shipping-detail-page .seller-shipping-live {
 
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .03) !important;
+    box-shadow: 0 4px 12px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)) !important;
 
     transform: none !important;
 
@@ -1398,7 +1398,7 @@
 
 .seller-shipping-detail-page .seller-shipping-timeline-entry > .absolute {
 
-    background: #E5E7EB !important;
+    background: var(--sari-dark-4d21eb669b, #E5E7EB) !important;
 
 }
 
@@ -1406,7 +1406,7 @@
 
 .seller-shipping-detail-page .seller-shipping-timeline-entry > .relative {
 
-    box-shadow: 0 0 0 1px #E1E5EA !important;
+    box-shadow: 0 0 0 1px var(--sari-dark-f30a5f9061, #E1E5EA) !important;
 
 }
 
@@ -1448,11 +1448,11 @@
 
         box-shadow:
 
-            0 1px 2px rgba(15, 23, 42, .03),
+            0 1px 2px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)),
 
-            0 7px 18px rgba(15, 23, 42, .06),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
 
-            inset 0 1px 0 rgba(255, 255, 255, .84) !important;
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .84)) !important;
 
     }
 
@@ -1464,9 +1464,9 @@
 
         box-shadow:
 
-            0 1px 2px rgba(15, 23, 42, .02),
+            0 1px 2px var(--sari-dark-f6fe7319d9, rgba(15, 23, 42, .02)),
 
-            0 5px 13px rgba(15, 23, 42, .045) !important;
+            0 5px 13px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)) !important;
 
     }
 
@@ -1496,17 +1496,17 @@
 
     padding: 20px 22px 19px !important;
 
-    border: 1px solid #E5E7EB !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
 
     border-radius: 16px !important;
 
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 
     box-shadow:
 
-        0 1px 2px rgba(15, 23, 42, .035),
+        0 1px 2px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
 
-        0 12px 30px rgba(15, 23, 42, .075) !important;
+        0 12px 30px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)) !important;
 
 }
 
@@ -1538,7 +1538,7 @@
 
     margin: 0;
 
-    color: #B97805;
+    color: var(--sari-dark-af18afcaa4, #B97805);
 
     font-size: 7.5px;
 
@@ -1574,7 +1574,7 @@
 
     margin: 0;
 
-    color: #172033;
+    color: var(--sari-dark-e23e64dd1e, #172033);
 
     font-size: 17px;
 
@@ -1596,15 +1596,15 @@
 
     align-items: center;
 
-    border: 1px solid #E6E8EC;
+    border: 1px solid var(--sari-dark-d8c2716225, #E6E8EC);
 
     border-radius: 999px;
 
-    background: #F8FAFC;
+    background: var(--sari-dark-950baec030, #F8FAFC);
 
     padding: 0 9px;
 
-    color: #667085;
+    color: var(--sari-dark-a63aa16d7c, #667085);
 
     font-size: 7.5px;
 
@@ -1622,7 +1622,7 @@
 
     margin: 7px 0 0;
 
-    color: #98A2B3;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3);
 
     font-size: 8.5px;
 
@@ -1638,7 +1638,7 @@
 
     margin: 0 3px;
 
-    color: #C3C9D1;
+    color: var(--sari-dark-a63aa16d7c, #C3C9D1);
 
 }
 
@@ -1660,7 +1660,7 @@
 
 .seller-shipping-progress-modern-metric strong {
 
-    color: #B97805;
+    color: var(--sari-dark-af18afcaa4, #B97805);
 
     font-size: 27px;
 
@@ -1678,7 +1678,7 @@
 
     margin-top: 6px;
 
-    color: #98A2B3;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3);
 
     font-size: 7.5px;
 
@@ -1706,7 +1706,7 @@
 
     border-radius: 999px;
 
-    background: #ECEFF2;
+    background: var(--sari-dark-4d21eb669b, #ECEFF2);
 
 }
 
@@ -1782,7 +1782,7 @@
 
     height: 1px;
 
-    background: #E4E7EC;
+    background: var(--sari-dark-4d21eb669b, #E4E7EC);
 
 }
 
@@ -1810,15 +1810,15 @@
 
     place-items: center;
 
-    border: 1px solid #DDE2E8;
+    border: 1px solid var(--sari-dark-d8c2716225, #DDE2E8);
 
     border-radius: 999px;
 
-    background: #FFFFFF;
+    background: var(--sari-dark-950baec030, #FFFFFF);
 
-    color: #98A2B3;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3);
 
-    box-shadow: 0 2px 7px rgba(15, 23, 42, .035);
+    box-shadow: 0 2px 7px var(--sari-dark-7593018246, rgba(15, 23, 42, .035));
 
 }
 
@@ -1854,7 +1854,7 @@
 
     color: #FFFFFF;
 
-    box-shadow: 0 4px 10px rgba(213, 150, 23, .14);
+    box-shadow: 0 4px 10px var(--sari-dark-59ed29fe9d, rgba(213, 150, 23, .14));
 
 }
 
@@ -1864,13 +1864,13 @@
 
     border-color: #D59617;
 
-    color: #B97805;
+    color: var(--sari-dark-af18afcaa4, #B97805);
 
     box-shadow:
 
-        0 0 0 4px rgba(213, 150, 23, .08),
+        0 0 0 4px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08)),
 
-        0 2px 7px rgba(15, 23, 42, .035);
+        0 2px 7px var(--sari-dark-7593018246, rgba(15, 23, 42, .035));
 
 }
 
@@ -1880,9 +1880,9 @@
 
     box-shadow:
 
-        0 0 0 4px rgba(213, 150, 23, .08),
+        0 0 0 4px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08)),
 
-        0 4px 10px rgba(213, 150, 23, .14);
+        0 4px 10px var(--sari-dark-59ed29fe9d, rgba(213, 150, 23, .14));
 
 }
 
@@ -1902,7 +1902,7 @@
 
     display: block;
 
-    color: #B1B8C3;
+    color: var(--sari-dark-a63aa16d7c, #B1B8C3);
 
     font-size: 6.2px;
 
@@ -1926,7 +1926,7 @@
 
     margin-top: 5px;
 
-    color: #667085;
+    color: var(--sari-dark-a63aa16d7c, #667085);
 
     font-size: 8.5px;
 
@@ -1950,7 +1950,7 @@
 
     margin-top: 3px;
 
-    color: #A4ABB6;
+    color: var(--sari-dark-a63aa16d7c, #A4ABB6);
 
     font-size: 6.8px;
 
@@ -1970,7 +1970,7 @@
 
 .seller-shipping-progress-modern-step.is-current .seller-shipping-progress-modern-step-copy strong {
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
 }
 
@@ -1978,7 +1978,7 @@
 
 .seller-shipping-progress-modern-step.is-current .seller-shipping-progress-modern-step-kicker {
 
-    color: #B97805;
+    color: var(--sari-dark-af18afcaa4, #B97805);
 
 }
 
@@ -1988,15 +1988,15 @@
 
 .seller-shipping-detail-page .seller-shipping-progress-card--modern:hover {
 
-    border-color: #E5E7EB !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
 
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 
     box-shadow:
 
-        0 1px 2px rgba(15, 23, 42, .035),
+        0 1px 2px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
 
-        0 12px 30px rgba(15, 23, 42, .075) !important;
+        0 12px 30px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)) !important;
 
     transform: none !important;
 
@@ -2234,7 +2234,7 @@
 
     height: 1px !important;
 
-    background: #E4E7EC !important;
+    background: var(--sari-dark-4d21eb669b, #E4E7EC) !important;
 
 }
 
@@ -2485,14 +2485,14 @@
 
 .seller-shipping-detail-page .seller-shipping-open-meta--rider {
     margin-top: 0 !important;
-    border-top: 1px solid #ECEFF2 !important;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     padding-top: 13px !important;
 }
 
 /* Payment remains its own existing row, but align its separator with the
    new open metadata treatment. */
 .seller-shipping-detail-page .seller-shipping-delivery-meta > .border-t {
-    border-top-color: #ECEFF2 !important;
+    border-top-color: var(--sari-dark-d8c2716225, #ECEFF2) !important;
     padding-top: 13px !important;
 }
 
@@ -2511,7 +2511,7 @@
 /* Keep the hub heading open/document-like instead of card-like. */
 .seller-shipping-detail-page .seller-shipping-open-hub-head {
     padding: 0 2px 10px !important;
-    border-bottom: 1px solid #ECEFF2 !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
 }
 
 /* The individual parcel fields are also flattened so the whole Logistics
@@ -2528,20 +2528,20 @@
 }
 
 .seller-shipping-detail-page .seller-shipping-detail-card--open-hub .seller-shipping-hub-field + .seller-shipping-hub-field {
-    border-top: 1px solid #ECEFF2 !important;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
 }
 
 /* Two-column Sorting Zone / Received still read as columns, just without
    box shells. */
 .seller-shipping-detail-page .seller-shipping-detail-card--open-hub .grid.grid-cols-2 {
     gap: 0 !important;
-    border-top: 1px solid #ECEFF2 !important;
-    border-bottom: 1px solid #ECEFF2 !important;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
 }
 
 .seller-shipping-detail-page .seller-shipping-detail-card--open-hub .grid.grid-cols-2 > .seller-shipping-hub-field + .seller-shipping-hub-field {
     border-top: 0 !important;
-    border-left: 1px solid #ECEFF2 !important;
+    border-left: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     padding-left: 12px !important;
 }
 
@@ -2581,7 +2581,7 @@
 
     .seller-shipping-detail-page .seller-shipping-detail-card--open-hub .grid.grid-cols-2 > .seller-shipping-hub-field + .seller-shipping-hub-field {
         border-left: 0 !important;
-        border-top: 1px solid #ECEFF2 !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
         padding-left: 2px !important;
     }
 
@@ -2692,7 +2692,7 @@
 
 <div class="seller-shipping-detail-page">
     @if ($trackingRouteUnavailable || !empty($trackingRouteFailed))
-        <p role="status" style="margin:0 0 14px; padding:11px 14px; border:1px solid #e2e8f0; border-radius:12px; background:#f8fafc; color:#64748b; font:500 11.5px/1.5 Poppins,sans-serif">
+        <p role="status" style="margin:0 0 14px; padding:11px 14px; border:1px solid var(--sari-dark-d8c2716225, #e2e8f0); border-radius:12px; background:var(--sari-dark-950baec030, #f8fafc); color:var(--sari-dark-a63aa16d7c, #64748b); font:500 11.5px/1.5 Poppins,sans-serif">
             Delivery route data is temporarily unavailable. You can still view shipment details and tracking activity below.
         </p>
     @endif

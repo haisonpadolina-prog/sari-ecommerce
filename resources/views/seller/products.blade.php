@@ -9,6 +9,11 @@
 @endpush
 
 @section('content')
+{{-- SARI_STRUCTURED_SIZE_CHART_LINK_V1 --}}
+<div style="display:flex;justify-content:flex-end;margin:0 auto 14px;max-width:1520px;font-family:Poppins,ui-sans-serif,system-ui,sans-serif">
+    <a href="{{ route('seller.products.size-charts') }}" style="font-size:12px;font-weight:650;color:var(--sari-dark-a63aa16d7c, #59636e);text-decoration:none;padding:8px 0">Product Size Charts <span aria-hidden="true">›</span></a>
+</div>
+
 
 
 

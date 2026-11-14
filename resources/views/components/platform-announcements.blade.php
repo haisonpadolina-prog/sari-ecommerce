@@ -15,7 +15,7 @@
                 align-items: center !important;
                 justify-content: center !important;
                 padding: 20px !important;
-                background: rgba(17, 24, 39, .34) !important;
+                background: var(--sari-dark-af713eb7dd, rgba(17, 24, 39, .34)) !important;
                 backdrop-filter: blur(2px);
                 -webkit-backdrop-filter: blur(2px);
                 box-sizing: border-box !important;
@@ -40,13 +40,13 @@
                 width: 100% !important;
                 max-width: 440px !important;
                 overflow: hidden !important;
-                border: 1px solid #e3e7eb !important;
+                border: 1px solid var(--sari-dark-d8c2716225, #e3e7eb) !important;
                 border-radius: 13px !important;
-                background: #ffffff !important;
-                color: #202124 !important;
+                background: var(--sari-dark-950baec030, #ffffff) !important;
+                color: var(--sari-dark-e23e64dd1e, #202124) !important;
                 box-shadow:
-                    0 22px 55px rgba(15, 23, 42, .18),
-                    0 8px 22px rgba(15, 23, 42, .08) !important;
+                    0 22px 55px var(--sari-dark-3793f9e558, rgba(15, 23, 42, .18)),
+                    0 8px 22px var(--sari-dark-c33e3d1bb4, rgba(15, 23, 42, .08)) !important;
                 font-family: inherit !important;
                 box-sizing: border-box !important;
                 outline: none !important;
@@ -68,15 +68,15 @@
                 border: 0 !important;
                 border-radius: 8px !important;
                 background: transparent !important;
-                color: #77818d !important;
+                color: var(--sari-dark-a63aa16d7c, #77818d) !important;
                 cursor: pointer !important;
                 transition: background .16s ease, color .16s ease !important;
                 box-sizing: border-box !important;
             }
 
             .sari-announcement-close:hover {
-                background: #f3f5f7 !important;
-                color: #202124 !important;
+                background: var(--sari-dark-4d21eb669b, #f3f5f7) !important;
+                color: var(--sari-dark-e23e64dd1e, #202124) !important;
             }
 
             .sari-announcement-close:focus-visible,
@@ -139,7 +139,7 @@
 
             .sari-announcement-source {
                 margin: 3px 0 0 !important;
-                color: #97a0aa !important;
+                color: var(--sari-dark-a63aa16d7c, #97a0aa) !important;
                 font-size: 9px !important;
                 line-height: 1.35 !important;
                 font-weight: 500 !important;
@@ -148,7 +148,7 @@
             .sari-announcement-title {
                 margin: 18px 0 0 !important;
                 padding: 0 !important;
-                color: #202124 !important;
+                color: var(--sari-dark-e23e64dd1e, #202124) !important;
                 font-size: 18px !important;
                 line-height: 1.28 !important;
                 font-weight: 750 !important;
@@ -162,15 +162,15 @@
                 max-width: 100% !important;
                 max-height: 220px !important;
                 margin: 13px 0 0 !important;
-                border: 1px solid #e7eaee !important;
+                border: 1px solid var(--sari-dark-d8c2716225, #e7eaee) !important;
                 border-radius: 9px !important;
                 object-fit: cover !important;
-                background: #f7f8f9 !important;
+                background: var(--sari-dark-950baec030, #f7f8f9) !important;
             }
 
             .sari-announcement-message {
                 margin: 8px 0 0 !important;
-                color: #626c78 !important;
+                color: var(--sari-dark-a63aa16d7c, #626c78) !important;
                 font-size: 11px !important;
                 line-height: 1.7 !important;
                 font-weight: 400 !important;
@@ -183,7 +183,7 @@
                 align-items: center !important;
                 gap: 6px !important;
                 margin-top: 14px !important;
-                color: #8d97a2 !important;
+                color: var(--sari-dark-a63aa16d7c, #8d97a2) !important;
                 font-size: 8px !important;
                 line-height: 1.4 !important;
                 font-weight: 600 !important;
@@ -206,8 +206,8 @@
                 justify-content: flex-end !important;
                 gap: 8px !important;
                 padding: 12px 24px 14px !important;
-                border-top: 1px solid #eef0f2 !important;
-                background: #fafbfc !important;
+                border-top: 1px solid var(--sari-dark-d8c2716225, #eef0f2) !important;
+                background: var(--sari-dark-950baec030, #fafbfc) !important;
                 box-sizing: border-box !important;
             }
 
@@ -234,7 +234,7 @@
                 border: 1px solid #d59617 !important;
                 background: #d59617 !important;
                 color: #ffffff !important;
-                box-shadow: 0 5px 14px rgba(213, 150, 23, .16) !important;
+                box-shadow: 0 5px 14px var(--sari-dark-b5c2a2270e, rgba(213, 150, 23, .16)) !important;
             }
 
             .sari-announcement-primary:hover {
@@ -243,14 +243,14 @@
             }
 
             .sari-announcement-action {
-                border: 1px solid #d8dde3 !important;
-                background: #ffffff !important;
-                color: #4c5661 !important;
+                border: 1px solid var(--sari-dark-d8c2716225, #d8dde3) !important;
+                background: var(--sari-dark-950baec030, #ffffff) !important;
+                color: var(--sari-dark-e23e64dd1e, #4c5661) !important;
             }
 
             .sari-announcement-action:hover {
-                border-color: #c7cdd4 !important;
-                background: #f7f8f9 !important;
+                border-color: var(--sari-dark-d8c2716225, #c7cdd4) !important;
+                background: var(--sari-dark-950baec030, #f7f8f9) !important;
             }
 
             .sari-announcement-primary:disabled,

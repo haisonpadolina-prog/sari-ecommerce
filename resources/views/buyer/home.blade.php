@@ -107,15 +107,15 @@
 
         --sari-gold-dark: #a96d07;
 
-        --sari-cream: #fff8eb;
+        --sari-cream: var(--sari-dark-4d21eb669b, #fff8eb);
 
         --sari-soft: #faf8f4;
 
-        --sari-border: #e9e3db;
+        --sari-border: var(--sari-dark-d8c2716225, #e9e3db);
 
-        --sari-text: #24201c;
+        --sari-text: var(--sari-dark-e23e64dd1e, #24201c);
 
-        --sari-muted: #7f776e;
+        --sari-muted: var(--sari-dark-a63aa16d7c, #7f776e);
 
         --sari-green: #4f8065;
 
@@ -123,7 +123,7 @@
 
         font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 
-        background: #fbfaf8;
+        background: var(--sari-dark-950baec030, #fbfaf8);
 
         color: var(--sari-text);
 
@@ -171,7 +171,7 @@
 
         gap: 6px;
 
-        color: #9a6815;
+        color: var(--sari-dark-5b23b431c8, #9a6815);
 
         font-size: 8px;
 
@@ -185,7 +185,7 @@
 
     .sari-section-link:hover {
 
-        color: #76500d;
+        color: var(--sari-dark-af18afcaa4, #76500d);
 
     }
 
@@ -195,9 +195,9 @@
 
         border: 1px solid var(--sari-border);
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        box-shadow: 0 9px 24px rgba(37, 29, 21, .038);
+        box-shadow: 0 9px 24px var(--sari-dark-e0ffb11e26, rgba(37, 29, 21, .038));
 
     }
 
@@ -219,7 +219,7 @@
 
         color: #fff !important;
 
-        box-shadow: 0 10px 25px rgba(217,147,10,.18) !important;
+        box-shadow: 0 10px 25px var(--sari-dark-3793f9e558, rgba(217,147,10,.18)) !important;
 
         font-weight: 600 !important;
 
@@ -231,7 +231,7 @@
 
         background: transparent !important;
 
-        color: #514b42 !important;
+        color: var(--sari-dark-e23e64dd1e, #514b42) !important;
 
         box-shadow: none !important;
 
@@ -243,9 +243,9 @@
 
     #buyerSidebarNav [data-buyer-sidebar-item].sari-route-not-current:hover {
 
-        background: #f9f1e3 !important;
+        background: var(--sari-dark-4d21eb669b, #f9f1e3) !important;
 
-        color: #a96e05 !important;
+        color: var(--sari-dark-af18afcaa4, #a96e05) !important;
 
     }
 
@@ -269,13 +269,13 @@
 
         overflow: hidden;
 
-        border: 1px solid #eadfce;
+        border: 1px solid var(--sari-dark-d8c2716225, #eadfce);
 
         border-radius: 16px;
 
-        background: #fffaf1;
+        background: var(--sari-dark-950baec030, #fffaf1);
 
-        box-shadow: 0 13px 32px rgba(46, 35, 22, .055);
+        box-shadow: 0 13px 32px var(--sari-dark-fbd3b3b9f6, rgba(46, 35, 22, .055));
 
         isolation: isolate;
 
@@ -299,13 +299,13 @@
 
                 90deg,
 
-                rgba(255,252,247,1) 0%,
+                var(--sari-dark-950baec030, rgba(255,252,247,1)) 0%,
 
-                rgba(255,250,241,.98) 39%,
+                var(--sari-dark-ad56cde17e, rgba(255,250,241,.98)) 39%,
 
-                rgba(255,249,239,.86) 51%,
+                var(--sari-dark-379cbaaa2a, rgba(255,249,239,.86)) 51%,
 
-                rgba(255,249,239,.15) 72%,
+                var(--sari-dark-ac1ab30256, rgba(255,249,239,.15)) 72%,
 
                 rgba(255,249,239,0) 100%
 
@@ -371,11 +371,11 @@
 
         border-radius: 999px;
 
-        background: rgba(255,255,255,.92);
+        background: var(--sari-dark-9b2add9551, rgba(255,255,255,.92));
 
         padding: 0 10px;
 
-        color: #996514;
+        color: var(--sari-dark-6c498671da, #996514);
 
         font-size: 6.5px;
 
@@ -403,7 +403,7 @@
 
         letter-spacing: -.055em;
 
-        color: #171411;
+        color: var(--sari-dark-e23e64dd1e, #171411);
 
     }
 
@@ -413,7 +413,7 @@
 
         display: block;
 
-        color: #b8790f;
+        color: var(--sari-dark-6e784b4931, #b8790f);
 
     }
 
@@ -425,7 +425,7 @@
 
         margin-top: 10px;
 
-        color: #6f675f;
+        color: var(--sari-dark-a63aa16d7c, #6f675f);
 
         font-size: 9px;
 
@@ -469,7 +469,7 @@
 
         color: #fff;
 
-        box-shadow: 0 8px 20px rgba(204,138,11,.16);
+        box-shadow: 0 8px 20px var(--sari-dark-b5c2a2270e, rgba(204,138,11,.16));
 
     }
 
@@ -487,11 +487,11 @@
 
     .sari-secondary-btn {
 
-        border: 1px solid #ddd3c6;
+        border: 1px solid var(--sari-dark-d8c2716225, #ddd3c6);
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        color: #514940;
+        color: var(--sari-dark-e23e64dd1e, #514940);
 
     }
 
@@ -501,9 +501,9 @@
 
         border-color: #cfb47c;
 
-        background: #fffaf1;
+        background: var(--sari-dark-950baec030, #fffaf1);
 
-        color: #8f6010;
+        color: var(--sari-dark-6e784b4931, #8f6010);
 
     }
 
@@ -531,7 +531,7 @@
 
         gap: 6px;
 
-        color: #6f675f;
+        color: var(--sari-dark-a63aa16d7c, #6f675f);
 
         font-size: 7.3px;
 
@@ -599,17 +599,17 @@
 
         overflow: hidden;
 
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2e8f0);
 
         border-radius: 14px;
 
-        background: #ffffff;
+        background: var(--sari-dark-950baec030, #ffffff);
 
         box-shadow:
 
-            0 18px 46px rgba(15, 23, 42, .075),
+            0 18px 46px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
 
-            0 3px 10px rgba(15, 23, 42, .035);
+            0 3px 10px var(--sari-dark-7593018246, rgba(15, 23, 42, .035));
 
         isolation: isolate;
 
@@ -631,7 +631,7 @@
 
         padding: 11px 16px;
 
-        background: #ffffff;
+        background: var(--sari-dark-950baec030, #ffffff);
 
     }
 
@@ -653,7 +653,7 @@
 
     a.sari-benefit-item:focus-visible {
 
-        background: #f8fafc;
+        background: var(--sari-dark-950baec030, #f8fafc);
 
     }
 
@@ -675,7 +675,7 @@
 
     .sari-benefit-item + .sari-benefit-item {
 
-        border-left: 1px solid #e5e7eb;
+        border-left: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
 
     }
 
@@ -693,13 +693,13 @@
 
         place-items: center;
 
-        border: 1px solid #e8edf3;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8edf3);
 
         border-radius: 10px;
 
-        background: #f4f6f8;
+        background: var(--sari-dark-4d21eb669b, #f4f6f8);
 
-        color: #b77905;
+        color: var(--sari-dark-c8bdcce6ab, #b77905);
 
     }
 
@@ -707,7 +707,7 @@
 
     .sari-benefit-item h3 {
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
         font-size: 8.5px;
 
@@ -723,7 +723,7 @@
 
         margin-top: 3px;
 
-        color: #7b8493;
+        color: var(--sari-dark-a63aa16d7c, #7b8493);
 
         font-size: 6.5px;
 
@@ -769,15 +769,15 @@
 
         overflow: hidden;
 
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2e8f0);
 
-        background: #ffffff;
+        background: var(--sari-dark-950baec030, #ffffff);
 
         box-shadow:
 
-            0 18px 42px rgba(15, 23, 42, .07),
+            0 18px 42px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)),
 
-            0 2px 8px rgba(15, 23, 42, .03);
+            0 2px 8px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03));
 
     }
 
@@ -879,7 +879,7 @@
 
         color: #ffffff;
 
-        text-shadow: 0 2px 16px rgba(0,0,0,.28);
+        text-shadow: 0 2px 16px var(--sari-dark-d014e7232e, rgba(0,0,0,.28));
 
     }
 
@@ -887,7 +887,7 @@
 
     .sari-promo-slide-copy--dark {
 
-        color: #111827;
+        color: var(--sari-dark-e23e64dd1e, #111827);
 
     }
 
@@ -905,11 +905,11 @@
 
         border-radius: 999px;
 
-        background: rgba(255,255,255,.90);
+        background: var(--sari-dark-f009d4d716, rgba(255,255,255,.90));
 
         padding: 0 9px;
 
-        color: #a96d07;
+        color: var(--sari-dark-6e784b4931, #a96d07);
 
         font-size: 6.2px;
 
@@ -987,7 +987,7 @@
 
         font-weight: 800;
 
-        box-shadow: 0 7px 15px rgba(217,147,10,.18);
+        box-shadow: 0 7px 15px var(--sari-dark-3793f9e558, rgba(217,147,10,.18));
 
     }
 
@@ -1023,15 +1023,15 @@
 
         transform: translateY(-50%);
 
-        border: 1px solid rgba(226,232,240,.95);
+        border: 1px solid var(--sari-dark-14d8f7e80d, rgba(226,232,240,.95));
 
         border-radius: 999px;
 
-        background: rgba(255,255,255,.94);
+        background: var(--sari-dark-fa7f649147, rgba(255,255,255,.94));
 
-        color: #334155;
+        color: var(--sari-dark-e23e64dd1e, #334155);
 
-        box-shadow: 0 7px 20px rgba(15,23,42,.11);
+        box-shadow: 0 7px 20px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11));
 
         pointer-events: auto;
 
@@ -1043,9 +1043,9 @@
 
     .sari-promo-arrow:hover {
 
-        background: #ffffff;
+        background: var(--sari-dark-950baec030, #ffffff);
 
-        color: #b77905;
+        color: var(--sari-dark-c8bdcce6ab, #b77905);
 
         transform: translateY(-50%) scale(1.04);
 
@@ -1099,9 +1099,9 @@
 
         border-radius: 999px;
 
-        background: rgba(255,255,255,.72);
+        background: var(--sari-dark-7ec801fc27, rgba(255,255,255,.72));
 
-        box-shadow: 0 1px 5px rgba(15,23,42,.15);
+        box-shadow: 0 1px 5px var(--sari-dark-f4efbbfaa5, rgba(15,23,42,.15));
 
         transition: width .2s ease, background-color .2s ease;
 
@@ -1157,7 +1157,7 @@
 
         inset: 0;
 
-        background: linear-gradient(90deg, rgba(15,23,42,.38) 0%, rgba(15,23,42,.10) 52%, transparent 82%);
+        background: linear-gradient(90deg, var(--sari-dark-44dd511923, rgba(15,23,42,.38)) 0%, var(--sari-dark-3a6447ce7f, rgba(15,23,42,.10)) 52%, transparent 82%);
 
         pointer-events: none;
 
@@ -1167,7 +1167,7 @@
 
     .sari-promo-side-card--flash::after {
 
-        background: linear-gradient(90deg, rgba(5,8,16,.66) 0%, rgba(5,8,16,.18) 70%, transparent 100%);
+        background: linear-gradient(90deg, var(--sari-dark-632cfa6701, rgba(5,8,16,.66)) 0%, var(--sari-dark-b1e482ad64, rgba(5,8,16,.18)) 70%, transparent 100%);
 
     }
 
@@ -1273,13 +1273,13 @@
 
         overflow: hidden;
 
-        border: 1px solid #e8e1d8;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e1d8);
 
         border-radius: 12px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        box-shadow: 0 7px 18px rgba(43,34,24,.03);
+        box-shadow: 0 7px 18px var(--sari-dark-b13200ac05, rgba(43,34,24,.03));
 
         transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
 
@@ -1291,7 +1291,7 @@
 
         border-color: #dbc394;
 
-        box-shadow: 0 10px 24px rgba(43,34,24,.05);
+        box-shadow: 0 10px 24px var(--sari-dark-1df26971b5, rgba(43,34,24,.05));
 
         transform: translateY(-1px);
 
@@ -1305,7 +1305,7 @@
 
         overflow: hidden;
 
-        background: #f6f2eb;
+        background: var(--sari-dark-4d21eb669b, #f6f2eb);
 
     }
 
@@ -1341,7 +1341,7 @@
 
         padding: 8px 7px;
 
-        color: #3a332c;
+        color: var(--sari-dark-e23e64dd1e, #3a332c);
 
         font-size: 7px;
 
@@ -1397,7 +1397,7 @@
 
         padding: 0 10px;
 
-        color: #746b61;
+        color: var(--sari-dark-a63aa16d7c, #746b61);
 
         font-size: 6.8px;
 
@@ -1413,9 +1413,9 @@
 
         border-color: #e0cfad;
 
-        background: #fffaf1;
+        background: var(--sari-dark-950baec030, #fffaf1);
 
-        color: #8f6111;
+        color: var(--sari-dark-af18afcaa4, #8f6111);
 
     }
 
@@ -1473,7 +1473,7 @@
 
         overflow: hidden;
 
-        border: 1px solid #3a3732;
+        border: 1px solid var(--sari-dark-d8c2716225, #3a3732);
 
         border-radius: 14px;
 
@@ -1481,9 +1481,9 @@
 
             radial-gradient(circle at 12% 100%, rgba(202,139,24,.18), transparent 24%),
 
-            #272522;
+            var(--sari-dark-fbb35de0d1, #272522);
 
-        box-shadow: 0 12px 28px rgba(20,18,15,.10);
+        box-shadow: 0 12px 28px var(--sari-dark-8eadf403a5, rgba(20,18,15,.10));
 
     }
 
@@ -1559,7 +1559,7 @@
 
         margin-top: 4px;
 
-        color: #c8c0b7;
+        color: var(--sari-dark-a63aa16d7c, #c8c0b7);
 
         font-size: 7.5px;
 
@@ -1639,15 +1639,15 @@
 
         gap: 11px;
 
-        border: 1px solid #e9e3db;
+        border: 1px solid var(--sari-dark-d8c2716225, #e9e3db);
 
         border-radius: 12px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 13px;
 
-        box-shadow: 0 7px 18px rgba(43,34,24,.025);
+        box-shadow: 0 7px 18px var(--sari-dark-e1384eb7fc, rgba(43,34,24,.025));
 
     }
 
@@ -1667,9 +1667,9 @@
 
         border-radius: 999px;
 
-        background: #fff4de;
+        background: var(--sari-dark-4d21eb669b, #fff4de);
 
-        color: #b97810;
+        color: var(--sari-dark-4b8b580e58, #b97810);
 
     }
 
@@ -1681,7 +1681,7 @@
 
         font-weight: 700;
 
-        color: #39322c;
+        color: var(--sari-dark-e23e64dd1e, #39322c);
 
     }
 
@@ -1691,7 +1691,7 @@
 
         margin-top: 2px;
 
-        color: #938b82;
+        color: var(--sari-dark-a63aa16d7c, #938b82);
 
         font-size: 6.4px;
 
@@ -1765,13 +1765,13 @@
 
                     90deg,
 
-                    rgba(255,252,247,.98) 0%,
+                    var(--sari-dark-ad56cde17e, rgba(255,252,247,.98)) 0%,
 
-                    rgba(255,250,241,.97) 48%,
+                    var(--sari-dark-d2fbbe29b8, rgba(255,250,241,.97)) 48%,
 
-                    rgba(255,249,239,.78) 72%,
+                    var(--sari-dark-a1345396a6, rgba(255,249,239,.78)) 72%,
 
-                    rgba(255,249,239,.55) 100%
+                    var(--sari-dark-97f4777f4f, rgba(255,249,239,.55)) 100%
 
                 );
 
@@ -1831,7 +1831,7 @@
 
             border-left: 0;
 
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
 
         }
 
@@ -1839,7 +1839,7 @@
 
         .sari-benefit-item:nth-child(4) {
 
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
 
         }
 
@@ -2091,7 +2091,7 @@
 
             border-left: 0;
 
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
 
         }
 
@@ -2142,9 +2142,9 @@
        Benefits below stay clean white. Existing links/data/JS unchanged.
     ============================================================ */
     .sari-home-hero {
-        border-color: #eadfce !important;
-        background: #fffaf1 !important;
-        box-shadow: 0 13px 32px rgba(46, 35, 22, .055) !important;
+        border-color: var(--sari-dark-d8c2716225, #eadfce) !important;
+        background: var(--sari-dark-950baec030, #fffaf1) !important;
+        box-shadow: 0 13px 32px var(--sari-dark-fbd3b3b9f6, rgba(46, 35, 22, .055)) !important;
     }
 
     .sari-home-hero::before {
@@ -2152,10 +2152,10 @@
         width: auto !important;
         background: linear-gradient(
             90deg,
-            rgba(255,252,247,1) 0%,
-            rgba(255,250,241,.98) 39%,
-            rgba(255,249,239,.86) 51%,
-            rgba(255,249,239,.15) 72%,
+            var(--sari-dark-950baec030, rgba(255,252,247,1)) 0%,
+            var(--sari-dark-ad56cde17e, rgba(255,250,241,.98)) 39%,
+            var(--sari-dark-379cbaaa2a, rgba(255,249,239,.86)) 51%,
+            var(--sari-dark-ac1ab30256, rgba(255,249,239,.15)) 72%,
             rgba(255,249,239,0) 100%
         ) !important;
     }
@@ -2166,29 +2166,29 @@
 
     .sari-hero-badge {
         border-color: #e4c98f !important;
-        background: rgba(255,255,255,.92) !important;
-        color: #996514 !important;
+        background: var(--sari-dark-9b2add9551, rgba(255,255,255,.92)) !important;
+        color: var(--sari-dark-6c498671da, #996514) !important;
         backdrop-filter: blur(8px);
     }
 
     .sari-hero-title {
-        color: #171411 !important;
+        color: var(--sari-dark-e23e64dd1e, #171411) !important;
         text-shadow: none !important;
     }
 
     .sari-hero-title span {
-        color: #b8790f !important;
+        color: var(--sari-dark-6e784b4931, #b8790f) !important;
     }
 
     .sari-hero-copy {
-        color: #6f675f !important;
+        color: var(--sari-dark-a63aa16d7c, #6f675f) !important;
     }
 
     .sari-primary-btn {
         border: 1px solid var(--sari-gold) !important;
         background: var(--sari-gold) !important;
         color: #fff !important;
-        box-shadow: 0 8px 20px rgba(204,138,11,.16) !important;
+        box-shadow: 0 8px 20px var(--sari-dark-b5c2a2270e, rgba(204,138,11,.16)) !important;
     }
 
     .sari-primary-btn:hover,
@@ -2200,17 +2200,17 @@
     }
 
     .sari-secondary-btn {
-        border-color: #ddd3c6 !important;
-        background: #fff !important;
-        color: #514940 !important;
+        border-color: var(--sari-dark-d8c2716225, #ddd3c6) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-e23e64dd1e, #514940) !important;
         box-shadow: none !important;
     }
 
     .sari-secondary-btn:hover,
     .sari-secondary-btn:focus-visible {
         border-color: #cfb47c !important;
-        background: #fffaf1 !important;
-        color: #8f6010 !important;
+        background: var(--sari-dark-950baec030, #fffaf1) !important;
+        color: var(--sari-dark-6e784b4931, #8f6010) !important;
         outline: none !important;
     }
 
@@ -2220,7 +2220,7 @@
     }
 
     .sari-hero-trust-item {
-        color: #6f675f !important;
+        color: var(--sari-dark-a63aa16d7c, #6f675f) !important;
         font-size: 7.3px !important;
         font-weight: 600 !important;
     }
@@ -2240,37 +2240,37 @@
     }
 
     .sari-benefit-strip {
-        border-color: #e2e8f0 !important;
-        background: #ffffff !important;
+        border-color: var(--sari-dark-d8c2716225, #e2e8f0) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 18px 46px rgba(15, 23, 42, .075),
-            0 3px 10px rgba(15, 23, 42, .035) !important;
+            0 18px 46px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 3px 10px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
     }
 
     .sari-benefit-item {
         min-height: 84px !important;
         gap: 14px !important;
         padding: 15px 18px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     a.sari-benefit-item:hover,
     a.sari-benefit-item:focus-visible {
-        background: #f8fafc !important;
+        background: var(--sari-dark-950baec030, #f8fafc) !important;
     }
 
     .sari-benefit-item + .sari-benefit-item {
-        border-left-color: #e5e7eb !important;
+        border-left-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
     }
 
     .sari-benefit-icon {
         width: 44px !important;
         height: 44px !important;
         flex-basis: 44px !important;
-        border-color: #e8edf3 !important;
+        border-color: var(--sari-dark-d8c2716225, #e8edf3) !important;
         border-radius: 12px !important;
-        background: #f4f6f8 !important;
-        color: #b77905 !important;
+        background: var(--sari-dark-4d21eb669b, #f4f6f8) !important;
+        color: var(--sari-dark-c8bdcce6ab, #b77905) !important;
     }
 
     .sari-benefit-icon svg {
@@ -2280,7 +2280,7 @@
     }
 
     .sari-benefit-item h3 {
-        color: #111827 !important;
+        color: var(--sari-dark-e23e64dd1e, #111827) !important;
         font-size: 13px !important;
         font-weight: 750 !important;
         line-height: 1.3 !important;
@@ -2289,7 +2289,7 @@
 
     .sari-benefit-item p {
         margin-top: 4px !important;
-        color: #7b8493 !important;
+        color: var(--sari-dark-a63aa16d7c, #7b8493) !important;
         font-size: 10.5px !important;
         font-weight: 500 !important;
         line-height: 1.45 !important;
@@ -2301,16 +2301,16 @@
             width: auto !important;
             background: linear-gradient(
                 90deg,
-                rgba(255,252,247,.98) 0%,
-                rgba(255,250,241,.97) 48%,
-                rgba(255,249,239,.78) 72%,
-                rgba(255,249,239,.55) 100%
+                var(--sari-dark-ad56cde17e, rgba(255,252,247,.98)) 0%,
+                var(--sari-dark-d2fbbe29b8, rgba(255,250,241,.97)) 48%,
+                var(--sari-dark-a1345396a6, rgba(255,249,239,.78)) 72%,
+                var(--sari-dark-97f4777f4f, rgba(255,249,239,.55)) 100%
             ) !important;
         }
 
         .sari-benefit-item:nth-child(3),
         .sari-benefit-item:nth-child(4) {
-            border-top-color: #e5e7eb !important;
+            border-top-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
         }
     }
 
@@ -2320,9 +2320,9 @@
             width: auto !important;
             background: linear-gradient(
                 90deg,
-                rgba(255,252,247,.98) 0%,
-                rgba(255,250,241,.96) 58%,
-                rgba(255,249,239,.80) 100%
+                var(--sari-dark-ad56cde17e, rgba(255,252,247,.98)) 0%,
+                var(--sari-dark-c86bd35395, rgba(255,250,241,.96)) 58%,
+                var(--sari-dark-27ff01802e, rgba(255,249,239,.80)) 100%
             ) !important;
         }
 
@@ -2351,12 +2351,12 @@
     ============================================================ */
     .sari-home-hero {
         min-height: 350px !important;
-        border: 1px solid #ded6ca !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #ded6ca) !important;
         border-radius: 18px !important;
-        background: #ece7df !important;
+        background: var(--sari-dark-4d21eb669b, #ece7df) !important;
         box-shadow:
-            0 22px 54px rgba(43, 38, 31, .10),
-            0 4px 14px rgba(43, 38, 31, .045) !important;
+            0 22px 54px var(--sari-dark-8eadf403a5, rgba(43, 38, 31, .10)),
+            0 4px 14px var(--sari-dark-1190f58155, rgba(43, 38, 31, .045)) !important;
     }
 
     .sari-home-hero::before {
@@ -2366,11 +2366,11 @@
         background:
             linear-gradient(
                 90deg,
-                rgba(236, 231, 223, .99) 0%,
-                rgba(239, 234, 226, .985) 31%,
-                rgba(241, 236, 228, .93) 45%,
-                rgba(242, 237, 230, .68) 57%,
-                rgba(242, 237, 230, .22) 70%,
+                var(--sari-dark-90416b8715, rgba(236, 231, 223, .99)) 0%,
+                var(--sari-dark-24c69f585d, rgba(239, 234, 226, .985)) 31%,
+                var(--sari-dark-d02cb64ec5, rgba(241, 236, 228, .93)) 45%,
+                var(--sari-dark-a559bda35c, rgba(242, 237, 230, .68)) 57%,
+                var(--sari-dark-3474670eb6, rgba(242, 237, 230, .22)) 70%,
                 rgba(242, 237, 230, 0) 83%
             ) !important;
     }
@@ -2385,8 +2385,8 @@
         inset: 0;
         pointer-events: none;
         background:
-            linear-gradient(90deg, rgba(236,231,223,.18) 0%, rgba(236,231,223,0) 28%),
-            linear-gradient(180deg, rgba(255,255,255,.04), rgba(25,20,14,.035));
+            linear-gradient(90deg, var(--sari-dark-3686ce8d51, rgba(236,231,223,.18)) 0%, rgba(236,231,223,0) 28%),
+            linear-gradient(180deg, var(--sari-dark-f02d16aa86, rgba(255,255,255,.04)), var(--sari-dark-d2a0d2ca90, rgba(25,20,14,.035)));
     }
 
     .sari-hero-image img {
@@ -2408,20 +2408,20 @@
         min-height: 29px !important;
         border: 1px solid rgba(190, 127, 15, .44) !important;
         border-radius: 999px !important;
-        background: rgba(249, 247, 243, .76) !important;
+        background: var(--sari-dark-bce5f37dfd, rgba(249, 247, 243, .76)) !important;
         padding: 0 13px !important;
-        color: #9b650f !important;
+        color: var(--sari-dark-4b8b580e58, #9b650f) !important;
         font-size: 7.2px !important;
         font-weight: 800 !important;
         letter-spacing: .12em !important;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.64);
+        box-shadow: inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.64));
         backdrop-filter: blur(10px);
     }
 
     .sari-hero-title {
         max-width: 760px !important;
         margin-top: 18px !important;
-        color: #17191d !important;
+        color: var(--sari-dark-e23e64dd1e, #17191d) !important;
         font-size: clamp(40px, 4vw, 62px) !important;
         font-weight: 800 !important;
         line-height: .99 !important;
@@ -2432,13 +2432,13 @@
     .sari-hero-title span {
         display: block !important;
         margin-top: 4px;
-        color: #c48610 !important;
+        color: var(--sari-dark-19b301f69a, #c48610) !important;
     }
 
     .sari-hero-copy {
         max-width: 560px !important;
         margin-top: 18px !important;
-        color: #5f625f !important;
+        color: var(--sari-dark-a63aa16d7c, #5f625f) !important;
         font-size: 11.5px !important;
         font-weight: 500 !important;
         line-height: 1.7 !important;
@@ -2465,8 +2465,8 @@
         background: linear-gradient(180deg, #d59618 0%, #c88912 100%) !important;
         color: #fff !important;
         box-shadow:
-            0 10px 22px rgba(200,137,18,.20),
-            inset 0 1px 0 rgba(255,255,255,.14) !important;
+            0 10px 22px var(--sari-dark-ef22e61893, rgba(200,137,18,.20)),
+            inset 0 1px 0 var(--sari-dark-8eadf403a5, rgba(255,255,255,.14)) !important;
     }
 
     .sari-primary-btn:hover,
@@ -2480,17 +2480,17 @@
 
     .sari-secondary-btn {
         border: 1px solid rgba(181, 126, 28, .46) !important;
-        background: rgba(255,255,255,.56) !important;
-        color: #282b31 !important;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.70) !important;
+        background: var(--sari-dark-68a902bedc, rgba(255,255,255,.56)) !important;
+        color: var(--sari-dark-e23e64dd1e, #282b31) !important;
+        box-shadow: inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.70)) !important;
         backdrop-filter: blur(9px);
     }
 
     .sari-secondary-btn:hover,
     .sari-secondary-btn:focus-visible {
         border-color: #c88912 !important;
-        background: rgba(255,255,255,.82) !important;
-        color: #8f5f0e !important;
+        background: var(--sari-dark-bccc879a33, rgba(255,255,255,.82)) !important;
+        color: var(--sari-dark-6e784b4931, #8f5f0e) !important;
         transform: translateY(-1px) !important;
         outline: none !important;
     }
@@ -2502,7 +2502,7 @@
 
     .sari-hero-trust-item {
         gap: 8px !important;
-        color: #3f4348 !important;
+        color: var(--sari-dark-e23e64dd1e, #3f4348) !important;
         font-size: 8.5px !important;
         font-weight: 700 !important;
     }
@@ -2514,7 +2514,7 @@
         background: linear-gradient(180deg, #d99a22 0%, #c88912 100%) !important;
         color: #fff !important;
         font-size: 11px !important;
-        box-shadow: 0 5px 12px rgba(200,137,18,.16);
+        box-shadow: 0 5px 12px var(--sari-dark-b5c2a2270e, rgba(200,137,18,.16));
     }
 
     /* Benefits stay clean white, as requested. */
@@ -2523,15 +2523,15 @@
     }
 
     .sari-benefit-strip {
-        border-color: #e1e6eb !important;
-        background: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e6eb) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            0 18px 46px rgba(15, 23, 42, .075),
-            0 3px 10px rgba(15, 23, 42, .035) !important;
+            0 18px 46px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 3px 10px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
     }
 
     .sari-benefit-item {
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     @media (max-width: 1199px) {
@@ -2560,10 +2560,10 @@
             background:
                 linear-gradient(
                     90deg,
-                    rgba(236,231,223,.99) 0%,
-                    rgba(239,234,226,.98) 44%,
-                    rgba(241,236,228,.82) 66%,
-                    rgba(241,236,228,.50) 100%
+                    var(--sari-dark-90416b8715, rgba(236,231,223,.99)) 0%,
+                    var(--sari-dark-d048a78d92, rgba(239,234,226,.98)) 44%,
+                    var(--sari-dark-e8a27ccf56, rgba(241,236,228,.82)) 66%,
+                    var(--sari-dark-af9cc69647, rgba(241,236,228,.50)) 100%
                 ) !important;
         }
 
@@ -2588,9 +2588,9 @@
             background:
                 linear-gradient(
                     90deg,
-                    rgba(236,231,223,.985) 0%,
-                    rgba(239,234,226,.97) 62%,
-                    rgba(241,236,228,.78) 100%
+                    var(--sari-dark-24c69f585d, rgba(236,231,223,.985)) 0%,
+                    var(--sari-dark-cc9bdc4d6b, rgba(239,234,226,.97)) 62%,
+                    var(--sari-dark-4f864b874d, rgba(241,236,228,.78)) 100%
                 ) !important;
         }
 
@@ -2647,7 +2647,7 @@
         background: #c88912 !important;
         background-image: none !important;
         color: #fff !important;
-        box-shadow: 0 8px 18px rgba(200,137,18,.16) !important;
+        box-shadow: 0 8px 18px var(--sari-dark-b5c2a2270e, rgba(200,137,18,.16)) !important;
     }
 
     .sari-primary-btn:hover,
@@ -2660,10 +2660,10 @@
     }
 
     .sari-secondary-btn {
-        border: 1px solid #cfc6ba !important;
-        background: #fff !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #cfc6ba) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         background-image: none !important;
-        color: #282b31 !important;
+        color: var(--sari-dark-e23e64dd1e, #282b31) !important;
         box-shadow: none !important;
         backdrop-filter: none !important;
     }
@@ -2671,9 +2671,9 @@
     .sari-secondary-btn:hover,
     .sari-secondary-btn:focus-visible {
         border-color: #c88912 !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         background-image: none !important;
-        color: #8f5f0e !important;
+        color: var(--sari-dark-6e784b4931, #8f5f0e) !important;
         outline: none !important;
     }
 
@@ -2700,20 +2700,20 @@
         min-height: 30px !important;
         border: 1px solid rgba(200, 137, 18, .42) !important;
         border-radius: 999px !important;
-        background: rgba(255, 255, 255, .72) !important;
+        background: var(--sari-dark-7ec801fc27, rgba(255, 255, 255, .72)) !important;
         padding: 0 13px !important;
-        color: #9d6810 !important;
+        color: var(--sari-dark-9b2ca2d764, #9d6810) !important;
         font-size: 8px !important;
         font-weight: 800 !important;
         letter-spacing: .14em !important;
-        box-shadow: 0 3px 10px rgba(91, 67, 31, .04) !important;
+        box-shadow: 0 3px 10px var(--sari-dark-25b2da5e49, rgba(91, 67, 31, .04)) !important;
         backdrop-filter: blur(8px) !important;
     }
 
     .sari-hero-title {
         max-width: 760px !important;
         margin-top: 18px !important;
-        color: #17191d !important;
+        color: var(--sari-dark-e23e64dd1e, #17191d) !important;
         font-size: clamp(42px, 4.35vw, 66px) !important;
         font-weight: 780 !important;
         line-height: .99 !important;
@@ -2724,7 +2724,7 @@
     .sari-hero-title span {
         display: block !important;
         margin-top: 6px !important;
-        color: #c2810e !important;
+        color: var(--sari-dark-af18afcaa4, #c2810e) !important;
         font-weight: 740 !important;
         letter-spacing: -.052em !important;
     }
@@ -2759,7 +2759,7 @@
         background: #c88912 !important;
         background-image: none !important;
         color: #fff !important;
-        box-shadow: 0 8px 18px rgba(200, 137, 18, .16) !important;
+        box-shadow: 0 8px 18px var(--sari-dark-b5c2a2270e, rgba(200, 137, 18, .16)) !important;
     }
 
     .sari-primary-btn:hover,
@@ -2768,7 +2768,7 @@
         background: #ad760f !important;
         background-image: none !important;
         color: #fff !important;
-        box-shadow: 0 10px 22px rgba(173, 118, 15, .18) !important;
+        box-shadow: 0 10px 22px var(--sari-dark-3793f9e558, rgba(173, 118, 15, .18)) !important;
         transform: translateY(-1px) !important;
         outline: none !important;
     }
@@ -2785,21 +2785,21 @@
     }
 
     .sari-secondary-btn {
-        border: 1px solid #d4c8b9 !important;
-        background: rgba(255, 255, 255, .82) !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #d4c8b9) !important;
+        background: var(--sari-dark-bccc879a33, rgba(255, 255, 255, .82)) !important;
         background-image: none !important;
-        color: #2b2d31 !important;
-        box-shadow: 0 4px 12px rgba(72, 57, 39, .035) !important;
+        color: var(--sari-dark-e23e64dd1e, #2b2d31) !important;
+        box-shadow: 0 4px 12px var(--sari-dark-7593018246, rgba(72, 57, 39, .035)) !important;
         backdrop-filter: blur(6px) !important;
     }
 
     .sari-secondary-btn:hover,
     .sari-secondary-btn:focus-visible {
         border-color: #c88912 !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         background-image: none !important;
-        color: #9a6610 !important;
-        box-shadow: 0 7px 16px rgba(80, 60, 32, .055) !important;
+        color: var(--sari-dark-9b2ca2d764, #9a6610) !important;
+        box-shadow: 0 7px 16px var(--sari-dark-fbd3b3b9f6, rgba(80, 60, 32, .055)) !important;
         transform: translateY(-1px) !important;
         outline: none !important;
     }
@@ -2926,7 +2926,7 @@
         width: 1px;
         height: 26px;
         flex: 0 0 1px;
-        background: rgba(54, 47, 38, .20);
+        background: var(--sari-dark-6abcb5d51b, rgba(54, 47, 38, .20));
     }
 
     /*
@@ -2945,7 +2945,7 @@
     .sari-hero-brand-lockup + .sari-hero-title {
         max-width: 680px !important;
         margin-top: 14px !important;
-        color: #17191d !important;
+        color: var(--sari-dark-e23e64dd1e, #17191d) !important;
         font-size: clamp(38px, 3.8vw, 56px) !important;
         font-weight: 760 !important;
         line-height: 1 !important;
@@ -2956,7 +2956,7 @@
     .sari-hero-title span {
         display: block !important;
         margin-top: 5px !important;
-        color: #bf7e0e !important;
+        color: var(--sari-dark-6e784b4931, #bf7e0e) !important;
         font-weight: 700 !important;
         letter-spacing: -.046em !important;
     }
@@ -2992,7 +2992,7 @@
         border: 1px solid #c88912 !important;
         background: #c88912 !important;
         color: #fff !important;
-        box-shadow: 0 6px 14px rgba(200, 137, 18, .14) !important;
+        box-shadow: 0 6px 14px var(--sari-dark-59ed29fe9d, rgba(200, 137, 18, .14)) !important;
     }
 
     .sari-primary-btn:hover,
@@ -3000,7 +3000,7 @@
         border-color: #ad760f !important;
         background: #ad760f !important;
         color: #fff !important;
-        box-shadow: 0 8px 18px rgba(173, 118, 15, .16) !important;
+        box-shadow: 0 8px 18px var(--sari-dark-b5c2a2270e, rgba(173, 118, 15, .16)) !important;
         transform: translateY(-1px) !important;
         outline: none !important;
     }
@@ -3018,9 +3018,9 @@
     }
 
     .sari-secondary-btn {
-        border: 1px solid #c9c1b7 !important;
-        background: #fff !important;
-        color: #292b2f !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #c9c1b7) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-e23e64dd1e, #292b2f) !important;
         box-shadow: none !important;
         backdrop-filter: none !important;
     }
@@ -3028,9 +3028,9 @@
     .sari-secondary-btn:hover,
     .sari-secondary-btn:focus-visible {
         border-color: #c88912 !important;
-        background: #fff !important;
-        color: #98640f !important;
-        box-shadow: 0 5px 12px rgba(52, 44, 34, .05) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-9b2ca2d764, #98640f) !important;
+        box-shadow: 0 5px 12px var(--sari-dark-1df26971b5, rgba(52, 44, 34, .05)) !important;
         transform: translateY(-1px) !important;
         outline: none !important;
     }
@@ -3148,7 +3148,7 @@
     .sari-hero-description {
         max-width: 525px;
         margin: 17px 0 0;
-        color: #17191d;
+        color: var(--sari-dark-e23e64dd1e, #17191d);
         font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
         font-size: 12px;
         font-weight: 300;
@@ -3189,11 +3189,11 @@
 
     .sari-promo-carousel,
     .sari-promo-side-card {
-        border-color: #dde2e7 !important;
-        background: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #dde2e7) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            0 18px 42px rgba(15, 23, 42, .075),
-            0 3px 10px rgba(15, 23, 42, .035) !important;
+            0 18px 42px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 3px 10px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
     }
 
     .sari-promo-carousel {
@@ -3213,26 +3213,26 @@
 
     .sari-promo-slide-copy--dark {
         padding: 18px 20px !important;
-        border: 1px solid rgba(226, 232, 240, .95) !important;
+        border: 1px solid var(--sari-dark-14d8f7e80d, rgba(226, 232, 240, .95)) !important;
         border-radius: 14px !important;
-        background: rgba(255, 255, 255, .94) !important;
-        color: #171a1f !important;
-        box-shadow: 0 14px 32px rgba(15, 23, 42, .10) !important;
+        background: var(--sari-dark-fa7f649147, rgba(255, 255, 255, .94)) !important;
+        color: var(--sari-dark-e23e64dd1e, #171a1f) !important;
+        box-shadow: 0 14px 32px var(--sari-dark-8eadf403a5, rgba(15, 23, 42, .10)) !important;
         text-shadow: none !important;
     }
 
     .sari-promo-slide-copy--light {
         width: min(46%, 410px) !important;
         color: #fff !important;
-        text-shadow: 0 2px 16px rgba(0, 0, 0, .32) !important;
+        text-shadow: 0 2px 16px var(--sari-dark-152c2221a5, rgba(0, 0, 0, .32)) !important;
     }
 
     .sari-promo-kicker {
         min-height: 27px !important;
         padding: 0 11px !important;
         border-radius: 999px !important;
-        background: #fff !important;
-        color: #a96d07 !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-6e784b4931, #a96d07) !important;
         font-size: 8.5px !important;
         font-weight: 700 !important;
         letter-spacing: .09em !important;
@@ -3268,7 +3268,7 @@
         font-size: 10px !important;
         font-weight: 650 !important;
         letter-spacing: -.01em !important;
-        box-shadow: 0 7px 16px rgba(200, 137, 18, .15) !important;
+        box-shadow: 0 7px 16px var(--sari-dark-f4efbbfaa5, rgba(200, 137, 18, .15)) !important;
     }
 
     .sari-promo-slide:hover .sari-promo-cta,
@@ -3284,9 +3284,9 @@
     .sari-promo-side-card--flash::after {
         background: linear-gradient(
             0deg,
-            rgba(10, 14, 20, .76) 0%,
-            rgba(10, 14, 20, .48) 34%,
-            rgba(10, 14, 20, .12) 66%,
+            var(--sari-dark-6890f9acae, rgba(10, 14, 20, .76)) 0%,
+            var(--sari-dark-0aceb62107, rgba(10, 14, 20, .48)) 34%,
+            var(--sari-dark-07989bed0c, rgba(10, 14, 20, .12)) 66%,
             rgba(10, 14, 20, 0) 100%
         ) !important;
     }
@@ -3307,7 +3307,7 @@
         max-width: calc(100% - 36px) !important;
         transform: none !important;
         color: #fff !important;
-        text-shadow: 0 2px 12px rgba(0, 0, 0, .28) !important;
+        text-shadow: 0 2px 12px var(--sari-dark-d014e7232e, rgba(0, 0, 0, .28)) !important;
     }
 
     .sari-promo-side-copy strong {
@@ -3329,10 +3329,10 @@
     .sari-promo-arrow {
         width: 34px !important;
         height: 34px !important;
-        border-color: #e2e8f0 !important;
-        background: #fff !important;
-        color: #334155 !important;
-        box-shadow: 0 7px 18px rgba(15, 23, 42, .10) !important;
+        border-color: var(--sari-dark-d8c2716225, #e2e8f0) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-e23e64dd1e, #334155) !important;
+        box-shadow: 0 7px 18px var(--sari-dark-8eadf403a5, rgba(15, 23, 42, .10)) !important;
     }
 
     .sari-promo-dot {
@@ -3517,13 +3517,13 @@
     }
 
     .sari-promo-slide-copy--dark {
-        color: #171a1f !important;
+        color: var(--sari-dark-e23e64dd1e, #171a1f) !important;
         text-shadow: none !important;
     }
 
     .sari-promo-slide-copy--light {
         color: #ffffff !important;
-        text-shadow: 0 2px 16px rgba(0, 0, 0, .30) !important;
+        text-shadow: 0 2px 16px var(--sari-dark-152c2221a5, rgba(0, 0, 0, .30)) !important;
     }
 
     .sari-promo-kicker {
@@ -3534,7 +3534,7 @@
         background: transparent !important;
         box-shadow: none !important;
         backdrop-filter: none !important;
-        color: #b77905 !important;
+        color: var(--sari-dark-c8bdcce6ab, #b77905) !important;
         font-size: 8.5px !important;
         font-weight: 700 !important;
         letter-spacing: .12em !important;
@@ -3600,7 +3600,7 @@
         font-size: 24px !important;
         font-weight: 700 !important;
         letter-spacing: -.03em !important;
-        color: #1f2329 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2329) !important;
     }
 
     .sari-category-rail {
@@ -3632,10 +3632,10 @@
         height: 104px !important;
         margin: 0 auto !important;
         overflow: hidden !important;
-        border: 1px solid #e1e5ea !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e5ea) !important;
         border-radius: 999px !important;
-        background: #f5f6f8 !important;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, .07) !important;
+        background: var(--sari-dark-950baec030, #f5f6f8) !important;
+        box-shadow: 0 8px 20px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)) !important;
         transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease !important;
     }
 
@@ -3650,7 +3650,7 @@
 
     .sari-category-card:hover .sari-category-image {
         border-color: rgba(200, 137, 18, .55) !important;
-        box-shadow: 0 10px 24px rgba(15, 23, 42, .10) !important;
+        box-shadow: 0 10px 24px var(--sari-dark-8eadf403a5, rgba(15, 23, 42, .10)) !important;
     }
 
     .sari-category-card:hover .sari-category-image img {
@@ -3662,7 +3662,7 @@
         min-height: 0 !important;
         margin-top: 10px !important;
         padding: 0 2px !important;
-        color: #252a31 !important;
+        color: var(--sari-dark-e23e64dd1e, #252a31) !important;
         font-size: 11.5px !important;
         font-weight: 600 !important;
         line-height: 1.35 !important;
@@ -3671,7 +3671,7 @@
     }
 
     .sari-category-card:hover .sari-category-name {
-        color: #a96f0e !important;
+        color: var(--sari-dark-6e784b4931, #a96f0e) !important;
     }
 
     @media (max-width: 767px) {
@@ -3706,7 +3706,7 @@
        Inline SVG icons replace category images. Links/data unchanged.
     ============================================================ */
     #categories .sari-section-title {
-        color: #1f2329 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2329) !important;
         font-size: 25px !important;
         font-weight: 700 !important;
         letter-spacing: -.035em !important;
@@ -3748,11 +3748,11 @@
         height: 110px;
         flex: 0 0 110px;
         place-items: center;
-        border: 1px solid #e1e5ea;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e5ea);
         border-radius: 999px;
-        background: #f7f8fa;
-        color: #323840;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, .055);
+        background: var(--sari-dark-950baec030, #f7f8fa);
+        color: var(--sari-dark-e23e64dd1e, #323840);
+        box-shadow: 0 8px 20px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055));
         transition:
             border-color .18s ease,
             background-color .18s ease,
@@ -3775,9 +3775,9 @@
     .sari-category-card:hover .sari-category-icon,
     .sari-category-card:focus-visible .sari-category-icon {
         border-color: rgba(200, 137, 18, .58);
-        background: #fff;
-        color: #b8780d;
-        box-shadow: 0 11px 26px rgba(15, 23, 42, .085);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-6e784b4931, #b8780d);
+        box-shadow: 0 11px 26px var(--sari-dark-0a9e89f88f, rgba(15, 23, 42, .085));
         transform: translateY(-1px);
     }
 
@@ -3788,7 +3788,7 @@
         min-height: 0 !important;
         margin: 12px auto 0 !important;
         padding: 0 !important;
-        color: #20252c !important;
+        color: var(--sari-dark-e23e64dd1e, #20252c) !important;
         font-size: 14.5px !important;
         font-weight: 600 !important;
         line-height: 1.32 !important;
@@ -3800,7 +3800,7 @@
 
     .sari-category-card:hover .sari-category-name,
     .sari-category-card:focus-visible .sari-category-name {
-        color: #9f690e !important;
+        color: var(--sari-dark-6e784b4931, #9f690e) !important;
     }
 
     @media (max-width: 767px) {
@@ -3909,10 +3909,10 @@
         height: 74px;
         flex: 0 0 74px;
         overflow: hidden;
-        border: 1px solid #e1e5ea;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e5ea);
         border-radius: 999px;
-        background: #f5f6f8;
-        box-shadow: 0 7px 18px rgba(15, 23, 42, .065);
+        background: var(--sari-dark-950baec030, #f5f6f8);
+        box-shadow: 0 7px 18px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065));
         transition:
             border-color .18s ease,
             box-shadow .18s ease,
@@ -3932,7 +3932,7 @@
     #categories .sari-category-card:hover .sari-category-photo,
     #categories .sari-category-card:focus-visible .sari-category-photo {
         border-color: rgba(200, 137, 18, .58);
-        box-shadow: 0 10px 24px rgba(15, 23, 42, .10);
+        box-shadow: 0 10px 24px var(--sari-dark-8eadf403a5, rgba(15, 23, 42, .10));
         transform: translateY(-1px);
     }
 
@@ -3990,8 +3990,8 @@
        behavior, sidebar, header, and shared product component stay intact.
        ============================================================ */
     .sari-home {
-        background: #f4f5f7 !important;
-        color: #253040;
+        background: var(--sari-dark-4d21eb669b, #f4f5f7) !important;
+        color: var(--sari-dark-e23e64dd1e, #253040);
     }
 
     /* Elevate only outer surfaces, not text overlays or inner rows. */
@@ -3999,12 +3999,12 @@
     .sari-home .sari-benefit-strip,
     .sari-home .sari-promo-carousel,
     .sari-home .sari-promo-side-card {
-        border-color: #e3e7ec !important;
+        border-color: var(--sari-dark-d8c2716225, #e3e7ec) !important;
         box-shadow:
-            0 2px 5px rgba(15,23,42,.045),
-            0 10px 24px rgba(15,23,42,.075),
-            0 24px 54px rgba(15,23,42,.095),
-            inset 0 1px 0 rgba(255,255,255,.72) !important;
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.72)) !important;
     }
 
     /* The hero stays image-backed. No opaque panel behind any banner text. */
@@ -4015,7 +4015,7 @@
         font-size: 13.5px !important;
         line-height: 1.72 !important;
         font-weight: 400 !important;
-        color: #343a40 !important;
+        color: var(--sari-dark-e23e64dd1e, #343a40) !important;
     }
     .sari-home .sari-primary-btn,
     .sari-home .sari-secondary-btn {
@@ -4071,14 +4071,14 @@
     /* Shared product cards: apply page-specific outer shadow and type only.
        The reusable Blade component, cards' data, buttons and JS are unchanged. */
     .sari-home .sari-product-grid .sari-product-card {
-        border: 1px solid #e3e7ec !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e3e7ec) !important;
         border-radius: 18px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            0 2px 5px rgba(15,23,42,.045),
-            0 9px 23px rgba(15,23,42,.07),
-            0 20px 42px rgba(15,23,42,.08),
-            inset 0 1px 0 rgba(255,255,255,.9) !important;
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+            0 9px 23px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)),
+            0 20px 42px var(--sari-dark-c33e3d1bb4, rgba(15,23,42,.08)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.9)) !important;
     }
     .sari-home .sari-product-grid .sari-product-card .sari-buyer-card-title {
         font-size: 15px !important;
@@ -4101,10 +4101,10 @@
 
     /* Only the existing empty-state panel, not entire product/category rails. */
     .sari-home .sari-product-grid > .sari-card {
-        border-color: #e3e7ec !important;
+        border-color: var(--sari-dark-d8c2716225, #e3e7ec) !important;
         box-shadow:
-            0 2px 5px rgba(15,23,42,.04),
-            0 12px 28px rgba(15,23,42,.075) !important;
+            0 2px 5px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04)),
+            0 12px 28px var(--sari-dark-e07575a086, rgba(15,23,42,.075)) !important;
     }
     .sari-home .sari-product-grid > .sari-card p:first-child {
         font-size: 14px !important;
@@ -4126,15 +4126,15 @@
         .sari-home .sari-promo-carousel,
         .sari-home .sari-promo-side-card {
             box-shadow:
-                0 2px 4px rgba(15,23,42,.04),
-                0 8px 20px rgba(15,23,42,.065),
-                0 16px 34px rgba(15,23,42,.065) !important;
+                0 2px 4px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04)),
+                0 8px 20px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)),
+                0 16px 34px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)) !important;
         }
         .sari-home .sari-product-grid .sari-product-card {
             box-shadow:
-                0 2px 4px rgba(15,23,42,.035),
-                0 8px 18px rgba(15,23,42,.06),
-                0 15px 30px rgba(15,23,42,.07) !important;
+                0 2px 4px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+                0 8px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),
+                0 15px 30px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)) !important;
         }
         .sari-home .sari-hero-description {
             font-size: 12.5px !important;
@@ -4176,11 +4176,11 @@
         height: auto !important; max-height: none !important; overflow: visible !important;
     }
     #buyerCategoryRail button.sari-category-card { border: 0; background: transparent; cursor: pointer; font: inherit; }
-    #buyerCategoryRail .sari-category-card.is-active .sari-category-name { color: #a86d08; font-weight: 700; }
+    #buyerCategoryRail .sari-category-card.is-active .sari-category-name { color: var(--sari-dark-6e784b4931, #a86d08); font-weight: 700; }
     #buyerCategoryRail .sari-category-card:focus-visible { outline: 2px solid #c9870e; outline-offset: 4px; }
-    #buyerCategoryRail .sari-category-photo { display: grid; place-items: center; background: white; }
+    #buyerCategoryRail .sari-category-photo { display: grid; place-items: center; background: var(--sari-dark-950baec030, white); }
     #buyerCategoryRail .sari-home-category-fallback svg,
-    #buyerCategoryRail .sari-home-category-glyph { width: 38px; height: 38px; color: #a86d08; }
+    #buyerCategoryRail .sari-home-category-glyph { width: 38px; height: 38px; color: var(--sari-dark-6e784b4931, #a86d08); }
     #homeCatalogGrid [data-product-card][hidden] { display: none !important; }
 </style>
 
@@ -5026,3 +5026,211 @@
 })();
 </script>
 @endonce
+
+
+<style>
+/* SARI_BUYER_HOME_HERO_STAYS_LIGHT_IN_DARK_MODE
+   Keep the Buyer home campaign hero in its original light brand treatment.
+   This is intentionally scoped to the hero only; other Buyer surfaces remain dark. */
+html[data-sari-theme="dark"] .sari-home-hero {
+    background: #fffaf1 !important;
+    border-color: #eadfce !important;
+    color: #17191d !important;
+}
+html[data-sari-theme="dark"] .sari-home-hero::before {
+    background: linear-gradient(
+        90deg,
+        rgba(255,252,247,1) 0%,
+        rgba(255,250,241,.98) 39%,
+        rgba(255,249,239,.86) 51%,
+        rgba(255,249,239,.15) 72%,
+        rgba(255,249,239,0) 100%
+    ) !important;
+}
+html[data-sari-theme="dark"] .sari-home-hero .sari-hero-brand-main {
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+html[data-sari-theme="dark"] .sari-home-hero .sari-hero-brand-mark {
+    filter: brightness(0) saturate(100%) !important;
+    -webkit-filter: brightness(0) saturate(100%) !important;
+}
+html[data-sari-theme="dark"] .sari-home-hero .sari-hero-brand-divider {
+    background: rgba(54,47,38,.20) !important;
+}
+html[data-sari-theme="dark"] .sari-home-hero .sari-hero-title,
+html[data-sari-theme="dark"] .sari-home-hero .sari-hero-brand-lockup + .sari-hero-title {
+    color: #17191d !important;
+    -webkit-text-fill-color: #17191d !important;
+}
+html[data-sari-theme="dark"] .sari-home-hero .sari-hero-title span {
+    color: #bf7e0e !important;
+    -webkit-text-fill-color: #bf7e0e !important;
+}
+html[data-sari-theme="dark"] .sari-home-hero .sari-hero-description {
+    color: #45413b !important;
+    -webkit-text-fill-color: #45413b !important;
+}
+</style>
+
+<style>
+/* SARI_BUYER_HERO_EXACT_BEIGE_DARKMODE_FIX_V3
+   Use fixed light-mode beige values. Do not use --sari-dark-* tokens here:
+   those tokens are remapped to dark-theme colors when dark mode is active. */
+html[data-sari-theme="dark"] .sari-home-hero {
+    background-color: #efeae2 !important;
+    background-image: none !important;
+    border-color: #ddd2c2 !important;
+    box-shadow: 0 13px 32px rgba(46, 35, 22, .055) !important;
+}
+
+html[data-sari-theme="dark"] .sari-home-hero::before {
+    background: linear-gradient(
+        90deg,
+        rgba(239, 234, 226, 1) 0%,
+        rgba(239, 234, 226, .98) 39%,
+        rgba(239, 234, 226, .86) 51%,
+        rgba(239, 234, 226, .15) 72%,
+        rgba(239, 234, 226, 0) 100%
+    ) !important;
+}
+
+@media (max-width: 1023px) {
+    html[data-sari-theme="dark"] .sari-home-hero::before {
+        background: linear-gradient(
+            90deg,
+            rgba(239, 234, 226, .98) 0%,
+            rgba(239, 234, 226, .97) 48%,
+            rgba(239, 234, 226, .78) 72%,
+            rgba(239, 234, 226, .55) 100%
+        ) !important;
+    }
+}
+</style>
+
+<style>
+/* SARI_BUYER_HERO_SMOOTH_FADE_RIGHT_FIX_V4
+   Keep the hero warm beige and blend that color gradually over the photo.
+   Explicit stacking ensures the gradient sits above the image and below content. */
+.sari-home-hero {
+    position: relative !important;
+    isolation: isolate !important;
+    background-color: #efeae2 !important;
+}
+
+.sari-home-hero .sari-hero-image {
+    z-index: -1 !important;
+}
+
+.sari-home-hero::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    background: linear-gradient(
+        90deg,
+        #efeae2 0%,
+        rgba(239, 234, 226, .995) 27%,
+        rgba(239, 234, 226, .97) 39%,
+        rgba(239, 234, 226, .90) 49%,
+        rgba(239, 234, 226, .73) 59%,
+        rgba(239, 234, 226, .48) 70%,
+        rgba(239, 234, 226, .23) 82%,
+        rgba(239, 234, 226, .08) 92%,
+        rgba(239, 234, 226, 0) 100%
+    ) !important;
+}
+
+.sari-home-hero .sari-hero-content {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+@media (max-width: 1023px) {
+    .sari-home-hero::before {
+        background: linear-gradient(
+            90deg,
+            #efeae2 0%,
+            rgba(239, 234, 226, .98) 38%,
+            rgba(239, 234, 226, .88) 55%,
+            rgba(239, 234, 226, .62) 72%,
+            rgba(239, 234, 226, .28) 88%,
+            rgba(239, 234, 226, .12) 100%
+        ) !important;
+    }
+}
+</style>
+
+<style>
+/* SARI_BUYER_HERO_SEAMLESS_IMAGE_BLEND_FIX_V5
+   Move the image underneath the copy area and fade its left edge into the beige.
+   This removes the hard 48% vertical split rather than only fading the outer hero. */
+.sari-home-hero {
+    position: relative !important;
+    isolation: isolate !important;
+    overflow: hidden !important;
+    background: #efeae2 !important;
+    background-color: #efeae2 !important;
+}
+
+.sari-home-hero .sari-hero-image {
+    position: absolute !important;
+    inset: 0 0 0 38% !important;
+    z-index: 0 !important;
+    overflow: hidden !important;
+}
+
+.sari-home-hero .sari-hero-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.sari-home-hero .sari-hero-image::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+    background: linear-gradient(
+        90deg,
+        #efeae2 0%,
+        rgba(239, 234, 226, .98) 12%,
+        rgba(239, 234, 226, .90) 24%,
+        rgba(239, 234, 226, .70) 38%,
+        rgba(239, 234, 226, .42) 52%,
+        rgba(239, 234, 226, .18) 66%,
+        rgba(239, 234, 226, .05) 80%,
+        rgba(239, 234, 226, 0) 100%
+    ) !important;
+}
+
+.sari-home-hero::before {
+    z-index: 0 !important;
+    pointer-events: none !important;
+}
+
+.sari-home-hero .sari-hero-content {
+    position: relative !important;
+    z-index: 3 !important;
+}
+
+@media (max-width: 1023px) {
+    .sari-home-hero .sari-hero-image {
+        inset: 0 !important;
+    }
+
+    .sari-home-hero .sari-hero-image::before {
+        background: linear-gradient(
+            90deg,
+            #efeae2 0%,
+            rgba(239, 234, 226, .97) 24%,
+            rgba(239, 234, 226, .82) 42%,
+            rgba(239, 234, 226, .55) 62%,
+            rgba(239, 234, 226, .20) 82%,
+            rgba(239, 234, 226, .05) 100%
+        ) !important;
+    }
+}
+</style>

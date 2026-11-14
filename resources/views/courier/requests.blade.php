@@ -28,11 +28,11 @@
 
 body:has(#pickupAssignmentsPage),
 
-body:has(#pickupAssignmentsPage) #courierMain { background: #F4F5F7 !important; color: #1d2939; }
+body:has(#pickupAssignmentsPage) #courierMain { background: var(--sari-dark-4d21eb669b, #F4F5F7) !important; color: var(--sari-dark-e23e64dd1e, #1d2939); }
 
-body:has(#pickupAssignmentsPage) #courierSidebar { background:#fff !important; border-right:1px solid #e9edf2 !important; width:244px; box-shadow:none; }
+body:has(#pickupAssignmentsPage) #courierSidebar { background:var(--sari-dark-950baec030, #fff) !important; border-right:1px solid var(--sari-dark-d8c2716225, #e9edf2) !important; width:244px; box-shadow:none; }
 
-body:has(#pickupAssignmentsPage) #courierSidebar > div:first-child { min-height:78px !important; border-color:#edf0f4 !important; }
+body:has(#pickupAssignmentsPage) #courierSidebar > div:first-child { min-height:78px !important; border-color:var(--sari-dark-d8c2716225, #edf0f4) !important; }
 
 body:has(#pickupAssignmentsPage) #courierSidebarLogo { min-height:78px; }
 
@@ -40,25 +40,25 @@ body:has(#pickupAssignmentsPage) #courierSidebarLogo img { width:112px; }
 
 body:has(#pickupAssignmentsPage) #courierSidebarNav { padding:13px 12px 16px; }
 
-body:has(#pickupAssignmentsPage) #courierSidebarNav .courier-sidebar-section { font-size:8px; font-weight:500; letter-spacing:.12em; color:#98a2b3; }
+body:has(#pickupAssignmentsPage) #courierSidebarNav .courier-sidebar-section { font-size:8px; font-weight:500; letter-spacing:.12em; color:var(--sari-dark-a63aa16d7c, #98a2b3); }
 
 body:has(#pickupAssignmentsPage) #courierSidebarNav [data-courier-sidebar-item] { min-height:41px; border-radius:10px; padding:10px 12px; font-size:11px; font-weight:400; box-shadow:none; gap:11px; }
 
 body:has(#pickupAssignmentsPage) #courierSidebarNav [data-courier-sidebar-item] svg { width:17px; height:17px; stroke-width:1.7; }
 
-body:has(#pickupAssignmentsPage) #courierSidebarNav a[title="Pickup Assignments"] { background:#f3f6fa !important; color:#192638 !important; font-weight:500 !important; position:relative; }
+body:has(#pickupAssignmentsPage) #courierSidebarNav a[title="Pickup Assignments"] { background:var(--sari-dark-950baec030, #f3f6fa) !important; color:var(--sari-dark-e23e64dd1e, #192638) !important; font-weight:500 !important; position:relative; }
 
 body:has(#pickupAssignmentsPage) #courierSidebarNav a[title="Pickup Assignments"]::before { content:''; position:absolute; width:3px; height:25px; left:-12px; top:50%; transform:translateY(-50%); background:#d99a0b; border-radius:0 3px 3px 0; }
 
-body:has(#pickupAssignmentsPage) #courierSidebarProfile { background:#fff !important; border-color:#e9edf2 !important; }
+body:has(#pickupAssignmentsPage) #courierSidebarProfile { background:var(--sari-dark-950baec030, #fff) !important; border-color:var(--sari-dark-d8c2716225, #e9edf2) !important; }
 
-body:has(#pickupAssignmentsPage) #courierSidebarProfile > a { border-color:#e9edf2; box-shadow:none; }
+body:has(#pickupAssignmentsPage) #courierSidebarProfile > a { border-color:var(--sari-dark-d8c2716225, #e9edf2); box-shadow:none; }
 
-body:has(#pickupAssignmentsPage) #courierMain > header { background:rgba(255,255,255,.97) !important; border-bottom:1px solid #e9edf2 !important; box-shadow:none !important; }
+body:has(#pickupAssignmentsPage) #courierMain > header { background:var(--sari-dark-d2fbbe29b8, rgba(255,255,255,.97)) !important; border-bottom:1px solid var(--sari-dark-d8c2716225, #e9edf2) !important; box-shadow:none !important; }
 
 body:has(#pickupAssignmentsPage) #courierMain > header > div:first-child { min-height:70px; padding-inline:clamp(16px,2vw,28px); }
 
-body:has(#pickupAssignmentsPage) #courierMain > header input[type="search"] { border-color:#e8ecf1 !important; border-radius:12px !important; background:#f8fafc !important; font-weight:400; font-size:11px; }
+body:has(#pickupAssignmentsPage) #courierMain > header input[type="search"] { border-color:var(--sari-dark-d8c2716225, #e8ecf1) !important; border-radius:12px !important; background:var(--sari-dark-950baec030, #f8fafc) !important; font-weight:400; font-size:11px; }
 
 body:has(#pickupAssignmentsPage) #courierMain > header button { box-shadow:none !important; border-color:transparent !important; background:transparent !important; }
 
@@ -78,9 +78,9 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 
 #pickupAssignmentsPage {
 
-  --pa-ink:#1d2939; --pa-muted:#7b8797; --pa-border:#e7ebf1;
+  --pa-ink:var(--sari-dark-e23e64dd1e, #1d2939); --pa-muted:var(--sari-dark-a63aa16d7c, #7b8797); --pa-border:var(--sari-dark-d8c2716225, #e7ebf1);
 
-  --pa-shadow:0 3px 12px rgba(26,39,57,.026), 0 12px 32px rgba(26,39,57,.052);
+  --pa-shadow:0 3px 12px var(--sari-dark-54756fd423, rgba(26,39,57,.026)), 0 12px 32px var(--sari-dark-a49f9eb969, rgba(26,39,57,.052));
 
   width:100%; max-width:none; margin:0; padding:0; background:transparent;
 
@@ -98,59 +98,59 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 
 #pickupAssignmentsPage .pa-alert { margin-bottom:16px; padding:13px 17px; border-radius:12px; font-size:11px; line-height:1.6; }
 
-#pickupAssignmentsPage .pa-alert--error { background:#fff1f2; border:1px solid #facdd3; color:#a23c4c; }
+#pickupAssignmentsPage .pa-alert--error { background:var(--sari-dark-950baec030, #fff1f2); border:1px solid var(--sari-dark-d8c2716225, #facdd3); color:var(--sari-dark-a63aa16d7c, #a23c4c); }
 
-#pickupAssignmentsPage .pa-alert--success { background:#edf9f1; border:1px solid #bde7cd; color:#24734f; }
+#pickupAssignmentsPage .pa-alert--success { background:var(--sari-dark-4d21eb669b, #edf9f1); border:1px solid var(--sari-dark-d8c2716225, #bde7cd); color:var(--sari-dark-e23e64dd1e, #24734f); }
 
 #pickupAssignmentsPage .pa-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; }
 
-#pickupAssignmentsPage .pa-kicker { display:flex; align-items:center; gap:8px; margin:0 0 7px; color:#929eac; font-size:10px; font-weight:400; }
+#pickupAssignmentsPage .pa-kicker { display:flex; align-items:center; gap:8px; margin:0 0 7px; color:var(--sari-dark-a63aa16d7c, #929eac); font-size:10px; font-weight:400; }
 
 #pickupAssignmentsPage .pa-kicker i { display:block; width:6px; height:6px; border-radius:50%; background:#d69c20; }
 
-#courierMain #pickupAssignmentsPage .pa-title { margin:0; color:#142235; font-size:clamp(21px,2vw,27px); line-height:1.3; font-weight:600; letter-spacing:-.045em; }
+#courierMain #pickupAssignmentsPage .pa-title { margin:0; color:var(--sari-dark-e23e64dd1e, #142235); font-size:clamp(21px,2vw,27px); line-height:1.3; font-weight:600; letter-spacing:-.045em; }
 
-#pickupAssignmentsPage .pa-description { margin:7px 0 0; max-width:680px; color:#8491a1; font-size:11px; font-weight:400; line-height:1.7; }
+#pickupAssignmentsPage .pa-description { margin:7px 0 0; max-width:680px; color:var(--sari-dark-a63aa16d7c, #8491a1); font-size:11px; font-weight:400; line-height:1.7; }
 
 #pickupAssignmentsPage .pa-top-actions { display:flex; flex-wrap:wrap; gap:9px; padding-top:4px; }
 
-#pickupAssignmentsPage .pa-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:40px; padding:10px 15px; border:1px solid #e4e9ef; border-radius:10px; background:#fff; color:#39485b; font-size:10.5px; font-weight:500; line-height:1.4; white-space:nowrap; transition:background-color .18s ease,border-color .18s ease,transform .18s ease; cursor:pointer; }
+#pickupAssignmentsPage .pa-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:40px; padding:10px 15px; border:1px solid var(--sari-dark-d8c2716225, #e4e9ef); border-radius:10px; background:var(--sari-dark-950baec030, #fff); color:var(--sari-dark-e23e64dd1e, #39485b); font-size:10.5px; font-weight:500; line-height:1.4; white-space:nowrap; transition:background-color .18s ease,border-color .18s ease,transform .18s ease; cursor:pointer; }
 
-#pickupAssignmentsPage .pa-btn:hover { background:#f8fafc; border-color:#ced8e4; }
+#pickupAssignmentsPage .pa-btn:hover { background:var(--sari-dark-950baec030, #f8fafc); border-color:var(--sari-dark-d8c2716225, #ced8e4); }
 
 #pickupAssignmentsPage .pa-btn svg { width:16px; height:16px; flex:none; stroke-width:1.8; }
 
-#pickupAssignmentsPage .pa-btn--dark { background:#192231; border-color:#192231; color:#fff; }
+#pickupAssignmentsPage .pa-btn--dark { background:var(--sari-dark-fbb35de0d1, #192231); border-color:var(--sari-dark-d8c2716225, #192231); color:#fff; }
 
-#pickupAssignmentsPage .pa-btn--dark:hover { background:#2f3c4e; border-color:#2f3c4e; }
+#pickupAssignmentsPage .pa-btn--dark:hover { background:var(--sari-dark-fbb35de0d1, #2f3c4e); border-color:var(--sari-dark-d8c2716225, #2f3c4e); }
 
 #pickupAssignmentsPage .pa-kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:15px; margin-bottom:17px; }
 
 #pickupAssignmentsPage .pa-kpi, #pickupAssignmentsPage .pa-card, #pickupAssignmentsPage .pa-job, #pickupAssignmentsPage .pa-empty {
 
-  background:#fff; border:1px solid rgba(231,236,243,.92); border-radius:15px; box-shadow:var(--pa-shadow);
+  background:var(--sari-dark-950baec030, #fff); border:1px solid var(--sari-dark-ed07d02c93, rgba(231,236,243,.92)); border-radius:15px; box-shadow:var(--pa-shadow);
 
 }
 
 #pickupAssignmentsPage .pa-kpi { display:flex; align-items:center; gap:14px; min-width:0; min-height:98px; padding:17px 20px; }
 
-#pickupAssignmentsPage .pa-kpi-icon { display:flex; align-items:center; justify-content:center; width:30px; height:31px; flex:0 0 30px; color:#4882e9; background:transparent; border:0; box-shadow:none; }
+#pickupAssignmentsPage .pa-kpi-icon { display:flex; align-items:center; justify-content:center; width:30px; height:31px; flex:0 0 30px; color:var(--sari-dark-366658902c, #4882e9); background:transparent; border:0; box-shadow:none; }
 
-#pickupAssignmentsPage .pa-kpi:nth-child(2) .pa-kpi-icon { color:#17a575; }
+#pickupAssignmentsPage .pa-kpi:nth-child(2) .pa-kpi-icon { color:var(--sari-dark-7e1ebeffa8, #17a575); }
 
 #pickupAssignmentsPage .pa-kpi:nth-child(3) .pa-kpi-icon { color:#805ced; }
 
-#pickupAssignmentsPage .pa-kpi:nth-child(4) .pa-kpi-icon { color:#d4a021; }
+#pickupAssignmentsPage .pa-kpi:nth-child(4) .pa-kpi-icon { color:var(--sari-dark-c3cadde8ba, #d4a021); }
 
 #pickupAssignmentsPage .pa-kpi-icon svg { width:24px; height:24px; stroke-width:1.7; }
 
 #pickupAssignmentsPage .pa-kpi-copy { min-width:0; }
 
-#pickupAssignmentsPage .pa-kpi-label { margin:0; color:#7c899b; font-size:11px; font-weight:400; }
+#pickupAssignmentsPage .pa-kpi-label { margin:0; color:var(--sari-dark-a63aa16d7c, #7c899b); font-size:11px; font-weight:400; }
 
-#pickupAssignmentsPage .pa-kpi-number { display:block; margin-top:4px; color:#152136; font-size:24px; line-height:1.25; letter-spacing:-.04em; font-weight:600; font-variant-numeric:tabular-nums; }
+#pickupAssignmentsPage .pa-kpi-number { display:block; margin-top:4px; color:var(--sari-dark-e23e64dd1e, #152136); font-size:24px; line-height:1.25; letter-spacing:-.04em; font-weight:600; font-variant-numeric:tabular-nums; }
 
-#pickupAssignmentsPage .pa-kpi-note { display:block; margin-top:3px; font-size:9px; font-weight:300; color:#9ca6b4; }
+#pickupAssignmentsPage .pa-kpi-note { display:block; margin-top:3px; font-size:9px; font-weight:300; color:var(--sari-dark-a63aa16d7c, #9ca6b4); }
 
 #pickupAssignmentsPage .pa-card { overflow:hidden; }
 
@@ -160,75 +160,75 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 
 #pickupAssignmentsPage .pa-active-heading { display:flex; flex-wrap:wrap; gap:9px; align-items:center; margin-bottom:12px; }
 
-#pickupAssignmentsPage .pa-eyebrow { color:#8995a4; font-size:10px; font-weight:500; letter-spacing:.025em; }
+#pickupAssignmentsPage .pa-eyebrow { color:var(--sari-dark-a63aa16d7c, #8995a4); font-size:10px; font-weight:500; letter-spacing:.025em; }
 
-#pickupAssignmentsPage .pa-pill { display:inline-flex; align-items:center; gap:6px; min-height:24px; border-radius:99px; padding:4px 10px; background:#e9f1ff; color:#3575e0; font-size:9px; line-height:1.2; font-weight:500; }
+#pickupAssignmentsPage .pa-pill { display:inline-flex; align-items:center; gap:6px; min-height:24px; border-radius:99px; padding:4px 10px; background:var(--sari-dark-4d21eb669b, #e9f1ff); color:var(--sari-dark-03fbeade1b, #3575e0); font-size:9px; line-height:1.2; font-weight:500; }
 
 #pickupAssignmentsPage .pa-pill::before { content:''; width:5px; height:5px; background:currentColor; border-radius:50%; opacity:.75; }
 
-#pickupAssignmentsPage .pa-pill--green { background:#e6f7ef; color:#178659; }
+#pickupAssignmentsPage .pa-pill--green { background:var(--sari-dark-4d21eb669b, #e6f7ef); color:var(--sari-dark-7aa9213690, #178659); }
 
-#pickupAssignmentsPage .pa-pill--amber { background:#fff4e1; color:#a7771a; }
+#pickupAssignmentsPage .pa-pill--amber { background:var(--sari-dark-4d21eb669b, #fff4e1); color:var(--sari-dark-96d3c54559, #a7771a); }
 
-#courierMain #pickupAssignmentsPage .pa-active-title { margin:0; color:#1d2b3b; font-weight:600; font-size:17px; letter-spacing:-.026em; overflow-wrap:anywhere; }
+#courierMain #pickupAssignmentsPage .pa-active-title { margin:0; color:var(--sari-dark-e23e64dd1e, #1d2b3b); font-weight:600; font-size:17px; letter-spacing:-.026em; overflow-wrap:anywhere; }
 
-#pickupAssignmentsPage .pa-active-sub { margin:4px 0 0; color:#8693a4; font-size:10px; font-weight:400; }
+#pickupAssignmentsPage .pa-active-sub { margin:4px 0 0; color:var(--sari-dark-a63aa16d7c, #8693a4); font-size:10px; font-weight:400; }
 
-#pickupAssignmentsPage .pa-active-route { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:16px 0 0; color:#526276; font-size:11px; font-weight:400; }
+#pickupAssignmentsPage .pa-active-route { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:16px 0 0; color:var(--sari-dark-a63aa16d7c, #526276); font-size:11px; font-weight:400; }
 
-#pickupAssignmentsPage .pa-active-route b { color:#29384b; font-weight:500; }
+#pickupAssignmentsPage .pa-active-route b { color:var(--sari-dark-e23e64dd1e, #29384b); font-weight:500; }
 
-#pickupAssignmentsPage .pa-active-route svg { width:15px; height:15px; flex:none; color:#b0bbc9; }
+#pickupAssignmentsPage .pa-active-route svg { width:15px; height:15px; flex:none; color:var(--sari-dark-a63aa16d7c, #b0bbc9); }
 
-#pickupAssignmentsPage .pa-active-note { margin:12px 0 0; color:#718096; font-size:10px; line-height:1.75; font-weight:400; }
+#pickupAssignmentsPage .pa-active-note { margin:12px 0 0; color:var(--sari-dark-a63aa16d7c, #718096); font-size:10px; line-height:1.75; font-weight:400; }
 
 #pickupAssignmentsPage .pa-active-action { display:flex; align-items:center; justify-content:flex-end; }
 
 #pickupAssignmentsPage .pa-section-heading { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:15px; margin:24px 1px 15px; }
 
-#courierMain #pickupAssignmentsPage .pa-section-heading h3 { color:#1e293b; font-size:15px; font-weight:600; line-height:1.4; margin:0; letter-spacing:-.025em; }
+#courierMain #pickupAssignmentsPage .pa-section-heading h3 { color:var(--sari-dark-e23e64dd1e, #1e293b); font-size:15px; font-weight:600; line-height:1.4; margin:0; letter-spacing:-.025em; }
 
-#pickupAssignmentsPage .pa-section-heading p { margin:4px 0 0; color:#96a1b0; font-size:10.5px; font-weight:400; }
+#pickupAssignmentsPage .pa-section-heading p { margin:4px 0 0; color:var(--sari-dark-a63aa16d7c, #96a1b0); font-size:10.5px; font-weight:400; }
 
-#pickupAssignmentsPage .pa-section-count { background:#fff; border:1px solid #e8edf3; border-radius:99px; min-width:30px; padding:5px 11px; font-size:10px; color:#718095; font-weight:500; }
+#pickupAssignmentsPage .pa-section-count { background:var(--sari-dark-950baec030, #fff); border:1px solid var(--sari-dark-d8c2716225, #e8edf3); border-radius:99px; min-width:30px; padding:5px 11px; font-size:10px; color:var(--sari-dark-a63aa16d7c, #718095); font-weight:500; }
 
 #pickupAssignmentsPage .pa-toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:15px; }
 
-#pickupAssignmentsPage .pa-search { display:flex; gap:10px; align-items:center; min-width:240px; max-width:460px; height:43px; flex:1; padding:0 13px; background:#fff; border:1px solid #e5eaf0; border-radius:11px; color:#91a0b1; box-shadow:0 2px 7px rgba(26,39,57,.018); }
+#pickupAssignmentsPage .pa-search { display:flex; gap:10px; align-items:center; min-width:240px; max-width:460px; height:43px; flex:1; padding:0 13px; background:var(--sari-dark-950baec030, #fff); border:1px solid var(--sari-dark-d8c2716225, #e5eaf0); border-radius:11px; color:var(--sari-dark-a63aa16d7c, #91a0b1); box-shadow:0 2px 7px var(--sari-dark-7672bb207e, rgba(26,39,57,.018)); }
 
-#pickupAssignmentsPage .pa-search:focus-within { border-color:#a7c2ef; box-shadow:0 0 0 3px rgba(64,121,220,.08); }
+#pickupAssignmentsPage .pa-search:focus-within { border-color:#a7c2ef; box-shadow:0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(64,121,220,.08)); }
 
 #pickupAssignmentsPage .pa-search svg { width:16px; height:16px; flex:none; stroke-width:1.8; }
 
-#pickupAssignmentsPage .pa-search input { width:100%; min-width:0; border:0; outline:0; box-shadow:none; background:transparent; color:#344054; font-size:10.5px; font-weight:400; }
+#pickupAssignmentsPage .pa-search input { width:100%; min-width:0; border:0; outline:0; box-shadow:none; background:transparent; color:var(--sari-dark-e23e64dd1e, #344054); font-size:10.5px; font-weight:400; }
 
-#pickupAssignmentsPage .pa-search input::placeholder { color:#a5afbb; }
+#pickupAssignmentsPage .pa-search input::placeholder { color:var(--sari-dark-a63aa16d7c, #a5afbb); }
 
 #pickupAssignmentsPage .pa-search input:focus-visible { outline:0; }
 
 #pickupAssignmentsPage .pa-filters { display:flex; gap:5px; flex-wrap:wrap; }
 
-#pickupAssignmentsPage .pa-filter { padding:9px 12px; background:transparent; border:1px solid transparent; border-radius:9px; color:#7d899a; font-size:10px; font-weight:400; cursor:pointer; transition:background .15s ease,color .15s ease; }
+#pickupAssignmentsPage .pa-filter { padding:9px 12px; background:transparent; border:1px solid transparent; border-radius:9px; color:var(--sari-dark-a63aa16d7c, #7d899a); font-size:10px; font-weight:400; cursor:pointer; transition:background .15s ease,color .15s ease; }
 
-#pickupAssignmentsPage .pa-filter:hover { color:#344054; background:#fff; }
+#pickupAssignmentsPage .pa-filter:hover { color:var(--sari-dark-e23e64dd1e, #344054); background:var(--sari-dark-950baec030, #fff); }
 
-#pickupAssignmentsPage .pa-filter.is-active { color:#26384c; background:#fff; border-color:#e5eaf0; box-shadow:0 2px 8px rgba(26,39,57,.03); font-weight:500; }
+#pickupAssignmentsPage .pa-filter.is-active { color:var(--sari-dark-e23e64dd1e, #26384c); background:var(--sari-dark-950baec030, #fff); border-color:var(--sari-dark-d8c2716225, #e5eaf0); box-shadow:0 2px 8px var(--sari-dark-b13200ac05, rgba(26,39,57,.03)); font-weight:500; }
 
 #pickupAssignmentsPage .pa-job-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }
 
 #pickupAssignmentsPage .pa-job { min-width:0; padding:22px; transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease; }
 
-#pickupAssignmentsPage .pa-job:hover { transform:translateY(-2px); border-color:#d3dfed; box-shadow:0 6px 18px rgba(26,39,57,.045),0 18px 38px rgba(26,39,57,.07); }
+#pickupAssignmentsPage .pa-job:hover { transform:translateY(-2px); border-color:var(--sari-dark-d8c2716225, #d3dfed); box-shadow:0 6px 18px var(--sari-dark-1190f58155, rgba(26,39,57,.045)),0 18px 38px var(--sari-dark-7c935c8886, rgba(26,39,57,.07)); }
 
 #pickupAssignmentsPage .pa-job-head { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:10px; }
 
-#pickupAssignmentsPage .pa-job-type { display:flex; align-items:center; gap:7px; font-size:9px; color:#8a97a6; font-weight:400; }
+#pickupAssignmentsPage .pa-job-type { display:flex; align-items:center; gap:7px; font-size:9px; color:var(--sari-dark-a63aa16d7c, #8a97a6); font-weight:400; }
 
-#pickupAssignmentsPage .pa-job-type svg { width:16px; height:16px; stroke-width:1.7; color:#b18a3b; }
+#pickupAssignmentsPage .pa-job-type svg { width:16px; height:16px; stroke-width:1.7; color:var(--sari-dark-a63aa16d7c, #b18a3b); }
 
-#courierMain #pickupAssignmentsPage .pa-job-id { margin:9px 0 0; font-size:14px; letter-spacing:-.02em; font-weight:600; color:#1c293a; overflow-wrap:anywhere; }
+#courierMain #pickupAssignmentsPage .pa-job-id { margin:9px 0 0; font-size:14px; letter-spacing:-.02em; font-weight:600; color:var(--sari-dark-e23e64dd1e, #1c293a); overflow-wrap:anywhere; }
 
-#pickupAssignmentsPage .pa-seller-name { margin:4px 0 0; color:#8390a1; font-size:10px; }
+#pickupAssignmentsPage .pa-seller-name { margin:4px 0 0; color:var(--sari-dark-a63aa16d7c, #8390a1); font-size:10px; }
 
 #pickupAssignmentsPage .pa-timeline { display:grid; gap:0; margin:22px 0 18px; }
 
@@ -236,39 +236,39 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 
 #pickupAssignmentsPage .pa-stop-rail { display:flex; align-items:center; flex-direction:column; padding-top:5px; }
 
-#pickupAssignmentsPage .pa-stop-dot { width:9px; height:9px; border-radius:50%; background:#3f83ea; box-shadow:0 0 0 3px #eef4ff; flex:none; }
+#pickupAssignmentsPage .pa-stop-dot { width:9px; height:9px; border-radius:50%; background:#3f83ea; box-shadow:0 0 0 3px var(--sari-dark-f30a5f9061, #eef4ff); flex:none; }
 
-#pickupAssignmentsPage .pa-stop:last-child .pa-stop-dot { background:#1da773; box-shadow:0 0 0 3px #e7f7ee; }
+#pickupAssignmentsPage .pa-stop:last-child .pa-stop-dot { background:#1da773; box-shadow:0 0 0 3px var(--sari-dark-f30a5f9061, #e7f7ee); }
 
-#pickupAssignmentsPage .pa-stop-line { width:1px; min-height:40px; flex:1; margin:6px 0; background:#dfe6ee; }
+#pickupAssignmentsPage .pa-stop-line { width:1px; min-height:40px; flex:1; margin:6px 0; background:var(--sari-dark-4d21eb669b, #dfe6ee); }
 
 #pickupAssignmentsPage .pa-stop-body { padding:0 0 17px; min-width:0; }
 
 #pickupAssignmentsPage .pa-stop:last-child .pa-stop-body { padding-bottom:0; }
 
-#pickupAssignmentsPage .pa-stop-label { color:#98a3b1; font-size:9px; font-weight:400; }
+#pickupAssignmentsPage .pa-stop-label { color:var(--sari-dark-a63aa16d7c, #98a3b1); font-size:9px; font-weight:400; }
 
-#pickupAssignmentsPage .pa-stop-name { margin:3px 0 0; font-size:11px; color:#2d3b4e; font-weight:500; overflow-wrap:anywhere; }
+#pickupAssignmentsPage .pa-stop-name { margin:3px 0 0; font-size:11px; color:var(--sari-dark-e23e64dd1e, #2d3b4e); font-weight:500; overflow-wrap:anywhere; }
 
-#pickupAssignmentsPage .pa-stop-address { margin:3px 0 0; color:#8896a5; font-size:9.5px; font-weight:400; line-height:1.7; overflow-wrap:anywhere; }
+#pickupAssignmentsPage .pa-stop-address { margin:3px 0 0; color:var(--sari-dark-a63aa16d7c, #8896a5); font-size:9.5px; font-weight:400; line-height:1.7; overflow-wrap:anywhere; }
 
-#pickupAssignmentsPage .pa-delivery-note { display:flex; align-items:flex-start; gap:8px; padding:11px 12px; border-radius:10px; background:#f7f9fc; color:#778596; font-size:9px; line-height:1.7; }
+#pickupAssignmentsPage .pa-delivery-note { display:flex; align-items:flex-start; gap:8px; padding:11px 12px; border-radius:10px; background:var(--sari-dark-950baec030, #f7f9fc); color:var(--sari-dark-a63aa16d7c, #778596); font-size:9px; line-height:1.7; }
 
-#pickupAssignmentsPage .pa-delivery-note svg { width:15px; height:15px; flex:none; margin-top:1px; color:#6685b2; }
+#pickupAssignmentsPage .pa-delivery-note svg { width:15px; height:15px; flex:none; margin-top:1px; color:var(--sari-dark-47b03ee611, #6685b2); }
 
-#pickupAssignmentsPage .pa-job-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-top:20px; padding-top:16px; border-top:1px solid #eef1f5; }
+#pickupAssignmentsPage .pa-job-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-top:20px; padding-top:16px; border-top:1px solid var(--sari-dark-d8c2716225, #eef1f5); }
 
-#pickupAssignmentsPage .pa-job-footer > span { font-size:9.5px; color:#96a1b0; }
+#pickupAssignmentsPage .pa-job-footer > span { font-size:9.5px; color:var(--sari-dark-a63aa16d7c, #96a1b0); }
 
 #pickupAssignmentsPage .pa-job-footer .pa-btn { min-height:38px; padding:9px 13px; }
 
 #pickupAssignmentsPage .pa-empty { display:flex; align-items:center; justify-content:center; flex-direction:column; gap:7px; min-height:238px; padding:32px 18px; text-align:center; }
 
-#pickupAssignmentsPage .pa-empty > svg { width:40px; height:40px; color:#aeb9c8; stroke-width:1.4; margin-bottom:5px; }
+#pickupAssignmentsPage .pa-empty > svg { width:40px; height:40px; color:var(--sari-dark-a63aa16d7c, #aeb9c8); stroke-width:1.4; margin-bottom:5px; }
 
-#courierMain #pickupAssignmentsPage .pa-empty h4 { margin:0; color:#46566a; font-size:12px; font-weight:500; }
+#courierMain #pickupAssignmentsPage .pa-empty h4 { margin:0; color:var(--sari-dark-e23e64dd1e, #46566a); font-size:12px; font-weight:500; }
 
-#pickupAssignmentsPage .pa-empty p { margin:0; max-width:370px; font-size:10px; color:#98a3b2; line-height:1.75; }
+#pickupAssignmentsPage .pa-empty p { margin:0; max-width:370px; font-size:10px; color:var(--sari-dark-a63aa16d7c, #98a3b2); line-height:1.75; }
 
 #pickupAssignmentsPage .pa-empty .pa-btn { margin-top:9px; }
 
@@ -354,11 +354,11 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 
 #pickupAssignmentsPage .pa-kpi { min-height:116px; padding:21px 23px; }
 
-#pickupAssignmentsPage .pa-kpi-label { font-size:13px; color:#667588; }
+#pickupAssignmentsPage .pa-kpi-label { font-size:13px; color:var(--sari-dark-a63aa16d7c, #667588); }
 
 #pickupAssignmentsPage .pa-kpi-number { font-size:clamp(28px,2.5vw,36px); }
 
-#pickupAssignmentsPage .pa-kpi-note { font-size:11px; color:#929dab; }
+#pickupAssignmentsPage .pa-kpi-note { font-size:11px; color:var(--sari-dark-a63aa16d7c, #929dab); }
 
 #pickupAssignmentsPage .pa-kpi-icon,
 
@@ -366,7 +366,7 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 
 #pickupAssignmentsPage .pa-kpi:nth-child(3) .pa-kpi-icon,
 
-#pickupAssignmentsPage .pa-kpi:nth-child(4) .pa-kpi-icon { color:#8995a5; }
+#pickupAssignmentsPage .pa-kpi:nth-child(4) .pa-kpi-icon { color:var(--sari-dark-a63aa16d7c, #8995a5); }
 
 #pickupAssignmentsPage .pa-kpi-icon svg { stroke-width:1.6; }
 
@@ -406,27 +406,27 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 
 #pickupAssignmentsPage .pa-job-type svg,
 
-#pickupAssignmentsPage .pa-delivery-note svg { color:#8793a3; }
+#pickupAssignmentsPage .pa-delivery-note svg { color:var(--sari-dark-a63aa16d7c, #8793a3); }
 
 #pickupAssignmentsPage .pa-stop-dot,
 
-#pickupAssignmentsPage .pa-stop:last-child .pa-stop-dot { background:#9CA7B6; box-shadow:0 0 0 3px #F0F2F5; }
+#pickupAssignmentsPage .pa-stop:last-child .pa-stop-dot { background:#9CA7B6; box-shadow:0 0 0 3px var(--sari-dark-f30a5f9061, #F0F2F5); }
 
 #pickupAssignmentsPage .pa-pill,
 
 #pickupAssignmentsPage .pa-pill--green,
 
-#pickupAssignmentsPage .pa-pill--amber { background:#F2F4F7; color:#667588; }
+#pickupAssignmentsPage .pa-pill--amber { background:var(--sari-dark-4d21eb669b, #F2F4F7); color:var(--sari-dark-a63aa16d7c, #667588); }
 
 #pickupAssignmentsPage .pa-active::before { background:#C8A052; }
 
 #pickupAssignmentsPage .pa-empty { min-height:280px; padding:42px 22px; }
 
-#pickupAssignmentsPage .pa-empty > svg { width:48px; height:48px; color:#9AA5B3; stroke-width:1.5; }
+#pickupAssignmentsPage .pa-empty > svg { width:48px; height:48px; color:var(--sari-dark-a63aa16d7c, #9AA5B3); stroke-width:1.5; }
 
-#courierMain #pickupAssignmentsPage .pa-empty h4 { font-size:17px; color:#687688; font-weight:500; }
+#courierMain #pickupAssignmentsPage .pa-empty h4 { font-size:17px; color:var(--sari-dark-a63aa16d7c, #687688); font-weight:500; }
 
-#pickupAssignmentsPage .pa-empty p { max-width:460px; font-size:13px; color:#8B97A6; }
+#pickupAssignmentsPage .pa-empty p { max-width:460px; font-size:13px; color:var(--sari-dark-a63aa16d7c, #8B97A6); }
 
 @media (max-width:500px) {
 
@@ -446,15 +446,15 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 /* Pickup Assignments — visual alignment with Active Deliveries, Last-Mile and Rider Earnings.
    Scoped, presentation-only. Do not alter job filtering, dispatch polling or courier routes. */
 #pickupAssignmentsPage {
-  --pa-ink:#2f3742;
-  --pa-muted:#7a8593;
-  --pa-border:#e5e7eb;
+  --pa-ink:var(--sari-dark-e23e64dd1e, #2f3742);
+  --pa-muted:var(--sari-dark-a63aa16d7c, #7a8593);
+  --pa-border:var(--sari-dark-d8c2716225, #e5e7eb);
   --pa-gold:#c88912;
   --pa-gold-hover:#b47b0e;
-  --pa-shadow:0 2px 5px rgba(15,23,42,.045),
-              0 10px 24px rgba(15,23,42,.075),
-              0 24px 54px rgba(15,23,42,.095),
-              inset 0 1px 0 rgba(255,255,255,.92);
+  --pa-shadow:0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+              0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+              0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+              inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
   max-width:1400px;
   margin:0 auto;
   font:400 13px/1.65 'Poppins',ui-sans-serif,system-ui,sans-serif;
@@ -496,26 +496,26 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 #pickupAssignmentsPage .pa-empty {
   border:1px solid var(--pa-border);
   border-radius:18px;
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
   box-shadow:var(--pa-shadow);
 }
 #pickupAssignmentsPage .pa-kpi { min-height:110px; padding:14px 17px; gap:14px; }
 #pickupAssignmentsPage .pa-kpi-icon { width:29px; height:29px; flex-basis:29px; color:var(--pa-gold); }
 #pickupAssignmentsPage .pa-kpi:nth-child(1) .pa-kpi-icon { color:var(--pa-gold); }
-#pickupAssignmentsPage .pa-kpi:nth-child(2) .pa-kpi-icon { color:#3865c7; }
-#pickupAssignmentsPage .pa-kpi:nth-child(3) .pa-kpi-icon { color:#0f8a6b; }
+#pickupAssignmentsPage .pa-kpi:nth-child(2) .pa-kpi-icon { color:var(--sari-dark-059589c01f, #3865c7); }
+#pickupAssignmentsPage .pa-kpi:nth-child(3) .pa-kpi-icon { color:var(--sari-dark-03a543331f, #0f8a6b); }
 #pickupAssignmentsPage .pa-kpi:nth-child(4) .pa-kpi-icon { color:#8b5cf6; }
 #pickupAssignmentsPage .pa-kpi-icon svg { width:25px; height:25px; stroke-width:1.8; }
-#pickupAssignmentsPage .pa-kpi-label { color:#5f6d7c; font-size:12.5px; font-weight:600; line-height:1.4; }
+#pickupAssignmentsPage .pa-kpi-label { color:var(--sari-dark-a63aa16d7c, #5f6d7c); font-size:12.5px; font-weight:600; line-height:1.4; }
 #pickupAssignmentsPage .pa-kpi-number {
   margin-top:5px;
-  color:#1f2937;
+  color:var(--sari-dark-e23e64dd1e, #1f2937);
   font-size:clamp(24px,1.95vw,29px);
   font-weight:650;
   letter-spacing:-.045em;
   line-height:1.12;
 }
-#pickupAssignmentsPage .pa-kpi-note { margin-top:4px; color:#929eab; font-size:10.5px; font-weight:400; line-height:1.5; }
+#pickupAssignmentsPage .pa-kpi-note { margin-top:4px; color:var(--sari-dark-a63aa16d7c, #929eab); font-size:10.5px; font-weight:400; line-height:1.5; }
 #pickupAssignmentsPage .pa-active {
   gap:18px;
   margin-bottom:18px;
@@ -523,16 +523,16 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 }
 #pickupAssignmentsPage .pa-active::before { background:var(--pa-gold); top:19px; bottom:19px; }
 #pickupAssignmentsPage .pa-active-heading { margin-bottom:10px; }
-#pickupAssignmentsPage .pa-eyebrow { color:#8b96a4; font-size:9.5px; font-weight:700; letter-spacing:.06em; }
-#pickupAssignmentsPage .pa-pill { border:1px solid #e5e7eb; background:#f8fafc; color:#647384; font-size:10px; font-weight:650; }
-#pickupAssignmentsPage .pa-pill--green { background:#effcf3; color:#18794e; border-color:#bde7c9; }
-#pickupAssignmentsPage .pa-pill--amber { background:#f8fafc; color:#647384; border-color:#e5e7eb; }
+#pickupAssignmentsPage .pa-eyebrow { color:var(--sari-dark-a63aa16d7c, #8b96a4); font-size:9.5px; font-weight:700; letter-spacing:.06em; }
+#pickupAssignmentsPage .pa-pill { border:1px solid var(--sari-dark-d8c2716225, #e5e7eb); background:var(--sari-dark-950baec030, #f8fafc); color:var(--sari-dark-a63aa16d7c, #647384); font-size:10px; font-weight:650; }
+#pickupAssignmentsPage .pa-pill--green { background:var(--sari-dark-4d21eb669b, #effcf3); color:var(--sari-dark-bef1dc8dc1, #18794e); border-color:var(--sari-dark-d8c2716225, #bde7c9); }
+#pickupAssignmentsPage .pa-pill--amber { background:var(--sari-dark-950baec030, #f8fafc); color:var(--sari-dark-a63aa16d7c, #647384); border-color:var(--sari-dark-d8c2716225, #e5e7eb); }
 #courierMain #pickupAssignmentsPage .pa-active-title,
-#courierPageContent #pickupAssignmentsPage .pa-active-title { color:#293440; font-size:16px; font-weight:750; }
-#pickupAssignmentsPage .pa-active-sub { font-size:11px; color:#8b96a4; }
-#pickupAssignmentsPage .pa-active-route { margin-top:14px; color:#566579; font-size:11.5px; }
-#pickupAssignmentsPage .pa-active-route b { font-weight:700; color:#344357; }
-#pickupAssignmentsPage .pa-active-note { margin-top:10px; color:#647384; font-size:11px; }
+#courierPageContent #pickupAssignmentsPage .pa-active-title { color:var(--sari-dark-e23e64dd1e, #293440); font-size:16px; font-weight:750; }
+#pickupAssignmentsPage .pa-active-sub { font-size:11px; color:var(--sari-dark-a63aa16d7c, #8b96a4); }
+#pickupAssignmentsPage .pa-active-route { margin-top:14px; color:var(--sari-dark-a63aa16d7c, #566579); font-size:11.5px; }
+#pickupAssignmentsPage .pa-active-route b { font-weight:700; color:var(--sari-dark-e23e64dd1e, #344357); }
+#pickupAssignmentsPage .pa-active-note { margin-top:10px; color:var(--sari-dark-a63aa16d7c, #647384); font-size:11px; }
 #pickupAssignmentsPage .pa-btn { min-height:42px; padding:10px 15px; border-radius:12px; font-size:11.5px; font-weight:700; }
 #pickupAssignmentsPage .pa-btn--dark { background:var(--pa-gold); border-color:var(--pa-gold); color:#fff; }
 #pickupAssignmentsPage .pa-btn--dark:hover { background:var(--pa-gold-hover); border-color:var(--pa-gold-hover); color:#fff; }
@@ -540,47 +540,47 @@ body:has(#pickupAssignmentsPage) #courierMain > header h1 { font-weight:600 !imp
 #pickupAssignmentsPage .pa-section-heading { margin:20px 1px 13px; gap:10px 16px; }
 #courierMain #pickupAssignmentsPage .pa-section-heading h3,
 #courierPageContent #pickupAssignmentsPage .pa-section-heading h3 {
-  color:#2f3742;
+  color:var(--sari-dark-e23e64dd1e, #2f3742);
   font-size:17px;
   font-weight:750;
   line-height:1.4;
   letter-spacing:-.025em;
 }
-#pickupAssignmentsPage .pa-section-heading p { font-size:11.5px; color:#8b96a4; }
-#pickupAssignmentsPage .pa-section-count { border-color:#e5e7eb; background:#f8fafc; color:#647384; font-size:10.5px; font-weight:650; }
+#pickupAssignmentsPage .pa-section-heading p { font-size:11.5px; color:var(--sari-dark-a63aa16d7c, #8b96a4); }
+#pickupAssignmentsPage .pa-section-count { border-color:var(--sari-dark-d8c2716225, #e5e7eb); background:var(--sari-dark-950baec030, #f8fafc); color:var(--sari-dark-a63aa16d7c, #647384); font-size:10.5px; font-weight:650; }
 #pickupAssignmentsPage .pa-toolbar { margin-bottom:14px; gap:12px; }
-#pickupAssignmentsPage .pa-search { height:45px; max-width:480px; border:1px solid #dce2e8; border-radius:12px; color:#97a3b2; box-shadow:none; }
-#pickupAssignmentsPage .pa-search:focus-within { border-color:var(--pa-gold); background:#fff; box-shadow:none; }
-#pickupAssignmentsPage .pa-search input { font-size:11.5px; color:#344357; }
-#pickupAssignmentsPage .pa-filter { font-size:11px; font-weight:650; border-radius:10px; min-height:39px; padding:9px 12px; color:#7b8794; }
-#pickupAssignmentsPage .pa-filter:hover { background:#f1f3f5; color:#344357; }
-#pickupAssignmentsPage .pa-filter.is-active { background:#fff; border-color:#d9b977; color:#9b6b14; box-shadow:none; font-weight:750; }
+#pickupAssignmentsPage .pa-search { height:45px; max-width:480px; border:1px solid var(--sari-dark-d8c2716225, #dce2e8); border-radius:12px; color:var(--sari-dark-a63aa16d7c, #97a3b2); box-shadow:none; }
+#pickupAssignmentsPage .pa-search:focus-within { border-color:var(--pa-gold); background:var(--sari-dark-950baec030, #fff); box-shadow:none; }
+#pickupAssignmentsPage .pa-search input { font-size:11.5px; color:var(--sari-dark-e23e64dd1e, #344357); }
+#pickupAssignmentsPage .pa-filter { font-size:11px; font-weight:650; border-radius:10px; min-height:39px; padding:9px 12px; color:var(--sari-dark-a63aa16d7c, #7b8794); }
+#pickupAssignmentsPage .pa-filter:hover { background:var(--sari-dark-4d21eb669b, #f1f3f5); color:var(--sari-dark-e23e64dd1e, #344357); }
+#pickupAssignmentsPage .pa-filter.is-active { background:var(--sari-dark-950baec030, #fff); border-color:#d9b977; color:var(--sari-dark-70ad317896, #9b6b14); box-shadow:none; font-weight:750; }
 #pickupAssignmentsPage .pa-job-grid { gap:14px; }
 #pickupAssignmentsPage .pa-job { padding:20px 21px; transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease; }
-#pickupAssignmentsPage .pa-job:hover { transform:none; background:#fdfefe; border-color:#d5dbe4; box-shadow:var(--pa-shadow); }
-#pickupAssignmentsPage .pa-job-type { color:#8b96a4; font-size:10px; font-weight:650; }
+#pickupAssignmentsPage .pa-job:hover { transform:none; background:var(--sari-dark-950baec030, #fdfefe); border-color:var(--sari-dark-d8c2716225, #d5dbe4); box-shadow:var(--pa-shadow); }
+#pickupAssignmentsPage .pa-job-type { color:var(--sari-dark-a63aa16d7c, #8b96a4); font-size:10px; font-weight:650; }
 #pickupAssignmentsPage .pa-job-type svg { color:var(--pa-gold); }
 #courierMain #pickupAssignmentsPage .pa-job-id,
-#courierPageContent #pickupAssignmentsPage .pa-job-id { margin-top:7px; color:#293440; font-size:15px; font-weight:750; }
-#pickupAssignmentsPage .pa-seller-name { color:#8190a0; font-size:11px; }
+#courierPageContent #pickupAssignmentsPage .pa-job-id { margin-top:7px; color:var(--sari-dark-e23e64dd1e, #293440); font-size:15px; font-weight:750; }
+#pickupAssignmentsPage .pa-seller-name { color:var(--sari-dark-a63aa16d7c, #8190a0); font-size:11px; }
 #pickupAssignmentsPage .pa-timeline { margin:17px 0 15px; }
 #pickupAssignmentsPage .pa-stop-dot,
-#pickupAssignmentsPage .pa-stop:last-child .pa-stop-dot { background:var(--pa-gold); box-shadow:0 0 0 3px #f1f3f5; }
+#pickupAssignmentsPage .pa-stop:last-child .pa-stop-dot { background:var(--pa-gold); box-shadow:0 0 0 3px var(--sari-dark-f30a5f9061, #f1f3f5); }
 #pickupAssignmentsPage .pa-stop:last-child .pa-stop-dot { background:#94a3b8; }
-#pickupAssignmentsPage .pa-stop-line { background:#dce3eb; }
-#pickupAssignmentsPage .pa-stop-label { color:#929eab; font-size:10px; font-weight:650; }
-#pickupAssignmentsPage .pa-stop-name { color:#465363; font-size:12px; font-weight:650; }
-#pickupAssignmentsPage .pa-stop-address { color:#8290a0; font-size:11px; line-height:1.6; }
-#pickupAssignmentsPage .pa-delivery-note { padding:11px 13px; border:1px solid #e2e8f0; background:#f8fafc; color:#64748b; font-size:10.5px; line-height:1.65; }
+#pickupAssignmentsPage .pa-stop-line { background:var(--sari-dark-4d21eb669b, #dce3eb); }
+#pickupAssignmentsPage .pa-stop-label { color:var(--sari-dark-a63aa16d7c, #929eab); font-size:10px; font-weight:650; }
+#pickupAssignmentsPage .pa-stop-name { color:var(--sari-dark-e23e64dd1e, #465363); font-size:12px; font-weight:650; }
+#pickupAssignmentsPage .pa-stop-address { color:var(--sari-dark-a63aa16d7c, #8290a0); font-size:11px; line-height:1.6; }
+#pickupAssignmentsPage .pa-delivery-note { padding:11px 13px; border:1px solid var(--sari-dark-d8c2716225, #e2e8f0); background:var(--sari-dark-950baec030, #f8fafc); color:var(--sari-dark-a63aa16d7c, #64748b); font-size:10.5px; line-height:1.65; }
 #pickupAssignmentsPage .pa-delivery-note svg { color:var(--pa-gold); }
-#pickupAssignmentsPage .pa-job-footer { margin-top:17px; padding-top:15px; border-color:#edf0f3; }
-#pickupAssignmentsPage .pa-job-footer > span { color:#8b96a4; font-size:10.5px; }
+#pickupAssignmentsPage .pa-job-footer { margin-top:17px; padding-top:15px; border-color:var(--sari-dark-d8c2716225, #edf0f3); }
+#pickupAssignmentsPage .pa-job-footer > span { color:var(--sari-dark-a63aa16d7c, #8b96a4); font-size:10.5px; }
 #pickupAssignmentsPage .pa-job-footer .pa-btn { min-height:41px; font-size:11.5px; }
 #pickupAssignmentsPage .pa-empty { min-height:265px; padding:40px 20px; }
-#pickupAssignmentsPage .pa-empty > svg { color:#98a3ae; }
+#pickupAssignmentsPage .pa-empty > svg { color:var(--sari-dark-a63aa16d7c, #98a3ae); }
 #courierMain #pickupAssignmentsPage .pa-empty h4,
-#courierPageContent #pickupAssignmentsPage .pa-empty h4 { color:#546172; font-size:17px; font-weight:750; }
-#pickupAssignmentsPage .pa-empty p { color:#8290a0; font-size:11.5px; }
+#courierPageContent #pickupAssignmentsPage .pa-empty h4 { color:var(--sari-dark-a63aa16d7c, #546172); font-size:17px; font-weight:750; }
+#pickupAssignmentsPage .pa-empty p { color:var(--sari-dark-a63aa16d7c, #8290a0); font-size:11.5px; }
 @media (max-width:1180px) {
   #pickupAssignmentsPage .pa-job-grid { grid-template-columns:1fr; }
   #pickupAssignmentsPage .pa-kpi { padding:13px 14px; gap:12px; }

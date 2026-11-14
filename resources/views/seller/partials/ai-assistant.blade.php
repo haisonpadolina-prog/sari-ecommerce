@@ -185,10 +185,10 @@
         --sari-ai-gold-dark: #bb7d08;
         --sari-ai-charcoal: #24282f;
         --sari-ai-gold-soft: #fff9ec;
-        --sari-ai-ink: #17202d;
-        --sari-ai-text: #475467;
-        --sari-ai-muted: #98a2b3;
-        --sari-ai-line: #e4e7ec;
+        --sari-ai-ink: var(--sari-dark-e23e64dd1e, #17202d);
+        --sari-ai-text: var(--sari-dark-e23e64dd1e, #475467);
+        --sari-ai-muted: var(--sari-dark-a63aa16d7c, #98a2b3);
+        --sari-ai-line: var(--sari-dark-d8c2716225, #e4e7ec);
         --sari-ai-soft: #f7f9fb;
 
         position: fixed;
@@ -228,7 +228,7 @@
     }
 
     .sari-seller-ai-launcher:focus-visible {
-        box-shadow: 0 0 0 4px rgba(213, 150, 23, .2);
+        box-shadow: 0 0 0 4px var(--sari-dark-ef22e61893, rgba(213, 150, 23, .2));
     }
 
     .sari-seller-ai-launcher-aura {
@@ -262,7 +262,7 @@
         bottom: 6px;
         width: 14px;
         height: 14px;
-        border: 3px solid #fff;
+        border: 3px solid var(--sari-dark-d8c2716225, #fff);
         border-radius: 50%;
         background: #35a568;
         box-shadow: none;
@@ -274,26 +274,26 @@
         display: grid;
         min-width: 132px;
         gap: 1px;
-        border: 1px solid #e4e7ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e7ec);
         border-radius: 12px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 8px 10px;
         text-align: left;
         opacity: 0;
         pointer-events: none;
         transform: translateX(6px);
-        box-shadow: 0 12px 28px rgba(16, 24, 40, .1);
+        box-shadow: 0 12px 28px var(--sari-dark-8eadf403a5, rgba(16, 24, 40, .1));
         transition: opacity .14s ease, transform .14s ease;
     }
 
     .sari-seller-ai-launcher-callout strong {
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-size: 8.8px;
         font-weight: 700;
     }
 
     .sari-seller-ai-launcher-callout small {
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 6.9px;
         font-weight: 500;
     }
@@ -315,12 +315,12 @@
         height: min(596px, calc(100dvh - 110px));
         grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
         overflow: hidden;
-        border: 1px solid #dfe3e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8);
         border-radius: 20px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         box-shadow:
-            0 32px 80px rgba(16, 24, 40, .18),
-            0 8px 24px rgba(16, 24, 40, .06);
+            0 32px 80px var(--sari-dark-3793f9e558, rgba(16, 24, 40, .18)),
+            0 8px 24px var(--sari-dark-361b571631, rgba(16, 24, 40, .06));
         opacity: 0;
         pointer-events: none;
         transform: translateY(12px) scale(.985);
@@ -350,8 +350,8 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        border-bottom: 1px solid #eaecf0;
-        background: #fff;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eaecf0);
+        background: var(--sari-dark-950baec030, #fff);
         padding: 10px 12px;
     }
 
@@ -389,7 +389,7 @@
         bottom: 1px;
         width: 10px;
         height: 10px;
-        border: 2px solid #fff;
+        border: 2px solid var(--sari-dark-d8c2716225, #fff);
         border-radius: 50%;
         background: #35a568;
         box-shadow: none;
@@ -424,7 +424,7 @@
         border-radius: 999px;
         background: var(--sari-ai-charcoal);
         padding: 0 6px;
-        color: #f0bd4c;
+        color: var(--sari-dark-bc0de3730f, #f0bd4c);
         font-size: 5.9px;
         font-weight: 800;
         letter-spacing: .08em;
@@ -435,7 +435,7 @@
         align-items: center;
         gap: 5px;
         margin-top: 3px;
-        color: #7c8592;
+        color: var(--sari-dark-a63aa16d7c, #7c8592);
         font-size: 7.5px;
         font-weight: 500;
     }
@@ -461,16 +461,16 @@
         border: 1px solid transparent;
         border-radius: 9px;
         background: transparent;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         cursor: pointer;
         outline: none;
     }
 
     .sari-seller-ai-icon-button:hover,
     .sari-seller-ai-icon-button:focus-visible {
-        border-color: #e4e7ec;
-        background: #f8fafc;
-        color: #344054;
+        border-color: var(--sari-dark-d8c2716225, #e4e7ec);
+        background: var(--sari-dark-950baec030, #f8fafc);
+        color: var(--sari-dark-e23e64dd1e, #344054);
     }
 
     .sari-seller-ai-icon-button svg {
@@ -484,8 +484,8 @@
         gap: 8px;
         align-items: center;
         min-height: 51px;
-        border-bottom: 1px solid #eaecf0;
-        background: #fcfcfd;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eaecf0);
+        background: var(--sari-dark-950baec030, #fcfcfd);
         padding: 8px 12px;
     }
 
@@ -494,10 +494,10 @@
         width: 30px;
         height: 30px;
         place-items: center;
-        border: 1px solid #e4e7ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e7ec);
         border-radius: 9px;
-        background: #fff;
-        color: #7c8592;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #7c8592);
     }
 
     .sari-seller-ai-context-icon svg {
@@ -511,7 +511,7 @@
 
     .sari-seller-ai-context-copy small {
         display: block;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 6.7px;
         font-weight: 650;
         letter-spacing: .06em;
@@ -522,7 +522,7 @@
         display: block;
         overflow: hidden;
         margin-top: 2px;
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
         font-size: 8.6px;
         font-weight: 700;
         text-overflow: ellipsis;
@@ -534,11 +534,11 @@
         min-height: 24px;
         align-items: center;
         gap: 5px;
-        border: 1px solid #d8eadf;
+        border: 1px solid var(--sari-dark-d8c2716225, #d8eadf);
         border-radius: 999px;
-        background: #f4faf6;
+        background: var(--sari-dark-950baec030, #f4faf6);
         padding: 0 7px;
-        color: #4f7d63;
+        color: var(--sari-dark-a63aa16d7c, #4f7d63);
         font-size: 6.7px;
         font-weight: 700;
         white-space: nowrap;
@@ -560,7 +560,7 @@
         overflow-y: auto;
         overflow-x: hidden;
         overscroll-behavior: contain;
-        background: #f7f9fb;
+        background: var(--sari-dark-950baec030, #f7f9fb);
         padding: 11px 10px 14px;
         scrollbar-width: thin;
         scrollbar-color: #d0d5dd transparent;
@@ -607,7 +607,7 @@
     }
 
     .sari-seller-ai-welcome-kicker {
-        color: #b97805;
+        color: var(--sari-dark-af18afcaa4, #b97805);
         font-size: 6.7px;
         font-weight: 800;
         letter-spacing: .13em;
@@ -615,7 +615,7 @@
 
     .sari-seller-ai-welcome-copy h2 {
         margin: 5px 0 0;
-        color: #1d2939;
+        color: var(--sari-dark-e23e64dd1e, #1d2939);
         font-size: 15px;
         font-weight: 750;
         letter-spacing: -.02em;
@@ -623,7 +623,7 @@
 
     .sari-seller-ai-welcome-copy p {
         margin: 6px 0 0;
-        color: #7c8592;
+        color: var(--sari-dark-a63aa16d7c, #7c8592);
         font-size: 8.4px;
         line-height: 1.55;
     }
@@ -642,24 +642,24 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        border: 1px solid #e4e7ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e7ec);
         border-radius: 11px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 10px;
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
         font-family: inherit;
         font-size: 8.3px;
         font-weight: 650;
         text-align: left;
         cursor: pointer;
-        box-shadow: 0 3px 10px rgba(16, 24, 40, .025);
+        box-shadow: 0 3px 10px var(--sari-dark-e1384eb7fc, rgba(16, 24, 40, .025));
     }
 
     .sari-seller-ai-welcome-actions button:hover,
     .sari-seller-ai-welcome-actions button:focus-visible {
         border-color: #ead3a0;
-        background: #fffaf0;
-        color: #9b6505;
+        background: var(--sari-dark-950baec030, #fffaf0);
+        color: var(--sari-dark-af18afcaa4, #9b6505);
         outline: none;
     }
 
@@ -667,7 +667,7 @@
         width: 12px;
         height: 12px;
         flex: 0 0 auto;
-        color: #b97805;
+        color: var(--sari-dark-af18afcaa4, #b97805);
     }
 
     .sari-seller-ai-message {
@@ -726,11 +726,11 @@
     .sari-seller-ai-message--assistant .sari-seller-ai-bubble {
         width: auto;
         max-width: calc(100% - 35px);
-        border: 1px solid #e4e7ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e7ec);
         border-bottom-left-radius: 5px;
-        background: #fff;
-        color: #475467;
-        box-shadow: 0 4px 12px rgba(16, 24, 40, .035);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #475467);
+        box-shadow: 0 4px 12px var(--sari-dark-7593018246, rgba(16, 24, 40, .035));
     }
 
     .sari-seller-ai-message--user .sari-seller-ai-bubble {
@@ -740,7 +740,7 @@
         border-bottom-right-radius: 5px;
         background: #d59617;
         color: #fff;
-        box-shadow: 0 5px 13px rgba(213, 150, 23, .14);
+        box-shadow: 0 5px 13px var(--sari-dark-59ed29fe9d, rgba(213, 150, 23, .14));
     }
 
     .sari-seller-ai-bubble p {
@@ -763,7 +763,7 @@
     .sari-seller-ai-message-label {
         display: block;
         margin: 0 0 4px 35px;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 6.7px;
         font-weight: 750;
         letter-spacing: .08em;
@@ -811,18 +811,18 @@
     }
 
     .sari-seller-ai-message--assistant .sari-seller-ai-bubble {
-        border: 1px solid #e4e7ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e7ec);
         border-bottom-left-radius: 5px;
-        background: #fff;
-        color: #475467;
-        box-shadow: 0 4px 12px rgba(16, 24, 40, .035);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #475467);
+        box-shadow: 0 4px 12px var(--sari-dark-7593018246, rgba(16, 24, 40, .035));
     }
 
     .sari-seller-ai-message--user .sari-seller-ai-bubble {
         border-bottom-right-radius: 5px;
         background: #d59617;
         color: #fff;
-        box-shadow: 0 5px 13px rgba(213, 150, 23, .14);
+        box-shadow: 0 5px 13px var(--sari-dark-59ed29fe9d, rgba(213, 150, 23, .14));
     }
 
     .sari-seller-ai-typing-wrap {
@@ -841,7 +841,7 @@
     }
 
     .sari-seller-ai-typing-label {
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 6.6px;
         font-weight: 700;
         letter-spacing: .06em;
@@ -854,9 +854,9 @@
         height: 34px;
         align-items: center;
         gap: 4px;
-        border: 1px solid #e4e7ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4e7ec);
         border-radius: 12px 12px 12px 5px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 11px;
     }
 
@@ -880,8 +880,8 @@
        Dynamic suggestions + composer
        ---------------------------------------------------------- */
     .sari-seller-ai-composer-wrap {
-        border-top: 1px solid #eaecf0;
-        background: #fff;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eaecf0);
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .sari-seller-ai-suggestions {
@@ -907,11 +907,11 @@
         max-width: 190px;
         flex: 0 0 auto;
         overflow: hidden;
-        border: 1px solid #e3e6ea;
+        border: 1px solid var(--sari-dark-d8c2716225, #e3e6ea);
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 9px;
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
         font-family: inherit;
         font-size: 7.2px;
         font-weight: 650;
@@ -924,8 +924,8 @@
     .sari-seller-ai-suggestions button:hover,
     .sari-seller-ai-suggestions button:focus-visible {
         border-color: #e6ce99;
-        background: #fffaf0;
-        color: #9b6505;
+        background: var(--sari-dark-950baec030, #fffaf0);
+        color: var(--sari-dark-af18afcaa4, #9b6505);
         outline: none;
     }
 
@@ -943,25 +943,25 @@
         max-height: 104px;
         resize: none;
         overflow-y: auto;
-        border: 1px solid #dfe3e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8);
         border-radius: 12px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 11px;
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
         font-family: inherit;
         font-size: 9.4px;
         line-height: 1.45;
         outline: none;
-        box-shadow: 0 1px 2px rgba(16,24,40,.015);
+        box-shadow: 0 1px 2px var(--sari-dark-37396001f9, rgba(16,24,40,.015));
     }
 
     .sari-seller-ai-composer textarea::placeholder {
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
     }
 
     .sari-seller-ai-composer textarea:focus {
         border-color: #d59617;
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08);
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08));
     }
 
     .sari-seller-ai-send {
@@ -975,7 +975,7 @@
         color: #fff;
         cursor: pointer;
         outline: none;
-        box-shadow: 0 6px 14px rgba(213, 150, 23, .16);
+        box-shadow: 0 6px 14px var(--sari-dark-b5c2a2270e, rgba(213, 150, 23, .16));
     }
 
     .sari-seller-ai-send:hover,
@@ -1001,7 +1001,7 @@
         justify-content: space-between;
         gap: 8px;
         padding: 0 11px 6px;
-        color: #b0b7c3;
+        color: var(--sari-dark-a63aa16d7c, #b0b7c3);
         font-size: 6.1px;
         line-height: 1.3;
     }
@@ -1009,10 +1009,10 @@
     .sari-seller-ai-error {
         display: none;
         margin: 0;
-        border-top: 1px solid #f1d7d7;
-        background: #fff7f7;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #f1d7d7);
+        background: var(--sari-dark-950baec030, #fff7f7);
         padding: 7px 10px;
-        color: #a65353;
+        color: var(--sari-dark-58dd29f069, #a65353);
         font-size: 7.6px;
         line-height: 1.45;
     }
@@ -1022,17 +1022,17 @@
     }
 
     .sari-seller-ai-footer {
-        border-top: 1px solid #eaecf0;
-        background: #fcfcfd;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eaecf0);
+        background: var(--sari-dark-950baec030, #fcfcfd);
         padding: 7px 10px 8px;
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
         font-size: 6.7px;
         line-height: 1.45;
         text-align: center;
     }
 
     .sari-seller-ai-footer a {
-        color: #8f650d;
+        color: var(--sari-dark-094fd3764c, #8f650d);
         font-weight: 650;
         text-decoration: none;
     }
@@ -1363,19 +1363,19 @@
        ========================================================== */
 
     #sariSellerAiPanel {
-        border-color: #e2e6eb !important;
+        border-color: var(--sari-dark-d8c2716225, #e2e6eb) !important;
         border-radius: 18px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 22px 55px rgba(16, 24, 40, .14),
-            0 3px 12px rgba(16, 24, 40, .04) !important;
+            0 22px 55px var(--sari-dark-59ed29fe9d, rgba(16, 24, 40, .14)),
+            0 3px 12px var(--sari-dark-25b2da5e49, rgba(16, 24, 40, .04)) !important;
     }
 
     /* Header */
     #sariSellerAiPanel .sari-seller-ai-header {
         min-height: 64px !important;
         padding: 9px 12px !important;
-        border-bottom-color: #edf0f3 !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
     }
 
     #sariSellerAiPanel .sari-seller-ai-identity {
@@ -1407,7 +1407,7 @@
     #sariSellerAiPanel .sari-seller-ai-identity-copy > strong {
         display: block !important;
         overflow: hidden !important;
-        color: #1f2937 !important;
+        color: var(--sari-dark-e23e64dd1e, #1f2937) !important;
         font-size: 10.7px !important;
         font-weight: 750 !important;
         line-height: 1.25 !important;
@@ -1425,7 +1425,7 @@
         align-items: center !important;
         gap: 5px !important;
         margin-top: 4px !important;
-        color: #8993a1 !important;
+        color: var(--sari-dark-a63aa16d7c, #8993a1) !important;
         font-size: 7.1px !important;
         font-weight: 500 !important;
         line-height: 1.2 !important;
@@ -1447,14 +1447,14 @@
         width: 30px !important;
         height: 30px !important;
         border-radius: 8px !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
     }
 
     #sariSellerAiPanel .sari-seller-ai-icon-button:hover,
     #sariSellerAiPanel .sari-seller-ai-icon-button:focus-visible {
-        border-color: #e6e9ed !important;
-        background: #f7f8fa !important;
-        color: #344054 !important;
+        border-color: var(--sari-dark-d8c2716225, #e6e9ed) !important;
+        background: var(--sari-dark-950baec030, #f7f8fa) !important;
+        color: var(--sari-dark-e23e64dd1e, #344054) !important;
     }
 
     /* Context bar */
@@ -1462,21 +1462,21 @@
         grid-template-columns: 28px minmax(0, 1fr) !important;
         min-height: 46px !important;
         padding: 7px 12px !important;
-        background: #fbfcfd !important;
-        border-bottom-color: #edf0f3 !important;
+        background: var(--sari-dark-950baec030, #fbfcfd) !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
     }
 
     #sariSellerAiPanel .sari-seller-ai-context-icon {
         width: 28px !important;
         height: 28px !important;
-        border-color: #e4e7ec !important;
+        border-color: var(--sari-dark-d8c2716225, #e4e7ec) !important;
         border-radius: 8px !important;
-        background: #fff !important;
-        color: #7c8592 !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-a63aa16d7c, #7c8592) !important;
     }
 
     #sariSellerAiPanel .sari-seller-ai-context-copy small {
-        color: #a0a7b2 !important;
+        color: var(--sari-dark-a63aa16d7c, #a0a7b2) !important;
         font-size: 6.2px !important;
         font-weight: 700 !important;
         letter-spacing: .07em !important;
@@ -1484,7 +1484,7 @@
 
     #sariSellerAiPanel .sari-seller-ai-context-copy strong {
         margin-top: 1px !important;
-        color: #475467 !important;
+        color: var(--sari-dark-e23e64dd1e, #475467) !important;
         font-size: 8.2px !important;
         font-weight: 700 !important;
     }
@@ -1495,7 +1495,7 @@
 
     /* Conversation */
     #sariSellerAiMessages {
-        background: #f8fafb !important;
+        background: var(--sari-dark-950baec030, #f8fafb) !important;
         padding: 12px 11px 14px !important;
     }
 
@@ -1505,7 +1505,7 @@
 
     #sariSellerAiMessages .sari-seller-ai-message-label {
         margin: 0 0 4px 35px !important;
-        color: #9aa3af !important;
+        color: var(--sari-dark-a63aa16d7c, #9aa3af) !important;
         font-size: 6.2px !important;
         font-weight: 750 !important;
         letter-spacing: .07em !important;
@@ -1530,11 +1530,11 @@
 
     #sariSellerAiMessages .sari-seller-ai-message--assistant > .sari-seller-ai-bubble {
         max-width: 100% !important;
-        border-color: #e5e8ec !important;
+        border-color: var(--sari-dark-d8c2716225, #e5e8ec) !important;
         border-radius: 12px 12px 12px 5px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 8px 10px !important;
-        color: #475467 !important;
+        color: var(--sari-dark-e23e64dd1e, #475467) !important;
         font-size: 8.7px !important;
         line-height: 1.55 !important;
         box-shadow: none !important;
@@ -1556,16 +1556,16 @@
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 5px !important;
         padding: 7px 10px 3px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     #sariSellerAiSuggestions button {
         min-height: 28px !important;
-        border-color: #e4e7ec !important;
+        border-color: var(--sari-dark-d8c2716225, #e4e7ec) !important;
         border-radius: 9px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 0 8px !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 7px !important;
         font-weight: 650 !important;
     }
@@ -1573,14 +1573,14 @@
     #sariSellerAiSuggestions button:hover,
     #sariSellerAiSuggestions button:focus-visible {
         border-color: #dfc68e !important;
-        background: #fffaf0 !important;
-        color: #9b6505 !important;
+        background: var(--sari-dark-950baec030, #fffaf0) !important;
+        color: var(--sari-dark-af18afcaa4, #9b6505) !important;
     }
 
     /* Composer */
     #sariSellerAiPanel .sari-seller-ai-composer-wrap {
-        background: #fff !important;
-        border-top: 1px solid #edf0f3 !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3) !important;
     }
 
     #sariSellerAiForm {
@@ -1591,18 +1591,18 @@
     #sariSellerAiInput {
         min-height: 40px !important;
         max-height: 92px !important;
-        border-color: #dde2e7 !important;
+        border-color: var(--sari-dark-d8c2716225, #dde2e7) !important;
         border-radius: 11px !important;
         padding: 10px 11px !important;
-        background: #fff !important;
-        color: #344054 !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-e23e64dd1e, #344054) !important;
         font-size: 8.9px !important;
         box-shadow: none !important;
     }
 
     #sariSellerAiInput:focus {
         border-color: #d59617 !important;
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .07) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-7c935c8886, rgba(213, 150, 23, .07)) !important;
     }
 
     #sariSellerAiSend {
@@ -1617,15 +1617,15 @@
 
     #sariSellerAiPanel .sari-seller-ai-composer-meta {
         padding: 0 11px 6px !important;
-        color: #b0b7c3 !important;
+        color: var(--sari-dark-a63aa16d7c, #b0b7c3) !important;
         font-size: 5.9px !important;
     }
 
     #sariSellerAiPanel .sari-seller-ai-footer {
         padding: 7px 10px !important;
-        border-top-color: #edf0f3 !important;
-        background: #fcfcfd !important;
-        color: #9aa3af !important;
+        border-top-color: var(--sari-dark-d8c2716225, #edf0f3) !important;
+        background: var(--sari-dark-950baec030, #fcfcfd) !important;
+        color: var(--sari-dark-a63aa16d7c, #9aa3af) !important;
         font-size: 6.2px !important;
     }
 

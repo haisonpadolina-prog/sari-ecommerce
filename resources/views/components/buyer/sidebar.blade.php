@@ -264,26 +264,26 @@
         {{-- Logout stays red in its default, hover, and keyboard focus states. --}}
         <style>
             #buyerSidebar #buyerLogoutForm button {
-                color: #ef4444 !important;
+                color: var(--sari-dark-65ed380fe4, #ef4444) !important;
                 background-color: transparent;
                 border-color: transparent;
             }
             #buyerSidebar #buyerLogoutForm button svg,
             #buyerSidebar #buyerLogoutForm button .buyer-sidebar-label {
-                color: #ef4444 !important;
-                stroke: #ef4444;
+                color: var(--sari-dark-65ed380fe4, #ef4444) !important;
+                stroke: var(--sari-dark-65ed380fe4, #ef4444);
             }
             #buyerSidebar #buyerLogoutForm button:hover,
             #buyerSidebar #buyerLogoutForm button:focus-visible {
-                background-color: #fef2f2 !important;
-                color: #dc2626 !important;
+                background-color: var(--sari-dark-950baec030, #fef2f2) !important;
+                color: var(--sari-dark-0c8ad229f5, #dc2626) !important;
             }
             #buyerSidebar #buyerLogoutForm button:hover svg,
             #buyerSidebar #buyerLogoutForm button:hover .buyer-sidebar-label,
             #buyerSidebar #buyerLogoutForm button:focus-visible svg,
             #buyerSidebar #buyerLogoutForm button:focus-visible .buyer-sidebar-label {
-                color: #dc2626 !important;
-                stroke: #dc2626;
+                color: var(--sari-dark-0c8ad229f5, #dc2626) !important;
+                stroke: var(--sari-dark-0c8ad229f5, #dc2626);
             }
         </style>
 
@@ -305,4 +305,17 @@
         </form>
     </nav>
 
+
+<style>
+/* SARI_BUYER_SIDEBAR_DARK_LOGO_WHITE_FIX
+   The full wordmark is black in the source asset; make it white only in dark mode. */
+html[data-sari-theme="dark"] #buyerSidebarLogoFull {
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+}
+html[data-sari-theme="dark"] #buyerSidebarLogoCompact {
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+</style>
 </aside>

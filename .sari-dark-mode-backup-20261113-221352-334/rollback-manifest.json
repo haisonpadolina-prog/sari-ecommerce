@@ -1,0 +1,829 @@
+﻿{
+    "files":  [
+                  {
+                      "path":  "public/css/admin/ai-assistant.css",
+                      "existed":  true,
+                      "installed_sha256":  "24cd5a26a46dbc59c1e6ac419ad25c57616acddf06a4e629a47ac3bf71f31aec"
+                  },
+                  {
+                      "path":  "public/css/admin/buyer-homepage.css",
+                      "existed":  true,
+                      "installed_sha256":  "4e64fa602ddd17d58e6f1d30fb74dff9227e28737e894348cdeb314d1edff1e8"
+                  },
+                  {
+                      "path":  "public/css/admin/notifications.css",
+                      "existed":  true,
+                      "installed_sha256":  "96930131d10a77a003e782bd42aa9c634f93d349d81a07c5002573ddd6bcaf50"
+                  },
+                  {
+                      "path":  "public/css/admin/sari-toast.css",
+                      "existed":  true,
+                      "installed_sha256":  "1f889878bc83290cab041c982459f7f24ce9372131cd56e5d558317131b80a34"
+                  },
+                  {
+                      "path":  "public/css/auth/login-feedback-modal.css",
+                      "existed":  true,
+                      "installed_sha256":  "a29fd272bf613a101664d621e48071efb8be4ee1d7f2e66f8f458bb30c0e7dd1"
+                  },
+                  {
+                      "path":  "public/css/buyer/order-confirmation-card.css",
+                      "existed":  true,
+                      "installed_sha256":  "6e245e141462a7039f752e411cb89faa1f4518dd30874a61e9d6b35aaeacccb1"
+                  },
+                  {
+                      "path":  "public/css/buyer/sari-rider-conversations.css",
+                      "existed":  true,
+                      "installed_sha256":  "ba5bdff3842fb9523051c113b2854d5af0118bbfa8c0a61942abc4f4ba56bb10"
+                  },
+                  {
+                      "path":  "public/css/buyer/sari-toast.css",
+                      "existed":  true,
+                      "installed_sha256":  "4fc81e15438068cb4ef792e6ccd569855ed98d23a3b59ef1e1538804144c07fa"
+                  },
+                  {
+                      "path":  "public/css/buyer/seller-conversations.css",
+                      "existed":  true,
+                      "installed_sha256":  "7d48002d524b10548f953d85ecba1f4742aee283a7d531358771d13319af208e"
+                  },
+                  {
+                      "path":  "public/css/buyer/shell.css",
+                      "existed":  true,
+                      "installed_sha256":  "eca1315b7508c51e88a9e7c60d3c5201695ca729c8917d9015fc929248b31cc3"
+                  },
+                  {
+                      "path":  "public/css/courier/rider-unified-messenger.css",
+                      "existed":  true,
+                      "installed_sha256":  "0d74c28f122916369e917b017972a4f05058eb3ff83ede2bc5bae8f1d1f86f59"
+                  },
+                  {
+                      "path":  "public/css/courier/sari-toast.css",
+                      "existed":  true,
+                      "installed_sha256":  "8d08f56f4cf548cf09c8bec2fef7b8f3c996cf7bfd0400d98b1c4c2a0d3cfea9"
+                  },
+                  {
+                      "path":  "public/css/logistics/buyer-parity.css",
+                      "existed":  true,
+                      "installed_sha256":  "1721147e89624d01d57fd79be2725c672068d8759cb84cce99cedf377d09ff22"
+                  },
+                  {
+                      "path":  "public/css/seller/account.css",
+                      "existed":  true,
+                      "installed_sha256":  "d14b05c22a2a7c44ecdd35cb6f8c54ace0f2a6c8f876a5673c542d21497ebf08"
+                  },
+                  {
+                      "path":  "public/css/seller/archived-products.css",
+                      "existed":  true,
+                      "installed_sha256":  "d129f29ceb60bee131aa4bdda0a5c37b42c32531dc18170e3d748ddfecea1131"
+                  },
+                  {
+                      "path":  "public/css/seller/dashboard.css",
+                      "existed":  true,
+                      "installed_sha256":  "2b621cd9da599276afd871527e9ee0b743ab3b7ac5acc983ba1d5c93bc2dcd0d"
+                  },
+                  {
+                      "path":  "public/css/seller/finance.css",
+                      "existed":  true,
+                      "installed_sha256":  "e4367a0b6e7c609eb6cd2aa3591c7ca21495e45987eec40bcae08a9fd6250341"
+                  },
+                  {
+                      "path":  "public/css/seller/inventory.css",
+                      "existed":  true,
+                      "installed_sha256":  "d5157f5a45a7b86a70b36ba54477f250dc81a351f8ca6cc31eff253097e2e8c4"
+                  },
+                  {
+                      "path":  "public/css/seller/layout.css",
+                      "existed":  true,
+                      "installed_sha256":  "0e66bff1852504d376b0c6ab7463dfafba148efb91bfb91bfc7e13a3ed555203"
+                  },
+                  {
+                      "path":  "public/css/seller/messages.css",
+                      "existed":  true,
+                      "installed_sha256":  "422b617647d7bfb3a1b5e8fee16bd508dce9b7b4feb24a2a45831247e63a5785"
+                  },
+                  {
+                      "path":  "public/css/seller/notifications.css",
+                      "existed":  true,
+                      "installed_sha256":  "12ea73ff54d74bda7e9f8aa9f9198dc8cc5d18d8348c0bb6b356d505d1fae1dd"
+                  },
+                  {
+                      "path":  "public/css/seller/orders.css",
+                      "existed":  true,
+                      "installed_sha256":  "b0d04c69e4f31e2753811125b7edfa99cb74386c75fa7c47acfc5693ce5c9042"
+                  },
+                  {
+                      "path":  "public/css/seller/product-create.css",
+                      "existed":  true,
+                      "installed_sha256":  "531ac245e6a7bf09822bd8382a730aa3bc512274cd99e8b50c381d67994d9d79"
+                  },
+                  {
+                      "path":  "public/css/seller/products.css",
+                      "existed":  true,
+                      "installed_sha256":  "e4dcd2ad61467101a82e3ff205ac46ab9f38b3c689b03c5010b6ce1e8ac00c25"
+                  },
+                  {
+                      "path":  "public/css/seller/reports.css",
+                      "existed":  true,
+                      "installed_sha256":  "155b47f42e9378afb162d6d5c07efa7311763118c58a52f192186b4139d368b8"
+                  },
+                  {
+                      "path":  "public/css/seller/returns.css",
+                      "existed":  true,
+                      "installed_sha256":  "b56a32b4fba27926ad99d76d6382513cdb37f8bc2aa6619844540083a8a48c51"
+                  },
+                  {
+                      "path":  "public/css/seller/reviews-center.css",
+                      "existed":  true,
+                      "installed_sha256":  "91c96c0bc5314abd18d19953697ba9287542cd026fcc2ed9f6f42abf7e709af8"
+                  },
+                  {
+                      "path":  "public/css/seller/sari-toast.css",
+                      "existed":  true,
+                      "installed_sha256":  "ef490ff8f8a939ca49aca855f650f6ced8afafa7c5145bf984542d23979ce19d"
+                  },
+                  {
+                      "path":  "public/css/seller/shipping-detail.css",
+                      "existed":  true,
+                      "installed_sha256":  "19b039e898a931a3f7c412e972028ae4917cafad1449c0cf7a314b0e42c850f8"
+                  },
+                  {
+                      "path":  "public/css/seller/shipping.css",
+                      "existed":  true,
+                      "installed_sha256":  "d76768c73b235905ec6a61f310fcbe29229e66fdb5589a7ed35c5600707f1511"
+                  },
+                  {
+                      "path":  "public/css/seller/store.css",
+                      "existed":  true,
+                      "installed_sha256":  "c1e40f261bd31dbf6d52fa4555aeee28c68fbaef6d97d9bea98110ecc49fb0c4"
+                  },
+                  {
+                      "path":  "public/css/seller/vouchers.css",
+                      "existed":  true,
+                      "installed_sha256":  "b989513f5bb5b8941fdb03b6eb4698b26b331daa51bfbf40f08c0f4ed6968205"
+                  },
+                  {
+                      "path":  "resources/views/admin/account.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "b94575d33a885bb17fa97b08e25f10d4f15d84e609bc05daae0f4529404b0cdb"
+                  },
+                  {
+                      "path":  "resources/views/admin/admin-activity.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "de89e4aa8bbabc76acf4fb9f95b79cd6381aa4906811743fb3193d531fbcb413"
+                  },
+                  {
+                      "path":  "resources/views/admin/buyer-homepage.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "cf8d895cc3aa8cf2c9e13057a95343159f0ec9b5bcddc1e15d3fff8bcc4e5648"
+                  },
+                  {
+                      "path":  "resources/views/admin/cash-turnovers.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "a16e72298c9a794d0346d2370eea22b6d5a6656b9d43e53f3d4dce8c693da252"
+                  },
+                  {
+                      "path":  "resources/views/admin/commissions.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "72fe3b033bc7f296abcd112da3021229d4ddd208a4ab46392d9609c5fa818702"
+                  },
+                  {
+                      "path":  "resources/views/admin/complaints.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "dd6cb0de6ca2e8d8c36d68dc72543dd24628ecde285abc3adf932d0ae42036a1"
+                  },
+                  {
+                      "path":  "resources/views/admin/dashboard.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "01117e5c4de005088ac16bc19ef16741e726ef0b5324fa05c083682306259237"
+                  },
+                  {
+                      "path":  "resources/views/admin/finance.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "b8af9580bee45c1637cc2c888fe45e463df70d4e88ad3f613a3ea10c824fa416"
+                  },
+                  {
+                      "path":  "resources/views/admin/messages.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "08e6cc3e825d8f13289de593139dc6a7018e8f3f5925aef4885252458cfdf4c4"
+                  },
+                  {
+                      "path":  "resources/views/admin/monitoring/detail.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "a22f455ce7399784499ecada9d545cf00ca0d893f7596681e99a4032f7df35d6"
+                  },
+                  {
+                      "path":  "resources/views/admin/monitoring/index.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "3a51285c60f3b9e67f1c9b7530f5a9219f7f3cf52aa7cbacd1deac30ed5af944"
+                  },
+                  {
+                      "path":  "resources/views/admin/monitoring/partials/marketplace-health.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "ce886d4a7ed403c055d2aed26ed033d430c74709acf73ead0b179e69c68c42fa"
+                  },
+                  {
+                      "path":  "resources/views/admin/monitoring/partials/security-alert-overlay.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "e6498a171075b4591808c4c2b13002ad8d34a4945e45aff2d55971ded1ae43db"
+                  },
+                  {
+                      "path":  "resources/views/admin/partials/registration/review-styles.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "0b27ae5aa0e5398b7162a76aaddf10519459acf5bc77ddf81ccdd3f3d306a2ee"
+                  },
+                  {
+                      "path":  "resources/views/admin/partials/security-alert-overlay.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "e6498a171075b4591808c4c2b13002ad8d34a4945e45aff2d55971ded1ae43db"
+                  },
+                  {
+                      "path":  "resources/views/admin/partials/users/modal-styles.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "4af0f4111efa5a6636dcdcf73b3b121e8cd03ab2c328277abb0a09f8b28e23d7"
+                  },
+                  {
+                      "path":  "resources/views/admin/partials/users/page-styles.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "b3bdf462270a7313aedb3fedc995e4d0ec9960e2c886c10ce82cd6c1ed1dc152"
+                  },
+                  {
+                      "path":  "resources/views/admin/partials/users/table-styles.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "9014360632a5d113e02b98645fbe18266729afcfea97dfe43490fe4cab114539"
+                  },
+                  {
+                      "path":  "resources/views/admin/platform-announcements.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "81ef4ec2073d5ff3c74e4aac7ee459aae8df6db02874b481a4cffcbf1943c8b5"
+                  },
+                  {
+                      "path":  "resources/views/admin/platform-campaigns.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "7a0be4b7b0269d3eaef6ab2acbfec90458d9b4759c9ba1e14ec3978ce699498f"
+                  },
+                  {
+                      "path":  "resources/views/admin/platform-settings.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "e30d2d9329019a7528f536c2fdfa54c70252f1a14178557ea434e728d97de374"
+                  },
+                  {
+                      "path":  "resources/views/admin/product-reviews.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "f2c5a3772d96f0d12b1ed5f029e04399a1f98e13763ba3a304b744d6d6af841d"
+                  },
+                  {
+                      "path":  "resources/views/admin/registrations.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "33424299d36df466a54565f85985e34130e078f169b2686e4d1486b537b0d5b7"
+                  },
+                  {
+                      "path":  "resources/views/admin/reports.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "f8719430f6888425afbe3456597ce0d45cf83413e3021293a09e34c2226d0d25"
+                  },
+                  {
+                      "path":  "resources/views/admin/security-center.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "1b4d85becfe6034d61a5a29c1d756aa794723f6493bb4053ce4fc6207e456714"
+                  },
+                  {
+                      "path":  "resources/views/admin/seller-account-control.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "d362725f62eab4be5f370cd00a0c5924726b8beca64fd203a54c943e4151a633"
+                  },
+                  {
+                      "path":  "resources/views/admin/seller-compliance.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "4d6303a117b5cd96791b5533ec8a2063c44859843231f8ff3a43722b0935a27b"
+                  },
+                  {
+                      "path":  "resources/views/admin/user-activity.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "0dba8878ce171259fb946151f6f218280ba1fa0f08138fff93614bfe25c24a2c"
+                  },
+                  {
+                      "path":  "resources/views/admin/users.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "0091bba077f68ba5a67b3bb3950477a085fe511ecd5bf709c3bbc4369127920a"
+                  },
+                  {
+                      "path":  "resources/views/buyer/account.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "e607855b0dd3b781d91e74f9f51bd5f8abf8d5481a2604052d8bcff0c8889471"
+                  },
+                  {
+                      "path":  "resources/views/buyer/cart.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "c8527b562a7328a05d8574672e2381cc07ea9ec63a74cc3ec97221ca9ac92000"
+                  },
+                  {
+                      "path":  "resources/views/buyer/checkout.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "a99dfa0a364a34654bf5140ff54b591f7f7b808e4ec98919102876f021e0c847"
+                  },
+                  {
+                      "path":  "resources/views/buyer/home.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "3f9ab6b252ecd2480fa20abebefbff9d8edf7d6659b099bca844a7082ad9c906"
+                  },
+                  {
+                      "path":  "resources/views/buyer/messages.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "7ccd091a7350e7ab564f33f027d7828ac004224ad7639b3675d85a768f40ee03"
+                  },
+                  {
+                      "path":  "resources/views/buyer/notifications.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "72b960439ffd61a4c0c2c6493937b1418a9feeafddd2bdf5283e7a0a04686db3"
+                  },
+                  {
+                      "path":  "resources/views/buyer/order-details.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "a17d068c56d27e661e07b48a07b4e388963bb7f0a0b064e18d205e59b2fc4fea"
+                  },
+                  {
+                      "path":  "resources/views/buyer/orders.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "9a7fa115f07eede7736868bc7221a4ece72adc59ec1ed0c16086c9724b57ca2e"
+                  },
+                  {
+                      "path":  "resources/views/buyer/partials/admin-support-messages.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "6c306d36df1ed0803973831bb34cc999c0431da7fa2ed94661a859285848f944"
+                  },
+                  {
+                      "path":  "resources/views/buyer/partials/ai-assistant.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "24e864d602c568230ba3f950bdcee15818967ea95176623cbe89102f68cfd20f"
+                  },
+                  {
+                      "path":  "resources/views/buyer/product-details.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "2041bf7097ceb8a6ecf49ba86288848d15c17edca8a96924e6880ad00003781a"
+                  },
+                  {
+                      "path":  "resources/views/buyer/products.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "5ac5f2200d758df681691186fee931ac8e48afa9c5479e2ed7a4e3990b13822d"
+                  },
+                  {
+                      "path":  "resources/views/buyer/recent-activity.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "958f74901b240f877aa7f4076855e8748ca4f626119621fdc45c1acbc1cfb81e"
+                  },
+                  {
+                      "path":  "resources/views/buyer/recent-orders.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "9b4f5f97287b9b9896b66cdccadcaf757c6c764ac6f78b4103cdfdc0a5addf55"
+                  },
+                  {
+                      "path":  "resources/views/buyer/rewards.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "524b978fa4317912a4c47a2df1812986065af540b4a355c0a9747606422bb0f2"
+                  },
+                  {
+                      "path":  "resources/views/buyer/shipping.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "ad20ce527015d12f519fdd2427d0a5b584b1e1feaa33512c4df0ee5830efc0e3"
+                  },
+                  {
+                      "path":  "resources/views/buyer/shop.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "6783b7cc8a63420fec19669be4502ef8ff9c9a05615c8f644b0ffb6514cd6b40"
+                  },
+                  {
+                      "path":  "resources/views/buyer/wallet.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "2528f35b93370f837e926b553e9d33d16cc0422a9d221f71b653d24e7efe2649"
+                  },
+                  {
+                      "path":  "resources/views/components/admin/header.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "582e060b353799c227b711d6f8ef210508453f0ad425a95c6c570c1447dc96c0"
+                  },
+                  {
+                      "path":  "resources/views/components/admin/logout-modal.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "c21e6346d933a31942c422d9a9d7d096a8ada3fdedeeccbf6c75ee7e83c000c1"
+                  },
+                  {
+                      "path":  "resources/views/components/admin/notification-menu.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "58f3a236e62078df40a1f690cff1f36735b3c5e9a4267eb2599fdc32e4087030"
+                  },
+                  {
+                      "path":  "resources/views/components/admin/shell-styles.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "a88ac0d900eccd900bb2d853c97c4d404949a492a4d8701c53893b8031f0ccd1"
+                  },
+                  {
+                      "path":  "resources/views/components/admin/sidebar.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "3e5913f93e09d5854e791ea0193c1c3ddc5ae96e58647d7a1b537abd6502e96a"
+                  },
+                  {
+                      "path":  "resources/views/components/buyer/header.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "b91bc6b214b80ee90eb7c956315adb4b15a2241be7785112db1c95f876696d8e"
+                  },
+                  {
+                      "path":  "resources/views/components/buyer/product-card.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "c0cf5e634e1be00e422948c0c9f377befa3c0814f71ba1c2f7d009d37ef2f7df"
+                  },
+                  {
+                      "path":  "resources/views/components/buyer/product-details-page-data.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "27a4b83096099ddef269b6563855c2213f6a9b27eb465f45c6c02496a10c881d"
+                  },
+                  {
+                      "path":  "resources/views/components/buyer/sidebar.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "e3183962077c9832af33888e76963236b53fd1e46b5bccfd97754fa4c7c94058"
+                  },
+                  {
+                      "path":  "resources/views/components/logistics/header.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "37b821b7a488d30a3ae9df4c88fe6dd1e5e32b87007bd6a97d518c8d1408928e"
+                  },
+                  {
+                      "path":  "resources/views/components/platform-announcements.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "ea4c13c49fe34b46c297d2bc27ae840014a6335860602f7d04bea7fc1a0c0d12"
+                  },
+                  {
+                      "path":  "resources/views/courier/dashboard.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "f56b3d1607d12a5da6f2512b74315f9db6fc63403b6a5ff36383f2df4c6c8b47"
+                  },
+                  {
+                      "path":  "resources/views/courier/deliveries.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "227e17c22276c4313a1eac1046f35502ddc3e2cf03565c1e1adf578a9a82ab5e"
+                  },
+                  {
+                      "path":  "resources/views/courier/delivery.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "678389a508c92aa418aab507b652d001459a48f390b4dfdff98c7cef564054c9"
+                  },
+                  {
+                      "path":  "resources/views/courier/earnings.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "ef8e14e9c637287e14524e450a56100d06cc996a34deca90f58e98af73f70412"
+                  },
+                  {
+                      "path":  "resources/views/courier/history.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "ba16c2a61dafbca60fb4f6e4f64d5d7a85ebfe074b49705e2317fd3fcfd74bb2"
+                  },
+                  {
+                      "path":  "resources/views/courier/last-mile.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "cdd7802c25bbbdae245cf24c6cd896ecc8089c84ed292dbb483110e48d2cb3d3"
+                  },
+                  {
+                      "path":  "resources/views/courier/messages.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "5ce0d0a727bb6b24ff5c32c9f1906bbd382826f8d5c5b2813448cfef02083526"
+                  },
+                  {
+                      "path":  "resources/views/courier/notifications.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "7c0c1b1879eb22f15ebece4958eb2de24475783b6bdae22a89260867f624444d"
+                  },
+                  {
+                      "path":  "resources/views/courier/parcel-scanner.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "fd979a328704e9d94e8c13d63eb0d50b15da13ae816aebbb510d36516b125bd3"
+                  },
+                  {
+                      "path":  "resources/views/courier/pickups.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "f6c717a80ecb9acc08c0804a95bf95d5fc4eaf979acbafbbdeb4cbf6a8a28991"
+                  },
+                  {
+                      "path":  "resources/views/courier/profile.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "d6fa15c2dfdc0b9a7576677a7deeac41ed30a53d0c93a4c86ef8aba7cc250d35"
+                  },
+                  {
+                      "path":  "resources/views/courier/remittances.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "6317789e53aaf887359400e6ddecc28af160f70bdbc8bf58550467fed8f739d3"
+                  },
+                  {
+                      "path":  "resources/views/courier/requests.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "ff00838ee881c51fbdd95c172f67cb0a9c63ec6e97b3a9afe2b606beefc2a6d9"
+                  },
+                  {
+                      "path":  "resources/views/finance/cod-compliance.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "d5e2eab0bfd43eeeb96328327c922e8d833a4950c529c32f868ed2d91e96ade1"
+                  },
+                  {
+                      "path":  "resources/views/layouts/admin.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "0d60e0d786cb71504d9665de70f548ec495744fd1345a56cf07b74629c94dfa0"
+                  },
+                  {
+                      "path":  "resources/views/layouts/buyer.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "23a385dc58d824fb81552ea56bbc93ffc10b852e25b3bd7bd34e007de0e58ca0"
+                  },
+                  {
+                      "path":  "resources/views/layouts/courier.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "d7cfc293f4e5f77829d9e22c950d97ae0959a1957de965842e96ccabf8c05ee4"
+                  },
+                  {
+                      "path":  "resources/views/layouts/logistics.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "87051e9ed173485ce507b4742f3766234cc0640546a2aee9ecb77419d226e36d"
+                  },
+                  {
+                      "path":  "resources/views/layouts/seller.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "96edc632063712a674e08ab127be1886670fb8b07de93878f2b21d7cc080ac23"
+                  },
+                  {
+                      "path":  "resources/views/logistics/account-management.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "816f2fd9e229b9309dd98f4ca98475fbdb6633eefed80594bb2d277be5d05a7a"
+                  },
+                  {
+                      "path":  "resources/views/logistics/activity-logs.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "755904cdefb0ffd66f1d8a88d0c058353b8c6e256bf3c1399a63dfaf8c004a85"
+                  },
+                  {
+                      "path":  "resources/views/logistics/branch-treasury.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "614913a3d2094c2266e76db65c96f5ae6693cd3cb1637a3cebda29936e0f2790"
+                  },
+                  {
+                      "path":  "resources/views/logistics/dashboard.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "16b8382fd3e13644939edc936dfecf7f7202f5bf578a9fc6b9f8d21816e8ef0a"
+                  },
+                  {
+                      "path":  "resources/views/logistics/delivery-assignment.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "242d0b01aaa15dc855159dd2120a53754d76bc60ae206a1cac44a1aa77b48326"
+                  },
+                  {
+                      "path":  "resources/views/logistics/delivery-monitoring.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "9e5c26e39f010a2983543e493934f5c9274f01d3ff2fee99a9f1b7b9499debd6"
+                  },
+                  {
+                      "path":  "resources/views/logistics/delivery-route.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "b5e7eeb04a65f302e4185f854f7ba6ff4e771825576d1923cdb58b8993f189ea"
+                  },
+                  {
+                      "path":  "resources/views/logistics/hub-transfers.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "1d8fbed36985533d31c8803826266d5243d9d4e5453d8615bf67899119ead460"
+                  },
+                  {
+                      "path":  "resources/views/logistics/incoming-parcels.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "5ccc002df9ae94bd414dc1b1590f022072c74e7148b6367710e7d99b58c4e335"
+                  },
+                  {
+                      "path":  "resources/views/logistics/last-mile-assignment.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "f4afc87b02d28a27a93bc9e7c938ededa22009a84a3be801a8011aa1e5f7e9af"
+                  },
+                  {
+                      "path":  "resources/views/logistics/messages.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "65cc42616e23cd39331a9d16246ac340c18615ceb6796cd5b78153b3a7e88de6"
+                  },
+                  {
+                      "path":  "resources/views/logistics/parcel-scanner.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "c8908c42f1319d13ccac1614ae48d17d81d1b58008062b2c197750c9ddc5463c"
+                  },
+                  {
+                      "path":  "resources/views/logistics/parcel-sorting.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "4aa342f613bba8d3ca284fa66962c41eb776daf3f2ba838b7fab199a56ce3192"
+                  },
+                  {
+                      "path":  "resources/views/logistics/pickup-requests.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "667f68a484b91fd3116759df57fd45f828bc4b3847344a782fb66a8b051145b9"
+                  },
+                  {
+                      "path":  "resources/views/logistics/remittances.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "e805e29c28b20d33d4ea4a8fb42c25a14b317eedf782e99c7be464a4facf9a3e"
+                  },
+                  {
+                      "path":  "resources/views/logistics/reports.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "212fedc7aacb456c290b2fcca48d299f04e4c4f00098b3d4a92c1ea8c65b76bf"
+                  },
+                  {
+                      "path":  "resources/views/logistics/rider-applications.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "53a72786511308a4ab8e503be89bae6a725bc72dce7fc41229eaa88640690314"
+                  },
+                  {
+                      "path":  "resources/views/logistics/rider-management.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "1200f7167f23d6134290ed882d8bad4f2a4f25030db68cc13bae93a909977056"
+                  },
+                  {
+                      "path":  "resources/views/pages/account.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "4f5bc95cabda3aa3dfd55c8f2dcd5b38535de8adeb25557c5b09c56ea7c2dd34"
+                  },
+                  {
+                      "path":  "resources/views/seller/account.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "6f7f1cda1cc132c9bea4edde8ab855ab5e7f934d2a39c9376a06a1b13abe87ed"
+                  },
+                  {
+                      "path":  "resources/views/seller/compliance-center.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "f485adfb62d8b07b425d287c68b49b85af7f8bdbae5e76e827dca5340769c533"
+                  },
+                  {
+                      "path":  "resources/views/seller/dashboard.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "0cca89adb0c17ac6e22e7e186c273dbeeba57331302b7e0d4d47df2e93f50645"
+                  },
+                  {
+                      "path":  "resources/views/seller/finance.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "a4236127a1a0ac5f9f0f276d44ac7115a6b90c576c3acadbccd6bd454f02b65c"
+                  },
+                  {
+                      "path":  "resources/views/seller/inventory.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "f03455db10b73ddb19f31c44c24bc695ac2331feef972385ad1ba7e2db68ada3"
+                  },
+                  {
+                      "path":  "resources/views/seller/messages.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "6b922747a6a60eb80aca062de0e19bede8e637938ef072450b8f9bd111f3f328"
+                  },
+                  {
+                      "path":  "resources/views/seller/notifications.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "3e20b4adcfe03ce5d25177011dc1e75adc6c9187e4f2493cdc42b4f9933ce059"
+                  },
+                  {
+                      "path":  "resources/views/seller/order-partials/order-detail-modal-styles.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "cf82e3355518fc9a619462f02f4299f36b8c784184f270f0b03eba72aff1ac67"
+                  },
+                  {
+                      "path":  "resources/views/seller/orders.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "364e3a5107ac469505366770ccc89718df8daf74beeeae49d3de57c0b3eb05a3"
+                  },
+                  {
+                      "path":  "resources/views/seller/partials/ai-assistant.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "f7908b5a0fdf64ce495f73c3710069bfb832f3e05aeb1d92a2689c6fd8ac4ad1"
+                  },
+                  {
+                      "path":  "resources/views/seller/products/create.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "1df6072563405c94ff174a6fa729dd8075ffa123781d8b2932abe3d81fda6aa2"
+                  },
+                  {
+                      "path":  "resources/views/seller/products/partials/catalog.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "7f30e92e76c1e9e03ec088a451bb91e98e1aabf70ba64bacdae869c750862e55"
+                  },
+                  {
+                      "path":  "resources/views/seller/products/partials/modals/edit.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "742fc9d3d1e76e835f7eec932b642955e98165fcd2c12c761b61a52d19e9b0c5"
+                  },
+                  {
+                      "path":  "resources/views/seller/products/partials/styles.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "993250fe6513d0c6da03b155b11d35a311812590f4ec7517babf693ad540c229"
+                  },
+                  {
+                      "path":  "resources/views/seller/products/size-chart-edit.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "2c1a492508b117d24cb914865a8cff30c81c1d18277df5af5168fece9003fad4"
+                  },
+                  {
+                      "path":  "resources/views/seller/products/size-charts.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "171d3edab2f43259b5f305cd4659aea0c094bb99a994a063f04b39afb22c541e"
+                  },
+                  {
+                      "path":  "resources/views/seller/products.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "1101a49a2427a73a7c9f21c472882f9f36aae9ff39e54810dc2e11d32cd9380b"
+                  },
+                  {
+                      "path":  "resources/views/seller/reports.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "cadbf124e07434117708566eb9ca8116ff9455ffb55f1b33c6bb3c79add4480b"
+                  },
+                  {
+                      "path":  "resources/views/seller/returns.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "3bb97bf467908094c6a01e18dba501a17b89ab9bbaaeb112a323e8e160023e6e"
+                  },
+                  {
+                      "path":  "resources/views/seller/reviews-center.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "6dc907c6667b82c156fe6d7d2421c5759b269658eebf5db78bb3e6b6cf28308c"
+                  },
+                  {
+                      "path":  "resources/views/seller/reviews.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "83d738937f4d993083728876863cafdfaddb57a44bbc8a2e8026408dd9ca22b6"
+                  },
+                  {
+                      "path":  "resources/views/seller/shipping/index.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "c76712df3049f1b8787638a31be36575feeece630b1aac8ebd5132b7d0dbfc50"
+                  },
+                  {
+                      "path":  "resources/views/seller/shipping/partials/route-map-styles.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "5516078df9a8f680385385f524bda0e72a27550af785fb982b1952bd2e20d931"
+                  },
+                  {
+                      "path":  "resources/views/seller/shipping/show.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "c6091083fd6ec2c18f3b8ea73ef483e9e194b534a63db425a4f0d0682f07b0f5"
+                  },
+                  {
+                      "path":  "resources/views/seller/store.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "42167f4e1e4ddc64571b467dad55495895fb163c11b2788f77f00631bb233187"
+                  },
+                  {
+                      "path":  "resources/views/seller/vouchers.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "10ccd05949fc32ce6fc00b0d6c7cc2f4756513eb22ff52b6bea595fec3a5faa8"
+                  },
+                  {
+                      "path":  "resources/views/components/shared/theme-head.blade.php",
+                      "existed":  false,
+                      "installed_sha256":  "2431fbd795fda5ab430fa3ee55348b6afac15f853f70dce2f951c51e0d4485fb"
+                  },
+                  {
+                      "path":  "resources/views/components/shared/theme-toggle.blade.php",
+                      "existed":  false,
+                      "installed_sha256":  "7ab7d2276a3fe18a5fa9a11a071736c9cedbe6819294acebd57d2bd26e88660a"
+                  },
+                  {
+                      "path":  "public/js/sari-theme.js",
+                      "existed":  false,
+                      "installed_sha256":  "e3ef8896c890e527d902eb1249dcef85341e446669459fa0f7bba99fe99dd245"
+                  },
+                  {
+                      "path":  "resources/views/seller/archived-products.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "f440c063dc1c90dec29d0bb7fef0e7df62261ae673db5a3f66ac1f40837477e4"
+                  },
+                  {
+                      "path":  "resources/views/logistics/facilities.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "8f357fb648e13a3e4132b43ec2d2ed38f77e495ebd23a91674beb23ca75ad08e"
+                  },
+                  {
+                      "path":  "resources/views/seller/products/partials/modals/view.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "88f79fc5561b5d82fd2c808933ee6e00bc505b842f1e6b2020efba1684e91bfd"
+                  },
+                  {
+                      "path":  "resources/views/admin/partials/dashboard-functional-wiring.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "3ce426cff1558821545a5972450010dd2ba7ab2100755e0fbe64b55bdaa2229d"
+                  },
+                  {
+                      "path":  "public/js/seller-products.js",
+                      "existed":  true,
+                      "installed_sha256":  "4d42898a6f495ca733523fe9516307bb12457da8549b3ce518235dcd00cc9310"
+                  },
+                  {
+                      "path":  "resources/views/logistics/branch-select.blade.php",
+                      "existed":  true,
+                      "installed_sha256":  "abe41f622ac997955e4c67da98c847d0e69343b352e5875995ceff8f8a46bc1b"
+                  },
+                  {
+                      "path":  "public/css/sari-theme.css",
+                      "existed":  false,
+                      "installed_sha256":  "2234ddd740e89ce14e4ef458575fe6f1d183bf67db885b87a0b651cb9093e027"
+                  },
+                  {
+                      "path":  "tests/Unit/sari-theme.test.cjs",
+                      "existed":  false,
+                      "installed_sha256":  "afa3ddf0bf19fa75a8ba0535112b6e5638a366f30e425c25cb1d815ace8ffa45"
+                  }
+              ]
+}

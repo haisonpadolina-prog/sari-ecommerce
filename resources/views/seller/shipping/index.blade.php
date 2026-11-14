@@ -16,15 +16,15 @@
 
         --ship-gold-soft: #fffaf0;
 
-        --ship-ink: #111827;
+        --ship-ink: var(--sari-dark-e23e64dd1e, #111827);
 
-        --ship-text: #344054;
+        --ship-text: var(--sari-dark-e23e64dd1e, #344054);
 
-        --ship-muted: #7c8592;
+        --ship-muted: var(--sari-dark-a63aa16d7c, #7c8592);
 
-        --ship-soft-muted: #98a2b3;
+        --ship-soft-muted: var(--sari-dark-a63aa16d7c, #98a2b3);
 
-        --ship-line: #e5e7eb;
+        --ship-line: var(--sari-dark-d8c2716225, #e5e7eb);
 
         width: 100%;
 
@@ -66,7 +66,7 @@
 
         padding: 2px 2px 16px;
 
-        border-bottom: 1px solid #e7ebf0;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e7ebf0);
 
     }
 
@@ -76,7 +76,7 @@
 
         margin: 0;
 
-        color: #b87605;
+        color: var(--sari-dark-6e784b4931, #b87605);
 
         font-size: 8px;
 
@@ -106,7 +106,7 @@
 
     }
 
-    .seller-shipping-title span { color: #C9890B; }
+    .seller-shipping-title span { color: var(--sari-dark-9db03b407c, #C9890B); }
 
     .seller-shipping-subtitle {
 
@@ -150,15 +150,15 @@
 
         gap: 8px;
 
-        border: 1px solid #dfe3e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8);
 
         border-radius: 12px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 0 14px;
 
-        color: #4b5563;
+        color: var(--sari-dark-e23e64dd1e, #4b5563);
 
         font-size: 10px;
 
@@ -166,7 +166,7 @@
 
         text-decoration: none;
 
-        box-shadow: 0 5px 14px rgba(15, 23, 42, .035);
+        box-shadow: 0 5px 14px var(--sari-dark-7593018246, rgba(15, 23, 42, .035));
 
         transition: border-color .14s ease, background-color .14s ease, color .14s ease;
 
@@ -182,7 +182,7 @@
 
         background: var(--ship-gold-soft);
 
-        color: #9b6505;
+        color: var(--sari-dark-af18afcaa4, #9b6505);
 
     }
 
@@ -194,7 +194,7 @@
 
         color: #fff;
 
-        box-shadow: 0 7px 16px rgba(213, 150, 23, .14);
+        box-shadow: 0 7px 16px var(--sari-dark-59ed29fe9d, rgba(213, 150, 23, .14));
 
     }
 
@@ -234,11 +234,11 @@
 
         border-radius: 16px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 14px 15px;
 
-        box-shadow: 0 8px 22px rgba(15, 23, 42, .035);
+        box-shadow: 0 8px 22px var(--sari-dark-7593018246, rgba(15, 23, 42, .035));
 
     }
 
@@ -246,7 +246,7 @@
 
     .seller-shipping-stat p:first-child {
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
         font-size: 10px;
 
@@ -296,7 +296,7 @@
 
         place-items: center;
 
-        border: 1px solid rgba(17, 24, 39, .05);
+        border: 1px solid var(--sari-dark-452f190c69, rgba(17, 24, 39, .05));
 
         border-radius: 10px;
 
@@ -308,15 +308,15 @@
 
         margin-top: 14px;
 
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
 
         border-radius: 22px;
 
-        background: #f8fafc;
+        background: var(--sari-dark-950baec030, #f8fafc);
 
         padding: 12px;
 
-        box-shadow: 0 8px 22px rgba(15, 23, 42, .035);
+        box-shadow: 0 8px 22px var(--sari-dark-7593018246, rgba(15, 23, 42, .035));
 
     }
 
@@ -354,7 +354,7 @@
 
         transform: translateY(-50%);
 
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
         pointer-events: none;
 
@@ -384,17 +384,17 @@
 
     .seller-shipping-status-select {
 
-        border: 1px solid #d8dee6;
+        border: 1px solid var(--sari-dark-d8c2716225, #d8dee6);
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
 
         font-size: 12px;
 
         outline: none;
 
-        box-shadow: 0 1px 2px rgba(15, 23, 42, .015);
+        box-shadow: 0 1px 2px var(--sari-dark-37396001f9, rgba(15, 23, 42, .015));
 
         transition: border-color .14s ease, box-shadow .14s ease, background-color .14s ease;
 
@@ -408,7 +408,7 @@
 
     .seller-shipping-search-input::placeholder {
 
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
         font-weight: 400;
 
@@ -430,9 +430,9 @@
 
         border-color: #d59617;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        box-shadow: 0 0 0 4px rgba(213, 150, 23, .09);
+        box-shadow: 0 0 0 4px var(--sari-dark-b12a5e9552, rgba(213, 150, 23, .09));
 
     }
 
@@ -468,7 +468,7 @@
 
         color: #fff;
 
-        box-shadow: 0 8px 18px rgba(213, 150, 23, .16);
+        box-shadow: 0 8px 18px var(--sari-dark-b5c2a2270e, rgba(213, 150, 23, .16));
 
     }
 
@@ -494,13 +494,13 @@
 
     .seller-shipping-reset-filter {
 
-        border: 1px solid #d8dee6;
+        border: 1px solid var(--sari-dark-d8c2716225, #d8dee6);
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 0 14px;
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
         box-shadow: none;
 
@@ -512,11 +512,11 @@
 
         outline: none;
 
-        border-color: #cfd6df;
+        border-color: var(--sari-dark-d8c2716225, #cfd6df);
 
-        background: #f9fafb;
+        background: var(--sari-dark-950baec030, #f9fafb);
 
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
 
     }
 
@@ -530,9 +530,9 @@
 
         border-radius: 16px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        box-shadow: 0 10px 26px rgba(15, 23, 42, .035);
+        box-shadow: 0 10px 26px var(--sari-dark-7593018246, rgba(15, 23, 42, .035));
 
     }
 
@@ -544,7 +544,7 @@
 
         padding: 0;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
     }
 
@@ -552,11 +552,11 @@
 
         border: 0;
 
-        border-bottom: 1px solid #edf0f3;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
         border-radius: 0;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 16px;
 
@@ -566,11 +566,11 @@
 
     .seller-shipping-card:last-child { border-bottom: 0; }
 
-    .seller-shipping-card:hover { background: #fffdf8; }
+    .seller-shipping-card:hover { background: var(--sari-dark-950baec030, #fffdf8); }
 
     .seller-shipping-order-number {
 
-        color: #1f2937;
+        color: var(--sari-dark-e23e64dd1e, #1f2937);
 
         font-size: 12px;
 
@@ -582,11 +582,11 @@
 
     }
 
-    .seller-shipping-order-number:hover { color: #a96f06; }
+    .seller-shipping-order-number:hover { color: var(--sari-dark-c8bdcce6ab, #a96f06); }
 
     .seller-shipping-progress-label {
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
         font-size: 8.5px;
 
@@ -598,11 +598,11 @@
 
         min-width: 0;
 
-        border: 1px solid #e7e9ee;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e9ee);
 
         border-radius: 12px;
 
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
 
         padding: 11px 12px;
 
@@ -612,7 +612,7 @@
 
         margin-top: 14px;
 
-        border-top: 1px solid #edf0f3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
         padding-top: 13px;
 
@@ -644,11 +644,11 @@
 
     .seller-shipping-waybill-button {
 
-        border: 1px solid #dfe3e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8);
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
     }
 
@@ -656,9 +656,9 @@
 
         border-color: #efd9a7;
 
-        background: #fffaf0;
+        background: var(--sari-dark-950baec030, #fffaf0);
 
-        color: #9b6505;
+        color: var(--sari-dark-af18afcaa4, #9b6505);
 
     }
 
@@ -672,7 +672,7 @@
 
         color: #fff;
 
-        box-shadow: 0 6px 14px rgba(213,150,23,.13);
+        box-shadow: 0 6px 14px var(--sari-dark-3e32d50f5e, rgba(213,150,23,.13));
 
     }
 
@@ -684,7 +684,7 @@
 
         text-align: center;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
     }
 
@@ -700,13 +700,13 @@
 
         place-items: center;
 
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
 
         border-radius: 12px;
 
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
 
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     }
 
@@ -920,7 +920,7 @@
 
     padding: 10px 12px !important;
 
-    box-shadow: 0 5px 16px rgba(15, 23, 42, .028) !important;
+    box-shadow: 0 5px 16px var(--sari-dark-7888fe3028, rgba(15, 23, 42, .028)) !important;
 
 }
 
@@ -980,9 +980,9 @@
 
     padding: 9px !important;
 
-    background: #f8fafc !important;
+    background: var(--sari-dark-950baec030, #f8fafc) !important;
 
-    box-shadow: 0 5px 16px rgba(15, 23, 42, .028) !important;
+    box-shadow: 0 5px 16px var(--sari-dark-7888fe3028, rgba(15, 23, 42, .028)) !important;
 
 }
 
@@ -1064,7 +1064,7 @@
 
     border-radius: 13px !important;
 
-    box-shadow: 0 6px 18px rgba(15, 23, 42, .03) !important;
+    box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)) !important;
 
 }
 
@@ -1284,7 +1284,7 @@
 
 .seller-shipping-status-select:focus {
 
-    box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08)) !important;
 
 }
 
@@ -1476,15 +1476,15 @@
 
     gap: 9px;
 
-    border: 1px solid #d8dee6;
+    border: 1px solid var(--sari-dark-d8c2716225, #d8dee6);
 
     border-radius: 9px;
 
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
 
     padding: 0 10px 0 8px;
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-family: inherit;
 
@@ -1498,7 +1498,7 @@
 
     outline: none;
 
-    box-shadow: 0 1px 2px rgba(15, 23, 42, .025);
+    box-shadow: 0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025));
 
     transition: border-color .14s ease, box-shadow .14s ease, background-color .14s ease;
 
@@ -1506,9 +1506,9 @@
 
 .seller-shipping-status-button:hover {
 
-    border-color: #cfd6df;
+    border-color: var(--sari-dark-d8c2716225, #cfd6df);
 
-    background: #fdfefe;
+    background: var(--sari-dark-950baec030, #fdfefe);
 
 }
 
@@ -1518,9 +1518,9 @@
 
     border-color: #d59617;
 
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
 
-    box-shadow: 0 0 0 3px rgba(213, 150, 23, .08);
+    box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08));
 
 }
 
@@ -1548,13 +1548,13 @@
 
     place-items: center;
 
-    border: 1px solid #efe3c7;
+    border: 1px solid var(--sari-dark-d8c2716225, #efe3c7);
 
     border-radius: 7px;
 
-    background: #fffaf0;
+    background: var(--sari-dark-950baec030, #fffaf0);
 
-    color: #b97805;
+    color: var(--sari-dark-af18afcaa4, #b97805);
 
 }
 
@@ -1574,7 +1574,7 @@
 
     flex: 0 0 auto;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     transition: transform .15s ease, color .15s ease;
 
@@ -1584,7 +1584,7 @@
 
     transform: rotate(180deg);
 
-    color: #b97805;
+    color: var(--sari-dark-af18afcaa4, #b97805);
 
 }
 
@@ -1604,15 +1604,15 @@
 
     overflow: hidden;
 
-    border: 1px solid #e2e7ed;
+    border: 1px solid var(--sari-dark-d8c2716225, #e2e7ed);
 
     border-radius: 12px;
 
-    background: rgba(255, 255, 255, .985);
+    background: var(--sari-dark-56c375634d, rgba(255, 255, 255, .985));
 
     padding: 5px;
 
-    box-shadow: 0 18px 40px rgba(15, 23, 42, .12), 0 3px 9px rgba(15, 23, 42, .045);
+    box-shadow: 0 18px 40px var(--sari-dark-3b2338cbf0, rgba(15, 23, 42, .12)), 0 3px 9px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045));
 
     backdrop-filter: blur(10px);
 
@@ -1648,7 +1648,7 @@
 
     padding: 7px 8px 7px 10px;
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-family: inherit;
 
@@ -1666,13 +1666,13 @@
 
     outline: none;
 
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 
 }
 
 .seller-shipping-status-option.is-selected {
 
-    background: #fff9ec;
+    background: var(--sari-dark-4d21eb669b, #fff9ec);
 
 }
 
@@ -1688,7 +1688,7 @@
 
     display: block;
 
-    color: #344054;
+    color: var(--sari-dark-e23e64dd1e, #344054);
 
     font-size: 9.3px;
 
@@ -1700,7 +1700,7 @@
 
 .seller-shipping-status-option.is-selected .seller-shipping-status-option-copy strong {
 
-    color: #9b6505;
+    color: var(--sari-dark-af18afcaa4, #9b6505);
 
 }
 
@@ -1710,7 +1710,7 @@
 
     margin-top: 2px;
 
-    color: #98a2b3;
+    color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     font-size: 7.8px;
 
@@ -1728,7 +1728,7 @@
 
     flex: 0 0 auto;
 
-    color: #c9890f;
+    color: var(--sari-dark-19b301f69a, #c9890f);
 
     opacity: 0;
 
@@ -1767,16 +1767,16 @@
    ====================================================================== */
 
 .seller-shipping-page {
-    --ship-float-border: #E2E7ED;
-    --ship-float-border-soft: #E8EDF2;
+    --ship-float-border: var(--sari-dark-d8c2716225, #E2E7ED);
+    --ship-float-border-soft: var(--sari-dark-d8c2716225, #E8EDF2);
     --ship-float-shadow:
-        0 1px 2px rgba(15, 23, 42, .035),
-        0 11px 28px rgba(15, 23, 42, .075),
-        inset 0 1px 0 rgba(255, 255, 255, .88);
+        0 1px 2px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 11px 28px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .88));
     --ship-float-shadow-soft:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 6px 16px rgba(15, 23, 42, .05),
-        inset 0 1px 0 rgba(255, 255, 255, .84);
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 6px 16px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .84));
 }
 
 /* Main page surfaces — strongest floating hierarchy. */
@@ -1784,7 +1784,7 @@
 .seller-shipping-page .seller-shipping-filter-panel,
 .seller-shipping-page .seller-shipping-workspace {
     border-color: var(--ship-float-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-float-shadow) !important;
     transform: none !important;
 }
@@ -1797,7 +1797,7 @@
 
 .seller-shipping-page .seller-shipping-filter-panel {
     border-radius: 14px !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* No card lift or positional hover movement. */
@@ -1812,45 +1812,45 @@
 /* Shipment list is one elevated workspace; rows remain calm and flat. */
 .seller-shipping-page .seller-shipping-card,
 .seller-shipping-page .seller-shipping-card:hover {
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     transform: none !important;
 }
 
 .seller-shipping-page .seller-shipping-card {
-    border-bottom-color: #EDF1F5 !important;
+    border-bottom-color: var(--sari-dark-d8c2716225, #EDF1F5) !important;
 }
 
 /* Secondary information blocks receive softer depth. */
 .seller-shipping-page .seller-shipping-meta-card {
     border-color: var(--ship-float-border-soft) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-float-shadow-soft) !important;
     transform: none !important;
 }
 
 /* Progress section remains clean and document-like. */
 .seller-shipping-page .seller-shipping-card-footer {
-    border-top-color: #E9EDF2 !important;
+    border-top-color: var(--sari-dark-d8c2716225, #E9EDF2) !important;
 }
 
 /* Filter controls sit slightly above the filter card surface. */
 .seller-shipping-page .seller-shipping-search-input,
 .seller-shipping-page .seller-shipping-status-button {
-    border-color: #D8DEE6 !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #D8DEE6) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, .02),
-        0 4px 11px rgba(15, 23, 42, .035) !important;
+        0 1px 2px var(--sari-dark-f6fe7319d9, rgba(15, 23, 42, .02)),
+        0 4px 11px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
     transform: none !important;
 }
 
 .seller-shipping-page .seller-shipping-search-input:hover,
 .seller-shipping-page .seller-shipping-status-button:hover {
-    border-color: #CBD3DD !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #CBD3DD) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 5px 13px rgba(15, 23, 42, .045) !important;
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 5px 13px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)) !important;
     transform: none !important;
 }
 
@@ -1858,19 +1858,19 @@
 .seller-shipping-page .seller-shipping-status-button:focus-visible,
 .seller-shipping-page .seller-shipping-status-button[aria-expanded="true"] {
     border-color: #D09A2F !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 0 0 3px rgba(208, 154, 47, .08),
-        0 5px 14px rgba(15, 23, 42, .04) !important;
+        0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(208, 154, 47, .08)),
+        0 5px 14px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)) !important;
 }
 
 /* Custom status menu: floating white popover with neutral structure. */
 .seller-shipping-page .seller-shipping-status-menu {
-    border-color: #E1E6EC !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E1E6EC) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 18px 42px rgba(15, 23, 42, .12),
-        0 4px 12px rgba(15, 23, 42, .04) !important;
+        0 18px 42px var(--sari-dark-3b2338cbf0, rgba(15, 23, 42, .12)),
+        0 4px 12px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
@@ -1881,30 +1881,30 @@
 
 .seller-shipping-page .seller-shipping-status-option:hover,
 .seller-shipping-page .seller-shipping-status-option:focus-visible {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     transform: none !important;
 }
 
 .seller-shipping-page .seller-shipping-status-option.is-selected {
-    background: #FFF9EC !important;
+    background: var(--sari-dark-4d21eb669b, #FFF9EC) !important;
 }
 
 /* Empty state keeps the same elevated page language. */
 .seller-shipping-page .seller-shipping-empty {
     border-radius: 14px !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .seller-shipping-page .seller-shipping-empty-icon {
-    border-color: #E2E7ED !important;
-    background: #F9FAFB !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+    border-color: var(--sari-dark-d8c2716225, #E2E7ED) !important;
+    background: var(--sari-dark-950baec030, #F9FAFB) !important;
+    box-shadow: 0 4px 12px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
 }
 
 /* Pagination/footer visually belongs to the floating workspace. */
 .seller-shipping-page .seller-shipping-workspace > .border-t {
-    border-top-color: #E9EDF2 !important;
-    background: #FFFFFF !important;
+    border-top-color: var(--sari-dark-d8c2716225, #E9EDF2) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* Buttons stay clickable but do not physically move. */
@@ -1938,15 +1938,15 @@
     .seller-shipping-page .seller-shipping-filter-panel,
     .seller-shipping-page .seller-shipping-workspace {
         box-shadow:
-            0 1px 2px rgba(15, 23, 42, .03),
-            0 7px 18px rgba(15, 23, 42, .06),
-            inset 0 1px 0 rgba(255, 255, 255, .84) !important;
+            0 1px 2px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .84)) !important;
     }
 
     .seller-shipping-page .seller-shipping-meta-card {
         box-shadow:
-            0 1px 2px rgba(15, 23, 42, .02),
-            0 5px 13px rgba(15, 23, 42, .045) !important;
+            0 1px 2px var(--sari-dark-f6fe7319d9, rgba(15, 23, 42, .02)),
+            0 5px 13px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)) !important;
     }
 }
 
@@ -1958,15 +1958,15 @@
    ====================================================================== */
 
 .seller-shipping-page {
-    --ship-neutral-border: #E5E5E5;
-    --ship-neutral-border-strong: #D4D4D4;
-    --ship-neutral-divider: #ECECEC;
+    --ship-neutral-border: var(--sari-dark-d8c2716225, #E5E5E5);
+    --ship-neutral-border-strong: var(--sari-dark-d8c2716225, #D4D4D4);
+    --ship-neutral-divider: var(--sari-dark-d8c2716225, #ECECEC);
     --ship-neutral-shadow:
-        0 1px 2px rgba(0, 0, 0, .025),
-        0 10px 26px rgba(0, 0, 0, .065);
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(0, 0, 0, .025)),
+        0 10px 26px var(--sari-dark-4fc908fafe, rgba(0, 0, 0, .065));
     --ship-neutral-shadow-soft:
-        0 1px 2px rgba(0, 0, 0, .02),
-        0 6px 16px rgba(0, 0, 0, .045);
+        0 1px 2px var(--sari-dark-f6fe7319d9, rgba(0, 0, 0, .02)),
+        0 6px 16px var(--sari-dark-1190f58155, rgba(0, 0, 0, .045));
 }
 
 /* Main floating containers: neutral gray only. */
@@ -1974,7 +1974,7 @@
 .seller-shipping-page .seller-shipping-filter-panel,
 .seller-shipping-page .seller-shipping-workspace {
     border-color: var(--ship-neutral-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-neutral-shadow) !important;
 }
 
@@ -1988,7 +1988,7 @@
 /* Inner information cards. */
 .seller-shipping-page .seller-shipping-meta-card {
     border-color: var(--ship-neutral-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-neutral-shadow-soft) !important;
 }
 
@@ -2013,69 +2013,69 @@
 .seller-shipping-page .seller-shipping-search-input,
 .seller-shipping-page .seller-shipping-status-button {
     border-color: var(--ship-neutral-border-strong) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 1px 2px rgba(0, 0, 0, .018),
-        0 4px 10px rgba(0, 0, 0, .03) !important;
+        0 1px 2px var(--sari-dark-7672bb207e, rgba(0, 0, 0, .018)),
+        0 4px 10px var(--sari-dark-b13200ac05, rgba(0, 0, 0, .03)) !important;
 }
 
 .seller-shipping-page .seller-shipping-search-input:hover,
 .seller-shipping-page .seller-shipping-status-button:hover {
-    border-color: #CFCFCF !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #CFCFCF) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 1px 2px rgba(0, 0, 0, .02),
-        0 5px 12px rgba(0, 0, 0, .038) !important;
+        0 1px 2px var(--sari-dark-f6fe7319d9, rgba(0, 0, 0, .02)),
+        0 5px 12px var(--sari-dark-e0ffb11e26, rgba(0, 0, 0, .038)) !important;
 }
 
 .seller-shipping-page .seller-shipping-search-input:focus,
 .seller-shipping-page .seller-shipping-status-button:focus-visible,
 .seller-shipping-page .seller-shipping-status-button[aria-expanded="true"] {
-    border-color: #BFBFBF !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #BFBFBF) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 0 0 3px rgba(0, 0, 0, .045),
-        0 5px 12px rgba(0, 0, 0, .035) !important;
+        0 0 0 3px var(--sari-dark-1190f58155, rgba(0, 0, 0, .045)),
+        0 5px 12px var(--sari-dark-7593018246, rgba(0, 0, 0, .035)) !important;
 }
 
 /* Dropdown popover outline also neutral. */
 .seller-shipping-page .seller-shipping-status-menu {
     border-color: var(--ship-neutral-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 18px 40px rgba(0, 0, 0, .105),
-        0 4px 10px rgba(0, 0, 0, .035) !important;
+        0 18px 40px var(--sari-dark-03e9d0debe, rgba(0, 0, 0, .105)),
+        0 4px 10px var(--sari-dark-7593018246, rgba(0, 0, 0, .035)) !important;
 }
 
 /* Remove colored outline from the small dropdown icon shell.
    Keep the gold icon itself as the brand accent. */
 .seller-shipping-page .seller-shipping-status-button-icon {
     border-color: var(--ship-neutral-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* Header secondary button outlines should remain neutral too. */
 .seller-shipping-page .seller-shipping-header-action:not(.seller-shipping-header-action--primary) {
     border-color: var(--ship-neutral-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .seller-shipping-page .seller-shipping-header-action:not(.seller-shipping-header-action--primary):hover,
 .seller-shipping-page .seller-shipping-header-action:not(.seller-shipping-header-action--primary):focus-visible {
     border-color: var(--ship-neutral-border-strong) !important;
-    background: #F9F9F9 !important;
+    background: var(--sari-dark-950baec030, #F9F9F9) !important;
 }
 
 /* Secondary row actions: no gold/cream structural border. */
 .seller-shipping-page .seller-shipping-waybill-button {
     border-color: var(--ship-neutral-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .seller-shipping-page .seller-shipping-waybill-button:hover,
 .seller-shipping-page .seller-shipping-waybill-button:focus-visible {
     border-color: var(--ship-neutral-border-strong) !important;
-    background: #F9F9F9 !important;
+    background: var(--sari-dark-950baec030, #F9F9F9) !important;
 }
 
 /* Empty-state/icon outlines. */
@@ -2108,8 +2108,8 @@
     .seller-shipping-page .seller-shipping-workspace {
         border-color: var(--ship-neutral-border) !important;
         box-shadow:
-            0 1px 2px rgba(0, 0, 0, .02),
-            0 7px 18px rgba(0, 0, 0, .05) !important;
+            0 1px 2px var(--sari-dark-f6fe7319d9, rgba(0, 0, 0, .02)),
+            0 7px 18px var(--sari-dark-1df26971b5, rgba(0, 0, 0, .05)) !important;
     }
 }
 
@@ -2121,25 +2121,25 @@
    ====================================================================== */
 
 .seller-shipping-page .seller-shipping-card:hover {
-    background: #F8FAFC !important;
-    border-bottom-color: #E5E7EB !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
+    border-bottom-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
     transform: none !important;
 }
 
 /* Keep inner information cards clean white while the parent row gets
    the subtle gray hover surface. */
 .seller-shipping-page .seller-shipping-card:hover .seller-shipping-meta-card {
-    background: #FFFFFF !important;
-    border-color: #E5E5E5 !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E5E5) !important;
 }
 
 /* Keep progress track and footer neutral on row hover. */
 .seller-shipping-page .seller-shipping-card:hover .seller-shipping-card-footer {
-    border-top-color: #ECECEC !important;
+    border-top-color: var(--sari-dark-d8c2716225, #ECECEC) !important;
 }
 
 .seller-shipping-page .seller-shipping-card:hover .bg-\[\#eceff2\] {
-    background: #E9EDF2 !important;
+    background: var(--sari-dark-4d21eb669b, #E9EDF2) !important;
 }
 
 
@@ -2150,9 +2150,9 @@
    ====================================================================== */
 
 .seller-shipping-page {
-    --ship-dashboard-border: #E5E7EB;
-    --ship-dashboard-border-strong: #D1D5DB;
-    --ship-dashboard-divider: #ECEFF2;
+    --ship-dashboard-border: var(--sari-dark-d8c2716225, #E5E7EB);
+    --ship-dashboard-border-strong: var(--sari-dark-d8c2716225, #D1D5DB);
+    --ship-dashboard-divider: var(--sari-dark-d8c2716225, #ECEFF2);
 
     /* Main dashboard-style elevation:
        - contact shadow
@@ -2160,21 +2160,21 @@
        - broad ambient float
        - subtle white top inset for a crisp elevated surface */
     --ship-dashboard-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
 
     --ship-dashboard-shadow-soft:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065),
-        inset 0 1px 0 rgba(255, 255, 255, .90);
+        0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+        0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
 
     --ship-dashboard-shadow-inner:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 5px 14px rgba(15, 23, 42, .045),
-        inset 0 1px 0 rgba(255, 255, 255, .88);
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 5px 14px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .88));
 }
 
 /* ------------------------------------------------------------
@@ -2182,14 +2182,14 @@
    ------------------------------------------------------------ */
 .seller-shipping-page .seller-shipping-stat {
     border: 1px solid var(--ship-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-dashboard-shadow-soft) !important;
     transform: none !important;
 }
 
 .seller-shipping-page .seller-shipping-stat:hover {
     border-color: var(--ship-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-dashboard-shadow-soft) !important;
     transform: none !important;
 }
@@ -2201,7 +2201,7 @@
 .seller-shipping-page .seller-shipping-filter-panel,
 .seller-shipping-page .seller-shipping-workspace {
     border: 1px solid var(--ship-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-dashboard-shadow) !important;
     transform: none !important;
 }
@@ -2209,18 +2209,18 @@
 .seller-shipping-page .seller-shipping-filter-panel:hover,
 .seller-shipping-page .seller-shipping-workspace:hover {
     border-color: var(--ship-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-dashboard-shadow) !important;
     transform: none !important;
 }
 
 /* Keep the list itself clean; elevation belongs to the workspace shell. */
 .seller-shipping-page .seller-shipping-list {
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 .seller-shipping-page .seller-shipping-card {
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     border-bottom-color: var(--ship-dashboard-divider) !important;
     box-shadow: none !important;
     transform: none !important;
@@ -2228,7 +2228,7 @@
 
 /* Light-gray row hover only — no cream and no movement. */
 .seller-shipping-page .seller-shipping-card:hover {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     border-bottom-color: var(--ship-dashboard-divider) !important;
     box-shadow: none !important;
     transform: none !important;
@@ -2239,15 +2239,15 @@
    Softer elevation so they remain subordinate to the main workspace.
    ------------------------------------------------------------ */
 .seller-shipping-page .seller-shipping-meta-card {
-    border-color: #E7EAEE !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAEE) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-dashboard-shadow-inner) !important;
     transform: none !important;
 }
 
 .seller-shipping-page .seller-shipping-card:hover .seller-shipping-meta-card {
-    border-color: #E5E7EB !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E5E7EB) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-dashboard-shadow-inner) !important;
 }
 
@@ -2255,7 +2255,7 @@
 .seller-shipping-page .seller-shipping-card-footer,
 .seller-shipping-page .seller-shipping-workspace > .border-t {
     border-color: var(--ship-dashboard-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* ------------------------------------------------------------
@@ -2266,38 +2266,38 @@
 .seller-shipping-page .seller-shipping-status-button,
 .seller-shipping-page .seller-shipping-reset-filter {
     border-color: var(--ship-dashboard-border-strong) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 5px 12px rgba(15, 23, 42, .04) !important;
+        0 1px 2px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025)),
+        0 5px 12px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)) !important;
     transform: none !important;
 }
 
 .seller-shipping-page .seller-shipping-search-input:hover,
 .seller-shipping-page .seller-shipping-status-button:hover,
 .seller-shipping-page .seller-shipping-reset-filter:hover {
-    border-color: #C9D0D9 !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #C9D0D9) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, .03),
-        0 6px 14px rgba(15, 23, 42, .05) !important;
+        0 1px 2px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)),
+        0 6px 14px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)) !important;
     transform: none !important;
 }
 
 .seller-shipping-page .seller-shipping-search-input:focus,
 .seller-shipping-page .seller-shipping-status-button:focus-visible,
 .seller-shipping-page .seller-shipping-status-button[aria-expanded="true"] {
-    border-color: #BFC5CC !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #BFC5CC) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 0 0 3px rgba(15, 23, 42, .045),
-        0 5px 14px rgba(15, 23, 42, .04) !important;
+        0 0 0 3px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 5px 14px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04)) !important;
 }
 
 /* Icon shell stays neutral; gold is only the icon/accent. */
 .seller-shipping-page .seller-shipping-status-button-icon {
     border-color: var(--ship-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* ------------------------------------------------------------
@@ -2305,19 +2305,19 @@
    One elevation level above the filter panel.
    ------------------------------------------------------------ */
 .seller-shipping-page .seller-shipping-status-menu {
-    border-color: #E1E5EA !important;
-    background: #FFFFFF !important;
+    border-color: var(--sari-dark-d8c2716225, #E1E5EA) !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow:
-        0 4px 10px rgba(15, 23, 42, .05),
-        0 18px 42px rgba(15, 23, 42, .14),
-        0 32px 70px rgba(15, 23, 42, .08) !important;
+        0 4px 10px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
+        0 18px 42px var(--sari-dark-59ed29fe9d, rgba(15, 23, 42, .14)),
+        0 32px 70px var(--sari-dark-c33e3d1bb4, rgba(15, 23, 42, .08)) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
 
 .seller-shipping-page .seller-shipping-status-option:hover,
 .seller-shipping-page .seller-shipping-status-option:focus-visible {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     transform: none !important;
 }
 
@@ -2326,7 +2326,7 @@
    ------------------------------------------------------------ */
 .seller-shipping-page .seller-shipping-empty {
     border: 1px solid var(--ship-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: var(--ship-dashboard-shadow) !important;
     transform: none !important;
 }
@@ -2334,20 +2334,20 @@
 .seller-shipping-page .seller-shipping-empty-icon,
 .seller-shipping-page .seller-shipping-stat-icon {
     border-color: var(--ship-dashboard-border) !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+    box-shadow: 0 4px 12px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)) !important;
 }
 
 /* Secondary button remains neutral and still. */
 .seller-shipping-page .seller-shipping-waybill-button {
     border-color: var(--ship-dashboard-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     transform: none !important;
 }
 
 .seller-shipping-page .seller-shipping-waybill-button:hover,
 .seller-shipping-page .seller-shipping-waybill-button:focus-visible {
     border-color: var(--ship-dashboard-border-strong) !important;
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
     transform: none !important;
 }
 
@@ -2377,24 +2377,24 @@
 @media (max-width: 640px) {
     .seller-shipping-page .seller-shipping-stat {
         box-shadow:
-            0 1px 3px rgba(15, 23, 42, .03),
-            0 6px 14px rgba(15, 23, 42, .05),
-            0 12px 26px rgba(15, 23, 42, .055) !important;
+            0 1px 3px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)),
+            0 6px 14px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
+            0 12px 26px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)) !important;
     }
 
     .seller-shipping-page .seller-shipping-filter-panel,
     .seller-shipping-page .seller-shipping-workspace,
     .seller-shipping-page .seller-shipping-empty {
         box-shadow:
-            0 2px 4px rgba(15, 23, 42, .035),
-            0 8px 18px rgba(15, 23, 42, .06),
-            0 18px 38px rgba(15, 23, 42, .07) !important;
+            0 2px 4px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 8px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            0 18px 38px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)) !important;
     }
 
     .seller-shipping-page .seller-shipping-meta-card {
         box-shadow:
-            0 1px 2px rgba(15, 23, 42, .02),
-            0 5px 13px rgba(15, 23, 42, .045) !important;
+            0 1px 2px var(--sari-dark-f6fe7319d9, rgba(15, 23, 42, .02)),
+            0 5px 13px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)) !important;
     }
 }
 
@@ -2435,7 +2435,7 @@
 /* Subtle separators instead of nested card outlines. */
 @media (min-width: 640px) {
     .seller-shipping-page .seller-shipping-meta-card + .seller-shipping-meta-card {
-        border-left: 1px solid #ECEFF2 !important;
+        border-left: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     }
 
     .seller-shipping-page .seller-shipping-meta-card:first-child {
@@ -2458,7 +2458,7 @@
     }
 
     .seller-shipping-page .seller-shipping-meta-card + .seller-shipping-meta-card {
-        border-top: 1px solid #ECEFF2 !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     }
 
     .seller-shipping-page .seller-shipping-meta-card:first-child {
@@ -2472,17 +2472,17 @@
 
 /* Labels stay quiet; values get slightly more presence without adding boxes. */
 .seller-shipping-page .seller-shipping-meta-card p:first-child {
-    color: #98A2B3 !important;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3) !important;
     font-weight: 700 !important;
 }
 
 .seller-shipping-page .seller-shipping-meta-card p:nth-child(2) {
-    color: #344054 !important;
+    color: var(--sari-dark-e23e64dd1e, #344054) !important;
     font-weight: 650 !important;
 }
 
 .seller-shipping-page .seller-shipping-meta-card p:nth-child(3) {
-    color: #7C8592 !important;
+    color: var(--sari-dark-a63aa16d7c, #7C8592) !important;
 }
 
 
@@ -2523,7 +2523,7 @@
 /* Desktop: open 3-column information strip with separators only. */
 @media (min-width: 640px) {
     .seller-shipping-page .seller-shipping-meta-item + .seller-shipping-meta-item {
-        border-left: 1px solid #ECEFF2 !important;
+        border-left: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     }
 
     .seller-shipping-page .seller-shipping-meta-item:first-child {
@@ -2542,7 +2542,7 @@
     }
 
     .seller-shipping-page .seller-shipping-meta-item + .seller-shipping-meta-item {
-        border-top: 1px solid #ECEFF2 !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     }
 
     .seller-shipping-page .seller-shipping-meta-item:first-child {
@@ -2555,17 +2555,17 @@
 }
 
 .seller-shipping-page .seller-shipping-meta-item p:first-child {
-    color: #98A2B3 !important;
+    color: var(--sari-dark-a63aa16d7c, #98A2B3) !important;
     font-weight: 700 !important;
 }
 
 .seller-shipping-page .seller-shipping-meta-item p:nth-child(2) {
-    color: #344054 !important;
+    color: var(--sari-dark-e23e64dd1e, #344054) !important;
     font-weight: 650 !important;
 }
 
 .seller-shipping-page .seller-shipping-meta-item p:nth-child(3) {
-    color: #7C8592 !important;
+    color: var(--sari-dark-a63aa16d7c, #7C8592) !important;
 }
 
 /* ======================================================================
@@ -2576,10 +2576,10 @@
 .seller-shipping-page {
     --ship-gold: #C88912;
     --ship-gold-hover: #B47B0E;
-    --ship-ink: #2F3742;
-    --ship-text: #475569;
-    --ship-muted: #667085;
-    --ship-line: #E5E7EB;
+    --ship-ink: var(--sari-dark-e23e64dd1e, #2F3742);
+    --ship-text: var(--sari-dark-e23e64dd1e, #475569);
+    --ship-muted: var(--sari-dark-a63aa16d7c, #667085);
+    --ship-line: var(--sari-dark-d8c2716225, #E5E7EB);
     width: 100% !important;
     max-width: 1520px !important;
     padding-bottom: 28px !important;
@@ -2591,28 +2591,28 @@
     min-height: 0 !important;
     margin-bottom: 20px !important;
     padding: 0 2px 14px !important;
-    border-bottom: 1px solid #E5E7EB !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
 }
 .seller-shipping-page .seller-shipping-eyebrow {
     font-size: 10.5px !important;
     font-weight: 800 !important;
     letter-spacing: .12em !important;
-    color: #A87316 !important;
+    color: var(--sari-dark-685eb4fc40, #A87316) !important;
 }
 .seller-shipping-page .seller-shipping-title {
     margin-top: 7px !important;
     font-size: clamp(27px,2.25vw,31px) !important;
     font-weight: 760 !important;
-    color: #2E343B !important;
+    color: var(--sari-dark-e23e64dd1e, #2E343B) !important;
     line-height: 1.1 !important;
 }
-.seller-shipping-page .seller-shipping-title span { color: #C88912 !important; }
+.seller-shipping-page .seller-shipping-title span { color: var(--sari-dark-19b301f69a, #C88912) !important; }
 .seller-shipping-page .seller-shipping-subtitle {
     max-width: 680px !important;
     margin-top: 7px !important;
     font-size: 11.5px !important;
     line-height: 1.55 !important;
-    color: #667085 !important;
+    color: var(--sari-dark-a63aa16d7c, #667085) !important;
 }
 /* Four balanced KPI cards; bare outline icons, no colored icon boxes. */
 .seller-shipping-page .seller-shipping-summary {
@@ -2623,26 +2623,26 @@
 .seller-shipping-page .seller-shipping-stat:hover {
     min-height: 110px !important;
     padding: 18px 19px !important;
-    border: 1px solid #E5E7EB !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
     border-radius: 18px !important;
-    background: #fff !important;
-    box-shadow: 0 3px 8px rgba(15,23,42,.035),0 15px 32px rgba(15,23,42,.065) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    box-shadow: 0 3px 8px var(--sari-dark-7593018246, rgba(15,23,42,.035)),0 15px 32px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)) !important;
     transform: none !important;
 }
 .seller-shipping-page .seller-shipping-stat p:first-child {
-    color: #59636E !important;
+    color: var(--sari-dark-a63aa16d7c, #59636E) !important;
     font-size: 13px !important;
     font-weight: 650 !important;
 }
 .seller-shipping-page .seller-shipping-stat p:nth-child(2) {
     margin-top: 8px !important;
-    color: #293440 !important;
+    color: var(--sari-dark-e23e64dd1e, #293440) !important;
     font-size: 28px !important;
     font-weight: 700 !important;
 }
 .seller-shipping-page .seller-shipping-stat p:nth-child(3) {
     margin-top: 8px !important;
-    color: #8591A0 !important;
+    color: var(--sari-dark-a63aa16d7c, #8591A0) !important;
     font-size: 11.5px !important;
     line-height: 1.45 !important;
 }
@@ -2687,9 +2687,9 @@
 .seller-shipping-page .seller-shipping-status-button,
 .seller-shipping-page .seller-shipping-search-input:hover,
 .seller-shipping-page .seller-shipping-status-button:hover {
-    border: 1px solid #DCE2E8 !important;
-    background: #fff !important;
-    color: #344054 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    color: var(--sari-dark-e23e64dd1e, #344054) !important;
     box-shadow: none !important;
 }
 .seller-shipping-page .seller-shipping-search-field svg {
@@ -2702,7 +2702,7 @@
     font-weight: 600 !important;
 }
 .seller-shipping-page .seller-shipping-search-input::placeholder {
-    color: #94A3B8 !important;
+    color: var(--sari-dark-a63aa16d7c, #94A3B8) !important;
     font-weight: 500 !important;
 }
 .seller-shipping-page .seller-shipping-search-input:focus,
@@ -2710,7 +2710,7 @@
 .seller-shipping-page .seller-shipping-status-button[aria-expanded="true"] {
     outline: none !important;
     border-color: #C88912 !important;
-    box-shadow: 0 0 0 2px rgba(200,137,18,.10) !important;
+    box-shadow: 0 0 0 2px var(--sari-dark-8eadf403a5, rgba(200,137,18,.10)) !important;
 }
 .seller-shipping-page .seller-shipping-status-button {
     padding: 0 16px !important;
@@ -2719,39 +2719,39 @@
 .seller-shipping-page .seller-shipping-status-button-main { gap: 0 !important; }
 .seller-shipping-page .seller-shipping-status-button-icon,
 .seller-shipping-page .seller-shipping-status-check { display: none !important; }
-.seller-shipping-page .seller-shipping-status-chevron { width: 17px !important; height: 17px !important; color: #64748B !important; }
+.seller-shipping-page .seller-shipping-status-chevron { width: 17px !important; height: 17px !important; color: var(--sari-dark-a63aa16d7c, #64748B) !important; }
 .seller-shipping-page .seller-shipping-status-menu {
     top: calc(100% + 8px) !important;
     min-width: 100% !important;
     max-width: 300px;
     padding: 8px !important;
-    border: 1px solid #E2E8F0 !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E8F0) !important;
     border-radius: 14px !important;
-    background: #fff !important;
-    box-shadow: 0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    box-shadow: 0 16px 32px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)),0 2px 6px var(--sari-dark-1df26971b5, rgba(15,23,42,.05)) !important;
     overflow: auto !important;
 }
 .seller-shipping-page .seller-shipping-status-option {
     min-height: 43px !important;
     padding: 8px 12px !important;
     border-radius: 10px !important;
-    background: #fff !important;
-    color: #475569 !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    color: var(--sari-dark-e23e64dd1e, #475569) !important;
 }
 .seller-shipping-page .seller-shipping-status-option:hover,
 .seller-shipping-page .seller-shipping-status-option:focus-visible,
 .seller-shipping-page .seller-shipping-status-option.is-selected {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
 }
 .seller-shipping-page .seller-shipping-status-option-copy strong,
 .seller-shipping-page .seller-shipping-status-option.is-selected .seller-shipping-status-option-copy strong {
-    color: #334155 !important;
+    color: var(--sari-dark-e23e64dd1e, #334155) !important;
     font-size: 11.5px !important;
     font-weight: 650 !important;
 }
 .seller-shipping-page .seller-shipping-status-option-copy small {
     margin-top: 2px !important;
-    color: #94A3B8 !important;
+    color: var(--sari-dark-a63aa16d7c, #94A3B8) !important;
     font-size: 10px !important;
 }
 .seller-shipping-page .seller-shipping-apply-filter {
@@ -2766,22 +2766,22 @@
 .seller-shipping-page .seller-shipping-apply-filter svg { width: 15px !important; height: 15px !important; }
 .seller-shipping-page .seller-shipping-reset-filter,
 .seller-shipping-page .seller-shipping-reset-filter:hover {
-    border: 1px solid #DCE2E8 !important;
-    background: #fff !important;
-    color: #64748B !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    color: var(--sari-dark-a63aa16d7c, #64748B) !important;
     font-size: 11.5px !important;
     font-weight: 650 !important;
     box-shadow: none !important;
 }
-.seller-shipping-page .seller-shipping-reset-filter:hover { background: #F8FAFC !important; }
+.seller-shipping-page .seller-shipping-reset-filter:hover { background: var(--sari-dark-950baec030, #F8FAFC) !important; }
 /* One elevated shipment list, clean table-like rows. */
 .seller-shipping-page .seller-shipping-workspace,
 .seller-shipping-page .seller-shipping-workspace:hover {
     margin-top: 24px !important;
-    border: 1px solid #E5E7EB !important;
+    border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
     border-radius: 18px !important;
-    background: #fff !important;
-    box-shadow: 0 3px 9px rgba(15,23,42,.04),0 17px 36px rgba(15,23,42,.08) !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    box-shadow: 0 3px 9px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04)),0 17px 36px var(--sari-dark-c33e3d1bb4, rgba(15,23,42,.08)) !important;
 }
 .seller-shipping-page .seller-shipping-list-heading {
     display: flex;
@@ -2789,31 +2789,31 @@
     justify-content: space-between;
     gap: 16px;
     padding: 20px 23px;
-    border-bottom: 1px solid #E9EDF1;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF1);
 }
 .seller-shipping-page .seller-shipping-list-heading h2 {
-    color: #293440;
+    color: var(--sari-dark-e23e64dd1e, #293440);
     font-size: 18px;
     font-weight: 780;
     letter-spacing: -.02em;
 }
 .seller-shipping-page .seller-shipping-list-heading p {
     margin-top: 5px;
-    color: #8591A0;
+    color: var(--sari-dark-a63aa16d7c, #8591A0);
     font-size: 11.5px;
 }
 .seller-shipping-page .seller-shipping-list-heading > span {
     flex: 0 0 auto;
-    color: #8591A0;
+    color: var(--sari-dark-a63aa16d7c, #8591A0);
     font-size: 12px;
     font-weight: 600;
 }
 .seller-shipping-page .seller-shipping-card {
     padding: 20px 23px !important;
-    background: #fff !important;
-    border-bottom: 1px solid #EDF0F3 !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #EDF0F3) !important;
 }
-.seller-shipping-page .seller-shipping-card:hover { background: #F8FAFC !important; }
+.seller-shipping-page .seller-shipping-card:hover { background: var(--sari-dark-950baec030, #F8FAFC) !important; }
 .seller-shipping-page .seller-shipping-card > .flex {
     display: grid !important;
     grid-template-columns: minmax(0,1.05fr) minmax(0,1fr) !important;
@@ -2821,13 +2821,13 @@
     gap: 24px !important;
 }
 .seller-shipping-page .seller-shipping-order-number {
-    color: #293440 !important;
+    color: var(--sari-dark-e23e64dd1e, #293440) !important;
     font-size: 12.5px !important;
     font-weight: 750 !important;
 }
 .seller-shipping-page .seller-shipping-state-detail {
     margin-top: 7px !important;
-    color: #64748B !important;
+    color: var(--sari-dark-a63aa16d7c, #64748B) !important;
     font-size: 11px !important;
     line-height: 1.5 !important;
 }
@@ -2845,20 +2845,20 @@
     letter-spacing: 0;
     white-space: nowrap;
 }
-.seller-shipping-page .seller-shipping-status--delivered { background: #ECFDF3; border-color: #BBF7D0; color: #166534; }
-.seller-shipping-page .seller-shipping-status--transit { background: #E8F4FF; border-color: #BAE0FF; color: #075985; }
-.seller-shipping-page .seller-shipping-status--hub { background: #F5F3FF; border-color: #DDD6FE; color: #6D28D9; }
-.seller-shipping-page .seller-shipping-status--awaiting { background: #F8FAFC; border-color: #E2E8F0; color: #A56D0A; }
+.seller-shipping-page .seller-shipping-status--delivered { background: var(--sari-dark-4d21eb669b, #ECFDF3); border-color: var(--sari-dark-d8c2716225, #BBF7D0); color: var(--sari-dark-e23e64dd1e, #166534); }
+.seller-shipping-page .seller-shipping-status--transit { background: var(--sari-dark-4d21eb669b, #E8F4FF); border-color: var(--sari-dark-d8c2716225, #BAE0FF); color: var(--sari-dark-bd74476c41, #075985); }
+.seller-shipping-page .seller-shipping-status--hub { background: var(--sari-dark-950baec030, #F5F3FF); border-color: var(--sari-dark-d8c2716225, #DDD6FE); color: var(--sari-dark-a8c9d62a39, #6D28D9); }
+.seller-shipping-page .seller-shipping-status--awaiting { background: var(--sari-dark-950baec030, #F8FAFC); border-color: var(--sari-dark-d8c2716225, #E2E8F0); color: var(--sari-dark-af18afcaa4, #A56D0A); }
 /* Segmented, static shipment progress — not an indeterminate loading line. */
 .seller-shipping-page .seller-shipping-progress { margin-top: 15px; }
 .seller-shipping-page .seller-shipping-progress-heading {
     display: flex; align-items: center; justify-content: space-between; gap: 10px;
 }
 .seller-shipping-page .seller-shipping-progress-label {
-    color: #475569 !important; font-size: 11px !important; font-weight: 650 !important;
+    color: var(--sari-dark-e23e64dd1e, #475569) !important; font-size: 11px !important; font-weight: 650 !important;
 }
 .seller-shipping-page .seller-shipping-progress-percent {
-    color: #A56D0A; font-size: 11px; font-weight: 700; white-space: nowrap;
+    color: var(--sari-dark-af18afcaa4, #A56D0A); font-size: 11px; font-weight: 700; white-space: nowrap;
 }
 .seller-shipping-page .seller-shipping-progress-track {
     display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 5px;
@@ -2866,7 +2866,7 @@
 }
 .seller-shipping-page .seller-shipping-progress-segment {
     display: block; height: 8px; overflow: hidden;
-    border-radius: 999px; background: #E9EDF2;
+    border-radius: 999px; background: var(--sari-dark-4d21eb669b, #E9EDF2);
 }
 .seller-shipping-page .seller-shipping-progress-fill {
     display: block; height: 100%; background: #C88912; border-radius: inherit;
@@ -2878,21 +2878,21 @@
 }
 .seller-shipping-page .seller-shipping-progress-milestones li {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
-    min-width: 0; color: #98A2B3; text-align: center;
+    min-width: 0; color: var(--sari-dark-a63aa16d7c, #98A2B3); text-align: center;
     font-size: 9.5px; font-weight: 550; line-height: 1.3;
 }
-.seller-shipping-page .seller-shipping-progress-milestones li.is-complete { color: #475569; font-weight: 650; }
-.seller-shipping-page .seller-shipping-progress-milestones li.is-current { color: #A56D0A; font-weight: 700; }
+.seller-shipping-page .seller-shipping-progress-milestones li.is-complete { color: var(--sari-dark-e23e64dd1e, #475569); font-weight: 650; }
+.seller-shipping-page .seller-shipping-progress-milestones li.is-current { color: var(--sari-dark-af18afcaa4, #A56D0A); font-weight: 700; }
 .seller-shipping-page .seller-shipping-milestone-number {
     display: grid; width: 21px; height: 21px; place-items: center;
-    border: 1px solid #E2E8F0; border-radius: 50%; background: #fff;
-    color: #94A3B8; font-size: 9px; font-weight: 700;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E8F0); border-radius: 50%; background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-a63aa16d7c, #94A3B8); font-size: 9px; font-weight: 700;
 }
 .seller-shipping-page .seller-shipping-progress-milestones .is-complete .seller-shipping-milestone-number {
     border-color: #C88912; background: #C88912; color: #fff;
 }
 .seller-shipping-page .seller-shipping-progress-milestones .is-current .seller-shipping-milestone-number {
-    border-color: #C88912; background: #fff; color: #A56D0A;
+    border-color: #C88912; background: var(--sari-dark-950baec030, #fff); color: var(--sari-dark-af18afcaa4, #A56D0A);
 }
 /* Shipment metadata: open columns, no nested containers. */
 .seller-shipping-page .seller-shipping-card > .flex > .grid { width: 100% !important; gap: 0 !important; }
@@ -2901,22 +2901,22 @@
     background: transparent !important; box-shadow: none !important;
 }
 .seller-shipping-page .seller-shipping-meta-item:first-child { padding-left: 0 !important; }
-.seller-shipping-page .seller-shipping-meta-item + .seller-shipping-meta-item { border-left: 1px solid #EDF0F3 !important; }
+.seller-shipping-page .seller-shipping-meta-item + .seller-shipping-meta-item { border-left: 1px solid var(--sari-dark-d8c2716225, #EDF0F3) !important; }
 .seller-shipping-page .seller-shipping-meta-item p:first-child {
-    color: #8591A0 !important; font-size: 10px !important; font-weight: 700 !important;
+    color: var(--sari-dark-a63aa16d7c, #8591A0) !important; font-size: 10px !important; font-weight: 700 !important;
 }
 .seller-shipping-page .seller-shipping-meta-item p:nth-child(2) {
-    margin-top: 7px !important; color: #293440 !important;
+    margin-top: 7px !important; color: var(--sari-dark-e23e64dd1e, #293440) !important;
     font-size: 11.5px !important; font-weight: 650 !important;
 }
 .seller-shipping-page .seller-shipping-meta-item p:nth-child(3) {
-    margin-top: 5px !important; color: #8591A0 !important;
+    margin-top: 5px !important; color: var(--sari-dark-a63aa16d7c, #8591A0) !important;
     font-size: 10px !important; line-height: 1.5 !important;
 }
 .seller-shipping-page .seller-shipping-card-footer {
     margin-top: 16px !important;
     padding-top: 14px !important;
-    border-top: 1px solid #EDF0F3 !important;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #EDF0F3) !important;
 }
 .seller-shipping-page .seller-shipping-card-footer > div:first-child,
 .seller-shipping-page .seller-shipping-card-footer > div:first-child strong {
@@ -2934,7 +2934,7 @@
     border-color: #B47B0E !important; background: #B47B0E !important;
 }
 .seller-shipping-page .seller-shipping-waybill-button:hover {
-    border-color: #D1D5DB !important; background: #F8FAFC !important;
+    border-color: var(--sari-dark-d8c2716225, #D1D5DB) !important; background: var(--sari-dark-950baec030, #F8FAFC) !important;
 }
 .seller-shipping-page .seller-shipping-empty { padding: 56px 24px !important; }
 .seller-shipping-page .seller-shipping-empty-icon {
@@ -2943,8 +2943,8 @@
     background: transparent !important; box-shadow: none !important;
 }
 .seller-shipping-page .seller-shipping-empty-icon svg { width: 54px !important; height: 54px !important; }
-.seller-shipping-page .seller-shipping-empty h3 { color: #475569 !important; font-size: 20px !important; font-weight: 700 !important; }
-.seller-shipping-page .seller-shipping-empty p { color: #94A3B8 !important; font-size: 11.5px !important; }
+.seller-shipping-page .seller-shipping-empty h3 { color: var(--sari-dark-e23e64dd1e, #475569) !important; font-size: 20px !important; font-weight: 700 !important; }
+.seller-shipping-page .seller-shipping-empty p { color: var(--sari-dark-a63aa16d7c, #94A3B8) !important; font-size: 11.5px !important; }
 .seller-shipping-page .seller-shipping-workspace nav a,
 .seller-shipping-page .seller-shipping-workspace nav span {
     border-radius: 9px !important; font-size: 11px !important;
@@ -2975,7 +2975,7 @@
     .seller-shipping-page .seller-shipping-card > .flex > .grid { grid-template-columns: 1fr !important; }
     .seller-shipping-page .seller-shipping-meta-item { padding: 10px 0 !important; }
     .seller-shipping-page .seller-shipping-meta-item:first-child { padding-top: 0 !important; }
-    .seller-shipping-page .seller-shipping-meta-item + .seller-shipping-meta-item { border-left: 0 !important; border-top: 1px solid #EDF0F3 !important; }
+    .seller-shipping-page .seller-shipping-meta-item + .seller-shipping-meta-item { border-left: 0 !important; border-top: 1px solid var(--sari-dark-d8c2716225, #EDF0F3) !important; }
     .seller-shipping-page .seller-shipping-progress-milestones li { font-size: 8.5px !important; }
     .seller-shipping-page .seller-shipping-milestone-number { width: 19px; height: 19px; }
     .seller-shipping-page .seller-shipping-card-footer > div:last-child { width: 100%; flex-wrap: wrap; }
@@ -2993,9 +2993,9 @@
    Original route/form/status values and progress data are reused.
    =========================================================== */
 .seller-shipping-page {
-    --ship-clean-line: #E8ECF1;
-    --ship-clean-muted: #8591A0;
-    --ship-clean-text: #293440;
+    --ship-clean-line: var(--sari-dark-d8c2716225, #E8ECF1);
+    --ship-clean-muted: var(--sari-dark-a63aa16d7c, #8591A0);
+    --ship-clean-text: var(--sari-dark-e23e64dd1e, #293440);
     --ship-clean-gold: #C88912;
     --ship-clean-hover: #B47B0E;
 }
@@ -3007,9 +3007,9 @@
 .seller-shipping-page .seller-shipping-stat:hover {
     min-height: 106px !important;
     padding: 17px 18px !important;
-    border-color: #E7EAF0 !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAF0) !important;
     border-radius: 16px !important;
-    box-shadow: 0 2px 4px rgba(15,23,42,.02), 0 9px 23px rgba(15,23,42,.045) !important;
+    box-shadow: 0 2px 4px var(--sari-dark-f6fe7319d9, rgba(15,23,42,.02)), 0 9px 23px var(--sari-dark-1190f58155, rgba(15,23,42,.045)) !important;
 }
 .seller-shipping-page .seller-shipping-stat p:nth-child(2) { margin-top: 6px !important; font-size: 27px !important; }
 .seller-shipping-page .seller-shipping-stat p:nth-child(3) { margin-top: 6px !important; font-size: 10.5px !important; }
@@ -3019,18 +3019,18 @@
 .seller-shipping-page .seller-shipping-status-option {
     min-height: 39px !important; padding: 8px 12px !important;
 }
-.seller-shipping-page .seller-shipping-status-option.is-selected { background: #F8FAFC !important; }
+.seller-shipping-page .seller-shipping-status-option.is-selected { background: var(--sari-dark-950baec030, #F8FAFC) !important; }
 /* One workspace with flat readable rows and neutral dividers. */
 .seller-shipping-page .seller-shipping-workspace,
 .seller-shipping-page .seller-shipping-workspace:hover {
     margin-top: 20px !important;
-    border-color: #E7EAF0 !important;
+    border-color: var(--sari-dark-d8c2716225, #E7EAF0) !important;
     border-radius: 16px !important;
-    box-shadow: 0 2px 4px rgba(15,23,42,.025),0 12px 28px rgba(15,23,42,.055) !important;
+    box-shadow: 0 2px 4px var(--sari-dark-e1384eb7fc, rgba(15,23,42,.025)),0 12px 28px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)) !important;
 }
 .seller-shipping-page .seller-shipping-list-heading { padding: 18px 22px !important; }
 .seller-shipping-page .seller-shipping-card { padding: 19px 22px 15px !important; }
-.seller-shipping-page .seller-shipping-card:hover { background: #FBFCFE !important; }
+.seller-shipping-page .seller-shipping-card:hover { background: var(--sari-dark-950baec030, #FBFCFE) !important; }
 .seller-shipping-page .seller-ship-order-head {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
@@ -3047,7 +3047,7 @@
 }
 .seller-shipping-page .seller-shipping-state-detail {
     margin: 7px 0 0 !important; font-size: 11px !important;
-    line-height: 1.55 !important; color: #64748B !important;
+    line-height: 1.55 !important; color: var(--sari-dark-a63aa16d7c, #64748B) !important;
 }
 /* 3-column fact strip, no nested boxes or tinted cards. */
 .seller-shipping-page .seller-ship-meta-grid {
@@ -3066,7 +3066,7 @@
     padding-left: 18px !important;
 }
 .seller-shipping-page .seller-shipping-meta-item p:first-child {
-    color: #8B97A6 !important; font-size: 9.5px !important; font-weight: 700 !important;
+    color: var(--sari-dark-a63aa16d7c, #8B97A6) !important; font-size: 9.5px !important; font-weight: 700 !important;
     letter-spacing: .05em !important; text-transform: uppercase !important;
 }
 .seller-shipping-page .seller-shipping-meta-item p:nth-child(2) {
@@ -3083,14 +3083,14 @@
 /* A clear five-stage determinate progress line: no numbered icon circles. */
 .seller-shipping-page .seller-shipping-progress {
     margin-top: 17px !important; padding-top: 15px;
-    border-top: 1px solid #F0F2F5;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #F0F2F5);
 }
 .seller-shipping-page .seller-shipping-progress-heading { gap: 8px !important; }
 .seller-shipping-page .seller-shipping-progress-label {
-    font-size: 10.5px !important; font-weight: 650 !important; color: #475569 !important;
+    font-size: 10.5px !important; font-weight: 650 !important; color: var(--sari-dark-e23e64dd1e, #475569) !important;
 }
 .seller-shipping-page .seller-shipping-progress-percent {
-    color: #A56D0A !important; font-size: 11px !important; font-weight: 750 !important;
+    color: var(--sari-dark-af18afcaa4, #A56D0A) !important; font-size: 11px !important; font-weight: 750 !important;
     font-variant-numeric: tabular-nums;
 }
 .seller-shipping-page .seller-shipping-progress-track {
@@ -3098,21 +3098,21 @@
 }
 .seller-shipping-page .seller-shipping-progress-segment {
     height: 6px !important; border-radius: 999px !important;
-    background: #E9EDF2 !important;
+    background: var(--sari-dark-4d21eb669b, #E9EDF2) !important;
 }
 .seller-shipping-page .seller-shipping-progress-milestones {
     margin-top: 8px !important; gap: 5px !important;
 }
 .seller-shipping-page .seller-shipping-progress-milestones li {
     align-items: flex-start !important; text-align: left !important;
-    gap: 0 !important; color: #9AA5B3 !important;
+    gap: 0 !important; color: var(--sari-dark-a63aa16d7c, #9AA5B3) !important;
     font-size: 9.5px !important; font-weight: 500 !important;
 }
 .seller-shipping-page .seller-shipping-progress-milestones li.is-complete {
-    color: #475569 !important; font-weight: 600 !important;
+    color: var(--sari-dark-e23e64dd1e, #475569) !important; font-weight: 600 !important;
 }
 .seller-shipping-page .seller-shipping-progress-milestones li.is-current {
-    color: #A56D0A !important; font-weight: 700 !important;
+    color: var(--sari-dark-af18afcaa4, #A56D0A) !important; font-weight: 700 !important;
 }
 /* Quiet footer, actions are the last thing in each shipment row. */
 .seller-shipping-page .seller-shipping-card-footer {
@@ -3126,7 +3126,7 @@
     color: var(--ship-clean-muted); font-size: 10px;
 }
 .seller-shipping-page .seller-ship-dates strong {
-    color: #59636E; margin-left: 3px; font-size: 10px; font-weight: 600;
+    color: var(--sari-dark-a63aa16d7c, #59636E); margin-left: 3px; font-size: 10px; font-weight: 600;
 }
 .seller-shipping-page .seller-ship-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-left: auto; }
 .seller-shipping-page .seller-shipping-waybill-button,
@@ -3135,7 +3135,7 @@
     border-radius: 9px !important; padding: 0 13px !important;
     font-size: 10.5px !important; font-weight: 650 !important;
 }
-.seller-shipping-page .seller-shipping-waybill-button { color: #475569 !important; background: #fff !important; border-color: #DCE2E8 !important; }
+.seller-shipping-page .seller-shipping-waybill-button { color: var(--sari-dark-e23e64dd1e, #475569) !important; background: var(--sari-dark-950baec030, #fff) !important; border-color: var(--sari-dark-d8c2716225, #DCE2E8) !important; }
 .seller-shipping-page .seller-shipping-track-button { background: #C88912 !important; color: #fff !important; border-color: #C88912 !important; }
 .seller-shipping-page .seller-shipping-track-button span { display: inline-block; padding-left: 3px; font-size: 15px; line-height: 1; }
 .seller-shipping-page .seller-shipping-track-button:hover { background: #B47B0E !important; border-color: #B47B0E !important; }
@@ -3158,7 +3158,7 @@
         border: 0 !important; padding: 9px 0 !important;
     }
     .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item + .seller-shipping-meta-item {
-        border-top: 1px solid #F0F2F5 !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #F0F2F5) !important;
     }
     .seller-shipping-page .seller-shipping-meta-item p:nth-child(2) { margin-top: 3px !important; }
     .seller-shipping-page .seller-shipping-progress { margin-top: 10px !important; }
@@ -3195,11 +3195,11 @@
     }
     .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item:nth-child(3) {
         grid-column: 1 / -1;
-        border-top: 1px solid #F0F2F5 !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #F0F2F5) !important;
         margin-top: 4px;
     }
     .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item:nth-child(2) {
-        border-left: 1px solid #F0F2F5 !important;
+        border-left: 1px solid var(--sari-dark-d8c2716225, #F0F2F5) !important;
         padding-left: 12px !important;
     }
 }
@@ -3214,12 +3214,12 @@
     flex-wrap: wrap;
     gap: 12px 20px;
     padding: 14px 22px;
-    border-top: 1px solid #E9EDF1;
-    background: #FFFFFF;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #E9EDF1);
+    background: var(--sari-dark-950baec030, #FFFFFF);
 }
 .seller-shipping-page .seller-shipping-pagination-count {
     margin: 0;
-    color: #8591A0;
+    color: var(--sari-dark-a63aa16d7c, #8591A0);
     font-size: 11px;
     font-weight: 550;
     line-height: 1.5;
@@ -3240,10 +3240,10 @@
     height: 34px;
     align-items: center;
     justify-content: center;
-    border: 1px solid #E2E8F0;
+    border: 1px solid var(--sari-dark-d8c2716225, #E2E8F0);
     border-radius: 10px !important;
-    background: #FFFFFF;
-    color: #64748B;
+    background: var(--sari-dark-950baec030, #FFFFFF);
+    color: var(--sari-dark-a63aa16d7c, #64748B);
     font-size: 11.5px !important;
     font-weight: 700;
     text-decoration: none;
@@ -3256,25 +3256,25 @@
     height: 15px;
 }
 .seller-shipping-page .seller-shipping-pagination a:hover {
-    border-color: #CBD5E1;
-    background: #F8FAFC;
-    color: #293440;
+    border-color: var(--sari-dark-d8c2716225, #CBD5E1);
+    background: var(--sari-dark-950baec030, #F8FAFC);
+    color: var(--sari-dark-e23e64dd1e, #293440);
 }
 .seller-shipping-page .seller-shipping-pagination .seller-shipping-page-number.is-current {
     border-color: #C88912;
     background: #C88912;
     color: #FFFFFF;
-    box-shadow: 0 4px 12px rgba(200,137,18,.14);
+    box-shadow: 0 4px 12px var(--sari-dark-59ed29fe9d, rgba(200,137,18,.14));
 }
 .seller-shipping-page .seller-shipping-pagination .seller-shipping-page-arrow.is-disabled {
-    border-color: #F1F5F9;
-    background: #F8FAFC;
+    border-color: var(--sari-dark-d8c2716225, #F1F5F9);
+    background: var(--sari-dark-950baec030, #F8FAFC);
     color: #CBD5E1;
     cursor: default;
 }
 .seller-shipping-page .seller-shipping-pagination .seller-shipping-page-ellipsis {
     min-width: 15px;
-    color: #94A3B8;
+    color: var(--sari-dark-a63aa16d7c, #94A3B8);
     text-align: center;
     font-size: 12px;
 }
@@ -3309,10 +3309,10 @@
 .seller-shipping-page .seller-shipping-workspace:hover {
     border-radius: 20px !important;
     box-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)) !important;
 }
 
 /* The empty state already sits inside the floating workspace. */
@@ -3329,10 +3329,10 @@
     .seller-shipping-page .seller-shipping-workspace:hover {
         border-radius: 16px !important;
         box-shadow:
-            0 1px 3px rgba(15, 23, 42, .035),
-            0 6px 16px rgba(15, 23, 42, .055),
-            0 13px 28px rgba(15, 23, 42, .065),
-            inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+            0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 6px 16px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)),
+            0 13px 28px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90)) !important;
     }
 }
 

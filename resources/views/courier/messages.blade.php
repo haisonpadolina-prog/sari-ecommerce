@@ -8,7 +8,7 @@
 <style id="sariRiderUnifiedMessengerInlineV4">
 @verbatim
 /* SARI Rider unified messaging — Buyer Messenger visual language, neutral surfaces */
-#sariRiderMessenger{--rm-gold:#c99128;--rm-gold-dark:#ad781b;--rm-ink:#303740;--rm-muted:#87929f;--rm-border:#e7ebef;--rm-canvas:#f5f6f8;font-family:Poppins,ui-sans-serif,system-ui,sans-serif;width:100%;min-width:0;color:var(--rm-ink);font-size:12px}
+#sariRiderMessenger{--rm-gold:#c99128;--rm-gold-dark:#ad781b;--rm-ink:var(--sari-dark-e23e64dd1e, #303740);--rm-muted:var(--sari-dark-a63aa16d7c, #87929f);--rm-border:var(--sari-dark-d8c2716225, #e7ebef);--rm-canvas:var(--sari-dark-950baec030, #f5f6f8);font-family:Poppins,ui-sans-serif,system-ui,sans-serif;width:100%;min-width:0;color:var(--rm-ink);font-size:12px}
 #sariRiderMessenger *,#sariRiderMessenger *::before,#sariRiderMessenger *::after{box-sizing:border-box}
 #sariRiderMessenger [hidden]{display:none!important}
 #sariRiderMessenger button,#sariRiderMessenger input,#sariRiderMessenger textarea{font:inherit}
@@ -16,111 +16,111 @@
 #sariRiderMessenger button:disabled{opacity:.55;cursor:wait}
 #sariRiderMessenger button:focus-visible,#sariRiderMessenger input:focus-visible,#sariRiderMessenger textarea:focus-visible,#sariRiderMessenger a:focus-visible{outline:2px solid var(--rm-gold);outline-offset:2px}
 #sariRiderMessenger .sari-rm-sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
-#sariRiderMessenger .sari-rm-server-alert{padding:10px 13px;margin:0 0 12px;border:1px solid #eec7c7;border-radius:11px;background:#fff7f7;color:#a74242;font-size:11px}
-#sariRiderMessenger .sari-rm-server-alert.is-success{background:#f2faf5;border-color:#d1e8da;color:#386c4b}
-#sariRiderMessenger .sari-rm-shell{position:relative;display:grid;grid-template-columns:310px minmax(0,1fr);width:100%;height:min(790px,calc(100dvh - 132px));min-height:540px;overflow:hidden;border:1px solid #e4e8ed;border-radius:20px;background:#fff;box-shadow:0 8px 30px rgba(21,30,42,.065)}
-#sariRiderMessenger .sari-rm-inbox{display:flex;flex-direction:column;min-width:0;min-height:0;border-right:1px solid var(--rm-border);background:#fff}
+#sariRiderMessenger .sari-rm-server-alert{padding:10px 13px;margin:0 0 12px;border:1px solid var(--sari-dark-d8c2716225, #eec7c7);border-radius:11px;background:var(--sari-dark-950baec030, #fff7f7);color:var(--sari-dark-a63aa16d7c, #a74242);font-size:11px}
+#sariRiderMessenger .sari-rm-server-alert.is-success{background:var(--sari-dark-4d21eb669b, #f2faf5);border-color:var(--sari-dark-d8c2716225, #d1e8da);color:var(--sari-dark-e23e64dd1e, #386c4b)}
+#sariRiderMessenger .sari-rm-shell{position:relative;display:grid;grid-template-columns:310px minmax(0,1fr);width:100%;height:min(790px,calc(100dvh - 132px));min-height:540px;overflow:hidden;border:1px solid var(--sari-dark-d8c2716225, #e4e8ed);border-radius:20px;background:var(--sari-dark-950baec030, #fff);box-shadow:0 8px 30px var(--sari-dark-4fc908fafe, rgba(21,30,42,.065))}
+#sariRiderMessenger .sari-rm-inbox{display:flex;flex-direction:column;min-width:0;min-height:0;border-right:1px solid var(--rm-border);background:var(--sari-dark-950baec030, #fff)}
 #sariRiderMessenger .sari-rm-inbox-header{padding:19px 15px 12px;border-bottom:1px solid var(--rm-border);flex:0 0 auto}
 #sariRiderMessenger .sari-rm-heading-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-#sariRiderMessenger .sari-rm-eyebrow{margin:0 0 3px;color:#a87316;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+#sariRiderMessenger .sari-rm-eyebrow{margin:0 0 3px;color:var(--sari-dark-685eb4fc40, #a87316);font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 #sariRiderMessenger .sari-rm-heading-row h1{margin:0;font-size:20px;font-weight:750;letter-spacing:-.035em;line-height:1.2;color:var(--rm-ink)}
-#sariRiderMessenger .sari-rm-new{display:grid;place-items:center;width:36px;height:36px;flex:0 0 36px;border:1px solid #ead7b5;border-radius:11px;background:#fffaf0;color:var(--rm-gold-dark)}
-#sariRiderMessenger .sari-rm-new:hover{background:#fff3dd}
+#sariRiderMessenger .sari-rm-new{display:grid;place-items:center;width:36px;height:36px;flex:0 0 36px;border:1px solid var(--sari-dark-d8c2716225, #ead7b5);border-radius:11px;background:var(--sari-dark-950baec030, #fffaf0);color:var(--rm-gold-dark)}
+#sariRiderMessenger .sari-rm-new:hover{background:var(--sari-dark-4d21eb669b, #fff3dd)}
 #sariRiderMessenger .sari-rm-new svg{width:19px;height:19px}
 #sariRiderMessenger .sari-rm-search-box{position:relative;display:flex;align-items:center;margin-top:15px}
 #sariRiderMessenger .sari-rm-search-box svg{position:absolute;left:13px;width:17px;height:17px;color:var(--rm-gold);pointer-events:none}
-#sariRiderMessenger .sari-rm-search-box input,#sariRiderMessenger .sari-rm-contact-search input{width:100%;height:42px;min-width:0;padding:0 12px 0 40px;border:1px solid #e4e7ec;border-radius:999px;background:#f5f6f8;color:#344054;font-size:11px;outline:0}
-#sariRiderMessenger .sari-rm-search-box input:focus,#sariRiderMessenger .sari-rm-contact-search input:focus{border:1px solid var(--rm-gold);background:#fff;box-shadow:none}
-#sariRiderMessenger .sari-rm-search-box input::placeholder,#sariRiderMessenger .sari-rm-contact-search input::placeholder{color:#9ba5af}
+#sariRiderMessenger .sari-rm-search-box input,#sariRiderMessenger .sari-rm-contact-search input{width:100%;height:42px;min-width:0;padding:0 12px 0 40px;border:1px solid var(--sari-dark-d8c2716225, #e4e7ec);border-radius:999px;background:var(--sari-dark-950baec030, #f5f6f8);color:var(--sari-dark-e23e64dd1e, #344054);font-size:11px;outline:0}
+#sariRiderMessenger .sari-rm-search-box input:focus,#sariRiderMessenger .sari-rm-contact-search input:focus{border:1px solid var(--rm-gold);background:var(--sari-dark-950baec030, #fff);box-shadow:none}
+#sariRiderMessenger .sari-rm-search-box input::placeholder,#sariRiderMessenger .sari-rm-contact-search input::placeholder{color:var(--sari-dark-a63aa16d7c, #9ba5af)}
 #sariRiderMessenger .sari-rm-tabs,#sariRiderMessenger .sari-rm-contact-tabs{display:flex;gap:5px;overflow-x:auto;scrollbar-width:thin;margin-top:13px;padding-bottom:2px}
-#sariRiderMessenger .sari-rm-tabs button,#sariRiderMessenger .sari-rm-contact-tabs button{border:0;border-radius:8px;background:transparent;padding:7px 8px;color:#89939e;font-size:10px;font-weight:650;white-space:nowrap}
-#sariRiderMessenger .sari-rm-tabs button.is-active,#sariRiderMessenger .sari-rm-contact-tabs button.is-active{background:#f1f3f6;color:#a16c15;font-weight:800}
+#sariRiderMessenger .sari-rm-tabs button,#sariRiderMessenger .sari-rm-contact-tabs button{border:0;border-radius:8px;background:transparent;padding:7px 8px;color:var(--sari-dark-a63aa16d7c, #89939e);font-size:10px;font-weight:650;white-space:nowrap}
+#sariRiderMessenger .sari-rm-tabs button.is-active,#sariRiderMessenger .sari-rm-contact-tabs button.is-active{background:var(--sari-dark-4d21eb669b, #f1f3f6);color:var(--sari-dark-7a324da987, #a16c15);font-weight:800}
 #sariRiderMessenger .sari-rm-threads{flex:1;min-height:0;overflow-y:auto;padding:9px 7px 14px;scrollbar-width:thin;scrollbar-color:#d3d9df transparent}
-#sariRiderMessenger .sari-rm-thread{display:flex;align-items:center;gap:11px;width:100%;min-height:75px;margin:2px 0;padding:10px;border:0;border-left:3px solid transparent;border-radius:12px;background:#fff;text-align:left;color:inherit}
-#sariRiderMessenger .sari-rm-thread:hover{background:#f7f8fa}
-#sariRiderMessenger .sari-rm-thread.is-active{border-left-color:#cbd2db;background:#eef1f4}
-#sariRiderMessenger .sari-rm-avatar{display:grid;place-items:center;width:47px;height:47px;flex:0 0 47px;overflow:hidden;border:1px solid #e1e6ec;border-radius:50%;background:#f0f3f7;color:#778391;font-size:14px;font-weight:750;text-transform:uppercase}
+#sariRiderMessenger .sari-rm-thread{display:flex;align-items:center;gap:11px;width:100%;min-height:75px;margin:2px 0;padding:10px;border:0;border-left:3px solid transparent;border-radius:12px;background:var(--sari-dark-950baec030, #fff);text-align:left;color:inherit}
+#sariRiderMessenger .sari-rm-thread:hover{background:var(--sari-dark-950baec030, #f7f8fa)}
+#sariRiderMessenger .sari-rm-thread.is-active{border-left-color:var(--sari-dark-d8c2716225, #cbd2db);background:var(--sari-dark-4d21eb669b, #eef1f4)}
+#sariRiderMessenger .sari-rm-avatar{display:grid;place-items:center;width:47px;height:47px;flex:0 0 47px;overflow:hidden;border:1px solid var(--sari-dark-d8c2716225, #e1e6ec);border-radius:50%;background:var(--sari-dark-4d21eb669b, #f0f3f7);color:var(--sari-dark-a63aa16d7c, #778391);font-size:14px;font-weight:750;text-transform:uppercase}
 #sariRiderMessenger .sari-rm-avatar.is-small{width:41px;height:41px;flex-basis:41px;font-size:12px}
 #sariRiderMessenger .sari-rm-avatar.is-tiny{width:29px;height:29px;flex-basis:29px;font-size:10px}
-#sariRiderMessenger .sari-rm-avatar.is-large{width:85px;height:85px;flex-basis:85px;margin:0 auto;font-size:25px;border:3px solid #fff;box-shadow:0 0 0 2px #f0dfbb}
-#sariRiderMessenger .sari-rm-avatar.is-admin{background:#fff4de;border-color:#eed7ab;color:#a4721c}
-#sariRiderMessenger .sari-rm-avatar.is-logistics{background:#edf5ff;border-color:#d6e7f9;color:#527eac}
+#sariRiderMessenger .sari-rm-avatar.is-large{width:85px;height:85px;flex-basis:85px;margin:0 auto;font-size:25px;border:3px solid var(--sari-dark-d8c2716225, #fff);box-shadow:0 0 0 2px var(--sari-dark-f30a5f9061, #f0dfbb)}
+#sariRiderMessenger .sari-rm-avatar.is-admin{background:var(--sari-dark-4d21eb669b, #fff4de);border-color:var(--sari-dark-d8c2716225, #eed7ab);color:var(--sari-dark-93ff5b7313, #a4721c)}
+#sariRiderMessenger .sari-rm-avatar.is-logistics{background:var(--sari-dark-4d21eb669b, #edf5ff);border-color:var(--sari-dark-d8c2716225, #d6e7f9);color:var(--sari-dark-f01741d178, #527eac)}
 #sariRiderMessenger .sari-rm-thread-copy{display:grid;gap:5px;min-width:0;flex:1}
-#sariRiderMessenger .sari-rm-thread-copy strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#303740;font-size:12px;font-weight:750}
-#sariRiderMessenger .sari-rm-thread-copy small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#939eaa;font-size:10px;line-height:1.5}
+#sariRiderMessenger .sari-rm-thread-copy strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--sari-dark-e23e64dd1e, #303740);font-size:12px;font-weight:750}
+#sariRiderMessenger .sari-rm-thread-copy small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--sari-dark-a63aa16d7c, #939eaa);font-size:10px;line-height:1.5}
 #sariRiderMessenger .sari-rm-unread{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--rm-gold);color:#fff;font-size:10px;font-weight:750}
-#sariRiderMessenger .sari-rm-inbox-bottom{display:flex;justify-content:space-between;align-items:center;gap:9px;border-top:1px solid var(--rm-border);padding:12px 14px;font-size:9.5px;color:#9ca6b0}
-#sariRiderMessenger .sari-rm-inbox-count{color:#9c7025;font-weight:700}
+#sariRiderMessenger .sari-rm-inbox-bottom{display:flex;justify-content:space-between;align-items:center;gap:9px;border-top:1px solid var(--rm-border);padding:12px 14px;font-size:9.5px;color:var(--sari-dark-a63aa16d7c, #9ca6b0)}
+#sariRiderMessenger .sari-rm-inbox-count{color:var(--sari-dark-a63aa16d7c, #9c7025);font-weight:700}
 #sariRiderMessenger .sari-rm-chat{display:flex;flex-direction:column;min-height:0;min-width:0;overflow:hidden;background:var(--rm-canvas)}
-#sariRiderMessenger .sari-rm-chat-header{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:77px;flex:0 0 auto;border-bottom:1px solid var(--rm-border);background:#fff;padding:12px 22px}
+#sariRiderMessenger .sari-rm-chat-header{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:77px;flex:0 0 auto;border-bottom:1px solid var(--rm-border);background:var(--sari-dark-950baec030, #fff);padding:12px 22px}
 #sariRiderMessenger .sari-rm-peer{display:flex;align-items:center;gap:12px;min-width:0}
 #sariRiderMessenger .sari-rm-peer-copy{min-width:0}
-#sariRiderMessenger .sari-rm-peer-copy h2{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;color:#303740;font-size:14px;font-weight:750}
-#sariRiderMessenger .sari-rm-peer-copy p{margin:5px 0 0;color:#9aa4af;font-size:10px}
+#sariRiderMessenger .sari-rm-peer-copy h2{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;color:var(--sari-dark-e23e64dd1e, #303740);font-size:14px;font-weight:750}
+#sariRiderMessenger .sari-rm-peer-copy p{margin:5px 0 0;color:var(--sari-dark-a63aa16d7c, #9aa4af);font-size:10px}
 #sariRiderMessenger .sari-rm-info-button{display:grid;place-items:center;width:36px;height:36px;flex:0 0 36px;border:0;border-radius:50%;background:transparent;color:var(--rm-gold)}
-#sariRiderMessenger .sari-rm-info-button:hover{background:#fff7e8}
+#sariRiderMessenger .sari-rm-info-button:hover{background:var(--sari-dark-4d21eb669b, #fff7e8)}
 #sariRiderMessenger .sari-rm-info-button svg{width:19px;height:19px}
 #sariRiderMessenger .sari-rm-conversation{display:flex;flex-direction:column;gap:17px;flex:1;min-height:0;overflow-y:auto;overflow-wrap:anywhere;padding:25px 20px;scrollbar-width:thin;scrollbar-color:#d0d8e0 transparent}
 #sariRiderMessenger .sari-rm-message{display:flex;align-items:flex-end;gap:9px;min-width:0}
 #sariRiderMessenger .sari-rm-message.is-mine{justify-content:flex-end}
 #sariRiderMessenger .sari-rm-message-body{min-width:0;max-width:min(78%,580px)}
-#sariRiderMessenger .sari-rm-sender{display:block;margin-bottom:6px;color:#8995a1;font-size:9.5px;font-weight:650}
+#sariRiderMessenger .sari-rm-sender{display:block;margin-bottom:6px;color:var(--sari-dark-a63aa16d7c, #8995a1);font-size:9.5px;font-weight:650}
 #sariRiderMessenger .sari-rm-message.is-mine .sari-rm-sender,#sariRiderMessenger .sari-rm-message.is-mine .sari-rm-time{text-align:right}
-#sariRiderMessenger .sari-rm-bubble{margin:0;padding:12px 15px;border:1px solid #e9ecf0;border-radius:16px 16px 16px 5px;background:#fff;color:#394451;font-size:11.5px;font-weight:450;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 2px 7px rgba(22,34,49,.035)}
-#sariRiderMessenger .sari-rm-message.is-mine .sari-rm-bubble{border-radius:16px 16px 5px 16px;background:#fff}
-#sariRiderMessenger .sari-rm-time{display:block;margin:6px 2px 0;color:#9da6b0;font-size:9px}
-#sariRiderMessenger .sari-rm-attachment{display:flex;align-items:center;gap:8px;max-width:100%;margin:7px 0 0;padding:9px 11px;border:1px solid #e8ebf0;border-radius:12px;background:#fff;color:#6b7580;font-size:10px;text-decoration:none}
-#sariRiderMessenger .sari-rm-attachment:hover{border-color:#cfac6b;color:#936c29}
+#sariRiderMessenger .sari-rm-bubble{margin:0;padding:12px 15px;border:1px solid var(--sari-dark-d8c2716225, #e9ecf0);border-radius:16px 16px 16px 5px;background:var(--sari-dark-950baec030, #fff);color:var(--sari-dark-e23e64dd1e, #394451);font-size:11.5px;font-weight:450;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 2px 7px var(--sari-dark-7593018246, rgba(22,34,49,.035))}
+#sariRiderMessenger .sari-rm-message.is-mine .sari-rm-bubble{border-radius:16px 16px 5px 16px;background:var(--sari-dark-950baec030, #fff)}
+#sariRiderMessenger .sari-rm-time{display:block;margin:6px 2px 0;color:var(--sari-dark-a63aa16d7c, #9da6b0);font-size:9px}
+#sariRiderMessenger .sari-rm-attachment{display:flex;align-items:center;gap:8px;max-width:100%;margin:7px 0 0;padding:9px 11px;border:1px solid var(--sari-dark-d8c2716225, #e8ebf0);border-radius:12px;background:var(--sari-dark-950baec030, #fff);color:var(--sari-dark-a63aa16d7c, #6b7580);font-size:10px;text-decoration:none}
+#sariRiderMessenger .sari-rm-attachment:hover{border-color:#cfac6b;color:var(--sari-dark-a63aa16d7c, #936c29)}
 #sariRiderMessenger .sari-rm-attachment img{display:block;max-width:260px;max-height:250px;object-fit:contain;border-radius:9px}
-#sariRiderMessenger .sari-rm-empty{margin:auto;max-width:330px;padding:30px 17px;text-align:center;color:#97a2ae}
-#sariRiderMessenger .sari-rm-empty-icon{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 15px;border-radius:50%;background:#eef1f5;color:var(--rm-gold)}
+#sariRiderMessenger .sari-rm-empty{margin:auto;max-width:330px;padding:30px 17px;text-align:center;color:var(--sari-dark-a63aa16d7c, #97a2ae)}
+#sariRiderMessenger .sari-rm-empty-icon{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 15px;border-radius:50%;background:var(--sari-dark-4d21eb669b, #eef1f5);color:var(--rm-gold)}
 #sariRiderMessenger .sari-rm-empty-icon svg{width:29px;height:29px}
-#sariRiderMessenger .sari-rm-empty h3{margin:0;color:#535e6c;font-size:14px;font-weight:750}
-#sariRiderMessenger .sari-rm-empty p{margin:8px 0 0;color:#929fac;font-size:11px;line-height:1.7}
-#sariRiderMessenger .sari-rm-hint{margin:12px;color:#949fac;font-size:11px;line-height:1.7}
-#sariRiderMessenger .sari-rm-feedback{margin:0;padding:10px 16px;border-top:1px solid #f0caca;background:#fff5f5;color:#a63f45;font-size:11px}
-#sariRiderMessenger .sari-rm-composer{flex:0 0 auto;border-top:1px solid var(--rm-border);background:#fff;padding:13px 15px}
+#sariRiderMessenger .sari-rm-empty h3{margin:0;color:var(--sari-dark-a63aa16d7c, #535e6c);font-size:14px;font-weight:750}
+#sariRiderMessenger .sari-rm-empty p{margin:8px 0 0;color:var(--sari-dark-a63aa16d7c, #929fac);font-size:11px;line-height:1.7}
+#sariRiderMessenger .sari-rm-hint{margin:12px;color:var(--sari-dark-a63aa16d7c, #949fac);font-size:11px;line-height:1.7}
+#sariRiderMessenger .sari-rm-feedback{margin:0;padding:10px 16px;border-top:1px solid var(--sari-dark-d8c2716225, #f0caca);background:var(--sari-dark-950baec030, #fff5f5);color:var(--sari-dark-a63aa16d7c, #a63f45);font-size:11px}
+#sariRiderMessenger .sari-rm-composer{flex:0 0 auto;border-top:1px solid var(--rm-border);background:var(--sari-dark-950baec030, #fff);padding:13px 15px}
 #sariRiderMessenger .sari-rm-composer form{display:flex;align-items:center;gap:10px;width:100%;min-width:0;margin:0;padding:0;border:0;box-shadow:none;background:transparent}
 #sariRiderMessenger .sari-rm-attach-button{display:grid;place-items:center;width:31px;height:37px;flex:0 0 31px;border-radius:8px;color:var(--rm-gold);cursor:pointer}
-#sariRiderMessenger .sari-rm-attach-button:hover{background:#fff6e8}
+#sariRiderMessenger .sari-rm-attach-button:hover{background:var(--sari-dark-4d21eb669b, #fff6e8)}
 #sariRiderMessenger .sari-rm-attach-button svg{width:20px;height:20px}
-#sariRiderMessenger .sari-rm-compose-field{flex:1;min-width:0;border:1px solid #d6aa59;border-radius:17px;padding:0 13px;background:#fff}
+#sariRiderMessenger .sari-rm-compose-field{flex:1;min-width:0;border:1px solid #d6aa59;border-radius:17px;padding:0 13px;background:var(--sari-dark-950baec030, #fff)}
 #sariRiderMessenger .sari-rm-compose-field:focus-within{border-color:var(--rm-gold);box-shadow:none}
-#sariRiderMessenger .sari-rm-composer textarea{display:block;width:100%;min-width:0;min-height:54px;max-height:120px;padding:16px 0 12px;border:0;outline:0;resize:none;background:transparent;color:#303740;font-size:11.5px;line-height:20px;box-shadow:none}
+#sariRiderMessenger .sari-rm-composer textarea{display:block;width:100%;min-width:0;min-height:54px;max-height:120px;padding:16px 0 12px;border:0;outline:0;resize:none;background:transparent;color:var(--sari-dark-e23e64dd1e, #303740);font-size:11.5px;line-height:20px;box-shadow:none}
 #sariRiderMessenger .sari-rm-composer textarea:focus{outline:0;box-shadow:none}
-#sariRiderMessenger .sari-rm-composer textarea::placeholder{color:#a2aab5}
-#sariRiderMessenger .sari-rm-file-chip{display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:100%;border-radius:10px;background:#f4f6f8;padding:7px 10px;margin-top:9px;color:#677585;font-size:10px}
+#sariRiderMessenger .sari-rm-composer textarea::placeholder{color:var(--sari-dark-a63aa16d7c, #a2aab5)}
+#sariRiderMessenger .sari-rm-file-chip{display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:100%;border-radius:10px;background:var(--sari-dark-4d21eb669b, #f4f6f8);padding:7px 10px;margin-top:9px;color:var(--sari-dark-a63aa16d7c, #677585);font-size:10px}
 #sariRiderMessenger .sari-rm-file-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#sariRiderMessenger .sari-rm-file-chip button{border:0;background:transparent;color:#627181;font-size:18px}
-#sariRiderMessenger .sari-rm-send{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border:0;border-radius:50%;background:var(--rm-gold);color:#fff;box-shadow:0 4px 10px rgba(201,145,40,.20)}
+#sariRiderMessenger .sari-rm-file-chip button{border:0;background:transparent;color:var(--sari-dark-a63aa16d7c, #627181);font-size:18px}
+#sariRiderMessenger .sari-rm-send{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border:0;border-radius:50%;background:var(--rm-gold);color:#fff;box-shadow:0 4px 10px var(--sari-dark-ef22e61893, rgba(201,145,40,.20))}
 #sariRiderMessenger .sari-rm-send:hover{background:var(--rm-gold-dark)}
 #sariRiderMessenger .sari-rm-send svg{width:20px;height:20px}
 #sariRiderMessenger #sariRmLegacyForm textarea{flex:1;min-height:52px;padding:13px 15px;border:1px solid #d6aa59;border-radius:15px}
-#sariRiderMessenger .sari-rm-drawer-backdrop{position:absolute;inset:0;z-index:8;width:100%;height:100%;border:0;background:rgba(23,30,40,.12);backdrop-filter:blur(2px)}
-#sariRiderMessenger .sari-rm-drawer{position:absolute;right:0;top:0;bottom:0;z-index:9;display:flex;flex-direction:column;width:min(360px,100%);border-left:1px solid var(--rm-border);background:#f5f7fa;box-shadow:-14px 0 40px rgba(24,33,45,.14);transform:translateX(105%);visibility:hidden;transition:transform .27s ease,visibility .27s}
+#sariRiderMessenger .sari-rm-drawer-backdrop{position:absolute;inset:0;z-index:8;width:100%;height:100%;border:0;background:var(--sari-dark-f68f67db1d, rgba(23,30,40,.12));backdrop-filter:blur(2px)}
+#sariRiderMessenger .sari-rm-drawer{position:absolute;right:0;top:0;bottom:0;z-index:9;display:flex;flex-direction:column;width:min(360px,100%);border-left:1px solid var(--rm-border);background:var(--sari-dark-950baec030, #f5f7fa);box-shadow:-14px 0 40px var(--sari-dark-59ed29fe9d, rgba(24,33,45,.14));transform:translateX(105%);visibility:hidden;transition:transform .27s ease,visibility .27s}
 #sariRiderMessenger .sari-rm-drawer.is-open{transform:translateX(0);visibility:visible}
-#sariRiderMessenger .sari-rm-drawer header,#sariRiderMessenger .sari-rm-contact-panel header{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--rm-border);padding:17px;background:#fff}
-#sariRiderMessenger .sari-rm-drawer header h2,#sariRiderMessenger .sari-rm-contact-panel header h2{margin:0;color:#303740;font-size:14px;font-weight:750}
-#sariRiderMessenger .sari-rm-drawer header p,#sariRiderMessenger .sari-rm-contact-panel header p{margin:4px 0 0;color:#98a3af;font-size:10px}
-#sariRiderMessenger .sari-rm-drawer header button,#sariRiderMessenger .sari-rm-contact-panel header button{display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:50%;background:#f3f5f7;color:#586475;font-size:22px}
+#sariRiderMessenger .sari-rm-drawer header,#sariRiderMessenger .sari-rm-contact-panel header{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--rm-border);padding:17px;background:var(--sari-dark-950baec030, #fff)}
+#sariRiderMessenger .sari-rm-drawer header h2,#sariRiderMessenger .sari-rm-contact-panel header h2{margin:0;color:var(--sari-dark-e23e64dd1e, #303740);font-size:14px;font-weight:750}
+#sariRiderMessenger .sari-rm-drawer header p,#sariRiderMessenger .sari-rm-contact-panel header p{margin:4px 0 0;color:var(--sari-dark-a63aa16d7c, #98a3af);font-size:10px}
+#sariRiderMessenger .sari-rm-drawer header button,#sariRiderMessenger .sari-rm-contact-panel header button{display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:50%;background:var(--sari-dark-4d21eb669b, #f3f5f7);color:var(--sari-dark-a63aa16d7c, #586475);font-size:22px}
 #sariRiderMessenger .sari-rm-drawer-body{padding:25px 18px;text-align:center}
-#sariRiderMessenger .sari-rm-drawer-body h3{margin:15px 0 0;font-size:16px;color:#303740}
-#sariRiderMessenger .sari-rm-drawer-body>p{margin:5px 0 0;color:#9da7b1;font-size:11px}
-#sariRiderMessenger .sari-rm-info-note{margin:26px 0 0;padding:17px;border:1px solid #e5e9ef;border-radius:14px;background:#fff;text-align:left}
-#sariRiderMessenger .sari-rm-info-note strong{font-size:11px;color:#4c5864}
-#sariRiderMessenger .sari-rm-info-note p{font-size:10px;color:#8b96a2;line-height:1.7}
-#sariRiderMessenger .sari-rm-contact-overlay{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(18,28,40,.42);padding:15px}
-#sariRiderMessenger .sari-rm-contact-panel{display:flex;flex-direction:column;min-width:0;width:min(560px,100%);height:min(680px,88dvh);overflow:hidden;border-radius:19px;background:#fff;box-shadow:0 24px 70px rgba(17,25,39,.25)}
+#sariRiderMessenger .sari-rm-drawer-body h3{margin:15px 0 0;font-size:16px;color:var(--sari-dark-e23e64dd1e, #303740)}
+#sariRiderMessenger .sari-rm-drawer-body>p{margin:5px 0 0;color:var(--sari-dark-a63aa16d7c, #9da7b1);font-size:11px}
+#sariRiderMessenger .sari-rm-info-note{margin:26px 0 0;padding:17px;border:1px solid var(--sari-dark-d8c2716225, #e5e9ef);border-radius:14px;background:var(--sari-dark-950baec030, #fff);text-align:left}
+#sariRiderMessenger .sari-rm-info-note strong{font-size:11px;color:var(--sari-dark-e23e64dd1e, #4c5864)}
+#sariRiderMessenger .sari-rm-info-note p{font-size:10px;color:var(--sari-dark-a63aa16d7c, #8b96a2);line-height:1.7}
+#sariRiderMessenger .sari-rm-contact-overlay{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:var(--sari-dark-416d70b0b2, rgba(18,28,40,.42));padding:15px}
+#sariRiderMessenger .sari-rm-contact-panel{display:flex;flex-direction:column;min-width:0;width:min(560px,100%);height:min(680px,88dvh);overflow:hidden;border-radius:19px;background:var(--sari-dark-950baec030, #fff);box-shadow:0 24px 70px var(--sari-dark-f846f23b59, rgba(17,25,39,.25))}
 #sariRiderMessenger .sari-rm-contact-search{display:block;margin:15px 16px 0}
 #sariRiderMessenger .sari-rm-contact-search input{padding-left:16px}
 #sariRiderMessenger .sari-rm-contact-tabs{margin:11px 16px}
 #sariRiderMessenger .sari-rm-contacts{min-height:0;flex:1;overflow-y:auto;padding:7px 12px 19px}
-#sariRiderMessenger .sari-rm-contact-option{display:flex;align-items:center;gap:11px;width:100%;min-height:67px;padding:10px 12px;border:0;border-radius:12px;background:#fff;text-align:left;color:#344054}
-#sariRiderMessenger .sari-rm-contact-option:hover{background:#f5f6f8}
-#sariRiderMessenger .sari-rm-contact-option strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#303740;font-size:12px}
-#sariRiderMessenger .sari-rm-contact-option small{display:block;margin-top:5px;color:#99a3af;font-size:10px}
+#sariRiderMessenger .sari-rm-contact-option{display:flex;align-items:center;gap:11px;width:100%;min-height:67px;padding:10px 12px;border:0;border-radius:12px;background:var(--sari-dark-950baec030, #fff);text-align:left;color:var(--sari-dark-e23e64dd1e, #344054)}
+#sariRiderMessenger .sari-rm-contact-option:hover{background:var(--sari-dark-950baec030, #f5f6f8)}
+#sariRiderMessenger .sari-rm-contact-option strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--sari-dark-e23e64dd1e, #303740);font-size:12px}
+#sariRiderMessenger .sari-rm-contact-option small{display:block;margin-top:5px;color:var(--sari-dark-a63aa16d7c, #99a3af);font-size:10px}
 @media(max-width:1080px){#sariRiderMessenger .sari-rm-shell{grid-template-columns:260px minmax(0,1fr)}}
-@media(max-width:650px){#sariRiderMessenger .sari-rm-shell{grid-template-columns:minmax(0,1fr);grid-template-rows:210px minmax(0,1fr);height:calc(100dvh - 110px);min-height:590px;border-radius:14px}#sariRiderMessenger .sari-rm-inbox{border-right:0;border-bottom:1px solid var(--rm-border)}#sariRiderMessenger .sari-rm-inbox-header{padding:9px 11px 6px}#sariRiderMessenger .sari-rm-eyebrow{display:none}#sariRiderMessenger .sari-rm-heading-row h1{font-size:15px}#sariRiderMessenger .sari-rm-new{width:31px;height:31px;flex-basis:31px}#sariRiderMessenger .sari-rm-search-box{margin-top:6px}#sariRiderMessenger .sari-rm-search-box input{height:34px}#sariRiderMessenger .sari-rm-tabs{margin-top:5px}#sariRiderMessenger .sari-rm-threads{display:flex;overflow-x:auto;overflow-y:hidden;gap:7px;padding:5px 8px 7px}#sariRiderMessenger .sari-rm-thread{flex:0 0 195px;min-height:63px;padding:7px;border:1px solid transparent;border-bottom:3px solid transparent}#sariRiderMessenger .sari-rm-thread.is-active{border:1px solid #d4dbe4;border-bottom:3px solid #b5beca}#sariRiderMessenger .sari-rm-thread-copy strong{font-size:10.5px}#sariRiderMessenger .sari-rm-avatar{width:35px;height:35px;flex-basis:35px;font-size:11px}#sariRiderMessenger .sari-rm-inbox-bottom{display:none}#sariRiderMessenger .sari-rm-chat-header{min-height:62px;padding:8px 12px}#sariRiderMessenger .sari-rm-conversation{padding:13px 10px;gap:14px}#sariRiderMessenger .sari-rm-message-body{max-width:85%}#sariRiderMessenger .sari-rm-bubble{font-size:11px;padding:10px 12px}#sariRiderMessenger .sari-rm-composer{padding:9px}#sariRiderMessenger .sari-rm-composer form{gap:6px}#sariRiderMessenger .sari-rm-send{width:38px;height:38px;flex-basis:38px}#sariRiderMessenger .sari-rm-compose-field{padding-inline:10px}#sariRiderMessenger .sari-rm-composer textarea{font-size:11px;min-height:47px;padding-top:13px}#sariRiderMessenger .sari-rm-contact-panel{height:min(670px,91dvh)}}
+@media(max-width:650px){#sariRiderMessenger .sari-rm-shell{grid-template-columns:minmax(0,1fr);grid-template-rows:210px minmax(0,1fr);height:calc(100dvh - 110px);min-height:590px;border-radius:14px}#sariRiderMessenger .sari-rm-inbox{border-right:0;border-bottom:1px solid var(--rm-border)}#sariRiderMessenger .sari-rm-inbox-header{padding:9px 11px 6px}#sariRiderMessenger .sari-rm-eyebrow{display:none}#sariRiderMessenger .sari-rm-heading-row h1{font-size:15px}#sariRiderMessenger .sari-rm-new{width:31px;height:31px;flex-basis:31px}#sariRiderMessenger .sari-rm-search-box{margin-top:6px}#sariRiderMessenger .sari-rm-search-box input{height:34px}#sariRiderMessenger .sari-rm-tabs{margin-top:5px}#sariRiderMessenger .sari-rm-threads{display:flex;overflow-x:auto;overflow-y:hidden;gap:7px;padding:5px 8px 7px}#sariRiderMessenger .sari-rm-thread{flex:0 0 195px;min-height:63px;padding:7px;border:1px solid transparent;border-bottom:3px solid transparent}#sariRiderMessenger .sari-rm-thread.is-active{border:1px solid var(--sari-dark-d8c2716225, #d4dbe4);border-bottom:3px solid var(--sari-dark-d8c2716225, #b5beca)}#sariRiderMessenger .sari-rm-thread-copy strong{font-size:10.5px}#sariRiderMessenger .sari-rm-avatar{width:35px;height:35px;flex-basis:35px;font-size:11px}#sariRiderMessenger .sari-rm-inbox-bottom{display:none}#sariRiderMessenger .sari-rm-chat-header{min-height:62px;padding:8px 12px}#sariRiderMessenger .sari-rm-conversation{padding:13px 10px;gap:14px}#sariRiderMessenger .sari-rm-message-body{max-width:85%}#sariRiderMessenger .sari-rm-bubble{font-size:11px;padding:10px 12px}#sariRiderMessenger .sari-rm-composer{padding:9px}#sariRiderMessenger .sari-rm-composer form{gap:6px}#sariRiderMessenger .sari-rm-send{width:38px;height:38px;flex-basis:38px}#sariRiderMessenger .sari-rm-compose-field{padding-inline:10px}#sariRiderMessenger .sari-rm-composer textarea{font-size:11px;min-height:47px;padding-top:13px}#sariRiderMessenger .sari-rm-contact-panel{height:min(670px,91dvh)}}
 @media(max-width:390px){#sariRiderMessenger .sari-rm-tabs button{padding:6px 7px;font-size:9px}#sariRiderMessenger .sari-rm-thread{flex-basis:170px}#sariRiderMessenger .sari-rm-contact-tabs{gap:1px}#sariRiderMessenger .sari-rm-contact-tabs button{padding-inline:7px}}
 @media(prefers-reduced-motion:reduce){#sariRiderMessenger *{transition:none!important;scroll-behavior:auto!important}}
 
@@ -137,15 +137,15 @@ body:has(#sariRiderMessenger) #courierMain > main {
   width: 100%;
   max-width: none;
 }
-body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
+body:has(#sariRiderMessenger) {background:var(--sari-dark-950baec030, #f5f6f8)!important;}
 #sariRiderMessenger{
   --rm-gold:#c99128;
   --rm-gold-dark:#ae7a1e;
-  --rm-ink:#303740;
-  --rm-muted:#8e99a6;
-  --rm-border:#ebedf0;
-  --rm-canvas:#f7f8fa;
-  background:#fff;
+  --rm-ink:var(--sari-dark-e23e64dd1e, #303740);
+  --rm-muted:var(--sari-dark-a63aa16d7c, #8e99a6);
+  --rm-border:var(--sari-dark-d8c2716225, #ebedf0);
+  --rm-canvas:var(--sari-dark-950baec030, #f7f8fa);
+  background:var(--sari-dark-950baec030, #fff);
   margin:0;
   padding:0;
   font-family:Poppins,ui-sans-serif,system-ui,sans-serif;
@@ -163,12 +163,12 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
   overflow:hidden;
   border:0;
   border-radius:0;
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
   box-shadow:none;
 }
 #sariRiderMessenger .sari-rm-inbox{
   border-right:1px solid var(--rm-border);
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
 }
 #sariRiderMessenger .sari-rm-inbox-header{
   flex-shrink:0;
@@ -178,7 +178,7 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
 #sariRiderMessenger .sari-rm-heading-row{align-items:flex-start;gap:12px;}
 #sariRiderMessenger .sari-rm-heading-row h1{
   margin:0;
-  color:#303740;
+  color:var(--sari-dark-e23e64dd1e, #303740);
   font-size:20px;
   font-weight:750;
   line-height:1.25;
@@ -186,7 +186,7 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
 }
 #sariRiderMessenger .sari-rm-inbox-subtitle{
   margin:6px 0 0;
-  color:#9aa3af;
+  color:var(--sari-dark-a63aa16d7c, #9aa3af);
   font-size:10.5px;
   font-weight:450;
   line-height:1.55;
@@ -195,28 +195,28 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
   width:37px;height:37px;flex-basis:37px;
   border:1px solid transparent;
   border-radius:50%;
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
   color:var(--rm-gold);
   box-shadow:none;
 }
 #sariRiderMessenger .sari-rm-new:hover{
-  background:#f7f8fa;
-  border-color:#e8eaf0;
+  background:var(--sari-dark-950baec030, #f7f8fa);
+  border-color:var(--sari-dark-d8c2716225, #e8eaf0);
 }
 #sariRiderMessenger .sari-rm-search-box{margin-top:20px;}
 #sariRiderMessenger .sari-rm-search-box svg{left:14px;width:17px;height:17px;stroke:var(--rm-gold);}
 #sariRiderMessenger .sari-rm-search-box input{
   height:43px;
   padding:0 13px 0 42px;
-  border:1px solid #e7eaee;
+  border:1px solid var(--sari-dark-d8c2716225, #e7eaee);
   border-radius:100px;
-  background:#f5f6f8;
-  color:#303740;
+  background:var(--sari-dark-950baec030, #f5f6f8);
+  color:var(--sari-dark-e23e64dd1e, #303740);
   font-size:11px;
 }
 #sariRiderMessenger .sari-rm-search-box input:focus{
   border:1px solid #d5a64a;
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
   box-shadow:none;
 }
 #sariRiderMessenger .sari-rm-tabs{
@@ -234,14 +234,14 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
   border-radius:7px;
   padding:6px 8px;
   background:transparent;
-  color:#919ca8;
+  color:var(--sari-dark-a63aa16d7c, #919ca8);
   font-size:9.5px;
   font-weight:600;
   line-height:1.35;
 }
 #sariRiderMessenger .sari-rm-tabs button.is-active{
-  background:#eef1f4;
-  color:#3d4651;
+  background:var(--sari-dark-4d21eb669b, #eef1f4);
+  color:var(--sari-dark-e23e64dd1e, #3d4651);
   font-weight:750;
 }
 #sariRiderMessenger .sari-rm-threads{
@@ -261,20 +261,20 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
   border:0;
   border-left:3px solid transparent;
   border-radius:12px;
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
   text-decoration:none;
   transition:background .15s,border-color .15s;
 }
-#sariRiderMessenger .sari-rm-thread:hover{background:#f8f9fa;}
+#sariRiderMessenger .sari-rm-thread:hover{background:var(--sari-dark-950baec030, #f8f9fa);}
 #sariRiderMessenger .sari-rm-thread.is-active{
-  border-left-color:#c8ced6;
-  background:#eef1f4;
+  border-left-color:var(--sari-dark-d8c2716225, #c8ced6);
+  background:var(--sari-dark-4d21eb669b, #eef1f4);
 }
 #sariRiderMessenger .sari-rm-avatar{
   width:50px;height:50px;flex-basis:50px;
-  border:1px solid #e6e9ed;
-  background:#f1f4f7;
-  color:#697886;
+  border:1px solid var(--sari-dark-d8c2716225, #e6e9ed);
+  background:var(--sari-dark-4d21eb669b, #f1f4f7);
+  color:var(--sari-dark-a63aa16d7c, #697886);
   font-size:14px;
 }
 #sariRiderMessenger .sari-rm-avatar.is-small{
@@ -286,14 +286,14 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
 #sariRiderMessenger .sari-rm-avatar.is-large{
   width:84px;height:84px;flex-basis:84px;
   font-size:26px;
-  border:3px solid #fff;
-  box-shadow:0 0 0 2px #f0dfbb,0 8px 24px rgba(38,45,55,.08);
+  border:3px solid var(--sari-dark-d8c2716225, #fff);
+  box-shadow:0 0 0 2px var(--sari-dark-f30a5f9061, #f0dfbb),0 8px 24px var(--sari-dark-c33e3d1bb4, rgba(38,45,55,.08));
 }
 #sariRiderMessenger .sari-rm-thread-copy strong{
-  color:#303740;font-size:12px;font-weight:750;line-height:1.4;
+  color:var(--sari-dark-e23e64dd1e, #303740);font-size:12px;font-weight:750;line-height:1.4;
 }
 #sariRiderMessenger .sari-rm-thread-copy small{
-  color:#98a1ad;font-size:10px;font-weight:450;line-height:1.55;
+  color:var(--sari-dark-a63aa16d7c, #98a1ad);font-size:10px;font-weight:450;line-height:1.55;
 }
 #sariRiderMessenger .sari-rm-inbox-bottom{display:none;}
 #sariRiderMessenger .sari-rm-chat{
@@ -305,21 +305,21 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
   min-height:78px;
   padding:12px 22px;
   border-bottom:1px solid var(--rm-border);
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
 }
 #sariRiderMessenger .sari-rm-peer{gap:12px;}
 #sariRiderMessenger .sari-rm-peer-copy h2{
-  color:#303740;
+  color:var(--sari-dark-e23e64dd1e, #303740);
   font-size:14px;
   font-weight:750;
   line-height:1.4;
   letter-spacing:-.018em;
 }
 #sariRiderMessenger .sari-rm-peer-copy p{
-  margin:5px 0 0;color:#9aa3ae;font-size:10px;line-height:1.35;
+  margin:5px 0 0;color:var(--sari-dark-a63aa16d7c, #9aa3ae);font-size:10px;line-height:1.35;
 }
 #sariRiderMessenger .sari-rm-info-button{width:37px;height:37px;flex-basis:37px;}
-#sariRiderMessenger .sari-rm-info-button:hover{background:#fff7e8;}
+#sariRiderMessenger .sari-rm-info-button:hover{background:var(--sari-dark-4d21eb669b, #fff7e8);}
 #sariRiderMessenger .sari-rm-conversation{
   flex:1;
   min-height:0;
@@ -333,36 +333,36 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
 #sariRiderMessenger .sari-rm-message{gap:10px;}
 #sariRiderMessenger .sari-rm-message-body{max-width:min(77%,580px);}
 #sariRiderMessenger .sari-rm-sender{
-  margin:0 0 6px;color:#89929e;font-size:10px;font-weight:650;
+  margin:0 0 6px;color:var(--sari-dark-a63aa16d7c, #89929e);font-size:10px;font-weight:650;
 }
 #sariRiderMessenger .sari-rm-bubble{
   display:block;
   margin:0;
   padding:12px 15px;
-  border:1px solid #eceef1;
+  border:1px solid var(--sari-dark-d8c2716225, #eceef1);
   border-radius:17px 17px 17px 5px;
-  background:#fff;
-  color:#3c4652;
+  background:var(--sari-dark-950baec030, #fff);
+  color:var(--sari-dark-e23e64dd1e, #3c4652);
   font-size:11.5px;
   font-weight:450;
   line-height:1.65;
   overflow-wrap:anywhere;
   white-space:pre-wrap;
-  box-shadow:0 2px 8px rgba(22,34,49,.04);
+  box-shadow:0 2px 8px var(--sari-dark-25b2da5e49, rgba(22,34,49,.04));
 }
 #sariRiderMessenger .sari-rm-message.is-mine .sari-rm-bubble{
-  border-color:#e9e7e1;
+  border-color:var(--sari-dark-d8c2716225, #e9e7e1);
   border-radius:17px 17px 5px 17px;
-  background:#fff;
-  color:#303740;
-  box-shadow:0 3px 10px rgba(22,34,49,.05);
+  background:var(--sari-dark-950baec030, #fff);
+  color:var(--sari-dark-e23e64dd1e, #303740);
+  box-shadow:0 3px 10px var(--sari-dark-1df26971b5, rgba(22,34,49,.05));
 }
-#sariRiderMessenger .sari-rm-time{margin:6px 2px 0;color:#a3abb5;font-size:9px;line-height:1.4;}
+#sariRiderMessenger .sari-rm-time{margin:6px 2px 0;color:var(--sari-dark-a63aa16d7c, #a3abb5);font-size:9px;line-height:1.4;}
 #sariRiderMessenger .sari-rm-composer{
   flex-shrink:0;
   padding:13px 17px 15px;
   border-top:1px solid var(--rm-border);
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
 }
 #sariRiderMessenger .sari-rm-composer form{
   display:flex;align-items:center;gap:10px;
@@ -381,7 +381,7 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
   padding:0 14px;
   border:1px solid #d5a64a;
   border-radius:18px;
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
 }
 #sariRiderMessenger .sari-rm-compose-field:focus-within{border-color:#d5a64a;box-shadow:none;}
 #sariRiderMessenger .sari-rm-composer textarea{
@@ -401,32 +401,32 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
   border-radius:50%;
   background:var(--rm-gold);
   color:#fff;
-  box-shadow:0 4px 10px rgba(201,145,40,.2);
+  box-shadow:0 4px 10px var(--sari-dark-ef22e61893, rgba(201,145,40,.2));
 }
 #sariRiderMessenger .sari-rm-send:hover{background:var(--rm-gold-dark);}
 #sariRiderMessenger .sari-rm-drawer-backdrop{
-  background:rgba(255,255,255,.06);
+  background:var(--sari-dark-4cd63dc51a, rgba(255,255,255,.06));
   -webkit-backdrop-filter:blur(2px);
   backdrop-filter:blur(2px);
 }
 #sariRiderMessenger .sari-rm-drawer{
   width:min(372px,100%);
-  border-left:1px solid #e4e8ed;
-  background:#f5f7fa;
-  box-shadow:-18px 0 45px rgba(28,35,45,.14);
+  border-left:1px solid var(--sari-dark-d8c2716225, #e4e8ed);
+  background:var(--sari-dark-950baec030, #f5f7fa);
+  box-shadow:-18px 0 45px var(--sari-dark-59ed29fe9d, rgba(28,35,45,.14));
   transition:transform .32s cubic-bezier(.22,1,.36,1),visibility .32s;
 }
 #sariRiderMessenger .sari-rm-drawer header{
   padding:16px 18px 14px;
-  background:#fff;
+  background:var(--sari-dark-950baec030, #fff);
 }
 #sariRiderMessenger .sari-rm-drawer header h2{font-size:12.5px;}
 #sariRiderMessenger .sari-rm-drawer-body{padding:18px 18px 24px;}
 #sariRiderMessenger .sari-rm-info-note{
   padding:14px 13px;
-  border:1px solid #e5e9ee;
+  border:1px solid var(--sari-dark-d8c2716225, #e5e9ee);
   border-radius:13px;
-  background:#f8fafb;
+  background:var(--sari-dark-950baec030, #f8fafb);
 }
 @media(max-width:1320px){
   #sariRiderMessenger .sari-rm-shell{grid-template-columns:275px minmax(0,1fr);}
@@ -475,9 +475,9 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
     border-radius:10px;
   }
   #sariRiderMessenger .sari-rm-thread.is-active{
-    border:1px solid #d6dde5;
-    border-bottom:3px solid #aeb7c2;
-    background:#eef1f4;
+    border:1px solid var(--sari-dark-d8c2716225, #d6dde5);
+    border-bottom:3px solid var(--sari-dark-d8c2716225, #aeb7c2);
+    background:var(--sari-dark-4d21eb669b, #eef1f4);
   }
   #sariRiderMessenger .sari-rm-avatar{width:36px;height:36px;flex-basis:36px;}
   #sariRiderMessenger .sari-rm-thread-copy strong{font-size:10.5px;}
@@ -511,25 +511,25 @@ body:has(#sariRiderMessenger) {background:#f5f6f8!important;}
 #sariRiderMessenger .sari-rm-drawer{width:min(372px,100%);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#d8dfe6 transparent}
 #sariRiderMessenger .sari-rm-drawer-body{padding:18px 18px 25px;text-align:left}
 #sariRiderMessenger .sari-rm-profile-top{display:flex;flex-direction:column;align-items:center;text-align:center;padding:4px 0 5px}
-#sariRiderMessenger .sari-rm-profile-top h3{max-width:100%;margin:12px 0 0;color:#303740;font-size:16px;font-weight:750;line-height:1.5;overflow-wrap:anywhere}
-#sariRiderMessenger .sari-rm-profile-top>p{margin:3px 0 0;color:#8e99a6;font-size:10.5px}
-#sariRiderMessenger .sari-rm-profile-status{margin-top:10px;padding:5px 12px;border:1px solid #d9e7dd;border-radius:30px;background:#f0f8f2;color:#427a53;font-size:10px;font-weight:750;text-transform:capitalize}
-#sariRiderMessenger .sari-rm-profile-status.is-neutral{background:#f3f5f7;border-color:#e3e8ec;color:#6b7580}
-#sariRiderMessenger .sari-rm-profile-card{margin-top:20px;overflow:hidden;border:1px solid #e5e9ef;border-radius:16px;background:#fff;box-shadow:0 3px 12px rgba(31,41,55,.025)}
-#sariRiderMessenger .sari-rm-profile-card-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:15px 15px 12px;border-bottom:1px solid #edf0f3}
-#sariRiderMessenger .sari-rm-profile-card-title h4{margin:0;color:#303740;font-size:12px;font-weight:750}
-#sariRiderMessenger .sari-rm-profile-card-title>span{color:#a7b0bb;font-size:9.5px}
+#sariRiderMessenger .sari-rm-profile-top h3{max-width:100%;margin:12px 0 0;color:var(--sari-dark-e23e64dd1e, #303740);font-size:16px;font-weight:750;line-height:1.5;overflow-wrap:anywhere}
+#sariRiderMessenger .sari-rm-profile-top>p{margin:3px 0 0;color:var(--sari-dark-a63aa16d7c, #8e99a6);font-size:10.5px}
+#sariRiderMessenger .sari-rm-profile-status{margin-top:10px;padding:5px 12px;border:1px solid var(--sari-dark-d8c2716225, #d9e7dd);border-radius:30px;background:var(--sari-dark-4d21eb669b, #f0f8f2);color:var(--sari-dark-a63aa16d7c, #427a53);font-size:10px;font-weight:750;text-transform:capitalize}
+#sariRiderMessenger .sari-rm-profile-status.is-neutral{background:var(--sari-dark-4d21eb669b, #f3f5f7);border-color:var(--sari-dark-d8c2716225, #e3e8ec);color:var(--sari-dark-a63aa16d7c, #6b7580)}
+#sariRiderMessenger .sari-rm-profile-card{margin-top:20px;overflow:hidden;border:1px solid var(--sari-dark-d8c2716225, #e5e9ef);border-radius:16px;background:var(--sari-dark-950baec030, #fff);box-shadow:0 3px 12px var(--sari-dark-e1384eb7fc, rgba(31,41,55,.025))}
+#sariRiderMessenger .sari-rm-profile-card-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:15px 15px 12px;border-bottom:1px solid var(--sari-dark-d8c2716225, #edf0f3)}
+#sariRiderMessenger .sari-rm-profile-card-title h4{margin:0;color:var(--sari-dark-e23e64dd1e, #303740);font-size:12px;font-weight:750}
+#sariRiderMessenger .sari-rm-profile-card-title>span{color:var(--sari-dark-a63aa16d7c, #a7b0bb);font-size:9.5px}
 #sariRiderMessenger .sari-rm-profile-fields{margin:0;padding:2px 15px}
-#sariRiderMessenger .sari-rm-profile-field{display:grid;grid-template-columns:minmax(0,1fr);gap:3px;padding:12px 0;border-bottom:1px solid #f0f2f4;text-align:left}
+#sariRiderMessenger .sari-rm-profile-field{display:grid;grid-template-columns:minmax(0,1fr);gap:3px;padding:12px 0;border-bottom:1px solid var(--sari-dark-d8c2716225, #f0f2f4);text-align:left}
 #sariRiderMessenger .sari-rm-profile-field:last-child{border-bottom:0}
-#sariRiderMessenger .sari-rm-profile-field dt{color:#929eaa;font-size:10px;font-weight:550}
-#sariRiderMessenger .sari-rm-profile-field dd{min-width:0;margin:0;color:#394451;font-size:11.5px;font-weight:700;line-height:1.55;overflow-wrap:anywhere}
-#sariRiderMessenger .sari-rm-profile-field dd a{color:#a6741e;text-decoration:none;word-break:break-word}
+#sariRiderMessenger .sari-rm-profile-field dt{color:var(--sari-dark-a63aa16d7c, #929eaa);font-size:10px;font-weight:550}
+#sariRiderMessenger .sari-rm-profile-field dd{min-width:0;margin:0;color:var(--sari-dark-e23e64dd1e, #394451);font-size:11.5px;font-weight:700;line-height:1.55;overflow-wrap:anywhere}
+#sariRiderMessenger .sari-rm-profile-field dd a{color:var(--sari-dark-e13523fe23, #a6741e);text-decoration:none;word-break:break-word}
 #sariRiderMessenger .sari-rm-profile-field dd a:hover{text-decoration:underline;text-underline-offset:3px}
-#sariRiderMessenger .sari-rm-profile-help{margin:0;border-top:1px solid #edf0f3;padding:11px 15px;color:#9aa4b0;font-size:10px;line-height:1.6;text-align:left}
-#sariRiderMessenger .sari-rm-info-note{margin-top:13px;padding:14px 15px;background:#f8fafb;border:1px solid #e8ecf0}
-#sariRiderMessenger .sari-rm-info-note strong{color:#54616d;font-size:11px}
-#sariRiderMessenger .sari-rm-info-note p{margin:6px 0 0;color:#8c98a5;font-size:10px;line-height:1.65}
+#sariRiderMessenger .sari-rm-profile-help{margin:0;border-top:1px solid var(--sari-dark-d8c2716225, #edf0f3);padding:11px 15px;color:var(--sari-dark-a63aa16d7c, #9aa4b0);font-size:10px;line-height:1.6;text-align:left}
+#sariRiderMessenger .sari-rm-info-note{margin-top:13px;padding:14px 15px;background:var(--sari-dark-950baec030, #f8fafb);border:1px solid var(--sari-dark-d8c2716225, #e8ecf0)}
+#sariRiderMessenger .sari-rm-info-note strong{color:var(--sari-dark-a63aa16d7c, #54616d);font-size:11px}
+#sariRiderMessenger .sari-rm-info-note p{margin:6px 0 0;color:var(--sari-dark-a63aa16d7c, #8c98a5);font-size:10px;line-height:1.65}
 @media(max-width:650px){#sariRiderMessenger .sari-rm-drawer{width:min(355px,100%)}#sariRiderMessenger .sari-rm-drawer-body{padding:15px 14px 23px}}
 
 

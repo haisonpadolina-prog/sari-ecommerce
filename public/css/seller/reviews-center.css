@@ -7,15 +7,15 @@
 
         --reviews-gold-soft: #fffaf0;
 
-        --reviews-ink: #111827;
+        --reviews-ink: var(--sari-dark-e23e64dd1e, #111827);
 
-        --reviews-text: #344054;
+        --reviews-text: var(--sari-dark-e23e64dd1e, #344054);
 
-        --reviews-muted: #7c8592;
+        --reviews-muted: var(--sari-dark-a63aa16d7c, #7c8592);
 
-        --reviews-soft-muted: #98a2b3;
+        --reviews-soft-muted: var(--sari-dark-a63aa16d7c, #98a2b3);
 
-        --reviews-line: #e5e7eb;
+        --reviews-line: var(--sari-dark-d8c2716225, #e5e7eb);
 
 
 
@@ -95,11 +95,11 @@
 
     .seller-reviews-alert--success {
 
-        border-color: #d5e7dc;
+        border-color: var(--sari-dark-d8c2716225, #d5e7dc);
 
-        background: #f5faf7;
+        background: var(--sari-dark-950baec030, #f5faf7);
 
-        color: #4f7d63;
+        color: var(--sari-dark-a63aa16d7c, #4f7d63);
 
     }
 
@@ -107,11 +107,11 @@
 
     .seller-reviews-alert--error {
 
-        border-color: #efdada;
+        border-color: var(--sari-dark-d8c2716225, #efdada);
 
-        background: #fff7f7;
+        background: var(--sari-dark-950baec030, #fff7f7);
 
-        color: #a65353;
+        color: var(--sari-dark-58dd29f069, #a65353);
 
     }
 
@@ -133,7 +133,7 @@
 
         border-radius: 8px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         opacity: .82;
 
@@ -163,7 +163,7 @@
 
         padding: 2px 2px 13px;
 
-        border-bottom: 1px solid #e7ebf0;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e7ebf0);
 
     }
 
@@ -173,7 +173,7 @@
 
         margin: 0;
 
-        color: #b87605;
+        color: var(--sari-dark-6e784b4931, #b87605);
 
         font-size: 8px;
 
@@ -211,7 +211,7 @@
 
         margin-left: .18em;
 
-        color: #C9890B;
+        color: var(--sari-dark-9db03b407c, #C9890B);
 
     }
 
@@ -263,11 +263,11 @@
 
         border-radius: 13px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 10px 12px;
 
-        box-shadow: 0 5px 16px rgba(15, 23, 42, .028);
+        box-shadow: 0 5px 16px var(--sari-dark-7888fe3028, rgba(15, 23, 42, .028));
 
     }
 
@@ -291,7 +291,7 @@
 
     .seller-reviews-stat-label {
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
         font-size: 9.5px;
 
@@ -347,7 +347,7 @@
 
         place-items: center;
 
-        border: 1px solid rgba(17, 24, 39, .05);
+        border: 1px solid var(--sari-dark-452f190c69, rgba(17, 24, 39, .05));
 
         border-radius: 9px;
 
@@ -367,9 +367,9 @@
 
     .seller-reviews-stat-icon--average {
 
-        background: #fff8e9;
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
 
-        color: #b97805;
+        color: var(--sari-dark-af18afcaa4, #b97805);
 
     }
 
@@ -377,9 +377,9 @@
 
     .seller-reviews-stat-icon--total {
 
-        background: #f3f7fb;
+        background: var(--sari-dark-950baec030, #f3f7fb);
 
-        color: #52789b;
+        color: var(--sari-dark-a63aa16d7c, #52789b);
 
     }
 
@@ -387,9 +387,9 @@
 
     .seller-reviews-stat-icon--five {
 
-        background: #f1f8f4;
+        background: var(--sari-dark-4d21eb669b, #f1f8f4);
 
-        color: #4f7d63;
+        color: var(--sari-dark-a63aa16d7c, #4f7d63);
 
     }
 
@@ -397,9 +397,9 @@
 
     .seller-reviews-stat-icon--low {
 
-        background: #fff6f2;
+        background: var(--sari-dark-950baec030, #fff6f2);
 
-        color: #b66745;
+        color: var(--sari-dark-3ba2e031b5, #b66745);
 
     }
 
@@ -421,9 +421,9 @@
 
         border-radius: 13px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
-        box-shadow: 0 6px 18px rgba(15, 23, 42, .03);
+        box-shadow: 0 6px 18px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03));
 
     }
 
@@ -439,11 +439,11 @@
 
         gap: 12px;
 
-        border-bottom: 1px solid #edf0f3;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
         padding: 11px 13px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
     }
 
@@ -475,13 +475,13 @@
 
         place-items: center;
 
-        border: 1px solid #efe3c7;
+        border: 1px solid var(--sari-dark-d8c2716225, #efe3c7);
 
         border-radius: 8px;
 
         background: var(--reviews-gold-soft);
 
-        color: #b97805;
+        color: var(--sari-dark-af18afcaa4, #b97805);
 
     }
 
@@ -501,7 +501,7 @@
 
         margin: 0;
 
-        color: #1f2937;
+        color: var(--sari-dark-e23e64dd1e, #1f2937);
 
         font-size: 11px;
 
@@ -535,15 +535,15 @@
 
         align-items: center;
 
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
 
         border-radius: 999px;
 
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
 
         padding: 0 8px;
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
         font-size: 8px;
 
@@ -563,9 +563,9 @@
 
     .seller-review-row {
 
-        border-bottom: 1px solid #edf0f3;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         transition: background-color .14s ease;
 
@@ -583,7 +583,7 @@
 
     .seller-review-row:hover {
 
-        background: #fffdf9;
+        background: var(--sari-dark-950baec030, #fffdf9);
 
     }
 
@@ -641,7 +641,7 @@
 
         margin: 0;
 
-        color: #1f2937;
+        color: var(--sari-dark-e23e64dd1e, #1f2937);
 
         font-size: 10.5px;
 
@@ -701,11 +701,11 @@
 
     .seller-review-reply-state--replied {
 
-        border-color: #cfe4d7;
+        border-color: var(--sari-dark-d8c2716225, #cfe4d7);
 
-        background: #f1f8f4;
+        background: var(--sari-dark-4d21eb669b, #f1f8f4);
 
-        color: #4f7d63;
+        color: var(--sari-dark-a63aa16d7c, #4f7d63);
 
     }
 
@@ -713,11 +713,11 @@
 
     .seller-review-reply-state--pending {
 
-        border-color: #eadfc9;
+        border-color: var(--sari-dark-d8c2716225, #eadfc9);
 
-        background: #fff9ef;
+        background: var(--sari-dark-950baec030, #fff9ef);
 
-        color: #a8731f;
+        color: var(--sari-dark-5d5ad776eb, #a8731f);
 
     }
 
@@ -765,7 +765,7 @@
 
     .seller-review-rating-value {
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
         font-size: 8.5px;
 
@@ -799,7 +799,7 @@
 
     .seller-review-meta strong {
 
-        color: #667085;
+        color: var(--sari-dark-a63aa16d7c, #667085);
 
         font-weight: 600;
 
@@ -835,7 +835,7 @@
 
         max-width: 980px;
 
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
 
         font-size: 9.2px;
 
@@ -853,9 +853,9 @@
 
     .seller-review-reply-area {
 
-        border-top: 1px solid #edf0f3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
-        background: #fcfcfd;
+        background: var(--sari-dark-950baec030, #fcfcfd);
 
         padding: 9px 13px 10px;
 
@@ -881,7 +881,7 @@
 
     .seller-review-reply-label {
 
-        color: #475467;
+        color: var(--sari-dark-e23e64dd1e, #475467);
 
         font-size: 8.6px;
 
@@ -927,15 +927,15 @@
 
         resize: vertical;
 
-        border: 1px solid #d8dee6;
+        border: 1px solid var(--sari-dark-d8c2716225, #d8dee6);
 
         border-radius: 9px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
         padding: 8px 10px;
 
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
 
         font-size: 9.3px;
 
@@ -943,7 +943,7 @@
 
         outline: none;
 
-        box-shadow: 0 1px 2px rgba(15, 23, 42, .015);
+        box-shadow: 0 1px 2px var(--sari-dark-37396001f9, rgba(15, 23, 42, .015));
 
         transition: border-color .14s ease, box-shadow .14s ease;
 
@@ -953,7 +953,7 @@
 
     .seller-review-reply-input::placeholder {
 
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     }
 
@@ -963,7 +963,7 @@
 
         border-color: var(--reviews-gold);
 
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08);
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08));
 
     }
 
@@ -999,7 +999,7 @@
 
         cursor: pointer;
 
-        box-shadow: 0 6px 14px rgba(213, 150, 23, .13);
+        box-shadow: 0 6px 14px var(--sari-dark-3e32d50f5e, rgba(213, 150, 23, .13));
 
         transition: border-color .14s ease, background-color .14s ease;
 
@@ -1065,13 +1065,13 @@
 
         place-items: center;
 
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
 
         border-radius: 10px;
 
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
 
-        color: #98a2b3;
+        color: var(--sari-dark-a63aa16d7c, #98a2b3);
 
     }
 
@@ -1091,7 +1091,7 @@
 
         margin-top: 9px;
 
-        color: #344054;
+        color: var(--sari-dark-e23e64dd1e, #344054);
 
         font-size: 10.5px;
 
@@ -1117,11 +1117,11 @@
 
     .seller-reviews-pagination {
 
-        border-top: 1px solid #edf0f3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
 
         padding: 10px 13px;
 
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
 
     }
 
@@ -1279,20 +1279,20 @@
    ====================================================================== */
 
 .seller-reviews-page {
-    --reviews-main-border: #E5E7EB;
-    --reviews-main-divider: #ECEFF2;
+    --reviews-main-border: var(--sari-dark-d8c2716225, #E5E7EB);
+    --reviews-main-divider: var(--sari-dark-d8c2716225, #ECEFF2);
 
     --reviews-main-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
 
     --reviews-main-shadow-soft:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065),
-        inset 0 1px 0 rgba(255, 255, 255, .90);
+        0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+        0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+        0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90));
 }
 
 /* ------------------------------------------------------------
@@ -1302,7 +1302,7 @@
 .seller-reviews-page .seller-reviews-stat,
 .seller-reviews-page .seller-reviews-feed {
     border: 1px solid var(--reviews-main-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     transform: none !important;
     outline: 0 !important;
 }
@@ -1327,7 +1327,7 @@
 .seller-reviews-page .seller-reviews-stat:hover,
 .seller-reviews-page .seller-reviews-feed:hover {
     border-color: var(--reviews-main-border) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     transform: none !important;
 }
 
@@ -1354,27 +1354,27 @@
 .seller-reviews-page .seller-review-row,
 .seller-reviews-page .seller-review-row:hover {
     border-bottom-color: var(--reviews-main-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
     box-shadow: none !important;
     transform: none !important;
 }
 
 /* Neutral row hover only. */
 .seller-reviews-page .seller-review-row:hover {
-    background: #F8FAFC !important;
+    background: var(--sari-dark-950baec030, #F8FAFC) !important;
 }
 
 /* Reply area is a flat subsection inside the floating feed. */
 .seller-reviews-page .seller-review-reply-area {
     border-top-color: var(--reviews-main-divider) !important;
-    background: #FAFBFC !important;
+    background: var(--sari-dark-950baec030, #FAFBFC) !important;
 }
 
 /* Feed header and pagination are attached to the same parent shell. */
 .seller-reviews-page .seller-reviews-feed-head,
 .seller-reviews-page .seller-reviews-pagination {
     border-color: var(--reviews-main-divider) !important;
-    background: #FFFFFF !important;
+    background: var(--sari-dark-950baec030, #FFFFFF) !important;
 }
 
 /* Empty state belongs to the feed — never an independent floating card. */
@@ -1398,7 +1398,7 @@
 }
 
 .seller-reviews-page .seller-review-reply-input:focus {
-    box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+    box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213, 150, 23, .08)) !important;
 }
 
 .seller-reviews-page .seller-review-reply-button,
@@ -1428,17 +1428,17 @@
     .seller-reviews-page .seller-reviews-header,
     .seller-reviews-page .seller-reviews-feed {
         box-shadow:
-            0 2px 4px rgba(15, 23, 42, .035),
-            0 8px 18px rgba(15, 23, 42, .06),
-            0 18px 38px rgba(15, 23, 42, .07) !important;
+            0 2px 4px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 8px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            0 18px 38px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)) !important;
     }
 
     .seller-reviews-page .seller-reviews-stat,
     .seller-reviews-page .seller-reviews-alert {
         box-shadow:
-            0 1px 3px rgba(15, 23, 42, .03),
-            0 6px 14px rgba(15, 23, 42, .05),
-            0 12px 26px rgba(15, 23, 42, .055) !important;
+            0 1px 3px var(--sari-dark-b13200ac05, rgba(15, 23, 42, .03)),
+            0 6px 14px var(--sari-dark-1df26971b5, rgba(15, 23, 42, .05)),
+            0 12px 26px var(--sari-dark-fbd3b3b9f6, rgba(15, 23, 42, .055)) !important;
     }
 
     .seller-reviews-page .seller-review-row,
@@ -1460,7 +1460,7 @@
 .seller-reviews-page .seller-reviews-header:focus-within {
     min-height: 0 !important;
     border: 0 !important;
-    border-bottom: 1px solid #ECEFF2 !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
     border-radius: 0 !important;
     background: transparent !important;
     background-image: none !important;

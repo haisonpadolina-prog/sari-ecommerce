@@ -14,10 +14,10 @@
         --fc-brand: #d99500;
         --fc-brand-strong: #bd8205;
         --fc-brand-soft: #fff7e8;
-        --fc-ink: #26211c;
-        --fc-text: #514a42;
-        --fc-muted: #8d8479;
-        --fc-line: #e8e1d8;
+        --fc-ink: var(--sari-dark-e23e64dd1e, #26211c);
+        --fc-text: var(--sari-dark-e23e64dd1e, #514a42);
+        --fc-muted: var(--sari-dark-a63aa16d7c, #8d8479);
+        --fc-line: var(--sari-dark-d8c2716225, #e8e1d8);
         --fc-soft: #faf9f6;
         --fc-green: #4f8060;
         --fc-blue: #4f7fa8;
@@ -52,8 +52,8 @@
     .fc-card {
         border: 1px solid var(--fc-line);
         border-radius: 14px;
-        background: #fff;
-        box-shadow: 0 6px 20px rgba(61,43,22,.045);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 6px 20px var(--sari-dark-1190f58155, rgba(61,43,22,.045));
     }
 
     /* ---------------- PAGE HEADER ---------------- */
@@ -77,11 +77,11 @@
         height: 36px;
         flex: 0 0 36px;
         place-items: center;
-        border: 1px solid #eadfc9;
+        border: 1px solid var(--sari-dark-d8c2716225, #eadfc9);
         border-radius: 10px;
-        background: #fff8eb;
-        color: #b77c18;
-        box-shadow: 0 4px 12px rgba(75,54,25,.045);
+        background: var(--sari-dark-4d21eb669b, #fff8eb);
+        color: var(--sari-dark-5acaf64852, #b77c18);
+        box-shadow: 0 4px 12px var(--sari-dark-1190f58155, rgba(75,54,25,.045));
     }
 
     .fc-title-icon svg {
@@ -90,7 +90,7 @@
     }
 
     .fc-eyebrow {
-        color: #9a7b43;
+        color: var(--sari-dark-a63aa16d7c, #9a7b43);
         font-size: 7px;
         font-weight: 700;
         letter-spacing: .13em;
@@ -106,7 +106,7 @@
     }
 
     .fc-title-platform {
-        color: #17130f;
+        color: var(--sari-dark-e23e64dd1e, #17130f);
     }
 
     .fc-title-gold {
@@ -116,7 +116,7 @@
     .fc-subtitle {
         max-width: 760px;
         margin-top: 5px;
-        color: #81786c;
+        color: var(--sari-dark-a63aa16d7c, #81786c);
         font-size: 9.5px;
         line-height: 1.55;
     }
@@ -134,9 +134,9 @@
         min-height: 38px;
         align-items: center;
         gap: 6px;
-        border: 1px solid #e5ddd2;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd2);
         border-radius: 9px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 7px 0 9px;
         box-shadow: none;
     }
@@ -144,7 +144,7 @@
     .fc-date-control svg {
         width: 13px;
         height: 13px;
-        color: #8d8479;
+        color: var(--sari-dark-a63aa16d7c, #8d8479);
     }
 
     .fc-date-control input {
@@ -152,13 +152,13 @@
         border: 0;
         outline: 0;
         background: transparent;
-        color: #514a42;
+        color: var(--sari-dark-e23e64dd1e, #514a42);
         font: inherit;
         font-size: 7.8px;
     }
 
     .fc-date-arrow {
-        color: #aaa196;
+        color: var(--sari-dark-a63aa16d7c, #aaa196);
         font-size: 8px;
     }
 
@@ -169,14 +169,14 @@
         place-items: center;
         border: 0;
         border-radius: 7px;
-        background: #faf8f4;
-        color: #756d63;
+        background: var(--sari-dark-950baec030, #faf8f4);
+        color: var(--sari-dark-a63aa16d7c, #756d63);
         cursor: pointer;
     }
 
     .fc-date-submit:hover {
-        background: #fff4db;
-        color: #a56d00;
+        background: var(--sari-dark-4d21eb669b, #fff4db);
+        color: var(--sari-dark-19b301f69a, #a56d00);
     }
 
     .fc-primary-button,
@@ -198,7 +198,7 @@
         border: 1px solid var(--fc-brand);
         background: var(--fc-brand);
         color: #fff;
-        box-shadow: 0 4px 10px rgba(217,149,0,.11);
+        box-shadow: 0 4px 10px var(--sari-dark-71f44bdb16, rgba(217,149,0,.11));
     }
 
     .fc-primary-button:hover {
@@ -209,15 +209,15 @@
 
     .fc-secondary-button,
     .fc-link-button {
-        border: 1px solid #e5ddd2;
-        background: #fff;
-        color: #6f665b;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd2);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #6f665b);
     }
 
     .fc-secondary-button:hover,
     .fc-link-button:hover {
-        border-color: #d4c5b4;
-        background: #faf8f4;
+        border-color: var(--sari-dark-d8c2716225, #d4c5b4);
+        background: var(--sari-dark-950baec030, #faf8f4);
     }
 
     .fc-primary-button svg,
@@ -241,15 +241,15 @@
         padding: 11px 50px 11px 13px;
         border: 1px solid var(--fc-line);
         border-radius: 13px;
-        background: #fff;
-        box-shadow: 0 6px 18px rgba(61,43,22,.045);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 6px 18px var(--sari-dark-1190f58155, rgba(61,43,22,.045));
         contain: paint;
     }
 
     .fc-stat-card:hover {
-        border-color: #ddcfbb;
+        border-color: var(--sari-dark-d8c2716225, #ddcfbb);
         transform: translateY(-1px);
-        box-shadow: 0 8px 22px rgba(61,43,22,.06);
+        box-shadow: 0 8px 22px var(--sari-dark-361b571631, rgba(61,43,22,.06));
     }
 
     .fc-stat-inner {
@@ -273,13 +273,13 @@
         height: 14px;
     }
 
-    .fc-stat-icon.rate { background: #fff7e7; color: #c48612; }
-    .fc-stat-icon.orders { background: #eef6fb; color: #4f7fa8; }
-    .fc-stat-icon.sales { background: #f5f2fb; color: #7566a8; }
-    .fc-stat-icon.earned { background: #eef7f1; color: #4f8060; }
+    .fc-stat-icon.rate { background: var(--sari-dark-4d21eb669b, #fff7e7); color: var(--sari-dark-c8bdcce6ab, #c48612); }
+    .fc-stat-icon.orders { background: var(--sari-dark-4d21eb669b, #eef6fb); color: var(--sari-dark-55d2052ae1, #4f7fa8); }
+    .fc-stat-icon.sales { background: var(--sari-dark-950baec030, #f5f2fb); color: var(--sari-dark-a63aa16d7c, #7566a8); }
+    .fc-stat-icon.earned { background: var(--sari-dark-4d21eb669b, #eef7f1); color: var(--sari-dark-a63aa16d7c, #4f8060); }
 
     .fc-stat-label {
-        color: #8e857a;
+        color: var(--sari-dark-a63aa16d7c, #8e857a);
         font-size: 8px;
         font-weight: 500;
         line-height: 1.3;
@@ -294,7 +294,7 @@
     }
 
     .fc-stat-value {
-        color: #28221b;
+        color: var(--sari-dark-e23e64dd1e, #28221b);
         font-size: 19px;
         font-weight: 700;
         line-height: 1;
@@ -303,7 +303,7 @@
 
     .fc-stat-help {
         margin-top: 6px;
-        color: #9b9288;
+        color: var(--sari-dark-a63aa16d7c, #9b9288);
         font-size: 7.2px;
         line-height: 1.35;
     }
@@ -319,9 +319,9 @@
         font-weight: 700;
     }
 
-    .fc-delta.positive { background: #eef8f1; color: #4f8060; }
-    .fc-delta.negative { background: #fff2ef; color: #a65d5d; }
-    .fc-delta.neutral { background: #f4f2ef; color: #81786d; }
+    .fc-delta.positive { background: var(--sari-dark-4d21eb669b, #eef8f1); color: var(--sari-dark-a63aa16d7c, #4f8060); }
+    .fc-delta.negative { background: var(--sari-dark-950baec030, #fff2ef); color: var(--sari-dark-887359ecf4, #a65d5d); }
+    .fc-delta.neutral { background: var(--sari-dark-4d21eb669b, #f4f2ef); color: var(--sari-dark-a63aa16d7c, #81786d); }
 
     /* ---------------- ANALYTICS ---------------- */
     .fc-analytics-grid {
@@ -345,7 +345,7 @@
     }
 
     .fc-panel-title {
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 11px;
         font-weight: 700;
         line-height: 1.35;
@@ -353,7 +353,7 @@
 
     .fc-panel-copy {
         margin-top: 3px;
-        color: #91887d;
+        color: var(--sari-dark-a63aa16d7c, #91887d);
         font-size: 7.5px;
         line-height: 1.5;
     }
@@ -370,18 +370,18 @@
         height: 25px;
         align-items: center;
         justify-content: center;
-        border: 1px solid #e7e1d9;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e1d9);
         border-radius: 7px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 7px;
-        color: #81786d;
+        color: var(--sari-dark-a63aa16d7c, #81786d);
         font-size: 7px;
         font-weight: 600;
         text-decoration: none;
     }
 
     .fc-range-tab:hover {
-        background: #faf8f4;
+        background: var(--sari-dark-950baec030, #faf8f4);
     }
 
     .fc-range-tab.active {
@@ -411,11 +411,11 @@
         min-width: 112px;
         pointer-events: none;
         transform: translate(-50%, -118%);
-        border: 1px solid #e1dad1;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1dad1);
         border-radius: 9px;
-        background: rgba(255,255,255,.99);
+        background: var(--sari-dark-68ba16e186, rgba(255,255,255,.99));
         padding: 7px 9px;
-        box-shadow: 0 8px 20px rgba(31,24,17,.11);
+        box-shadow: 0 8px 20px var(--sari-dark-71f44bdb16, rgba(31,24,17,.11));
         opacity: 0;
     }
 
@@ -424,7 +424,7 @@
 
     .fc-chart-tooltip small {
         display: block;
-        color: #81786d;
+        color: var(--sari-dark-a63aa16d7c, #81786d);
         font-size: 7.5px;
         font-weight: 500;
     }
@@ -432,7 +432,7 @@
     .fc-chart-tooltip strong {
         display: block;
         margin-top: 3px;
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 10px;
         font-weight: 700;
     }
@@ -441,7 +441,7 @@
         display: grid;
         height: 205px;
         place-items: center;
-        color: #91887d;
+        color: var(--sari-dark-a63aa16d7c, #91887d);
         font-size: 8px;
         text-align: center;
     }
@@ -457,11 +457,11 @@
         height: 28px;
         align-items: center;
         gap: 5px;
-        border: 1px solid #eadbbd;
+        border: 1px solid var(--sari-dark-d8c2716225, #eadbbd);
         border-radius: 8px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 8px;
-        color: #9a6810;
+        color: var(--sari-dark-af18afcaa4, #9a6810);
         font-size: 7px;
         font-weight: 600;
         text-decoration: none;
@@ -487,7 +487,7 @@
         height: 118px;
         place-items: center;
         border-radius: 50%;
-        background: conic-gradient(var(--fc-brand) 0deg var(--rate-deg), #efede9 var(--rate-deg) 360deg);
+        background: conic-gradient(var(--fc-brand) 0deg var(--rate-deg), var(--sari-dark-4d21eb669b, #efede9) var(--rate-deg) 360deg);
     }
 
     .fc-rate-donut::before {
@@ -496,8 +496,8 @@
         width: 86px;
         height: 86px;
         border-radius: 50%;
-        background: #fff;
-        box-shadow: inset 0 0 0 1px #eee8df;
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: inset 0 0 0 1px var(--sari-dark-f30a5f9061, #eee8df);
     }
 
     .fc-rate-center {
@@ -506,7 +506,7 @@
     }
 
     .fc-rate-value {
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 19px;
         font-weight: 700;
         line-height: 1;
@@ -514,7 +514,7 @@
 
     .fc-rate-label {
         margin-top: 4px;
-        color: #91887d;
+        color: var(--sari-dark-a63aa16d7c, #91887d);
         font-size: 7px;
     }
 
@@ -535,7 +535,7 @@
         width: 20px;
         height: 20px;
         place-items: center;
-        color: #8d8479;
+        color: var(--sari-dark-a63aa16d7c, #8d8479);
     }
 
     .fc-policy-item-icon svg {
@@ -544,13 +544,13 @@
     }
 
     .fc-policy-label {
-        color: #978e83;
+        color: var(--sari-dark-a63aa16d7c, #978e83);
         font-size: 6.3px;
     }
 
     .fc-policy-value {
         margin-top: 2px;
-        color: #514a42;
+        color: var(--sari-dark-e23e64dd1e, #514a42);
         font-size: 7.2px;
         line-height: 1.45;
     }
@@ -562,17 +562,17 @@
         align-items: center;
         justify-content: space-between;
         margin-top: 10px;
-        border: 1px solid #e5ddd2;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd2);
         border-radius: 8px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 9px;
-        color: #6f665b;
+        color: var(--sari-dark-a63aa16d7c, #6f665b);
         font-size: 7px;
         cursor: pointer;
     }
 
     .fc-history-button:hover {
-        background: #faf8f4;
+        background: var(--sari-dark-950baec030, #faf8f4);
     }
 
     /* ---------------- FILTERS ---------------- */
@@ -601,7 +601,7 @@
         left: 12px;
         width: 14px;
         height: 14px;
-        color: #9b9287;
+        color: var(--sari-dark-a63aa16d7c, #9b9287);
         pointer-events: none;
         transform: translateY(-50%);
     }
@@ -610,10 +610,10 @@
     .fc-custom-select-trigger {
         width: 100%;
         height: 38px;
-        border: 1px solid #e5ddd2;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd2);
         border-radius: 9px;
-        background: #fff;
-        color: #3d3730;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #3d3730);
         font: inherit;
         font-size: 8.5px;
         font-weight: 500;
@@ -633,7 +633,7 @@
     .fc-custom-select.is-open .fc-custom-select-trigger {
         outline: none;
         border-color: #d49a2b;
-        box-shadow: 0 0 0 3px rgba(217,149,0,.075);
+        box-shadow: 0 0 0 3px var(--sari-dark-e07575a086, rgba(217,149,0,.075));
     }
 
     .fc-filter-dates {
@@ -661,21 +661,21 @@
     }
 
     .fc-filter-reset {
-        border: 1px solid #e5ddd2;
-        background: #fff;
-        color: #6f665b;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd2);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #6f665b);
     }
 
     .fc-filter-reset:hover {
-        border-color: #d4c5b4;
-        background: #faf8f4;
+        border-color: var(--sari-dark-d8c2716225, #d4c5b4);
+        background: var(--sari-dark-950baec030, #faf8f4);
     }
 
     .fc-filter-apply {
         border: 1px solid var(--fc-brand);
         background: var(--fc-brand);
         color: #fff;
-        box-shadow: 0 4px 10px rgba(217,149,0,.10);
+        box-shadow: 0 4px 10px var(--sari-dark-8eadf403a5, rgba(217,149,0,.10));
     }
 
     .fc-filter-apply:hover {
@@ -735,7 +735,7 @@
         height: 16px;
         flex: 0 0 16px;
         place-items: center;
-        color: #9a6c18;
+        color: var(--sari-dark-0d676d4438, #9a6c18);
     }
 
     .fc-custom-select-user-icon svg,
@@ -748,7 +748,7 @@
         width: 12px;
         height: 12px;
         flex: 0 0 12px;
-        color: #857b70;
+        color: var(--sari-dark-a63aa16d7c, #857b70);
     }
 
     .fc-custom-select.is-open .fc-custom-select-chevron {
@@ -764,14 +764,14 @@
         max-height: 210px;
         overflow-y: auto;
         padding: 4px;
-        border: 1px solid #e4dcd1;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4dcd1);
         border-radius: 10px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
         transform: translateY(-3px);
-        box-shadow: 0 14px 32px rgba(47,37,25,.12);
+        box-shadow: 0 14px 32px var(--sari-dark-3b2338cbf0, rgba(47,37,25,.12));
         scrollbar-width: thin;
         scrollbar-color: #ddd3c7 transparent;
     }
@@ -794,7 +794,7 @@
         border-radius: 7px;
         background: transparent;
         padding: 0 8px;
-        color: #5b534a;
+        color: var(--sari-dark-e23e64dd1e, #5b534a);
         font: inherit;
         font-size: 8px;
         font-weight: 500;
@@ -806,8 +806,8 @@
     .fc-custom-select-option:focus-visible,
     .fc-custom-select-option.is-selected {
         outline: none;
-        background: #fff7e8;
-        color: #9a6810;
+        background: var(--sari-dark-4d21eb669b, #fff7e8);
+        color: var(--sari-dark-af18afcaa4, #9a6810);
     }
 
     .fc-custom-select-check {
@@ -846,7 +846,7 @@
         justify-content: space-between;
         gap: 12px;
         padding: 11px 14px;
-        border-bottom: 1px solid #eee8df;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8df);
     }
 
     .fc-table-wrap {
@@ -861,13 +861,13 @@
     }
 
     .fc-table thead {
-        background: #faf9f6;
+        background: var(--sari-dark-950baec030, #faf9f6);
     }
 
     .fc-table th {
         padding: 9px 11px;
-        border-bottom: 1px solid #eee8df;
-        color: #81786d;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8df);
+        color: var(--sari-dark-a63aa16d7c, #81786d);
         font-size: 7.5px;
         font-weight: 700;
         letter-spacing: .04em;
@@ -876,8 +876,8 @@
 
     .fc-table td {
         padding: 9px 11px;
-        border-bottom: 1px solid #f0ebe4;
-        color: #5b534a;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
+        color: var(--sari-dark-e23e64dd1e, #5b534a);
         font-size: 8px;
         vertical-align: middle;
     }
@@ -888,12 +888,12 @@
     }
 
     .fc-table tbody tr:hover {
-        background: #fdfbf8;
+        background: var(--sari-dark-950baec030, #fdfbf8);
     }
 
     .fc-order,
     .fc-money {
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 8.3px;
         font-weight: 700;
         white-space: nowrap;
@@ -918,29 +918,29 @@
         background: currentColor;
     }
 
-    .fc-status.earned { background: #eef8f1; color: #4f8060; }
-    .fc-status.adjusted { background: #fff7e8; color: #9a6810; }
-    .fc-status.reversed { background: #fff2ef; color: #a65d5d; }
+    .fc-status.earned { background: var(--sari-dark-4d21eb669b, #eef8f1); color: var(--sari-dark-a63aa16d7c, #4f8060); }
+    .fc-status.adjusted { background: var(--sari-dark-4d21eb669b, #fff7e8); color: var(--sari-dark-af18afcaa4, #9a6810); }
+    .fc-status.reversed { background: var(--sari-dark-950baec030, #fff2ef); color: var(--sari-dark-887359ecf4, #a65d5d); }
 
     .fc-view-button {
         display: inline-flex;
         height: 28px;
         align-items: center;
         justify-content: center;
-        border: 1px solid #e3dcd3;
+        border: 1px solid var(--sari-dark-d8c2716225, #e3dcd3);
         border-radius: 7px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 9px;
-        color: #514a42;
+        color: var(--sari-dark-e23e64dd1e, #514a42);
         font-size: 7.3px;
         font-weight: 600;
         cursor: pointer;
     }
 
     .fc-view-button:hover {
-        border-color: #d6c7b4;
-        background: #fffaf1;
-        color: #9a6810;
+        border-color: var(--sari-dark-d8c2716225, #d6c7b4);
+        background: var(--sari-dark-950baec030, #fffaf1);
+        color: var(--sari-dark-af18afcaa4, #9a6810);
     }
 
     .fc-table-footer {
@@ -950,8 +950,8 @@
         justify-content: space-between;
         gap: 10px;
         padding: 8px 11px;
-        border-top: 1px solid #eee8df;
-        color: #81786d;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee8df);
+        color: var(--sari-dark-a63aa16d7c, #81786d);
         font-size: 7.5px;
     }
 
@@ -966,10 +966,10 @@
         min-width: 27px;
         height: 27px;
         place-items: center;
-        border: 1px solid #e5ddd2;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd2);
         border-radius: 7px;
-        background: #fff;
-        color: #81786d;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #81786d);
         font-size: 8px;
         text-decoration: none;
     }
@@ -1023,15 +1023,15 @@
         height: 23px;
         place-items: center;
         border-radius: 50%;
-        background: #fff7e8;
-        color: #9a6810;
+        background: var(--sari-dark-4d21eb669b, #fff7e8);
+        color: var(--sari-dark-af18afcaa4, #9a6810);
         font-size: 7.5px;
         font-weight: 700;
     }
 
     .fc-seller-name {
         overflow: hidden;
-        color: #514a42;
+        color: var(--sari-dark-e23e64dd1e, #514a42);
         font-size: 8px;
         font-weight: 600;
         text-overflow: ellipsis;
@@ -1042,7 +1042,7 @@
         height: 6px;
         overflow: hidden;
         border-radius: 999px;
-        background: #eeeae4;
+        background: var(--sari-dark-4d21eb669b, #eeeae4);
     }
 
     .fc-progress > span {
@@ -1053,7 +1053,7 @@
     }
 
     .fc-seller-amount {
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 8px;
         font-weight: 700;
         text-align: right;
@@ -1061,7 +1061,7 @@
     }
 
     .fc-seller-share {
-        color: #9b9288;
+        color: var(--sari-dark-a63aa16d7c, #9b9288);
         font-size: 6.8px;
         font-weight: 500;
     }
@@ -1090,8 +1090,8 @@
         width: 78px;
         height: 78px;
         border-radius: 50%;
-        background: #fff;
-        box-shadow: inset 0 0 0 1px #eee8df;
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: inset 0 0 0 1px var(--sari-dark-f30a5f9061, #eee8df);
     }
 
     .fc-status-center {
@@ -1100,14 +1100,14 @@
     }
 
     .fc-status-total {
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 17px;
         font-weight: 700;
     }
 
     .fc-status-caption {
         margin-top: 3px;
-        color: #91887d;
+        color: var(--sari-dark-a63aa16d7c, #91887d);
         font-size: 7px;
     }
 
@@ -1121,7 +1121,7 @@
         grid-template-columns: 8px 1fr 36px 44px;
         gap: 6px;
         align-items: center;
-        color: #81786d;
+        color: var(--sari-dark-a63aa16d7c, #81786d);
         font-size: 7.5px;
     }
 
@@ -1132,13 +1132,13 @@
     }
 
     .fc-status-count {
-        color: #514a42;
+        color: var(--sari-dark-e23e64dd1e, #514a42);
         font-weight: 600;
         text-align: right;
     }
 
     .fc-status-percent {
-        color: #9b9288;
+        color: var(--sari-dark-a63aa16d7c, #9b9288);
         text-align: right;
     }
 
@@ -1152,7 +1152,7 @@
         gap: 6px;
         align-items: center;
         min-height: 34px;
-        border-bottom: 1px solid #f0ebe4;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
         content-visibility: auto;
         contain-intrinsic-size: 34px;
     }
@@ -1162,7 +1162,7 @@
     }
 
     .fc-recent-icon {
-        color: #81786d;
+        color: var(--sari-dark-a63aa16d7c, #81786d);
     }
 
     .fc-recent-icon svg {
@@ -1178,25 +1178,25 @@
     }
 
     .fc-recent-order {
-        color: #514a42;
+        color: var(--sari-dark-e23e64dd1e, #514a42);
         font-size: 7.5px;
         font-weight: 600;
     }
 
     .fc-recent-seller {
-        color: #81786d;
+        color: var(--sari-dark-a63aa16d7c, #81786d);
         font-size: 7.3px;
     }
 
     .fc-recent-amount {
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 7.8px;
         font-weight: 700;
         text-align: right;
     }
 
     .fc-recent-date {
-        color: #91887d;
+        color: var(--sari-dark-a63aa16d7c, #91887d);
         font-size: 7px;
         text-align: right;
         white-space: nowrap;
@@ -1206,7 +1206,7 @@
         display: grid;
         min-height: 100px;
         place-items: center;
-        color: #91887d;
+        color: var(--sari-dark-a63aa16d7c, #91887d);
         font-size: 8px;
         text-align: center;
     }
@@ -1228,10 +1228,10 @@
         min-height: 20px;
         align-items: center;
         gap: 4px;
-        border: 1px solid #e5ddd2;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd2);
         border-radius: 999px;
         padding: 0 6px;
-        color: #81786d;
+        color: var(--sari-dark-a63aa16d7c, #81786d);
         font-size: 6.5px;
         font-weight: 600;
     }
@@ -1255,7 +1255,7 @@
         align-items: center;
         min-height: 54px;
         padding: 8px 11px;
-        border-bottom: 1px solid #f0ebe4;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe4);
         content-visibility: auto;
         contain-intrinsic-size: 54px;
     }
@@ -1265,19 +1265,19 @@
     }
 
     .fc-payout-name {
-        color: #514a42;
+        color: var(--sari-dark-e23e64dd1e, #514a42);
         font-size: 7.5px;
         font-weight: 600;
     }
 
     .fc-payout-meta {
         margin-top: 2px;
-        color: #9b9288;
+        color: var(--sari-dark-a63aa16d7c, #9b9288);
         font-size: 6.5px;
     }
 
     .fc-payout-amount {
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 7.5px;
         font-weight: 700;
     }
@@ -1296,7 +1296,7 @@
     .fc-payout-input {
         height: 30px;
         min-width: 120px;
-        border: 1px solid #e5ddd2;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd2);
         border-radius: 7px;
         padding: 0 8px;
         font: inherit;
@@ -1305,11 +1305,11 @@
 
     .fc-action {
         height: 30px;
-        border: 1px solid #e5ddd2;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5ddd2);
         border-radius: 7px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 8px;
-        color: #6f665b;
+        color: var(--sari-dark-a63aa16d7c, #6f665b);
         font: inherit;
         font-size: 6.8px;
         font-weight: 600;
@@ -1317,7 +1317,7 @@
     }
 
     .fc-action:hover {
-        background: #faf8f4;
+        background: var(--sari-dark-950baec030, #faf8f4);
     }
 
     /* ============================================================
@@ -1330,7 +1330,7 @@
         display: none;
         align-items: center;
         justify-content: center;
-        background: rgba(28,24,20,.42);
+        background: var(--sari-dark-416d70b0b2, rgba(28,24,20,.42));
         padding: 14px;
     }
 
@@ -1342,12 +1342,12 @@
         width: min(620px, calc(100vw - 28px));
         max-height: calc(100vh - 28px);
         overflow: hidden;
-        border: 1px solid #dfd8cf;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfd8cf);
         border-radius: 16px;
-        background: #f8f7f4;
+        background: var(--sari-dark-4d21eb669b, #f8f7f4);
         box-shadow:
-            0 24px 64px rgba(31,24,17,.18),
-            0 8px 22px rgba(31,24,17,.07);
+            0 24px 64px var(--sari-dark-3793f9e558, rgba(31,24,17,.18)),
+            0 8px 22px var(--sari-dark-7c935c8886, rgba(31,24,17,.07));
         animation: fcModalIn .18s cubic-bezier(.22,1,.36,1) both;
     }
 
@@ -1363,12 +1363,12 @@
         justify-content: space-between;
         gap: 10px;
         padding: 10px 13px;
-        border-bottom: 1px solid #ebe5dd;
-        background: #fff;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #ebe5dd);
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .fc-modal-title {
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 10.5px;
         font-weight: 700;
     }
@@ -1378,23 +1378,23 @@
         width: 30px;
         height: 30px;
         place-items: center;
-        border: 1px solid #e4ddd4;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4ddd4);
         border-radius: 8px;
-        background: #fff;
-        color: #71685f;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #71685f);
         cursor: pointer;
     }
 
     .fc-modal-close:hover {
-        background: #f7f5f2;
-        color: #332d27;
+        background: var(--sari-dark-4d21eb669b, #f7f5f2);
+        color: var(--sari-dark-e23e64dd1e, #332d27);
     }
 
     .fc-modal-body {
         max-height: calc(100vh - 100px);
         overflow-y: auto;
         padding: 12px 13px 14px;
-        background: #f8f7f4;
+        background: var(--sari-dark-4d21eb669b, #f8f7f4);
         scrollbar-width: thin;
         scrollbar-color: #d0c8be transparent;
     }
@@ -1406,20 +1406,20 @@
     }
 
     .fc-detail-box {
-        border: 1px solid #e7e1d9;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e1d9);
         border-radius: 9px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 9px;
     }
 
     .fc-detail-label {
-        color: #9b9288;
+        color: var(--sari-dark-a63aa16d7c, #9b9288);
         font-size: 6.5px;
     }
 
     .fc-detail-value {
         margin-top: 3px;
-        color: #514a42;
+        color: var(--sari-dark-e23e64dd1e, #514a42);
         font-size: 7.5px;
         font-weight: 600;
         word-break: break-word;
@@ -1435,29 +1435,29 @@
         grid-template-columns: 72px 1fr 100px;
         gap: 8px;
         align-items: center;
-        border: 1px solid #e7e1d9;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e1d9);
         border-radius: 9px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 9px;
         content-visibility: auto;
         contain-intrinsic-size: 58px;
     }
 
     .fc-history-rate {
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 9px;
         font-weight: 700;
     }
 
     .fc-history-copy,
     .fc-history-date {
-        color: #81786d;
+        color: var(--sari-dark-a63aa16d7c, #81786d);
         font-size: 6.5px;
         line-height: 1.45;
     }
 
     .fc-history-date {
-        color: #9b9288;
+        color: var(--sari-dark-a63aa16d7c, #9b9288);
         text-align: right;
     }
 
@@ -1671,7 +1671,7 @@
         height:44px !important;
         flex:0 0 44px !important;
         border-radius:12px !important;
-        box-shadow:0 4px 12px rgba(75,54,25,.045) !important;
+        box-shadow:0 4px 12px var(--sari-dark-1190f58155, rgba(75,54,25,.045)) !important;
     }
 
     .finance-commissions .fc-title-icon svg{
@@ -1680,7 +1680,7 @@
     }
 
     .finance-commissions .fc-eyebrow{
-        color:#9a6f23 !important;
+        color:var(--sari-dark-a63aa16d7c, #9a6f23) !important;
         font-size:8px !important;
         font-weight:700 !important;
         line-height:1.15 !important;
@@ -1696,17 +1696,17 @@
     }
 
     .finance-commissions .fc-title-platform{
-        color:#17130f !important;
+        color:var(--sari-dark-e23e64dd1e, #17130f) !important;
     }
 
     .finance-commissions .fc-title-gold{
-        color:#d99500 !important;
+        color:var(--sari-dark-7f7834ccc9, #d99500) !important;
     }
 
     .finance-commissions .fc-subtitle{
         max-width:760px !important;
         margin-top:7px !important;
-        color:#7f756a !important;
+        color:var(--sari-dark-a63aa16d7c, #7f756a) !important;
         font-size:11px !important;
         font-weight:400 !important;
         line-height:1.5 !important;
@@ -1815,18 +1815,18 @@
        ============================================================ */
 
     .finance-commissions {
-        --fc-shell-line: #e5e7eb;
-        --fc-shell-divider: #eceff2;
-        --fc-shell-canvas: #f4f5f7;
+        --fc-shell-line: var(--sari-dark-d8c2716225, #e5e7eb);
+        --fc-shell-divider: var(--sari-dark-d8c2716225, #eceff2);
+        --fc-shell-canvas: var(--sari-dark-4d21eb669b, #f4f5f7);
         --fc-shell-shadow:
-            0 1px 2px rgba(31, 24, 17, .035),
-            0 8px 24px rgba(31, 24, 17, .055);
+            0 1px 2px var(--sari-dark-7593018246, rgba(31, 24, 17, .035)),
+            0 8px 24px var(--sari-dark-fbd3b3b9f6, rgba(31, 24, 17, .055));
         --fc-shell-shadow-soft:
-            0 1px 2px rgba(31, 24, 17, .025),
-            0 5px 16px rgba(31, 24, 17, .04);
+            0 1px 2px var(--sari-dark-e1384eb7fc, rgba(31, 24, 17, .025)),
+            0 5px 16px var(--sari-dark-25b2da5e49, rgba(31, 24, 17, .04));
         --fc-shell-shadow-modal:
-            0 26px 70px rgba(31, 24, 17, .19),
-            0 10px 28px rgba(31, 24, 17, .08);
+            0 26px 70px var(--sari-dark-ef4e8433d9, rgba(31, 24, 17, .19)),
+            0 10px 28px var(--sari-dark-c33e3d1bb4, rgba(31, 24, 17, .08));
 
         max-width: 1600px !important;
         padding-bottom: 32px !important;
@@ -1852,7 +1852,7 @@
 
     .finance-commissions .fc-eyebrow {
         margin: 0 !important;
-        color: #9a6f23 !important;
+        color: var(--sari-dark-a63aa16d7c, #9a6f23) !important;
         font-size: 8px !important;
         font-weight: 700 !important;
         line-height: 1.15 !important;
@@ -1870,7 +1870,7 @@
     .finance-commissions .fc-subtitle {
         max-width: 820px !important;
         margin-top: 8px !important;
-        color: #7f756a !important;
+        color: var(--sari-dark-a63aa16d7c, #7f756a) !important;
         font-size: 10px !important;
         font-weight: 400 !important;
         line-height: 1.55 !important;
@@ -1889,16 +1889,16 @@
     }
 
     .finance-commissions .fc-date-control {
-        border-color: #e2e5e9 !important;
+        border-color: var(--sari-dark-d8c2716225, #e2e5e9) !important;
         padding-inline: 10px 8px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow: none !important;
     }
 
     .finance-commissions .fc-primary-button {
         padding-inline: 13px !important;
         font-size: 8.5px !important;
-        box-shadow: 0 5px 13px rgba(194, 132, 10, .13) !important;
+        box-shadow: 0 5px 13px var(--sari-dark-3e32d50f5e, rgba(194, 132, 10, .13)) !important;
     }
 
     /* Seller elevation hierarchy: float major surfaces only */
@@ -1906,7 +1906,7 @@
     .finance-commissions .fc-stat-card {
         border-color: var(--fc-shell-line) !important;
         border-radius: 14px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     .finance-commissions .fc-card {
@@ -1922,7 +1922,7 @@
 
     .finance-commissions .fc-stat-card:hover {
         border-color: var(--fc-shell-line) !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow: var(--fc-shell-shadow-soft) !important;
         transform: none !important;
     }
@@ -1941,14 +1941,14 @@
         right: 14px !important;
         width: 32px !important;
         height: 32px !important;
-        border: 1px solid #eceff2 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #eceff2) !important;
         border-radius: 9px !important;
         box-shadow: none !important;
     }
 
     .finance-commissions .fc-stat-label {
         font-size: 8px !important;
-        color: #85807a !important;
+        color: var(--sari-dark-a63aa16d7c, #85807a) !important;
     }
 
     .finance-commissions .fc-stat-value {
@@ -1975,7 +1975,7 @@
 
     .finance-commissions .fc-panel-title {
         font-size: 11px !important;
-        color: #2f2924 !important;
+        color: var(--sari-dark-e23e64dd1e, #2f2924) !important;
     }
 
     .finance-commissions .fc-panel-copy {
@@ -1996,9 +1996,9 @@
     .finance-commissions .fc-range-tab {
         min-width: 36px !important;
         height: 28px !important;
-        border-color: #e3e6ea !important;
+        border-color: var(--sari-dark-d8c2716225, #e3e6ea) !important;
         border-radius: 8px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     .finance-commissions .fc-range-tab.active {
@@ -2012,11 +2012,11 @@
     }
 
     .finance-commissions .fc-chart-tooltip {
-        border-color: #e1e4e8 !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e4e8) !important;
         border-radius: 10px !important;
         box-shadow:
-            0 10px 26px rgba(31, 24, 17, .10),
-            0 2px 7px rgba(31, 24, 17, .04) !important;
+            0 10px 26px var(--sari-dark-8eadf403a5, rgba(31, 24, 17, .10)),
+            0 2px 7px var(--sari-dark-25b2da5e49, rgba(31, 24, 17, .04)) !important;
     }
 
     .finance-commissions .fc-policy-body {
@@ -2024,7 +2024,7 @@
     }
 
     .finance-commissions .fc-history-button {
-        border-color: #e3e6ea !important;
+        border-color: var(--sari-dark-d8c2716225, #e3e6ea) !important;
         border-radius: 9px !important;
     }
 
@@ -2052,8 +2052,8 @@
     .finance-commissions .fc-control,
     .finance-commissions .fc-custom-select-trigger,
     .finance-commissions .fc-filter-reset {
-        border-color: #e2e5e9 !important;
-        background: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #e2e5e9) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow: none !important;
     }
 
@@ -2063,11 +2063,11 @@
     .finance-commissions .fc-payout-input:focus {
         outline: none !important;
         border-color: #d49a2b !important;
-        box-shadow: 0 0 0 3px rgba(217, 149, 0, .075) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-e07575a086, rgba(217, 149, 0, .075)) !important;
     }
 
     .finance-commissions .fc-filter-apply {
-        box-shadow: 0 5px 13px rgba(194, 132, 10, .12) !important;
+        box-shadow: 0 5px 13px var(--sari-dark-3b2338cbf0, rgba(194, 132, 10, .12)) !important;
     }
 
     .finance-commissions .fc-filter-apply:hover {
@@ -2075,11 +2075,11 @@
     }
 
     .finance-commissions .fc-custom-select-menu {
-        border-color: #e1e4e8 !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e4e8) !important;
         border-radius: 10px !important;
         box-shadow:
-            0 15px 34px rgba(31, 24, 17, .11),
-            0 3px 10px rgba(31, 24, 17, .04) !important;
+            0 15px 34px var(--sari-dark-71f44bdb16, rgba(31, 24, 17, .11)),
+            0 3px 10px var(--sari-dark-25b2da5e49, rgba(31, 24, 17, .04)) !important;
     }
 
     /* Ledger */
@@ -2095,27 +2095,27 @@
     .finance-commissions .fc-table th {
         padding: 10px 12px !important;
         border-bottom-color: var(--fc-shell-divider) !important;
-        background: #fafbfc !important;
-        color: #7d776f !important;
+        background: var(--sari-dark-950baec030, #fafbfc) !important;
+        color: var(--sari-dark-a63aa16d7c, #7d776f) !important;
         font-size: 7.5px !important;
         letter-spacing: .05em !important;
     }
 
     .finance-commissions .fc-table td {
         padding: 10px 12px !important;
-        border-bottom-color: #f0f1f3 !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #f0f1f3) !important;
         font-size: 8px !important;
     }
 
     .finance-commissions .fc-table tbody tr:hover {
-        background: #fcfbf9 !important;
+        background: var(--sari-dark-950baec030, #fcfbf9) !important;
     }
 
     .finance-commissions .fc-view-button {
         height: 30px !important;
-        border-color: #e1e4e8 !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e4e8) !important;
         border-radius: 8px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow: none !important;
     }
 
@@ -2123,8 +2123,8 @@
     .finance-commissions .fc-view-button:focus-visible {
         outline: none !important;
         border-color: #e4c77e !important;
-        background: #fff9ef !important;
-        color: #94620a !important;
+        background: var(--sari-dark-950baec030, #fff9ef) !important;
+        color: var(--sari-dark-af18afcaa4, #94620a) !important;
     }
 
     .finance-commissions .fc-table-footer {
@@ -2146,7 +2146,7 @@
 
     .finance-commissions .fc-seller-row,
     .finance-commissions .fc-recent-row {
-        border-color: #f0f1f3 !important;
+        border-color: var(--sari-dark-d8c2716225, #f0f1f3) !important;
     }
 
     .finance-commissions .fc-payout-panel {
@@ -2154,25 +2154,25 @@
     }
 
     .finance-commissions .fc-payout-row {
-        border-bottom-color: #f0f1f3 !important;
+        border-bottom-color: var(--sari-dark-d8c2716225, #f0f1f3) !important;
     }
 
     .finance-commissions .fc-payout-input,
     .finance-commissions .fc-action {
-        border-color: #e2e5e9 !important;
+        border-color: var(--sari-dark-d8c2716225, #e2e5e9) !important;
         border-radius: 8px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     /* Focal finance modals */
     .fc-modal-backdrop {
-        background: rgba(28, 24, 20, .44) !important;
+        background: var(--sari-dark-13762c5eae, rgba(28, 24, 20, .44)) !important;
     }
 
     .fc-modal {
-        border-color: #dfe3e7 !important;
+        border-color: var(--sari-dark-d8c2716225, #dfe3e7) !important;
         border-radius: 16px !important;
-        background: #f7f8f9 !important;
+        background: var(--sari-dark-950baec030, #f7f8f9) !important;
         box-shadow: var(--fc-shell-shadow-modal) !important;
     }
 
@@ -2180,7 +2180,7 @@
         min-height: 58px !important;
         padding: 11px 14px !important;
         border-bottom-color: var(--fc-shell-divider) !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     .fc-modal-title {
@@ -2191,21 +2191,21 @@
     .fc-modal-close {
         width: 30px !important;
         height: 30px !important;
-        border-color: #e1e4e8 !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e4e8) !important;
         border-radius: 8px !important;
         box-shadow: none !important;
     }
 
     .fc-modal-body {
         padding: 14px !important;
-        background: #f7f8f9 !important;
+        background: var(--sari-dark-950baec030, #f7f8f9) !important;
     }
 
     .fc-detail-box,
     .fc-history-row {
-        border-color: #e1e4e8 !important;
+        border-color: var(--sari-dark-d8c2716225, #e1e4e8) !important;
         border-radius: 9px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     /* Keep smaller screens usable without changing finance behavior */
@@ -2280,10 +2280,10 @@
 
     .finance-commissions {
         --users-gold: #D99500;
-        --users-ink: #1F2937;
-        --users-muted: #7C8592;
-        --users-border: #E5E7EB;
-        --users-divider: #EEF0F3;
+        --users-ink: var(--sari-dark-e23e64dd1e, #1F2937);
+        --users-muted: var(--sari-dark-a63aa16d7c, #7C8592);
+        --users-border: var(--sari-dark-d8c2716225, #E5E7EB);
+        --users-divider: var(--sari-dark-d8c2716225, #EEF0F3);
         max-width: 1880px !important;
         padding-bottom: 30px !important;
     }
@@ -2293,7 +2293,7 @@
         align-items: flex-end !important;
         gap: 24px !important;
         padding: 2px 0 18px !important;
-        border-bottom: 1px solid #E7E9EC !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #E7E9EC) !important;
     }
 
     .finance-commissions .fc-title-side {
@@ -2307,7 +2307,7 @@
 
     .finance-commissions .fc-eyebrow {
         margin: 0 0 5px !important;
-        color: #9A6F23 !important;
+        color: var(--sari-dark-a63aa16d7c, #9A6F23) !important;
         font-size: 8px !important;
         font-weight: 700 !important;
         line-height: 1.15 !important;
@@ -2326,7 +2326,7 @@
     .finance-commissions .fc-subtitle {
         max-width: 920px !important;
         margin-top: 7px !important;
-        color: #7F8590 !important;
+        color: var(--sari-dark-a63aa16d7c, #7F8590) !important;
         font-size: 10.5px !important;
         line-height: 1.6 !important;
     }
@@ -2356,24 +2356,24 @@
         overflow: hidden !important;
         border: 1px solid var(--users-border) !important;
         border-radius: 18px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         padding: 17px 64px 16px 18px !important;
         box-shadow:
-            0 1px 2px rgba(17, 24, 39, .025),
-            0 8px 24px rgba(17, 24, 39, .055),
-            0 20px 44px rgba(17, 24, 39, .03) !important;
+            0 1px 2px var(--sari-dark-e1384eb7fc, rgba(17, 24, 39, .025)),
+            0 8px 24px var(--sari-dark-fbd3b3b9f6, rgba(17, 24, 39, .055)),
+            0 20px 44px var(--sari-dark-b13200ac05, rgba(17, 24, 39, .03)) !important;
         transform: none !important;
         contain: paint;
         transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease !important;
     }
 
     .finance-commissions .fc-stat-card:hover {
-        border-color: #DADDE2 !important;
-        background: #FFFFFF !important;
+        border-color: var(--sari-dark-d8c2716225, #DADDE2) !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         box-shadow:
-            0 1px 2px rgba(17, 24, 39, .025),
-            0 10px 27px rgba(17, 24, 39, .065),
-            0 22px 48px rgba(17, 24, 39, .03) !important;
+            0 1px 2px var(--sari-dark-e1384eb7fc, rgba(17, 24, 39, .025)),
+            0 10px 27px var(--sari-dark-4fc908fafe, rgba(17, 24, 39, .065)),
+            0 22px 48px var(--sari-dark-b13200ac05, rgba(17, 24, 39, .03)) !important;
         transform: translateY(-2px) !important;
     }
 
@@ -2382,7 +2382,7 @@
     }
 
     .finance-commissions .fc-stat-label {
-        color: #7D8590 !important;
+        color: var(--sari-dark-a63aa16d7c, #7D8590) !important;
         font-size: 11.5px !important;
         font-weight: 500 !important;
         line-height: 1.35 !important;
@@ -2394,7 +2394,7 @@
     }
 
     .finance-commissions .fc-stat-value {
-        color: #20242B !important;
+        color: var(--sari-dark-e23e64dd1e, #20242B) !important;
         font-size: 26px !important;
         font-weight: 700 !important;
         line-height: 1 !important;
@@ -2403,7 +2403,7 @@
 
     .finance-commissions .fc-stat-help {
         margin-top: 8px !important;
-        color: #98A0AA !important;
+        color: var(--sari-dark-a63aa16d7c, #98A0AA) !important;
         font-size: 9px !important;
         line-height: 1.4 !important;
     }
@@ -2441,19 +2441,19 @@
     }
 
     .finance-commissions .fc-stat-icon.rate {
-        color: #D99500 !important;
+        color: var(--sari-dark-7f7834ccc9, #D99500) !important;
     }
 
     .finance-commissions .fc-stat-icon.orders {
-        color: #2563EB !important;
+        color: var(--sari-dark-8f882a075f, #2563EB) !important;
     }
 
     .finance-commissions .fc-stat-icon.sales {
-        color: #7C3AED !important;
+        color: var(--sari-dark-904a7bfa5a, #7C3AED) !important;
     }
 
     .finance-commissions .fc-stat-icon.earned {
-        color: #16A34A !important;
+        color: var(--sari-dark-bc794282b4, #16A34A) !important;
     }
 
     /* Keep analytics useful but align surface depth/radii with Users. */
@@ -2468,11 +2468,11 @@
     .finance-commissions .fc-payout-panel {
         border: 1px solid var(--users-border) !important;
         border-radius: 18px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         box-shadow:
-            0 1px 2px rgba(17,24,39,.025),
-            0 8px 24px rgba(17,24,39,.05),
-            0 20px 44px rgba(17,24,39,.025) !important;
+            0 1px 2px var(--sari-dark-e1384eb7fc, rgba(17,24,39,.025)),
+            0 8px 24px var(--sari-dark-1df26971b5, rgba(17,24,39,.05)),
+            0 20px 44px var(--sari-dark-e1384eb7fc, rgba(17,24,39,.025)) !important;
     }
 
     /* User Management-style bare filter row instead of an extra filter card. */
@@ -2504,16 +2504,16 @@
     .finance-commissions .fc-control,
     .finance-commissions .fc-custom-select-trigger,
     .finance-commissions .fc-filter-reset {
-        border-color: #E2E5E9 !important;
-        background: #FFFFFF !important;
-        color: #344054 !important;
-        box-shadow: 0 1px 2px rgba(17,24,39,.025) !important;
+        border-color: var(--sari-dark-d8c2716225, #E2E5E9) !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        color: var(--sari-dark-e23e64dd1e, #344054) !important;
+        box-shadow: 0 1px 2px var(--sari-dark-e1384eb7fc, rgba(17,24,39,.025)) !important;
     }
 
     .finance-commissions .fc-filter-apply {
         border-color: #D99500 !important;
         background: #D99500 !important;
-        box-shadow: 0 6px 16px rgba(217,149,0,.14) !important;
+        box-shadow: 0 6px 16px var(--sari-dark-59ed29fe9d, rgba(217,149,0,.14)) !important;
     }
 
     .finance-commissions .fc-filter-apply:hover {
@@ -2528,38 +2528,38 @@
         overflow: hidden !important;
         border: 1px solid var(--users-border) !important;
         border-radius: 18px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
         box-shadow:
-            0 1px 2px rgba(17,24,39,.025),
-            0 9px 26px rgba(17,24,39,.055),
-            0 22px 48px rgba(17,24,39,.025) !important;
+            0 1px 2px var(--sari-dark-e1384eb7fc, rgba(17,24,39,.025)),
+            0 9px 26px var(--sari-dark-fbd3b3b9f6, rgba(17,24,39,.055)),
+            0 22px 48px var(--sari-dark-e1384eb7fc, rgba(17,24,39,.025)) !important;
     }
 
     .finance-commissions .fc-section-head {
         min-height: 66px !important;
         padding: 14px 16px !important;
-        border-bottom: 1px solid #ECEFF2 !important;
-        background: #FFFFFF !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
     }
 
     .finance-commissions .fc-ledger .fc-panel-title {
-        color: #252A32 !important;
+        color: var(--sari-dark-e23e64dd1e, #252A32) !important;
         font-size: 12px !important;
         font-weight: 700 !important;
     }
 
     .finance-commissions .fc-ledger .fc-panel-copy {
         margin-top: 4px !important;
-        color: #98A2B3 !important;
+        color: var(--sari-dark-a63aa16d7c, #98A2B3) !important;
         font-size: 9px !important;
     }
 
     .finance-commissions .fc-link-button {
         min-height: 38px !important;
-        border-color: #E2E5E9 !important;
+        border-color: var(--sari-dark-d8c2716225, #E2E5E9) !important;
         border-radius: 9px !important;
-        background: #FFFFFF !important;
-        color: #667085 !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         box-shadow: none !important;
     }
 
@@ -2568,14 +2568,14 @@
     }
 
     .finance-commissions .fc-table thead {
-        background: #F8FAFC !important;
+        background: var(--sari-dark-950baec030, #F8FAFC) !important;
     }
 
     .finance-commissions .fc-table th {
         padding: 12px 16px !important;
-        border-bottom: 1px solid #ECEFF2 !important;
-        background: #F8FAFC !important;
-        color: #667085 !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
+        background: var(--sari-dark-950baec030, #F8FAFC) !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 10px !important;
         font-weight: 600 !important;
         line-height: 1.35 !important;
@@ -2586,8 +2586,8 @@
 
     .finance-commissions .fc-table td {
         padding: 13px 16px !important;
-        border-bottom: 1px solid #EEF0F3 !important;
-        color: #475467 !important;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #EEF0F3) !important;
+        color: var(--sari-dark-e23e64dd1e, #475467) !important;
         font-size: 10.5px !important;
         line-height: 1.45 !important;
         vertical-align: middle !important;
@@ -2596,16 +2596,16 @@
     .finance-commissions .fc-table tbody tr {
         min-height: 68px !important;
         contain-intrinsic-size: 68px !important;
-        background: #FFFFFF !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
     }
 
     .finance-commissions .fc-table tbody tr:hover {
-        background: #FAFBFC !important;
+        background: var(--sari-dark-950baec030, #FAFBFC) !important;
     }
 
     .finance-commissions .fc-order,
     .finance-commissions .fc-money {
-        color: #252A32 !important;
+        color: var(--sari-dark-e23e64dd1e, #252A32) !important;
         font-size: 11px !important;
         font-weight: 600 !important;
     }
@@ -2631,7 +2631,7 @@
         border: 1px solid transparent !important;
         border-radius: 9px !important;
         background: transparent !important;
-        color: #667085 !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 0 !important;
         box-shadow: none !important;
         position: relative;
@@ -2650,9 +2650,9 @@
     .finance-commissions .fc-view-button:hover,
     .finance-commissions .fc-view-button:focus-visible {
         outline: none !important;
-        border-color: #F0E1BF !important;
-        background: #FFFAF0 !important;
-        color: #D99500 !important;
+        border-color: var(--sari-dark-d8c2716225, #F0E1BF) !important;
+        background: var(--sari-dark-950baec030, #FFFAF0) !important;
+        color: var(--sari-dark-7f7834ccc9, #D99500) !important;
     }
 
     .finance-commissions .fc-view-button:hover::before,
@@ -2664,9 +2664,9 @@
     .finance-commissions .fc-table-footer {
         min-height: 54px !important;
         padding: 11px 16px !important;
-        border-top: 1px solid #ECEFF2 !important;
-        background: #FFFFFF !important;
-        color: #667085 !important;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #ECEFF2) !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 9.5px !important;
     }
 
@@ -2677,10 +2677,10 @@
     .finance-commissions .fc-page-link {
         min-width: 32px !important;
         height: 32px !important;
-        border-color: #E2E5E9 !important;
+        border-color: var(--sari-dark-d8c2716225, #E2E5E9) !important;
         border-radius: 9px !important;
-        background: #FFFFFF !important;
-        color: #667085 !important;
+        background: var(--sari-dark-950baec030, #FFFFFF) !important;
+        color: var(--sari-dark-a63aa16d7c, #667085) !important;
         font-size: 9px !important;
     }
 
@@ -2688,7 +2688,7 @@
         border-color: #D99500 !important;
         background: #D99500 !important;
         color: #FFFFFF !important;
-        box-shadow: 0 6px 16px rgba(217,149,0,.14) !important;
+        box-shadow: 0 6px 16px var(--sari-dark-59ed29fe9d, rgba(217,149,0,.14)) !important;
     }
 
     @media (max-width: 1250px) {
@@ -2763,12 +2763,12 @@
     .finance-commissions {
         --fc-brand: #c88912;
         --fc-brand-strong: #a96d08;
-        --fc-ink: #29323b;
-        --fc-text: #4c545e;
-        --fc-muted: #707b86;
-        --fc-line: #e5e7eb;
-        --fc-surface-shadow: 0 2px 5px rgba(15,23,42,.045), 0 10px 24px rgba(15,23,42,.075), 0 24px 54px rgba(15,23,42,.095), inset 0 1px 0 rgba(255,255,255,.92);
-        --fc-surface-shadow-mobile: 0 2px 4px rgba(15,23,42,.035), 0 8px 18px rgba(15,23,42,.06), 0 18px 38px rgba(15,23,42,.07);
+        --fc-ink: var(--sari-dark-e23e64dd1e, #29323b);
+        --fc-text: var(--sari-dark-e23e64dd1e, #4c545e);
+        --fc-muted: var(--sari-dark-a63aa16d7c, #707b86);
+        --fc-line: var(--sari-dark-d8c2716225, #e5e7eb);
+        --fc-surface-shadow: 0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)), 0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)), 0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)), inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
+        --fc-surface-shadow-mobile: 0 2px 4px var(--sari-dark-7593018246, rgba(15,23,42,.035)), 0 8px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)), 0 18px 38px var(--sari-dark-7c935c8886, rgba(15,23,42,.07));
         width: 100%;
         max-width: 1640px !important;
         min-width: 0;
@@ -2782,11 +2782,11 @@
         min-width: 0;
         border: 1px solid var(--fc-line) !important;
         border-radius: 17px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow: var(--fc-surface-shadow) !important;
     }
     .finance-commissions .fc-stat-card:hover {
-        border-color: #d5dbe0 !important;
+        border-color: var(--sari-dark-d8c2716225, #d5dbe0) !important;
         box-shadow: var(--fc-surface-shadow) !important;
         transform: none !important;
     }
@@ -2798,7 +2798,7 @@
     }
     .finance-commissions .fc-eyebrow {
         margin: 0 !important;
-        color: #a87316 !important;
+        color: var(--sari-dark-685eb4fc40, #a87316) !important;
         font-size: 10.5px !important;
         font-weight: 800 !important;
         line-height: 1.2 !important;
@@ -2810,12 +2810,12 @@
         line-height: 1.04 !important;
         letter-spacing: -.035em !important;
     }
-    .finance-commissions .fc-title-platform { color: #2e343b !important; }
-    .finance-commissions .fc-title-gold { color: #c88912 !important; }
+    .finance-commissions .fc-title-platform { color: var(--sari-dark-e23e64dd1e, #2e343b) !important; }
+    .finance-commissions .fc-title-gold { color: var(--sari-dark-19b301f69a, #c88912) !important; }
     .finance-commissions .fc-subtitle {
         max-width: 760px !important;
         margin-top: 7px !important;
-        color: #707b86 !important;
+        color: var(--sari-dark-a63aa16d7c, #707b86) !important;
         font-size: 11.5px !important;
         line-height: 1.55 !important;
     }
@@ -2823,8 +2823,8 @@
     .finance-commissions .fc-date-control {
         min-height: 42px !important;
         height: auto !important;
-        border-color: #dfe3e8 !important;
-        background: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #dfe3e8) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
     .finance-commissions .fc-date-control input { width: 122px !important; font-size: 11px !important; }
     .finance-commissions .fc-date-arrow { font-size: 11px; }
@@ -2840,7 +2840,7 @@
     .finance-commissions :is(.fc-primary-button,.fc-filter-apply) {
         border-color: var(--fc-brand) !important;
         background: var(--fc-brand) !important;
-        box-shadow: 0 6px 16px rgba(201,132,8,.14) !important;
+        box-shadow: 0 6px 16px var(--sari-dark-59ed29fe9d, rgba(201,132,8,.14)) !important;
     }
     .finance-commissions :is(.fc-primary-button,.fc-filter-apply):hover {
         border-color: var(--fc-brand-strong) !important;
@@ -2853,18 +2853,18 @@
     .finance-commissions :is(.fc-summary-grid,.fc-analytics-grid,.fc-bottom-grid) { gap: 18px !important; margin-top: 18px !important; }
     .finance-commissions .fc-stat-card { min-height: 110px !important; padding: 17px 52px 16px 18px !important; contain: none; }
     .finance-commissions .fc-stat-inner { min-height: 76px !important; }
-    .finance-commissions .fc-stat-label { color: #707b86 !important; font-size: 11.5px !important; }
+    .finance-commissions .fc-stat-label { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 11.5px !important; }
     .finance-commissions .fc-stat-row { gap: 7px !important; margin-top: 7px !important; }
-    .finance-commissions .fc-stat-value { color: #29323b !important; font-size: clamp(22px,1.6vw,26px) !important; line-height: 1.2 !important; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
-    .finance-commissions .fc-stat-help { color: #707b86 !important; font-size: 10.5px !important; margin-top: 7px !important; }
+    .finance-commissions .fc-stat-value { color: var(--sari-dark-e23e64dd1e, #29323b) !important; font-size: clamp(22px,1.6vw,26px) !important; line-height: 1.2 !important; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+    .finance-commissions .fc-stat-help { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10.5px !important; margin-top: 7px !important; }
     .finance-commissions .fc-delta { min-height: 23px !important; font-size: 9px !important; }
     .finance-commissions .fc-stat-icon { top: 17px !important; right: 15px !important; width: 26px !important; height: 26px !important; }
     .finance-commissions .fc-stat-icon svg { width: 22px !important; height: 22px !important; }
     .finance-commissions :is(.fc-chart-panel,.fc-policy-panel,.fc-bottom-card) { padding: 18px !important; }
     .finance-commissions :is(.fc-chart-panel,.fc-policy-panel) { min-height: 310px !important; }
     .finance-commissions .fc-analytics-grid { grid-template-columns: minmax(0,1.5fr) minmax(350px,1fr); }
-    .finance-commissions .fc-panel-title { color: #29323b !important; font-size: 14px !important; font-weight: 750 !important; line-height: 1.35; }
-    .finance-commissions .fc-panel-copy { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.55; }
+    .finance-commissions .fc-panel-title { color: var(--sari-dark-e23e64dd1e, #29323b) !important; font-size: 14px !important; font-weight: 750 !important; line-height: 1.35; }
+    .finance-commissions .fc-panel-copy { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10.5px !important; line-height: 1.55; }
     .finance-commissions .fc-panel-head { flex-wrap: wrap; }
     .finance-commissions .fc-range-tabs { flex-wrap: wrap; gap: 5px; }
     .finance-commissions .fc-range-tab { min-width: 36px !important; height: 30px !important; font-size: 10px; }
@@ -2873,8 +2873,8 @@
     .finance-commissions .fc-history-button { min-height: 38px; margin-top: 15px; }
     .finance-commissions .fc-policy-body { gap: 16px; margin-top: 18px !important; }
     .finance-commissions .fc-policy-list { gap: 10px; }
-    .finance-commissions .fc-policy-label { color: #707b86; font-size: 10px; }
-    .finance-commissions .fc-policy-value { color: #4c545e; font-size: 11px; }
+    .finance-commissions .fc-policy-label { color: var(--sari-dark-a63aa16d7c, #707b86); font-size: 10px; }
+    .finance-commissions .fc-policy-value { color: var(--sari-dark-e23e64dd1e, #4c545e); font-size: 11px; }
     .finance-commissions .fc-policy-item-icon svg { width: 15px; height: 15px; }
     .finance-commissions :is(.fc-rate-label,.fc-status-caption) { font-size: 10px; }
     .finance-commissions .fc-chart-tooltip small { font-size: 10.5px; }
@@ -2895,71 +2895,71 @@
         align-items: end;
         gap: 10px !important;
     }
-    .finance-commissions .fc-filter-label { display: block; margin-bottom: 6px; color: #4b5560; font-size: 11px; font-weight: 750; letter-spacing: .045em; line-height: 1.3; }
-    .finance-commissions .fc-search > svg { top: auto; bottom: 13px; width: 16px; height: 16px; transform: none; color: #596470; }
+    .finance-commissions .fc-filter-label { display: block; margin-bottom: 6px; color: var(--sari-dark-e23e64dd1e, #4b5560); font-size: 11px; font-weight: 750; letter-spacing: .045em; line-height: 1.3; }
+    .finance-commissions .fc-search > svg { top: auto; bottom: 13px; width: 16px; height: 16px; transform: none; color: var(--sari-dark-a63aa16d7c, #596470); }
     .finance-commissions :is(.fc-control,.fc-custom-select-trigger) {
         min-width: 0;
         min-height: 42px !important;
         height: 42px !important;
-        border: 1px solid #dfe3e8 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8) !important;
         border-radius: 9px !important;
-        background: #fff !important;
-        color: #333d47 !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-e23e64dd1e, #333d47) !important;
         font-size: 12px !important;
         font-weight: 550 !important;
         box-shadow: none !important;
     }
     .finance-commissions .fc-control { padding-inline: 11px; }
     .finance-commissions .fc-search .fc-control { padding-left: 37px; padding-right: 12px; }
-    .finance-commissions .fc-control::placeholder { color: #79838e; font-size: 11.5px; opacity: 1; }
-    .finance-commissions .fc-search .fc-control:focus { border-color: #9faab5 !important; box-shadow: 0 0 0 3px rgba(75,85,99,.10) !important; }
+    .finance-commissions .fc-control::placeholder { color: var(--sari-dark-a63aa16d7c, #79838e); font-size: 11.5px; opacity: 1; }
+    .finance-commissions .fc-search .fc-control:focus { border-color: var(--sari-dark-d8c2716225, #9faab5) !important; box-shadow: 0 0 0 3px var(--sari-dark-8eadf403a5, rgba(75,85,99,.10)) !important; }
     .finance-commissions .fc-custom-select-trigger { padding-inline: 12px; font-weight: 650 !important; }
     .finance-commissions .fc-custom-select-main { min-width: 0; }
-    .finance-commissions .fc-custom-select-chevron { width: 14px; height: 14px; flex-basis: 14px; color: #596470; }
+    .finance-commissions .fc-custom-select-chevron { width: 14px; height: 14px; flex-basis: 14px; color: var(--sari-dark-a63aa16d7c, #596470); }
     .finance-commissions .fc-custom-select-menu {
         top: calc(100% + 6px);
         max-height: 270px;
         padding: 5px;
-        border: 1px solid #e1e5e9 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e5e9) !important;
         border-radius: 12px !important;
-        box-shadow: 0 18px 42px rgba(31,41,55,.13), 0 4px 12px rgba(31,41,55,.04) !important;
+        box-shadow: 0 18px 42px var(--sari-dark-3e32d50f5e, rgba(31,41,55,.13)), 0 4px 12px var(--sari-dark-25b2da5e49, rgba(31,41,55,.04)) !important;
     }
-    .finance-commissions .fc-custom-select-option { min-height: 39px; padding: 7px 10px; border-radius: 8px; color: #4c545e; font-size: 11.5px; line-height: 1.4; }
-    .finance-commissions .fc-custom-select-option:hover { background: #f5f6f8; color: #22282f; }
-    .finance-commissions .fc-custom-select-option.is-selected { background: #f7f3eb; color: #8e5d0e; font-weight: 700; }
+    .finance-commissions .fc-custom-select-option { min-height: 39px; padding: 7px 10px; border-radius: 8px; color: var(--sari-dark-e23e64dd1e, #4c545e); font-size: 11.5px; line-height: 1.4; }
+    .finance-commissions .fc-custom-select-option:hover { background: var(--sari-dark-950baec030, #f5f6f8); color: var(--sari-dark-e23e64dd1e, #22282f); }
+    .finance-commissions .fc-custom-select-option.is-selected { background: var(--sari-dark-4d21eb669b, #f7f3eb); color: var(--sari-dark-9b2ca2d764, #8e5d0e); font-weight: 700; }
     .finance-commissions .fc-custom-select-check { width: 14px; height: 14px; flex-basis: 14px; }
     .finance-commissions .fc-filter-dates { gap: 8px; min-width: 0; }
     .finance-commissions .fc-date-field { min-width: 0; }
-    .finance-commissions .fc-filter-reset { color: #865709 !important; border-color: transparent !important; background: transparent !important; box-shadow: none !important; }
-    .finance-commissions .fc-filter-reset:hover { color: #c88912 !important; }
+    .finance-commissions .fc-filter-reset { color: var(--sari-dark-9b2ca2d764, #865709) !important; border-color: transparent !important; background: transparent !important; box-shadow: none !important; }
+    .finance-commissions .fc-filter-reset:hover { color: var(--sari-dark-19b301f69a, #c88912) !important; }
     /* Ledger and selection controls. */
     .finance-commissions .fc-ledger { margin-top: 18px !important; }
     .finance-commissions .fc-section-head { min-height: 72px !important; padding: 16px 18px !important; flex-wrap: wrap; gap: 12px; }
     .finance-commissions .fc-ledger .fc-panel-title { font-size: 14px !important; }
-    .finance-commissions .fc-ledger .fc-panel-copy { color: #707b86 !important; font-size: 10.5px !important; }
+    .finance-commissions .fc-ledger .fc-panel-copy { color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 10.5px !important; }
     .finance-commissions .fc-ledger-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
-    .finance-commissions .fc-selection-summary { display: flex; align-items: center; gap: 9px; color: #707b86; font-size: 11px; }
+    .finance-commissions .fc-selection-summary { display: flex; align-items: center; gap: 9px; color: var(--sari-dark-a63aa16d7c, #707b86); font-size: 11px; }
     .finance-commissions .fc-selection-summary[hidden] { display: none; }
-    .finance-commissions .fc-selection-clear { border: 0; background: transparent; color: #9b6710; padding: 5px; font-size: 11px; font-weight: 650; cursor: pointer; }
+    .finance-commissions .fc-selection-clear { border: 0; background: transparent; color: var(--sari-dark-6e784b4931, #9b6710); padding: 5px; font-size: 11px; font-weight: 650; cursor: pointer; }
     .finance-commissions .fc-table-wrap { max-width: 100%; scrollbar-width: thin; scrollbar-color: #d9dde2 transparent; }
     .finance-commissions .fc-table { min-width: 1120px !important; }
-    .finance-commissions .fc-table th { padding: 12px 14px !important; background: #f8fafc !important; color: #667085 !important; font-size: 10.5px !important; font-weight: 650 !important; letter-spacing: .045em !important; }
-    .finance-commissions .fc-table td { padding: 14px !important; color: #4c545e !important; font-size: 12px !important; line-height: 1.5 !important; }
-    .finance-commissions .fc-table tbody tr { content-visibility: visible; contain-intrinsic-size: none !important; background: #fff !important; }
-    .finance-commissions .fc-table tbody tr:hover { background: #fafbfc !important; }
-    .finance-commissions .fc-table tbody tr.fc-row-selected { background: #fff9ed !important; }
+    .finance-commissions .fc-table th { padding: 12px 14px !important; background: var(--sari-dark-950baec030, #f8fafc) !important; color: var(--sari-dark-a63aa16d7c, #667085) !important; font-size: 10.5px !important; font-weight: 650 !important; letter-spacing: .045em !important; }
+    .finance-commissions .fc-table td { padding: 14px !important; color: var(--sari-dark-e23e64dd1e, #4c545e) !important; font-size: 12px !important; line-height: 1.5 !important; }
+    .finance-commissions .fc-table tbody tr { content-visibility: visible; contain-intrinsic-size: none !important; background: var(--sari-dark-950baec030, #fff) !important; }
+    .finance-commissions .fc-table tbody tr:hover { background: var(--sari-dark-950baec030, #fafbfc) !important; }
+    .finance-commissions .fc-table tbody tr.fc-row-selected { background: var(--sari-dark-4d21eb669b, #fff9ed) !important; }
     .finance-commissions .fc-table .fc-check-cell { width: 42px; padding-right: 2px !important; }
     .finance-commissions .fc-checkbox { display: block; width: 16px; height: 16px; margin: 0; accent-color: var(--fc-brand); cursor: pointer; }
     .finance-commissions .fc-checkbox:disabled { cursor: default; opacity: .45; }
-    .finance-commissions :is(.fc-order,.fc-money) { color: #29323b !important; font-size: 12px !important; font-weight: 650 !important; font-variant-numeric: tabular-nums; }
+    .finance-commissions :is(.fc-order,.fc-money) { color: var(--sari-dark-e23e64dd1e, #29323b) !important; font-size: 12px !important; font-weight: 650 !important; font-variant-numeric: tabular-nums; }
     .finance-commissions .fc-status { min-height: 26px !important; font-size: 10.5px !important; padding: 3px 9px !important; white-space: nowrap; }
     .finance-commissions .fc-view-button { width: 34px !important; height: 34px !important; }
     .finance-commissions .fc-view-button::before { width: 16px; height: 16px; background-size: 16px; }
-    .finance-commissions .fc-table-footer { min-height: 60px !important; padding: 13px 18px !important; color: #707b86 !important; font-size: 11px !important; flex-wrap: wrap; }
+    .finance-commissions .fc-table-footer { min-height: 60px !important; padding: 13px 18px !important; color: var(--sari-dark-a63aa16d7c, #707b86) !important; font-size: 11px !important; flex-wrap: wrap; }
     .finance-commissions .fc-pagination { flex-wrap: wrap; gap: 6px !important; }
     .finance-commissions .fc-page-link { min-width: 34px !important; height: 34px !important; padding-inline: 6px; font-size: 11px !important; }
     .finance-commissions .fc-page-link.active { background: var(--fc-brand) !important; border-color: var(--fc-brand) !important; box-shadow: none !important; }
-    .finance-commissions .fc-page-link:not(.active):not(.disabled):hover { background: #f7f3eb !important; border-color: #dbc18a !important; }
+    .finance-commissions .fc-page-link:not(.active):not(.disabled):hover { background: var(--sari-dark-4d21eb669b, #f7f3eb) !important; border-color: #dbc18a !important; }
     /* Supporting panels use the same readable typography. */
     .finance-commissions .fc-bottom-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
     .finance-commissions .fc-bottom-card:last-child { grid-column: 1 / -1; }
@@ -2983,13 +2983,13 @@
     .finance-commissions .fc-payout-actions form { min-width: 0; flex-wrap: wrap; }
     /* Modals are siblings of the page wrapper, so use explicit values. */
     .fc-modal-backdrop :is(.fc-modal,.fc-modal-title,.fc-panel-copy,.fc-detail-box,.fc-history-row) { font-family: 'Poppins',ui-sans-serif,system-ui,sans-serif; }
-    .fc-modal-backdrop .fc-modal { border-radius: 17px !important; box-shadow: 0 26px 70px rgba(31,24,17,.19),0 10px 28px rgba(31,24,17,.08) !important; }
-    .fc-modal-backdrop .fc-modal-head { padding: 16px 18px !important; border-bottom-color: #eceff2 !important; }
+    .fc-modal-backdrop .fc-modal { border-radius: 17px !important; box-shadow: 0 26px 70px var(--sari-dark-ef4e8433d9, rgba(31,24,17,.19)),0 10px 28px var(--sari-dark-c33e3d1bb4, rgba(31,24,17,.08)) !important; }
+    .fc-modal-backdrop .fc-modal-head { padding: 16px 18px !important; border-bottom-color: var(--sari-dark-d8c2716225, #eceff2) !important; }
     .fc-modal-backdrop .fc-modal-title { font-size: 15px !important; }
-    .fc-modal-backdrop .fc-panel-copy { font-size: 11px; color: #707b86; }
+    .fc-modal-backdrop .fc-panel-copy { font-size: 11px; color: var(--sari-dark-a63aa16d7c, #707b86); }
     .fc-modal-backdrop .fc-modal-body { padding: 18px !important; }
     .fc-modal-backdrop :is(.fc-detail-box,.fc-history-row) { padding: 12px; }
-    .fc-modal-backdrop .fc-detail-label { font-size: 10.5px; color: #707b86; }
+    .fc-modal-backdrop .fc-detail-label { font-size: 10.5px; color: var(--sari-dark-a63aa16d7c, #707b86); }
     .fc-modal-backdrop .fc-detail-value { font-size: 12px; }
     .fc-modal-backdrop .fc-history-rate { font-size: 13px; }
     .fc-modal-backdrop :is(.fc-history-copy,.fc-history-date) { font-size: 10.5px; }
@@ -3089,7 +3089,7 @@
 
 <div class="finance-commissions">
     @if(session('success'))
-        <div class="fc-card" style="margin-bottom:12px;padding:10px 12px;border-color:#d7eadf;background:#f4fbf6;color:#356b50;font-size:8px;">
+        <div class="fc-card" style="margin-bottom:12px;padding:10px 12px;border-color:var(--sari-dark-d8c2716225, #d7eadf);background:var(--sari-dark-950baec030, #f4fbf6);color:var(--sari-dark-e23e64dd1e, #356b50);font-size:8px;">
             {{ session('success') }}
         </div>
     @endif
@@ -3208,7 +3208,7 @@
                 </div>
             @else
                 <div class="fc-chart-empty">
-                    <div><strong style="color:#475467;">No commission activity in this period.</strong><br>Paid and delivered orders will appear here automatically.</div>
+                    <div><strong style="color:var(--sari-dark-e23e64dd1e, #475467);">No commission activity in this period.</strong><br>Paid and delivered orders will appear here automatically.</div>
                 </div>
             @endif
         </article>

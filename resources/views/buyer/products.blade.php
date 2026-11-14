@@ -16,12 +16,12 @@
     .sari-products-page {
         --sari-gold: #cd890b;
         --sari-gold-dark: #a96d08;
-        --sari-cream: #fff8eb;
+        --sari-cream: var(--sari-dark-4d21eb669b, #fff8eb);
         --sari-soft: #fbfaf8;
-        --sari-border: #e9e3db;
-        --sari-text: #211c18;
-        --sari-muted: #81786f;
-        background: #fbfaf8;
+        --sari-border: var(--sari-dark-d8c2716225, #e9e3db);
+        --sari-text: var(--sari-dark-e23e64dd1e, #211c18);
+        --sari-muted: var(--sari-dark-a63aa16d7c, #81786f);
+        background: var(--sari-dark-950baec030, #fbfaf8);
         color: var(--sari-text);
     }
 
@@ -36,7 +36,7 @@
     ============================================================ */
     .sari-products-hero {
         padding: 6px 2px 18px;
-        border-bottom: 1px solid #eee8e1;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8e1);
     }
 /* ============================================================
        ADMIN CAMPAIGN SPOTLIGHT
@@ -48,7 +48,7 @@
         border: 1px solid rgba(103, 28, 18, .20);
         border-radius: 17px;
         background: #731d14;
-        box-shadow: 0 12px 28px rgba(79, 28, 19, .12);
+        box-shadow: 0 12px 28px var(--sari-dark-3b2338cbf0, rgba(79, 28, 19, .12));
     }
 
     .sari-campaign-slide {
@@ -63,11 +63,11 @@
     }
 
     .sari-campaign-slide[data-theme="green"] {
-        background: #173f32;
+        background: var(--sari-dark-fbb35de0d1, #173f32);
     }
 
     .sari-campaign-slide[data-theme="charcoal"] {
-        background: #292621;
+        background: var(--sari-dark-fbb35de0d1, #292621);
     }
 
     .sari-campaign-slide[data-theme="rose"] {
@@ -90,8 +90,8 @@
         top: -105px;
         border: 1px solid rgba(255, 219, 126, .18);
         box-shadow:
-            0 0 0 22px rgba(255, 220, 129, .035),
-            0 0 0 44px rgba(255, 220, 129, .022);
+            0 0 0 22px var(--sari-dark-e1384eb7fc, rgba(255, 220, 129, .035)),
+            0 0 0 44px var(--sari-dark-104df339cd, rgba(255, 220, 129, .022));
     }
 
     .sari-campaign-slide::after {
@@ -99,7 +99,7 @@
         height: 170px;
         left: 32%;
         bottom: -125px;
-        border: 1px solid rgba(255, 255, 255, .08);
+        border: 1px solid var(--sari-dark-6da278ba55, rgba(255, 255, 255, .08));
     }
 
     .sari-campaign-content {
@@ -118,7 +118,7 @@
         gap: 7px;
         border: 1px solid rgba(255, 224, 149, .35);
         border-radius: 999px;
-        background: rgba(255, 255, 255, .09);
+        background: var(--sari-dark-30bd406a14, rgba(255, 255, 255, .09));
         padding: 0 10px;
         color: #ffe4a0;
         font-size: 6.8px;
@@ -153,7 +153,7 @@
     }
 
     .sari-campaign-offer {
-        border-left: 1px solid rgba(255,255,255,.18);
+        border-left: 1px solid var(--sari-dark-ab70a14a3e, rgba(255,255,255,.18));
         padding-left: 24px;
     }
 
@@ -187,7 +187,7 @@
         gap: 5px;
         border: 1px solid rgba(255, 224, 149, .25);
         border-radius: 999px;
-        background: rgba(255,255,255,.07);
+        background: var(--sari-dark-56adac4dda, rgba(255,255,255,.07));
         padding: 0 9px;
         color: rgba(255,255,255,.90);
         font-size: 6.2px;
@@ -203,9 +203,9 @@
 
     .sari-countdown-box {
         min-width: 44px;
-        border: 1px solid rgba(255,255,255,.13);
+        border: 1px solid var(--sari-dark-70334c7f17, rgba(255,255,255,.13));
         border-radius: 8px;
-        background: rgba(0,0,0,.13);
+        background: var(--sari-dark-e832c3023b, rgba(0,0,0,.13));
         padding: 6px 7px;
         text-align: center;
     }
@@ -236,7 +236,7 @@
         position: absolute;
         border-radius: 8px;
         background: #9f281c;
-        box-shadow: 0 12px 24px rgba(32,8,4,.22);
+        box-shadow: 0 12px 24px var(--sari-dark-e267f3cebc, rgba(32,8,4,.22));
     }
 
     .sari-campaign-slide[data-theme="green"] .sari-campaign-gift {
@@ -244,7 +244,7 @@
     }
 
     .sari-campaign-slide[data-theme="charcoal"] .sari-campaign-gift {
-        background: #4b463f;
+        background: var(--sari-dark-fbb35de0d1, #4b463f);
     }
 
     .sari-campaign-slide[data-theme="rose"] .sari-campaign-gift {
@@ -305,14 +305,14 @@
         max-width: 125px;
         transform: rotate(7deg);
         border-radius: 8px;
-        background: #f7e4bb;
+        background: var(--sari-dark-a19bde6a70, #f7e4bb);
         padding: 11px 13px;
-        color: #4d3321;
+        color: var(--sari-dark-e23e64dd1e, #4d3321);
         font-size: 8px;
         font-weight: 750;
         line-height: 1.35;
         text-align: center;
-        box-shadow: 0 8px 20px rgba(32,8,4,.15);
+        box-shadow: 0 8px 20px var(--sari-dark-f4efbbfaa5, rgba(32,8,4,.15));
     }
 
     .sari-campaign-cta {
@@ -326,12 +326,12 @@
         justify-content: center;
         gap: 8px;
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 17px;
-        color: #9a4f15;
+        color: var(--sari-dark-c62d3a8937, #9a4f15);
         font-size: 7.5px;
         font-weight: 800;
-        box-shadow: 0 6px 16px rgba(31,9,4,.15);
+        box-shadow: 0 6px 16px var(--sari-dark-f4efbbfaa5, rgba(31,9,4,.15));
         transition: transform .15s ease;
     }
 
@@ -355,9 +355,9 @@
         transform: translateY(-50%);
         place-items: center;
         border-radius: 999px;
-        background: rgba(255,255,255,.95);
-        color: #6e6257;
-        box-shadow: 0 4px 12px rgba(26,10,5,.14);
+        background: var(--sari-dark-ff55c56e19, rgba(255,255,255,.95));
+        color: var(--sari-dark-a63aa16d7c, #6e6257);
+        box-shadow: 0 4px 12px var(--sari-dark-59ed29fe9d, rgba(26,10,5,.14));
         pointer-events: auto;
     }
 
@@ -378,7 +378,7 @@
         width: 6px;
         height: 6px;
         border-radius: 999px;
-        background: rgba(255,255,255,.35);
+        background: var(--sari-dark-09ef87e90f, rgba(255,255,255,.35));
     }
 
     .sari-campaign-dot.is-active {
@@ -414,11 +414,11 @@
         position: relative;
         z-index: 45;
         margin-top: 14px;
-        border: 1px solid #e7e1da;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e1da);
         border-radius: 15px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 11px 13px;
-        box-shadow: 0 9px 24px rgba(43,34,24,.042);
+        box-shadow: 0 9px 24px var(--sari-dark-6301903fc7, rgba(43,34,24,.042));
     }
 
     .sari-filter-grid {
@@ -438,7 +438,7 @@
     .sari-filter-label {
         display: block;
         margin-bottom: 5px;
-        color: #665d54;
+        color: var(--sari-dark-a63aa16d7c, #665d54);
         font-size: 6.4px;
         font-weight: 800;
         letter-spacing: .08em;
@@ -448,10 +448,10 @@
     .sari-filter-control {
         height: 40px;
         width: 100%;
-        border: 1px solid #ddd7d0;
+        border: 1px solid var(--sari-dark-d8c2716225, #ddd7d0);
         border-radius: 9px;
-        background: #fff;
-        color: #50483f;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #50483f);
         font-size: 8px;
         font-weight: 550;
         outline: none;
@@ -460,7 +460,7 @@
 
     .sari-filter-control:focus {
         border-color: #ca8b17;
-        box-shadow: 0 0 0 3px rgba(202,139,23,.08);
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(202,139,23,.08));
     }
 
     .sari-products-select {
@@ -482,7 +482,7 @@
         bottom: 12px;
         width: 15px;
         height: 15px;
-        color: #9a9188;
+        color: var(--sari-dark-a63aa16d7c, #9a9188);
         pointer-events: none;
     }
 
@@ -499,7 +499,7 @@
         height: 26px;
         place-items: center;
         border-radius: 7px;
-        color: #8c8278;
+        color: var(--sari-dark-a63aa16d7c, #8c8278);
     }
 
     .sari-live-search-clear.is-visible {
@@ -513,12 +513,12 @@
         top: calc(100% + 8px);
         z-index: 100;
         overflow: hidden;
-        border: 1px solid #e4ded7;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4ded7);
         border-radius: 13px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         box-shadow:
-            0 20px 48px rgba(39,31,23,.14),
-            0 4px 12px rgba(39,31,23,.04);
+            0 20px 48px var(--sari-dark-59ed29fe9d, rgba(39,31,23,.14)),
+            0 4px 12px var(--sari-dark-25b2da5e49, rgba(39,31,23,.04));
     }
 
     .sari-live-search-head {
@@ -527,13 +527,13 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        border-bottom: 1px solid #f0ebe5;
-        background: #fffdfa;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #f0ebe5);
+        background: var(--sari-dark-950baec030, #fffdfa);
         padding: 0 11px;
     }
 
     .sari-live-search-head strong {
-        color: #514940;
+        color: var(--sari-dark-e23e64dd1e, #514940);
         font-size: 6.8px;
         font-weight: 800;
         letter-spacing: .07em;
@@ -541,7 +541,7 @@
     }
 
     .sari-live-search-head span {
-        color: #9b9288;
+        color: var(--sari-dark-a63aa16d7c, #9b9288);
         font-size: 6.3px;
         font-weight: 600;
     }
@@ -568,7 +568,7 @@
 
     .sari-live-result:hover,
     .sari-live-result.is-active {
-        background: #fff8eb;
+        background: var(--sari-dark-4d21eb669b, #fff8eb);
     }
 
     .sari-live-result-image {
@@ -578,10 +578,10 @@
         flex: 0 0 auto;
         place-items: center;
         overflow: hidden;
-        border: 1px solid #e7e1d9;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e1d9);
         border-radius: 8px;
-        background: #f6f3ee;
-        color: #aaa198;
+        background: var(--sari-dark-4d21eb669b, #f6f3ee);
+        color: var(--sari-dark-a63aa16d7c, #aaa198);
     }
 
     .sari-live-result-image img {
@@ -598,7 +598,7 @@
     .sari-live-result-name {
         display: block;
         overflow: hidden;
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
         font-size: 8.2px;
         font-weight: 750;
         text-overflow: ellipsis;
@@ -612,7 +612,7 @@
         align-items: center;
         gap: 5px;
         margin-top: 3px;
-        color: #948b82;
+        color: var(--sari-dark-a63aa16d7c, #948b82);
         font-size: 6.2px;
     }
 
@@ -620,7 +620,7 @@
         display: inline-flex;
         align-items: center;
         gap: 4px;
-        color: #4f8065;
+        color: var(--sari-dark-a63aa16d7c, #4f8065);
     }
 
     .sari-live-result-stock::before {
@@ -632,7 +632,7 @@
     }
 
     .sari-live-result-stock.is-out {
-        color: #bd5555;
+        color: var(--sari-dark-2a778702e9, #bd5555);
     }
 
     .sari-live-result-stock.is-out::before {
@@ -641,7 +641,7 @@
 
     .sari-live-result-price {
         flex: 0 0 auto;
-        color: #bf7b08;
+        color: var(--sari-dark-6e784b4931, #bf7b08);
         font-size: 7.8px;
         font-weight: 800;
         white-space: nowrap;
@@ -654,14 +654,14 @@
 
     .sari-live-search-empty strong {
         display: block;
-        color: #5f574f;
+        color: var(--sari-dark-e23e64dd1e, #5f574f);
         font-size: 8px;
         font-weight: 750;
     }
 
     .sari-live-search-empty p {
         margin-top: 4px;
-        color: #9b9288;
+        color: var(--sari-dark-a63aa16d7c, #9b9288);
         font-size: 6.5px;
         line-height: 1.5;
     }
@@ -673,10 +673,10 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        border-top: 1px solid #eee9e3;
-        background: #fffdfa;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee9e3);
+        background: var(--sari-dark-950baec030, #fffdfa);
         padding: 0 11px;
-        color: #996414;
+        color: var(--sari-dark-9b82ece8ba, #996414);
         font-size: 6.8px;
         font-weight: 750;
     }
@@ -696,11 +696,11 @@
         top: calc(100% + 8px);
         z-index: 85;
         width: 280px;
-        border: 1px solid #e4ded7;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4ded7);
         border-radius: 12px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 13px;
-        box-shadow: 0 18px 40px rgba(39,31,23,.12);
+        box-shadow: 0 18px 40px var(--sari-dark-3b2338cbf0, rgba(39,31,23,.12));
     }
 
     .sari-price-field {
@@ -712,7 +712,7 @@
         left: 9px;
         top: 50%;
         transform: translateY(-50%);
-        color: #9b9084;
+        color: var(--sari-dark-a63aa16d7c, #9b9084);
         font-size: 7px;
         font-weight: 700;
         pointer-events: none;
@@ -721,11 +721,11 @@
     .sari-price-field input {
         height: 38px;
         width: 100%;
-        border: 1px solid #ded8d1;
+        border: 1px solid var(--sari-dark-d8c2716225, #ded8d1);
         border-radius: 8px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 8px 0 22px;
-        color: #4b443d;
+        color: var(--sari-dark-e23e64dd1e, #4b443d);
         font-size: 8px;
         outline: none;
     }
@@ -738,14 +738,14 @@
         gap: 6px;
         border-radius: 9px;
         padding: 0 10px;
-        color: #ad700d;
+        color: var(--sari-dark-9b2ca2d764, #ad700d);
         font-size: 7.5px;
         font-weight: 750;
         white-space: nowrap;
     }
 
     .sari-filter-reset:hover {
-        background: #fff8ea;
+        background: var(--sari-dark-4d21eb669b, #fff8ea);
     }
 
     .sari-result-pill {
@@ -755,9 +755,9 @@
         align-items: center;
         justify-content: center;
         border-radius: 999px;
-        background: #fff3dc;
+        background: var(--sari-dark-4d21eb669b, #fff3dc);
         padding: 0 15px;
-        color: #a66b0b;
+        color: var(--sari-dark-9b2ca2d764, #a66b0b);
         font-size: 8px;
         font-weight: 800;
         white-space: nowrap;
@@ -775,11 +775,11 @@
         display: inline-flex;
         min-height: 26px;
         align-items: center;
-        border: 1px solid #e7d7b7;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7d7b7);
         border-radius: 999px;
-        background: #fff8e9;
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
         padding: 0 9px;
-        color: #986312;
+        color: var(--sari-dark-0e58bfc5a3, #986312);
         font-size: 6.5px;
         font-weight: 700;
     }
@@ -798,11 +798,11 @@
     #variationFilters button,
     #mobileVariationFilters button {
         min-height: 26px !important;
-        border: 1px solid #e2dcd5 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2dcd5) !important;
         border-radius: 999px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 0 9px !important;
-        color: #70675e !important;
+        color: var(--sari-dark-a63aa16d7c, #70675e) !important;
         font-size: 6.3px !important;
         font-weight: 650 !important;
         box-shadow: none !important;
@@ -811,8 +811,8 @@
     #variationFilters button.is-active,
     #mobileVariationFilters button.is-active {
         border-color: #cf8b0e !important;
-        background: #fff5df !important;
-        color: #986312 !important;
+        background: var(--sari-dark-4d21eb669b, #fff5df) !important;
+        color: var(--sari-dark-0e58bfc5a3, #986312) !important;
     }
 
     /* ============================================================
@@ -830,16 +830,16 @@
         font-weight: 780;
         line-height: 1.08;
         letter-spacing: -.045em;
-        color: #201b17;
+        color: var(--sari-dark-e23e64dd1e, #201b17);
     }
 
     .sari-recommended-title span {
-        color: #c3830d;
+        color: var(--sari-dark-c8bdcce6ab, #c3830d);
     }
 
     .sari-recommended-copy {
         margin-top: 6px;
-        color: #81786f;
+        color: var(--sari-dark-a63aa16d7c, #81786f);
         font-size: 8.5px;
     }
 
@@ -855,26 +855,26 @@
         min-height: 33px;
         align-items: center;
         justify-content: center;
-        border: 1px solid #ddd6ce;
+        border: 1px solid var(--sari-dark-d8c2716225, #ddd6ce);
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 15px;
-        color: #413a33;
+        color: var(--sari-dark-e23e64dd1e, #413a33);
         font-size: 7px;
         font-weight: 650;
     }
 
     .sari-inline-chip:hover {
         border-color: #d0ba8a;
-        background: #fff9ef;
-        color: #9a6513;
+        background: var(--sari-dark-950baec030, #fff9ef);
+        color: var(--sari-dark-4b8b580e58, #9a6513);
     }
 
     .sari-inline-chip.is-active {
         border-color: #cf8b0e;
         background: #cf8b0e;
         color: #fff;
-        box-shadow: 0 7px 15px rgba(201,135,14,.16);
+        box-shadow: 0 7px 15px var(--sari-dark-b5c2a2270e, rgba(201,135,14,.16));
     }
 
     .sari-view-all {
@@ -882,7 +882,7 @@
         align-items: center;
         gap: 6px;
         margin-left: 3px;
-        color: #b5740c;
+        color: var(--sari-dark-4b8b580e58, #b5740c);
         font-size: 8px;
         font-weight: 750;
     }
@@ -904,10 +904,10 @@
     .sari-benefits-wrap {
         margin-top: 17px;
         overflow: hidden;
-        border: 1px solid #e8e1d8;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e1d8);
         border-radius: 14px;
-        background: #fff;
-        box-shadow: 0 7px 18px rgba(43,34,24,.025);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 7px 18px var(--sari-dark-e1384eb7fc, rgba(43,34,24,.025));
     }
 
     .sari-benefits-row {
@@ -921,7 +921,7 @@
         align-items: center;
         gap: 10px;
         padding: 13px 15px;
-        border-right: 1px solid #eee8e1;
+        border-right: 1px solid var(--sari-dark-d8c2716225, #eee8e1);
     }
 
     .sari-benefit-tile:last-child {
@@ -935,19 +935,19 @@
         flex: 0 0 auto;
         place-items: center;
         border-radius: 999px;
-        background: #fff5df;
-        color: #bd7b0f;
+        background: var(--sari-dark-4d21eb669b, #fff5df);
+        color: var(--sari-dark-9b2ca2d764, #bd7b0f);
     }
 
     .sari-benefit-tile h3 {
-        color: #36302a;
+        color: var(--sari-dark-e23e64dd1e, #36302a);
         font-size: 7.8px;
         font-weight: 750;
     }
 
     .sari-benefit-tile p {
         margin-top: 2px;
-        color: #968d84;
+        color: var(--sari-dark-a63aa16d7c, #968d84);
         font-size: 6.3px;
         line-height: 1.4;
     }
@@ -1001,7 +1001,7 @@
 
         .sari-benefit-tile {
             border-right: 0;
-            border-bottom: 1px solid #eee8e1;
+            border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8e1);
         }
     }
 
@@ -1053,8 +1053,8 @@
             radial-gradient(circle at 50% 0%, rgba(255, 203, 77, .10), transparent 42%),
             #8b1b12;
         box-shadow:
-            0 10px 24px rgba(91, 30, 19, .10),
-            inset 0 1px 0 rgba(255,255,255,.10);
+            0 10px 24px var(--sari-dark-8eadf403a5, rgba(91, 30, 19, .10)),
+            inset 0 1px 0 var(--sari-dark-2f91cbc37f, rgba(255,255,255,.10));
     }
 
     .sari-accurate-sale-banner > a {
@@ -1074,7 +1074,7 @@
         margin-top: 14px;
         padding: 10px 12px;
         border-radius: 14px;
-        box-shadow: 0 7px 20px rgba(43,34,24,.035);
+        box-shadow: 0 7px 20px var(--sari-dark-7593018246, rgba(43,34,24,.035));
     }
 
     .sari-filter-grid {
@@ -1170,7 +1170,7 @@
        Banner is the picture itself — no colored wrapper behind it.
     ============================================================ */
     .sari-products-page {
-        background: #fffdfa;
+        background: var(--sari-dark-950baec030, #fffdfa);
     }
 
     .sari-products-main {
@@ -1208,16 +1208,16 @@
         object-fit: contain;
         object-position: center;
         background: transparent;
-        box-shadow: 0 8px 22px rgba(89,35,17,.08);
+        box-shadow: 0 8px 22px var(--sari-dark-c33e3d1bb4, rgba(89,35,17,.08));
     }
 
     .sari-filter-dock {
         margin-top: 15px;
-        border: 1px solid #e7e1d9;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e1d9);
         border-radius: 13px;
-        background: rgba(255,255,255,.98);
+        background: var(--sari-dark-ad56cde17e, rgba(255,255,255,.98));
         padding: 10px 12px;
-        box-shadow: 0 7px 20px rgba(43,34,24,.035);
+        box-shadow: 0 7px 20px var(--sari-dark-7593018246, rgba(43,34,24,.035));
     }
 
     .sari-filter-grid {
@@ -1241,7 +1241,7 @@
     .sari-filter-control {
         height: 39px;
         border-radius: 9px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         font-size: 7.8px;
     }
 
@@ -1252,8 +1252,8 @@
 
     .sari-result-pill {
         min-width: 96px;
-        border: 1px solid #f0dfbd;
-        background: #fff4df;
+        border: 1px solid var(--sari-dark-d8c2716225, #f0dfbd);
+        background: var(--sari-dark-4d21eb669b, #fff4df);
     }
 
     .sari-reference-category-row {
@@ -1281,8 +1281,8 @@
     .sari-live-search-panel {
         border-radius: 12px;
         box-shadow:
-            0 18px 42px rgba(39,31,23,.13),
-            0 4px 12px rgba(39,31,23,.035);
+            0 18px 42px var(--sari-dark-3e32d50f5e, rgba(39,31,23,.13)),
+            0 4px 12px var(--sari-dark-7593018246, rgba(39,31,23,.035));
     }
 
     @media (min-width: 1280px) {
@@ -1310,7 +1310,7 @@
         .sari-accurate-sale-banner img {
             width: 100%;
             border-radius: 11px;
-            box-shadow: 0 5px 14px rgba(89,35,17,.07);
+            box-shadow: 0 5px 14px var(--sari-dark-7c935c8886, rgba(89,35,17,.07));
         }
     }
 
@@ -1415,12 +1415,12 @@
     ============================================================ */
 
     .sari-products-page {
-        --catalog-panel: #ffffff;
+        --catalog-panel: var(--sari-dark-950baec030, #ffffff);
         --catalog-page: #f5f6f8;
-        --catalog-border: #e3e6ea;
-        --catalog-border-soft: #eceef1;
-        --catalog-text: #2f343b;
-        --catalog-muted: #818995;
+        --catalog-border: var(--sari-dark-d8c2716225, #e3e6ea);
+        --catalog-border-soft: var(--sari-dark-d8c2716225, #eceef1);
+        --catalog-text: var(--sari-dark-e23e64dd1e, #2f343b);
+        --catalog-muted: var(--sari-dark-a63aa16d7c, #818995);
         --catalog-gold: #c88912;
         --catalog-gold-dark: #a96f0e;
 
@@ -1445,8 +1445,8 @@
         background: var(--catalog-panel) !important;
         padding: 17px 20px 18px !important;
         box-shadow:
-            0 10px 28px rgba(31, 41, 55, .045),
-            0 2px 7px rgba(31, 41, 55, .025) !important;
+            0 10px 28px var(--sari-dark-1190f58155, rgba(31, 41, 55, .045)),
+            0 2px 7px var(--sari-dark-e1384eb7fc, rgba(31, 41, 55, .025)) !important;
     }
 
     .sari-products-hero::after {
@@ -1467,7 +1467,7 @@
 
     .sari-products-hero p:first-child {
         margin: 0 !important;
-        color: #a87316 !important;
+        color: var(--sari-dark-685eb4fc40, #a87316) !important;
         font-size: 7px !important;
         font-weight: 800 !important;
         line-height: 1.2 !important;
@@ -1477,7 +1477,7 @@
 
     .sari-products-hero h1 {
         margin-top: 5px !important;
-        color: #2d3137 !important;
+        color: var(--sari-dark-e23e64dd1e, #2d3137) !important;
         font-size: clamp(27px, 2.3vw, 32px) !important;
         font-weight: 750 !important;
         line-height: 1.06 !important;
@@ -1485,13 +1485,13 @@
     }
 
     .sari-products-hero h1 span {
-        color: #c88912 !important;
+        color: var(--sari-dark-19b301f69a, #c88912) !important;
     }
 
     .sari-products-hero h1 + p {
         max-width: 650px !important;
         margin-top: 7px !important;
-        color: #818995 !important;
+        color: var(--sari-dark-a63aa16d7c, #818995) !important;
         font-size: 8px !important;
         font-weight: 400 !important;
         line-height: 1.65 !important;
@@ -1503,10 +1503,10 @@
     .sari-products-hero + section[class*="mb-4"] {
         border-color: var(--catalog-border) !important;
         border-radius: 13px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            0 8px 22px rgba(31, 41, 55, .035),
-            0 2px 6px rgba(31, 41, 55, .02) !important;
+            0 8px 22px var(--sari-dark-7593018246, rgba(31, 41, 55, .035)),
+            0 2px 6px var(--sari-dark-f6fe7319d9, rgba(31, 41, 55, .02)) !important;
     }
 
     /* -----------------------------
@@ -1516,11 +1516,11 @@
         margin-top: 12px !important;
         border: 1px solid var(--catalog-border) !important;
         border-radius: 14px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 13px 14px !important;
         box-shadow:
-            0 10px 28px rgba(31, 41, 55, .045),
-            0 2px 7px rgba(31, 41, 55, .025) !important;
+            0 10px 28px var(--sari-dark-1190f58155, rgba(31, 41, 55, .045)),
+            0 2px 7px var(--sari-dark-e1384eb7fc, rgba(31, 41, 55, .025)) !important;
     }
 
     .sari-filter-grid {
@@ -1537,7 +1537,7 @@
 
     .sari-filter-label {
         margin-bottom: 5px !important;
-        color: #747c86 !important;
+        color: var(--sari-dark-a63aa16d7c, #747c86) !important;
         font-size: 6.2px !important;
         font-weight: 750 !important;
         letter-spacing: .07em !important;
@@ -1545,70 +1545,70 @@
 
     .sari-filter-control {
         height: 40px !important;
-        border: 1px solid #dfe3e8 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8) !important;
         border-radius: 9px !important;
-        background-color: #fff !important;
-        color: #4a515b !important;
+        background-color: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-e23e64dd1e, #4a515b) !important;
         font-size: 8px !important;
         font-weight: 500 !important;
         box-shadow: none !important;
     }
 
     .sari-filter-control:hover {
-        border-color: #d3d8de !important;
-        background-color: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #d3d8de) !important;
+        background-color: var(--sari-dark-950baec030, #fff) !important;
     }
 
     .sari-filter-control:focus {
         border-color: #c88912 !important;
-        box-shadow: 0 0 0 3px rgba(200, 137, 18, .08) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200, 137, 18, .08)) !important;
     }
 
     .sari-live-search input {
         border-color: #d9c8a8 !important;
-        background: #fffdf9 !important;
+        background: var(--sari-dark-950baec030, #fffdf9) !important;
     }
 
     .sari-live-search > svg {
-        color: #7f8790 !important;
+        color: var(--sari-dark-a63aa16d7c, #7f8790) !important;
     }
 
     .sari-live-search-panel,
     .sari-price-popover {
         border-color: var(--catalog-border) !important;
         border-radius: 12px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            0 20px 48px rgba(31, 41, 55, .12),
-            0 4px 12px rgba(31, 41, 55, .035) !important;
+            0 20px 48px var(--sari-dark-3b2338cbf0, rgba(31, 41, 55, .12)),
+            0 4px 12px var(--sari-dark-7593018246, rgba(31, 41, 55, .035)) !important;
     }
 
     .sari-live-search-head,
     .sari-live-search-footer {
-        background: #fafbfc !important;
-        border-color: #eceff2 !important;
+        background: var(--sari-dark-950baec030, #fafbfc) !important;
+        border-color: var(--sari-dark-d8c2716225, #eceff2) !important;
     }
 
     .sari-filter-reset {
         height: 40px !important;
         border: 1px solid transparent;
         border-radius: 9px !important;
-        color: #9f6b13 !important;
+        color: var(--sari-dark-6e784b4931, #9f6b13) !important;
         font-size: 7.3px !important;
     }
 
     .sari-filter-reset:hover {
-        border-color: #eadfc9 !important;
-        background: #fffaf1 !important;
+        border-color: var(--sari-dark-d8c2716225, #eadfc9) !important;
+        background: var(--sari-dark-950baec030, #fffaf1) !important;
     }
 
     .sari-result-pill {
         height: 40px !important;
         min-width: 96px !important;
-        border: 1px solid #eadfc9 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #eadfc9) !important;
         border-radius: 9px !important;
-        background: #fffaf1 !important;
-        color: #9c6811 !important;
+        background: var(--sari-dark-950baec030, #fffaf1) !important;
+        color: var(--sari-dark-6e784b4931, #9c6811) !important;
         font-size: 7.4px !important;
         box-shadow: none !important;
     }
@@ -1621,11 +1621,11 @@
         margin-top: 11px !important;
         border: 1px solid var(--catalog-border);
         border-radius: 13px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 9px 11px;
         box-shadow:
-            0 8px 22px rgba(31, 41, 55, .035),
-            0 2px 6px rgba(31, 41, 55, .018);
+            0 8px 22px var(--sari-dark-7593018246, rgba(31, 41, 55, .035)),
+            0 2px 6px var(--sari-dark-7672bb207e, rgba(31, 41, 55, .018));
     }
 
     .sari-category-chips {
@@ -1634,11 +1634,11 @@
 
     .sari-inline-chip {
         min-height: 30px !important;
-        border: 1px solid #e0e4e8 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e0e4e8) !important;
         border-radius: 8px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 0 12px !important;
-        color: #59616b !important;
+        color: var(--sari-dark-a63aa16d7c, #59616b) !important;
         font-size: 6.8px !important;
         font-weight: 650 !important;
         box-shadow: none !important;
@@ -1646,15 +1646,15 @@
 
     .sari-inline-chip:hover {
         border-color: #dfc995 !important;
-        background: #fffaf1 !important;
-        color: #946313 !important;
+        background: var(--sari-dark-950baec030, #fffaf1) !important;
+        color: var(--sari-dark-9b2ca2d764, #946313) !important;
     }
 
     .sari-inline-chip.is-active {
         border-color: #c88912 !important;
         background: #c88912 !important;
         color: #fff !important;
-        box-shadow: 0 5px 12px rgba(200,137,18,.14) !important;
+        box-shadow: 0 5px 12px var(--sari-dark-59ed29fe9d, rgba(200,137,18,.14)) !important;
     }
 
     .sari-view-all {
@@ -1662,12 +1662,12 @@
         margin-left: 2px !important;
         border-radius: 8px;
         padding: 0 8px;
-        color: #9e6a12 !important;
+        color: var(--sari-dark-6e784b4931, #9e6a12) !important;
         font-size: 7px !important;
     }
 
     .sari-view-all:hover {
-        background: #fffaf1;
+        background: var(--sari-dark-950baec030, #fffaf1);
     }
 
     /* -----------------------------
@@ -1692,15 +1692,15 @@
         margin-top: 13px !important;
         border: 1px solid var(--catalog-border) !important;
         border-radius: 13px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            0 9px 24px rgba(31, 41, 55, .035),
-            0 2px 6px rgba(31, 41, 55, .018) !important;
+            0 9px 24px var(--sari-dark-7593018246, rgba(31, 41, 55, .035)),
+            0 2px 6px var(--sari-dark-7672bb207e, rgba(31, 41, 55, .018)) !important;
     }
 
     .sari-benefit-tile {
         min-height: 62px;
-        border-color: #eceef1 !important;
+        border-color: var(--sari-dark-d8c2716225, #eceef1) !important;
         padding: 10px 13px !important;
     }
 
@@ -1708,19 +1708,19 @@
         width: 32px !important;
         height: 32px !important;
         border-radius: 9px !important;
-        background: #fff8eb !important;
-        color: #b9780f !important;
+        background: var(--sari-dark-4d21eb669b, #fff8eb) !important;
+        color: var(--sari-dark-9b2ca2d764, #b9780f) !important;
     }
 
     .sari-benefit-tile h3 {
-        color: #3d434b !important;
+        color: var(--sari-dark-e23e64dd1e, #3d434b) !important;
         font-size: 7.2px !important;
         font-weight: 700 !important;
     }
 
     .sari-benefit-tile p {
         margin-top: 2px !important;
-        color: #8b929b !important;
+        color: var(--sari-dark-a63aa16d7c, #8b929b) !important;
         font-size: 5.9px !important;
         line-height: 1.4 !important;
     }
@@ -1741,7 +1741,7 @@
     #buyerProductModal > div {
         border-color: var(--catalog-border) !important;
         border-radius: 15px !important;
-        box-shadow: 0 30px 80px rgba(31,41,55,.20) !important;
+        box-shadow: 0 30px 80px var(--sari-dark-ef22e61893, rgba(31,41,55,.20)) !important;
     }
 
     /* -----------------------------
@@ -1822,7 +1822,7 @@
     }
 
     .sari-products-hero p:first-child {
-        color: #a87316 !important;
+        color: var(--sari-dark-685eb4fc40, #a87316) !important;
         font-size: 6.6px !important;
         font-weight: 800 !important;
         letter-spacing: .15em !important;
@@ -1830,7 +1830,7 @@
 
     .sari-products-hero h1 {
         margin-top: 5px !important;
-        color: #2f343b !important;
+        color: var(--sari-dark-e23e64dd1e, #2f343b) !important;
         font-size: clamp(27px, 2.25vw, 31px) !important;
         font-weight: 760 !important;
         line-height: 1.04 !important;
@@ -1840,7 +1840,7 @@
     .sari-products-hero h1 + p {
         margin-top: 7px !important;
         max-width: 650px !important;
-        color: #818995 !important;
+        color: var(--sari-dark-a63aa16d7c, #818995) !important;
         font-size: 8px !important;
         line-height: 1.6 !important;
     }
@@ -1852,22 +1852,22 @@
     }
 
     .sari-live-search .sari-filter-label {
-        color: #626a74 !important;
+        color: var(--sari-dark-a63aa16d7c, #626a74) !important;
     }
 
     .sari-live-search input.sari-filter-control {
         height: 42px !important;
-        border: 1px solid #d9c9aa !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #d9c9aa) !important;
         border-radius: 10px !important;
-        background: #fffefa !important;
+        background: var(--sari-dark-950baec030, #fffefa) !important;
         padding-left: 40px !important;
         padding-right: 40px !important;
-        color: #343a42 !important;
+        color: var(--sari-dark-e23e64dd1e, #343a42) !important;
         font-size: 8.3px !important;
         font-weight: 500 !important;
         box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.75),
-            0 2px 5px rgba(31,41,55,.018) !important;
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.75)),
+            0 2px 5px var(--sari-dark-7672bb207e, rgba(31,41,55,.018)) !important;
         transition:
             border-color .16s ease,
             box-shadow .16s ease,
@@ -1875,21 +1875,21 @@
     }
 
     .sari-live-search input.sari-filter-control::placeholder {
-        color: #9aa1a9 !important;
+        color: var(--sari-dark-a63aa16d7c, #9aa1a9) !important;
         opacity: 1;
     }
 
     .sari-live-search input.sari-filter-control:hover {
         border-color: #ccb684 !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
     }
 
     .sari-live-search input.sari-filter-control:focus {
         border-color: #c88912 !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            0 0 0 3px rgba(200,137,18,.09),
-            0 5px 14px rgba(31,41,55,.035) !important;
+            0 0 0 3px var(--sari-dark-b12a5e9552, rgba(200,137,18,.09)),
+            0 5px 14px var(--sari-dark-7593018246, rgba(31,41,55,.035)) !important;
     }
 
     .sari-live-search > svg {
@@ -1897,7 +1897,7 @@
         bottom: 13px !important;
         width: 16px !important;
         height: 16px !important;
-        color: #7f8790 !important;
+        color: var(--sari-dark-a63aa16d7c, #7f8790) !important;
         stroke-width: 1.9 !important;
     }
 
@@ -1910,23 +1910,23 @@
     }
 
     .sari-live-search-clear:hover {
-        background: #f6f7f8 !important;
-        color: #5e6670 !important;
+        background: var(--sari-dark-950baec030, #f6f7f8) !important;
+        color: var(--sari-dark-a63aa16d7c, #5e6670) !important;
     }
 
     /* Premium dropdown/select controls */
     .sari-products-select,
     .sari-price-trigger {
         height: 42px !important;
-        border: 1px solid #dfe3e8 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8) !important;
         border-radius: 10px !important;
-        background-color: #fff !important;
-        color: #4a515b !important;
+        background-color: var(--sari-dark-950baec030, #fff) !important;
+        color: var(--sari-dark-e23e64dd1e, #4a515b) !important;
         font-size: 8px !important;
         font-weight: 550 !important;
         box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.8),
-            0 2px 5px rgba(31,41,55,.015) !important;
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.8)),
+            0 2px 5px var(--sari-dark-37396001f9, rgba(31,41,55,.015)) !important;
         transition:
             border-color .16s ease,
             box-shadow .16s ease,
@@ -1942,16 +1942,16 @@
 
     .sari-products-select:hover,
     .sari-price-trigger:hover {
-        border-color: #cfd5dc !important;
-        background-color: #fbfcfd !important;
+        border-color: var(--sari-dark-d8c2716225, #cfd5dc) !important;
+        background-color: var(--sari-dark-950baec030, #fbfcfd) !important;
     }
 
     .sari-products-select:focus,
     .sari-price-trigger:focus,
     .sari-price-trigger[aria-expanded="true"] {
         border-color: #c88912 !important;
-        background-color: #fff !important;
-        box-shadow: 0 0 0 3px rgba(200,137,18,.08) !important;
+        background-color: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08)) !important;
         outline: none !important;
     }
 
@@ -1969,7 +1969,7 @@
     .sari-price-trigger svg {
         width: 14px !important;
         height: 14px !important;
-        color: #7a828c !important;
+        color: var(--sari-dark-a63aa16d7c, #7a828c) !important;
         transition: transform .16s ease;
     }
 
@@ -1981,33 +1981,33 @@
     .sari-price-popover {
         top: calc(100% + 7px) !important;
         width: 270px !important;
-        border: 1px solid #e1e5e9 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e5e9) !important;
         border-radius: 11px !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         padding: 12px !important;
         box-shadow:
-            0 20px 48px rgba(31,41,55,.12),
-            0 4px 12px rgba(31,41,55,.035) !important;
+            0 20px 48px var(--sari-dark-3b2338cbf0, rgba(31,41,55,.12)),
+            0 4px 12px var(--sari-dark-7593018246, rgba(31,41,55,.035)) !important;
     }
 
     .sari-price-field input {
         height: 38px !important;
-        border: 1px solid #dfe3e8 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8) !important;
         border-radius: 8px !important;
-        color: #4a515b !important;
+        color: var(--sari-dark-e23e64dd1e, #4a515b) !important;
         font-size: 8px !important;
     }
 
     .sari-price-field input:focus {
         border-color: #c88912 !important;
-        box-shadow: 0 0 0 3px rgba(200,137,18,.08) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08)) !important;
         outline: none !important;
     }
 
     #applyPriceFilter {
         border-radius: 8px !important;
         background: #c88912 !important;
-        box-shadow: 0 5px 12px rgba(200,137,18,.14) !important;
+        box-shadow: 0 5px 12px var(--sari-dark-59ed29fe9d, rgba(200,137,18,.14)) !important;
     }
 
     #applyPriceFilter:hover {
@@ -2047,13 +2047,13 @@
         justify-content: flex-start !important;
         margin-top: 12px !important;
         overflow: hidden !important;
-        border: 1px solid #e1e5e9 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e5e9) !important;
         border-radius: 18px !important;
-        background: rgba(255, 255, 255, .985) !important;
+        background: var(--sari-dark-56c375634d, rgba(255, 255, 255, .985)) !important;
         padding: 10px 14px !important;
         box-shadow:
-            0 14px 34px rgba(31, 41, 55, .055),
-            0 3px 9px rgba(31, 41, 55, .025) !important;
+            0 14px 34px var(--sari-dark-fbd3b3b9f6, rgba(31, 41, 55, .055)),
+            0 3px 9px var(--sari-dark-e1384eb7fc, rgba(31, 41, 55, .025)) !important;
     }
 
     .sari-reference-category-row .sari-category-chips {
@@ -2071,19 +2071,19 @@
         flex: 0 0 auto !important;
         align-items: center !important;
         justify-content: center !important;
-        border: 1px solid #dfe3e8 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8) !important;
         border-radius: 13px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         padding: 0 18px !important;
-        color: #303741 !important;
+        color: var(--sari-dark-e23e64dd1e, #303741) !important;
         font-size: 8.2px !important;
         font-weight: 700 !important;
         line-height: 1 !important;
         letter-spacing: -.015em !important;
         white-space: nowrap !important;
         box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.85),
-            0 2px 5px rgba(31,41,55,.018) !important;
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.85)),
+            0 2px 5px var(--sari-dark-7672bb207e, rgba(31,41,55,.018)) !important;
         transition:
             background-color .16s ease,
             border-color .16s ease,
@@ -2093,30 +2093,30 @@
     }
 
     .sari-reference-category-row .sari-inline-chip:hover {
-        border-color: #cfd4da !important;
-        background: #f7f8f9 !important;
-        color: #20252b !important;
+        border-color: var(--sari-dark-d8c2716225, #cfd4da) !important;
+        background: var(--sari-dark-950baec030, #f7f8f9) !important;
+        color: var(--sari-dark-e23e64dd1e, #20252b) !important;
         transform: translateY(-1px);
     }
 
     .sari-reference-category-row .sari-inline-chip:focus-visible {
-        outline: 2px solid rgba(47, 47, 47, .28) !important;
+        outline: 2px solid var(--sari-dark-dd32a0938d, rgba(47, 47, 47, .28)) !important;
         outline-offset: 2px !important;
     }
 
     .sari-reference-category-row .sari-inline-chip.is-active {
-        border-color: #2f2f2f !important;
-        background: linear-gradient(180deg, #363636 0%, #292929 100%) !important;
+        border-color: var(--sari-dark-d8c2716225, #2f2f2f) !important;
+        background: linear-gradient(180deg, var(--sari-dark-fbb35de0d1, #363636) 0%, var(--sari-dark-fbb35de0d1, #292929) 100%) !important;
         color: #ffffff !important;
         box-shadow:
-            0 8px 18px rgba(24, 24, 24, .17),
-            inset 0 1px 0 rgba(255,255,255,.06) !important;
+            0 8px 18px var(--sari-dark-3135cb7628, rgba(24, 24, 24, .17)),
+            inset 0 1px 0 var(--sari-dark-0d18deb7fd, rgba(255,255,255,.06)) !important;
         transform: none !important;
     }
 
     .sari-reference-category-row .sari-inline-chip.is-active:hover {
-        border-color: #292929 !important;
-        background: linear-gradient(180deg, #333333 0%, #262626 100%) !important;
+        border-color: var(--sari-dark-d8c2716225, #292929) !important;
+        background: linear-gradient(180deg, var(--sari-dark-fbb35de0d1, #333333) 0%, var(--sari-dark-fbb35de0d1, #262626) 100%) !important;
         color: #fff !important;
     }
 
@@ -2191,7 +2191,7 @@
 
     .sari-price-details[open] .sari-price-trigger {
         border-color: #c88912 !important;
-        box-shadow: 0 0 0 3px rgba(200,137,18,.08) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08)) !important;
     }
 
     .sari-price-details .sari-price-trigger svg {
@@ -2263,7 +2263,7 @@
         height: 14px;
         flex: 0 0 auto;
         fill: none;
-        stroke: #737c87;
+        stroke: var(--sari-dark-a63aa16d7c, #737c87);
         stroke-width: 1.9;
         stroke-linecap: round;
         stroke-linejoin: round;
@@ -2272,13 +2272,13 @@
 
     .sari-formal-dropdown[open] .sari-formal-trigger {
         border-color: #c88912 !important;
-        background: #fff !important;
-        box-shadow: 0 0 0 3px rgba(200,137,18,.08) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08)) !important;
     }
 
     .sari-formal-dropdown[open] .sari-formal-trigger svg {
         transform: rotate(180deg);
-        stroke: #9b6710;
+        stroke: var(--sari-dark-6e784b4931, #9b6710);
     }
 
     .sari-formal-menu {
@@ -2289,13 +2289,13 @@
         z-index: 190;
         max-height: 270px;
         overflow-y: auto;
-        border: 1px solid #e1e5e9;
+        border: 1px solid var(--sari-dark-d8c2716225, #e1e5e9);
         border-radius: 12px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 5px;
         box-shadow:
-            0 18px 42px rgba(31,41,55,.13),
-            0 4px 12px rgba(31,41,55,.04);
+            0 18px 42px var(--sari-dark-3e32d50f5e, rgba(31,41,55,.13)),
+            0 4px 12px var(--sari-dark-25b2da5e49, rgba(31,41,55,.04));
         scrollbar-width: thin;
         scrollbar-color: #d9dde2 transparent;
     }
@@ -2315,7 +2315,7 @@
         border-radius: 8px;
         background: transparent;
         padding: 0 10px;
-        color: #4c545e;
+        color: var(--sari-dark-e23e64dd1e, #4c545e);
         font-size: 7.6px;
         font-weight: 600;
         line-height: 1.2;
@@ -2326,21 +2326,21 @@
 
     .sari-formal-option:hover,
     .sari-formal-option:focus-visible {
-        background: #f5f6f8;
-        color: #22282f;
+        background: var(--sari-dark-950baec030, #f5f6f8);
+        color: var(--sari-dark-e23e64dd1e, #22282f);
         outline: none;
     }
 
     .sari-formal-option.is-selected {
-        background: #f7f3eb;
-        color: #8e5d0e;
+        background: var(--sari-dark-4d21eb669b, #f7f3eb);
+        color: var(--sari-dark-9b2ca2d764, #8e5d0e);
         font-weight: 750;
     }
 
     .sari-formal-check {
         display: none;
         flex: 0 0 auto;
-        color: #9b6710;
+        color: var(--sari-dark-6e784b4931, #9b6710);
         font-size: 8px;
         font-weight: 800;
     }
@@ -2355,7 +2355,7 @@
        Stronger filter labels and values; benefits strip removed.
     ============================================================ */
     .sari-filter-label {
-        color: #4f5964 !important;
+        color: var(--sari-dark-e23e64dd1e, #4f5964) !important;
         font-size: 7.2px !important;
         font-weight: 800 !important;
         letter-spacing: .07em !important;
@@ -2363,20 +2363,20 @@
     }
 
     .sari-live-search input.sari-filter-control {
-        color: #2f3740 !important;
+        color: var(--sari-dark-e23e64dd1e, #2f3740) !important;
         font-size: 8.8px !important;
         font-weight: 550 !important;
     }
 
     .sari-live-search input.sari-filter-control::placeholder {
-        color: #737d88 !important;
+        color: var(--sari-dark-a63aa16d7c, #737d88) !important;
         opacity: 1 !important;
         font-weight: 500 !important;
     }
 
     .sari-formal-trigger,
     .sari-price-trigger {
-        color: #303842 !important;
+        color: var(--sari-dark-e23e64dd1e, #303842) !important;
         font-size: 8.7px !important;
         font-weight: 700 !important;
     }
@@ -2384,45 +2384,45 @@
     .sari-formal-trigger > span,
     .sari-price-trigger > span,
     #buyerPriceTriggerText {
-        color: #303842 !important;
+        color: var(--sari-dark-e23e64dd1e, #303842) !important;
         font-weight: 700 !important;
     }
 
     .sari-formal-option {
         min-height: 36px !important;
-        color: #3f4852 !important;
+        color: var(--sari-dark-e23e64dd1e, #3f4852) !important;
         font-size: 8.2px !important;
         font-weight: 600 !important;
     }
 
     .sari-formal-option:hover,
     .sari-formal-option:focus-visible {
-        color: #1f252c !important;
+        color: var(--sari-dark-e23e64dd1e, #1f252c) !important;
     }
 
     .sari-formal-option.is-selected {
-        color: #89580c !important;
+        color: var(--sari-dark-4b8b580e58, #89580c) !important;
         font-weight: 800 !important;
     }
 
     .sari-formal-check {
-        color: #89580c !important;
+        color: var(--sari-dark-4b8b580e58, #89580c) !important;
         font-size: 8.5px !important;
     }
 
     .sari-price-field input {
-        color: #303842 !important;
+        color: var(--sari-dark-e23e64dd1e, #303842) !important;
         font-size: 8.5px !important;
         font-weight: 600 !important;
     }
 
     .sari-price-field input::placeholder {
-        color: #858e98 !important;
+        color: var(--sari-dark-a63aa16d7c, #858e98) !important;
         opacity: 1 !important;
     }
 
     .sari-filter-reset {
-        color: #865709 !important;
+        color: var(--sari-dark-9b2ca2d764, #865709) !important;
         font-size: 8.2px !important;
         font-weight: 800 !important;
     }
@@ -2440,8 +2440,8 @@
     .sari-live-search > svg,
     .sari-formal-trigger svg,
     .sari-price-trigger svg {
-        color: #596470 !important;
-        stroke: #596470 !important;
+        color: var(--sari-dark-a63aa16d7c, #596470) !important;
+        stroke: var(--sari-dark-a63aa16d7c, #596470) !important;
     }
 
 
@@ -2451,8 +2451,8 @@
         background: linear-gradient(180deg, #e0a11a 0%, #c98408 100%) !important;
         color: #ffffff !important;
         box-shadow:
-            0 7px 16px rgba(201,132,8,.16),
-            inset 0 1px 0 rgba(255,255,255,.18) !important;
+            0 7px 16px var(--sari-dark-b5c2a2270e, rgba(201,132,8,.16)),
+            inset 0 1px 0 var(--sari-dark-3ab7594414, rgba(255,255,255,.18)) !important;
     }
 
     .sari-result-pill #toolbarResultCount {
@@ -2510,7 +2510,7 @@
         border-radius: 0 !important;
         background: transparent !important;
         padding: 0 4px !important;
-        color: #59636f !important;
+        color: var(--sari-dark-a63aa16d7c, #59636f) !important;
         font-size: 8.8px !important;
         font-weight: 650 !important;
         box-shadow: none !important;
@@ -2518,7 +2518,7 @@
     }
 
     .sari-result-pill #toolbarResultCount {
-        color: #343d47 !important;
+        color: var(--sari-dark-e23e64dd1e, #343d47) !important;
         font-weight: 800 !important;
     }
 
@@ -2533,7 +2533,7 @@
     .sari-filter-reset:focus-visible {
         border-color: transparent !important;
         background: transparent !important;
-        color: #c88912 !important;
+        color: var(--sari-dark-19b301f69a, #c88912) !important;
         box-shadow: none !important;
     }
 
@@ -2566,7 +2566,7 @@
 
     .sari-products-page .sari-products-hero p:first-child {
         margin: 0 !important;
-        color: #a87316 !important;
+        color: var(--sari-dark-685eb4fc40, #a87316) !important;
         font-size: 10.5px !important;
         font-weight: 800 !important;
         line-height: 1.2 !important;
@@ -2576,7 +2576,7 @@
 
     .sari-products-page .sari-products-hero h1 {
         margin-top: 5px !important;
-        color: #2e343b !important;
+        color: var(--sari-dark-e23e64dd1e, #2e343b) !important;
         font-size: clamp(29px, 2.35vw, 34px) !important;
         font-weight: 760 !important;
         line-height: 1.04 !important;
@@ -2584,13 +2584,13 @@
     }
 
     .sari-products-page .sari-products-hero h1 span {
-        color: #c88912 !important;
+        color: var(--sari-dark-19b301f69a, #c88912) !important;
     }
 
     .sari-products-page .sari-products-hero h1 + p {
         max-width: 760px !important;
         margin-top: 7px !important;
-        color: #7d8792 !important;
+        color: var(--sari-dark-a63aa16d7c, #7d8792) !important;
         font-size: 11.5px !important;
         font-weight: 450 !important;
         line-height: 1.55 !important;
@@ -2676,8 +2676,8 @@
     .sari-products-page .sari-live-search input.sari-filter-control,
     .sari-products-page .sari-live-search input.sari-filter-control:hover,
     .sari-products-page .sari-live-search input.sari-filter-control:focus {
-        background: #ffffff !important;
-        background-color: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        background-color: var(--sari-dark-950baec030, #ffffff) !important;
     }
 
     /*
@@ -2730,10 +2730,10 @@
 
     .sari-insight-card {
         overflow: hidden;
-        border: 1px solid #e2e5e9;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2e5e9);
         border-radius: 14px;
-        background: #ffffff;
-        box-shadow: 0 8px 22px rgba(31, 41, 55, .035);
+        background: var(--sari-dark-950baec030, #ffffff);
+        box-shadow: 0 8px 22px var(--sari-dark-7593018246, rgba(31, 41, 55, .035));
     }
 
     .sari-insight-card-head {
@@ -2743,7 +2743,7 @@
         justify-content: space-between;
         gap: 12px;
         padding: 0 14px;
-        border-bottom: 1px solid #eceef1;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eceef1);
     }
 
     .sari-insight-heading {
@@ -2759,7 +2759,7 @@
         height: 20px;
         flex: 0 0 auto;
         place-items: center;
-        color: #c88912;
+        color: var(--sari-dark-19b301f69a, #c88912);
     }
 
     .sari-insight-heading-icon svg {
@@ -2769,7 +2769,7 @@
 
     .sari-insight-heading h2 {
         margin: 0;
-        color: #20252b;
+        color: var(--sari-dark-e23e64dd1e, #20252b);
         font-size: 11px;
         font-weight: 750;
         line-height: 1.2;
@@ -2785,7 +2785,7 @@
         border: 0;
         background: transparent;
         padding: 0;
-        color: #a96f0e;
+        color: var(--sari-dark-6e784b4931, #a96f0e);
         font-size: 8px;
         font-weight: 700;
         cursor: pointer;
@@ -2794,7 +2794,7 @@
 
     .sari-insight-link:hover,
     .sari-insight-link:focus-visible {
-        color: #7d5007;
+        color: var(--sari-dark-9b2ca2d764, #7d5007);
         outline: none;
     }
 
@@ -2812,7 +2812,7 @@
         align-items: center;
         gap: 10px;
         border: 0;
-        border-bottom: 1px solid #eef0f2;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eef0f2);
         background: transparent;
         padding: 10px 0;
         color: inherit;
@@ -2838,7 +2838,7 @@
     .sari-trending-item:focus-visible .sari-trending-copy strong,
     .sari-popular-category-item:hover .sari-popular-category-copy strong,
     .sari-popular-category-item:focus-visible .sari-popular-category-copy strong {
-        color: #9d670c;
+        color: var(--sari-dark-6e784b4931, #9d670c);
     }
 
     .sari-trending-thumb {
@@ -2848,10 +2848,10 @@
         flex: 0 0 54px;
         overflow: hidden;
         place-items: center;
-        border: 1px solid #e7e9ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e9ec);
         border-radius: 9px;
-        background: #f3f4f5;
-        color: #8c9299;
+        background: var(--sari-dark-4d21eb669b, #f3f4f5);
+        color: var(--sari-dark-a63aa16d7c, #8c9299);
         font-size: 11px;
         font-weight: 700;
     }
@@ -2874,7 +2874,7 @@
     .sari-popular-category-copy strong {
         display: block;
         overflow: hidden;
-        color: #2d3339;
+        color: var(--sari-dark-e23e64dd1e, #2d3339);
         font-size: 9px;
         font-weight: 650;
         line-height: 1.3;
@@ -2887,7 +2887,7 @@
     .sari-popular-category-copy small {
         display: block;
         margin-top: 2px;
-        color: #8b939d;
+        color: var(--sari-dark-a63aa16d7c, #8b939d);
         font-size: 7.5px;
         font-weight: 500;
         line-height: 1.3;
@@ -2896,7 +2896,7 @@
     .sari-trending-copy b {
         display: block;
         margin-top: 4px;
-        color: #c17e08;
+        color: var(--sari-dark-af18afcaa4, #c17e08);
         font-size: 9px;
         font-weight: 750;
         line-height: 1.2;
@@ -2907,7 +2907,7 @@
         width: 14px;
         height: 14px;
         flex: 0 0 auto;
-        color: #a6adb5;
+        color: var(--sari-dark-a63aa16d7c, #a6adb5);
     }
 
     .sari-popular-category-icon {
@@ -2916,10 +2916,10 @@
         height: 32px;
         flex: 0 0 32px;
         place-items: center;
-        border: 1px solid #e7e9ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e9ec);
         border-radius: 9px;
-        background: #f8f9fa;
-        color: #5f6872;
+        background: var(--sari-dark-950baec030, #f8f9fa);
+        color: var(--sari-dark-a63aa16d7c, #5f6872);
     }
 
     .sari-popular-category-icon svg {
@@ -2929,18 +2929,18 @@
 
     .sari-popular-category-item.is-active .sari-popular-category-icon {
         border-color: #e2c98f;
-        background: #fff8e9;
-        color: #b87808;
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
+        color: var(--sari-dark-af18afcaa4, #b87808);
     }
 
     .sari-popular-category-item.is-active .sari-popular-category-copy strong {
-        color: #9d670c;
+        color: var(--sari-dark-6e784b4931, #9d670c);
     }
 
     .sari-insight-empty {
         margin: 0;
         padding: 14px 0;
-        color: #8b939d;
+        color: var(--sari-dark-a63aa16d7c, #8b939d);
         font-size: 8px;
         line-height: 1.55;
     }
@@ -2988,24 +2988,24 @@
     /* Pure white search: remove cream fill and warm-colored border. */
     .sari-products-page .sari-live-search input.sari-filter-control,
     .sari-products-page .sari-live-search input.sari-filter-control:hover {
-        background: #ffffff !important;
-        background-color: #ffffff !important;
-        border: 1px solid #dfe3e8 !important;
-        color: #29323b !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        background-color: var(--sari-dark-950baec030, #ffffff) !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe3e8) !important;
+        color: var(--sari-dark-e23e64dd1e, #29323b) !important;
         font-size: 12px !important;
         font-weight: 550 !important;
         box-shadow: none !important;
     }
 
     .sari-products-page .sari-live-search input.sari-filter-control:focus {
-        background: #ffffff !important;
-        background-color: #ffffff !important;
-        border-color: #9faab5 !important;
-        box-shadow: 0 0 0 3px rgba(75, 85, 99, .10) !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
+        background-color: var(--sari-dark-950baec030, #ffffff) !important;
+        border-color: var(--sari-dark-d8c2716225, #9faab5) !important;
+        box-shadow: 0 0 0 3px var(--sari-dark-8eadf403a5, rgba(75, 85, 99, .10)) !important;
     }
 
     .sari-products-page .sari-live-search input.sari-filter-control::placeholder {
-        color: #79838e !important;
+        color: var(--sari-dark-a63aa16d7c, #79838e) !important;
         font-size: 11.5px !important;
         font-weight: 450 !important;
         opacity: 1 !important;
@@ -3013,7 +3013,7 @@
 
     /* Search, Category and Sort By labels; selected dropdown values. */
     .sari-products-page .sari-filter-label {
-        color: #4b5560 !important;
+        color: var(--sari-dark-e23e64dd1e, #4b5560) !important;
         font-size: 11px !important;
         font-weight: 750 !important;
         letter-spacing: .045em !important;
@@ -3021,7 +3021,7 @@
 
     .sari-products-page .sari-formal-trigger,
     .sari-products-page .sari-formal-trigger > span {
-        color: #333d47 !important;
+        color: var(--sari-dark-e23e64dd1e, #333d47) !important;
         font-size: 12px !important;
         font-weight: 650 !important;
     }
@@ -3069,7 +3069,7 @@
 
     .sari-products-page .sari-trending-copy strong,
     .sari-products-page .sari-popular-category-copy strong {
-        color: #29323b !important;
+        color: var(--sari-dark-e23e64dd1e, #29323b) !important;
         font-size: 12px !important;
         font-weight: 700 !important;
         line-height: 1.45 !important;
@@ -3082,13 +3082,13 @@
 
     .sari-products-page .sari-trending-copy small,
     .sari-products-page .sari-popular-category-copy small {
-        color: #707b86 !important;
+        color: var(--sari-dark-a63aa16d7c, #707b86) !important;
         font-size: 10.5px !important;
         font-weight: 500 !important;
     }
 
     .sari-products-page .sari-trending-copy b {
-        color: #a96f0e !important;
+        color: var(--sari-dark-6e784b4931, #a96f0e) !important;
         font-size: 13px !important;
         font-weight: 800 !important;
     }
@@ -3130,40 +3130,40 @@
     /* Product component already has its own subtle surface. Use one
        consistent shadow instead of stacking a CSS drop-shadow on top. */
     .sari-products-page .sari-showcase-grid > article.sari-product-card {
-        border: 1px solid #e5e7eb !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 17px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         filter: none !important;
         box-shadow:
-            0 2px 5px rgba(15, 23, 42, .045),
-            0 10px 24px rgba(15, 23, 42, .075),
-            0 24px 54px rgba(15, 23, 42, .095),
-            inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)) !important;
         transform: none !important;
     }
 
     @media (hover: hover) and (pointer: fine) {
         .sari-products-page .sari-showcase-grid > article.sari-product-card:hover {
-            border-color: #d5dbe0 !important;
+            border-color: var(--sari-dark-d8c2716225, #d5dbe0) !important;
             box-shadow:
-                0 2px 5px rgba(15, 23, 42, .045),
-                0 10px 24px rgba(15, 23, 42, .075),
-                0 24px 54px rgba(15, 23, 42, .095),
-                inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+                0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+                0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+                0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)) !important;
             transform: none !important;
         }
     }
 
     /* The two insight workspaces float as top-level cards. */
     .sari-products-page .sari-insight-card {
-        border: 1px solid #e5e7eb !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 17px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 2px 5px rgba(15, 23, 42, .045),
-            0 10px 24px rgba(15, 23, 42, .075),
-            0 24px 54px rgba(15, 23, 42, .095),
-            inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)) !important;
     }
 
     /* Related shops and the search-results notice are standalone
@@ -3171,14 +3171,14 @@
     .sari-products-page .sari-products-main > .sari-products-hero + section.mb-4,
     .sari-products-page .sari-products-main > section.mb-5,
     .sari-products-page .sari-products-main > section.lg\:hidden > div {
-        border: 1px solid #e5e7eb !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 17px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 1px 3px rgba(15, 23, 42, .035),
-            0 7px 18px rgba(15, 23, 42, .06),
-            0 15px 32px rgba(15, 23, 42, .065),
-            inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+            0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90)) !important;
     }
 
     .sari-products-page .sari-products-main > section.mb-5 > div:last-child > a {
@@ -3188,14 +3188,14 @@
 
     /* Only visible empty results need a standalone floating surface. */
     .sari-products-page #buyerProductEmpty:not(.hidden) {
-        border: 1px solid #e5e7eb !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 17px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 1px 3px rgba(15, 23, 42, .035),
-            0 7px 18px rgba(15, 23, 42, .06),
-            0 15px 32px rgba(15, 23, 42, .065),
-            inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+            0 1px 3px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+            0 7px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+            0 15px 32px var(--sari-dark-4fc908fafe, rgba(15, 23, 42, .065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .90)) !important;
     }
 
     /* Preserve all existing grid columns, card sizes, banners and
@@ -3227,9 +3227,9 @@
         .sari-products-page #buyerProductEmpty:not(.hidden) {
             border-radius: 14px !important;
             box-shadow:
-                0 2px 4px rgba(15, 23, 42, .035),
-                0 8px 18px rgba(15, 23, 42, .06),
-                0 18px 38px rgba(15, 23, 42, .07) !important;
+                0 2px 4px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+                0 8px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+                0 18px 38px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)) !important;
         }
     }
 

@@ -122,15 +122,15 @@
     }
 
     .buyer-product-page {
-        color: #2f2923;
+        color: var(--sari-dark-e23e64dd1e, #2f2923);
     }
 
     .buyer-product-card {
-        border: 1px solid #e8e0d5;
-        background: #fff;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e0d5);
+        background: var(--sari-dark-950baec030, #fff);
         box-shadow:
-            0 12px 28px rgba(45,34,22,.045),
-            0 2px 8px rgba(45,34,22,.018);
+            0 12px 28px var(--sari-dark-1190f58155, rgba(45,34,22,.045)),
+            0 2px 8px var(--sari-dark-7672bb207e, rgba(45,34,22,.018));
     }
 
     /* ============================================================
@@ -192,9 +192,9 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border: 1px solid #e4ddd3;
+        border: 1px solid var(--sari-dark-d8c2716225, #e4ddd3);
         border-radius: 11px;
-        background: #f7f4ef;
+        background: var(--sari-dark-4d21eb669b, #f7f4ef);
         transition:
             border-color .16s ease,
             box-shadow .16s ease,
@@ -207,7 +207,7 @@
 
     .sari-v7-gallery-thumb.is-active img {
         border-color: #c98b13;
-        box-shadow: 0 0 0 2px rgba(201,139,19,.14);
+        box-shadow: 0 0 0 2px var(--sari-dark-59ed29fe9d, rgba(201,139,19,.14));
     }
 
     .sari-v7-gallery-main {
@@ -237,10 +237,10 @@
         width: 100%;
         min-height: 410px;
         place-items: center;
-        border: 1px dashed #ddd4c8;
+        border: 1px dashed var(--sari-dark-d8c2716225, #ddd4c8);
         border-radius: 16px;
-        background: #fcfbf8;
-        color: #aaa198;
+        background: var(--sari-dark-950baec030, #fcfbf8);
+        color: var(--sari-dark-a63aa16d7c, #aaa198);
     }
 
     .sari-v7-main-photo-placeholder.hidden {
@@ -279,21 +279,21 @@
     }
 
     .sari-v7-shipping-pill {
-        border: 1px solid #bedec8;
-        background: #eff9f2;
-        color: #347451;
+        border: 1px solid var(--sari-dark-d8c2716225, #bedec8);
+        background: var(--sari-dark-4d21eb669b, #eff9f2);
+        color: var(--sari-dark-e23e64dd1e, #347451);
     }
 
     .sari-v7-gallery-count {
-        border: 1px solid #e2dbd1;
-        background: #fff;
-        color: #6f665d;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2dbd1);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #6f665d);
     }
 
     .sari-v7-gallery-discount {
         border: 1px solid #ead09a;
-        background: #fff4d7;
-        color: #9b6208;
+        background: var(--sari-dark-4d21eb669b, #fff4d7);
+        color: var(--sari-dark-4b8b580e58, #9b6208);
     }
 
     /* ============================================================
@@ -302,13 +302,13 @@
     .sari-v7-buying-panel {
         width: 100%;
         min-width: 0;
-        border: 1px solid #e7dfd4;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7dfd4);
         border-radius: 20px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 22px;
         box-shadow:
-            0 14px 34px rgba(45,34,22,.055),
-            0 3px 10px rgba(45,34,22,.02);
+            0 14px 34px var(--sari-dark-fbd3b3b9f6, rgba(45,34,22,.055)),
+            0 3px 10px var(--sari-dark-f6fe7319d9, rgba(45,34,22,.02));
     }
 
     .sari-v7-eyebrow {
@@ -330,14 +330,14 @@
 
     .sari-v7-badge.gold {
         border: 1px solid #e7d3aa;
-        background: #fff8e9;
-        color: #956313;
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
+        color: var(--sari-dark-4b8b580e58, #956313);
     }
 
     .sari-v7-badge.neutral {
-        border: 1px solid #e2ddd6;
-        background: #faf8f5;
-        color: #716960;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2ddd6);
+        background: var(--sari-dark-950baec030, #faf8f5);
+        color: var(--sari-dark-a63aa16d7c, #716960);
     }
 
     .sari-v7-title {
@@ -346,7 +346,7 @@
         line-height: 1.12;
         letter-spacing: -.04em;
         font-weight: 700;
-        color: #231f1b;
+        color: var(--sari-dark-e23e64dd1e, #231f1b);
     }
 
     .sari-v7-meta-row {
@@ -356,18 +356,18 @@
         align-items: center;
         gap: 9px;
         padding: 11px 0;
-        border-top: 1px solid #eee8df;
-        border-bottom: 1px solid #eee8df;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee8df);
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eee8df);
         font-size: 10px;
-        color: #81786f;
+        color: var(--sari-dark-a63aa16d7c, #81786f);
     }
 
     .sari-v7-price-box {
         margin-top: 18px;
         padding: 16px 17px;
-        border: 1px solid #efe2c4;
+        border: 1px solid var(--sari-dark-d8c2716225, #efe2c4);
         border-radius: 15px;
-        background: #fffaf0;
+        background: var(--sari-dark-950baec030, #fffaf0);
     }
 
     .sari-v7-price {
@@ -375,32 +375,32 @@
         line-height: 1;
         letter-spacing: -.045em;
         font-weight: 700;
-        color: #c7840c;
+        color: var(--sari-dark-af18afcaa4, #c7840c);
     }
 
     .sari-v7-section {
         margin-top: 18px;
         padding-top: 17px;
-        border-top: 1px solid #eee8df;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee8df);
     }
 
     .sari-v7-section-title {
         font-size: 10px;
         font-weight: 700;
-        color: #49413a;
+        color: var(--sari-dark-e23e64dd1e, #49413a);
     }
 
     .sari-v7-section-help {
         margin-top: 3px;
         font-size: 9px;
         line-height: 1.6;
-        color: #91887d;
+        color: var(--sari-dark-a63aa16d7c, #91887d);
     }
 
     .buyer-variant-button {
-        border: 1px solid #ddd6cc;
-        background: #fff;
-        color: #655d54;
+        border: 1px solid var(--sari-dark-d8c2716225, #ddd6cc);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #655d54);
         transition:
             border-color .16s ease,
             background-color .16s ease,
@@ -409,21 +409,21 @@
 
     .buyer-variant-button:hover {
         border-color: #d2b16e;
-        background: #fffaf1;
-        color: #8d6115;
+        background: var(--sari-dark-950baec030, #fffaf1);
+        color: var(--sari-dark-7f4828a5f5, #8d6115);
     }
 
     .buyer-variant-button.is-selected {
         border-color: #c98b13;
-        background: #fff8e9;
-        color: #8e5f11;
-        box-shadow: 0 0 0 2px rgba(201,139,19,.08);
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
+        color: var(--sari-dark-9b2ca2d764, #8e5f11);
+        box-shadow: 0 0 0 2px var(--sari-dark-c33e3d1bb4, rgba(201,139,19,.08));
     }
 
     .buyer-variant-button:disabled {
         cursor: not-allowed;
         opacity: .42;
-        background: #f7f5f2;
+        background: var(--sari-dark-4d21eb669b, #f7f5f2);
     }
 
     .sari-v7-availability {
@@ -433,9 +433,9 @@
         align-items: end;
         margin-top: 18px;
         padding: 14px;
-        border: 1px solid #e8e0d6;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e0d6);
         border-radius: 14px;
-        background: #fcfbf8;
+        background: var(--sari-dark-950baec030, #fcfbf8);
     }
 
     .sari-v7-qty {
@@ -443,9 +443,9 @@
         height: 42px;
         align-items: center;
         overflow: hidden;
-        border: 1px solid #ddd6cd;
+        border: 1px solid var(--sari-dark-d8c2716225, #ddd6cd);
         border-radius: 10px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .sari-v7-qty button {
@@ -454,26 +454,26 @@
         width: 40px;
         place-items: center;
         font-size: 15px;
-        color: #766d63;
+        color: var(--sari-dark-a63aa16d7c, #766d63);
         transition: background-color .15s ease, color .15s ease;
     }
 
     .sari-v7-qty button:hover {
-        background: #fff8e9;
-        color: #9a6817;
+        background: var(--sari-dark-4d21eb669b, #fff8e9);
+        color: var(--sari-dark-a0f3b28b84, #9a6817);
     }
 
     .sari-v7-qty input {
         height: 100%;
         min-width: 0;
         flex: 1;
-        border-left: 1px solid #e6e0d9;
-        border-right: 1px solid #e6e0d9;
-        background: #fff;
+        border-left: 1px solid var(--sari-dark-d8c2716225, #e6e0d9);
+        border-right: 1px solid var(--sari-dark-d8c2716225, #e6e0d9);
+        background: var(--sari-dark-950baec030, #fff);
         text-align: center;
         font-size: 10px;
         font-weight: 700;
-        color: #403930;
+        color: var(--sari-dark-e23e64dd1e, #403930);
         outline: none;
     }
 
@@ -498,14 +498,14 @@
 
     .buyer-product-secondary {
         border: 1px solid #c98b13;
-        background: #fff;
-        color: #a46b0c;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-6e784b4931, #a46b0c);
     }
 
     .buyer-product-secondary:hover {
         border-color: #b77d10;
-        background: #fff9ec;
-        color: #8d5c08;
+        background: var(--sari-dark-4d21eb669b, #fff9ec);
+        color: var(--sari-dark-6e784b4931, #8d5c08);
     }
 
     .buyer-product-primary:disabled,
@@ -520,7 +520,7 @@
         grid-template-columns: repeat(3, minmax(0,1fr));
         gap: 8px;
         padding-top: 15px;
-        border-top: 1px solid #eee8df;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eee8df);
     }
 
     .sari-v7-trust-item {
@@ -530,24 +530,24 @@
         justify-content: center;
         gap: 6px;
         border-radius: 10px;
-        background: #faf8f5;
+        background: var(--sari-dark-950baec030, #faf8f5);
         padding: 10px 8px;
         text-align: center;
         font-size: 8px;
         font-weight: 700;
-        color: #746b61;
+        color: var(--sari-dark-a63aa16d7c, #746b61);
     }
 
     .sari-v7-trust-item svg {
         flex: 0 0 auto;
-        color: #b9780b;
+        color: var(--sari-dark-6e784b4931, #b9780b);
     }
 
     .sari-v7-seller-card {
         margin-top: 14px;
-        border: 1px solid #e8e0d6;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e0d6);
         border-radius: 14px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 14px;
     }
 
@@ -562,11 +562,11 @@
     }
 
     .sari-v7-section-card {
-        border: 1px solid #e8e0d5;
+        border: 1px solid var(--sari-dark-d8c2716225, #e8e0d5);
         border-radius: 18px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 20px;
-        box-shadow: 0 8px 20px rgba(45,34,22,.035);
+        box-shadow: 0 8px 20px var(--sari-dark-7593018246, rgba(45,34,22,.035));
     }
 
     .sari-v7-section-kicker {
@@ -574,7 +574,7 @@
         font-weight: 700;
         letter-spacing: .11em;
         text-transform: uppercase;
-        color: #ae7a20;
+        color: var(--sari-dark-e13523fe23, #ae7a20);
     }
 
     .sari-v7-section-heading {
@@ -582,7 +582,7 @@
         font-size: 18px;
         font-weight: 700;
         letter-spacing: -.025em;
-        color: #302a24;
+        color: var(--sari-dark-e23e64dd1e, #302a24);
     }
 
     .buyer-product-lightbox {
@@ -602,7 +602,7 @@
 
     .buyer-product-related:hover {
         border-color: #dac59b;
-        box-shadow: 0 9px 20px rgba(45,34,22,.05);
+        box-shadow: 0 9px 20px var(--sari-dark-1df26971b5, rgba(45,34,22,.05));
     }
 
     @media (min-width: 640px) {
@@ -701,16 +701,16 @@
     ============================================================ */
 
     :root {
-        --sari-v8-bg: #fbfaf7;
-        --sari-v8-surface: #fffdfa;
-        --sari-v8-border: #e8dfd3;
+        --sari-v8-bg: var(--sari-dark-950baec030, #fbfaf7);
+        --sari-v8-surface: var(--sari-dark-950baec030, #fffdfa);
+        --sari-v8-border: var(--sari-dark-d8c2716225, #e8dfd3);
         --sari-v8-gold: #c98b13;
         --sari-v8-gold-dark: #b77d10;
         --sari-v8-gold-soft: #fff8e9;
-        --sari-v8-text: #2f2923;
-        --sari-v8-muted: #847a70;
-        --sari-v8-shadow-dark: rgba(73, 56, 37, .075);
-        --sari-v8-shadow-light: rgba(255, 255, 255, .92);
+        --sari-v8-text: var(--sari-dark-e23e64dd1e, #2f2923);
+        --sari-v8-muted: var(--sari-dark-a63aa16d7c, #847a70);
+        --sari-v8-shadow-dark: var(--sari-dark-e07575a086, rgba(73, 56, 37, .075));
+        --sari-v8-shadow-light: var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92));
     }
 
     .buyer-product-page {
@@ -733,7 +733,7 @@
     /* Main buying card — clear but restrained raised effect. */
     .sari-v7-buying-panel {
         border-color: var(--sari-v8-border) !important;
-        background: #fff !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
             8px 8px 20px var(--sari-v8-shadow-dark),
             -6px -6px 16px var(--sari-v8-shadow-light) !important;
@@ -741,76 +741,76 @@
 
     /* Price area — softly inset, not floating. */
     .sari-v7-price-box {
-        border-color: #eadfc8 !important;
-        background: #fffaf0 !important;
+        border-color: var(--sari-dark-d8c2716225, #eadfc8) !important;
+        background: var(--sari-dark-950baec030, #fffaf0) !important;
         box-shadow:
-            inset 3px 3px 7px rgba(115, 82, 28, .055),
-            inset -3px -3px 7px rgba(255, 255, 255, .82) !important;
+            inset 3px 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(115, 82, 28, .055)),
+            inset -3px -3px 7px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .82)) !important;
     }
 
     /* Availability / quantity container gets a gentle inset surface. */
     .sari-v7-availability {
-        border-color: #e5dccf !important;
-        background: #fcfbf8 !important;
+        border-color: var(--sari-dark-d8c2716225, #e5dccf) !important;
+        background: var(--sari-dark-950baec030, #fcfbf8) !important;
         box-shadow:
-            inset 3px 3px 7px rgba(73, 56, 37, .045),
-            inset -3px -3px 7px rgba(255, 255, 255, .86) !important;
+            inset 3px 3px 7px var(--sari-dark-1190f58155, rgba(73, 56, 37, .045)),
+            inset -3px -3px 7px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .86)) !important;
     }
 
     .sari-v7-qty {
-        border-color: #ded4c7 !important;
-        background: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #ded4c7) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            inset 2px 2px 5px rgba(73, 56, 37, .05),
-            inset -2px -2px 5px rgba(255, 255, 255, .9) !important;
+            inset 2px 2px 5px var(--sari-dark-1df26971b5, rgba(73, 56, 37, .05)),
+            inset -2px -2px 5px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .9)) !important;
     }
 
     /* Trust and seller areas feel softly raised without looking bulky. */
     .sari-v7-trust-item {
-        border: 1px solid #ebe3d9;
-        background: #fcfbf8 !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #ebe3d9);
+        background: var(--sari-dark-950baec030, #fcfbf8) !important;
         box-shadow:
-            4px 4px 9px rgba(73, 56, 37, .04),
-            -3px -3px 8px rgba(255, 255, 255, .9);
+            4px 4px 9px var(--sari-dark-25b2da5e49, rgba(73, 56, 37, .04)),
+            -3px -3px 8px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .9));
     }
 
     .sari-v7-seller-card {
-        border-color: #e7ded2 !important;
-        background: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #e7ded2) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            5px 5px 12px rgba(73, 56, 37, .045),
-            -4px -4px 10px rgba(255, 255, 255, .92) !important;
+            5px 5px 12px var(--sari-dark-1190f58155, rgba(73, 56, 37, .045)),
+            -4px -4px 10px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)) !important;
     }
 
     /* Lower information cards get the same visual language. */
     .sari-v7-section-card,
     .buyer-product-card {
-        border-color: #e7ded2 !important;
-        background: #fff !important;
+        border-color: var(--sari-dark-d8c2716225, #e7ded2) !important;
+        background: var(--sari-dark-950baec030, #fff) !important;
         box-shadow:
-            7px 7px 17px rgba(73, 56, 37, .055),
-            -5px -5px 14px rgba(255, 255, 255, .9) !important;
+            7px 7px 17px var(--sari-dark-fbd3b3b9f6, rgba(73, 56, 37, .055)),
+            -5px -5px 14px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .9)) !important;
     }
 
     /* Related cards stay lightweight — less shadow than large sections. */
     .buyer-product-related {
         box-shadow:
-            4px 4px 10px rgba(73, 56, 37, .045),
-            -3px -3px 8px rgba(255, 255, 255, .9) !important;
+            4px 4px 10px var(--sari-dark-1190f58155, rgba(73, 56, 37, .045)),
+            -3px -3px 8px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .9)) !important;
     }
 
     /* Thumbnails: subtle raised image, active state remains gold. */
     .sari-v7-gallery-thumb img {
         box-shadow:
-            3px 3px 8px rgba(73, 56, 37, .045),
-            -2px -2px 6px rgba(255, 255, 255, .9);
+            3px 3px 8px var(--sari-dark-1190f58155, rgba(73, 56, 37, .045)),
+            -2px -2px 6px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .9));
     }
 
     .sari-v7-gallery-thumb.is-active img {
         border-color: var(--sari-v8-gold) !important;
         box-shadow:
-            0 0 0 2px rgba(201, 139, 19, .12),
-            3px 3px 8px rgba(73, 56, 37, .045) !important;
+            0 0 0 2px var(--sari-dark-3b2338cbf0, rgba(201, 139, 19, .12)),
+            3px 3px 8px var(--sari-dark-1190f58155, rgba(73, 56, 37, .045)) !important;
     }
 
     /* Badges / pills — slight surface depth only. */
@@ -819,8 +819,8 @@
     .sari-v7-gallery-count,
     .sari-v7-gallery-discount {
         box-shadow:
-            2px 2px 6px rgba(73, 56, 37, .035),
-            -2px -2px 5px rgba(255, 255, 255, .88);
+            2px 2px 6px var(--sari-dark-7593018246, rgba(73, 56, 37, .035)),
+            -2px -2px 5px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .88));
     }
 
     /* Buttons remain simple and responsive — no heavy shadow animation. */
@@ -859,7 +859,7 @@
 
     .buyer-variant-button.is-selected {
         box-shadow:
-            inset 0 0 0 1px rgba(201, 139, 19, .08) !important;
+            inset 0 0 0 1px var(--sari-dark-c33e3d1bb4, rgba(201, 139, 19, .08)) !important;
     }
 
     /* Avoid expensive hover shadow recalculation. */
@@ -889,8 +889,8 @@
         .sari-v7-section-card,
         .buyer-product-card {
             box-shadow:
-                5px 5px 13px rgba(73, 56, 37, .045),
-                -4px -4px 11px rgba(255, 255, 255, .88) !important;
+                5px 5px 13px var(--sari-dark-1190f58155, rgba(73, 56, 37, .045)),
+                -4px -4px 11px var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .88)) !important;
         }
     }
 

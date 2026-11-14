@@ -1,0 +1,3801 @@
+@extends('layouts.seller')
+
+@section('title', 'Generate Report — SARI Seller')
+@section('page-title', 'Generate Report')
+
+@section('content')
+@php
+    $showSales = in_array($reportType, ['all', 'sales', 'financial'], true);
+    $showOrders = in_array($reportType, ['all', 'orders'], true);
+    $showProducts = in_array($reportType, ['all', 'products'], true);
+
+    $downloadUrl = route('seller.reports.download', [
+        'from' => $from->format('Y-m-d'),
+        'to' => $to->format('Y-m-d'),
+        'type' => $reportType,
+    ]);
+
+    $statusTone = fn (string $status) => match ($status) {
+        'delivered' => 'border-[#cfe4d7] bg-[#f1f8f4] text-[#4f7d63]',
+        'cancelled' => 'border-[#efcece] bg-[#fff5f5] text-[#a65353]',
+        'new' => 'border-[#eadfc9] bg-[#fff9ef] text-[#a8731f]',
+        'preparing' => 'border-[#d5e2ed] bg-[#f3f8fc] text-[#5d7f9d]',
+        'ready_for_pickup' => 'border-[#e5d9b9] bg-[#fff9ec] text-[#a67820]',
+        default => 'border-[#d7e1eb] bg-[#f4f8fb] text-[#52728c]',
+    };
+@endphp
+
+@push('styles')
+<style id="sariSellerEmbeddedCss-reports" data-sari-inline-css="reports">
+@verbatim
+/* Extracted from resources/views/seller/reports.blade.php — original style block 1. */
+:root {
+        --report-gold: #d99500;
+        --report-gold-hover: #bf8304;
+        --report-gold-soft: #fff8eb;
+        --report-border: #e7ddd1;
+        --report-border-soft: #eee8df;
+        --report-text: #211c17;
+        --report-muted: #83796f;
+        --report-canvas: #fbfaf7;
+    }
+
+    .seller-report-page {
+        width: 100%;
+        max-width: none !important;
+        margin: 0;
+        padding: 0 0 18px;
+        color: var(--report-text);
+        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+        font-weight: 400;
+    }
+
+    #sellerReportContent {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* Header — matched to the recent Order Management / Archive pages */
+    .seller-report-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 14px;
+    }
+
+    .seller-report-heading {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .seller-report-heading-icon {
+        display: grid;
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+        place-items: center;
+        border: 1px solid #eadfc9;
+        border-radius: 12px;
+        background: var(--report-gold-soft);
+        color: #b77c18;
+        box-shadow: 0 4px 12px rgba(75, 54, 25, .045);
+    }
+
+    .seller-report-heading-icon svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .seller-report-eyebrow {
+        margin: 0;
+        color: #9a6f23;
+        font-size: 8px;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+    }
+
+    .seller-report-title {
+        margin: 5px 0 0;
+        color: #17130f;
+        font-size: 29px;
+        font-weight: 700;
+        line-height: 1.02;
+        letter-spacing: -.045em;
+    }
+
+    .seller-report-title-accent {
+        margin-left: 4px;
+        color: var(--report-gold);
+    }
+
+    .seller-report-subtitle {
+        max-width: 820px;
+        margin: 7px 0 0;
+        color: #7f756a;
+        font-size: 10.5px;
+        line-height: 1.5;
+    }
+
+    .seller-report-header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .seller-report-header-button {
+        display: inline-flex;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        border-radius: 10px;
+        padding: 0 13px;
+        font-size: 8.5px;
+        font-weight: 600;
+        transition: border-color .14s ease, background-color .14s ease, color .14s ease;
+    }
+
+    .seller-report-header-button svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .seller-report-header-button--secondary {
+        border: 1px solid #e6ddd2;
+        background: #fff;
+        color: #5f574e;
+        box-shadow: 0 4px 10px rgba(63, 49, 32, .04);
+    }
+
+    .seller-report-header-button--secondary:hover {
+        border-color: #d8c4a3;
+        background: #fffaf2;
+        color: #a8731f;
+    }
+
+    .seller-report-header-button--primary {
+        border: 1px solid var(--report-gold);
+        background: var(--report-gold);
+        color: #fff;
+        box-shadow: 0 5px 14px rgba(217,149,0,.14);
+    }
+
+    .seller-report-header-button--primary:hover {
+        border-color: var(--report-gold-hover);
+        background: var(--report-gold-hover);
+    }
+
+    /* Compact report controls — no oversized filter card */
+    .seller-report-filter-panel {
+        margin-bottom: 11px;
+        border: 1px solid var(--report-border);
+        border-radius: 14px;
+        background: #fff;
+        padding: 9px;
+        box-shadow: 0 8px 24px rgba(61, 43, 22, .05);
+    }
+
+    .seller-report-filter-grid {
+        display: grid;
+        grid-template-columns: minmax(150px, .8fr) minmax(150px, .8fr) minmax(170px, .9fr) 110px;
+        gap: 8px;
+        align-items: end;
+    }
+
+    .seller-report-filter-field label {
+        display: block;
+        margin: 0 0 5px 2px;
+        color: #70675d;
+        font-size: 8px;
+        font-weight: 600;
+    }
+
+    .seller-report-filter-field input,
+    .seller-report-filter-field select,
+    .seller-report-generate {
+        width: 100%;
+        height: 38px;
+        min-height: 38px;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: 9px;
+    }
+
+    .seller-report-filter-field input,
+    .seller-report-filter-field select {
+        border: 1px solid #e8e0d5;
+        background: #fff;
+        padding: 0 10px;
+        color: #403930;
+        outline: none;
+        box-shadow: 0 1px 2px rgba(61,43,22,.018), 0 4px 10px rgba(61,43,22,.025);
+        transition: border-color .14s ease, box-shadow .14s ease;
+    }
+
+    .seller-report-filter-field input:focus,
+    .seller-report-filter-field select:focus {
+        border-color: #d4af67;
+        box-shadow: 0 0 0 3px rgba(217, 148, 0, .07);
+    }
+
+    .seller-report-generate {
+        border: 1px solid var(--report-gold);
+        background: var(--report-gold);
+        color: #fff;
+        font-weight: 700;
+        box-shadow: 0 5px 14px rgba(217,149,0,.13);
+    }
+
+    .seller-report-generate:hover {
+        border-color: var(--report-gold-hover);
+        background: var(--report-gold-hover);
+    }
+
+    .seller-report-ranges {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #f0ebe4;
+    }
+
+    .seller-report-ranges > span {
+        margin-right: 2px;
+        color: #92887d;
+        font-size: 8px;
+        font-weight: 600;
+    }
+
+    .seller-report-ranges button {
+        min-height: 27px;
+        border: 1px solid #e8e0d5;
+        border-radius: 999px;
+        background: #fff;
+        padding: 4px 9px;
+        color: #766d63;
+        font-size: 7.5px;
+        font-weight: 600;
+        transition: border-color .12s ease, background-color .12s ease, color .12s ease;
+    }
+
+    .seller-report-ranges button:hover {
+        border-color: #dcc79e;
+        background: #fff8ea;
+        color: #9b6c1c;
+    }
+
+    /* Sales KPI cards are still useful, but much denser */
+    .seller-report-kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 9px;
+        margin-bottom: 11px;
+    }
+
+    .seller-report-kpi-grid .seller-report-card {
+        min-height: 84px;
+        border-radius: 13px !important;
+        padding: 11px 13px !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05);
+        transform: none !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card:hover {
+        transform: none !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05);
+    }
+
+    .seller-report-kpi-grid .seller-report-card p:first-child {
+        font-size: 9.5px !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card p:nth-child(2) {
+        margin-top: 5px !important;
+        font-size: 21px !important;
+        line-height: 1 !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card p:nth-child(3) {
+        margin-top: 6px !important;
+        font-size: 8px !important;
+        line-height: 1.35 !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card span.grid {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 9px !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card span.grid svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    /* Orders are shown as a slim status strip instead of four large cards */
+    .seller-report-order-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        overflow: hidden;
+        margin-bottom: 11px;
+        border: 1px solid var(--report-border);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05);
+    }
+
+    .seller-report-order-stat {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 13px;
+        border-right: 1px solid #eee8df;
+    }
+
+    .seller-report-order-stat:last-child {
+        border-right: 0;
+    }
+
+    .seller-report-order-stat-icon {
+        display: grid;
+        width: 31px;
+        height: 31px;
+        flex: 0 0 31px;
+        place-items: center;
+        border-radius: 9px;
+    }
+
+    .seller-report-order-stat-icon svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .seller-report-order-stat-copy {
+        min-width: 0;
+    }
+
+    .seller-report-order-stat-label {
+        margin: 0;
+        color: #746b61;
+        font-size: 8px;
+        font-weight: 600;
+    }
+
+    .seller-report-order-stat-value {
+        display: inline-block;
+        margin-top: 2px;
+        color: #211c17;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .seller-report-order-stat-desc {
+        margin-left: 5px;
+        color: #9a9187;
+        font-size: 7.5px;
+        white-space: nowrap;
+    }
+
+    /* Main report panels */
+    .seller-report-panel {
+        overflow: hidden;
+        border: 1px solid var(--report-border) !important;
+        border-radius: 14px !important;
+        background: #fff !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05) !important;
+    }
+
+    .seller-report-panel-heading {
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        letter-spacing: -.025em !important;
+    }
+
+    .seller-report-panel-subtitle {
+        margin-top: 3px !important;
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-report-chart-shell {
+        position: relative;
+        min-height: 238px;
+    }
+
+    #sellerReportChart {
+        height: 238px !important;
+    }
+
+    .seller-report-chart-empty {
+        position: absolute;
+        inset: 0;
+        display: none;
+        place-items: center;
+        pointer-events: none;
+    }
+
+    .seller-report-chart-empty.is-visible {
+        display: grid;
+    }
+
+    .seller-report-chart-path {
+        vector-effect: non-scaling-stroke;
+    }
+
+    .seller-report-table-row {
+        transition: background-color .14s ease;
+    }
+
+    .seller-report-table-row:hover {
+        background: #fffdfa;
+    }
+
+    /* Compact common report sections using their existing markup */
+    .seller-report-analysis-grid {
+        gap: 10px !important;
+        margin-top: 0 !important;
+        margin-bottom: 11px;
+    }
+
+    .seller-report-analysis-grid > div {
+        border-radius: 14px !important;
+        padding: 14px !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05) !important;
+    }
+
+    .seller-report-products-section,
+    .seller-report-financial-section {
+        margin-top: 0 !important;
+        margin-bottom: 11px;
+        border-radius: 14px !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05) !important;
+    }
+
+    .seller-report-products-section > div:first-child,
+    .seller-report-financial-section > div:first-child {
+        padding: 12px 14px !important;
+    }
+
+    .seller-report-products-section > div:first-child h2,
+    .seller-report-financial-section > div:first-child h2 {
+        font-size: 15px !important;
+    }
+
+    .seller-report-products-section > div:first-child p,
+    .seller-report-financial-section > div:first-child p {
+        margin-top: 3px !important;
+        font-size: 8.5px !important;
+    }
+
+    .seller-report-products-section > div:nth-child(2) {
+        gap: 8px !important;
+        padding: 10px !important;
+    }
+
+    .seller-report-products-section article {
+        border-radius: 11px !important;
+        padding: 10px !important;
+    }
+
+    .seller-report-financial-section table th {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+        font-size: 8px !important;
+    }
+
+    .seller-report-financial-section table td {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+    }
+
+    @media (max-width: 1279px) {
+        .seller-report-filter-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .seller-report-kpi-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 900px) {
+        .seller-report-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .seller-report-header-actions {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .seller-report-order-strip {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .seller-report-order-stat:nth-child(2) {
+            border-right: 0;
+        }
+
+        .seller-report-order-stat:nth-child(-n+2) {
+            border-bottom: 1px solid #eee8df;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .seller-report-title {
+            font-size: 24px;
+        }
+
+        .seller-report-header-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .seller-report-filter-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .seller-report-kpi-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .seller-report-order-strip {
+            grid-template-columns: 1fr;
+        }
+
+        .seller-report-order-stat {
+            border-right: 0;
+            border-bottom: 1px solid #eee8df;
+        }
+
+        .seller-report-order-stat:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    @media print {
+        .seller-report-no-print,
+        #sellerSidebar,
+        #sellerHeader,
+        #sellerMobileOverlay {
+            display: none !important;
+        }
+
+        #sellerContent {
+            padding-left: 0 !important;
+        }
+
+        body {
+            background: #fff !important;
+        }
+
+        .seller-report-page {
+            max-width: none !important;
+        }
+
+        .seller-report-card,
+        .seller-report-print-section,
+        .seller-report-panel,
+        .seller-report-order-strip {
+            box-shadow: none !important;
+            break-inside: avoid;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .seller-report-card,
+        .seller-report-table-row,
+        .seller-report-header-button,
+        .seller-report-generate {
+            transition: none !important;
+        }
+    }
+
+    /* ============================================================
+       SELLER REPORTS — CONSISTENT SELLER UI FINAL LAYER
+       Matches the recent Orders / Shipping / Finance visual system.
+       ============================================================ */
+
+    :root {
+        --report-gold: #d59617;
+        --report-gold-hover: #c9890f;
+        --report-gold-soft: #fffaf0;
+        --report-border: #e5e7eb;
+        --report-border-soft: #edf0f3;
+        --report-text: #111827;
+        --report-muted: #7c8592;
+        --report-canvas: #ffffff;
+    }
+
+    .seller-report-page {
+        width: 100% !important;
+        max-width: 1440px !important;
+        margin-inline: auto !important;
+        padding-bottom: 24px !important;
+        color: var(--report-text) !important;
+    }
+
+    /* Header */
+    .seller-report-header {
+        min-height: 66px !important;
+        align-items: flex-start !important;
+        margin-bottom: 12px !important;
+        padding: 2px 2px 13px !important;
+        border-bottom: 1px solid #e7ebf0 !important;
+    }
+
+    .seller-report-heading {
+        gap: 0 !important;
+    }
+
+    .seller-report-heading-icon {
+        display: none !important;
+    }
+
+    .seller-report-eyebrow {
+        color: #b87605 !important;
+        font-size: 8px !important;
+        font-weight: 800 !important;
+        letter-spacing: .16em !important;
+    }
+
+    .seller-report-title {
+        margin-top: 5px !important;
+        color: #111827 !important;
+        font-size: clamp(29px, 2.2vw, 36px) !important;
+        font-weight: 650 !important;
+        line-height: 1 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .seller-report-title-accent {
+        margin-left: .18em !important;
+        color: #C9890B !important;
+    }
+
+    .seller-report-subtitle {
+        max-width: 780px !important;
+        margin-top: 7px !important;
+        color: #7c8592 !important;
+        font-size: 10px !important;
+        line-height: 1.5 !important;
+    }
+
+    .seller-report-header-actions {
+        gap: 7px !important;
+        padding-top: 2px !important;
+    }
+
+    .seller-report-header-button {
+        height: 38px !important;
+        min-height: 38px !important;
+        border-radius: 10px !important;
+        padding-inline: 11px !important;
+        font-size: 9px !important;
+        font-weight: 650 !important;
+    }
+
+    .seller-report-header-button--secondary {
+        border-color: #dfe3e8 !important;
+        color: #667085 !important;
+        box-shadow: 0 3px 9px rgba(15,23,42,.025) !important;
+    }
+
+    .seller-report-header-button--secondary:hover,
+    .seller-report-header-button--secondary:focus-visible {
+        border-color: #efd9a7 !important;
+        background: #fffaf0 !important;
+        color: #9b6505 !important;
+        outline: none !important;
+    }
+
+    /* Filter controls */
+    .seller-report-filter-panel {
+        margin-bottom: 10px !important;
+        border-color: #e5e7eb !important;
+        border-radius: 13px !important;
+        background: #f8fafc !important;
+        padding: 9px !important;
+        box-shadow: 0 5px 16px rgba(15,23,42,.028) !important;
+    }
+
+    .seller-report-filter-grid {
+        grid-template-columns: minmax(150px, .8fr) minmax(150px, .8fr) minmax(180px, .9fr) 112px !important;
+        gap: 8px !important;
+    }
+
+    .seller-report-filter-field label {
+        margin-bottom: 5px !important;
+        color: #667085 !important;
+        font-size: 8.5px !important;
+        font-weight: 650 !important;
+    }
+
+    .seller-report-filter-field input,
+    .seller-report-filter-field select,
+    .seller-report-generate {
+        height: 40px !important;
+        min-height: 40px !important;
+        border-radius: 9px !important;
+        font-size: 9.5px !important;
+    }
+
+    .seller-report-filter-field input,
+    .seller-report-filter-field select {
+        border-color: #d8dee6 !important;
+        color: #344054 !important;
+        box-shadow: 0 1px 2px rgba(15,23,42,.015) !important;
+    }
+
+    .seller-report-filter-field input:focus,
+    .seller-report-filter-field select:focus {
+        border-color: #d59617 !important;
+        box-shadow: 0 0 0 3px rgba(213,150,23,.08) !important;
+    }
+
+    .seller-report-ranges {
+        gap: 5px !important;
+        margin-top: 7px !important;
+        padding-top: 7px !important;
+        border-top-color: #edf0f3 !important;
+    }
+
+    .seller-report-ranges > span {
+        color: #98a2b3 !important;
+        font-size: 8px !important;
+    }
+
+    .seller-report-ranges button {
+        min-height: 26px !important;
+        border-color: #dfe3e8 !important;
+        background: #fff !important;
+        padding: 3px 9px !important;
+        color: #667085 !important;
+        font-size: 7.8px !important;
+    }
+
+    .seller-report-ranges button:hover,
+    .seller-report-ranges button:focus-visible {
+        border-color: #efd9a7 !important;
+        background: #fffaf0 !important;
+        color: #9b6505 !important;
+        outline: none !important;
+    }
+
+    /* KPI cards */
+    .seller-report-kpi-grid {
+        gap: 9px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card {
+        min-height: 78px !important;
+        border-color: #e5e7eb !important;
+        border-radius: 13px !important;
+        padding: 10px 12px !important;
+        box-shadow: 0 5px 16px rgba(15,23,42,.028) !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card p:first-child {
+        color: #667085 !important;
+        font-size: 9.2px !important;
+        font-weight: 600 !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card p:nth-child(2) {
+        margin-top: 4px !important;
+        color: #111827 !important;
+        font-size: 20px !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card p:nth-child(3) {
+        margin-top: 5px !important;
+        font-size: 8px !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card span.grid {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 9px !important;
+    }
+
+    /* Shared panels */
+    .seller-report-panel,
+    .seller-report-products-section,
+    .seller-report-financial-section,
+    .seller-report-order-strip {
+        border-color: #e5e7eb !important;
+        border-radius: 13px !important;
+        box-shadow: 0 6px 18px rgba(15,23,42,.03) !important;
+    }
+
+    .seller-report-analysis-grid {
+        gap: 9px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .seller-report-analysis-grid > div {
+        border-radius: 13px !important;
+        padding: 12px !important;
+        box-shadow: 0 6px 18px rgba(15,23,42,.03) !important;
+    }
+
+    .seller-report-panel-heading {
+        color: #1f2937 !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+    }
+
+    .seller-report-panel-subtitle {
+        color: #98a2b3 !important;
+        font-size: 8.3px !important;
+    }
+
+    .seller-report-chart-shell {
+        min-height: 224px !important;
+        margin-top: 10px !important;
+        border-color: #edf0f3 !important;
+        border-radius: 11px !important;
+        background: #fcfcfd !important;
+        padding: 9px !important;
+    }
+
+    #sellerReportChart {
+        height: 224px !important;
+    }
+
+    /* Order strip */
+    .seller-report-order-strip {
+        margin-bottom: 10px !important;
+    }
+
+    .seller-report-order-stat {
+        gap: 8px !important;
+        padding: 9px 11px !important;
+        border-right-color: #edf0f3 !important;
+    }
+
+    .seller-report-order-stat-icon {
+        width: 30px !important;
+        height: 30px !important;
+        flex-basis: 30px !important;
+        border-radius: 8px !important;
+    }
+
+    .seller-report-order-stat-label {
+        color: #667085 !important;
+        font-size: 8.3px !important;
+    }
+
+    .seller-report-order-stat-value {
+        color: #1f2937 !important;
+        font-size: 17px !important;
+    }
+
+    .seller-report-order-stat-desc {
+        color: #98a2b3 !important;
+        font-size: 7.6px !important;
+    }
+
+    /* Top Selling Products */
+    .seller-report-products-section {
+        margin-bottom: 10px !important;
+        overflow: visible !important;
+    }
+
+    .seller-report-products-section > div:first-child {
+        padding: 11px 13px !important;
+        border-bottom-color: #edf0f3 !important;
+    }
+
+    .seller-report-products-section > div:first-child h2 {
+        color: #1f2937 !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0 !important;
+    }
+
+    .seller-report-products-section > div:first-child p {
+        color: #98a2b3 !important;
+        font-size: 8px !important;
+        line-height: 1.4 !important;
+    }
+
+    .seller-report-product-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .seller-report-product-card {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 3px 10px rgba(15,23,42,.02);
+    }
+
+    .seller-report-product-media {
+        position: relative;
+        height: 120px;
+        overflow: hidden;
+        border-bottom: 1px solid #edf0f3;
+        background: #f8fafc;
+    }
+
+    .seller-report-product-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .seller-report-product-placeholder {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        place-items: center;
+        color: #98a2b3;
+    }
+
+    .seller-report-product-placeholder svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .seller-report-product-rank {
+        position: absolute;
+        top: 7px;
+        left: 7px;
+        display: grid;
+        width: 27px;
+        height: 27px;
+        place-items: center;
+        border: 1px solid rgba(255,255,255,.82);
+        border-radius: 8px;
+        background: rgba(255,255,255,.94);
+        color: #9b6505;
+        font-size: 8.5px;
+        font-weight: 800;
+        box-shadow: 0 3px 9px rgba(15,23,42,.08);
+        backdrop-filter: blur(5px);
+    }
+
+    .seller-report-product-body {
+        padding: 9px 10px 10px;
+    }
+
+    .seller-report-product-topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .seller-report-product-sold {
+        display: inline-flex;
+        min-height: 22px;
+        align-items: center;
+        border: 1px solid #efe3c7;
+        border-radius: 999px;
+        background: #fffaf0;
+        padding: 0 7px;
+        color: #a96f06;
+        font-size: 7.8px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .seller-report-product-share {
+        color: #98a2b3;
+        font-size: 7.5px;
+        font-weight: 600;
+    }
+
+    .seller-report-product-name {
+        display: -webkit-box;
+        overflow: hidden;
+        min-height: 29px;
+        margin: 7px 0 0;
+        color: #344054;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1.4;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .seller-report-product-sales {
+        margin: 5px 0 0;
+        color: #c9890f;
+        font-size: 13px;
+        font-weight: 750;
+        line-height: 1.2;
+        letter-spacing: -.02em;
+    }
+
+    .seller-report-product-progress {
+        height: 4px;
+        margin-top: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #edf0f3;
+    }
+
+    .seller-report-product-progress > span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: #d59617;
+    }
+
+    /* Financial table */
+    .seller-report-financial-section {
+        margin-bottom: 10px !important;
+    }
+
+    .seller-report-financial-section > div:first-child {
+        padding: 11px 13px !important;
+        border-bottom-color: #edf0f3 !important;
+    }
+
+    .seller-report-financial-section > div:first-child h2 {
+        color: #1f2937 !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0 !important;
+    }
+
+    .seller-report-financial-section > div:first-child p {
+        color: #98a2b3 !important;
+        font-size: 8px !important;
+    }
+
+    .seller-report-financial-section table thead tr {
+        border-bottom-color: #e8ebef !important;
+        background: #fafbfc !important;
+    }
+
+    .seller-report-financial-section table th {
+        padding: 9px 13px !important;
+        color: #667085 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+    }
+
+    .seller-report-financial-section table td {
+        padding: 9px 13px !important;
+    }
+
+    .seller-report-table-row {
+        border-bottom-color: #edf0f3 !important;
+    }
+
+    .seller-report-table-row:hover {
+        background: #fffdf8 !important;
+    }
+
+    @media (max-width: 1180px) {
+        .seller-report-product-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 900px) {
+        .seller-report-header {
+            gap: 10px !important;
+        }
+
+        .seller-report-filter-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+
+        .seller-report-product-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 639px) {
+        .seller-report-title {
+            font-size: clamp(28px, 8vw, 34px) !important;
+        }
+
+        .seller-report-header-actions {
+            grid-template-columns: 1fr 1fr !important;
+        }
+
+        .seller-report-header-button {
+            height: 40px !important;
+            min-height: 40px !important;
+        }
+
+        .seller-report-filter-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .seller-report-filter-field input,
+        .seller-report-filter-field select,
+        .seller-report-generate {
+            height: 42px !important;
+            min-height: 42px !important;
+            font-size: 10px !important;
+        }
+
+        .seller-report-product-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .seller-report-product-media {
+            height: 180px;
+        }
+    }
+
+    @media print {
+        .seller-report-product-media {
+            height: 105px !important;
+        }
+
+        .seller-report-product-card {
+            break-inside: avoid;
+            box-shadow: none !important;
+        }
+    }
+
+
+    /* ============================================================
+       REPORT TYPE — PREMIUM DROPDOWN
+       ============================================================ */
+    .seller-report-type-dropdown {
+        position: relative;
+        min-width: 0;
+    }
+
+    .seller-report-type-native {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        overflow: hidden !important;
+        clip: rect(0 0 0 0) !important;
+        clip-path: inset(50%) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+        padding: 0 !important;
+        margin: -1px !important;
+    }
+
+    .seller-report-type-button {
+        display: flex;
+        width: 100%;
+        height: 40px;
+        min-height: 40px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 9px;
+        border: 1px solid #d8dee6;
+        border-radius: 9px;
+        background: #fff;
+        padding: 0 10px 0 8px;
+        color: #344054;
+        font-family: inherit;
+        font-size: 9.5px;
+        font-weight: 650;
+        text-align: left;
+        cursor: pointer;
+        outline: none;
+        box-shadow: 0 1px 2px rgba(15,23,42,.02);
+        transition: border-color .14s ease, box-shadow .14s ease, background-color .14s ease;
+    }
+
+    .seller-report-type-button:hover {
+        border-color: #cfd6df;
+        background: #fdfefe;
+    }
+
+    .seller-report-type-button:focus-visible,
+    .seller-report-type-button[aria-expanded="true"] {
+        border-color: #d59617;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(213,150,23,.08);
+    }
+
+    .seller-report-type-button-main {
+        display: inline-flex;
+        min-width: 0;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .seller-report-type-icon {
+        display: grid;
+        width: 24px;
+        height: 24px;
+        flex: 0 0 24px;
+        place-items: center;
+        border: 1px solid #efe3c7;
+        border-radius: 7px;
+        background: #fffaf0;
+        color: #b97805;
+    }
+
+    .seller-report-type-icon svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .seller-report-type-current {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .seller-report-type-chevron {
+        width: 13px;
+        height: 13px;
+        flex: 0 0 auto;
+        color: #98a2b3;
+        transition: transform .15s ease, color .15s ease;
+    }
+
+    .seller-report-type-button[aria-expanded="true"] .seller-report-type-chevron {
+        transform: rotate(180deg);
+        color: #b97805;
+    }
+
+    .seller-report-type-menu {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        z-index: 100;
+        min-width: 270px;
+        overflow: hidden;
+        border: 1px solid #e2e7ed;
+        border-radius: 12px;
+        background: rgba(255,255,255,.99);
+        padding: 5px;
+        box-shadow: 0 18px 40px rgba(15,23,42,.12), 0 3px 9px rgba(15,23,42,.045);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .seller-report-type-menu[hidden] {
+        display: none !important;
+    }
+
+    .seller-report-type-option {
+        display: flex;
+        width: 100%;
+        min-height: 44px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border: 0;
+        border-radius: 9px;
+        background: transparent;
+        padding: 7px 8px 7px 10px;
+        color: #344054;
+        font-family: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color .12s ease, color .12s ease;
+    }
+
+    .seller-report-type-option:hover,
+    .seller-report-type-option:focus-visible {
+        outline: none;
+        background: #f8fafc;
+    }
+
+    .seller-report-type-option.is-selected {
+        background: #fff9ec;
+    }
+
+    .seller-report-type-option-copy {
+        display: block;
+        min-width: 0;
+    }
+
+    .seller-report-type-option-copy strong {
+        display: block;
+        color: #344054;
+        font-size: 9.3px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .seller-report-type-option.is-selected .seller-report-type-option-copy strong {
+        color: #9b6505;
+    }
+
+    .seller-report-type-option-copy small {
+        display: block;
+        margin-top: 2px;
+        color: #98a2b3;
+        font-size: 7.8px;
+        font-weight: 400;
+        line-height: 1.35;
+    }
+
+    .seller-report-type-check {
+        width: 14px;
+        height: 14px;
+        flex: 0 0 auto;
+        color: #c9890f;
+        opacity: 0;
+    }
+
+    .seller-report-type-option.is-selected .seller-report-type-check {
+        opacity: 1;
+    }
+
+    /* ============================================================
+       MODERN SALES ANALYTICS
+       ============================================================ */
+    .seller-report-analytics-layout {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1.48fr) minmax(300px, .62fr) !important;
+        gap: 9px !important;
+        align-items: stretch;
+    }
+
+    .seller-report-trend-panel,
+    .seller-report-performance-panel {
+        overflow: hidden;
+        border: 1px solid #e5e7eb !important;
+        border-radius: 13px !important;
+        background: #fff !important;
+        padding: 0 !important;
+        box-shadow: 0 6px 18px rgba(15,23,42,.03) !important;
+    }
+
+    .seller-report-analytics-head,
+    .seller-report-performance-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 58px;
+        padding: 11px 13px 10px;
+        border-bottom: 1px solid #edf0f3;
+    }
+
+    .seller-report-analytics-heading {
+        min-width: 0;
+    }
+
+    .seller-report-analytics-head .seller-report-panel-heading,
+    .seller-report-performance-head .seller-report-panel-heading {
+        margin: 0 !important;
+        color: #1f2937 !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0 !important;
+    }
+
+    .seller-report-analytics-head .seller-report-panel-subtitle,
+    .seller-report-performance-head .seller-report-panel-subtitle {
+        margin: 3px 0 0 !important;
+        color: #98a2b3 !important;
+        font-size: 8px !important;
+        line-height: 1.4 !important;
+    }
+
+    .seller-report-chart-legend {
+        display: flex;
+        flex: 0 0 auto;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 6px;
+    }
+
+    .seller-report-legend-item {
+        display: inline-flex;
+        min-height: 25px;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #e7ebef;
+        border-radius: 999px;
+        background: #fff;
+        padding: 0 8px;
+        color: #667085;
+        font-size: 7.8px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .seller-report-legend-line {
+        width: 15px;
+        height: 3px;
+        border-radius: 999px;
+    }
+
+    .seller-report-legend-line--sales {
+        background: #d59617;
+    }
+
+    .seller-report-legend-line--net {
+        height: 0;
+        border-top: 2px dashed #7d93a5;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    .seller-report-chart-shell--modern {
+        position: relative;
+        min-height: 246px !important;
+        margin: 0 !important;
+        overflow-x: auto;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: #fff !important;
+        padding: 10px 10px 7px !important;
+    }
+
+    .seller-report-chart-shell--modern #sellerReportChart {
+        height: 229px !important;
+    }
+
+    .seller-report-chart-empty-card {
+        display: grid;
+        justify-items: center;
+        max-width: 230px;
+        border: 1px solid #e7ebef;
+        border-radius: 12px;
+        background: rgba(255,255,255,.96);
+        padding: 13px 16px;
+        text-align: center;
+        box-shadow: 0 6px 20px rgba(15,23,42,.04);
+    }
+
+    .seller-report-chart-empty-icon {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 8px;
+        background: #fffaf0;
+        color: #b97805;
+    }
+
+    .seller-report-chart-empty-icon svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .seller-report-chart-empty-card p {
+        margin: 7px 0 0;
+        color: #475467;
+        font-size: 9px;
+        font-weight: 650;
+    }
+
+    .seller-report-chart-empty-card small {
+        margin-top: 3px;
+        color: #98a2b3;
+        font-size: 7.8px;
+        line-height: 1.4;
+    }
+
+    .seller-report-performance-panel {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .seller-report-performance-list {
+        display: grid;
+        padding: 2px 13px 0;
+    }
+
+    .seller-report-performance-row {
+        padding: 11px 0;
+        border-bottom: 1px solid #edf0f3;
+    }
+
+    .seller-report-performance-row-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .seller-report-performance-label {
+        color: #475467;
+        font-size: 8.8px;
+        font-weight: 650;
+        line-height: 1.35;
+    }
+
+    .seller-report-performance-value {
+        font-size: 10.5px;
+        font-weight: 750;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    .seller-report-performance-value--completed {
+        color: #4f7d63;
+    }
+
+    .seller-report-performance-value--cancelled {
+        color: #a65353;
+    }
+
+    .seller-report-performance-track {
+        height: 5px;
+        margin-top: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #eef1f4;
+    }
+
+    .seller-report-performance-track > span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+    }
+
+    .seller-report-performance-row--rating {
+        border-bottom: 0;
+    }
+
+    .seller-report-rating-value {
+        color: #a8731f;
+        font-size: 9.5px;
+        font-weight: 750;
+        white-space: nowrap;
+    }
+
+    .seller-report-rating-note {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 6px;
+        color: #98a2b3;
+        font-size: 7.8px;
+        line-height: 1.4;
+    }
+
+    .seller-report-rating-star {
+        color: #d59617;
+        font-size: 10px;
+        line-height: 1;
+    }
+
+    .seller-report-revenue-note {
+        display: grid;
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 8px;
+        margin: auto 10px 10px;
+        border: 1px solid #e7ebef;
+        border-radius: 10px;
+        background: #fafbfc;
+        padding: 9px 10px;
+    }
+
+    .seller-report-revenue-note-icon {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 8px;
+        background: #fff;
+        color: #7c8592;
+        box-shadow: inset 0 0 0 1px #e5e7eb;
+    }
+
+    .seller-report-revenue-note-icon svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .seller-report-revenue-note strong {
+        display: block;
+        color: #475467;
+        font-size: 8.5px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .seller-report-revenue-note p {
+        margin: 3px 0 0;
+        color: #98a2b3;
+        font-size: 7.7px;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 1080px) {
+        .seller-report-analytics-layout {
+            grid-template-columns: 1fr !important;
+        }
+
+        .seller-report-revenue-note {
+            margin-top: 0;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .seller-report-type-button {
+            height: 42px;
+            min-height: 42px;
+            font-size: 10px;
+        }
+
+        .seller-report-type-menu {
+            min-width: 100%;
+        }
+
+        .seller-report-analytics-head {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .seller-report-chart-legend {
+            justify-content: flex-start;
+        }
+
+        .seller-report-chart-shell--modern {
+            min-height: 238px !important;
+        }
+    }
+
+
+
+/* ======================================================================
+   GENERATE REPORT — MAIN CONTAINERS ONLY FLOATING
+   Final hierarchy rule:
+   - Top-level report surfaces float.
+   - Everything nested inside those surfaces stays flat.
+   - Dropdown menus may keep elevation because they are overlays.
+   Visual-only: filters, routes, chart, print/download and report data
+   remain unchanged.
+   ====================================================================== */
+
+.seller-report-page {
+    --report-main-border: #E5E7EB;
+    --report-main-divider: #ECEFF2;
+    --report-main-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255,255,255,.92);
+    --report-main-shadow-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255,255,255,.90);
+}
+
+/* ------------------------------------------------------------
+   OPEN PAGE HEADER — NOT A FLOATING CARD
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-header,
+.seller-report-page .seller-report-header:hover {
+    border: 0 !important;
+    border-bottom: 1px solid var(--report-main-divider) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   ONLY TOP-LEVEL REPORT SURFACES FLOAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-filter-panel,
+.seller-report-page .seller-report-kpi-grid .seller-report-card,
+.seller-report-page .seller-report-trend-panel,
+.seller-report-page .seller-report-performance-panel,
+.seller-report-page .seller-report-products-section,
+.seller-report-page .seller-report-order-strip,
+.seller-report-page .seller-report-financial-section {
+    border-color: var(--report-main-border) !important;
+    background: #FFFFFF !important;
+    transform: none !important;
+    outline: 0 !important;
+}
+
+.seller-report-page .seller-report-filter-panel,
+.seller-report-page .seller-report-trend-panel,
+.seller-report-page .seller-report-performance-panel,
+.seller-report-page .seller-report-products-section,
+.seller-report-page .seller-report-order-strip,
+.seller-report-page .seller-report-financial-section {
+    box-shadow: var(--report-main-shadow) !important;
+}
+
+.seller-report-page .seller-report-kpi-grid .seller-report-card {
+    box-shadow: var(--report-main-shadow-soft) !important;
+}
+
+/* No movement/lift on structural hover. */
+.seller-report-page .seller-report-filter-panel:hover,
+.seller-report-page .seller-report-kpi-grid .seller-report-card:hover,
+.seller-report-page .seller-report-trend-panel:hover,
+.seller-report-page .seller-report-performance-panel:hover,
+.seller-report-page .seller-report-products-section:hover,
+.seller-report-page .seller-report-order-strip:hover,
+.seller-report-page .seller-report-financial-section:hover {
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   FILTER PANEL CONTENT — FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-filter-field input,
+.seller-report-page .seller-report-filter-field select,
+.seller-report-page .seller-report-type-button,
+.seller-report-page .seller-report-generate,
+.seller-report-page .seller-report-ranges button,
+.seller-report-page .seller-report-header-button {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-filter-field input,
+.seller-report-page .seller-report-filter-field select,
+.seller-report-page .seller-report-type-button {
+    border-color: #D1D5DB !important;
+    background: #FFFFFF !important;
+}
+
+.seller-report-page .seller-report-filter-field input:hover,
+.seller-report-page .seller-report-filter-field select:hover,
+.seller-report-page .seller-report-type-button:hover,
+.seller-report-page .seller-report-ranges button:hover {
+    background: #F8FAFC !important;
+    transform: none !important;
+}
+
+/* Focus ring only; no resting floating effect. */
+.seller-report-page .seller-report-filter-field input:focus,
+.seller-report-page .seller-report-filter-field select:focus,
+.seller-report-page .seller-report-type-button:focus-visible,
+.seller-report-page .seller-report-type-button[aria-expanded="true"] {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08) !important;
+}
+
+/* Header buttons remain flat controls. */
+.seller-report-page .seller-report-header-button--secondary,
+.seller-report-page .seller-report-header-button--primary,
+.seller-report-page .seller-report-header-button--secondary:hover,
+.seller-report-page .seller-report-header-button--primary:hover {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Report type icon is not a floating mini-card. */
+.seller-report-page .seller-report-type-icon {
+    box-shadow: none !important;
+}
+
+/* Dropdown menu remains elevated because it is a popover layer. */
+.seller-report-page .seller-report-type-menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* ------------------------------------------------------------
+   KPI CARD CONTENT — FLAT INSIDE EACH TOP-LEVEL KPI CARD
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-kpi-grid .seller-report-card > *,
+.seller-report-page .seller-report-kpi-grid .seller-report-card span.grid {
+    box-shadow: none !important;
+}
+
+.seller-report-page .seller-report-kpi-grid .seller-report-card span.grid {
+    border: 0 !important;
+}
+
+/* ------------------------------------------------------------
+   SALES TREND / PERFORMANCE CONTENT — FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-chart-shell,
+.seller-report-page .seller-report-chart-shell--modern,
+.seller-report-page .seller-report-chart-empty-card,
+.seller-report-page .seller-report-legend-item,
+.seller-report-page .seller-report-performance-row,
+.seller-report-page .seller-report-revenue-note,
+.seller-report-page .seller-report-revenue-note-icon {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-chart-shell,
+.seller-report-page .seller-report-chart-shell--modern {
+    border: 0 !important;
+    background: #FFFFFF !important;
+}
+
+.seller-report-page .seller-report-chart-empty-card {
+    border-color: #E5E7EB !important;
+    background: #FAFBFC !important;
+}
+
+.seller-report-page .seller-report-chart-empty-icon,
+.seller-report-page .seller-report-revenue-note-icon {
+    box-shadow: none !important;
+}
+
+.seller-report-page .seller-report-revenue-note {
+    border-color: var(--report-main-divider) !important;
+    background: #FAFBFC !important;
+}
+
+/* Performance rows stay document-like with dividers only. */
+.seller-report-page .seller-report-performance-row {
+    border-bottom-color: var(--report-main-divider) !important;
+}
+
+/* ------------------------------------------------------------
+   TOP SELLING PRODUCTS — MAIN SECTION FLOATS, PRODUCT ITEMS FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-product-card,
+.seller-report-page .seller-report-product-card:hover,
+.seller-report-page .seller-report-product-media,
+.seller-report-page .seller-report-product-rank,
+.seller-report-page .seller-report-product-sold,
+.seller-report-page .seller-report-product-progress {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-product-card {
+    border-color: #E5E7EB !important;
+    background: #FFFFFF !important;
+}
+
+.seller-report-page .seller-report-product-media {
+    border-bottom-color: var(--report-main-divider) !important;
+    background: #F8FAFC !important;
+}
+
+.seller-report-page .seller-report-product-rank {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.seller-report-page .seller-report-products-section .col-span-full {
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* ------------------------------------------------------------
+   ORDER STATUS STRIP — PARENT FLOATS, INNER CELLS FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-order-stat,
+.seller-report-page .seller-report-order-stat:hover,
+.seller-report-page .seller-report-order-stat-icon,
+.seller-report-page .seller-report-order-stat-copy {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-order-stat {
+    background: transparent !important;
+    border-right-color: var(--report-main-divider) !important;
+}
+
+.seller-report-page .seller-report-order-stat-icon {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   FINANCIAL TABLE — MAIN SECTION FLOATS, TABLE CONTENT FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-financial-section > div:first-child,
+.seller-report-page .seller-report-financial-section table,
+.seller-report-page .seller-report-financial-section thead,
+.seller-report-page .seller-report-financial-section tbody,
+.seller-report-page .seller-report-table-row,
+.seller-report-page .seller-report-table-row:hover,
+.seller-report-page .seller-report-financial-section td,
+.seller-report-page .seller-report-financial-section th,
+.seller-report-page .seller-report-financial-section td span {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-table-row:hover {
+    background: #F8FAFC !important;
+}
+
+.seller-report-page .seller-report-financial-section > div:first-child,
+.seller-report-page .seller-report-financial-section table thead tr,
+.seller-report-page .seller-report-table-row {
+    border-color: var(--report-main-divider) !important;
+}
+
+/* Transaction/status badges stay flat semantic labels. */
+.seller-report-page .seller-report-financial-section td span {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   PRINT — NO SHADOWS
+   ------------------------------------------------------------ */
+@media print {
+    .seller-report-page .seller-report-filter-panel,
+    .seller-report-page .seller-report-kpi-grid .seller-report-card,
+    .seller-report-page .seller-report-trend-panel,
+    .seller-report-page .seller-report-performance-panel,
+    .seller-report-page .seller-report-products-section,
+    .seller-report-page .seller-report-order-strip,
+    .seller-report-page .seller-report-financial-section {
+        box-shadow: none !important;
+    }
+}
+
+/* ------------------------------------------------------------
+   MOBILE — SAME HIERARCHY, LIGHTER MAIN DEPTH
+   ------------------------------------------------------------ */
+@media (max-width: 639px) {
+    .seller-report-page .seller-report-filter-panel,
+    .seller-report-page .seller-report-trend-panel,
+    .seller-report-page .seller-report-performance-panel,
+    .seller-report-page .seller-report-products-section,
+    .seller-report-page .seller-report-order-strip,
+    .seller-report-page .seller-report-financial-section {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .seller-report-page .seller-report-kpi-grid .seller-report-card {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
+    }
+
+    .seller-report-page .seller-report-product-card,
+    .seller-report-page .seller-report-chart-empty-card,
+    .seller-report-page .seller-report-revenue-note,
+    .seller-report-page .seller-report-order-stat {
+        box-shadow: none !important;
+    }
+}
+/* =====================================================================
+   SARI SELLER REPORTS — SELLER ORDERS UI PARITY
+   Shared Orders reference: open text header, 1520px workspace, 48px
+   filters, custom dropdown, floating white cards, flat data rows and
+   10-row pagination. Scoped to Reports; report logic is not changed.
+   ===================================================================== */
+.seller-report-page {
+    --report-orders-gold: #C88912;
+    --report-orders-gold-hover: #B47B0E;
+    --report-orders-ink: #2F3742;
+    --report-orders-muted: #667383;
+    --report-orders-border: #E5E7EB;
+    --report-orders-soft: #F8FAFC;
+    /* Exact Buyer Shopping Cart floating container shadow (desktop). */
+    --report-orders-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+    width: 100% !important;
+    max-width: 1520px !important;
+    margin: 0 auto !important;
+    padding: 0 0 28px !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    color: var(--report-orders-ink) !important;
+}
+.seller-report-page button,
+.seller-report-page input,
+.seller-report-page select,
+.seller-report-page a { font-family: inherit; }
+
+/* Orders-style open header (not a floating container). */
+.seller-report-page .seller-report-header {
+    display: flex !important;
+    min-height: 0 !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    gap: 14px 24px !important;
+    margin: 0 0 20px !important;
+    padding: 0 0 14px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #E9EDF1 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.seller-report-page .seller-report-heading { display: block !important; min-width: 0; }
+.seller-report-page .seller-report-heading-icon { display: none !important; }
+.seller-report-page .seller-report-eyebrow {
+    color: #A87316 !important;
+    font-size: 10.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.4 !important;
+    letter-spacing: .14em !important;
+}
+.seller-report-page .seller-report-title {
+    margin-top: 6px !important;
+    color: #2E343B !important;
+    font-size: clamp(27px, 2.3vw, 31px) !important;
+    font-weight: 760 !important;
+    line-height: 1.08 !important;
+    letter-spacing: -.04em !important;
+}
+.seller-report-page .seller-report-title-accent { color: var(--report-orders-gold) !important; }
+.seller-report-page .seller-report-subtitle {
+    max-width: 780px !important;
+    margin-top: 6px !important;
+    color: #8793A1 !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+}
+.seller-report-page .seller-report-header-actions { gap: 10px 24px !important; padding: 0 2px 0 0 !important; }
+.seller-report-page .seller-report-header-button,
+.seller-report-page .seller-report-header-button:hover,
+.seller-report-page .seller-report-header-button:focus-visible {
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    font-size: 11.5px !important;
+    font-weight: 750 !important;
+    color: #59636E !important;
+    text-decoration: none !important;
+}
+.seller-report-page .seller-report-header-button:hover,
+.seller-report-page .seller-report-header-button:focus-visible { color: var(--report-orders-gold) !important; }
+.seller-report-page .seller-report-header-button:focus-visible { outline: 2px solid var(--report-orders-gold) !important; outline-offset: 4px !important; }
+.seller-report-page .seller-report-header-button svg { width: 15px !important; height: 15px !important; }
+
+/* The report controls retain their original dates/type semantics. */
+.seller-report-page .seller-report-filter-panel,
+.seller-report-page .seller-report-filter-panel:hover {
+    position: relative;
+    z-index: 20;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+.seller-report-page .seller-report-filter-grid {
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(195px,1.14fr) 128px !important;
+    align-items: end !important;
+    gap: 12px !important;
+}
+.seller-report-page .seller-report-filter-field { min-width: 0; }
+.seller-report-page .seller-report-filter-field label {
+    margin: 0 0 7px 2px !important;
+    color: #637081 !important;
+    font-size: 11px !important;
+    font-weight: 650 !important;
+}
+.seller-report-page .seller-report-filter-field input,
+.seller-report-page .seller-report-type-button,
+.seller-report-page .seller-report-generate {
+    height: 48px !important;
+    min-height: 48px !important;
+    border-radius: 14px !important;
+    font-size: 11.5px !important;
+}
+.seller-report-page .seller-report-filter-field input,
+.seller-report-page .seller-report-type-button {
+    border: 1px solid #DCE2E8 !important;
+    background: #FFF !important;
+    color: #3F4B59 !important;
+    box-shadow: none !important;
+}
+.seller-report-page .seller-report-filter-field input { padding: 0 15px !important; cursor: pointer; }
+.seller-report-page .seller-report-type-button { padding: 0 15px !important; font-weight: 600 !important; }
+.seller-report-page .seller-report-type-icon { display: none !important; }
+.seller-report-page .seller-report-type-chevron { width: 17px !important; height: 17px !important; }
+.seller-report-page .seller-report-filter-field input:hover,
+.seller-report-page .seller-report-type-button:hover { border-color: #CFD6DE !important; background: #F8FAFC !important; }
+.seller-report-page .seller-report-filter-field input:focus,
+.seller-report-page .seller-report-type-button:focus-visible,
+.seller-report-page .seller-report-type-button[aria-expanded="true"] {
+    border-color: var(--report-orders-gold) !important;
+    background: #FFF !important;
+    box-shadow: 0 0 0 2px rgba(200,137,18,.12) !important;
+    outline: none !important;
+}
+.seller-report-page .seller-report-type-dropdown { position: relative; z-index: 25; }
+.seller-report-page .seller-report-type-menu {
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    left: 0 !important;
+    z-index: 100 !important;
+    min-width: min(100%, 270px) !important;
+    max-height: min(360px, 60vh);
+    overflow-y: auto !important;
+    padding: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 14px !important;
+    background: #FFF !important;
+    box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05) !important;
+    backdrop-filter: none !important;
+}
+.seller-report-page .seller-report-type-option {
+    min-height: 44px !important;
+    border-radius: 10px !important;
+    padding: 7px 12px !important;
+}
+.seller-report-page .seller-report-type-option:hover,
+.seller-report-page .seller-report-type-option:focus-visible,
+.seller-report-page .seller-report-type-option.is-selected { background: #F8FAFC !important; }
+.seller-report-page .seller-report-type-option-copy strong { color: #475569 !important; font-size: 11.5px !important; }
+.seller-report-page .seller-report-type-option-copy small { margin-top: 3px; color: #8B96A4 !important; font-size: 9px !important; }
+.seller-report-page .seller-report-type-option.is-selected strong { color: #A56D0A !important; }
+.seller-report-page .seller-report-generate {
+    width: 100% !important;
+    padding: 0 18px !important;
+    border: 1px solid var(--report-orders-gold) !important;
+    background: var(--report-orders-gold) !important;
+    color: #FFF !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+}
+.seller-report-page .seller-report-generate:hover,
+.seller-report-page .seller-report-generate:focus-visible {
+    border-color: var(--report-orders-gold-hover) !important;
+    background: var(--report-orders-gold-hover) !important;
+}
+.seller-report-page .seller-report-ranges {
+    gap: 8px !important;
+    margin-top: 12px !important;
+    padding-top: 0 !important;
+    border-top: 0 !important;
+}
+.seller-report-page .seller-report-ranges > span { color: #8793A1 !important; font-size: 11px !important; }
+.seller-report-page .seller-report-ranges button {
+    min-height: 32px !important;
+    border: 1px solid #DCE2E8 !important;
+    border-radius: 10px !important;
+    background: #FFF !important;
+    padding: 5px 12px !important;
+    color: #59636E !important;
+    font-size: 10.5px !important;
+    font-weight: 650 !important;
+}
+.seller-report-page .seller-report-ranges button:hover,
+.seller-report-page .seller-report-ranges button:focus-visible { border-color: var(--report-orders-gold) !important; background: #F8FAFC !important; color: #A56D0A !important; }
+
+/* 4 KPIs and the order status strip share Orders' readable card scale. */
+.seller-report-page .seller-report-kpi-grid { grid-template-columns: repeat(4,minmax(0,1fr)) !important; gap: 14px !important; margin-bottom: 20px !important; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card,
+.seller-report-page .seller-report-kpi-grid .seller-report-card:hover {
+    min-height: 110px !important;
+    border: 1px solid var(--report-orders-border) !important;
+    border-radius: 20px !important;
+    background: #FFF !important;
+    padding: 14px 16px !important;
+    box-shadow: var(--report-orders-shadow) !important;
+    transform: none !important;
+}
+.seller-report-page .seller-report-kpi-grid .seller-report-card p:first-child { color: #637081 !important; font-size: 13px !important; font-weight: 650 !important; line-height: 1.4 !important; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(2) { margin-top: 7px !important; color: #1F2937 !important; font-size: clamp(20px,1.9vw,30px) !important; font-weight: 650 !important; line-height: 1.12 !important; overflow-wrap: anywhere; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(3) { margin-top: 6px !important; color: #8995A3 !important; font-size: 11.5px !important; line-height: 1.5 !important; white-space: normal !important; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card span.grid {
+    width: 28px !important; height: 28px !important; flex: 0 0 28px !important;
+    border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important;
+}
+.seller-report-page .seller-report-kpi-grid .seller-report-card span.grid svg { width: 27px !important; height: 27px !important; }
+.seller-report-page .seller-report-analytics-layout { gap: 14px !important; margin: 0 0 20px !important; grid-template-columns: minmax(0,1.45fr) minmax(310px,.65fr) !important; }
+.seller-report-page .seller-report-trend-panel,
+.seller-report-page .seller-report-performance-panel,
+.seller-report-page .seller-report-products-section,
+.seller-report-page .seller-report-financial-section {
+    border: 1px solid var(--report-orders-border) !important;
+    border-radius: 20px !important;
+    background: #FFF !important;
+    box-shadow: var(--report-orders-shadow) !important;
+    transform: none !important;
+}
+.seller-report-page .seller-report-analytics-head,
+.seller-report-page .seller-report-performance-head { min-height: 92px !important; padding: 23px 25px !important; border-bottom: 1px solid #E9EDF1 !important; }
+.seller-report-page .seller-report-panel-heading { color: #1F2937 !important; font-size: 21px !important; font-weight: 750 !important; letter-spacing: -.025em !important; }
+.seller-report-page .seller-report-panel-subtitle { margin-top: 7px !important; color: #738093 !important; font-size: 13px !important; line-height: 1.5 !important; }
+.seller-report-page .seller-report-chart-shell--modern { min-height: 390px !important; padding: 19px 22px 22px !important; }
+.seller-report-page .seller-report-chart-shell--modern #sellerReportChart { height: 355px !important; }
+.seller-report-page .seller-report-legend-item { min-height: 36px !important; border: 1px solid #E5E9EF !important; background: #FFF !important; padding: 0 12px !important; color: #364152 !important; font-size: 12px !important; font-weight: 650 !important; }
+.seller-report-page .seller-report-legend-line--sales { width: 21px !important; background: #C88912 !important; }
+.seller-report-page .seller-report-legend-line--net { width: 21px !important; border-top-color: #8994A3 !important; }
+.seller-report-page .seller-report-performance-list { padding: 6px 22px 0 !important; }
+.seller-report-page .seller-report-performance-row { padding: 16px 0 !important; }
+.seller-report-page .seller-report-performance-label { font-size: 11.5px !important; }
+.seller-report-page .seller-report-performance-value { font-size: 12.5px !important; }
+.seller-report-page .seller-report-rating-value { font-size: 11.5px !important; }
+.seller-report-page .seller-report-rating-note { font-size: 10px !important; }
+.seller-report-page .seller-report-revenue-note { margin: auto 16px 16px !important; padding: 12px !important; }
+.seller-report-page .seller-report-revenue-note strong { font-size: 10.5px !important; }
+.seller-report-page .seller-report-revenue-note p { font-size: 9.5px !important; }
+.seller-report-page .seller-report-products-section { margin: 0 0 20px !important; overflow: hidden !important; }
+.seller-report-page .seller-report-products-section > div:first-child,
+.seller-report-page .seller-report-financial-section > div:first-child { padding: 20px 23px !important; border-bottom: 1px solid #E9EDF1 !important; }
+.seller-report-page .seller-report-products-section > div:first-child h2 { font-size: 20px !important; font-weight: 750 !important; color: var(--report-orders-ink) !important; }
+.seller-report-page .seller-report-financial-section > div:first-child h2 { font-size: 18px !important; font-weight: 750 !important; color: var(--report-orders-ink) !important; }
+.seller-report-page .seller-report-products-section > div:first-child p,
+.seller-report-page .seller-report-financial-section > div:first-child p { margin-top: 4px !important; color: #8B96A4 !important; font-size: 11.5px !important; }
+.seller-report-page .seller-report-product-grid { gap: 12px !important; padding: 16px !important; }
+.seller-report-page .seller-report-product-card { border-radius: 13px !important; }
+.seller-report-page .seller-report-product-media { height: 155px !important; }
+.seller-report-page .seller-report-product-media img { object-fit: cover !important; object-position: center !important; }
+.seller-report-page .seller-report-product-body { padding: 12px !important; }
+.seller-report-page .seller-report-product-name { margin-top: 0 !important; min-height: 0 !important; font-size: 12px !important; }
+.seller-report-page .seller-report-product-sales { font-size: 16px !important; color: #B47B0E !important; }
+.seller-report-page .seller-report-product-sold,
+.seller-report-page .seller-report-product-share { font-size: 10px !important; }
+
+/* Order-overview strip becomes four separate floating KPI cards. */
+.seller-report-page .seller-report-order-strip {
+    display: grid !important;
+    grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+    gap: 14px !important;
+    margin: 0 0 20px !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.seller-report-page .seller-report-order-stat {
+    min-height: 110px !important;
+    align-items: flex-start !important;
+    flex-direction: row-reverse !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+    border: 1px solid var(--report-orders-border) !important;
+    border-radius: 20px !important;
+    background: #FFF !important;
+    box-shadow: var(--report-orders-shadow) !important;
+}
+.seller-report-page .seller-report-order-stat-icon { width: 27px !important; height: 27px !important; flex: 0 0 27px !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; }
+.seller-report-page .seller-report-order-stat-icon svg { width: 27px !important; height: 27px !important; }
+.seller-report-page .seller-report-order-stat-label { font-size: 13px !important; line-height: 1.4 !important; color: #637081 !important; }
+.seller-report-page .seller-report-order-stat-value { display: block !important; margin-top: 7px !important; font-size: 27px !important; font-weight: 650 !important; color: #1F2937 !important; }
+.seller-report-page .seller-report-order-stat-desc { display: block !important; margin: 6px 0 0 !important; font-size: 11.5px !important; color: #8995A3 !important; }
+
+/* Financial breakdown: Orders table spacing, search, pagination. */
+.seller-report-page .seller-report-financial-section { margin: 0 0 20px !important; overflow: hidden !important; }
+.seller-report-page .seller-report-transaction-count-badge {
+    display: inline-flex; align-items: center; min-height: 32px;
+    border: 1px solid #E5E7EB !important; border-radius: 9px !important;
+    background: #F8FAFC !important; padding: 0 12px !important;
+    color: #667383 !important; font-size: 11px !important; font-weight: 600 !important;
+}
+.seller-report-page .seller-report-transaction-toolbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 20px; border-bottom: 1px solid #E9EDF1;
+}
+.seller-report-page .seller-report-transaction-search-field { position: relative; display: block; flex: 1 1 auto; max-width: 580px; }
+.seller-report-page .seller-report-transaction-search-field > svg {
+    position: absolute; left: 16px; top: 50%; width: 20px; height: 20px;
+    transform: translateY(-50%); color: #98A2B3; pointer-events: none;
+}
+.seller-report-page #sellerReportTransactionSearch {
+    display: block; width: 100%; height: 48px; min-height: 48px;
+    border: 1px solid #DCE2E8; border-radius: 14px; background: #FFF;
+    padding: 0 14px 0 46px; color: #3F4B59;
+    font-size: 11.5px; outline: none; box-shadow: none;
+}
+.seller-report-page #sellerReportTransactionSearch::placeholder { color: #A0AAB6; }
+.seller-report-page #sellerReportTransactionSearch:focus { border-color: #C88912; box-shadow: 0 0 0 2px rgba(200,137,18,.12); }
+.seller-report-page .seller-report-transaction-per-page { flex: 0 0 auto; color: #8793A1; font-size: 11px; }
+.seller-report-page .seller-report-financial-section table { width: 100% !important; min-width: 1080px !important; border-collapse: collapse !important; }
+.seller-report-page .seller-report-financial-section table thead tr { background: #F8FAFC !important; }
+.seller-report-page .seller-report-financial-section table th {
+    padding: 15px 16px !important; color: #8591A0 !important;
+    font-size: 11px !important; font-weight: 750 !important;
+    letter-spacing: .075em !important; text-transform: uppercase !important;
+    white-space: nowrap;
+}
+.seller-report-page .seller-report-financial-section table td {
+    padding: 17px 16px !important; font-size: 11.5px !important;
+    color: #475569; vertical-align: middle;
+}
+.seller-report-page .seller-report-financial-section table td:first-child { font-weight: 750 !important; color: #293440 !important; }
+.seller-report-page .seller-report-financial-section table td span { font-size: 10.5px !important; font-weight: 700 !important; }
+.seller-report-page .seller-report-table-row { border-bottom: 1px solid #EDF0F3 !important; background: #FFF !important; }
+.seller-report-page .seller-report-table-row:hover { background: #F8FAFC !important; }
+.seller-report-page .seller-report-table-row[hidden],
+.seller-report-page .seller-report-transaction-no-match[hidden],
+.seller-report-page .seller-report-transaction-footer[hidden] { display: none !important; }
+.seller-report-page .seller-report-transaction-no-match { padding: 60px 20px; color: #8793A1; font-size: 12px; text-align: center; }
+.seller-report-page .seller-report-transaction-footer {
+    display: flex; min-height: 64px; align-items: center;
+    justify-content: space-between; gap: 12px;
+    padding: 13px 20px; border-top: 1px solid #E9EDF1; background: #FFF;
+}
+.seller-report-page #sellerReportTransactionCount { margin: 0; color: #7B8794; font-size: 11px; font-weight: 550; }
+.seller-report-page .seller-report-transaction-pagination { display: flex; align-items: center; gap: 6px; }
+.seller-report-page .seller-report-transaction-pages { display: flex; align-items: center; gap: 6px; }
+.seller-report-page .seller-report-transaction-pagination button {
+    display: grid; width: 34px; min-width: 34px; height: 34px;
+    place-items: center; border: 1px solid #E5E7EB; border-radius: 10px;
+    background: #FFF; padding: 0; color: #8793A1;
+    font-size: 11.5px; font-weight: 700; cursor: pointer;
+}
+.seller-report-page .seller-report-transaction-pagination button:hover:not(:disabled) { border-color: #C88912; color: #A56D0A; background: #F8FAFC; }
+.seller-report-page .seller-report-transaction-pagination button:focus-visible { outline: 2px solid #C88912; outline-offset: 2px; }
+.seller-report-page .seller-report-transaction-pagination button.is-current {
+    border-color: #C88912; background: #C88912; color: #FFF;
+}
+.seller-report-page .seller-report-transaction-pagination button:disabled { opacity: .42; cursor: not-allowed; }
+.seller-report-page .seller-report-transaction-pagination svg { width: 16px; height: 16px; }
+
+@media (max-width: 1180px) {
+    .seller-report-page .seller-report-kpi-grid,
+    .seller-report-page .seller-report-order-strip { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    .seller-report-page .seller-report-analytics-layout { grid-template-columns: minmax(0,1fr) !important; }
+}
+@media (max-width: 900px) {
+    .seller-report-page .seller-report-header { align-items: flex-start !important; flex-direction: column !important; }
+    .seller-report-page .seller-report-header-actions { justify-content: flex-start !important; }
+    .seller-report-page .seller-report-filter-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    .seller-report-page .seller-report-filter-grid > .seller-report-filter-field:nth-child(3) { grid-column: 1 / -1; }
+    .seller-report-page .seller-report-generate { grid-column: 1 / -1; }
+    .seller-report-page .seller-report-product-grid { grid-template-columns: repeat(3,minmax(0,1fr)) !important; }
+}
+@media (max-width: 639px) {
+    .seller-report-page .seller-report-title { font-size: 25px !important; }
+    .seller-report-page .seller-report-eyebrow { font-size: 9.5px !important; }
+    .seller-report-page .seller-report-header-actions { display: flex !important; width: auto !important; gap: 18px !important; }
+    .seller-report-page .seller-report-header-button { font-size: 10.5px !important; }
+    .seller-report-page .seller-report-filter-grid { grid-template-columns: 1fr !important; }
+    .seller-report-page .seller-report-filter-grid > .seller-report-filter-field:nth-child(3),
+    .seller-report-page .seller-report-generate { grid-column: auto !important; }
+    .seller-report-page .seller-report-filter-field input,
+    .seller-report-page .seller-report-type-button,
+    .seller-report-page .seller-report-generate { height: 48px !important; min-height: 48px !important; font-size: 11px !important; }
+    .seller-report-page .seller-report-kpi-grid,
+    .seller-report-page .seller-report-order-strip { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 10px !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card,
+    .seller-report-page .seller-report-order-stat { min-height: 108px !important; padding: 12px !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card p:first-child,
+    .seller-report-page .seller-report-order-stat-label { font-size: 11px !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(2),
+    .seller-report-page .seller-report-order-stat-value { font-size: 21px !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(3),
+    .seller-report-page .seller-report-order-stat-desc { font-size: 9px !important; }
+    .seller-report-page .seller-report-product-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    .seller-report-page .seller-report-transaction-toolbar { align-items: flex-start; flex-direction: column; padding: 12px 14px; }
+    .seller-report-page .seller-report-transaction-search-field { width: 100%; max-width: none; }
+    .seller-report-page .seller-report-transaction-footer { align-items: flex-start; flex-direction: column; }
+    .seller-report-page .seller-report-transaction-pagination { align-self: flex-end; }
+}
+@media (max-width: 380px) {
+    .seller-report-page .seller-report-kpi-grid,
+    .seller-report-page .seller-report-order-strip,
+    .seller-report-page .seller-report-product-grid { grid-template-columns: 1fr !important; }
+}
+@media print {
+    .seller-report-page .seller-report-transaction-toolbar,
+    .seller-report-page .seller-report-transaction-footer,
+    .seller-report-page .seller-report-transaction-no-match { display: none !important; }
+    /* Pagination is screen-only. Print every server-rendered transaction. */
+    .seller-report-page .seller-report-table-row[hidden] { display: table-row !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card,
+    .seller-report-page .seller-report-trend-panel,
+    .seller-report-page .seller-report-performance-panel,
+    .seller-report-page .seller-report-order-stat,
+    .seller-report-page .seller-report-products-section,
+    .seller-report-page .seller-report-financial-section { box-shadow: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .seller-report-page .seller-report-transaction-pagination button { transition: none !important; }
+}
+/* =====================================================================
+   SELLER REPORTS — DASHBOARD HIERARCHY (AFTER ORDERS UI PARITY)
+   Four financial KPIs -> four order KPIs -> left chart/performance +
+   right Top Selling Products. No report data or actions are altered.
+   ===================================================================== */
+.seller-report-page .seller-report-kpi-grid {
+    margin-bottom: 14px !important;
+}
+.seller-report-page .seller-report-order-strip {
+    margin: 0 0 20px !important;
+}
+
+/* The layout exists only when both Sales and Products are included.
+   Sales-only, Orders-only and Products-only reports remain full-width. */
+.seller-report-page .seller-report-dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(365px, 30%);
+    align-items: start;
+    gap: 16px;
+    margin: 0 0 20px;
+}
+.seller-report-page .seller-report-dashboard-grid > .seller-report-analytics-layout {
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+    margin: 0 !important;
+}
+.seller-report-page .seller-report-dashboard-grid > .seller-report-products-section {
+    min-width: 0;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-products-section > div:first-child {
+    padding: 23px 21px !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-products-section > div:first-child h2 {
+    font-size: 20px !important;
+    line-height: 1.3 !important;
+    letter-spacing: -.02em !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-products-section > div:first-child p {
+    margin-top: 7px !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+}
+
+/* A ranked sidebar list, not five empty product columns when there is
+   only one seller product. Keep the entire product image visible. */
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    gap: 12px !important;
+    padding: 15px !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+    display: grid !important;
+    grid-template-columns: 136px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 16px !important;
+    min-width: 0 !important;
+    min-height: 164px !important;
+    padding: 14px !important;
+    border: 1px solid #E6EAF0 !important;
+    border-radius: 16px !important;
+    background: #FFF !important;
+    box-shadow: none !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-card:last-child {
+    border-bottom: 1px solid #E6EAF0 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
+    width: 136px !important;
+    height: 136px !important;
+    min-width: 136px !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+    background: #F8FAFC !important;
+    overflow: hidden !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-media img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-rank {
+    top: 8px !important;
+    left: 8px !important;
+    width: 29px !important;
+    height: 29px !important;
+    border-radius: 9px !important;
+    font-size: 11px !important;
+    color: #B47B0E !important;
+    background: rgba(255,255,255,.97) !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-body {
+    min-width: 0 !important;
+    padding: 0 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-topline {
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-share {
+    flex: 0 0 auto !important;
+    color: #7E8998 !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-name {
+    min-height: 0 !important;
+    margin-top: 0 !important;
+    color: #202B3A !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    overflow-wrap: anywhere;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-sales {
+    margin-top: 10px !important;
+    color: #B47B0E !important;
+    font-size: clamp(18px, 1.45vw, 22px) !important;
+    font-weight: 750 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-progress {
+    height: 8px !important;
+    margin-top: 15px !important;
+    background: #EDF0F3 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-progress > span {
+    background: #C88912 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-grid > .col-span-full {
+    padding: 24px 14px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-grid > .col-span-full p {
+    font-size: 11px !important;
+}
+
+/* Keep chart + performance side by side when their shared column fits. */
+@media (max-width: 1399px) and (min-width: 1280px) {
+    .seller-report-page .seller-report-dashboard-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(350px, 30%);
+        gap: 14px;
+    }
+}
+/* Avoid squeezing analytics/table on tablets or narrow desktops. */
+@media (max-width: 1279px) {
+    .seller-report-page .seller-report-dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+        gap: 12px !important;
+        padding: 14px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+        grid-template-columns: 116px minmax(0,1fr) !important;
+        min-height: 144px !important;
+        padding: 12px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
+        width: 116px !important;
+        min-width: 116px !important;
+        height: 116px !important;
+    }
+}
+@media (max-width: 639px) {
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+        grid-template-columns: 112px minmax(0, 1fr) !important;
+        gap: 12px !important;
+        border-right: 1px solid #E6EAF0 !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
+        width: 112px !important;
+        min-width: 112px !important;
+        height: 112px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-sales {
+        font-size: 17px !important;
+    }
+}
+@media (max-width: 380px) {
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+        grid-template-columns: 92px minmax(0,1fr) !important;
+        gap: 10px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
+        width: 92px !important;
+        min-width: 92px !important;
+        height: 92px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-share {
+        font-size: 9px !important;
+    }
+}
+@media print {
+    .seller-report-page .seller-report-dashboard-grid {
+        display: block !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid > .seller-report-products-section {
+        margin-top: 12px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+        break-inside: avoid;
+    }
+}
+
+/* SELLER REPORTS — SALES CHART ONLY (PERFORMANCE CARD REMOVED) */
+/* The Sales Trend fills the analytics column; Top Selling Products stays on the
+   right when the combined dashboard grid is present. Sales-only is full width. */
+.seller-report-page .seller-report-analytics-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+}
+.seller-report-page .seller-report-analytics-layout > .seller-report-trend-panel {
+    min-width: 0;
+    width: 100%;
+}
+
+/* Buyer Cart parity: rounded report card surfaces + lighter mobile elevation.
+   Applied only to the top-level floating cards, not filters, controls, inner
+   product tiles, chart elements, table rows or dropdown overlays. */
+@media screen and (max-width: 767px) {
+    .seller-report-page {
+        --report-orders-shadow:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 6px 16px rgba(15, 23, 42, .055),
+            0 13px 28px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90);
+    }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card,
+    .seller-report-page .seller-report-order-stat,
+    .seller-report-page .seller-report-trend-panel,
+    .seller-report-page .seller-report-performance-panel,
+    .seller-report-page .seller-report-products-section,
+    .seller-report-page .seller-report-financial-section {
+        border-radius: 16px !important;
+    }
+}
+
+@endverbatim
+</style>
+
+@endpush
+
+<div id="sellerReportStage" class="seller-report-page">
+
+    <div id="sellerReportContent">
+
+        {{-- HEADER — MATCHED TO ORDER MANAGEMENT --}}
+        <section class="seller-report-no-print seller-report-header">
+            <div class="seller-report-heading">
+                <span class="seller-report-heading-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M4 20h16"></path>
+                        <path d="M7 17v-5"></path>
+                        <path d="M12 17V8"></path>
+                        <path d="M17 17V4"></path>
+                    </svg>
+                </span>
+
+                <div class="min-w-0">
+                    <p class="seller-report-eyebrow">REPORTING & ANALYTICS</p>
+                    <h1 class="seller-report-title">
+                        <span>Seller</span><span class="seller-report-title-accent">Reports</span>
+                    </h1>
+                    
+                </div>
+            </div>
+
+            <div class="seller-report-header-actions">
+                <a href="{{ $downloadUrl }}" class="seller-report-header-button seller-report-header-button--secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 3v12"></path>
+                        <path d="m7 10 5 5 5-5"></path>
+                        <path d="M5 21h14"></path>
+                    </svg>
+                    Download CSV
+                </a>
+
+                <button
+                    id="printSellerReport"
+                    type="button"
+                    class="seller-report-header-button seller-report-header-button--primary"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M6 9V3h12v6"></path>
+                        <path d="M6 18H4V9h16v9h-2"></path>
+                        <path d="M7 14h10v7H7z"></path>
+                    </svg>
+                    Print Report
+                </button>
+            </div>
+        </section>
+
+        {{-- FILTERS — COMPACT CONTROL BAR --}}
+        <section class="seller-report-no-print seller-report-filter-panel">
+            <form
+                id="sellerReportFilterForm"
+                method="GET"
+                action="{{ route('seller.reports') }}"
+                class="seller-report-filter-grid"
+            >
+                <div class="seller-report-filter-field">
+                    <label for="reportFromDate">From Date</label>
+                    <input
+                        id="reportFromDate"
+                        name="from"
+                        type="date"
+                        value="{{ $from->format('Y-m-d') }}"
+                    >
+                </div>
+
+                <div class="seller-report-filter-field">
+                    <label for="reportToDate">To Date</label>
+                    <input
+                        id="reportToDate"
+                        name="to"
+                        type="date"
+                        value="{{ $to->format('Y-m-d') }}"
+                    >
+                </div>
+
+                <div class="seller-report-filter-field">
+                    <label id="reportTypeLabel" for="reportType">Report Type</label>
+
+                    <div class="seller-report-type-dropdown" data-report-type-dropdown>
+                        <select
+                            name="type"
+                            id="reportType"
+                            class="seller-report-type-native"
+                            aria-hidden="true"
+                            tabindex="-1"
+                            data-report-type-native
+                        >
+                            <option value="all" @selected($reportType === 'all')>All Reports</option>
+                            <option value="sales" @selected($reportType === 'sales')>Sales Report</option>
+                            <option value="financial" @selected($reportType === 'financial')>Financial Report</option>
+                            <option value="orders" @selected($reportType === 'orders')>Order Performance</option>
+                            <option value="products" @selected($reportType === 'products')>Product Performance</option>
+                        </select>
+
+                        <button
+                            id="reportTypeButton"
+                            type="button"
+                            class="seller-report-type-button"
+                            aria-labelledby="reportTypeLabel reportTypeButtonValue"
+                            aria-haspopup="listbox"
+                            aria-expanded="false"
+                            aria-controls="reportTypeMenu"
+                            data-report-type-button
+                        >
+                            <span class="seller-report-type-button-main">
+                                <span class="seller-report-type-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M5 5h14v4H5z"></path>
+                                        <path d="M5 11h6v8H5z"></path>
+                                        <path d="M13 11h6v3h-6z"></path>
+                                        <path d="M13 16h6v3h-6z"></path>
+                                    </svg>
+                                </span>
+
+                                <span id="reportTypeButtonValue" class="seller-report-type-current" data-report-type-label>
+                                    All Reports
+                                </span>
+                            </span>
+
+                            <svg class="seller-report-type-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="m7 10 5 5 5-5"></path>
+                            </svg>
+                        </button>
+
+                        <div
+                            id="reportTypeMenu"
+                            class="seller-report-type-menu"
+                            role="listbox"
+                            aria-labelledby="reportTypeLabel"
+                            hidden
+                            data-report-type-menu
+                        >
+                            @foreach ([
+                                ['all', 'All Reports', 'Sales, orders, products, and finance'],
+                                ['sales', 'Sales Report', 'Revenue trend and sales performance'],
+                                ['financial', 'Financial Report', 'Commission and net revenue'],
+                                ['orders', 'Order Performance', 'Fulfillment and order status'],
+                                ['products', 'Product Performance', 'Top products and quantities sold'],
+                            ] as [$value, $label, $description])
+                                <button
+                                    type="button"
+                                    class="seller-report-type-option"
+                                    role="option"
+                                    data-report-type-value="{{ $value }}"
+                                >
+                                    <span class="seller-report-type-option-copy">
+                                        <strong>{{ $label }}</strong>
+                                        <small>{{ $description }}</small>
+                                    </span>
+
+                                    <svg class="seller-report-type-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <path d="m6 12 4 4 8-8"></path>
+                                    </svg>
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="seller-report-generate">Generate</button>
+            </form>
+
+            <div class="seller-report-ranges">
+                <span>Quick range</span>
+                @foreach ([
+                    'today' => 'Today',
+                    '7days' => 'Last 7 Days',
+                    '30days' => 'Last 30 Days',
+                    'month' => 'This Month',
+                    'year' => 'This Year',
+                ] as $range => $label)
+                    <button type="button" data-report-range="{{ $range }}">
+                        {{ $label }}
+                    </button>
+                @endforeach
+            </div>
+        </section>
+
+        {{-- SALES / FINANCIAL KPI METRICS --}}
+        @if ($showSales)
+            <section class="seller-report-print-section seller-report-kpi-grid">
+                <article class="seller-report-card rounded-[17px] border border-[#d4e6db] bg-white px-4 py-5 sm:px-5">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <p class="text-[11px] font-medium text-[#5f574f]">Gross Sales</p>
+                            <p class="mt-2.5 text-[28px] font-semibold tracking-[-.04em] text-[#211d18]">
+                                ₱{{ number_format($summary['gross_sales'], 2) }}
+                            </p>
+                            <p class="mt-3 text-[9.5px] font-normal {{ $summary['sales_change'] >= 0 ? 'text-[#4f7d63]' : 'text-[#a65353]' }}">
+                                {{ $summary['sales_change'] >= 0 ? '▲' : '▼' }}
+                                {{ number_format(abs($summary['sales_change']), 1) }}% vs previous period
+                            </p>
+                        </div>
+                        <span class="grid h-11 w-11 place-items-center rounded-[12px] bg-[#f1f8f4] text-[#4f7d63]">
+                            <span class="text-[18px] font-medium">₱</span>
+                        </span>
+                    </div>
+                </article>
+
+                <article class="seller-report-card rounded-[17px] border border-[#eadbbd] bg-white px-4 py-5 sm:px-5">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <p class="text-[11px] font-medium text-[#5f574f]">Platform Commission</p>
+                            <p class="mt-2.5 text-[28px] font-semibold tracking-[-.04em] text-[#211d18]">
+                                ₱{{ number_format($summary['platform_commission'], 2) }}
+                            </p>
+                            <p class="mt-3 text-[9.5px] font-normal text-[#9b6c1c]">
+                                {{ number_format($summary['commission_rate'], 0) }}% on delivered merchandise sales
+                            </p>
+                        </div>
+                        <span class="grid h-11 w-11 place-items-center rounded-[12px] bg-[#fff7e9] text-[#b77c16]">
+                            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <circle cx="12" cy="12" r="8"></circle>
+                                <path d="M9 9h5a2 2 0 1 1 0 4h-4a2 2 0 1 0 0 4h5"></path>
+                            </svg>
+                        </span>
+                    </div>
+                </article>
+
+                <article class="seller-report-card rounded-[17px] border border-[#d8e4f0] bg-white px-4 py-5 sm:px-5">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <p class="text-[11px] font-medium text-[#5f574f]">Net Revenue</p>
+                            <p class="mt-2.5 text-[28px] font-semibold tracking-[-.04em] text-[#211d18]">
+                                ₱{{ number_format($summary['net_revenue'], 2) }}
+                            </p>
+                            <p class="mt-3 text-[9.5px] font-normal text-[#71879a]">
+                                Revenue after SARI commission
+                            </p>
+                        </div>
+                        <span class="grid h-11 w-11 place-items-center rounded-[12px] bg-[#f0f6fb] text-[#4e80aa]">
+                            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M4 18 9 13l3 3 7-8"></path>
+                                <path d="M15 8h4v4"></path>
+                            </svg>
+                        </span>
+                    </div>
+                </article>
+
+                <article class="seller-report-card rounded-[17px] border border-[#ddd8e8] bg-white px-4 py-5 sm:px-5">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <p class="text-[11px] font-medium text-[#5f574f]">Average Order Value</p>
+                            <p class="mt-2.5 text-[28px] font-semibold tracking-[-.04em] text-[#211d18]">
+                                ₱{{ number_format($summary['average_order_value'], 2) }}
+                            </p>
+                            <p class="mt-3 text-[9.5px] font-normal text-[#7b6e88]">
+                                Based on delivered orders
+                            </p>
+                        </div>
+                        <span class="grid h-11 w-11 place-items-center rounded-[12px] bg-[#f6f3f9] text-[#75618a]">
+                            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M4 20h16"></path>
+                                <path d="M7 16v-4"></path>
+                                <path d="M12 16V8"></path>
+                                <path d="M17 16V5"></path>
+                            </svg>
+                        </span>
+                    </div>
+                </article>
+            
+            </section>
+        @endif
+
+        @if ($showOrders)
+            {{-- ORDER STATUS OVERVIEW — compact strip, not summary cards --}}
+            <section class="seller-report-print-section seller-report-order-strip" aria-label="Order status overview">
+                <div class="seller-report-order-stat">
+                    <span class="seller-report-order-stat-icon bg-[#f0f6fb] text-[#4e80aa]">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="8"></circle>
+                            <path d="M12 8v5l3 2"></path>
+                        </svg>
+                    </span>
+                    <div class="seller-report-order-stat-copy">
+                        <p class="seller-report-order-stat-label">Total Orders</p>
+                        <div>
+                            <strong class="seller-report-order-stat-value">{{ $summary['total_orders'] }}</strong>
+                            <span class="seller-report-order-stat-desc">All orders</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seller-report-order-stat">
+                    <span class="seller-report-order-stat-icon bg-[#f1f8f4] text-[#4f7d63]">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="8"></circle>
+                            <path d="m8 12 2.5 2.5L16 9"></path>
+                        </svg>
+                    </span>
+                    <div class="seller-report-order-stat-copy">
+                        <p class="seller-report-order-stat-label">Delivered</p>
+                        <div>
+                            <strong class="seller-report-order-stat-value">{{ $summary['completed_orders'] }}</strong>
+                            <span class="seller-report-order-stat-desc">Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seller-report-order-stat">
+                    <span class="seller-report-order-stat-icon bg-[#fff7e9] text-[#b77c16]">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M4 6h16v13H4z"></path>
+                            <path d="M8 6V4h8v2"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </span>
+                    <div class="seller-report-order-stat-copy">
+                        <p class="seller-report-order-stat-label">Active</p>
+                        <div>
+                            <strong class="seller-report-order-stat-value">{{ $summary['active_orders'] }}</strong>
+                            <span class="seller-report-order-stat-desc">In fulfillment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seller-report-order-stat">
+                    <span class="seller-report-order-stat-icon bg-[#fff6f6] text-[#aa5a5a]">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="8"></circle>
+                            <path d="m9 9 6 6"></path>
+                            <path d="m15 9-6 6"></path>
+                        </svg>
+                    </span>
+                    <div class="seller-report-order-stat-copy">
+                        <p class="seller-report-order-stat-label">Cancelled</p>
+                        <div>
+                            <strong class="seller-report-order-stat-value">{{ $summary['cancelled_orders'] }}</strong>
+                            <span class="seller-report-order-stat-desc">Cancelled</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        {{-- Dashboard: sales analysis on the left, products on the right (All Reports). --}}
+        @if ($showSales && $showProducts)
+            <div class="seller-report-dashboard-grid">
+        @endif
+
+        @if ($showSales)
+            {{-- SALES TREND CHART — PERFORMANCE SUMMARY REMOVED --}}
+            <section class="seller-report-print-section seller-report-analysis-grid seller-report-analytics-layout">
+                <article class="seller-report-panel seller-report-trend-panel">
+                    <div class="seller-report-analytics-head">
+                        <div class="seller-report-analytics-heading">
+                            <div>
+                                <h2 class="seller-report-panel-heading">Sales & Revenue Trend</h2>
+                                <p class="seller-report-panel-subtitle">
+                                    Delivered merchandise sales · {{ $from->format('M d, Y') }} — {{ $to->format('M d, Y') }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="seller-report-chart-legend" aria-label="Chart legend">
+                            <span class="seller-report-legend-item">
+                                <span class="seller-report-legend-line seller-report-legend-line--sales" aria-hidden="true"></span>
+                                Sales
+                            </span>
+                            <span class="seller-report-legend-item">
+                                <span class="seller-report-legend-line seller-report-legend-line--net" aria-hidden="true"></span>
+                                Net Revenue
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="seller-report-chart-shell seller-report-chart-shell--modern">
+                        <svg
+                            id="sellerReportChart"
+                            viewBox="0 0 860 340"
+                            class="block min-w-[700px] w-full"
+                            preserveAspectRatio="xMidYMid meet"
+                            role="img"
+                            aria-label="Sales and net revenue trend for the selected report period"
+                        >
+                            <defs>
+                                <linearGradient id="sellerReportAreaFill" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#C88912" stop-opacity=".13"></stop>
+                                    <stop offset="100%" stop-color="#C88912" stop-opacity=".008"></stop>
+                                </linearGradient>
+                            </defs>
+
+                            <g id="sellerReportGrid"></g>
+                            <path id="sellerReportSalesArea" fill="url(#sellerReportAreaFill)"></path>
+                            <path id="sellerReportSalesLine" class="seller-report-chart-path" fill="none" stroke="#C88912" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path id="sellerReportNetLine" class="seller-report-chart-path" fill="none" stroke="#8994A3" stroke-width="2.4" stroke-dasharray="7 6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <g id="sellerReportSalesPoints"></g>
+                            <g id="sellerReportXAxis"></g>
+                        </svg>
+
+                        <div id="sellerReportChartEmpty" class="seller-report-chart-empty">
+                            <div class="seller-report-chart-empty-card">
+                                <p>No delivered sales in this period.</p>
+                                <small>Try a wider date range to see the trend.</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+        @endif
+
+        @if ($showProducts)
+            {{-- TOP PRODUCTS --}}
+            <section class="seller-report-print-section seller-report-products-section border bg-white">
+                <div>
+                    <h2>Top Selling Products</h2>
+                    <p>Ranked using real quantities and line totals from delivered order snapshots.</p>
+                </div>
+
+                <div class="seller-report-product-grid">
+                    @php
+                        $maxProductSales = max(1, (float) collect($topProducts)->max('sales'));
+                    @endphp
+
+                    @forelse ($topProducts as $index => $product)
+                        @php
+                            $width = min(100, (((float) $product['sales'] / $maxProductSales) * 100));
+                            $imagePath = $product['image_path'] ?? null;
+                            $imageUrl = null;
+
+                            if ($imagePath) {
+                                $imageUrl = \Illuminate\Support\Str::startsWith(
+                                    $imagePath,
+                                    ['http://', 'https://', '/storage/', '/images/', '/uploads/']
+                                )
+                                    ? $imagePath
+                                    : asset('storage/' . ltrim($imagePath, '/'));
+                            }
+                        @endphp
+
+                        <article class="seller-report-product-card">
+                            <div class="seller-report-product-media">
+                                @if($imageUrl)
+                                    <img
+                                        src="{{ $imageUrl }}"
+                                        alt="{{ $product['name'] }}"
+                                        loading="lazy"
+                                        decoding="async"
+                                    >
+                                @else
+                                    <div class="seller-report-product-placeholder" aria-label="No product image available">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+                                            <path d="m7 15 3-3 3 3 4-5 3 4"></path>
+                                            <circle cx="9" cy="9" r="1.2" fill="currentColor" stroke="none"></circle>
+                                        </svg>
+                                    </div>
+                                @endif
+
+                                <span class="seller-report-product-rank">#{{ $index + 1 }}</span>
+                            </div>
+
+                            <div class="seller-report-product-body">
+                                <div class="seller-report-product-topline">
+                                    <p class="seller-report-product-name" title="{{ $product['name'] }}">
+                                        {{ $product['name'] }}
+                                    </p>
+                                    <span class="seller-report-product-share">
+                                        {{ number_format($width, 0) }}% of top
+                                    </span>
+                                </div>
+
+                                <p class="seller-report-product-sales">
+                                    ₱{{ number_format((float) $product['sales'], 2) }}
+                                </p>
+
+                                <div class="seller-report-product-progress" aria-hidden="true">
+                                    <span style="width: {{ $width }}%"></span>
+                                </div>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="col-span-full rounded-[12px] border border-dashed border-[#dfe3e8] bg-white px-6 py-9 text-center">
+                            <p class="text-[9px] font-medium text-[#667085]">No delivered product sales in this period.</p>
+                        </div>
+                    @endforelse
+                </div>
+            </section>
+        @endif
+
+        @if ($showSales && $showProducts)
+            </div>
+        @endif
+
+        {{-- FINANCIAL / ORDER TRANSACTIONS --}}
+        @if ($reportType !== 'products')
+            <section class="seller-report-print-section seller-report-financial-section overflow-hidden border border-[#e9e2d9] bg-white">
+                <div class="flex flex-col gap-3 border-b border-[#eee8df] px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <h2 class="text-[20px] font-semibold tracking-[-.025em] text-[#24201b]">Financial Breakdown</h2>
+                        <p class="mt-1 text-[10.5px] text-[#887f75]">COD marketplace orders from the selected report period.</p>
+                    </div>
+                    <span class="seller-report-transaction-count-badge">
+                        Latest {{ $transactions->count() }} transactions
+                    </span>
+                </div>
+
+                {{-- Screen-only search and pagination of the latest server-rendered transactions. --}}
+                <div class="seller-report-no-print seller-report-transaction-toolbar">
+                    <label class="seller-report-transaction-search-field">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="m20 20-3.5-3.5"></path>
+                        </svg>
+                        <input
+                            id="sellerReportTransactionSearch"
+                            type="search"
+                            placeholder="Search order ID, buyer, status, payment..."
+                            aria-label="Search latest report transactions"
+                            autocomplete="off"
+                        >
+                    </label>
+                    <span class="seller-report-transaction-per-page">10 rows per page · latest transactions</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full min-w-[1080px] text-left">
+                        <thead>
+                            <tr class="border-b border-[#eee8df] bg-[#fdfbf8]">
+                                @foreach (['Order', 'Buyer', 'Date', 'Status', 'Gross Sales', 'Commission', 'Net Revenue', 'Payment'] as $head)
+                                    <th class="px-5 py-3.5 text-[9.5px] font-medium text-[#786f65]">{{ $head }}</th>
+                                @endforeach
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($transactions as $transaction)
+                                <tr class="seller-report-table-row border-b border-[#f1ece5] last:border-b-0" data-report-transaction-row>
+                                    <td class="px-5 py-4 text-[10px] font-semibold text-[#302a24]">{{ $transaction['order_number'] }}</td>
+                                    <td class="px-5 py-4 text-[9.5px] font-medium text-[#4a443d]">{{ $transaction['buyer_name'] }}</td>
+                                    <td class="px-5 py-4 text-[9px] text-[#91887e]">{{ $transaction['date']?->format('M d, Y') }}</td>
+                                    <td class="px-5 py-4">
+                                        <span class="inline-flex rounded-full border px-2.5 py-1.5 text-[9px] font-medium {{ $statusTone($transaction['status']) }}">
+                                            {{ $transaction['status_label'] }}
+                                        </span>
+                                    </td>
+                                    <td class="px-5 py-4 text-[10px] font-semibold text-[#302a24]">₱{{ number_format($transaction['gross'], 2) }}</td>
+                                    <td class="px-5 py-4 text-[9.5px] font-medium text-[#9b6c1c]">₱{{ number_format($transaction['commission'], 2) }}</td>
+                                    <td class="px-5 py-4 text-[10px] font-semibold text-[#4f7d63]">₱{{ number_format($transaction['net'], 2) }}</td>
+                                    <td class="px-5 py-4">
+                                        <p class="text-[9.5px] font-medium text-[#4a443d]">COD</p>
+                                        <p class="mt-1 text-[8.5px] text-[#91887e]">{{ $transaction['payment_status'] }}</p>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="px-6 py-12 text-center text-[10px] text-[#91887d]">No orders in this report period.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="sellerReportTransactionNoMatch" class="seller-report-transaction-no-match seller-report-no-print" hidden>
+                    No matching transactions in the latest {{ $transactions->count() }} records.
+                </div>
+
+                <footer id="sellerReportTransactionFooter" class="seller-report-transaction-footer seller-report-no-print" hidden>
+                    <p id="sellerReportTransactionCount" aria-live="polite">Showing recent transactions</p>
+                    <nav class="seller-report-transaction-pagination" aria-label="Transaction pages">
+                        <button type="button" data-report-page-prev aria-label="Previous transaction page" disabled>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                        </button>
+                        <div class="seller-report-transaction-pages" data-report-page-numbers></div>
+                        <button type="button" data-report-page-next aria-label="Next transaction page" disabled>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                        </button>
+                    </nav>
+                </footer>
+            </section>
+        @endif
+
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+(function () {
+    /*
+    |--------------------------------------------------------------------------
+    | SELLER REPORT PAGE — STABLE NAVIGATION LIFECYCLE
+    |--------------------------------------------------------------------------
+    | The lifecycle listeners are bound once globally. On every Livewire
+    | navigation the object below is replaced with the newest report data,
+    | preventing duplicated event handlers and slowdowns over time.
+    */
+    window.SariSellerReportPage = {
+        chartData: @json($chart),
+        abortController: null,
+
+        reset() {
+            if (this.abortController) {
+                this.abortController.abort();
+            }
+
+            this.abortController = new AbortController();
+
+        },
+
+        init() {
+            this.reset();
+
+            const signal = this.abortController.signal;
+            const form = document.getElementById('sellerReportFilterForm');
+            const fromInput = document.getElementById('reportFromDate');
+            const toInput = document.getElementById('reportToDate');
+            const generateButton = form?.querySelector('button[type="submit"]');
+
+            this.initReportTypeDropdown(signal);
+            this.initTransactionTable(signal);
+
+            const dateValue = (date) => {
+                const y = date.getFullYear();
+                const m = String(date.getMonth() + 1).padStart(2, '0');
+                const d = String(date.getDate()).padStart(2, '0');
+
+                return `${y}-${m}-${d}`;
+            };
+
+            const navigateToReport = () => {
+                if (!form) return;
+
+                const params = new URLSearchParams(new FormData(form));
+                const url = `${form.action}?${params.toString()}`;
+
+                if (generateButton) {
+                    generateButton.disabled = true;
+                    generateButton.classList.add('opacity-70', 'cursor-wait');
+                }
+
+                if (window.Livewire?.navigate) {
+                    window.Livewire.navigate(url);
+                } else {
+                    window.location.assign(url);
+                }
+            };
+
+            form?.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                if (!fromInput?.value || !toInput?.value) return;
+
+                if (fromInput.value > toInput.value) {
+                    const temp = fromInput.value;
+                    fromInput.value = toInput.value;
+                    toInput.value = temp;
+                }
+
+                navigateToReport();
+            }, { signal });
+
+            document.querySelectorAll('[data-report-range]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const type = button.dataset.reportRange;
+                    const now = new Date();
+                    let start = new Date(now);
+                    let end = new Date(now);
+
+                    if (type === '7days') {
+                        start.setDate(now.getDate() - 6);
+                    } else if (type === '30days') {
+                        start.setDate(now.getDate() - 29);
+                    } else if (type === 'month') {
+                        start = new Date(now.getFullYear(), now.getMonth(), 1);
+                    } else if (type === 'year') {
+                        start = new Date(now.getFullYear(), 0, 1);
+                    }
+
+                    if (fromInput) fromInput.value = dateValue(start);
+                    if (toInput) toInput.value = dateValue(end);
+
+                    navigateToReport();
+                }, { signal });
+            });
+
+            document.getElementById('printSellerReport')
+                ?.addEventListener('click', () => window.print(), { signal });
+
+            this.renderChart();
+        },
+
+        initReportTypeDropdown(signal) {
+            const root = document.querySelector('[data-report-type-dropdown]');
+            if (!root) return;
+
+            const nativeSelect = root.querySelector('[data-report-type-native]');
+            const button = root.querySelector('[data-report-type-button]');
+            const label = root.querySelector('[data-report-type-label]');
+            const menu = root.querySelector('[data-report-type-menu]');
+            const options = Array.from(root.querySelectorAll('[data-report-type-value]'));
+
+            if (!nativeSelect || !button || !label || !menu || !options.length) return;
+
+            const getLabel = (value) => {
+                const option = Array.from(nativeSelect.options).find((item) => item.value === value);
+                return option?.textContent?.trim() || 'All Reports';
+            };
+
+            const sync = (value) => {
+                nativeSelect.value = value;
+                label.textContent = getLabel(value);
+
+                options.forEach((option) => {
+                    const selected = (option.dataset.reportTypeValue || '') === value;
+                    option.classList.toggle('is-selected', selected);
+                    option.setAttribute('aria-selected', selected ? 'true' : 'false');
+                });
+            };
+
+            const close = (restoreFocus = false) => {
+                menu.hidden = true;
+                button.setAttribute('aria-expanded', 'false');
+                if (restoreFocus) button.focus();
+            };
+
+            const focusSelectedOrFirst = () => {
+                const selected = options.find((option) => option.classList.contains('is-selected')) || options[0];
+                selected?.focus();
+            };
+
+            const open = (focusOption = false) => {
+                menu.hidden = false;
+                button.setAttribute('aria-expanded', 'true');
+                if (focusOption) requestAnimationFrame(focusSelectedOrFirst);
+            };
+
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                menu.hidden ? open(false) : close(false);
+            }, { signal });
+
+            button.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    open(true);
+                }
+            }, { signal });
+
+            options.forEach((option, index) => {
+                option.addEventListener('click', () => {
+                    sync(option.dataset.reportTypeValue || 'all');
+                    close(true);
+                }, { signal });
+
+                option.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        event.preventDefault();
+                        close(true);
+                        return;
+                    }
+
+                    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+
+                    event.preventDefault();
+                    const direction = event.key === 'ArrowDown' ? 1 : -1;
+                    const nextIndex = (index + direction + options.length) % options.length;
+                    options[nextIndex]?.focus();
+                }, { signal });
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!root.contains(event.target)) close(false);
+            }, { signal });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !menu.hidden) {
+                    close(true);
+                }
+            }, { signal });
+
+            sync(nativeSelect.value || 'all');
+        },
+
+
+        initTransactionTable(signal) {
+            const search = document.getElementById('sellerReportTransactionSearch');
+            const footer = document.getElementById('sellerReportTransactionFooter');
+            const counter = document.getElementById('sellerReportTransactionCount');
+            const noMatch = document.getElementById('sellerReportTransactionNoMatch');
+            const numbers = footer?.querySelector('[data-report-page-numbers]');
+            const previous = footer?.querySelector('[data-report-page-prev]');
+            const next = footer?.querySelector('[data-report-page-next]');
+            const rows = Array.from(document.querySelectorAll('[data-report-transaction-row]'));
+
+            if (!search || !footer || !counter || !numbers || !previous || !next) return;
+            if (!rows.length) {
+                footer.hidden = true;
+                return;
+            }
+
+            const pageSize = 10;
+            const searchable = rows.map((row) => ({
+                row,
+                content: row.textContent.toLocaleLowerCase(),
+            }));
+            let currentPage = 1;
+
+            const render = () => {
+                const query = search.value.trim().toLocaleLowerCase();
+                const matching = searchable.filter(({ content }) => content.includes(query));
+                const count = matching.length;
+                const totalPages = Math.max(1, Math.ceil(count / pageSize));
+                currentPage = Math.min(currentPage, totalPages);
+                const start = (currentPage - 1) * pageSize;
+                const visible = new Set(matching.slice(start, start + pageSize).map(({ row }) => row));
+
+                rows.forEach((row) => { row.hidden = !visible.has(row); });
+                noMatch.hidden = count > 0;
+                footer.hidden = false;
+                counter.textContent = count
+                    ? `Showing ${start + 1}–${Math.min(start + pageSize, count)} of ${count} matching recent transactions`
+                    : `0 of ${rows.length} recent transactions match`;
+                previous.disabled = currentPage <= 1;
+                next.disabled = currentPage >= totalPages;
+                numbers.replaceChildren();
+
+                const firstPage = Math.max(1, Math.min(currentPage - 2, totalPages - 4));
+                for (let page = firstPage; page <= Math.min(totalPages, firstPage + 4); page++) {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.textContent = String(page);
+                    button.dataset.reportPage = String(page);
+                    button.setAttribute('aria-label', `Transaction page ${page}`);
+                    if (page === currentPage) {
+                        button.classList.add('is-current');
+                        button.setAttribute('aria-current', 'page');
+                    }
+                    numbers.appendChild(button);
+                }
+            };
+
+            search.addEventListener('input', () => {
+                currentPage = 1;
+                render();
+            }, { signal });
+            previous.addEventListener('click', () => {
+                currentPage = Math.max(1, currentPage - 1);
+                render();
+            }, { signal });
+            next.addEventListener('click', () => {
+                currentPage += 1;
+                render();
+            }, { signal });
+            numbers.addEventListener('click', (event) => {
+                const button = event.target.closest('[data-report-page]');
+                if (!button || !numbers.contains(button)) return;
+                currentPage = Number(button.dataset.reportPage) || 1;
+                render();
+            }, { signal });
+            render();
+        },
+
+        renderChart() {
+            const data = this.chartData || {};
+            const svg = document.getElementById('sellerReportChart');
+            const grid = document.getElementById('sellerReportGrid');
+            const salesArea = document.getElementById('sellerReportSalesArea');
+            const salesLine = document.getElementById('sellerReportSalesLine');
+            const netLine = document.getElementById('sellerReportNetLine');
+            const pointsGroup = document.getElementById('sellerReportSalesPoints');
+            const xAxis = document.getElementById('sellerReportXAxis');
+            const emptyState = document.getElementById('sellerReportChartEmpty');
+
+            if (!svg || !grid || !salesArea || !salesLine || !netLine || !pointsGroup || !xAxis) {
+                return;
+            }
+
+            grid.innerHTML = '';
+            pointsGroup.innerHTML = '';
+            xAxis.innerHTML = '';
+            salesArea.setAttribute('d', '');
+            salesLine.setAttribute('d', '');
+            netLine.setAttribute('d', '');
+
+            const labels = Array.isArray(data.labels) ? data.labels : [];
+            const sales = Array.isArray(data.sales) ? data.sales.map(Number) : [];
+            const net = Array.isArray(data.net) ? data.net.map(Number) : [];
+
+            const count = Math.max(labels.length, sales.length, net.length);
+            const hasSales = Math.max(0, ...sales, ...net) > 0;
+
+            emptyState?.classList.toggle('is-visible', !hasSales);
+
+            const chart = {
+                left: 78,
+                right: 822,
+                top: 25,
+                bottom: 272,
+            };
+
+            const width = chart.right - chart.left;
+            const height = chart.bottom - chart.top;
+
+            const maxRaw = Math.max(0, ...sales, ...net);
+            const maxValue = this.niceMaximum(maxRaw);
+
+            for (let index = 0; index <= 4; index++) {
+                const ratio = index / 4;
+                const y = chart.top + height * ratio;
+                const value = maxValue * (1 - ratio);
+
+                grid.appendChild(this.svgElement('line', {
+                    x1: chart.left,
+                    y1: y,
+                    x2: chart.right,
+                    y2: y,
+                    stroke: index === 4 ? '#D7DDE5' : '#E8EDF2',
+                    'stroke-dasharray': index === 4 ? '0' : '5 6',
+                }));
+
+                grid.appendChild(this.svgElement('text', {
+                    x: 10,
+                    y: y + 5,
+                    fill: '#344054',
+                    'font-size': 13.5,
+                    'font-family': 'Poppins, sans-serif',
+                    'font-weight': 600,
+                }, this.compactPeso(value)));
+            }
+
+            if (!count) {
+                return;
+            }
+
+            const salesPoints = this.makeChartPoints(sales, count, chart, maxValue);
+            const netPoints = this.makeChartPoints(net, count, chart, maxValue);
+
+            /*
+            | Smooth Catmull-Rom → cubic Bézier curves.
+            | This keeps every real data point while avoiding the harsh zig-zag
+            | appearance of straight line segments.
+            */
+            const salesPath = this.smoothPath(salesPoints);
+            const netPath = this.smoothPath(netPoints);
+
+            salesLine.setAttribute('d', salesPath);
+            netLine.setAttribute('d', netPath);
+
+            if (salesPoints.length) {
+                const first = salesPoints[0];
+                const last = salesPoints[salesPoints.length - 1];
+
+                salesArea.setAttribute(
+                    'd',
+                    `${salesPath} L${last.x.toFixed(2)} ${chart.bottom} L${first.x.toFixed(2)} ${chart.bottom} Z`
+                );
+            }
+
+            /*
+            | Keep labels readable. All points remain in the graph; only axis
+            | labels are thinned when there are many buckets.
+            */
+            const maxVisibleLabels = 8;
+            const labelStep = Math.max(1, Math.ceil(count / maxVisibleLabels));
+
+            salesPoints.forEach((point, index) => {
+                const circle = this.svgElement('circle', {
+                    cx: point.x,
+                    cy: point.y,
+                    r: index === salesPoints.length - 1 ? 5.2 : 4.4,
+                    fill: '#fff',
+                    stroke: '#C88912',
+                    'stroke-width': 2.4,
+                });
+
+                circle.appendChild(
+                    this.svgElement(
+                        'title',
+                        {},
+                        `${labels[index] || 'Period'} — Sales ${this.peso(point.value)}`
+                    )
+                );
+
+                pointsGroup.appendChild(circle);
+
+                const shouldShowLabel =
+                    index === 0 ||
+                    index === count - 1 ||
+                    index % labelStep === 0;
+
+                if (shouldShowLabel) {
+                    xAxis.appendChild(this.svgElement('text', {
+                        x: point.x,
+                        y: 314,
+                        fill: '#344054',
+                        'font-size': 13,
+                        'font-family': 'Poppins, sans-serif',
+                        'font-weight': 600,
+                        'text-anchor': 'middle',
+                    }, labels[index] || ''));
+                }
+            });
+        },
+
+        makeChartPoints(values, count, chart, maxValue) {
+            const width = chart.right - chart.left;
+            const height = chart.bottom - chart.top;
+
+            return Array.from({ length: count }, (_, index) => {
+                const x = count === 1
+                    ? chart.left + width / 2
+                    : chart.left + width * index / (count - 1);
+
+                const value = Math.max(0, Number(values[index] || 0));
+                const y = chart.bottom - (value / maxValue) * height;
+
+                return { x, y, value };
+            });
+        },
+
+        smoothPath(points) {
+            if (!points.length) return '';
+            if (points.length === 1) {
+                return `M${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+            }
+            if (points.length === 2) {
+                return `M${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)} L${points[1].x.toFixed(2)} ${points[1].y.toFixed(2)}`;
+            }
+
+            const tension = 0.16;
+            let path = `M${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+
+            for (let i = 0; i < points.length - 1; i++) {
+                const p0 = points[i - 1] || points[i];
+                const p1 = points[i];
+                const p2 = points[i + 1];
+                const p3 = points[i + 2] || p2;
+
+                const cp1x = p1.x + (p2.x - p0.x) * tension;
+                const cp1y = p1.y + (p2.y - p0.y) * tension;
+                const cp2x = p2.x - (p3.x - p1.x) * tension;
+                const cp2y = p2.y - (p3.y - p1.y) * tension;
+
+                path += ` C${cp1x.toFixed(2)} ${cp1y.toFixed(2)}, ${cp2x.toFixed(2)} ${cp2y.toFixed(2)}, ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`;
+            }
+
+            return path;
+        },
+
+        niceMaximum(value) {
+            const raw = Number(value || 0);
+            if (raw <= 0) return 1000;
+
+            const roughStep = raw / 4;
+            const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
+            const normalized = roughStep / magnitude;
+
+            let niceStep;
+            if (normalized <= 1) niceStep = 1;
+            else if (normalized <= 2) niceStep = 2;
+            else if (normalized <= 5) niceStep = 5;
+            else niceStep = 10;
+
+            niceStep *= magnitude;
+
+            return Math.max(niceStep * 4, raw);
+        },
+
+        svgElement(name, attrs = {}, content = '') {
+            const element = document.createElementNS('http://www.w3.org/2000/svg', name);
+
+            Object.entries(attrs).forEach(([key, value]) => {
+                element.setAttribute(key, String(value));
+            });
+
+            if (content !== '') {
+                element.textContent = content;
+            }
+
+            return element;
+        },
+
+        compactPeso(value) {
+            const amount = Number(value || 0);
+            const absolute = Math.abs(amount);
+
+            if (absolute >= 1000000) {
+                return '₱' + (amount / 1000000).toFixed(absolute >= 10000000 ? 0 : 1).replace(/\.0$/, '') + 'M';
+            }
+
+            if (absolute >= 1000) {
+                return '₱' + (amount / 1000).toFixed(absolute >= 100000 ? 0 : 1).replace(/\.0$/, '') + 'K';
+            }
+
+            return '₱' + Math.round(amount).toLocaleString('en-PH');
+        },
+
+        peso(value) {
+            return new Intl.NumberFormat('en-PH', {
+                style: 'currency',
+                currency: 'PHP',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }).format(Number(value || 0)).replace('PHP', '₱').replace(/\s/g, '');
+        },
+    };
+
+    /*
+    | Bind the Livewire lifecycle only once, even if this Blade script is
+    | evaluated again after navigation.
+    */
+    if (!window.__SARI_REPORT_LIFECYCLE_BOUND__) {
+        /* The page script itself runs on arrival. Keep only the persistent
+           cleanup hook; otherwise Reports initializes twice per visit. */
+        document.addEventListener('livewire:navigating', () => {
+            window.SariSellerReportPage?.reset();
+        });
+
+        window.__SARI_REPORT_LIFECYCLE_BOUND__ = true;
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.SariSellerReportPage?.init();
+        }, { once: true });
+    } else {
+        window.SariSellerReportPage.init();
+    }
+})();
+</script>
+@endpush

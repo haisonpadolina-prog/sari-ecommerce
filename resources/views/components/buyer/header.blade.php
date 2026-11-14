@@ -116,6 +116,7 @@
 
         {{-- RIGHT --}}
         <div class="flex min-w-0 items-center gap-1.5 sm:gap-2">
+            @include('components.shared.theme-toggle')
             <a
                 id="buyerNotificationButton"
                 href="{{ route('buyer.notifications') }}"
@@ -182,8 +183,8 @@
     {{-- Scoped overrides for the new professional header; shell.css uses !important rules. --}}
     <style>
         #buyerHeader {
-            border-bottom-color: #E9EDF2 !important;
-            background: #FFFFFF !important;
+            border-bottom-color: var(--sari-dark-d8c2716225, #E9EDF2) !important;
+            background: var(--sari-dark-950baec030, #FFFFFF) !important;
         }
         #buyerHeader .buyer-header-main {
             min-height: 82px !important;
@@ -199,25 +200,25 @@
             gap: 8px !important;
             font-size: 11.5px !important;
             line-height: 1.4 !important;
-            color: #758092 !important;
+            color: var(--sari-dark-a63aa16d7c, #758092) !important;
         }
         #buyerHeader .buyer-header-breadcrumb svg {
             width: 13px !important;
             height: 13px !important;
             flex: 0 0 13px !important;
-            color: #B5BDC8;
+            color: var(--sari-dark-a63aa16d7c, #B5BDC8);
         }
         #buyerHeader .buyer-header-control {
-            border-color: #E5EAF0 !important;
-            color: #344054 !important;
+            border-color: var(--sari-dark-d8c2716225, #E5EAF0) !important;
+            color: var(--sari-dark-e23e64dd1e, #344054) !important;
             box-shadow: none !important;
         }
         #buyerHeader .buyer-header-control:hover {
-            background: #F4F6F9 !important;
-            border-color: #D4DBE4 !important;
+            background: var(--sari-dark-950baec030, #F4F6F9) !important;
+            border-color: var(--sari-dark-d8c2716225, #D4DBE4) !important;
         }
         #buyerHeader .buyer-header-icon-button:hover {
-            color: #C99128 !important;
+            color: var(--sari-dark-d0445510f4, #C99128) !important;
         }
         #buyerHeader .buyer-header-profile {
             gap: 11px !important;
@@ -229,7 +230,7 @@
             width: 39px !important;
             height: 39px !important;
             font-size: 12px !important;
-            box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3px #F0E5CD;
+            box-shadow: 0 0 0 2px var(--sari-dark-f30a5f9061, #FFFFFF), 0 0 0 3px var(--sari-dark-f30a5f9061, #F0E5CD);
         }
         #buyerHeaderProfileName {
             font-size: 12px !important;

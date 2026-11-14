@@ -9,18 +9,18 @@
 @verbatim
 body:has(#sariCodRemittance),
 body:has(#sariCodRemittance) #courierMain {
-    background: #f4f5f7 !important;
-    color: #2f3742;
+    background: var(--sari-dark-4d21eb669b, #f4f5f7) !important;
+    color: var(--sari-dark-e23e64dd1e, #2f3742);
 }
 
 body:has(#sariCodRemittance) #courierSidebar {
-    background: #fff !important;
-    border-right-color: #e5e7eb !important;
+    background: var(--sari-dark-950baec030, #fff) !important;
+    border-right-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
 }
 
 body:has(#sariCodRemittance) #courierMain > header {
-    background: rgba(255,255,255,.97) !important;
-    border-bottom-color: #e5e7eb !important;
+    background: var(--sari-dark-d2fbbe29b8, rgba(255,255,255,.97)) !important;
+    border-bottom-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
     box-shadow: none !important;
 }
 
@@ -32,17 +32,17 @@ body:has(#sariCodRemittance) #courierMain > header {
 #sariCodRemittance {
     --cr-gold: #c88912;
     --cr-gold-hover: #af750d;
-    --cr-ink: #2f3742;
-    --cr-muted: #7a8593;
-    --cr-border: #e5e7eb;
-    --cr-panel: #ffffff;
-    --cr-panel-soft: #f8fafc;
+    --cr-ink: var(--sari-dark-e23e64dd1e, #2f3742);
+    --cr-muted: var(--sari-dark-a63aa16d7c, #7a8593);
+    --cr-border: var(--sari-dark-d8c2716225, #e5e7eb);
+    --cr-panel: var(--sari-dark-950baec030, #ffffff);
+    --cr-panel-soft: var(--sari-dark-950baec030, #f8fafc);
     --cr-hover: #f3f4f6;
     --cr-shadow:
-        0 2px 5px rgba(15,23,42,.045),
-        0 10px 24px rgba(15,23,42,.075),
-        0 24px 54px rgba(15,23,42,.095),
-        inset 0 1px 0 rgba(255,255,255,.92);
+        0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+        0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+        0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+        inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
@@ -67,7 +67,7 @@ body:has(#sariCodRemittance) #courierMain > header {
 #sariCodRemittance a { touch-action: manipulation; }
 
 #sariCodRemittance :is(a,button,input,select,textarea):focus-visible {
-    outline: 2px solid #94a3b8;
+    outline: 2px solid var(--sari-dark-d8c2716225, #94a3b8);
     outline-offset: 3px;
 }
 
@@ -116,7 +116,7 @@ body:has(#sariCodRemittance) #courierMain > header {
     position: relative;
     top: 12px;
     padding: 4px 0;
-    color: #667180;
+    color: var(--sari-dark-a63aa16d7c, #667180);
     font-size: 11.5px;
     font-weight: 750;
     white-space: nowrap;
@@ -124,7 +124,7 @@ body:has(#sariCodRemittance) #courierMain > header {
 }
 
 #sariCodRemittance .cr-back-link:hover,
-#sariCodRemittance .cr-back-link:focus-visible { color: #374151; }
+#sariCodRemittance .cr-back-link:focus-visible { color: var(--sari-dark-e23e64dd1e, #374151); }
 
 #sariCodRemittance .cr-back-arrow {
     font-size: 18px;
@@ -180,9 +180,9 @@ body:has(#sariCodRemittance) #courierMain > header {
     gap: 6px;
     padding: 6px 10px;
     border-radius: 999px;
-    border: 1px solid #e5e7eb;
-    background: #f9fafb;
-    color: #6b7280;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
+    background: var(--sari-dark-950baec030, #f9fafb);
+    color: var(--sari-dark-a63aa16d7c, #6b7280);
     font-size: 10px;
     font-weight: 700;
     white-space: nowrap;
@@ -190,9 +190,9 @@ body:has(#sariCodRemittance) #courierMain > header {
 
 #sariCodRemittance .cr-orders {
     overflow: hidden;
-    border: 1px solid #e8ebef;
+    border: 1px solid var(--sari-dark-d8c2716225, #e8ebef);
     border-radius: 14px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
 }
 
 #sariCodRemittance .cr-order-head,
@@ -205,9 +205,9 @@ body:has(#sariCodRemittance) #courierMain > header {
 
 #sariCodRemittance .cr-order-head {
     padding: 12px 15px;
-    border-bottom: 1px solid #e9edf1;
-    background: #f8fafc;
-    color: #8a94a3;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
+    background: var(--sari-dark-950baec030, #f8fafc);
+    color: var(--sari-dark-a63aa16d7c, #8a94a3);
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
@@ -218,17 +218,17 @@ body:has(#sariCodRemittance) #courierMain > header {
     padding: 14px 15px;
     min-width: 0;
     cursor: pointer;
-    border-top: 1px solid #edf0f3;
-    background: #fff;
+    border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f3);
+    background: var(--sari-dark-950baec030, #fff);
     transition: background-color .16s ease, border-color .16s ease;
 }
 
 #sariCodRemittance .cr-order-head + .cr-order { border-top: 0; }
 #sariCodRemittance .cr-order:hover { background: var(--cr-hover); }
 #sariCodRemittance .cr-order:has(input:checked) {
-    background: #f9fafb;
+    background: var(--sari-dark-950baec030, #f9fafb);
 }
-#sariCodRemittance .cr-order:has(input:checked):hover { background: #f3f4f6; }
+#sariCodRemittance .cr-order:has(input:checked):hover { background: var(--sari-dark-4d21eb669b, #f3f4f6); }
 
 #sariCodRemittance .cr-checkbox-wrap {
     display: flex;
@@ -243,8 +243,8 @@ body:has(#sariCodRemittance) #courierMain > header {
     height: 18px;
     margin: 0;
     border-radius: 6px;
-    border: 1.5px solid #cbd5e1;
-    background: #fff;
+    border: 1.5px solid var(--sari-dark-d8c2716225, #cbd5e1);
+    background: var(--sari-dark-950baec030, #fff);
     display: grid;
     place-items: center;
     cursor: pointer;
@@ -255,8 +255,8 @@ body:has(#sariCodRemittance) #courierMain > header {
     content: '';
     width: 8px;
     height: 5px;
-    border-left: 2px solid #fff;
-    border-bottom: 2px solid #fff;
+    border-left: 2px solid var(--sari-dark-d8c2716225, #fff);
+    border-bottom: 2px solid var(--sari-dark-d8c2716225, #fff);
     transform: rotate(-45deg) scale(0);
     transform-origin: center;
     transition: transform .14s ease;
@@ -271,14 +271,14 @@ body:has(#sariCodRemittance) #courierMain > header {
 #sariCodRemittance .cr-check:checked::after { transform: rotate(-45deg) scale(1); }
 #sariCodRemittance .cr-check:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(200,137,18,.20);
+    box-shadow: 0 0 0 3px var(--sari-dark-ef22e61893, rgba(200,137,18,.20));
     border-color: var(--cr-gold);
 }
 
 #sariCodRemittance .cr-order-id {
     display: block;
     overflow-wrap: anywhere;
-    color: #303844;
+    color: var(--sari-dark-e23e64dd1e, #303844);
     font-size: 11.5px;
     font-weight: 700;
 }
@@ -286,20 +286,20 @@ body:has(#sariCodRemittance) #courierMain > header {
 #sariCodRemittance .cr-order-date {
     display: block;
     margin-top: 2px;
-    color: #9aa4af;
+    color: var(--sari-dark-a63aa16d7c, #9aa4af);
     font-size: 10px;
 }
 
 #sariCodRemittance .cr-order-buyer {
     overflow-wrap: anywhere;
-    color: #6f7c8b;
+    color: var(--sari-dark-a63aa16d7c, #6f7c8b);
     font-size: 11.5px;
 }
 
 #sariCodRemittance .cr-order-cash { min-width: 0; }
 
 #sariCodRemittance .cr-order-amount {
-    color: #293440;
+    color: var(--sari-dark-e23e64dd1e, #293440);
     font-size: 12.5px;
     font-weight: 750;
     font-variant-numeric: tabular-nums;
@@ -311,7 +311,7 @@ body:has(#sariCodRemittance) #courierMain > header {
     gap: 9px;
     padding: 38px 18px;
     text-align: center;
-    color: #93a0ad;
+    color: var(--sari-dark-a63aa16d7c, #93a0ad);
 }
 
 #sariCodRemittance .cr-empty-icon {
@@ -320,9 +320,9 @@ body:has(#sariCodRemittance) #courierMain > header {
     width: 48px;
     height: 48px;
     border-radius: 14px;
-    border: 1px solid #e5e7eb;
-    background: #f9fafb;
-    color: #6b7280;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
+    background: var(--sari-dark-950baec030, #f9fafb);
+    color: var(--sari-dark-a63aa16d7c, #6b7280);
 }
 
 #sariCodRemittance .cr-empty-icon svg {
@@ -331,14 +331,14 @@ body:has(#sariCodRemittance) #courierMain > header {
 }
 
 #sariCodRemittance .cr-empty strong {
-    color: #5f6b78;
+    color: var(--sari-dark-a63aa16d7c, #5f6b78);
     font-size: 13px;
     font-weight: 700;
 }
 
 #sariCodRemittance .cr-empty p {
     margin: 0;
-    color: #93a0ad;
+    color: var(--sari-dark-a63aa16d7c, #93a0ad);
     font-size: 11.5px;
 }
 
@@ -351,12 +351,12 @@ body:has(#sariCodRemittance) #courierMain > header {
     margin-top: 18px;
     padding: 17px;
     border-radius: 13px;
-    border: 1px solid #e9edf1;
-    background: #f8fafc;
+    border: 1px solid var(--sari-dark-d8c2716225, #e9edf1);
+    background: var(--sari-dark-950baec030, #f8fafc);
 }
 
 #sariCodRemittance .cr-eyebrow {
-    color: #7f8b99;
+    color: var(--sari-dark-a63aa16d7c, #7f8b99);
     font-size: 11px;
     font-weight: 700;
 }
@@ -364,13 +364,13 @@ body:has(#sariCodRemittance) #courierMain > header {
 #sariCodRemittance .cr-total-note {
     max-width: 460px;
     margin: 4px 0 0;
-    color: #86929f;
+    color: var(--sari-dark-a63aa16d7c, #86929f);
     font-size: 11px;
     line-height: 1.7;
 }
 
 #sariCodRemittance .cr-total strong {
-    color: #27313d;
+    color: var(--sari-dark-e23e64dd1e, #27313d);
     font-size: 23px;
     letter-spacing: -.04em;
     font-weight: 750;
@@ -390,23 +390,23 @@ body:has(#sariCodRemittance) #courierMain > header {
 }
 
 #sariCodRemittance .cr-field-label {
-    color: #465363;
+    color: var(--sari-dark-e23e64dd1e, #465363);
     font-size: 11.5px;
     font-weight: 700;
 }
 
-#sariCodRemittance .cr-required { color: #4b5563; }
-#sariCodRemittance .cr-optional { color: #93a0ad; font-weight: 400; }
+#sariCodRemittance .cr-required { color: var(--sari-dark-e23e64dd1e, #4b5563); }
+#sariCodRemittance .cr-optional { color: var(--sari-dark-a63aa16d7c, #93a0ad); font-weight: 400; }
 
 #sariCodRemittance .cr-control {
     width: 100%;
     min-width: 0;
     min-height: 46px;
     padding: 12px 14px;
-    border: 1px solid #d9e0e7;
+    border: 1px solid var(--sari-dark-d8c2716225, #d9e0e7);
     border-radius: 12px;
-    background: #fff;
-    color: #33404d;
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-e23e64dd1e, #33404d);
     font-size: 11.5px;
     transition: border-color .16s ease, box-shadow .16s ease, background-color .16s ease;
 }
@@ -425,19 +425,19 @@ body:has(#sariCodRemittance) #courierMain > header {
 
 #sariCodRemittance select.cr-control:hover,
 #sariCodRemittance .cr-control:hover {
-    border-color: #cbd5df;
-    background-color: #fbfcfd;
+    border-color: var(--sari-dark-d8c2716225, #cbd5df);
+    background-color: var(--sari-dark-950baec030, #fbfcfd);
 }
 
 #sariCodRemittance .cr-control:focus {
-    border-color: #94a3b8;
+    border-color: var(--sari-dark-d8c2716225, #94a3b8);
     outline: 0;
-    box-shadow: 0 0 0 4px rgba(148,163,184,.16);
-    background-color: #fff;
+    box-shadow: 0 0 0 4px var(--sari-dark-b5c2a2270e, rgba(148,163,184,.16));
+    background-color: var(--sari-dark-950baec030, #fff);
 }
 
-#sariCodRemittance .cr-control::placeholder { color: #a3acb6; }
-#sariCodRemittance .cr-hub-warning { color: #ab3549; font-size: 11px; }
+#sariCodRemittance .cr-control::placeholder { color: var(--sari-dark-a63aa16d7c, #a3acb6); }
+#sariCodRemittance .cr-hub-warning { color: var(--sari-dark-a63aa16d7c, #ab3549); font-size: 11px; }
 
 #sariCodRemittance .cr-btn {
     display: inline-flex;
@@ -446,10 +446,10 @@ body:has(#sariCodRemittance) #courierMain > header {
     gap: 9px;
     min-height: 45px;
     padding: 11px 16px;
-    border: 1px solid #e1e5eb;
+    border: 1px solid var(--sari-dark-d8c2716225, #e1e5eb);
     border-radius: 12px;
-    background: #fff;
-    color: #485665;
+    background: var(--sari-dark-950baec030, #fff);
+    color: var(--sari-dark-e23e64dd1e, #485665);
     font-size: 11.5px;
     font-weight: 700;
     text-align: center;
@@ -459,22 +459,22 @@ body:has(#sariCodRemittance) #courierMain > header {
 }
 
 #sariCodRemittance .cr-btn:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
-    color: #293440;
+    background: var(--sari-dark-950baec030, #f8fafc);
+    border-color: var(--sari-dark-d8c2716225, #cbd5e1);
+    color: var(--sari-dark-e23e64dd1e, #293440);
 }
 
 #sariCodRemittance .cr-btn svg { width: 17px; height: 17px; }
 
 #sariCodRemittance .cr-btn--primary {
-    background: #334155;
-    border-color: #334155;
+    background: var(--sari-dark-fbb35de0d1, #334155);
+    border-color: var(--sari-dark-d8c2716225, #334155);
     color: #fff;
 }
 
 #sariCodRemittance .cr-btn--primary:hover {
-    background: #1f2937;
-    border-color: #1f2937;
+    background: var(--sari-dark-fbb35de0d1, #1f2937);
+    border-color: var(--sari-dark-d8c2716225, #1f2937);
     color: #fff;
 }
 
@@ -498,9 +498,9 @@ body:has(#sariCodRemittance) #courierMain > header {
 #sariCodRemittance .cr-batch {
     min-width: 0;
     padding: 16px;
-    border: 1px solid #e8ebef;
+    border: 1px solid var(--sari-dark-d8c2716225, #e8ebef);
     border-radius: 13px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
     box-shadow: none;
 }
 
@@ -513,7 +513,7 @@ body:has(#sariCodRemittance) #courierMain > header {
 }
 
 #sariCodRemittance .cr-batch-code {
-    color: #2e3945;
+    color: var(--sari-dark-e23e64dd1e, #2e3945);
     font-size: 12px;
     font-weight: 750;
     overflow-wrap: anywhere;
@@ -521,7 +521,7 @@ body:has(#sariCodRemittance) #courierMain > header {
 
 #sariCodRemittance .cr-batch-detail {
     margin-top: 6px;
-    color: #84909c;
+    color: var(--sari-dark-a63aa16d7c, #84909c);
     font-size: 11px;
     line-height: 1.7;
     overflow-wrap: anywhere;
@@ -533,7 +533,7 @@ body:has(#sariCodRemittance) #courierMain > header {
 }
 
 #sariCodRemittance .cr-batch-amount {
-    color: #293440;
+    color: var(--sari-dark-e23e64dd1e, #293440);
     font-size: 17px;
     font-weight: 750;
     letter-spacing: -.035em;
@@ -548,8 +548,8 @@ body:has(#sariCodRemittance) #courierMain > header {
     margin-top: 5px;
     padding: 4px 9px;
     border-radius: 999px;
-    background: #f3f4f6;
-    color: #647384;
+    background: var(--sari-dark-4d21eb669b, #f3f4f6);
+    color: var(--sari-dark-a63aa16d7c, #647384);
     font-size: 10px;
     font-weight: 650;
     text-transform: capitalize;
@@ -564,13 +564,13 @@ body:has(#sariCodRemittance) #courierMain > header {
 }
 
 #sariCodRemittance .cr-status--verified {
-    background: #eef2f7;
-    color: #3f4e61;
+    background: var(--sari-dark-4d21eb669b, #eef2f7);
+    color: var(--sari-dark-e23e64dd1e, #3f4e61);
 }
 
 #sariCodRemittance .cr-status--discrepancy {
-    background: #f6f6f6;
-    color: #7a3f47;
+    background: var(--sari-dark-4d21eb669b, #f6f6f6);
+    color: var(--sari-dark-a63aa16d7c, #7a3f47);
 }
 
 #sariCodRemittance .cr-batch-action {
@@ -578,7 +578,7 @@ body:has(#sariCodRemittance) #courierMain > header {
 }
 
 #sariCodRemittance .cr-help {
-    color: #909ba7;
+    color: var(--sari-dark-a63aa16d7c, #909ba7);
     font-size: 11px;
     line-height: 1.7;
 }
@@ -586,9 +586,9 @@ body:has(#sariCodRemittance) #courierMain > header {
 #sariCodRemittance .cr-qr-panel {
     margin-top: 15px;
     padding: 15px;
-    border: 1px solid #e8ebef;
+    border: 1px solid var(--sari-dark-d8c2716225, #e8ebef);
     border-radius: 12px;
-    background: #f8fafc;
+    background: var(--sari-dark-950baec030, #f8fafc);
 }
 
 #sariCodRemittance .cr-qr-inner {
@@ -604,8 +604,8 @@ body:has(#sariCodRemittance) #courierMain > header {
     width: 180px;
     height: 180px;
     padding: 12px;
-    background: #fff;
-    border: 1px solid #e5e8ed;
+    background: var(--sari-dark-950baec030, #fff);
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e8ed);
     border-radius: 12px;
     overflow-wrap: anywhere;
     text-align: center;
@@ -614,7 +614,7 @@ body:has(#sariCodRemittance) #courierMain > header {
 
 #sariCodRemittance .cr-qr-heading {
     margin: 0;
-    color: #293440;
+    color: var(--sari-dark-e23e64dd1e, #293440);
     font-size: 12px;
     font-weight: 750;
     overflow-wrap: anywhere;
@@ -630,21 +630,21 @@ body:has(#sariCodRemittance) #courierMain > header {
 #sariCodRemittance .cr-qr-stat {
     min-width: 0;
     padding: 10px;
-    border: 1px solid #e7ebef;
+    border: 1px solid var(--sari-dark-d8c2716225, #e7ebef);
     border-radius: 10px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
 }
 
 #sariCodRemittance .cr-qr-stat span {
     display: block;
     margin-bottom: 3px;
-    color: #8b97a3;
+    color: var(--sari-dark-a63aa16d7c, #8b97a3);
     font-size: 10px;
 }
 
 #sariCodRemittance .cr-qr-stat strong {
     display: block;
-    color: #293440;
+    color: var(--sari-dark-e23e64dd1e, #293440);
     font-size: 14px;
     font-weight: 750;
     overflow-wrap: anywhere;
@@ -652,29 +652,29 @@ body:has(#sariCodRemittance) #courierMain > header {
 
 #sariCodRemittance .cr-qr-caption {
     margin: 7px 0 0;
-    color: #84909c;
+    color: var(--sari-dark-a63aa16d7c, #84909c);
     font-size: 10.5px;
     line-height: 1.7;
 }
 
 #sariCodRemittance .cr-alert {
     padding: 12px 15px;
-    border: 1px solid #e5e8ed;
+    border: 1px solid var(--sari-dark-d8c2716225, #e5e8ed);
     border-radius: 11px;
-    background: #fff;
+    background: var(--sari-dark-950baec030, #fff);
     font-size: 11.5px;
 }
 
 #sariCodRemittance .cr-alert--success {
-    border-color: #d8dee6;
-    background: #f8fafc;
-    color: #334155;
+    border-color: var(--sari-dark-d8c2716225, #d8dee6);
+    background: var(--sari-dark-950baec030, #f8fafc);
+    color: var(--sari-dark-e23e64dd1e, #334155);
 }
 
 #sariCodRemittance .cr-alert--error {
-    border-color: #ead6da;
-    background: #fbf7f8;
-    color: #8c4651;
+    border-color: var(--sari-dark-d8c2716225, #ead6da);
+    background: var(--sari-dark-950baec030, #fbf7f8);
+    color: var(--sari-dark-a63aa16d7c, #8c4651);
 }
 
 #sariCodRemittance [hidden],
@@ -697,10 +697,10 @@ body:has(#sariCodRemittance) #courierMain > header {
     #sariCodRemittance .cr-section { padding: 17px; }
     #sariCodRemittance .cr-card {
         box-shadow:
-            0 1px 3px rgba(15,23,42,.035),
-            0 6px 16px rgba(15,23,42,.055),
-            0 13px 28px rgba(15,23,42,.065),
-            inset 0 1px 0 rgba(255,255,255,.90);
+            0 1px 3px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+            0 6px 16px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+            0 13px 28px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90));
     }
     #sariCodRemittance .cr-back-link { top: 0; font-size: 10.5px; }
     #sariCodRemittance .cr-back-arrow { font-size: 16px; }

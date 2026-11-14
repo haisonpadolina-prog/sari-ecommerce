@@ -1,0 +1,1555 @@
+{
+  "marker": "SARI_SELLER_FLOW50_V1",
+  "profiles": [
+    {
+      "first_name": "Anton",
+      "last_name": "Villanueva",
+      "sex": "Male",
+      "birthday": "1985-01-01",
+      "email": "seller.flow.001@example.test",
+      "store_name": "Amihan Market Demo 001",
+      "line_of_business": "Electronics",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Electronics store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-001-avatar.png",
+          "sha256": "d493ca9066092b12e16f5f2c595db5a523f47dd0c9e943e5d07afe09eb2efef5"
+        },
+        "logo": {
+          "file": "seller-001-logo.png",
+          "sha256": "354d0c156205d7dff4a177bd3929011f09ca19750116de7e3bf4b4410b9137de"
+        },
+        "banner": {
+          "file": "seller-001-banner.png",
+          "sha256": "50d522917e83b0ea605c8b61b7d267bd58674aa91e8f4758b09f58b2082dc4b3"
+        }
+      },
+      "province_code": "012800000",
+      "province_name": "Ilocos Norte",
+      "municipality_code": "012805000",
+      "municipality_name": "City of Batac",
+      "barangay_code": "012805001",
+      "barangay_name": "Aglipay",
+      "pickup_address": "SARI DEMO PICKUP 001 (fictional location), Aglipay, City of Batac, Ilocos Norte, Philippines"
+    },
+    {
+      "first_name": "Lara",
+      "last_name": "Villanueva",
+      "sex": "Female",
+      "birthday": "1986-02-02",
+      "email": "seller.flow.002@example.test",
+      "store_name": "Sinag Market Demo 002",
+      "line_of_business": "Fashion",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Fashion store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-002-avatar.png",
+          "sha256": "47181599f470799dc50bc55d5d234fced025f815afba2f0f2ce8c363d52659b2"
+        },
+        "logo": {
+          "file": "seller-002-logo.png",
+          "sha256": "ff7aa93348a46e3aee96cbab1647b0aec22d7d292b50ec3f283d1551e0886531"
+        },
+        "banner": {
+          "file": "seller-002-banner.png",
+          "sha256": "153a1b296f6562bd9c5aedb31fde9f820801fe2a8b55587c8ad330fd94b4d4e9"
+        }
+      },
+      "province_code": "012800000",
+      "province_name": "Ilocos Norte",
+      "municipality_code": "012812000",
+      "municipality_name": "City of Laoag",
+      "barangay_code": "012812001",
+      "barangay_name": "Bgy. No. 42, Apaya",
+      "pickup_address": "SARI DEMO PICKUP 002 (fictional location), Bgy. No. 42, Apaya, City of Laoag, Ilocos Norte, Philippines"
+    },
+    {
+      "first_name": "Enzo",
+      "last_name": "Villanueva",
+      "sex": "Male",
+      "birthday": "1987-03-03",
+      "email": "seller.flow.003@example.test",
+      "store_name": "Hiraya Market Demo 003",
+      "line_of_business": "Home & Living",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Home & Living store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-003-avatar.png",
+          "sha256": "6d94bfaabd01c2343614a4392ad52e1a0e93c5afd8806246f26a0460ba147081"
+        },
+        "logo": {
+          "file": "seller-003-logo.png",
+          "sha256": "dd1efcc56bd78ea1fecc5183c6ee9af6a57c671b34b6e28bf5268aaf22446d1e"
+        },
+        "banner": {
+          "file": "seller-003-banner.png",
+          "sha256": "c4965b4fca1b9cf6edb5301d53749ad7a9f8e23fceccde814f75518eed79a408"
+        }
+      },
+      "province_code": "012900000",
+      "province_name": "Ilocos Sur",
+      "municipality_code": "012906000",
+      "municipality_name": "City of Candon",
+      "barangay_code": "012906001",
+      "barangay_name": "Allangigan Primero",
+      "pickup_address": "SARI DEMO PICKUP 003 (fictional location), Allangigan Primero, City of Candon, Ilocos Sur, Philippines"
+    },
+    {
+      "first_name": "Mika",
+      "last_name": "Villanueva",
+      "sex": "Female",
+      "birthday": "1988-04-04",
+      "email": "seller.flow.004@example.test",
+      "store_name": "Likha Market Demo 004",
+      "line_of_business": "Beauty",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Beauty store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-004-avatar.png",
+          "sha256": "36c5fed05a4ff47b2a65c3551ef2eb3319e81f04a730c8a4915a565194707e92"
+        },
+        "logo": {
+          "file": "seller-004-logo.png",
+          "sha256": "f351d91fef74175d1d8801dbd627fc62d5cefa8f0c08434f7602e6b5e9cbe859"
+        },
+        "banner": {
+          "file": "seller-004-banner.png",
+          "sha256": "81abf3c59a5c21bc2d0ab2f9f68ad3c33bdfece0d4c90af34fd917608d464697"
+        }
+      },
+      "province_code": "012900000",
+      "province_name": "Ilocos Sur",
+      "municipality_code": "012934000",
+      "municipality_name": "City of Vigan",
+      "barangay_code": "012934001",
+      "barangay_name": "Ayusan Norte",
+      "pickup_address": "SARI DEMO PICKUP 004 (fictional location), Ayusan Norte, City of Vigan, Ilocos Sur, Philippines"
+    },
+    {
+      "first_name": "Adrian",
+      "last_name": "Villanueva",
+      "sex": "Male",
+      "birthday": "1989-05-05",
+      "email": "seller.flow.005@example.test",
+      "store_name": "Dalisay Market Demo 005",
+      "line_of_business": "Books",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Books store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-005-avatar.png",
+          "sha256": "ef947aa1012870a1c00f0a87f1d3c95c6a648fda1d4d3654c45abfa4b0a66057"
+        },
+        "logo": {
+          "file": "seller-005-logo.png",
+          "sha256": "fe03cf4c96802cf32d7e65d67b3f0a64784b32a19c37d02cf34216195952da74"
+        },
+        "banner": {
+          "file": "seller-005-banner.png",
+          "sha256": "4f4f5d26613461bd2e583013b2b2d9bafa234f4d5c311a77dedf448eb6364ee7"
+        }
+      },
+      "province_code": "013300000",
+      "province_name": "La Union",
+      "municipality_code": "013314000",
+      "municipality_name": "City of San Fernando",
+      "barangay_code": "013314001",
+      "barangay_name": "Abut",
+      "pickup_address": "SARI DEMO PICKUP 005 (fictional location), Abut, City of San Fernando, La Union, Philippines"
+    },
+    {
+      "first_name": "Clara",
+      "last_name": "Villanueva",
+      "sex": "Female",
+      "birthday": "1990-06-06",
+      "email": "seller.flow.006@example.test",
+      "store_name": "Luntian Market Demo 006",
+      "line_of_business": "Food & Beverage",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Food & Beverage store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-006-avatar.png",
+          "sha256": "ea94362f301bd638f679623f993a846d699a4eb5f50729c8ca805af8e6130d56"
+        },
+        "logo": {
+          "file": "seller-006-logo.png",
+          "sha256": "e3fc4b1bebd659775806c370a4045d22399475540ff69cf00437d8ff98ea72fb"
+        },
+        "banner": {
+          "file": "seller-006-banner.png",
+          "sha256": "c43f3eeab43ec778807e3c5771d7fd2bb52cf067ebeb01dce3d05f34ee966eb6"
+        }
+      },
+      "province_code": "015500000",
+      "province_name": "Pangasinan",
+      "municipality_code": "015503000",
+      "municipality_name": "City of Alaminos",
+      "barangay_code": "015503001",
+      "barangay_name": "Alos",
+      "pickup_address": "SARI DEMO PICKUP 006 (fictional location), Alos, City of Alaminos, Pangasinan, Philippines"
+    },
+    {
+      "first_name": "Luis",
+      "last_name": "Villanueva",
+      "sex": "Male",
+      "birthday": "1991-07-07",
+      "email": "seller.flow.007@example.test",
+      "store_name": "Isla Market Demo 007",
+      "line_of_business": "Jewelry & Watches",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Jewelry & Watches store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-007-avatar.png",
+          "sha256": "151fabd35bf50f999438360ef876baebe6902122ac4258681f75ce26145de81c"
+        },
+        "logo": {
+          "file": "seller-007-logo.png",
+          "sha256": "35984a770ce012e3803d8329f3c5abca5d55bafc77480ccb37ceda88eebcecfc"
+        },
+        "banner": {
+          "file": "seller-007-banner.png",
+          "sha256": "4ac6a2ad62fe4a2e30ba4948c80d4aa593e6ae24dee771d6e3a0c2731ce9465e"
+        }
+      },
+      "province_code": "015500000",
+      "province_name": "Pangasinan",
+      "municipality_code": "015518000",
+      "municipality_name": "City of Dagupan",
+      "barangay_code": "015518001",
+      "barangay_name": "Bacayao Norte",
+      "pickup_address": "SARI DEMO PICKUP 007 (fictional location), Bacayao Norte, City of Dagupan, Pangasinan, Philippines"
+    },
+    {
+      "first_name": "Nina",
+      "last_name": "Villanueva",
+      "sex": "Female",
+      "birthday": "1992-08-08",
+      "email": "seller.flow.008@example.test",
+      "store_name": "Tala Market Demo 008",
+      "line_of_business": "Furniture & Office",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Furniture & Office store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-008-avatar.png",
+          "sha256": "4b5780c8e2653ea68e9ff88d50b36e31a8ec06095e03331cb0bb9f4b91729ede"
+        },
+        "logo": {
+          "file": "seller-008-logo.png",
+          "sha256": "f550277f3e0faf61423b387c5ddf988f4455fbd80a4954677cc47b0e36b35a3b"
+        },
+        "banner": {
+          "file": "seller-008-banner.png",
+          "sha256": "7447a2c67fbe97fafd8e8e5fc20dc30659fc7878ade5fd6813179daf6fc9c8b9"
+        }
+      },
+      "province_code": "015500000",
+      "province_name": "Pangasinan",
+      "municipality_code": "015532000",
+      "municipality_name": "City of San Carlos",
+      "barangay_code": "015532001",
+      "barangay_name": "Abanon",
+      "pickup_address": "SARI DEMO PICKUP 008 (fictional location), Abanon, City of San Carlos, Pangasinan, Philippines"
+    },
+    {
+      "first_name": "Renzo",
+      "last_name": "Villanueva",
+      "sex": "Male",
+      "birthday": "1993-09-09",
+      "email": "seller.flow.009@example.test",
+      "store_name": "Silayan Market Demo 009",
+      "line_of_business": "Others",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Others store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-009-avatar.png",
+          "sha256": "aff1b5f8e5f82d21d317bc45937afc1cc4a1cf31d4eb327963197261a4082288"
+        },
+        "logo": {
+          "file": "seller-009-logo.png",
+          "sha256": "5ebc1e40a431bcb11d9ea710112ad01dd833aa5e827d7402d49a916a3a736702"
+        },
+        "banner": {
+          "file": "seller-009-banner.png",
+          "sha256": "397faf9362d3032be375ac03165530c0d877676990da0b4bf13845410808541b"
+        }
+      },
+      "province_code": "015500000",
+      "province_name": "Pangasinan",
+      "municipality_code": "015546000",
+      "municipality_name": "City of Urdaneta",
+      "barangay_code": "015546001",
+      "barangay_name": "Anonas",
+      "pickup_address": "SARI DEMO PICKUP 009 (fictional location), Anonas, City of Urdaneta, Pangasinan, Philippines"
+    },
+    {
+      "first_name": "Daphne",
+      "last_name": "Villanueva",
+      "sex": "Female",
+      "birthday": "1994-10-10",
+      "email": "seller.flow.010@example.test",
+      "store_name": "Habagat Market Demo 010",
+      "line_of_business": "Electronics",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Electronics store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-010-avatar.png",
+          "sha256": "f0bce5721e7be495505dfa3fcb22c1bbab8cdf3a65b5952e796749f8fcf17d7d"
+        },
+        "logo": {
+          "file": "seller-010-logo.png",
+          "sha256": "6b80cdaf033725d2e81fa3f319d38c6c8f6f655464b7f53871e6ac0a1d463eef"
+        },
+        "banner": {
+          "file": "seller-010-banner.png",
+          "sha256": "9173569fb5ffb58674cae3c4850def2a73e2b70190970378c22c21b019291e3b"
+        }
+      },
+      "province_code": "021500000",
+      "province_name": "Cagayan",
+      "municipality_code": "021529000",
+      "municipality_name": "Tuguegarao City",
+      "barangay_code": "021529001",
+      "barangay_name": "Annafunan East",
+      "pickup_address": "SARI DEMO PICKUP 010 (fictional location), Annafunan East, Tuguegarao City, Cagayan, Philippines"
+    },
+    {
+      "first_name": "Anton",
+      "last_name": "Del Rosario",
+      "sex": "Male",
+      "birthday": "1995-11-11",
+      "email": "seller.flow.011@example.test",
+      "store_name": "Amihan Market Demo 011",
+      "line_of_business": "Fashion",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Fashion store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-011-avatar.png",
+          "sha256": "27fa1d30afcd157621c113205c69e79bbd5011dd2f3f26349d7c111339d3e3f4"
+        },
+        "logo": {
+          "file": "seller-011-logo.png",
+          "sha256": "a404d4fc3a08bec081f5619403d960d09e914694d168b6d454c6d61fd2514b96"
+        },
+        "banner": {
+          "file": "seller-011-banner.png",
+          "sha256": "5e6ab9b8b04de352d08bf41459d38d457e6ab6a5bfbde2a24d0d98b0f36315dd"
+        }
+      },
+      "province_code": "023100000",
+      "province_name": "Isabela",
+      "municipality_code": "023108000",
+      "municipality_name": "City of Cauayan",
+      "barangay_code": "023108001",
+      "barangay_name": "Alicaocao",
+      "pickup_address": "SARI DEMO PICKUP 011 (fictional location), Alicaocao, City of Cauayan, Isabela, Philippines"
+    },
+    {
+      "first_name": "Lara",
+      "last_name": "Del Rosario",
+      "sex": "Female",
+      "birthday": "1996-12-12",
+      "email": "seller.flow.012@example.test",
+      "store_name": "Sinag Market Demo 012",
+      "line_of_business": "Home & Living",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Home & Living store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-012-avatar.png",
+          "sha256": "e2e637150a3dd796895703befe82bf2fa6696e2e28bbc6db867e4a972b4da408"
+        },
+        "logo": {
+          "file": "seller-012-logo.png",
+          "sha256": "65a524008b381240ed845bd7fea66ac82a889a1abb363380759804be3c12d314"
+        },
+        "banner": {
+          "file": "seller-012-banner.png",
+          "sha256": "eba6fa381884d65662eb084d45f0b9fc690a3589bf91b4afcb6a79c3c608cdda"
+        }
+      },
+      "province_code": "023100000",
+      "province_name": "Isabela",
+      "municipality_code": "023114000",
+      "municipality_name": "City of Ilagan",
+      "barangay_code": "023114001",
+      "barangay_name": "Cabeseria 27",
+      "pickup_address": "SARI DEMO PICKUP 012 (fictional location), Cabeseria 27, City of Ilagan, Isabela, Philippines"
+    },
+    {
+      "first_name": "Enzo",
+      "last_name": "Del Rosario",
+      "sex": "Male",
+      "birthday": "1997-01-13",
+      "email": "seller.flow.013@example.test",
+      "store_name": "Hiraya Market Demo 013",
+      "line_of_business": "Beauty",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Beauty store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-013-avatar.png",
+          "sha256": "dc5255e40a4d13612132f10ff3feab58b016fb5b1afbd2ee65682829334208c3"
+        },
+        "logo": {
+          "file": "seller-013-logo.png",
+          "sha256": "000f53730a636ed9d8451a25b78dc88dc4173949815bda7f86e5ba6e6638d21a"
+        },
+        "banner": {
+          "file": "seller-013-banner.png",
+          "sha256": "49b6cd467aca9576c2e2ee4482e3ae9cd3b049ab91d92ac6a903ac5f538f6ee6"
+        }
+      },
+      "province_code": "023100000",
+      "province_name": "Isabela",
+      "municipality_code": "023135000",
+      "municipality_name": "City of Santiago",
+      "barangay_code": "023135001",
+      "barangay_name": "Abra",
+      "pickup_address": "SARI DEMO PICKUP 013 (fictional location), Abra, City of Santiago, Isabela, Philippines"
+    },
+    {
+      "first_name": "Mika",
+      "last_name": "Del Rosario",
+      "sex": "Female",
+      "birthday": "1998-02-14",
+      "email": "seller.flow.014@example.test",
+      "store_name": "Likha Market Demo 014",
+      "line_of_business": "Books",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Books store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-014-avatar.png",
+          "sha256": "85cb91654a4a1e8e51e60f2088b2b33b915cba5940fa9ba97a66d6818b9cf251"
+        },
+        "logo": {
+          "file": "seller-014-logo.png",
+          "sha256": "76ca6f698366a658e71fd38cde77fde6e546ee6fba966dd06eb1786b3889cdfe"
+        },
+        "banner": {
+          "file": "seller-014-banner.png",
+          "sha256": "0dabfcc3bb52686c5cfaffe633f5c3efedd9079037c43dcc3f6c620e0ff3a907"
+        }
+      },
+      "province_code": "030800000",
+      "province_name": "Bataan",
+      "municipality_code": "030803000",
+      "municipality_name": "City of Balanga",
+      "barangay_code": "030803001",
+      "barangay_name": "Bagumbayan",
+      "pickup_address": "SARI DEMO PICKUP 014 (fictional location), Bagumbayan, City of Balanga, Bataan, Philippines"
+    },
+    {
+      "first_name": "Adrian",
+      "last_name": "Del Rosario",
+      "sex": "Male",
+      "birthday": "1999-03-15",
+      "email": "seller.flow.015@example.test",
+      "store_name": "Dalisay Market Demo 015",
+      "line_of_business": "Food & Beverage",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Food & Beverage store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-015-avatar.png",
+          "sha256": "c69003bfa8595ee630435738119de6e2bd5eb3ca50b6158a11548e8e219d0877"
+        },
+        "logo": {
+          "file": "seller-015-logo.png",
+          "sha256": "df4988b03fa31ea11ba3cd615993da34c5ca4b1b5a18cb75c4516806cb759a93"
+        },
+        "banner": {
+          "file": "seller-015-banner.png",
+          "sha256": "3ef92a5fd8d001371513d9c13a69f1aa557783a3d20adc662453652e3aa727fe"
+        }
+      },
+      "province_code": "031400000",
+      "province_name": "Bulacan",
+      "municipality_code": "031403000",
+      "municipality_name": "City of Baliwag",
+      "barangay_code": "031403001",
+      "barangay_name": "Bagong Nayon",
+      "pickup_address": "SARI DEMO PICKUP 015 (fictional location), Bagong Nayon, City of Baliwag, Bulacan, Philippines"
+    },
+    {
+      "first_name": "Clara",
+      "last_name": "Del Rosario",
+      "sex": "Female",
+      "birthday": "2000-04-16",
+      "email": "seller.flow.016@example.test",
+      "store_name": "Luntian Market Demo 016",
+      "line_of_business": "Jewelry & Watches",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Jewelry & Watches store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-016-avatar.png",
+          "sha256": "b74adeb0587710baf6d6b64b6e0cbd2025ff3aa8211f50374c83807521adbbb9"
+        },
+        "logo": {
+          "file": "seller-016-logo.png",
+          "sha256": "c8e0478ef4730fc17a1bf84ffd858d37a9421027d061f129f754db5c5ce04959"
+        },
+        "banner": {
+          "file": "seller-016-banner.png",
+          "sha256": "3aa719679da001a4e9c96dab7ca133cd060677d98b1436197ef9b1b63ee31849"
+        }
+      },
+      "province_code": "031400000",
+      "province_name": "Bulacan",
+      "municipality_code": "031410000",
+      "municipality_name": "City of Malolos",
+      "barangay_code": "031410001",
+      "barangay_name": "Anilao",
+      "pickup_address": "SARI DEMO PICKUP 016 (fictional location), Anilao, City of Malolos, Bulacan, Philippines"
+    },
+    {
+      "first_name": "Luis",
+      "last_name": "Del Rosario",
+      "sex": "Male",
+      "birthday": "2001-05-17",
+      "email": "seller.flow.017@example.test",
+      "store_name": "Isla Market Demo 017",
+      "line_of_business": "Furniture & Office",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Furniture & Office store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-017-avatar.png",
+          "sha256": "a95449c3f0c908aa0b65e50b094ba454c0776b26ef1739c950a4304333b71cac"
+        },
+        "logo": {
+          "file": "seller-017-logo.png",
+          "sha256": "c95f39545c4cf152592d2d23bfd5d269f63358a4d70b2579169b20de14057604"
+        },
+        "banner": {
+          "file": "seller-017-banner.png",
+          "sha256": "e91d708f151b6f3290e477057ac61197991bd96de78a3e7df40fded917d6cf43"
+        }
+      },
+      "province_code": "031400000",
+      "province_name": "Bulacan",
+      "municipality_code": "031412000",
+      "municipality_name": "City of Meycauayan",
+      "barangay_code": "031412001",
+      "barangay_name": "Bagbaguin",
+      "pickup_address": "SARI DEMO PICKUP 017 (fictional location), Bagbaguin, City of Meycauayan, Bulacan, Philippines"
+    },
+    {
+      "first_name": "Nina",
+      "last_name": "Del Rosario",
+      "sex": "Female",
+      "birthday": "2002-06-18",
+      "email": "seller.flow.018@example.test",
+      "store_name": "Tala Market Demo 018",
+      "line_of_business": "Others",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Others store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-018-avatar.png",
+          "sha256": "8255345321e19f21d6e29ecedde82f71812b622bc0549e2a1b785d5504f21e79"
+        },
+        "logo": {
+          "file": "seller-018-logo.png",
+          "sha256": "67824ecd2253cc54d53aecdd623b593750510b95be12b00fb0efaf4ee47514ba"
+        },
+        "banner": {
+          "file": "seller-018-banner.png",
+          "sha256": "7f90f053d2b05fac96687997757e166f0f1ceb6afa1c70b2e1ed96becd342735"
+        }
+      },
+      "province_code": "031400000",
+      "province_name": "Bulacan",
+      "municipality_code": "031420000",
+      "municipality_name": "City of San Jose Del Monte",
+      "barangay_code": "031420001",
+      "barangay_name": "Bagong Buhay I",
+      "pickup_address": "SARI DEMO PICKUP 018 (fictional location), Bagong Buhay I, City of San Jose Del Monte, Bulacan, Philippines"
+    },
+    {
+      "first_name": "Renzo",
+      "last_name": "Del Rosario",
+      "sex": "Male",
+      "birthday": "1985-07-19",
+      "email": "seller.flow.019@example.test",
+      "store_name": "Silayan Market Demo 019",
+      "line_of_business": "Electronics",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Electronics store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-019-avatar.png",
+          "sha256": "ab3dec48ae5f54bbc2b34ef706cfee04cc8d7c9ae1579e71e98250b472ee96a2"
+        },
+        "logo": {
+          "file": "seller-019-logo.png",
+          "sha256": "5e3074ba55f8695d5b58192cec713859a746dc645622d7b3a56712c1f500aa4b"
+        },
+        "banner": {
+          "file": "seller-019-banner.png",
+          "sha256": "221effeda89b220970838c74eb20cf98777c2ef5b6879e4930c3fdc41c6889cc"
+        }
+      },
+      "province_code": "034900000",
+      "province_name": "Nueva Ecija",
+      "municipality_code": "034903000",
+      "municipality_name": "City of Cabanatuan",
+      "barangay_code": "034903002",
+      "barangay_name": "Aduas Centro",
+      "pickup_address": "SARI DEMO PICKUP 019 (fictional location), Aduas Centro, City of Cabanatuan, Nueva Ecija, Philippines"
+    },
+    {
+      "first_name": "Daphne",
+      "last_name": "Del Rosario",
+      "sex": "Female",
+      "birthday": "1986-08-20",
+      "email": "seller.flow.020@example.test",
+      "store_name": "Habagat Market Demo 020",
+      "line_of_business": "Fashion",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Fashion store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-020-avatar.png",
+          "sha256": "882c441467785430b35ba808cdd1ceb6603a51564b607f7ed709810a5db5ceac"
+        },
+        "logo": {
+          "file": "seller-020-logo.png",
+          "sha256": "b41298ac862d79a2afb66ace6554c97e8e762d232f02544b99d0a06b10d9a2af"
+        },
+        "banner": {
+          "file": "seller-020-banner.png",
+          "sha256": "c2b65c7a87e432f28e2a57ebae6a3a707be52cb94542926ca43b5c9bc53789da"
+        }
+      },
+      "province_code": "034900000",
+      "province_name": "Nueva Ecija",
+      "municipality_code": "034908000",
+      "municipality_name": "City of Gapan",
+      "barangay_code": "034908001",
+      "barangay_name": "Bayanihan",
+      "pickup_address": "SARI DEMO PICKUP 020 (fictional location), Bayanihan, City of Gapan, Nueva Ecija, Philippines"
+    },
+    {
+      "first_name": "Anton",
+      "last_name": "Valdez",
+      "sex": "Male",
+      "birthday": "1987-09-21",
+      "email": "seller.flow.021@example.test",
+      "store_name": "Amihan Market Demo 021",
+      "line_of_business": "Home & Living",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Home & Living store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-021-avatar.png",
+          "sha256": "24201fa95b0dcf7774fb6716aca37433eb4bff2870db0a350ccc5d86bf05082a"
+        },
+        "logo": {
+          "file": "seller-021-logo.png",
+          "sha256": "60c38cff89be15aa7996fbafe47bf72ce7f44b9d5fa1fa6611bc123080a3d1a6"
+        },
+        "banner": {
+          "file": "seller-021-banner.png",
+          "sha256": "63d333684833c200645f08824c5af494588218e6d831fe8ef4ca2d9f3d01550c"
+        }
+      },
+      "province_code": "034900000",
+      "province_name": "Nueva Ecija",
+      "municipality_code": "034917000",
+      "municipality_name": "Science City of Mu\u00f1oz",
+      "barangay_code": "034917001",
+      "barangay_name": "Bagong Sikat",
+      "pickup_address": "SARI DEMO PICKUP 021 (fictional location), Bagong Sikat, Science City of Mu\u00f1oz, Nueva Ecija, Philippines"
+    },
+    {
+      "first_name": "Lara",
+      "last_name": "Valdez",
+      "sex": "Female",
+      "birthday": "1988-10-22",
+      "email": "seller.flow.022@example.test",
+      "store_name": "Sinag Market Demo 022",
+      "line_of_business": "Beauty",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Beauty store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-022-avatar.png",
+          "sha256": "70ef90e9951952ceba4cb72a920c5300fbaf34b1270bc4262589cf5f649aaf45"
+        },
+        "logo": {
+          "file": "seller-022-logo.png",
+          "sha256": "0e89660f310f736c75be75b6defc118ee414c37004a50465c22093a53fed0d7b"
+        },
+        "banner": {
+          "file": "seller-022-banner.png",
+          "sha256": "530540c46f19c3192e08098caae43a9688006be4c9d45c2fa3d09754cf99786f"
+        }
+      },
+      "province_code": "034900000",
+      "province_name": "Nueva Ecija",
+      "municipality_code": "034919000",
+      "municipality_name": "City of Palayan",
+      "barangay_code": "034919001",
+      "barangay_name": "Aulo",
+      "pickup_address": "SARI DEMO PICKUP 022 (fictional location), Aulo, City of Palayan, Nueva Ecija, Philippines"
+    },
+    {
+      "first_name": "Enzo",
+      "last_name": "Valdez",
+      "sex": "Male",
+      "birthday": "1989-11-23",
+      "email": "seller.flow.023@example.test",
+      "store_name": "Hiraya Market Demo 023",
+      "line_of_business": "Books",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Books store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-023-avatar.png",
+          "sha256": "006c4600821c2ef68cc3b112630ea0cfa907a088d4792d7637cbc093536fb905"
+        },
+        "logo": {
+          "file": "seller-023-logo.png",
+          "sha256": "9bbfdfbea2dc40028a46a2f0245a51e9b67d004bdaea4f68456628644113bc1f"
+        },
+        "banner": {
+          "file": "seller-023-banner.png",
+          "sha256": "4b064c96ab937caf3456bcaaf34e4dd174635ed08df4638686150abb0089bd16"
+        }
+      },
+      "province_code": "034900000",
+      "province_name": "Nueva Ecija",
+      "municipality_code": "034926000",
+      "municipality_name": "San Jose City",
+      "barangay_code": "034926001",
+      "barangay_name": "A. Pascual",
+      "pickup_address": "SARI DEMO PICKUP 023 (fictional location), A. Pascual, San Jose City, Nueva Ecija, Philippines"
+    },
+    {
+      "first_name": "Mika",
+      "last_name": "Valdez",
+      "sex": "Female",
+      "birthday": "1990-12-24",
+      "email": "seller.flow.024@example.test",
+      "store_name": "Likha Market Demo 024",
+      "line_of_business": "Food & Beverage",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Food & Beverage store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-024-avatar.png",
+          "sha256": "bd8e0d76cf79c49fece77e11acc2ba0072b846e0e9803f633b5200fe2c91cd04"
+        },
+        "logo": {
+          "file": "seller-024-logo.png",
+          "sha256": "9d7735e22f3638ed7cf514df3504a6087affa59cd35b7e5fded6e79bc9767145"
+        },
+        "banner": {
+          "file": "seller-024-banner.png",
+          "sha256": "d8e62d442df8a8dfc6f711724f6f71a7a586721d2414deec38937aa068a5fba7"
+        }
+      },
+      "province_code": "035400000",
+      "province_name": "Pampanga",
+      "municipality_code": "035409000",
+      "municipality_name": "Mabalacat City",
+      "barangay_code": "035409001",
+      "barangay_name": "Atlu-Bola",
+      "pickup_address": "SARI DEMO PICKUP 024 (fictional location), Atlu-Bola, Mabalacat City, Pampanga, Philippines"
+    },
+    {
+      "first_name": "Adrian",
+      "last_name": "Valdez",
+      "sex": "Male",
+      "birthday": "1991-01-25",
+      "email": "seller.flow.025@example.test",
+      "store_name": "Dalisay Market Demo 025",
+      "line_of_business": "Jewelry & Watches",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Jewelry & Watches store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-025-avatar.png",
+          "sha256": "43a5675ce8569ea10b51a703990d4d134db4961ea87a301ee25810717d7fea5a"
+        },
+        "logo": {
+          "file": "seller-025-logo.png",
+          "sha256": "02cca17b30704fa938994e9a876ddb51bdea3e427eb3efc3d507f4ea0804d9d3"
+        },
+        "banner": {
+          "file": "seller-025-banner.png",
+          "sha256": "06690d7df060afbe40d1fe2a02b6a4b5588b2b4a078daa2df0d619639020d86c"
+        }
+      },
+      "province_code": "035400000",
+      "province_name": "Pampanga",
+      "municipality_code": "035416000",
+      "municipality_name": "City of San Fernando",
+      "barangay_code": "035416001",
+      "barangay_name": "Alasas",
+      "pickup_address": "SARI DEMO PICKUP 025 (fictional location), Alasas, City of San Fernando, Pampanga, Philippines"
+    },
+    {
+      "first_name": "Clara",
+      "last_name": "Valdez",
+      "sex": "Female",
+      "birthday": "1992-02-26",
+      "email": "seller.flow.026@example.test",
+      "store_name": "Luntian Market Demo 026",
+      "line_of_business": "Furniture & Office",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Furniture & Office store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-026-avatar.png",
+          "sha256": "0f4b9a5ac4ac8724e7a9394020e83a15edb2793f3a7b8eeadba1bae72c9fd273"
+        },
+        "logo": {
+          "file": "seller-026-logo.png",
+          "sha256": "04d409cbcb2fa6dd1887fe141de97e854af4cfe5010c3f362d7d9b0eec1398e1"
+        },
+        "banner": {
+          "file": "seller-026-banner.png",
+          "sha256": "55bea721c79b673845294ebacb974bef9e8d306ee767d91179dad5cd38b23b07"
+        }
+      },
+      "province_code": "036900000",
+      "province_name": "Tarlac",
+      "municipality_code": "036916000",
+      "municipality_name": "City of Tarlac",
+      "barangay_code": "036916001",
+      "barangay_name": "Aguso",
+      "pickup_address": "SARI DEMO PICKUP 026 (fictional location), Aguso, City of Tarlac, Tarlac, Philippines"
+    },
+    {
+      "first_name": "Luis",
+      "last_name": "Valdez",
+      "sex": "Male",
+      "birthday": "1993-03-27",
+      "email": "seller.flow.027@example.test",
+      "store_name": "Isla Market Demo 027",
+      "line_of_business": "Others",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Others store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-027-avatar.png",
+          "sha256": "62a7eb1b9e8262dfcbc8e1e3c27f2794b30dfd1967f969d40a4379b34108634d"
+        },
+        "logo": {
+          "file": "seller-027-logo.png",
+          "sha256": "b51fc5e95020afeb50cbb8a6e6135f3afcfc4c89e486a9d6f4539c4700ebfde9"
+        },
+        "banner": {
+          "file": "seller-027-banner.png",
+          "sha256": "8a7fa6de77d9be6fa49e689685591f6fa218295b73f6e86544dd6bf73dfcdea5"
+        }
+      },
+      "province_code": "035400000",
+      "province_name": "Pampanga",
+      "municipality_code": "035401000",
+      "municipality_name": "City of Angeles",
+      "barangay_code": "035401001",
+      "barangay_name": "Agapito del Rosario",
+      "pickup_address": "SARI DEMO PICKUP 027 (fictional location), Agapito del Rosario, City of Angeles, Pampanga, Philippines"
+    },
+    {
+      "first_name": "Nina",
+      "last_name": "Valdez",
+      "sex": "Female",
+      "birthday": "1994-04-01",
+      "email": "seller.flow.028@example.test",
+      "store_name": "Tala Market Demo 028",
+      "line_of_business": "Electronics",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Electronics store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-028-avatar.png",
+          "sha256": "87f55792928f886951aab1a98a6ea7a991d2e4029dcb4dcc9230003e756851fe"
+        },
+        "logo": {
+          "file": "seller-028-logo.png",
+          "sha256": "65c0cab1c31f32e342effd68a2bf4999d293e5e46096cae945e956e7e990d747"
+        },
+        "banner": {
+          "file": "seller-028-banner.png",
+          "sha256": "e79dd4fafe87afe2e8af0ac1e5b0519e4189d731502f12b039ff2bf584e94b16"
+        }
+      },
+      "province_code": "037100000",
+      "province_name": "Zambales",
+      "municipality_code": "037107000",
+      "municipality_name": "City of Olongapo",
+      "barangay_code": "037107001",
+      "barangay_name": "Asinan",
+      "pickup_address": "SARI DEMO PICKUP 028 (fictional location), Asinan, City of Olongapo, Zambales, Philippines"
+    },
+    {
+      "first_name": "Renzo",
+      "last_name": "Valdez",
+      "sex": "Male",
+      "birthday": "1995-05-02",
+      "email": "seller.flow.029@example.test",
+      "store_name": "Silayan Market Demo 029",
+      "line_of_business": "Fashion",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Fashion store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-029-avatar.png",
+          "sha256": "e2e0bec53d49bd05e6128e58a59dd36077162a4cfb0be78b235a5b5fa3458252"
+        },
+        "logo": {
+          "file": "seller-029-logo.png",
+          "sha256": "2d9608a8843d733549f8d9887de7b8719138fc917e2d31ef8b2aca3753ab0e1f"
+        },
+        "banner": {
+          "file": "seller-029-banner.png",
+          "sha256": "2adae9851cfa3c19023925579e2d24da658ad98c6858a80675c61685747f5261"
+        }
+      },
+      "province_code": "041000000",
+      "province_name": "Batangas",
+      "municipality_code": "041005000",
+      "municipality_name": "Batangas City",
+      "barangay_code": "041005001",
+      "barangay_name": "Alangilan",
+      "pickup_address": "SARI DEMO PICKUP 029 (fictional location), Alangilan, Batangas City, Batangas, Philippines"
+    },
+    {
+      "first_name": "Daphne",
+      "last_name": "Valdez",
+      "sex": "Female",
+      "birthday": "1996-06-03",
+      "email": "seller.flow.030@example.test",
+      "store_name": "Habagat Market Demo 030",
+      "line_of_business": "Home & Living",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Home & Living store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-030-avatar.png",
+          "sha256": "1fe06939e89cb36b52bcdbf1db8570b08e2919ed23bb306e38a6301368b82ed8"
+        },
+        "logo": {
+          "file": "seller-030-logo.png",
+          "sha256": "4a5dd66c61bf660323b1055d0925644b715a19b7f0d55ab30a443ed8df00591d"
+        },
+        "banner": {
+          "file": "seller-030-banner.png",
+          "sha256": "ec2331fa272d3693c69daad9240b0fd07e402e51dcd7a71e93ccbe51b9e5e540"
+        }
+      },
+      "province_code": "041000000",
+      "province_name": "Batangas",
+      "municipality_code": "041007000",
+      "municipality_name": "City of Calaca",
+      "barangay_code": "041007001",
+      "barangay_name": "Bagong Tubig",
+      "pickup_address": "SARI DEMO PICKUP 030 (fictional location), Bagong Tubig, City of Calaca, Batangas, Philippines"
+    },
+    {
+      "first_name": "Anton",
+      "last_name": "Aquino",
+      "sex": "Male",
+      "birthday": "1997-07-04",
+      "email": "seller.flow.031@example.test",
+      "store_name": "Amihan Market Demo 031",
+      "line_of_business": "Beauty",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Beauty store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-031-avatar.png",
+          "sha256": "c2981189e745631dc3f7db08b184120f08fcb430daf954902d1e31dbcfe41069"
+        },
+        "logo": {
+          "file": "seller-031-logo.png",
+          "sha256": "4f018681b551b3a6658e74db19d6cd78bbd1036d4a44b0092ef6d1610fba63d4"
+        },
+        "banner": {
+          "file": "seller-031-banner.png",
+          "sha256": "b58faf0d7c03a859ce3a05ddf78b692733d5e09a139bbc048cc3336e474d64a1"
+        }
+      },
+      "province_code": "041000000",
+      "province_name": "Batangas",
+      "municipality_code": "041014000",
+      "municipality_name": "City of Lipa",
+      "barangay_code": "041014001",
+      "barangay_name": "Adya",
+      "pickup_address": "SARI DEMO PICKUP 031 (fictional location), Adya, City of Lipa, Batangas, Philippines"
+    },
+    {
+      "first_name": "Lara",
+      "last_name": "Aquino",
+      "sex": "Female",
+      "birthday": "1998-08-05",
+      "email": "seller.flow.032@example.test",
+      "store_name": "Sinag Market Demo 032",
+      "line_of_business": "Books",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Books store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-032-avatar.png",
+          "sha256": "6af6f586828a7d8412166ce7d4ee85ebecb4c85799b5064eaac2162c66f9c81f"
+        },
+        "logo": {
+          "file": "seller-032-logo.png",
+          "sha256": "f3bbbf7141e3841cecdbfc2800a85e32f6681bd9d52a7c5ee9feb8e754213484"
+        },
+        "banner": {
+          "file": "seller-032-banner.png",
+          "sha256": "9c952417d5a1fecbf5d60727d52c967f584fe74724cf324daac484ec30851e2a"
+        }
+      },
+      "province_code": "041000000",
+      "province_name": "Batangas",
+      "municipality_code": "041028000",
+      "municipality_name": "City of Sto. Tomas",
+      "barangay_code": "041028001",
+      "barangay_name": "Barangay I",
+      "pickup_address": "SARI DEMO PICKUP 032 (fictional location), Barangay I, City of Sto. Tomas, Batangas, Philippines"
+    },
+    {
+      "first_name": "Enzo",
+      "last_name": "Aquino",
+      "sex": "Male",
+      "birthday": "1999-09-06",
+      "email": "seller.flow.033@example.test",
+      "store_name": "Hiraya Market Demo 033",
+      "line_of_business": "Food & Beverage",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Food & Beverage store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-033-avatar.png",
+          "sha256": "fbd53154dc3a22085d9fce55223eadae3e34cb35d4382b228af86079bbc9e965"
+        },
+        "logo": {
+          "file": "seller-033-logo.png",
+          "sha256": "4671d94c61b23d6d661f23cbd8049a9c3b85ed26bfebea396eb5c4b9767f5a09"
+        },
+        "banner": {
+          "file": "seller-033-banner.png",
+          "sha256": "b19960c668a2b14d0eafea1007474effc13902f24f10eacd5eff048fa4af9aa9"
+        }
+      },
+      "province_code": "041000000",
+      "province_name": "Batangas",
+      "municipality_code": "041031000",
+      "municipality_name": "City of Tanauan",
+      "barangay_code": "041031001",
+      "barangay_name": "Altura Bata",
+      "pickup_address": "SARI DEMO PICKUP 033 (fictional location), Altura Bata, City of Tanauan, Batangas, Philippines"
+    },
+    {
+      "first_name": "Mika",
+      "last_name": "Aquino",
+      "sex": "Female",
+      "birthday": "2000-10-07",
+      "email": "seller.flow.034@example.test",
+      "store_name": "Likha Market Demo 034",
+      "line_of_business": "Jewelry & Watches",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Jewelry & Watches store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-034-avatar.png",
+          "sha256": "a763618e1be20d2f7e292765bcbb7e1656a973c99d59b4bb5bc50f98cb65e911"
+        },
+        "logo": {
+          "file": "seller-034-logo.png",
+          "sha256": "0726fd19223aaa0500954946216332bd93d6387722a81377840630db7586372f"
+        },
+        "banner": {
+          "file": "seller-034-banner.png",
+          "sha256": "7c6bddd8a7a4c96c71d735a63da771b385631ac8a71cb9f21c26fcea577536bd"
+        }
+      },
+      "province_code": "042100000",
+      "province_name": "Cavite",
+      "municipality_code": "042103000",
+      "municipality_name": "City of Bacoor",
+      "barangay_code": "042103004",
+      "barangay_name": "Bayanan",
+      "pickup_address": "SARI DEMO PICKUP 034 (fictional location), Bayanan, City of Bacoor, Cavite, Philippines"
+    },
+    {
+      "first_name": "Adrian",
+      "last_name": "Aquino",
+      "sex": "Male",
+      "birthday": "2001-11-08",
+      "email": "seller.flow.035@example.test",
+      "store_name": "Dalisay Market Demo 035",
+      "line_of_business": "Furniture & Office",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Furniture & Office store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-035-avatar.png",
+          "sha256": "e6899e6f1a5c85f2e129f3c5bb21d362af9deae8adbeddbe6d95526d978c87c7"
+        },
+        "logo": {
+          "file": "seller-035-logo.png",
+          "sha256": "4c0d2c55fad8cbc4b30437936fc40e691c2437693e51f44ed0cefd20391ac2e3"
+        },
+        "banner": {
+          "file": "seller-035-banner.png",
+          "sha256": "e7b053bfb55b612a04a6fe7fa955d80a2366ad0b89c0684d3bf47bebc09fdf72"
+        }
+      },
+      "province_code": "042100000",
+      "province_name": "Cavite",
+      "municipality_code": "042104000",
+      "municipality_name": "City of Carmona",
+      "barangay_code": "042104001",
+      "barangay_name": "Bancal",
+      "pickup_address": "SARI DEMO PICKUP 035 (fictional location), Bancal, City of Carmona, Cavite, Philippines"
+    },
+    {
+      "first_name": "Clara",
+      "last_name": "Aquino",
+      "sex": "Female",
+      "birthday": "2002-12-09",
+      "email": "seller.flow.036@example.test",
+      "store_name": "Luntian Market Demo 036",
+      "line_of_business": "Others",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Others store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-036-avatar.png",
+          "sha256": "fc00e7480ff96dad472e9519fd55a7cfcc16691e05c23bc2b23f1eaf2828dcec"
+        },
+        "logo": {
+          "file": "seller-036-logo.png",
+          "sha256": "f3f978a581dde33fe64e57530102c1e9989740c9829e53094865b60bce4174cd"
+        },
+        "banner": {
+          "file": "seller-036-banner.png",
+          "sha256": "eb5dc38ba1697cb2f4e9c6c0d26bac330d4190abcb7796504c586166fe4eaf8e"
+        }
+      },
+      "province_code": "042100000",
+      "province_name": "Cavite",
+      "municipality_code": "042105000",
+      "municipality_name": "City of Cavite",
+      "barangay_code": "042105001",
+      "barangay_name": "Barangay 1",
+      "pickup_address": "SARI DEMO PICKUP 036 (fictional location), Barangay 1, City of Cavite, Cavite, Philippines"
+    },
+    {
+      "first_name": "Luis",
+      "last_name": "Aquino",
+      "sex": "Male",
+      "birthday": "1985-01-10",
+      "email": "seller.flow.037@example.test",
+      "store_name": "Isla Market Demo 037",
+      "line_of_business": "Electronics",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Electronics store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-037-avatar.png",
+          "sha256": "35a94e6c99b86e07f019925f9939ebe96a56288688bd5d1c7311fb5cb2237625"
+        },
+        "logo": {
+          "file": "seller-037-logo.png",
+          "sha256": "cd170fc9f16efa955d8429290c743fb5f269d3f308dd033ba9e11295f4de17e9"
+        },
+        "banner": {
+          "file": "seller-037-banner.png",
+          "sha256": "b0702d6845886290e1142fd00f1082160f285d1975bb901a3aab1d4489ba265f"
+        }
+      },
+      "province_code": "042100000",
+      "province_name": "Cavite",
+      "municipality_code": "042106000",
+      "municipality_name": "City of Dasmari\u00f1as",
+      "barangay_code": "042106003",
+      "barangay_name": "Burol",
+      "pickup_address": "SARI DEMO PICKUP 037 (fictional location), Burol, City of Dasmari\u00f1as, Cavite, Philippines"
+    },
+    {
+      "first_name": "Nina",
+      "last_name": "Aquino",
+      "sex": "Female",
+      "birthday": "1986-02-11",
+      "email": "seller.flow.038@example.test",
+      "store_name": "Tala Market Demo 038",
+      "line_of_business": "Fashion",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Fashion store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-038-avatar.png",
+          "sha256": "0b5bbbb6e5748bbc7d8b8700da26ac155e46c967e0e976ef4a7c13de9be3882d"
+        },
+        "logo": {
+          "file": "seller-038-logo.png",
+          "sha256": "41fbf6d0a84f63e481bcc9e745f3ddcc57272846a8150acefcd1dbf77b51ea33"
+        },
+        "banner": {
+          "file": "seller-038-banner.png",
+          "sha256": "4cc858fccdf62b4cbd8955f55d786f38983dca2525e325f017cbe0c20b8c781f"
+        }
+      },
+      "province_code": "042100000",
+      "province_name": "Cavite",
+      "municipality_code": "042108000",
+      "municipality_name": "City of General Trias",
+      "barangay_code": "042108001",
+      "barangay_name": "Alingaro",
+      "pickup_address": "SARI DEMO PICKUP 038 (fictional location), Alingaro, City of General Trias, Cavite, Philippines"
+    },
+    {
+      "first_name": "Renzo",
+      "last_name": "Aquino",
+      "sex": "Male",
+      "birthday": "1987-03-12",
+      "email": "seller.flow.039@example.test",
+      "store_name": "Silayan Market Demo 039",
+      "line_of_business": "Home & Living",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Home & Living store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-039-avatar.png",
+          "sha256": "f63ae95418ec53508c2201bdc74631dd20b2a08604b3d4e97c265a361c8c4860"
+        },
+        "logo": {
+          "file": "seller-039-logo.png",
+          "sha256": "36b3ff67053eb3cb9d71092b20fd4c8a73d5da6918305d9eee514e29a2f63e76"
+        },
+        "banner": {
+          "file": "seller-039-banner.png",
+          "sha256": "ca3ed85a5e96a6c067aa7ab0b3925349418955b9524b02756e8235a7a5d99f95"
+        }
+      },
+      "province_code": "042100000",
+      "province_name": "Cavite",
+      "municipality_code": "042109000",
+      "municipality_name": "City of Imus",
+      "barangay_code": "042109001",
+      "barangay_name": "Alapan I-A",
+      "pickup_address": "SARI DEMO PICKUP 039 (fictional location), Alapan I-A, City of Imus, Cavite, Philippines"
+    },
+    {
+      "first_name": "Daphne",
+      "last_name": "Aquino",
+      "sex": "Female",
+      "birthday": "1988-04-13",
+      "email": "seller.flow.040@example.test",
+      "store_name": "Habagat Market Demo 040",
+      "line_of_business": "Beauty",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Beauty store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-040-avatar.png",
+          "sha256": "cb1374eb50bab3162872b2a4d26a06ef31a769ae0046c3dda39b64ebde944357"
+        },
+        "logo": {
+          "file": "seller-040-logo.png",
+          "sha256": "70dafd20400e7ce1a74b92d498da7c5144ca9d8007f7d47587d3e014e3ba14dd"
+        },
+        "banner": {
+          "file": "seller-040-banner.png",
+          "sha256": "d30bd7b8ea44619c6b333b5e8efa47ed1cd050eea9072b18a4ce0d8402f44945"
+        }
+      },
+      "province_code": "042100000",
+      "province_name": "Cavite",
+      "municipality_code": "042119000",
+      "municipality_name": "City of Tagaytay",
+      "barangay_code": "042119001",
+      "barangay_name": "Asisan",
+      "pickup_address": "SARI DEMO PICKUP 040 (fictional location), Asisan, City of Tagaytay, Cavite, Philippines"
+    },
+    {
+      "first_name": "Anton",
+      "last_name": "Salazar",
+      "sex": "Male",
+      "birthday": "1989-05-14",
+      "email": "seller.flow.041@example.test",
+      "store_name": "Amihan Market Demo 041",
+      "line_of_business": "Books",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Books store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-041-avatar.png",
+          "sha256": "35b890f82f612fe4b180784a0e224bb4680c19e751142f535c5efd5e59d1d21f"
+        },
+        "logo": {
+          "file": "seller-041-logo.png",
+          "sha256": "96369ad0768f0761d2471fd38566e13b5eee5858e6fdf807788899156d2fa4db"
+        },
+        "banner": {
+          "file": "seller-041-banner.png",
+          "sha256": "d819d37c5202a3b3e5e45e27bb3e5a2831d9f2bb10fc2449c791b7e8a38152ed"
+        }
+      },
+      "province_code": "042100000",
+      "province_name": "Cavite",
+      "municipality_code": "042122000",
+      "municipality_name": "City of Trece Martires",
+      "barangay_code": "042122002",
+      "barangay_name": "Cabezas",
+      "pickup_address": "SARI DEMO PICKUP 041 (fictional location), Cabezas, City of Trece Martires, Cavite, Philippines"
+    },
+    {
+      "first_name": "Lara",
+      "last_name": "Salazar",
+      "sex": "Female",
+      "birthday": "1990-06-15",
+      "email": "seller.flow.042@example.test",
+      "store_name": "Sinag Market Demo 042",
+      "line_of_business": "Food & Beverage",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Food & Beverage store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-042-avatar.png",
+          "sha256": "d060231ef836e2c3848e9a684e1c10bda001192b3bc65798ed3a1629d2a8d5f1"
+        },
+        "logo": {
+          "file": "seller-042-logo.png",
+          "sha256": "d43064644b60ab86d2c679b97fc700b62058eef6277859b0dce55fcadea21bf9"
+        },
+        "banner": {
+          "file": "seller-042-banner.png",
+          "sha256": "341fec476bf64a093a21564c62f83f6aad417f60ede2cbfa23be38fba9866d11"
+        }
+      },
+      "province_code": "043400000",
+      "province_name": "Laguna",
+      "municipality_code": "043403000",
+      "municipality_name": "City of Bi\u00f1an",
+      "barangay_code": "043403001",
+      "barangay_name": "Bi\u00f1an",
+      "pickup_address": "SARI DEMO PICKUP 042 (fictional location), Bi\u00f1an, City of Bi\u00f1an, Laguna, Philippines"
+    },
+    {
+      "first_name": "Enzo",
+      "last_name": "Salazar",
+      "sex": "Male",
+      "birthday": "1991-07-16",
+      "email": "seller.flow.043@example.test",
+      "store_name": "Hiraya Market Demo 043",
+      "line_of_business": "Jewelry & Watches",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Jewelry & Watches store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-043-avatar.png",
+          "sha256": "aeb6fb8c3eb166e723ae8e55cb8f5705e3a1d521fa893ace26f36f0c2c722fd9"
+        },
+        "logo": {
+          "file": "seller-043-logo.png",
+          "sha256": "8ea3e8a50ed2087a32100fed8fdf9486eb1a529f6498032b9044d109bd580021"
+        },
+        "banner": {
+          "file": "seller-043-banner.png",
+          "sha256": "14138646a1f79f2a93b036adf2116458d8d992426557f749f7c8cea8e6a81fe5"
+        }
+      },
+      "province_code": "043400000",
+      "province_name": "Laguna",
+      "municipality_code": "043404000",
+      "municipality_name": "City of Cabuyao",
+      "barangay_code": "043404001",
+      "barangay_name": "Baclaran",
+      "pickup_address": "SARI DEMO PICKUP 043 (fictional location), Baclaran, City of Cabuyao, Laguna, Philippines"
+    },
+    {
+      "first_name": "Mika",
+      "last_name": "Salazar",
+      "sex": "Female",
+      "birthday": "1992-08-17",
+      "email": "seller.flow.044@example.test",
+      "store_name": "Likha Market Demo 044",
+      "line_of_business": "Furniture & Office",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Furniture & Office store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-044-avatar.png",
+          "sha256": "15bd5681a87d7d4669f601586f0beda73501e3deb72af17c13697a93684d8e49"
+        },
+        "logo": {
+          "file": "seller-044-logo.png",
+          "sha256": "ed3061c52d871ed371519ccc11e7fc1dfe8d1dccb91d1eb3297a9f6a0c7486a3"
+        },
+        "banner": {
+          "file": "seller-044-banner.png",
+          "sha256": "8b2e91710eafc222ea06a71722f4bf3861d65b5e6c819137018379833f5009b4"
+        }
+      },
+      "province_code": "043400000",
+      "province_name": "Laguna",
+      "municipality_code": "043405000",
+      "municipality_name": "City of Calamba",
+      "barangay_code": "043405001",
+      "barangay_name": "Bagong Kalsada",
+      "pickup_address": "SARI DEMO PICKUP 044 (fictional location), Bagong Kalsada, City of Calamba, Laguna, Philippines"
+    },
+    {
+      "first_name": "Adrian",
+      "last_name": "Salazar",
+      "sex": "Male",
+      "birthday": "1993-09-18",
+      "email": "seller.flow.045@example.test",
+      "store_name": "Dalisay Market Demo 045",
+      "line_of_business": "Others",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Others store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-045-avatar.png",
+          "sha256": "d55cbbeb2501a5ee9f12ff07d6ec6469a82e2f35725d8891b4a44b92dbdcf8d4"
+        },
+        "logo": {
+          "file": "seller-045-logo.png",
+          "sha256": "08c3cda1b2e5d671f5aca8b22926484bea25e0220b8b3bdfc954278291071b2e"
+        },
+        "banner": {
+          "file": "seller-045-banner.png",
+          "sha256": "07d2dcef869170a6a32875365659d1dbd19c01d47410ef585cb5b6931ce46216"
+        }
+      },
+      "province_code": "043400000",
+      "province_name": "Laguna",
+      "municipality_code": "043424000",
+      "municipality_name": "City of San Pablo",
+      "barangay_code": "043424001",
+      "barangay_name": "Bagong Bayan II-A",
+      "pickup_address": "SARI DEMO PICKUP 045 (fictional location), Bagong Bayan II-A, City of San Pablo, Laguna, Philippines"
+    },
+    {
+      "first_name": "Clara",
+      "last_name": "Salazar",
+      "sex": "Female",
+      "birthday": "1994-10-19",
+      "email": "seller.flow.046@example.test",
+      "store_name": "Luntian Market Demo 046",
+      "line_of_business": "Electronics",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Electronics store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-046-avatar.png",
+          "sha256": "cb41957901988e3ac30d8d6e4ff3562f265a24a2cbfaf7b1609e7384a3b9d6cb"
+        },
+        "logo": {
+          "file": "seller-046-logo.png",
+          "sha256": "cf5ab01e7afdc811ec6cf90b80f61e6e5db1388084438ca7fc218b97402ede92"
+        },
+        "banner": {
+          "file": "seller-046-banner.png",
+          "sha256": "10eb22f8864fe56419d5fe20aecd5631b7801f8a06ab2dea69b58de7582afc44"
+        }
+      },
+      "province_code": "043400000",
+      "province_name": "Laguna",
+      "municipality_code": "043425000",
+      "municipality_name": "City of San Pedro",
+      "barangay_code": "043425001",
+      "barangay_name": "Bagong Silang",
+      "pickup_address": "SARI DEMO PICKUP 046 (fictional location), Bagong Silang, City of San Pedro, Laguna, Philippines"
+    },
+    {
+      "first_name": "Luis",
+      "last_name": "Salazar",
+      "sex": "Male",
+      "birthday": "1995-11-20",
+      "email": "seller.flow.047@example.test",
+      "store_name": "Isla Market Demo 047",
+      "line_of_business": "Fashion",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Fashion store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-047-avatar.png",
+          "sha256": "dda9a6a799efe0909473ff8c3648dc4d49a10a6d228fcc5bdae62fe8df1c494c"
+        },
+        "logo": {
+          "file": "seller-047-logo.png",
+          "sha256": "f7dc7742a82314b5dbabc79f746c7c19fa2f96eab9908f30ede47a9a4aa437d6"
+        },
+        "banner": {
+          "file": "seller-047-banner.png",
+          "sha256": "2961afb2af08fff76ec6507393aaa19f86aee63d3943b8b4c92be860d1185440"
+        }
+      },
+      "province_code": "043400000",
+      "province_name": "Laguna",
+      "municipality_code": "043428000",
+      "municipality_name": "City of Santa Rosa",
+      "barangay_code": "043428001",
+      "barangay_name": "Aplaya",
+      "pickup_address": "SARI DEMO PICKUP 047 (fictional location), Aplaya, City of Santa Rosa, Laguna, Philippines"
+    },
+    {
+      "first_name": "Nina",
+      "last_name": "Salazar",
+      "sex": "Female",
+      "birthday": "1996-12-21",
+      "email": "seller.flow.048@example.test",
+      "store_name": "Tala Market Demo 048",
+      "line_of_business": "Home & Living",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Home & Living store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-048-avatar.png",
+          "sha256": "0d2e4b36f7efa688e742bb6398ba29510fe98b5d6059915568e3cbfbcf561794"
+        },
+        "logo": {
+          "file": "seller-048-logo.png",
+          "sha256": "503ff5fe8f1f054aa7f3ad5a8f533e49a375ad5b0d69d16411165a37a92568ce"
+        },
+        "banner": {
+          "file": "seller-048-banner.png",
+          "sha256": "8d2a4d08c716615acb41b0b26ceb75f97c3c0c1afe057fcefab66cca6d77a66b"
+        }
+      },
+      "province_code": "045600000",
+      "province_name": "Quezon",
+      "municipality_code": "045647000",
+      "municipality_name": "City of Tayabas",
+      "barangay_code": "045647001",
+      "barangay_name": "Alitao",
+      "pickup_address": "SARI DEMO PICKUP 048 (fictional location), Alitao, City of Tayabas, Quezon, Philippines"
+    },
+    {
+      "first_name": "Renzo",
+      "last_name": "Salazar",
+      "sex": "Male",
+      "birthday": "1997-01-22",
+      "email": "seller.flow.049@example.test",
+      "store_name": "Silayan Market Demo 049",
+      "line_of_business": "Beauty",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Beauty store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-049-avatar.png",
+          "sha256": "b9da5b8ed9b038d605ac19b0972dc47219752bfc6c31b8b507aabf8783740401"
+        },
+        "logo": {
+          "file": "seller-049-logo.png",
+          "sha256": "73668c1397fd2bf3b9609a9876b7a5ca9d98135e4bfc6b866e7bfe8c7836638a"
+        },
+        "banner": {
+          "file": "seller-049-banner.png",
+          "sha256": "d3c84fccbc8cf9f6bb5334efba75ff5ce3183db6c7627a86297856c054b859a3"
+        }
+      },
+      "province_code": "045800000",
+      "province_name": "Rizal",
+      "municipality_code": "045802000",
+      "municipality_name": "City of Antipolo",
+      "barangay_code": "045802001",
+      "barangay_name": "Calawis",
+      "pickup_address": "SARI DEMO PICKUP 049 (fictional location), Calawis, City of Antipolo, Rizal, Philippines"
+    },
+    {
+      "first_name": "Daphne",
+      "last_name": "Salazar",
+      "sex": "Female",
+      "birthday": "1998-02-23",
+      "email": "seller.flow.050@example.test",
+      "store_name": "Habagat Market Demo 050",
+      "line_of_business": "Books",
+      "store_description": "[SARI_SELLER_FLOW50_V1] Fictional Books store for SARI workflow testing. Synthetic profile; not verified merchant/KYC data.",
+      "assets": {
+        "avatar": {
+          "file": "seller-050-avatar.png",
+          "sha256": "5195e2af6399412c9fb25f3bb21753d051cdb9f146def2f2006688d449be967f"
+        },
+        "logo": {
+          "file": "seller-050-logo.png",
+          "sha256": "bc0d3773d1ebd54245bd9162df2e9cf1ac304d195ef1f0bb0323ff323ae67e18"
+        },
+        "banner": {
+          "file": "seller-050-banner.png",
+          "sha256": "2b811992fb8ac6da98889c4f8af13b1a7b5556502e089ee7d92e230ca85cc8ad"
+        }
+      },
+      "province_code": "045600000",
+      "province_name": "Quezon",
+      "municipality_code": "045624000",
+      "municipality_name": "City of Lucena",
+      "barangay_code": "045624002",
+      "barangay_name": "Barangay 1",
+      "pickup_address": "SARI DEMO PICKUP 050 (fictional location), Barangay 1, City of Lucena, Quezon, Philippines"
+    }
+  ]
+}

@@ -14,9 +14,9 @@
     .sari-checkout {
         --checkout-gold: #c88912;
         --checkout-gold-dark: #aa720e;
-        --checkout-ink: #20242a;
-        --checkout-muted: #75808c;
-        --checkout-border: #e2e6ea;
+        --checkout-ink: var(--sari-dark-e23e64dd1e, #20242a);
+        --checkout-muted: var(--sari-dark-a63aa16d7c, #75808c);
+        --checkout-border: var(--sari-dark-d8c2716225, #e2e6ea);
         --checkout-soft: #f6f7f9;
         --checkout-green: #4f8065;
         font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
@@ -40,7 +40,7 @@
 
     .sari-checkout-eyebrow {
         margin: 0;
-        color: #9a6815;
+        color: var(--sari-dark-5b23b431c8, #9a6815);
         font-size: 10px;
         font-weight: 700;
         letter-spacing: .12em;
@@ -49,7 +49,7 @@
 
     .sari-checkout-title {
         margin: 6px 0 0;
-        color: #171a1f;
+        color: var(--sari-dark-e23e64dd1e, #171a1f);
         font-size: clamp(25px, 2.4vw, 34px);
         font-weight: 700;
         line-height: 1.12;
@@ -59,7 +59,7 @@
     .sari-checkout-subtitle {
         max-width: 570px;
         margin: 8px 0 0;
-        color: #7b8490;
+        color: var(--sari-dark-a63aa16d7c, #7b8490);
         font-size: 11px;
         line-height: 1.65;
     }
@@ -69,11 +69,11 @@
         align-items: center;
         gap: 8px;
         min-height: 38px;
-        border: 1px solid #e2e6ea;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2e6ea);
         border-radius: 10px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         padding: 0 13px;
-        color: #5d6671;
+        color: var(--sari-dark-a63aa16d7c, #5d6671);
         font-size: 10px;
         font-weight: 600;
         white-space: nowrap;
@@ -82,7 +82,7 @@
     .sari-checkout-secure svg {
         width: 17px;
         height: 17px;
-        color: #b47a0f;
+        color: var(--sari-dark-c8bdcce6ab, #b47a0f);
     }
 
     .sari-checkout-grid {
@@ -102,8 +102,8 @@
     .sari-checkout-summary {
         border: 1px solid var(--checkout-border);
         border-radius: 18px;
-        background: #fff;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, .04);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 10px 30px var(--sari-dark-25b2da5e49, rgba(15, 23, 42, .04));
     }
 
     .sari-checkout-card {
@@ -124,15 +124,15 @@
         place-items: center;
         border: 1px solid #ead7ad;
         border-radius: 11px;
-        background: #fff9ec;
-        color: #a96d07;
+        background: var(--sari-dark-4d21eb669b, #fff9ec);
+        color: var(--sari-dark-6e784b4931, #a96d07);
         font-size: 11px;
         font-weight: 700;
     }
 
     .sari-checkout-card-kicker {
         margin: 0;
-        color: #a8731f;
+        color: var(--sari-dark-5d5ad776eb, #a8731f);
         font-size: 9px;
         font-weight: 700;
         letter-spacing: .11em;
@@ -141,7 +141,7 @@
 
     .sari-checkout-card-title {
         margin: 4px 0 0;
-        color: #252a31;
+        color: var(--sari-dark-e23e64dd1e, #252a31);
         font-size: 18px;
         font-weight: 700;
         line-height: 1.25;
@@ -150,7 +150,7 @@
 
     .sari-checkout-card-copy {
         margin: 5px 0 0;
-        color: #848d98;
+        color: var(--sari-dark-a63aa16d7c, #848d98);
         font-size: 10px;
         line-height: 1.55;
     }
@@ -163,14 +163,14 @@
         margin-top: 20px;
         padding: 0 0 18px;
         border: 0;
-        border-bottom: 1px solid #edf0f2;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f2);
         border-radius: 0;
         background: transparent;
     }
 
     .sari-checkout-saved strong {
         display: block;
-        color: #343c45;
+        color: var(--sari-dark-e23e64dd1e, #343c45);
         font-size: 11px;
         font-weight: 650;
     }
@@ -178,7 +178,7 @@
     .sari-checkout-saved p {
         max-width: 560px;
         margin: 4px 0 0;
-        color: #8b949f;
+        color: var(--sari-dark-a63aa16d7c, #8b949f);
         font-size: 9px;
         line-height: 1.5;
     }
@@ -193,7 +193,7 @@
 
     .sari-checkout-address-help {
         margin: 7px 0 0;
-        color: #929aa4;
+        color: var(--sari-dark-a63aa16d7c, #929aa4);
         font-size: 8.5px;
         line-height: 1.5;
     }
@@ -212,7 +212,7 @@
     .sari-checkout-label {
         display: block;
         margin-bottom: 7px;
-        color: #5d6670;
+        color: var(--sari-dark-a63aa16d7c, #5d6670);
         font-size: 10px;
         font-weight: 600;
     }
@@ -221,10 +221,10 @@
     .sari-checkout-select,
     .sari-checkout-textarea {
         width: 100%;
-        border: 1px solid #dfe4e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe4e8);
         border-radius: 10px;
-        background: #fff;
-        color: #303740;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-e23e64dd1e, #303740);
         font-size: 11px;
         font-weight: 400;
         outline: none;
@@ -248,15 +248,15 @@
     .sari-checkout-select:focus,
     .sari-checkout-textarea:focus {
         border-color: rgba(200, 137, 18, .72);
-        box-shadow: 0 0 0 3px rgba(200, 137, 18, .08);
+        box-shadow: 0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(200, 137, 18, .08));
     }
 
     .sari-map-card {
         margin-top: 16px;
         overflow: hidden;
-        border: 1px solid #dfe4e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #dfe4e8);
         border-radius: 14px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .sari-map-toolbar {
@@ -265,20 +265,20 @@
         justify-content: space-between;
         gap: 12px;
         padding: 12px 14px;
-        border-bottom: 1px solid #e7eaee;
-        background: #fbfcfd;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #e7eaee);
+        background: var(--sari-dark-950baec030, #fbfcfd);
     }
 
     .sari-map-toolbar strong {
         display: block;
-        color: #333a43;
+        color: var(--sari-dark-e23e64dd1e, #333a43);
         font-size: 10.5px;
         font-weight: 650;
     }
 
     .sari-map-toolbar p {
         margin: 3px 0 0;
-        color: #8a939e;
+        color: var(--sari-dark-a63aa16d7c, #8a939e);
         font-size: 8.5px;
         line-height: 1.4;
     }
@@ -292,9 +292,9 @@
         gap: 7px;
         border: 1px solid #dfc895;
         border-radius: 9px;
-        background: #fffaf0;
+        background: var(--sari-dark-950baec030, #fffaf0);
         padding: 0 12px;
-        color: #956619;
+        color: var(--sari-dark-00a00a0e12, #956619);
         font-size: 9px;
         font-weight: 650;
         transition: border-color .16s ease, background-color .16s ease;
@@ -303,7 +303,7 @@
     .sari-map-location-btn:hover,
     .sari-map-location-btn:focus-visible {
         border-color: #c88912;
-        background: #fff5df;
+        background: var(--sari-dark-4d21eb669b, #fff5df);
         outline: none;
     }
 
@@ -315,7 +315,7 @@
     #checkoutDeliveryMap {
         width: 100%;
         height: 310px;
-        background: #eef1f4;
+        background: var(--sari-dark-4d21eb669b, #eef1f4);
     }
 
     .sari-map-footer {
@@ -325,8 +325,8 @@
         gap: 12px;
         min-height: 46px;
         padding: 10px 14px;
-        border-top: 1px solid #e7eaee;
-        background: #fff;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #e7eaee);
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .sari-map-status {
@@ -334,7 +334,7 @@
         min-width: 0;
         align-items: center;
         gap: 8px;
-        color: #69737e;
+        color: var(--sari-dark-a63aa16d7c, #69737e);
         font-size: 9px;
         line-height: 1.4;
     }
@@ -349,11 +349,11 @@
 
     .sari-map-status.is-set .sari-map-status-dot {
         background: #4f8065;
-        box-shadow: 0 0 0 4px rgba(79,128,101,.10);
+        box-shadow: 0 0 0 4px var(--sari-dark-8eadf403a5, rgba(79,128,101,.10));
     }
 
     .sari-map-coordinates {
-        color: #929aa4;
+        color: var(--sari-dark-a63aa16d7c, #929aa4);
         font-size: 8px;
         font-variant-numeric: tabular-nums;
         white-space: nowrap;
@@ -364,9 +364,9 @@
         align-items: center;
         gap: 13px;
         margin-top: 17px;
-        border: 1px solid #e5d6b4;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5d6b4);
         border-radius: 13px;
-        background: #fffaf1;
+        background: var(--sari-dark-950baec030, #fffaf1);
         padding: 15px;
         cursor: pointer;
     }
@@ -377,10 +377,10 @@
         height: 42px;
         flex: 0 0 42px;
         place-items: center;
-        border: 1px solid #ead9b5;
+        border: 1px solid var(--sari-dark-d8c2716225, #ead9b5);
         border-radius: 11px;
-        background: #fff;
-        color: #a8731f;
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-5d5ad776eb, #a8731f);
     }
 
     .sari-payment-icon svg {
@@ -401,7 +401,7 @@
 
     .sari-payment-copy strong {
         display: block;
-        color: #343a42;
+        color: var(--sari-dark-e23e64dd1e, #343a42);
         font-size: 11.5px;
         font-weight: 650;
     }
@@ -409,7 +409,7 @@
     .sari-payment-copy span {
         display: block;
         margin-top: 4px;
-        color: #858e99;
+        color: var(--sari-dark-a63aa16d7c, #858e99);
         font-size: 9px;
         line-height: 1.45;
     }
@@ -422,9 +422,9 @@
 
     .sari-seller-card {
         overflow: hidden;
-        border: 1px solid #e7eaed;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7eaed);
         border-radius: 13px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     .sari-seller-head {
@@ -434,21 +434,21 @@
         gap: 12px;
         min-height: 44px;
         padding: 10px 13px;
-        border-bottom: 1px solid #edf0f2;
-        background: #fafbfc;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #edf0f2);
+        background: var(--sari-dark-950baec030, #fafbfc);
     }
 
     .sari-seller-head strong {
-        color: #815711;
+        color: var(--sari-dark-5b23b431c8, #815711);
         font-size: 10px;
         font-weight: 650;
     }
 
     .sari-shipping-promo {
         margin: 11px 12px 0;
-        border: 1px solid #d7e6dc;
+        border: 1px solid var(--sari-dark-d8c2716225, #d7e6dc);
         border-radius: 10px;
-        background: #f5faf7;
+        background: var(--sari-dark-950baec030, #f5faf7);
         padding: 10px 11px;
     }
 
@@ -461,14 +461,14 @@
 
     .sari-shipping-promo strong {
         display: block;
-        color: #46775a;
+        color: var(--sari-dark-a63aa16d7c, #46775a);
         font-size: 9px;
         font-weight: 650;
     }
 
     .sari-shipping-promo p {
         margin: 3px 0 0;
-        color: #708078;
+        color: var(--sari-dark-a63aa16d7c, #708078);
         font-size: 8px;
         line-height: 1.45;
     }
@@ -483,14 +483,14 @@
     }
 
     .sari-shipping-badge.is-eligible {
-        background: #e5f5eb;
-        color: #397451;
+        background: var(--sari-dark-4d21eb669b, #e5f5eb);
+        color: var(--sari-dark-e23e64dd1e, #397451);
     }
 
     .sari-shipping-badge.is-pending {
-        border: 1px solid #d5e3da;
-        background: #fff;
-        color: #748178;
+        border: 1px solid var(--sari-dark-d8c2716225, #d5e3da);
+        background: var(--sari-dark-950baec030, #fff);
+        color: var(--sari-dark-a63aa16d7c, #748178);
     }
 
     .sari-seller-items {
@@ -506,12 +506,12 @@
     }
 
     .sari-seller-item + .sari-seller-item {
-        border-top: 1px solid #eff1f3;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eff1f3);
     }
 
     .sari-seller-item-name {
         margin: 0;
-        color: #3e454e;
+        color: var(--sari-dark-e23e64dd1e, #3e454e);
         font-size: 10px;
         font-weight: 600;
         line-height: 1.4;
@@ -519,14 +519,14 @@
 
     .sari-seller-item-variant {
         margin: 4px 0 0;
-        color: #9199a3;
+        color: var(--sari-dark-a63aa16d7c, #9199a3);
         font-size: 8px;
         line-height: 1.35;
     }
 
     .sari-seller-item-price {
         flex: 0 0 auto;
-        color: #2e343b;
+        color: var(--sari-dark-e23e64dd1e, #2e343b);
         font-size: 10px;
         font-weight: 650;
         font-variant-numeric: tabular-nums;
@@ -547,7 +547,7 @@
 
     .sari-summary-head h2 {
         margin: 0;
-        color: #252a31;
+        color: var(--sari-dark-e23e64dd1e, #252a31);
         font-size: 17px;
         font-weight: 700;
         letter-spacing: -.02em;
@@ -555,24 +555,24 @@
 
     .sari-summary-chip {
         border-radius: 999px;
-        background: #f5f6f8;
+        background: var(--sari-dark-950baec030, #f5f6f8);
         padding: 5px 8px;
-        color: #7c858f;
+        color: var(--sari-dark-a63aa16d7c, #7c858f);
         font-size: 7.5px;
         font-weight: 650;
     }
 
     .sari-voucher-card {
         margin-top: 16px;
-        border: 1px solid #e5e8eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e8eb);
         border-radius: 12px;
-        background: #fafbfc;
+        background: var(--sari-dark-950baec030, #fafbfc);
         padding: 13px;
     }
 
     .sari-voucher-label {
         display: block;
-        color: #767f89;
+        color: var(--sari-dark-a63aa16d7c, #767f89);
         font-size: 8.5px;
         font-weight: 700;
         letter-spacing: .08em;
@@ -598,9 +598,9 @@
         flex: 0 0 auto;
         border: 1px solid #d7ad59;
         border-radius: 9px;
-        background: #fff9ec;
+        background: var(--sari-dark-4d21eb669b, #fff9ec);
         padding: 0 13px;
-        color: #956619;
+        color: var(--sari-dark-00a00a0e12, #956619);
         font-size: 9px;
         font-weight: 700;
         transition: background-color .16s ease, border-color .16s ease;
@@ -609,13 +609,13 @@
     .sari-voucher-apply:hover,
     .sari-voucher-apply:focus-visible {
         border-color: #c88912;
-        background: #fff2d2;
+        background: var(--sari-dark-4d21eb669b, #fff2d2);
         outline: none;
     }
 
     .sari-voucher-help {
         margin: 8px 0 0;
-        color: #939ba4;
+        color: var(--sari-dark-a63aa16d7c, #939ba4);
         font-size: 8px;
         line-height: 1.5;
     }
@@ -630,26 +630,26 @@
     }
 
     .sari-voucher-success {
-        border: 1px solid #d9e8de;
-        background: #f4faf6;
-        color: #4d735c;
+        border: 1px solid var(--sari-dark-d8c2716225, #d9e8de);
+        background: var(--sari-dark-950baec030, #f4faf6);
+        color: var(--sari-dark-a63aa16d7c, #4d735c);
     }
 
     .sari-voucher-error {
-        border: 1px solid #ead7d2;
-        background: #fff7f5;
-        color: #9b5f55;
+        border: 1px solid var(--sari-dark-d8c2716225, #ead7d2);
+        background: var(--sari-dark-950baec030, #fff7f5);
+        color: var(--sari-dark-ee14665e08, #9b5f55);
     }
 
     .sari-voucher-offers {
         margin-top: 11px;
         padding-top: 11px;
-        border-top: 1px solid #e8ebee;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #e8ebee);
     }
 
     .sari-voucher-offers-title {
         margin: 0;
-        color: #68717b;
+        color: var(--sari-dark-a63aa16d7c, #68717b);
         font-size: 8.5px;
         font-weight: 650;
     }
@@ -664,13 +664,13 @@
     .sari-voucher-offer {
         border: 1px solid #e4cf9f;
         border-radius: 8px;
-        background: #fff9ec;
+        background: var(--sari-dark-4d21eb669b, #fff9ec);
         padding: 7px 9px;
         text-align: left;
     }
 
     .sari-voucher-offer:hover {
-        background: #fff3d7;
+        background: var(--sari-dark-4d21eb669b, #fff3d7);
     }
 
     .sari-voucher-offer strong,
@@ -679,14 +679,14 @@
     }
 
     .sari-voucher-offer strong {
-        color: #93651b;
+        color: var(--sari-dark-5d5ad776eb, #93651b);
         font-size: 8px;
         font-weight: 700;
     }
 
     .sari-voucher-offer span {
         margin-top: 2px;
-        color: #8d7b60;
+        color: var(--sari-dark-a63aa16d7c, #8d7b60);
         font-size: 7px;
         line-height: 1.35;
     }
@@ -706,12 +706,12 @@
     }
 
     .sari-summary-row span:first-child {
-        color: #7f8892;
+        color: var(--sari-dark-a63aa16d7c, #7f8892);
     }
 
     .sari-summary-row strong,
     .sari-summary-row span:last-child {
-        color: #343a42;
+        color: var(--sari-dark-e23e64dd1e, #343a42);
         font-weight: 600;
         font-variant-numeric: tabular-nums;
         text-align: right;
@@ -719,7 +719,7 @@
 
     .sari-summary-row.is-discount span,
     .sari-summary-row.is-discount strong {
-        color: #4f8065;
+        color: var(--sari-dark-a63aa16d7c, #4f8065);
     }
 
     /* Flat per-seller price breakdown; no cream cards or nested containers. */
@@ -741,7 +741,7 @@
 
     .sari-checkout--tiktok .sari-seller-summary-group + .sari-seller-summary-group {
         padding-top: 17px;
-        border-top: 1px solid #e9ecef;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #e9ecef);
     }
 
     .sari-checkout--tiktok .sari-seller-summary-heading {
@@ -754,7 +754,7 @@
 
     .sari-checkout--tiktok .sari-seller-summary-name {
         min-width: 0;
-        color: #27313b;
+        color: var(--sari-dark-e23e64dd1e, #27313b);
         font-size: 12px;
         font-weight: 750;
         line-height: 1.35;
@@ -763,7 +763,7 @@
 
     .sari-checkout--tiktok .sari-seller-summary-count {
         flex: 0 0 auto;
-        color: #858e98;
+        color: var(--sari-dark-a63aa16d7c, #858e98);
         font-size: 9px;
         white-space: nowrap;
     }
@@ -771,25 +771,25 @@
     .sari-checkout--tiktok .sari-seller-summary-total {
         margin-top: 3px;
         padding-top: 10px;
-        border-top: 1px solid #edf0f2;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #edf0f2);
     }
 
     .sari-checkout--tiktok .sari-seller-summary-total span:first-child,
     .sari-checkout--tiktok .sari-seller-summary-total strong {
-        color: #29313a;
+        color: var(--sari-dark-e23e64dd1e, #29313a);
         font-weight: 750;
     }
 
     .sari-checkout--tiktok .sari-seller-summary-breakdown > .sari-summary-total {
         margin-top: 0;
         padding-top: 17px;
-        border-top: 1px solid #dfe4e8;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #dfe4e8);
     }
 
     .sari-summary-total {
         margin-top: 4px;
         padding-top: 14px;
-        border-top: 1px solid #e5e8eb;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #e5e8eb);
     }
 
     .sari-summary-total .sari-summary-row {
@@ -797,13 +797,13 @@
     }
 
     .sari-summary-total .sari-summary-row span:first-child {
-        color: #272d34;
+        color: var(--sari-dark-e23e64dd1e, #272d34);
         font-size: 11px;
         font-weight: 650;
     }
 
     .sari-summary-grand {
-        color: #b97805 !important;
+        color: var(--sari-dark-af18afcaa4, #b97805) !important;
         font-size: 22px !important;
         font-weight: 750 !important;
         line-height: 1 !important;
@@ -823,7 +823,7 @@
         color: #fff;
         font-size: 11px;
         font-weight: 650;
-        box-shadow: 0 9px 18px rgba(200,137,18,.14);
+        box-shadow: 0 9px 18px var(--sari-dark-59ed29fe9d, rgba(200,137,18,.14));
         transition: background-color .16s ease, border-color .16s ease, transform .16s ease;
     }
 
@@ -842,7 +842,7 @@
 
     .sari-summary-note {
         margin: 10px 0 0;
-        color: #969ea7;
+        color: var(--sari-dark-a63aa16d7c, #969ea7);
         font-size: 7.8px;
         line-height: 1.5;
         text-align: center;
@@ -850,11 +850,11 @@
 
     .sari-checkout-error {
         margin-bottom: 15px;
-        border: 1px solid #efcece;
+        border: 1px solid var(--sari-dark-d8c2716225, #efcece);
         border-radius: 11px;
-        background: #fff5f5;
+        background: var(--sari-dark-950baec030, #fff5f5);
         padding: 11px 13px;
-        color: #a65353;
+        color: var(--sari-dark-58dd29f069, #a65353);
         font-size: 10px;
     }
 
@@ -875,10 +875,10 @@
         position: relative;
         width: 34px;
         height: 34px;
-        border: 3px solid #fff;
+        border: 3px solid var(--sari-dark-d8c2716225, #fff);
         border-radius: 50% 50% 50% 0;
         background: #c88912;
-        box-shadow: 0 6px 14px rgba(45,35,20,.24);
+        box-shadow: 0 6px 14px var(--sari-dark-7edf1b5a37, rgba(45,35,20,.24));
         transform: rotate(-45deg);
     }
 
@@ -890,7 +890,7 @@
         width: 10px;
         height: 10px;
         border-radius: 999px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
     }
 
     @media (max-width: 1199px) {
@@ -972,7 +972,7 @@
        Existing checkout IDs, inputs, routes, voucher logic and map JS preserved.
     ============================================================ */
     .sari-checkout--tiktok {
-        background: #f5f6f7;
+        background: var(--sari-dark-4d21eb669b, #f5f6f7);
         min-height: calc(100vh - 64px);
     }
 
@@ -992,7 +992,7 @@
 
     .sari-tiktok-page-head h1 {
         margin: 0;
-        color: #16181c;
+        color: var(--sari-dark-e23e64dd1e, #16181c);
         font-size: 24px;
         font-weight: 700;
         line-height: 1.2;
@@ -1003,7 +1003,7 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        color: #727981;
+        color: var(--sari-dark-a63aa16d7c, #727981);
         font-size: 9.5px;
         font-weight: 600;
     }
@@ -1011,7 +1011,7 @@
     .sari-tiktok-secure svg {
         width: 15px;
         height: 15px;
-        color: #b67a0f;
+        color: var(--sari-dark-af18afcaa4, #b67a0f);
     }
 
     .sari-checkout--tiktok .sari-checkout-grid {
@@ -1027,10 +1027,10 @@
 
     .sari-tiktok-panel,
     .sari-tiktok-summary {
-        border: 1px solid #e7e9ec;
+        border: 1px solid var(--sari-dark-d8c2716225, #e7e9ec);
         border-radius: 10px;
-        background: #fff;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, .025);
+        background: var(--sari-dark-950baec030, #fff);
+        box-shadow: 0 2px 8px var(--sari-dark-e1384eb7fc, rgba(15, 23, 42, .025));
     }
 
     .sari-tiktok-section {
@@ -1038,7 +1038,7 @@
     }
 
     .sari-tiktok-section + .sari-tiktok-section {
-        border-top: 1px solid #eceef0;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eceef0);
     }
 
     .sari-tiktok-section-head {
@@ -1059,13 +1059,13 @@
         width: 19px;
         height: 19px;
         flex: 0 0 19px;
-        color: #a86f0d;
+        color: var(--sari-dark-6e784b4931, #a86f0d);
         stroke-width: 1.8;
     }
 
     .sari-tiktok-section-title h2 {
         margin: 0;
-        color: #202328;
+        color: var(--sari-dark-e23e64dd1e, #202328);
         font-size: 14px;
         font-weight: 700;
         line-height: 1.3;
@@ -1074,7 +1074,7 @@
 
     .sari-tiktok-section-title p {
         margin: 2px 0 0;
-        color: #949aa2;
+        color: var(--sari-dark-a63aa16d7c, #949aa2);
         font-size: 8.5px;
         line-height: 1.4;
     }
@@ -1086,12 +1086,12 @@
         align-items: center;
         margin-top: 15px;
         padding: 12px 0 0;
-        border-top: 1px solid #eff0f2;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eff0f2);
     }
 
     .sari-tiktok-saved-label strong {
         display: block;
-        color: #363b42;
+        color: var(--sari-dark-e23e64dd1e, #363b42);
         font-size: 10px;
         font-weight: 650;
     }
@@ -1099,7 +1099,7 @@
     .sari-tiktok-saved-label span {
         display: block;
         margin-top: 2px;
-        color: #989fa7;
+        color: var(--sari-dark-a63aa16d7c, #989fa7);
         font-size: 8px;
         line-height: 1.4;
     }
@@ -1107,7 +1107,7 @@
     .sari-checkout--tiktok .sari-checkout-select,
     .sari-checkout--tiktok .sari-checkout-input,
     .sari-checkout--tiktok .sari-checkout-textarea {
-        border-color: #dfe2e6;
+        border-color: var(--sari-dark-d8c2716225, #dfe2e6);
         border-radius: 8px;
         font-size: 10.5px;
         box-shadow: none;
@@ -1128,7 +1128,7 @@
     .sari-checkout--tiktok .sari-checkout-select:focus,
     .sari-checkout--tiktok .sari-checkout-textarea:focus {
         border-color: #c88912;
-        box-shadow: 0 0 0 2px rgba(200,137,18,.08);
+        box-shadow: 0 0 0 2px var(--sari-dark-c33e3d1bb4, rgba(200,137,18,.08));
     }
 
     .sari-tiktok-fields {
@@ -1144,7 +1144,7 @@
 
     .sari-checkout--tiktok .sari-checkout-label {
         margin-bottom: 6px;
-        color: #666d75;
+        color: var(--sari-dark-a63aa16d7c, #666d75);
         font-size: 9px;
         font-weight: 600;
     }
@@ -1152,12 +1152,12 @@
     .sari-tiktok-address-divider {
         margin-top: 15px;
         padding-top: 15px;
-        border-top: 1px solid #eff0f2;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eff0f2);
     }
 
     .sari-tiktok-address-help {
         margin: 6px 0 0;
-        color: #9aa0a7;
+        color: var(--sari-dark-a63aa16d7c, #9aa0a7);
         font-size: 7.8px;
         line-height: 1.45;
     }
@@ -1169,19 +1169,19 @@
         gap: 12px;
         margin-top: 14px;
         padding-top: 14px;
-        border-top: 1px solid #eff0f2;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eff0f2);
     }
 
     .sari-tiktok-map-head strong {
         display: block;
-        color: #353a40;
+        color: var(--sari-dark-e23e64dd1e, #353a40);
         font-size: 9.5px;
         font-weight: 650;
     }
 
     .sari-tiktok-map-head p {
         margin: 2px 0 0;
-        color: #969ca4;
+        color: var(--sari-dark-a63aa16d7c, #969ca4);
         font-size: 7.8px;
         line-height: 1.4;
     }
@@ -1195,7 +1195,7 @@
 
     .sari-checkout--tiktok .sari-map-card {
         margin-top: 10px;
-        border-color: #e2e5e8;
+        border-color: var(--sari-dark-d8c2716225, #e2e5e8);
         border-radius: 8px;
         box-shadow: none;
     }
@@ -1211,7 +1211,7 @@
     .sari-checkout--tiktok .sari-map-footer {
         min-height: 40px;
         padding: 8px 11px;
-        background: #fbfbfc;
+        background: var(--sari-dark-950baec030, #fbfbfc);
     }
 
     .sari-checkout--tiktok .sari-map-status {
@@ -1228,7 +1228,7 @@
         gap: 12px;
         margin-top: 14px;
         padding: 13px 0 0;
-        border-top: 1px solid #eff0f2;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eff0f2);
         cursor: pointer;
     }
 
@@ -1239,8 +1239,8 @@
         flex: 0 0 36px;
         place-items: center;
         border-radius: 8px;
-        background: #fff7e8;
-        color: #a86f0d;
+        background: var(--sari-dark-4d21eb669b, #fff7e8);
+        color: var(--sari-dark-6e784b4931, #a86f0d);
     }
 
     .sari-tiktok-payment-icon svg {
@@ -1255,7 +1255,7 @@
 
     .sari-tiktok-payment-copy strong {
         display: block;
-        color: #343940;
+        color: var(--sari-dark-e23e64dd1e, #343940);
         font-size: 10.5px;
         font-weight: 650;
     }
@@ -1263,7 +1263,7 @@
     .sari-tiktok-payment-copy span {
         display: block;
         margin-top: 2px;
-        color: #969ca4;
+        color: var(--sari-dark-a63aa16d7c, #969ca4);
         font-size: 8px;
         line-height: 1.4;
     }
@@ -1278,7 +1278,7 @@
     .sari-tiktok-seller {
         margin-top: 14px;
         padding-top: 14px;
-        border-top: 1px solid #eff0f2;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #eff0f2);
     }
 
     .sari-tiktok-seller:first-of-type {
@@ -1297,7 +1297,7 @@
         display: flex;
         align-items: center;
         gap: 7px;
-        color: #2f343a;
+        color: var(--sari-dark-e23e64dd1e, #2f343a);
         font-size: 10px;
         font-weight: 650;
     }
@@ -1305,7 +1305,7 @@
     .sari-tiktok-store svg {
         width: 16px;
         height: 16px;
-        color: #a86f0d;
+        color: var(--sari-dark-6e784b4931, #a86f0d);
     }
 
     .sari-tiktok-promo-row {
@@ -1316,12 +1316,12 @@
         margin: 0 0 5px;
         padding: 8px 10px;
         border-radius: 6px;
-        background: #f3faf5;
+        background: var(--sari-dark-950baec030, #f3faf5);
     }
 
     .sari-tiktok-promo-copy strong {
         display: block;
-        color: #3f7352;
+        color: var(--sari-dark-e23e64dd1e, #3f7352);
         font-size: 8.5px;
         font-weight: 650;
     }
@@ -1329,21 +1329,21 @@
     .sari-tiktok-promo-copy span {
         display: block;
         margin-top: 2px;
-        color: #77867d;
+        color: var(--sari-dark-a63aa16d7c, #77867d);
         font-size: 7.3px;
         line-height: 1.35;
     }
 
     .sari-tiktok-promo-badge {
         flex: 0 0 auto;
-        color: #3f7352;
+        color: var(--sari-dark-e23e64dd1e, #3f7352);
         font-size: 7.5px;
         font-weight: 650;
         white-space: nowrap;
     }
 
     .sari-tiktok-promo-badge.is-pending {
-        color: #8b9299;
+        color: var(--sari-dark-a63aa16d7c, #8b9299);
     }
 
     .sari-tiktok-item {
@@ -1355,12 +1355,12 @@
     }
 
     .sari-tiktok-item + .sari-tiktok-item {
-        border-top: 1px solid #f0f1f2;
+        border-top: 1px solid var(--sari-dark-d8c2716225, #f0f1f2);
     }
 
     .sari-tiktok-item-name {
         margin: 0;
-        color: #33383f;
+        color: var(--sari-dark-e23e64dd1e, #33383f);
         font-size: 10px;
         font-weight: 600;
         line-height: 1.4;
@@ -1368,14 +1368,14 @@
 
     .sari-tiktok-item-variant {
         margin: 3px 0 0;
-        color: #9a9fa6;
+        color: var(--sari-dark-a63aa16d7c, #9a9fa6);
         font-size: 7.8px;
         line-height: 1.4;
     }
 
     .sari-tiktok-item-price {
         flex: 0 0 auto;
-        color: #202328;
+        color: var(--sari-dark-e23e64dd1e, #202328);
         font-size: 12px;
         font-weight: 700;
         font-variant-numeric: tabular-nums;
@@ -1396,10 +1396,10 @@
         flex: 0 0 38px;
         overflow: hidden;
         place-items: center;
-        border: 1px solid #e2e5e8;
+        border: 1px solid var(--sari-dark-d8c2716225, #e2e5e8);
         border-radius: 999px;
-        background: #f5f6f7;
-        color: #9b6811;
+        background: var(--sari-dark-4d21eb669b, #f5f6f7);
+        color: var(--sari-dark-6e784b4931, #9b6811);
         text-decoration: none;
     }
 
@@ -1414,8 +1414,8 @@
         width: 100%;
         height: 100%;
         place-items: center;
-        background: #fff7e8;
-        color: #9b6811;
+        background: var(--sari-dark-4d21eb669b, #fff7e8);
+        color: var(--sari-dark-6e784b4931, #9b6811);
         font-size: 10px;
         font-weight: 700;
         letter-spacing: -.02em;
@@ -1430,7 +1430,7 @@
 
     .sari-tiktok-store-name {
         overflow: hidden;
-        color: #252a30;
+        color: var(--sari-dark-e23e64dd1e, #252a30);
         font-size: 11.5px;
         font-weight: 700;
         line-height: 1.3;
@@ -1440,11 +1440,11 @@
     }
 
     a.sari-tiktok-store-name:hover {
-        color: #a86f0d;
+        color: var(--sari-dark-6e784b4931, #a86f0d);
     }
 
     .sari-tiktok-store-meta {
-        color: #969da5;
+        color: var(--sari-dark-a63aa16d7c, #969da5);
         font-size: 7.5px;
         font-weight: 500;
     }
@@ -1469,9 +1469,9 @@
         flex: 0 0 72px;
         overflow: hidden;
         place-items: center;
-        border: 1px solid #e5e7ea;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7ea);
         border-radius: 8px;
-        background: #f6f7f8;
+        background: var(--sari-dark-950baec030, #f6f7f8);
     }
 
     .sari-tiktok-product-thumb img {
@@ -1490,7 +1490,7 @@
         width: 100%;
         height: 100%;
         place-items: center;
-        color: #a1a7ae;
+        color: var(--sari-dark-a63aa16d7c, #a1a7ae);
     }
 
     .sari-tiktok-product-fallback svg {
@@ -1504,7 +1504,7 @@
 
     .sari-tiktok-item-name {
         display: block;
-        color: #252a30;
+        color: var(--sari-dark-e23e64dd1e, #252a30);
         font-size: 11.5px;
         font-weight: 650;
         line-height: 1.4;
@@ -1512,19 +1512,19 @@
     }
 
     a.sari-tiktok-item-name:hover {
-        color: #a86f0d;
+        color: var(--sari-dark-6e784b4931, #a86f0d);
     }
 
     .sari-tiktok-item-variant {
         margin-top: 4px;
-        color: #8f969e;
+        color: var(--sari-dark-a63aa16d7c, #8f969e);
         font-size: 8.5px;
     }
 
     .sari-tiktok-item-qty {
         display: inline-block;
         margin-top: 5px;
-        color: #626b74;
+        color: var(--sari-dark-a63aa16d7c, #626b74);
         font-size: 8.5px;
         font-weight: 600;
     }
@@ -1543,12 +1543,12 @@
 
     .sari-tiktok-summary-head {
         padding: 17px 18px 13px;
-        border-bottom: 1px solid #eceef0;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eceef0);
     }
 
     .sari-tiktok-summary-head h2 {
         margin: 0;
-        color: #202328;
+        color: var(--sari-dark-e23e64dd1e, #202328);
         font-size: 15px;
         font-weight: 700;
         letter-spacing: -.02em;
@@ -1561,14 +1561,14 @@
     .sari-checkout--tiktok .sari-voucher-card {
         margin-top: 0;
         border: 0;
-        border-bottom: 1px solid #eceef0;
+        border-bottom: 1px solid var(--sari-dark-d8c2716225, #eceef0);
         border-radius: 0;
         background: transparent;
         padding: 14px 0;
     }
 
     .sari-checkout--tiktok .sari-voucher-label {
-        color: #3d4248;
+        color: var(--sari-dark-e23e64dd1e, #3d4248);
         font-size: 9px;
         letter-spacing: 0;
         text-transform: none;
@@ -1917,13 +1917,13 @@
     .sari-checkout--tiktok .sari-delivery-pin {
         background: #ef4056 !important;
         box-shadow:
-            0 0 0 5px rgba(239, 64, 86, .14),
-            0 8px 18px rgba(117, 25, 39, .28) !important;
+            0 0 0 5px var(--sari-dark-59ed29fe9d, rgba(239, 64, 86, .14)),
+            0 8px 18px var(--sari-dark-d014e7232e, rgba(117, 25, 39, .28)) !important;
     }
 
     .sari-checkout--tiktok .sari-map-status.is-set .sari-map-status-dot {
         background: #ef4056 !important;
-        box-shadow: 0 0 0 4px rgba(239, 64, 86, .12) !important;
+        box-shadow: 0 0 0 4px var(--sari-dark-3b2338cbf0, rgba(239, 64, 86, .12)) !important;
     }
 
     @media (max-width: 767px) {
@@ -1966,14 +1966,14 @@
     ============================================================ */
     .sari-checkout.sari-checkout--tiktok .sari-tiktok-panel,
     .sari-checkout.sari-checkout--tiktok .sari-tiktok-summary {
-        border: 1px solid #e5e7eb !important;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb) !important;
         border-radius: 17px !important;
-        background: #ffffff !important;
+        background: var(--sari-dark-950baec030, #ffffff) !important;
         box-shadow:
-            0 2px 5px rgba(15, 23, 42, .045),
-            0 10px 24px rgba(15, 23, 42, .075),
-            0 24px 54px rgba(15, 23, 42, .095),
-            inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+            0 2px 5px var(--sari-dark-1190f58155, rgba(15, 23, 42, .045)),
+            0 10px 24px var(--sari-dark-e07575a086, rgba(15, 23, 42, .075)),
+            0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15, 23, 42, .095)),
+            inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255, 255, 255, .92)) !important;
     }
 
     /* Distinct cards have enough room for the external shadows. */
@@ -2017,9 +2017,9 @@
         .sari-checkout.sari-checkout--tiktok .sari-tiktok-summary {
             border-radius: 14px !important;
             box-shadow:
-                0 2px 4px rgba(15, 23, 42, .035),
-                0 8px 18px rgba(15, 23, 42, .06),
-                0 18px 38px rgba(15, 23, 42, .07) !important;
+                0 2px 4px var(--sari-dark-7593018246, rgba(15, 23, 42, .035)),
+                0 8px 18px var(--sari-dark-361b571631, rgba(15, 23, 42, .06)),
+                0 18px 38px var(--sari-dark-7c935c8886, rgba(15, 23, 42, .07)) !important;
         }
     }
 
@@ -2033,16 +2033,16 @@
         display: grid;
         place-items: center;
         padding: 20px;
-        background: rgba(15, 23, 42, .48);
+        background: var(--sari-dark-0aceb62107, rgba(15, 23, 42, .48));
     }
     #sariCheckoutSuccessModal .sari-checkout-success-card {
         width: min(100%, 410px);
         padding: 30px 26px 26px;
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--sari-dark-d8c2716225, #e5e7eb);
         border-radius: 18px;
-        background: #fff;
+        background: var(--sari-dark-950baec030, #fff);
         text-align: center;
-        box-shadow: 0 22px 65px rgba(15, 23, 42, .22);
+        box-shadow: 0 22px 65px var(--sari-dark-e267f3cebc, rgba(15, 23, 42, .22));
         animation: sariCheckoutSuccessIn .22s ease-out both;
     }
     #sariCheckoutSuccessModal .sari-checkout-success-icon {
@@ -2051,14 +2051,14 @@
         height: 62px;
         place-items: center;
         margin: 0 auto 17px;
-        border: 2px solid #cdebd7;
+        border: 2px solid var(--sari-dark-d8c2716225, #cdebd7);
         border-radius: 50%;
-        color: #21834b;
-        background: #f5fbf7;
+        color: var(--sari-dark-e23e64dd1e, #21834b);
+        background: var(--sari-dark-950baec030, #f5fbf7);
     }
     #sariCheckoutSuccessModal .sari-checkout-success-icon svg { width: 32px; height: 32px; }
-    #sariCheckoutSuccessModal h2 { margin: 0; font-size: 21px; font-weight: 800; color: #25303b; }
-    #sariCheckoutSuccessModal p { margin: 10px 0 0; color: #697583; font-size: 12px; line-height: 1.65; }
+    #sariCheckoutSuccessModal h2 { margin: 0; font-size: 21px; font-weight: 800; color: var(--sari-dark-e23e64dd1e, #25303b); }
+    #sariCheckoutSuccessModal p { margin: 10px 0 0; color: var(--sari-dark-a63aa16d7c, #697583); font-size: 12px; line-height: 1.65; }
     #sariCheckoutSuccessModal .sari-checkout-success-action {
         display: inline-flex;
         min-height: 45px;
@@ -2222,7 +2222,7 @@
 
                         <div class="sari-tiktok-map-head">
                             <div>
-                                <strong>Precise delivery pin <span style="font-weight:500;color:#9aa0a7;">(optional)</span></strong>
+                                <strong>Precise delivery pin <span style="font-weight:500;color:var(--sari-dark-a63aa16d7c, #9aa0a7);">(optional)</span></strong>
                                 <p>Tap the map or drag the marker to help the courier find the exact location.</p>
                             </div>
 

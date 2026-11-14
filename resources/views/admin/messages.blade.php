@@ -9,9 +9,9 @@
         #sariUniversalAdminMessages {
             --sari-gold: #D29A28;
             --sari-gold-deep: #A97012;
-            --sari-ink: #28231d;
-            --sari-muted: #81796f;
-            --sari-line: #e8e2d9;
+            --sari-ink: var(--sari-dark-e23e64dd1e, #28231d);
+            --sari-muted: var(--sari-dark-a63aa16d7c, #81796f);
+            --sari-line: var(--sari-dark-d8c2716225, #e8e2d9);
             --sari-soft: #faf9f6;
             --sari-soft-2: #f5f3ef;
             --sari-green: #6F826A;
@@ -28,11 +28,11 @@
         }
 
         #sariUniversalAdminMessages .sari-shadow {
-            box-shadow: 0 18px 48px rgba(42, 34, 24, 0.07);
+            box-shadow: 0 18px 48px var(--sari-dark-7c935c8886, rgba(42, 34, 24, 0.07));
         }
 
         #sariUniversalAdminMessages .sari-soft-shadow {
-            box-shadow: 0 8px 24px rgba(42, 34, 24, 0.05);
+            box-shadow: 0 8px 24px var(--sari-dark-1df26971b5, rgba(42, 34, 24, 0.05));
         }
 
         #sariUniversalAdminMessages .sari-scroll::-webkit-scrollbar {
@@ -40,7 +40,7 @@
         }
 
         #sariUniversalAdminMessages .sari-scroll::-webkit-scrollbar-thumb {
-            background: #d9d2c8;
+            background: var(--sari-dark-4d21eb669b, #d9d2c8);
             border-radius: 999px;
         }
 
@@ -53,12 +53,12 @@
             overflow-wrap: anywhere;
         }
 
-        #sariUniversalAdminMessages .sari-role-admin { background:#fff4dd; color:#9a6815; border-color:#ecd5a7; }
+        #sariUniversalAdminMessages .sari-role-admin { background:var(--sari-dark-4d21eb669b, #fff4dd); color:var(--sari-dark-5b23b431c8, #9a6815); border-color:#ecd5a7; }
         #sariUniversalAdminMessages .sari-role-buyer,
-        #sariUniversalAdminMessages .sari-role-social_buyer { background:#f3f7fa; color:#5f7687; border-color:#dce6ed; }
-        #sariUniversalAdminMessages .sari-role-seller { background:#fff7ea; color:#986c20; border-color:#edd9b5; }
-        #sariUniversalAdminMessages .sari-role-logistics { background:#f2f7f6; color:#55736d; border-color:#d9e6e2; }
-        #sariUniversalAdminMessages .sari-role-rider { background:#f5f4f8; color:#74657f; border-color:#e2ddea; }
+        #sariUniversalAdminMessages .sari-role-social_buyer { background:var(--sari-dark-950baec030, #f3f7fa); color:var(--sari-dark-a63aa16d7c, #5f7687); border-color:var(--sari-dark-d8c2716225, #dce6ed); }
+        #sariUniversalAdminMessages .sari-role-seller { background:var(--sari-dark-4d21eb669b, #fff7ea); color:var(--sari-dark-b3bb3193a0, #986c20); border-color:var(--sari-dark-d8c2716225, #edd9b5); }
+        #sariUniversalAdminMessages .sari-role-logistics { background:var(--sari-dark-4d21eb669b, #f2f7f6); color:var(--sari-dark-a63aa16d7c, #55736d); border-color:var(--sari-dark-d8c2716225, #d9e6e2); }
+        #sariUniversalAdminMessages .sari-role-rider { background:var(--sari-dark-4d21eb669b, #f5f4f8); color:var(--sari-dark-a63aa16d7c, #74657f); border-color:var(--sari-dark-d8c2716225, #e2ddea); }
 
         @media (max-width: 1279px) {
             #sariUniversalAdminMessages .sari-context-panel {
@@ -94,15 +94,15 @@
             max-width:1640px !important;
             margin-inline:auto !important;
             font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
-            color:#2b2722 !important;
+            color:var(--sari-dark-e23e64dd1e, #2b2722) !important;
         }
 
         #sariUniversalAdminMessages .sari-shadow{
-            box-shadow:0 8px 26px rgba(48,38,26,.055) !important;
+            box-shadow:0 8px 26px var(--sari-dark-fbd3b3b9f6, rgba(48,38,26,.055)) !important;
         }
 
         #sariUniversalAdminMessages .sari-soft-shadow{
-            box-shadow:0 4px 14px rgba(48,38,26,.045) !important;
+            box-shadow:0 4px 14px var(--sari-dark-1190f58155, rgba(48,38,26,.045)) !important;
         }
 
         #adminMessagingNotice{
@@ -117,28 +117,28 @@
         /* ---------------- MAIN CHAT WORKSPACE ---------------- */
         #sariUniversalAdminMessages > section.sari-shadow{
             overflow:hidden !important;
-            border-color:#e8e1d8 !important;
+            border-color:var(--sari-dark-d8c2716225, #e8e1d8) !important;
             border-radius:15px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #sariUniversalAdminMessages .sari-message-grid{
             min-height:620px !important;
             height:clamp(620px,calc(100vh - 190px),760px) !important;
             grid-template-columns:292px minmax(0,1fr) 258px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         /* ---------------- INBOX ---------------- */
         #sariUniversalAdminMessages .sari-inbox-panel{
-            border-color:#ece6de !important;
-            background:#faf9f6 !important;
+            border-color:var(--sari-dark-d8c2716225, #ece6de) !important;
+            background:var(--sari-dark-950baec030, #faf9f6) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel > div:first-child{
             padding:13px !important;
-            border-color:#ece6de !important;
-            background:#fbfaf8 !important;
+            border-color:var(--sari-dark-d8c2716225, #ece6de) !important;
+            background:var(--sari-dark-950baec030, #fbfaf8) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel > div:first-child > div:first-child{
@@ -148,7 +148,7 @@
         #sariUniversalAdminMessages .sari-inbox-panel p.text-\[10px\].font-bold.uppercase{
             font-size:6.8px !important;
             letter-spacing:.12em !important;
-            color:#9a7b43 !important;
+            color:var(--sari-dark-a63aa16d7c, #9a7b43) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel h2{
@@ -156,28 +156,28 @@
             font-size:16px !important;
             line-height:1.15 !important;
             letter-spacing:-.025em !important;
-            color:#2b2621 !important;
+            color:var(--sari-dark-e23e64dd1e, #2b2621) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel h2 + p{
             margin-top:3px !important;
             font-size:7.3px !important;
             line-height:1.45 !important;
-            color:#91887d !important;
+            color:var(--sari-dark-a63aa16d7c, #91887d) !important;
         }
 
         #adminNewConversationButton{
             width:32px !important;
             height:32px !important;
             border-radius:9px !important;
-            border-color:#e6ddd1 !important;
-            color:#a97012 !important;
+            border-color:var(--sari-dark-d8c2716225, #e6ddd1) !important;
+            color:var(--sari-dark-9b2ca2d764, #a97012) !important;
             box-shadow:none !important;
         }
 
         #adminNewConversationButton:hover{
             border-color:#d7b978 !important;
-            background:#fff8e9 !important;
+            background:var(--sari-dark-4d21eb669b, #fff8e9) !important;
             transform:translateY(-1px);
         }
 
@@ -197,7 +197,7 @@
 
         #adminConversationSearch:focus{
             border-color:#d49a2b !important;
-            box-shadow:0 0 0 3px rgba(217,149,0,.075) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-e07575a086, rgba(217,149,0,.075)) !important;
         }
 
         #adminConversationSearch + *{
@@ -218,22 +218,22 @@
         }
 
         #adminConversationList{
-            background:#faf9f6 !important;
+            background:var(--sari-dark-950baec030, #faf9f6) !important;
         }
 
         #adminConversationList [data-contact-role]{
             min-height:72px !important;
-            border-color:#eee8df !important;
+            border-color:var(--sari-dark-d8c2716225, #eee8df) !important;
             padding:10px 12px !important;
             box-shadow:none !important;
         }
 
         #adminConversationList [data-contact-role]:hover{
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminConversationList [data-contact-role].bg-\[\#fff8ea\]{
-            background:#fffaf0 !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
         }
 
         #adminConversationList [data-contact-role] > div{
@@ -271,8 +271,8 @@
 
         #sariUniversalAdminMessages .sari-inbox-panel > div:last-child{
             padding:8px 12px !important;
-            border-color:#ece6de !important;
-            background:#fbfaf8 !important;
+            border-color:var(--sari-dark-d8c2716225, #ece6de) !important;
+            background:var(--sari-dark-950baec030, #fbfaf8) !important;
         }
 
         #adminMessagingRefreshStatus,
@@ -282,14 +282,14 @@
 
         /* ---------------- THREAD ---------------- */
         #sariUniversalAdminMessages .sari-thread-panel{
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #sariUniversalAdminMessages .sari-thread-panel > header{
             min-height:58px !important;
             padding:9px 13px !important;
-            border-color:#ece6de !important;
-            background:#fff !important;
+            border-color:var(--sari-dark-d8c2716225, #ece6de) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #sariUniversalAdminMessages .sari-thread-panel > header > div:first-child{
@@ -307,8 +307,8 @@
             height:36px !important;
             flex-basis:36px !important;
             font-size:8px !important;
-            background:#f2f4f3 !important;
-            color:#65766f !important;
+            background:var(--sari-dark-4d21eb669b, #f2f4f3) !important;
+            color:var(--sari-dark-a63aa16d7c, #65766f) !important;
         }
 
         #adminThreadTitle{
@@ -319,7 +319,7 @@
 
         #adminThreadSubtitle{
             font-size:6.8px !important;
-            color:#958d82 !important;
+            color:var(--sari-dark-a63aa16d7c, #958d82) !important;
         }
 
         #adminThreadTypeBadge,
@@ -331,7 +331,7 @@
         }
 
         #adminThreadMessages{
-            background:#faf9f6 !important;
+            background:var(--sari-dark-950baec030, #faf9f6) !important;
             padding:16px 18px !important;
         }
 
@@ -389,7 +389,7 @@
             padding:8px 10px !important;
             font-size:8px !important;
             line-height:1.55 !important;
-            box-shadow:0 3px 10px rgba(31,27,22,.035) !important;
+            box-shadow:0 3px 10px var(--sari-dark-7593018246, rgba(31,27,22,.035)) !important;
         }
 
         #adminThreadMessages [data-message-id] .rounded-br-\[5px\]{
@@ -414,8 +414,8 @@
 
         #adminComposerWrap{
             padding:10px 12px !important;
-            border-color:#ece6de !important;
-            background:#fff !important;
+            border-color:var(--sari-dark-d8c2716225, #ece6de) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminUniversalMessageForm{
@@ -426,7 +426,7 @@
 
         #adminUniversalMessageForm:focus-within{
             border-color:#d49a2b !important;
-            box-shadow:0 0 0 3px rgba(217,149,0,.07) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-7c935c8886, rgba(217,149,0,.07)) !important;
         }
 
         #adminUniversalMessageInput{
@@ -452,7 +452,7 @@
             border-radius:8px !important;
             padding:0 11px !important;
             font-size:7.5px !important;
-            box-shadow:0 4px 10px rgba(166,112,18,.11) !important;
+            box-shadow:0 4px 10px var(--sari-dark-71f44bdb16, rgba(166,112,18,.11)) !important;
         }
 
         #adminUniversalSendButton svg{
@@ -467,13 +467,13 @@
 
         /* ---------------- CONTEXT RAIL ---------------- */
         #sariUniversalAdminMessages .sari-context-panel{
-            border-color:#ece6de !important;
-            background:#faf9f6 !important;
+            border-color:var(--sari-dark-d8c2716225, #ece6de) !important;
+            background:var(--sari-dark-950baec030, #faf9f6) !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:first-child{
             padding:12px !important;
-            border-color:#ece6de !important;
+            border-color:var(--sari-dark-d8c2716225, #ece6de) !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:first-child p:first-child{
@@ -541,7 +541,7 @@
 
         #sariUniversalAdminMessages .sari-context-panel > div:last-child{
             padding:12px !important;
-            border-color:#ece6de !important;
+            border-color:var(--sari-dark-d8c2716225, #ece6de) !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:last-child > div{
@@ -643,7 +643,7 @@
             width:100% !important;
             min-height:70px !important;
             border-left:2px solid transparent !important;
-            border-bottom:1px solid #eee8df !important;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #eee8df) !important;
             padding:10px 12px !important;
             background:transparent !important;
             text-align:left !important;
@@ -652,12 +652,12 @@
         }
 
         #adminConversationList [data-contact-role]:hover{
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminConversationList [data-contact-role].is-selected{
             border-left-color:#d29a28 !important;
-            background:#fffaf0 !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
         }
 
         #adminConversationList .account-directory-avatar{
@@ -667,15 +667,15 @@
             flex:0 0 34px;
             place-items:center;
             border-radius:50%;
-            background:#f0f3f4;
-            color:#657985;
+            background:var(--sari-dark-4d21eb669b, #f0f3f4);
+            color:var(--sari-dark-a63aa16d7c, #657985);
             font-size:8px;
             font-weight:700;
         }
 
         #adminConversationList .account-directory-name{
             overflow:hidden;
-            color:#332d27;
+            color:var(--sari-dark-e23e64dd1e, #332d27);
             font-size:8.3px;
             font-weight:700;
             line-height:1.35;
@@ -686,7 +686,7 @@
         #adminConversationList .account-directory-meta{
             overflow:hidden;
             margin-top:4px;
-            color:#91887d;
+            color:var(--sari-dark-a63aa16d7c, #91887d);
             font-size:6.7px;
             line-height:1.35;
             text-overflow:ellipsis;
@@ -696,7 +696,7 @@
         #adminConversationList .account-directory-preview{
             overflow:hidden;
             margin-top:5px;
-            color:#9a9186;
+            color:var(--sari-dark-a63aa16d7c, #9a9186);
             font-size:6.5px;
             line-height:1.35;
             text-overflow:ellipsis;
@@ -704,7 +704,7 @@
         }
 
         #adminConversationList .account-directory-time{
-            color:#9b9286;
+            color:var(--sari-dark-a63aa16d7c, #9b9286);
             font-size:6.2px;
             white-space:nowrap;
         }
@@ -746,36 +746,36 @@
         }
 
         #sariUniversalAdminMessages > section.sari-shadow{
-            border:1px solid #e6e1da !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e6e1da) !important;
             border-radius:16px !important;
-            background:#fff !important;
-            box-shadow:0 10px 28px rgba(42,34,24,.055) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            box-shadow:0 10px 28px var(--sari-dark-fbd3b3b9f6, rgba(42,34,24,.055)) !important;
         }
 
         #sariUniversalAdminMessages .sari-message-grid{
             min-height:640px !important;
             height:clamp(640px,calc(100vh - 176px),780px) !important;
             grid-template-columns:320px minmax(0,1fr) 246px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         /* LEFT: messenger-style people directory */
         #sariUniversalAdminMessages .sari-inbox-panel{
-            border-right:1px solid #ebe7e0 !important;
-            background:#fff !important;
+            border-right:1px solid var(--sari-dark-d8c2716225, #ebe7e0) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel > div:first-child{
             padding:16px 14px 13px !important;
-            border-bottom:1px solid #eeeae4 !important;
-            background:#fff !important;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #eeeae4) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel p.text-\[10px\].font-bold.uppercase{
             font-size:7px !important;
             font-weight:700 !important;
             letter-spacing:.14em !important;
-            color:#9b742f !important;
+            color:var(--sari-dark-a63aa16d7c, #9b742f) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel h2{
@@ -784,7 +784,7 @@
             font-weight:700 !important;
             line-height:1.12 !important;
             letter-spacing:-.035em !important;
-            color:#201c18 !important;
+            color:var(--sari-dark-e23e64dd1e, #201c18) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel h2 + p{
@@ -792,7 +792,7 @@
             max-width:250px !important;
             font-size:7.8px !important;
             line-height:1.5 !important;
-            color:#8f877d !important;
+            color:var(--sari-dark-a63aa16d7c, #8f877d) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel .relative.mt-4{
@@ -801,24 +801,24 @@
 
         #adminConversationSearch{
             height:40px !important;
-            border:1px solid #e8e3dc !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e8e3dc) !important;
             border-radius:11px !important;
-            background:#f8f7f5 !important;
+            background:var(--sari-dark-950baec030, #f8f7f5) !important;
             padding-left:35px !important;
             padding-right:11px !important;
-            color:#37312b !important;
+            color:var(--sari-dark-e23e64dd1e, #37312b) !important;
             font-size:8.3px !important;
             box-shadow:none !important;
         }
 
         #adminConversationSearch::placeholder{
-            color:#9d958b !important;
+            color:var(--sari-dark-a63aa16d7c, #9d958b) !important;
         }
 
         #adminConversationSearch:focus{
             border-color:#dcc58d !important;
-            background:#fff !important;
-            box-shadow:0 0 0 3px rgba(210,154,40,.07) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-7c935c8886, rgba(210,154,40,.07)) !important;
         }
 
         /* Role filters: real segmented control, not touching pills/text */
@@ -828,9 +828,9 @@
             gap:3px !important;
             margin-top:10px !important;
             padding:3px !important;
-            border:1px solid #ebe6df !important;
+            border:1px solid var(--sari-dark-d8c2716225, #ebe6df) !important;
             border-radius:10px !important;
-            background:#f6f4f1 !important;
+            background:var(--sari-dark-4d21eb669b, #f6f4f1) !important;
             overflow:hidden !important;
         }
 
@@ -845,7 +845,7 @@
             border-radius:7px !important;
             background:transparent !important;
             padding:0 4px !important;
-            color:#777067 !important;
+            color:var(--sari-dark-a63aa16d7c, #777067) !important;
             font-size:7.1px !important;
             font-weight:600 !important;
             line-height:1 !important;
@@ -856,36 +856,36 @@
         }
 
         #adminConversationFilters [data-role-filter]:hover{
-            background:#fff !important;
-            color:#4e473f !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            color:var(--sari-dark-e23e64dd1e, #4e473f) !important;
         }
 
         #adminConversationFilters [data-role-filter].is-active{
-            background:#fff !important;
-            color:#9a6815 !important;
-            box-shadow:0 1px 3px rgba(54,43,29,.08) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            color:var(--sari-dark-5b23b431c8, #9a6815) !important;
+            box-shadow:0 1px 3px var(--sari-dark-c33e3d1bb4, rgba(54,43,29,.08)) !important;
         }
 
         #adminConversationList{
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminConversationList [data-contact-role]{
             min-height:76px !important;
             border-left:0 !important;
-            border-bottom:1px solid #f0ece6 !important;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #f0ece6) !important;
             padding:10px 12px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:none !important;
         }
 
         #adminConversationList [data-contact-role]:hover{
-            background:#faf9f7 !important;
+            background:var(--sari-dark-950baec030, #faf9f7) !important;
         }
 
         #adminConversationList [data-contact-role].is-selected{
             border-left:0 !important;
-            background:#fff8e9 !important;
+            background:var(--sari-dark-4d21eb669b, #fff8e9) !important;
         }
 
         #adminConversationList [data-contact-role].is-selected::before{
@@ -907,33 +907,33 @@
             width:40px !important;
             height:40px !important;
             flex:0 0 40px !important;
-            border:1px solid #e2e5e5 !important;
-            background:#f1f4f4 !important;
-            color:#60746f !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e2e5e5) !important;
+            background:var(--sari-dark-4d21eb669b, #f1f4f4) !important;
+            color:var(--sari-dark-a63aa16d7c, #60746f) !important;
             font-size:9px !important;
         }
 
         #adminConversationList .account-directory-name{
-            color:#302a25 !important;
+            color:var(--sari-dark-e23e64dd1e, #302a25) !important;
             font-size:9px !important;
             font-weight:700 !important;
         }
 
         #adminConversationList .account-directory-meta{
             margin-top:3px !important;
-            color:#91887e !important;
+            color:var(--sari-dark-a63aa16d7c, #91887e) !important;
             font-size:6.8px !important;
         }
 
         #adminConversationList .account-directory-preview{
             margin-top:5px !important;
-            color:#7f776e !important;
+            color:var(--sari-dark-a63aa16d7c, #7f776e) !important;
             font-size:7px !important;
         }
 
         #adminConversationList .account-directory-time{
             font-size:6.3px !important;
-            color:#9b9389 !important;
+            color:var(--sari-dark-a63aa16d7c, #9b9389) !important;
         }
 
         #adminConversationList .account-directory-unread{
@@ -953,8 +953,8 @@
 
         #sariUniversalAdminMessages .sari-inbox-panel > div:last-child{
             padding:8px 12px !important;
-            border-top:1px solid #eeeae4 !important;
-            background:#fff !important;
+            border-top:1px solid var(--sari-dark-d8c2716225, #eeeae4) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminMessagingRefreshStatus,
@@ -964,35 +964,35 @@
 
         /* CENTER: modern messenger conversation */
         #sariUniversalAdminMessages .sari-thread-panel{
-            background:#f7f6f4 !important;
+            background:var(--sari-dark-4d21eb669b, #f7f6f4) !important;
         }
 
         #sariUniversalAdminMessages .sari-thread-panel > header{
             min-height:64px !important;
             padding:10px 15px !important;
-            border-bottom:1px solid #eae5de !important;
-            background:#fff !important;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #eae5de) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminThreadAvatar{
             width:40px !important;
             height:40px !important;
             flex-basis:40px !important;
-            border:1px solid #dde4e2 !important;
-            background:#eef3f1 !important;
-            color:#5d746d !important;
+            border:1px solid var(--sari-dark-d8c2716225, #dde4e2) !important;
+            background:var(--sari-dark-4d21eb669b, #eef3f1) !important;
+            color:var(--sari-dark-a63aa16d7c, #5d746d) !important;
             font-size:9px !important;
         }
 
         #adminThreadTitle{
             font-size:10.5px !important;
             font-weight:700 !important;
-            color:#2b2621 !important;
+            color:var(--sari-dark-e23e64dd1e, #2b2621) !important;
         }
 
         #adminThreadSubtitle{
             font-size:7px !important;
-            color:#938b81 !important;
+            color:var(--sari-dark-a63aa16d7c, #938b81) !important;
         }
 
         #adminThreadTypeBadge,
@@ -1004,7 +1004,7 @@
         }
 
         #adminThreadMessages{
-            background:#f7f6f4 !important;
+            background:var(--sari-dark-4d21eb669b, #f7f6f4) !important;
             padding:20px 22px !important;
             scroll-behavior:smooth;
         }
@@ -1017,7 +1017,7 @@
             width:28px !important;
             height:28px !important;
             flex-basis:28px !important;
-            border:1px solid #e2e5e4 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e2e5e4) !important;
             box-shadow:none !important;
         }
 
@@ -1038,21 +1038,21 @@
         }
 
         #adminThreadMessages [data-message-id] .border.border-\[\#e7e1d8\]{
-            border-color:#e5e0d9 !important;
-            background:#fff !important;
+            border-color:var(--sari-dark-d8c2716225, #e5e0d9) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminThreadMessages [data-message-id] p.mt-1\.5{
             margin-top:4px !important;
             font-size:6.2px !important;
-            color:#9a9289 !important;
+            color:var(--sari-dark-a63aa16d7c, #9a9289) !important;
         }
 
         /* Composer: Messenger-like, compact and anchored */
         #adminComposerWrap{
             padding:10px 13px 12px !important;
-            border-top:1px solid #eae5de !important;
-            background:#fff !important;
+            border-top:1px solid var(--sari-dark-d8c2716225, #eae5de) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminUniversalMessageForm{
@@ -1060,24 +1060,24 @@
             grid-template-columns:minmax(0,1fr) 38px !important;
             gap:8px !important;
             align-items:end !important;
-            border:1px solid #e5e0d9 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e5e0d9) !important;
             border-radius:14px !important;
-            background:#f8f7f5 !important;
+            background:var(--sari-dark-950baec030, #f8f7f5) !important;
             padding:7px 7px 7px 11px !important;
             box-shadow:none !important;
         }
 
         #adminUniversalMessageForm:focus-within{
             border-color:#ddc58a !important;
-            background:#fff !important;
-            box-shadow:0 0 0 3px rgba(210,154,40,.06) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-361b571631, rgba(210,154,40,.06)) !important;
         }
 
         #adminUniversalMessageInput{
             min-height:34px !important;
             max-height:92px !important;
             padding:7px 2px !important;
-            color:#3c3630 !important;
+            color:var(--sari-dark-e23e64dd1e, #3c3630) !important;
             font-size:8.5px !important;
             line-height:1.5 !important;
         }
@@ -1100,7 +1100,7 @@
             border-radius:11px !important;
             padding:0 !important;
             font-size:0 !important;
-            box-shadow:0 4px 10px rgba(166,112,18,.12) !important;
+            box-shadow:0 4px 10px var(--sari-dark-3b2338cbf0, rgba(166,112,18,.12)) !important;
         }
 
         #adminUniversalSendButton svg{
@@ -1115,18 +1115,18 @@
 
         /* RIGHT: quieter enterprise detail rail */
         #sariUniversalAdminMessages .sari-context-panel{
-            border-left:1px solid #ebe7e0 !important;
-            background:#fbfaf8 !important;
+            border-left:1px solid var(--sari-dark-d8c2716225, #ebe7e0) !important;
+            background:var(--sari-dark-950baec030, #fbfaf8) !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:first-child{
             padding:14px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:first-child p:first-child{
             font-size:9.2px !important;
-            color:#312b26 !important;
+            color:var(--sari-dark-e23e64dd1e, #312b26) !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:first-child p:last-child{
@@ -1142,21 +1142,21 @@
         #adminConversationContext > div,
         #adminConversationContext .rounded-\[16px\]{
             border-radius:10px !important;
-            border-color:#e8e2da !important;
+            border-color:var(--sari-dark-d8c2716225, #e8e2da) !important;
             padding:10px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:none !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:last-child{
             padding:12px !important;
-            background:#fbfaf8 !important;
+            background:var(--sari-dark-950baec030, #fbfaf8) !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:last-child > div{
-            border-color:#e8e2d8 !important;
+            border-color:var(--sari-dark-d8c2716225, #e8e2d8) !important;
             border-radius:10px !important;
-            background:#fffdf8 !important;
+            background:var(--sari-dark-950baec030, #fffdf8) !important;
             padding:10px !important;
         }
 
@@ -1216,18 +1216,18 @@
            Clearer contrast, calmer hierarchy, explicit AI disclosure.
            ============================================================ */
         #sariUniversalAdminMessages{
-            --chat-canvas:#f3f4f5;
-            --chat-panel:#fbfaf8;
-            --chat-panel-strong:#f7f5f2;
-            --chat-border:#e3ded7;
-            --chat-ink:#211d19;
-            --chat-muted:#847b72;
+            --chat-canvas:var(--sari-dark-4d21eb669b, #f3f4f5);
+            --chat-panel:var(--sari-dark-950baec030, #fbfaf8);
+            --chat-panel-strong:var(--sari-dark-4d21eb669b, #f7f5f2);
+            --chat-border:var(--sari-dark-d8c2716225, #e3ded7);
+            --chat-ink:var(--sari-dark-e23e64dd1e, #211d19);
+            --chat-muted:var(--sari-dark-a63aa16d7c, #847b72);
             --chat-gold:#cf900f;
         }
 
         #sariUniversalAdminMessages > section.sari-shadow{
             border-color:var(--chat-border) !important;
-            box-shadow:0 12px 32px rgba(40,32,22,.07) !important;
+            box-shadow:0 12px 32px var(--sari-dark-7c935c8886, rgba(40,32,22,.07)) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel{
@@ -1235,33 +1235,33 @@
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel > div:first-child{
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminConversationFilters{
             padding:4px !important;
-            border-color:#e4dfd8 !important;
-            background:#efede9 !important;
+            border-color:var(--sari-dark-d8c2716225, #e4dfd8) !important;
+            background:var(--sari-dark-4d21eb669b, #efede9) !important;
         }
 
         #adminConversationFilters [data-role-filter]{
             height:30px !important;
             min-height:30px !important;
             border-radius:7px !important;
-            color:#6f675f !important;
+            color:var(--sari-dark-a63aa16d7c, #6f675f) !important;
             font-size:7.2px !important;
             font-weight:650 !important;
         }
 
         #adminConversationFilters [data-role-filter].is-active{
-            background:#fff !important;
-            color:#8d5d0a !important;
-            box-shadow:0 1px 4px rgba(51,41,29,.10) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            color:var(--sari-dark-6e784b4931, #8d5d0a) !important;
+            box-shadow:0 1px 4px var(--sari-dark-8eadf403a5, rgba(51,41,29,.10)) !important;
         }
 
         #adminConversationList{
             padding:6px !important;
-            background:#f7f6f3 !important;
+            background:var(--sari-dark-4d21eb669b, #f7f6f3) !important;
         }
 
         #adminConversationList [data-contact-role]{
@@ -1274,14 +1274,14 @@
         }
 
         #adminConversationList [data-contact-role]:hover{
-            border-color:#e7e1d8 !important;
-            background:#fff !important;
+            border-color:var(--sari-dark-d8c2716225, #e7e1d8) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminConversationList [data-contact-role].is-selected{
             border-color:#ead7ab !important;
-            background:#fffaf0 !important;
-            box-shadow:0 3px 10px rgba(84,61,25,.045) !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
+            box-shadow:0 3px 10px var(--sari-dark-1190f58155, rgba(84,61,25,.045)) !important;
         }
 
         #adminConversationList [data-contact-role].is-selected::before{
@@ -1295,19 +1295,19 @@
             width:38px !important;
             height:38px !important;
             flex-basis:38px !important;
-            border-color:#dde2e1 !important;
-            background:#eef2f1 !important;
-            color:#536c65 !important;
+            border-color:var(--sari-dark-d8c2716225, #dde2e1) !important;
+            background:var(--sari-dark-4d21eb669b, #eef2f1) !important;
+            color:var(--sari-dark-a63aa16d7c, #536c65) !important;
         }
 
         #adminConversationList .account-directory-name{
             font-size:9.1px !important;
-            color:#27221e !important;
+            color:var(--sari-dark-e23e64dd1e, #27221e) !important;
         }
 
         #adminConversationList .account-directory-preview{
             max-width:190px !important;
-            color:#7d756c !important;
+            color:var(--sari-dark-a63aa16d7c, #7d756c) !important;
         }
 
         #sariUniversalAdminMessages .sari-thread-panel{
@@ -1316,38 +1316,38 @@
 
         #sariUniversalAdminMessages .sari-thread-panel > header{
             min-height:66px !important;
-            border-bottom-color:#e3ded7 !important;
-            background:#fff !important;
+            border-bottom-color:var(--sari-dark-d8c2716225, #e3ded7) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminThreadMessages{
             background:var(--chat-canvas) !important;
-            background-image:linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.42)) !important;
+            background-image:linear-gradient(var(--sari-dark-a45c6efc8c, rgba(255,255,255,.42)),var(--sari-dark-a45c6efc8c, rgba(255,255,255,.42))) !important;
         }
 
         #adminThreadMessages [data-message-id] .sari-message-body{
             min-width:64px;
             border-radius:14px !important;
             padding:9px 11px !important;
-            box-shadow:0 1px 2px rgba(40,34,28,.025) !important;
+            box-shadow:0 1px 2px var(--sari-dark-e1384eb7fc, rgba(40,34,28,.025)) !important;
         }
 
         #adminThreadMessages .sari-message-incoming{
-            border:1px solid #e2e0dc !important;
-            background:#fff !important;
-            color:#403a34 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e2e0dc) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            color:var(--sari-dark-e23e64dd1e, #403a34) !important;
         }
 
         #adminThreadMessages .sari-message-outgoing{
             border:1px solid #ecd9ac !important;
-            background:#fff0d1 !important;
-            color:#3e321f !important;
+            background:var(--sari-dark-4d21eb669b, #fff0d1) !important;
+            color:var(--sari-dark-e23e64dd1e, #3e321f) !important;
         }
 
         #adminThreadMessages .sari-message-ai{
-            border:1px solid #d8dfec !important;
-            background:#f6f8fc !important;
-            color:#354252 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #d8dfec) !important;
+            background:var(--sari-dark-950baec030, #f6f8fc) !important;
+            color:var(--sari-dark-e23e64dd1e, #354252) !important;
         }
 
         #adminThreadMessages .sari-ai-message-label{
@@ -1355,7 +1355,7 @@
             align-items:center;
             gap:5px;
             margin-bottom:5px;
-            color:#65758a;
+            color:var(--sari-dark-a63aa16d7c, #65758a);
             font-size:6.5px;
             font-weight:700;
             letter-spacing:.02em;
@@ -1367,17 +1367,17 @@
         }
 
         #adminComposerWrap{
-            border-top-color:#e1ddd6 !important;
-            background:#fff !important;
+            border-top-color:var(--sari-dark-d8c2716225, #e1ddd6) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminUniversalMessageForm{
-            border-color:#dfdbd4 !important;
-            background:#f5f4f2 !important;
+            border-color:var(--sari-dark-d8c2716225, #dfdbd4) !important;
+            background:var(--sari-dark-4d21eb669b, #f5f4f2) !important;
         }
 
         #adminUniversalMessageForm:focus-within{
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminUniversalSendButton{
@@ -1394,11 +1394,11 @@
             min-height:25px;
             align-items:center;
             gap:6px;
-            border:1px solid #e1ddd6;
+            border:1px solid var(--sari-dark-d8c2716225, #e1ddd6);
             border-radius:999px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:0 8px;
-            color:#716961;
+            color:var(--sari-dark-a63aa16d7c, #716961);
             font-size:6.5px;
             font-weight:650;
             white-space:nowrap;
@@ -1409,18 +1409,18 @@
             height:6px;
             border-radius:50%;
             background:#2f9b5c;
-            box-shadow:0 0 0 3px rgba(47,155,92,.10);
+            box-shadow:0 0 0 3px var(--sari-dark-8eadf403a5, rgba(47,155,92,.10));
         }
 
         .sari-live-pill.is-fallback .sari-live-dot{
             background:#c28a2b;
-            box-shadow:0 0 0 3px rgba(194,138,43,.10);
+            box-shadow:0 0 0 3px var(--sari-dark-8eadf403a5, rgba(194,138,43,.10));
         }
 
         .sari-ai-pill{
-            border-color:#e2d7bd;
-            background:#fffbf2;
-            color:#8a641e;
+            border-color:var(--sari-dark-d8c2716225, #e2d7bd);
+            background:var(--sari-dark-950baec030, #fffbf2);
+            color:var(--sari-dark-e23e64dd1e, #8a641e);
         }
 
         .sari-ai-pill svg{
@@ -1429,19 +1429,19 @@
         }
 
         #sariUniversalAdminMessages .sari-context-panel{
-            background:#f7f6f3 !important;
+            background:var(--sari-dark-4d21eb669b, #f7f6f3) !important;
         }
 
         #adminConversationContext > div,
         #adminConversationContext .rounded-\[16px\]{
-            border-color:#e0dcd5 !important;
-            box-shadow:0 2px 7px rgba(43,34,24,.025) !important;
+            border-color:var(--sari-dark-d8c2716225, #e0dcd5) !important;
+            box-shadow:0 2px 7px var(--sari-dark-e1384eb7fc, rgba(43,34,24,.025)) !important;
         }
 
         .sari-ai-cover-card{
-            border:1px solid #dfd7c7 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #dfd7c7) !important;
             border-radius:11px !important;
-            background:#fffaf0 !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
             padding:11px !important;
         }
 
@@ -1449,7 +1449,7 @@
             display:flex;
             align-items:center;
             gap:6px;
-            color:#8b641c;
+            color:var(--sari-dark-d0445510f4, #8b641c);
             font-size:6.7px;
             font-weight:800;
             letter-spacing:.10em;
@@ -1463,7 +1463,7 @@
 
         .sari-ai-cover-card p:last-child{
             margin-top:6px !important;
-            color:#776d60 !important;
+            color:var(--sari-dark-a63aa16d7c, #776d60) !important;
             font-size:6.8px !important;
             line-height:1.55 !important;
         }
@@ -1480,15 +1480,15 @@
 
         #adminUniversalMessageForm{
             display:block !important;
-            border:1px solid #e4dfd8 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e4dfd8) !important;
             border-radius:14px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             padding:7px !important;
         }
 
         #adminUniversalMessageForm:focus-within{
             border-color:#d9c28d !important;
-            box-shadow:0 0 0 3px rgba(210,154,40,.055) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-fbd3b3b9f6, rgba(210,154,40,.055)) !important;
         }
 
         .sari-composer-row{
@@ -1505,17 +1505,17 @@
             place-items:center;
             border:1px solid transparent;
             border-radius:10px;
-            background:#f6f4f1;
-            color:#746b61;
+            background:var(--sari-dark-4d21eb669b, #f6f4f1);
+            color:var(--sari-dark-a63aa16d7c, #746b61);
             transition:background-color .14s ease,color .14s ease,border-color .14s ease;
         }
 
         #adminAttachmentButton:hover,
         #adminAttachmentButton:focus-visible{
             outline:none;
-            border-color:#e1d8c9;
-            background:#fff8ea;
-            color:#a97012;
+            border-color:var(--sari-dark-d8c2716225, #e1d8c9);
+            background:var(--sari-dark-4d21eb669b, #fff8ea);
+            color:var(--sari-dark-9b2ca2d764, #a97012);
         }
 
         #adminAttachmentButton svg{
@@ -1543,7 +1543,7 @@
             background:#d09524 !important;
             color:#fff !important;
             font-size:0 !important;
-            box-shadow:0 5px 12px rgba(166,112,18,.14) !important;
+            box-shadow:0 5px 12px var(--sari-dark-59ed29fe9d, rgba(166,112,18,.14)) !important;
         }
 
         #adminUniversalSendButton:hover:not(:disabled){
@@ -1568,9 +1568,9 @@
             justify-content:space-between;
             gap:10px;
             margin:0 1px 7px;
-            border:1px solid #e8e2da;
+            border:1px solid var(--sari-dark-d8c2716225, #e8e2da);
             border-radius:10px;
-            background:#f8f7f5;
+            background:var(--sari-dark-950baec030, #f8f7f5);
             padding:7px 8px;
         }
 
@@ -1591,10 +1591,10 @@
             height:28px;
             flex:0 0 28px;
             place-items:center;
-            border:1px solid #e6ded0;
+            border:1px solid var(--sari-dark-d8c2716225, #e6ded0);
             border-radius:8px;
-            background:#fff;
-            color:#9b6d1c;
+            background:var(--sari-dark-950baec030, #fff);
+            color:var(--sari-dark-e13523fe23, #9b6d1c);
         }
 
         .sari-attachment-preview-icon svg{
@@ -1604,7 +1604,7 @@
 
         #adminAttachmentName{
             overflow:hidden;
-            color:#4a433b;
+            color:var(--sari-dark-e23e64dd1e, #4a433b);
             font-size:7.6px;
             font-weight:700;
             text-overflow:ellipsis;
@@ -1613,7 +1613,7 @@
 
         #adminAttachmentMeta{
             margin-top:2px;
-            color:#978e84;
+            color:var(--sari-dark-a63aa16d7c, #978e84);
             font-size:6.4px;
         }
 
@@ -1624,12 +1624,12 @@
             flex:0 0 27px;
             place-items:center;
             border-radius:8px;
-            color:#8c8379;
+            color:var(--sari-dark-a63aa16d7c, #8c8379);
         }
 
         #adminAttachmentRemove:hover{
-            background:#eee9e2;
-            color:#554d45;
+            background:var(--sari-dark-4d21eb669b, #eee9e2);
+            color:var(--sari-dark-e23e64dd1e, #554d45);
         }
 
         #adminAttachmentRemove svg{
@@ -1638,12 +1638,12 @@
         }
 
         #adminComposerWrap.is-dragging{
-            background:#fffaf0 !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
         }
 
         #adminComposerWrap.is-dragging #adminUniversalMessageForm{
             border-color:#d4b86f !important;
-            box-shadow:0 0 0 3px rgba(210,154,40,.07) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-7c935c8886, rgba(210,154,40,.07)) !important;
         }
 
         .sari-message-attachment{
@@ -1654,9 +1654,9 @@
             display:block;
             overflow:hidden;
             max-width:330px;
-            border:1px solid #e2ddd6;
+            border:1px solid var(--sari-dark-d8c2716225, #e2ddd6);
             border-radius:13px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
         }
 
         .sari-message-image{
@@ -1673,18 +1673,18 @@
             grid-template-columns:34px minmax(0,1fr) 20px;
             align-items:center;
             gap:9px;
-            border:1px solid #e5e0d9;
+            border:1px solid var(--sari-dark-d8c2716225, #e5e0d9);
             border-radius:12px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:9px 10px;
-            color:#4d463f;
+            color:var(--sari-dark-e23e64dd1e, #4d463f);
             text-decoration:none;
             transition:border-color .14s ease,background-color .14s ease;
         }
 
         .sari-message-file:hover{
             border-color:#d9c89f;
-            background:#fffdf8;
+            background:var(--sari-dark-950baec030, #fffdf8);
         }
 
         .sari-message-file-icon{
@@ -1693,8 +1693,8 @@
             height:34px;
             place-items:center;
             border-radius:9px;
-            background:#f5f2ed;
-            color:#8c6a30;
+            background:var(--sari-dark-4d21eb669b, #f5f2ed);
+            color:var(--sari-dark-a63aa16d7c, #8c6a30);
         }
 
         .sari-message-file-icon svg,
@@ -1713,7 +1713,7 @@
 
         .sari-message-file-meta{
             margin-top:2px;
-            color:#958c82;
+            color:var(--sari-dark-a63aa16d7c, #958c82);
             font-size:6.2px;
         }
 
@@ -1740,7 +1740,7 @@
             height:24px;
             place-items:center;
             border-radius:7px;
-            color:#9b9288;
+            color:var(--sari-dark-a63aa16d7c, #9b9288);
             opacity:.72;
             transition:background-color .13s ease,color .13s ease,opacity .13s ease;
         }
@@ -1753,8 +1753,8 @@
         .sari-reaction-toggle:hover,
         .sari-reaction-toggle:focus-visible{
             outline:none;
-            background:#ece8e2;
-            color:#6f665d;
+            background:var(--sari-dark-4d21eb669b, #ece8e2);
+            color:var(--sari-dark-a63aa16d7c, #6f665d);
         }
 
         .sari-reaction-toggle svg{
@@ -1770,11 +1770,11 @@
             display:flex;
             align-items:center;
             gap:2px;
-            border:1px solid #e4ddd4;
+            border:1px solid var(--sari-dark-d8c2716225, #e4ddd4);
             border-radius:999px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:4px;
-            box-shadow:0 10px 28px rgba(36,29,21,.12);
+            box-shadow:0 10px 28px var(--sari-dark-3b2338cbf0, rgba(36,29,21,.12));
         }
 
         .sari-message-tools.is-right .sari-reaction-picker{
@@ -1800,7 +1800,7 @@
         .sari-reaction-option:hover,
         .sari-reaction-option:focus-visible{
             outline:none;
-            background:#f2efea;
+            background:var(--sari-dark-4d21eb669b, #f2efea);
             transform:translateY(-1px);
         }
 
@@ -1815,19 +1815,19 @@
             min-height:21px;
             align-items:center;
             gap:3px;
-            border:1px solid #e6e0d9;
+            border:1px solid var(--sari-dark-d8c2716225, #e6e0d9);
             border-radius:999px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:0 6px;
-            color:#756d64;
+            color:var(--sari-dark-a63aa16d7c, #756d64);
             font-size:9px;
             line-height:1;
         }
 
         .sari-reaction-chip.is-mine{
             border-color:#e4c981;
-            background:#fff8e8;
-            color:#8f6417;
+            background:var(--sari-dark-4d21eb669b, #fff8e8);
+            color:var(--sari-dark-abfd83a056, #8f6417);
         }
 
         .sari-reaction-count{
@@ -1837,7 +1837,7 @@
 
         .sari-message-time{
             margin-left:auto;
-            color:#9b9286;
+            color:var(--sari-dark-a63aa16d7c, #9b9286);
             font-size:6.2px;
             white-space:nowrap;
         }
@@ -1867,19 +1867,19 @@
         #sariUniversalAdminMessages .sari-thread-panel > header{
             min-height:74px !important;
             padding:12px 18px !important;
-            border-bottom:1px solid #e9e4dc !important;
-            background:#fff !important;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #e9e4dc) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminThreadAvatar{
             width:44px !important;
             height:44px !important;
             flex-basis:44px !important;
-            border:1px solid #dde4e2 !important;
-            background:#eef3f1 !important;
-            color:#5e736d !important;
+            border:1px solid var(--sari-dark-d8c2716225, #dde4e2) !important;
+            background:var(--sari-dark-4d21eb669b, #eef3f1) !important;
+            color:var(--sari-dark-a63aa16d7c, #5e736d) !important;
             font-size:11px !important;
-            box-shadow:inset 0 1px 0 rgba(255,255,255,.7) !important;
+            box-shadow:inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.7)) !important;
         }
 
         #adminThreadTitle{
@@ -1887,7 +1887,7 @@
             font-weight:700 !important;
             line-height:1.15 !important;
             letter-spacing:-.02em !important;
-            color:#231f1b !important;
+            color:var(--sari-dark-e23e64dd1e, #231f1b) !important;
         }
 
         #adminThreadTypeBadge{
@@ -1905,7 +1905,7 @@
             display:inline-block !important;
             max-width:340px !important;
             overflow:hidden !important;
-            color:#8b8379 !important;
+            color:var(--sari-dark-a63aa16d7c, #8b8379) !important;
             font-size:10px !important;
             line-height:1.35 !important;
             text-overflow:ellipsis !important;
@@ -1923,21 +1923,21 @@
 
         #adminComposerWrap{
             padding:12px 14px 14px !important;
-            border-top:1px solid #e9e4dc !important;
-            background:#fff !important;
+            border-top:1px solid var(--sari-dark-d8c2716225, #e9e4dc) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminUniversalMessageForm{
-            border:1px solid #e5dfd7 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e5dfd7) !important;
             border-radius:18px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             padding:9px !important;
-            box-shadow:0 4px 14px rgba(33, 26, 18, .035) !important;
+            box-shadow:0 4px 14px var(--sari-dark-7593018246, rgba(33, 26, 18, .035)) !important;
         }
 
         #adminUniversalMessageForm:focus-within{
             border-color:#ddc58b !important;
-            box-shadow:0 0 0 4px rgba(210,154,40,.06) !important;
+            box-shadow:0 0 0 4px var(--sari-dark-361b571631, rgba(210,154,40,.06)) !important;
         }
 
         .sari-composer-row{
@@ -1950,30 +1950,30 @@
         #adminAttachmentButton{
             width:42px !important;
             height:42px !important;
-            border:1px solid #e7e1d8 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e7e1d8) !important;
             border-radius:14px !important;
-            background:#f8f7f5 !important;
-            color:#72685d !important;
+            background:var(--sari-dark-950baec030, #f8f7f5) !important;
+            color:var(--sari-dark-a63aa16d7c, #72685d) !important;
             transition:background-color .14s ease,border-color .14s ease,color .14s ease !important;
         }
 
         #adminAttachmentButton:hover{
-            background:#fffaf0 !important;
+            background:var(--sari-dark-950baec030, #fffaf0) !important;
             border-color:#e2c98f !important;
-            color:#9b6a18 !important;
+            color:var(--sari-dark-99f0de07d3, #9b6a18) !important;
         }
 
         #adminUniversalMessageInput{
             min-height:42px !important;
             max-height:120px !important;
             padding:10px 0 !important;
-            color:#342f29 !important;
+            color:var(--sari-dark-e23e64dd1e, #342f29) !important;
             font-size:13px !important;
             line-height:1.5 !important;
         }
 
         #adminUniversalMessageInput::placeholder{
-            color:#a39a90 !important;
+            color:var(--sari-dark-a63aa16d7c, #a39a90) !important;
         }
 
         #adminUniversalSendButton{
@@ -1983,7 +1983,7 @@
             border-radius:14px !important;
             background:#c99321 !important;
             color:#fff !important;
-            box-shadow:0 8px 18px rgba(166,112,18,.18) !important;
+            box-shadow:0 8px 18px var(--sari-dark-3793f9e558, rgba(166,112,18,.18)) !important;
         }
 
         #adminUniversalSendButton:hover:not(:disabled){
@@ -2048,9 +2048,9 @@
            Quiet enterprise actions; gold-first with restrained danger.
            ============================================================ */
         .sari-account-card{
-            border:1px solid #e6e1da;
+            border:1px solid var(--sari-dark-d8c2716225, #e6e1da);
             border-radius:12px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:12px;
         }
 
@@ -2060,10 +2060,10 @@
             height:38px;
             flex:0 0 38px;
             place-items:center;
-            border:1px solid #dde3e1;
+            border:1px solid var(--sari-dark-d8c2716225, #dde3e1);
             border-radius:50%;
-            background:#eef3f1;
-            color:#5e736d;
+            background:var(--sari-dark-4d21eb669b, #eef3f1);
+            color:var(--sari-dark-a63aa16d7c, #5e736d);
             font-size:9px;
             font-weight:700;
         }
@@ -2073,11 +2073,11 @@
             min-height:21px;
             align-items:center;
             gap:5px;
-            border:1px solid #d9e5dd;
+            border:1px solid var(--sari-dark-d8c2716225, #d9e5dd);
             border-radius:999px;
-            background:#f3f8f4;
+            background:var(--sari-dark-4d21eb669b, #f3f8f4);
             padding:0 7px;
-            color:#5f7866;
+            color:var(--sari-dark-a63aa16d7c, #5f7866);
             font-size:6.4px;
             font-weight:700;
         }
@@ -2091,17 +2091,17 @@
         }
 
         .sari-account-status.is-suspended{
-            border-color:#e5d9be;
-            background:#fffaf0;
-            color:#8b6828;
+            border-color:var(--sari-dark-d8c2716225, #e5d9be);
+            background:var(--sari-dark-950baec030, #fffaf0);
+            color:var(--sari-dark-e23e64dd1e, #8b6828);
         }
 
         .sari-account-status.is-suspended::before{background:#c5963e;}
 
         .sari-account-status.is-banned{
-            border-color:#ead6d1;
-            background:#fff6f4;
-            color:#9e5f53;
+            border-color:var(--sari-dark-d8c2716225, #ead6d1);
+            background:var(--sari-dark-950baec030, #fff6f4);
+            color:var(--sari-dark-bddb944f88, #9e5f53);
         }
 
         .sari-account-status.is-banned::before{background:#b86657;}
@@ -2119,11 +2119,11 @@
             align-items:center;
             justify-content:center;
             gap:6px;
-            border:1px solid #e5dfd6;
+            border:1px solid var(--sari-dark-d8c2716225, #e5dfd6);
             border-radius:9px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:0 8px;
-            color:#655d54;
+            color:var(--sari-dark-a63aa16d7c, #655d54);
             font-size:6.8px;
             font-weight:700;
             line-height:1;
@@ -2139,27 +2139,27 @@
         .sari-admin-action:focus-visible{
             outline:none;
             border-color:#dbc995;
-            background:#fffaf0;
-            color:#8e6418;
+            background:var(--sari-dark-950baec030, #fffaf0);
+            color:var(--sari-dark-d5949c0219, #8e6418);
         }
 
         .sari-admin-action--primary{
             border-color:#e2c987;
-            background:#fff8e8;
-            color:#8e6418;
+            background:var(--sari-dark-4d21eb669b, #fff8e8);
+            color:var(--sari-dark-d5949c0219, #8e6418);
         }
 
         .sari-admin-action--danger{
-            border-color:#ead8d3;
-            background:#fff;
-            color:#9c6156;
+            border-color:var(--sari-dark-d8c2716225, #ead8d3);
+            background:var(--sari-dark-950baec030, #fff);
+            color:var(--sari-dark-ee14665e08, #9c6156);
         }
 
         .sari-admin-action--danger:hover,
         .sari-admin-action--danger:focus-visible{
-            border-color:#ddb8af;
-            background:#fff6f4;
-            color:#8f4e43;
+            border-color:var(--sari-dark-d8c2716225, #ddb8af);
+            background:var(--sari-dark-950baec030, #fff6f4);
+            color:var(--sari-dark-a63aa16d7c, #8f4e43);
         }
 
         .sari-admin-action--wide{
@@ -2173,7 +2173,7 @@
             display:grid;
             place-items:center;
             padding:18px;
-            background:rgba(27,22,17,.24);
+            background:var(--sari-dark-fbffa22652, rgba(27,22,17,.24));
         }
 
         .sari-moderation-modal.hidden{display:none !important;}
@@ -2181,10 +2181,10 @@
         .sari-moderation-dialog{
             width:min(430px,100%);
             overflow:hidden;
-            border:1px solid #e4ddd3;
+            border:1px solid var(--sari-dark-d8c2716225, #e4ddd3);
             border-radius:16px;
-            background:#fff;
-            box-shadow:0 22px 55px rgba(39,31,23,.18);
+            background:var(--sari-dark-950baec030, #fff);
+            box-shadow:0 22px 55px var(--sari-dark-3793f9e558, rgba(39,31,23,.18));
         }
 
         .sari-moderation-dialog__header{
@@ -2192,12 +2192,12 @@
             align-items:flex-start;
             justify-content:space-between;
             gap:14px;
-            border-bottom:1px solid #eee8e1;
+            border-bottom:1px solid var(--sari-dark-d8c2716225, #eee8e1);
             padding:16px 17px 13px;
         }
 
         .sari-moderation-dialog__eyebrow{
-            color:#a2762f;
+            color:var(--sari-dark-a63aa16d7c, #a2762f);
             font-size:7px;
             font-weight:800;
             letter-spacing:.13em;
@@ -2206,7 +2206,7 @@
 
         .sari-moderation-dialog__title{
             margin-top:4px;
-            color:#29241f;
+            color:var(--sari-dark-e23e64dd1e, #29241f);
             font-size:14px;
             font-weight:750;
             letter-spacing:-.02em;
@@ -2215,7 +2215,7 @@
         .sari-moderation-dialog__body{padding:15px 17px 17px;}
 
         .sari-moderation-dialog__copy{
-            color:#7f766c;
+            color:var(--sari-dark-a63aa16d7c, #7f766c);
             font-size:8px;
             line-height:1.6;
         }
@@ -2225,11 +2225,11 @@
             min-height:92px;
             margin-top:12px;
             resize:vertical;
-            border:1px solid #e4ddd4;
+            border:1px solid var(--sari-dark-d8c2716225, #e4ddd4);
             border-radius:11px;
-            background:#f8f7f5;
+            background:var(--sari-dark-950baec030, #f8f7f5);
             padding:10px 11px;
-            color:#3d3731;
+            color:var(--sari-dark-e23e64dd1e, #3d3731);
             font-size:9px;
             line-height:1.5;
             outline:none;
@@ -2237,17 +2237,17 @@
 
         #adminModerationReason:focus{
             border-color:#d9bf7f;
-            background:#fff;
-            box-shadow:0 0 0 3px rgba(210,154,40,.07);
+            background:var(--sari-dark-950baec030, #fff);
+            box-shadow:0 0 0 3px var(--sari-dark-7c935c8886, rgba(210,154,40,.07));
         }
 
         .sari-moderation-dialog__footer{
             display:flex;
             justify-content:flex-end;
             gap:8px;
-            border-top:1px solid #eee8e1;
+            border-top:1px solid var(--sari-dark-d8c2716225, #eee8e1);
             padding:11px 17px;
-            background:#fbfaf8;
+            background:var(--sari-dark-950baec030, #fbfaf8);
         }
 
         .sari-moderation-dialog__button{
@@ -2259,16 +2259,16 @@
         }
 
         #adminModerationCancel{
-            border:1px solid #e3ddd5;
-            background:#fff;
-            color:#6f675f;
+            border:1px solid var(--sari-dark-d8c2716225, #e3ddd5);
+            background:var(--sari-dark-950baec030, #fff);
+            color:var(--sari-dark-a63aa16d7c, #6f675f);
         }
 
         #adminModerationConfirm{
             border:1px solid #c89428;
             background:#c89428;
             color:#fff;
-            box-shadow:0 5px 12px rgba(166,112,18,.12);
+            box-shadow:0 5px 12px var(--sari-dark-3b2338cbf0, rgba(166,112,18,.12));
         }
 
         #adminModerationConfirm.is-danger{
@@ -2288,11 +2288,11 @@
             min-height:24px !important;
             height:24px !important;
             align-items:center !important;
-            border:1px solid #dce6df !important;
+            border:1px solid var(--sari-dark-d8c2716225, #dce6df) !important;
             border-radius:999px !important;
-            background:#f5f8f5 !important;
+            background:var(--sari-dark-950baec030, #f5f8f5) !important;
             padding:0 9px !important;
-            color:#627567 !important;
+            color:var(--sari-dark-a63aa16d7c, #627567) !important;
             font-size:7.2px !important;
             font-weight:700 !important;
             line-height:1 !important;
@@ -2303,9 +2303,9 @@
             position:relative;
             overflow:visible;
             padding:12px !important;
-            border-color:#e7e2db !important;
+            border-color:var(--sari-dark-d8c2716225, #e7e2db) !important;
             border-radius:13px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:none !important;
         }
 
@@ -2319,9 +2319,9 @@
             width:38px !important;
             height:38px !important;
             flex:0 0 38px !important;
-            border:1px solid #dfe5e2 !important;
-            background:#f0f4f2 !important;
-            color:#60736d !important;
+            border:1px solid var(--sari-dark-d8c2716225, #dfe5e2) !important;
+            background:var(--sari-dark-4d21eb669b, #f0f4f2) !important;
+            color:var(--sari-dark-a63aa16d7c, #60736d) !important;
             font-size:8.5px !important;
         }
 
@@ -2348,9 +2348,9 @@
 
         .sari-account-status{
             gap:5px !important;
-            border-color:#dce7df !important;
-            background:#f6f9f6 !important;
-            color:#617568 !important;
+            border-color:var(--sari-dark-d8c2716225, #dce7df) !important;
+            background:var(--sari-dark-950baec030, #f6f9f6) !important;
+            color:var(--sari-dark-a63aa16d7c, #617568) !important;
         }
 
         .sari-account-status::before{
@@ -2360,16 +2360,16 @@
         }
 
         .sari-account-status.is-suspended{
-            border-color:#e6dcc4 !important;
-            background:#fffaf1 !important;
-            color:#8a692d !important;
+            border-color:var(--sari-dark-d8c2716225, #e6dcc4) !important;
+            background:var(--sari-dark-950baec030, #fffaf1) !important;
+            color:var(--sari-dark-e23e64dd1e, #8a692d) !important;
         }
         .sari-account-status.is-suspended::before{background:#c5963e !important;}
 
         .sari-account-status.is-banned{
-            border-color:#ead9d4 !important;
-            background:#fff7f5 !important;
-            color:#995d53 !important;
+            border-color:var(--sari-dark-d8c2716225, #ead9d4) !important;
+            background:var(--sari-dark-950baec030, #fff7f5) !important;
+            color:var(--sari-dark-a63aa16d7c, #995d53) !important;
         }
         .sari-account-status.is-banned::before{background:#b86657 !important;}
 
@@ -2385,10 +2385,10 @@
             width:30px;
             height:30px;
             place-items:center;
-            border:1px solid #e5e0d9;
+            border:1px solid var(--sari-dark-d8c2716225, #e5e0d9);
             border-radius:9px;
-            background:#fff;
-            color:#756d64;
+            background:var(--sari-dark-950baec030, #fff);
+            color:var(--sari-dark-a63aa16d7c, #756d64);
             transition:background-color .13s ease,border-color .13s ease,color .13s ease;
         }
 
@@ -2397,8 +2397,8 @@
         .sari-account-menu-trigger[aria-expanded="true"]{
             outline:none;
             border-color:#ddca9c;
-            background:#fffaf0;
-            color:#956b21;
+            background:var(--sari-dark-950baec030, #fffaf0);
+            color:var(--sari-dark-e23e64dd1e, #956b21);
         }
 
         .sari-account-menu-trigger svg{
@@ -2413,11 +2413,11 @@
             right:0;
             width:205px;
             overflow:hidden;
-            border:1px solid #e5dfd7;
+            border:1px solid var(--sari-dark-d8c2716225, #e5dfd7);
             border-radius:12px;
-            background:#fff;
+            background:var(--sari-dark-950baec030, #fff);
             padding:5px;
-            box-shadow:0 14px 34px rgba(41,33,24,.13);
+            box-shadow:0 14px 34px var(--sari-dark-3e32d50f5e, rgba(41,33,24,.13));
         }
 
         .sari-account-action-menu.hidden{display:none !important;}
@@ -2428,7 +2428,7 @@
             justify-content:space-between;
             gap:10px;
             padding:6px 7px 7px;
-            color:#9a9187;
+            color:var(--sari-dark-a63aa16d7c, #9a9187);
             font-size:6.2px;
             font-weight:700;
             letter-spacing:.06em;
@@ -2454,7 +2454,7 @@
             border-radius:8px !important;
             background:transparent !important;
             padding:0 9px !important;
-            color:#5f574f !important;
+            color:var(--sari-dark-e23e64dd1e, #5f574f) !important;
             font-size:7px !important;
             font-weight:650 !important;
             text-align:left !important;
@@ -2470,22 +2470,22 @@
         .sari-account-action-menu .sari-admin-action:hover,
         .sari-account-action-menu .sari-admin-action:focus-visible{
             outline:none !important;
-            background:#f7f5f1 !important;
-            color:#7f5b1e !important;
+            background:var(--sari-dark-4d21eb669b, #f7f5f1) !important;
+            color:var(--sari-dark-e23e64dd1e, #7f5b1e) !important;
         }
 
         .sari-account-action-menu .sari-admin-action--primary{
-            color:#8d651d !important;
+            color:var(--sari-dark-7b191db9e9, #8d651d) !important;
         }
 
         .sari-account-action-menu .sari-admin-action--danger{
-            color:#985f56 !important;
+            color:var(--sari-dark-a63aa16d7c, #985f56) !important;
         }
 
         .sari-account-action-menu .sari-admin-action--danger:hover,
         .sari-account-action-menu .sari-admin-action--danger:focus-visible{
-            background:#fff6f4 !important;
-            color:#8d4f45 !important;
+            background:var(--sari-dark-950baec030, #fff6f4) !important;
+            color:var(--sari-dark-a63aa16d7c, #8d4f45) !important;
         }
 
         /* Composer: smaller, quieter attachment + send controls. */
@@ -2496,7 +2496,7 @@
         #adminUniversalMessageForm{
             border-radius:15px !important;
             padding:7px 8px !important;
-            box-shadow:0 3px 12px rgba(33,26,18,.025) !important;
+            box-shadow:0 3px 12px var(--sari-dark-e1384eb7fc, rgba(33,26,18,.025)) !important;
         }
 
         .sari-composer-row{
@@ -2509,10 +2509,10 @@
             width:34px !important;
             min-width:34px !important;
             height:34px !important;
-            border:1px solid #e8e3dc !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e8e3dc) !important;
             border-radius:10px !important;
-            background:#f8f7f5 !important;
-            color:#746c63 !important;
+            background:var(--sari-dark-950baec030, #f8f7f5) !important;
+            color:var(--sari-dark-a63aa16d7c, #746c63) !important;
             box-shadow:none !important;
         }
 
@@ -2535,7 +2535,7 @@
             height:36px !important;
             border-radius:11px !important;
             background:#c9921f !important;
-            box-shadow:0 4px 10px rgba(166,112,18,.14) !important;
+            box-shadow:0 4px 10px var(--sari-dark-59ed29fe9d, rgba(166,112,18,.14)) !important;
         }
 
         #adminUniversalSendButton:hover:not(:disabled){
@@ -2575,7 +2575,7 @@
            ============================================================ */
 
         #adminThreadMessages{
-            background:#fbfaf7 !important;
+            background:var(--sari-dark-950baec030, #fbfaf7) !important;
             padding:24px 26px !important;
             scroll-behavior:smooth;
         }
@@ -2605,8 +2605,8 @@
 
         #adminThreadMessages [data-message-id] > div:first-child.grid{
             border:0 !important;
-            background:#f4f6f7 !important;
-            color:#607a8f !important;
+            background:var(--sari-dark-4d21eb669b, #f4f6f7) !important;
+            color:var(--sari-dark-a63aa16d7c, #607a8f) !important;
             font-size:9px !important;
             font-weight:700 !important;
         }
@@ -2615,9 +2615,9 @@
             display:grid;
             place-items:center;
             flex:0 0 32px;
-            border:1px solid #dce8ef !important;
-            background:#f2f7fa !important;
-            color:#5d788b !important;
+            border:1px solid var(--sari-dark-d8c2716225, #dce8ef) !important;
+            background:var(--sari-dark-4d21eb669b, #f2f7fa) !important;
+            color:var(--sari-dark-a63aa16d7c, #5d788b) !important;
         }
 
         #adminThreadMessages .sari-admin-bot-avatar svg{
@@ -2643,7 +2643,7 @@
 
         #adminThreadMessages .sari-admin-message-label{
             margin-bottom:6px !important;
-            color:#7c7369 !important;
+            color:var(--sari-dark-a63aa16d7c, #7c7369) !important;
             font-size:9px !important;
             font-weight:600 !important;
             line-height:1.2 !important;
@@ -2655,7 +2655,7 @@
             justify-content:flex-start !important;
             gap:5px !important;
             margin-bottom:6px !important;
-            color:#6e899c !important;
+            color:var(--sari-dark-a63aa16d7c, #6e899c) !important;
             font-size:9px !important;
             font-weight:600 !important;
             letter-spacing:.08em !important;
@@ -2672,14 +2672,14 @@
             padding:12px 16px !important;
             font-size:12px !important;
             line-height:1.5 !important;
-            box-shadow:0 7px 18px rgba(35,28,20,.055) !important;
+            box-shadow:0 7px 18px var(--sari-dark-fbd3b3b9f6, rgba(35,28,20,.055)) !important;
         }
 
         #adminThreadMessages .sari-message-incoming{
-            border:1px solid #e6dfd6 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e6dfd6) !important;
             border-bottom-left-radius:5px !important;
-            background:#fff !important;
-            color:#514a42 !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            color:var(--sari-dark-e23e64dd1e, #514a42) !important;
         }
 
         #adminThreadMessages .sari-message-outgoing{
@@ -2690,10 +2690,10 @@
         }
 
         #adminThreadMessages .sari-message-ai{
-            border:1px solid #dce8ef !important;
+            border:1px solid var(--sari-dark-d8c2716225, #dce8ef) !important;
             border-bottom-left-radius:5px !important;
-            background:#f4f8fa !important;
-            color:#526a79 !important;
+            background:var(--sari-dark-950baec030, #f4f8fa) !important;
+            color:var(--sari-dark-a63aa16d7c, #526a79) !important;
         }
 
         /* Attachments follow the same calmer Seller card treatment. */
@@ -2704,11 +2704,11 @@
         #adminThreadMessages .sari-message-image-link{
             overflow:hidden !important;
             max-width:360px !important;
-            border:1px solid #e6dfd6 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e6dfd6) !important;
             border-radius:14px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             padding:7px !important;
-            box-shadow:0 7px 18px rgba(35,28,20,.045) !important;
+            box-shadow:0 7px 18px var(--sari-dark-1190f58155, rgba(35,28,20,.045)) !important;
         }
 
         #adminThreadMessages .sari-message-image{
@@ -2722,19 +2722,19 @@
             max-width:360px !important;
             grid-template-columns:36px minmax(0,1fr) 20px !important;
             gap:10px !important;
-            border:1px solid #e6dfd6 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e6dfd6) !important;
             border-radius:14px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             padding:10px !important;
-            box-shadow:0 7px 18px rgba(35,28,20,.045) !important;
+            box-shadow:0 7px 18px var(--sari-dark-1190f58155, rgba(35,28,20,.045)) !important;
         }
 
         #adminThreadMessages .sari-message-file-icon{
             width:36px !important;
             height:36px !important;
             border-radius:9px !important;
-            background:#f5efe4 !important;
-            color:#a8731f !important;
+            background:var(--sari-dark-4d21eb669b, #f5efe4) !important;
+            color:var(--sari-dark-5d5ad776eb, #a8731f) !important;
         }
 
         #adminThreadMessages .sari-message-file-name{
@@ -2762,12 +2762,12 @@
         #adminThreadMessages .sari-reaction-toggle{
             width:28px !important;
             height:28px !important;
-            border:1px solid #e5ded4 !important;
+            border:1px solid var(--sari-dark-d8c2716225, #e5ded4) !important;
             border-radius:999px !important;
-            background:#fff !important;
-            color:#8c8378 !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            color:var(--sari-dark-a63aa16d7c, #8c8378) !important;
             opacity:1 !important;
-            box-shadow:0 4px 10px rgba(35,28,20,.05) !important;
+            box-shadow:0 4px 10px var(--sari-dark-1df26971b5, rgba(35,28,20,.05)) !important;
         }
 
         #adminThreadMessages .sari-reaction-toggle svg{
@@ -2781,7 +2781,7 @@
             border-radius:999px !important;
             padding:0 9px !important;
             font-size:12px !important;
-            box-shadow:0 4px 10px rgba(35,28,20,.05) !important;
+            box-shadow:0 4px 10px var(--sari-dark-1df26971b5, rgba(35,28,20,.05)) !important;
         }
 
         #adminThreadMessages .sari-reaction-count{
@@ -2790,7 +2790,7 @@
 
         #adminThreadMessages .sari-message-time{
             margin-left:0 !important;
-            color:#968d82 !important;
+            color:var(--sari-dark-a63aa16d7c, #968d82) !important;
             font-size:10px !important;
             line-height:1 !important;
         }
@@ -2817,8 +2817,8 @@
             height:56px !important;
             border:0 !important;
             border-radius:16px !important;
-            background:#f6efe2 !important;
-            color:#9d6f22 !important;
+            background:var(--sari-dark-4d21eb669b, #f6efe2) !important;
+            color:var(--sari-dark-a63aa16d7c, #9d6f22) !important;
         }
 
         #adminThreadMessages > .flex.h-full .mx-auto.grid svg{
@@ -2864,31 +2864,31 @@
            ============================================================ */
 
         #sariUniversalAdminMessages{
-            --seller-canvas:#F4F5F7;
-            --seller-surface:#FFFFFF;
-            --seller-surface-soft:#F9FAFB;
-            --seller-text:#111827;
-            --seller-text-secondary:#344054;
-            --seller-muted:#7C8592;
+            --seller-canvas:var(--sari-dark-4d21eb669b, #F4F5F7);
+            --seller-surface:var(--sari-dark-950baec030, #FFFFFF);
+            --seller-surface-soft:var(--sari-dark-950baec030, #F9FAFB);
+            --seller-text:var(--sari-dark-e23e64dd1e, #111827);
+            --seller-text-secondary:var(--sari-dark-e23e64dd1e, #344054);
+            --seller-muted:var(--sari-dark-a63aa16d7c, #7C8592);
             --seller-gold:#D59617;
             --seller-gold-strong:#B97805;
-            --seller-border:#E5E7EB;
-            --seller-border-strong:#D1D5DB;
-            --seller-divider:#ECEFF2;
+            --seller-border:var(--sari-dark-d8c2716225, #E5E7EB);
+            --seller-border-strong:var(--sari-dark-d8c2716225, #D1D5DB);
+            --seller-divider:var(--sari-dark-d8c2716225, #ECEFF2);
             --seller-shadow-main:
-                0 2px 5px rgba(15,23,42,.045),
-                0 10px 24px rgba(15,23,42,.075),
-                0 24px 54px rgba(15,23,42,.095),
-                inset 0 1px 0 rgba(255,255,255,.92);
+                0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)),
+                0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)),
+                0 24px 54px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.92));
             --seller-shadow-soft:
-                0 1px 3px rgba(15,23,42,.035),
-                0 7px 18px rgba(15,23,42,.06),
-                0 15px 32px rgba(15,23,42,.065),
-                inset 0 1px 0 rgba(255,255,255,.90);
+                0 1px 3px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+                0 7px 18px var(--sari-dark-361b571631, rgba(15,23,42,.06)),
+                0 15px 32px var(--sari-dark-4fc908fafe, rgba(15,23,42,.065)),
+                inset 0 1px 0 var(--sari-dark-f30a5f9061, rgba(255,255,255,.90));
             --seller-shadow-focal:
-                0 3px 7px rgba(15,23,42,.055),
-                0 14px 32px rgba(15,23,42,.095),
-                0 30px 68px rgba(15,23,42,.11);
+                0 3px 7px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)),
+                0 14px 32px var(--sari-dark-a2f72dee3d, rgba(15,23,42,.095)),
+                0 30px 68px var(--sari-dark-71f44bdb16, rgba(15,23,42,.11));
 
             width:100% !important;
             max-width:1600px !important;
@@ -2929,7 +2929,7 @@
         #sariUniversalAdminMessages .sari-inbox-panel > div:first-child{
             padding:16px 14px 14px !important;
             border-bottom:1px solid var(--seller-divider) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #sariUniversalAdminMessages .sari-inbox-panel p.text-\[10px\].font-bold.uppercase{
@@ -2960,7 +2960,7 @@
             height:40px !important;
             border:1px solid var(--seller-border) !important;
             border-radius:10px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             color:var(--seller-text-secondary) !important;
             font-size:9px !important;
             box-shadow:none !important;
@@ -2972,8 +2972,8 @@
 
         #adminConversationSearch:focus{
             border-color:var(--seller-gold) !important;
-            background:#fff !important;
-            box-shadow:0 0 0 3px rgba(213,150,23,.09) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-b12a5e9552, rgba(213,150,23,.09)) !important;
         }
 
         #adminConversationFilters{
@@ -2981,7 +2981,7 @@
             padding:3px !important;
             border:1px solid var(--seller-border) !important;
             border-radius:10px !important;
-            background:#F5F6F8 !important;
+            background:var(--sari-dark-950baec030, #F5F6F8) !important;
             gap:3px !important;
             box-shadow:none !important;
         }
@@ -2992,7 +2992,7 @@
             border:0 !important;
             border-radius:7px !important;
             background:transparent !important;
-            color:#667085 !important;
+            color:var(--sari-dark-a63aa16d7c, #667085) !important;
             padding:0 4px !important;
             font-size:7px !important;
             font-weight:650 !important;
@@ -3001,20 +3001,20 @@
         }
 
         #adminConversationFilters [data-role-filter]:hover{
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             color:var(--seller-text-secondary) !important;
             transform:none !important;
         }
 
         #adminConversationFilters [data-role-filter].is-active{
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             color:var(--seller-gold-strong) !important;
-            box-shadow:0 1px 3px rgba(15,23,42,.08) !important;
+            box-shadow:0 1px 3px var(--sari-dark-c33e3d1bb4, rgba(15,23,42,.08)) !important;
         }
 
         #adminConversationList{
             padding:5px !important;
-            background:#F8F9FA !important;
+            background:var(--sari-dark-950baec030, #F8F9FA) !important;
         }
 
         #adminConversationList [data-contact-role]{
@@ -3030,14 +3030,14 @@
 
         #adminConversationList [data-contact-role]:hover{
             border-color:var(--seller-border) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:none !important;
             transform:none !important;
         }
 
         #adminConversationList [data-contact-role].is-selected{
             border-color:#EAD7AB !important;
-            background:#FFFAF0 !important;
+            background:var(--sari-dark-950baec030, #FFFAF0) !important;
             box-shadow:none !important;
         }
 
@@ -3053,8 +3053,8 @@
             height:38px !important;
             flex-basis:38px !important;
             border:1px solid var(--seller-border) !important;
-            background:#F3F5F6 !important;
-            color:#60746F !important;
+            background:var(--sari-dark-4d21eb669b, #F3F5F6) !important;
+            color:var(--sari-dark-a63aa16d7c, #60746F) !important;
             font-size:8.5px !important;
             box-shadow:none !important;
         }
@@ -3076,7 +3076,7 @@
 
         #sariUniversalAdminMessages .sari-inbox-panel > div:last-child{
             border-top:1px solid var(--seller-divider) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminRefreshInbox{
@@ -3085,14 +3085,14 @@
 
         /* ---------------- THREAD ---------------- */
         #sariUniversalAdminMessages .sari-thread-panel{
-            background:#F7F8FA !important;
+            background:var(--sari-dark-950baec030, #F7F8FA) !important;
         }
 
         #sariUniversalAdminMessages .sari-thread-panel > header{
             min-height:72px !important;
             padding:11px 16px !important;
             border-bottom:1px solid var(--seller-divider) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:none !important;
         }
 
@@ -3101,8 +3101,8 @@
             height:42px !important;
             flex-basis:42px !important;
             border:1px solid var(--seller-border) !important;
-            background:#F1F5F3 !important;
-            color:#5E736D !important;
+            background:var(--sari-dark-4d21eb669b, #F1F5F3) !important;
+            color:var(--sari-dark-a63aa16d7c, #5E736D) !important;
             font-size:10px !important;
             box-shadow:none !important;
         }
@@ -3133,24 +3133,24 @@
         }
 
         #adminThreadStatus{
-            border-color:#DCE7DF !important;
-            background:#F5F8F5 !important;
-            color:#617568 !important;
+            border-color:var(--sari-dark-d8c2716225, #DCE7DF) !important;
+            background:var(--sari-dark-950baec030, #F5F8F5) !important;
+            color:var(--sari-dark-a63aa16d7c, #617568) !important;
         }
 
         .sari-live-pill{
             border-color:var(--seller-border) !important;
-            color:#667085 !important;
+            color:var(--sari-dark-a63aa16d7c, #667085) !important;
         }
 
         .sari-ai-pill{
-            border-color:#E9DDBD !important;
-            background:#FFFBF2 !important;
-            color:#8A641E !important;
+            border-color:var(--sari-dark-d8c2716225, #E9DDBD) !important;
+            background:var(--sari-dark-950baec030, #FFFBF2) !important;
+            color:var(--sari-dark-e23e64dd1e, #8A641E) !important;
         }
 
         #adminThreadMessages{
-            background:#F7F8FA !important;
+            background:var(--sari-dark-950baec030, #F7F8FA) !important;
             background-image:none !important;
             padding:22px 24px !important;
         }
@@ -3183,14 +3183,14 @@
             padding:11px 14px !important;
             font-size:11.5px !important;
             line-height:1.55 !important;
-            box-shadow:0 1px 3px rgba(15,23,42,.045) !important;
+            box-shadow:0 1px 3px var(--sari-dark-1190f58155, rgba(15,23,42,.045)) !important;
         }
 
         #adminThreadMessages .sari-message-incoming{
             border:1px solid var(--seller-border) !important;
             border-bottom-left-radius:5px !important;
-            background:#fff !important;
-            color:#475467 !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            color:var(--sari-dark-e23e64dd1e, #475467) !important;
         }
 
         #adminThreadMessages .sari-message-outgoing{
@@ -3201,35 +3201,35 @@
         }
 
         #adminThreadMessages .sari-message-ai{
-            border:1px solid #DDE7EE !important;
+            border:1px solid var(--sari-dark-d8c2716225, #DDE7EE) !important;
             border-bottom-left-radius:5px !important;
-            background:#F5F8FA !important;
-            color:#526A79 !important;
+            background:var(--sari-dark-950baec030, #F5F8FA) !important;
+            color:var(--sari-dark-a63aa16d7c, #526A79) !important;
         }
 
         #adminThreadMessages .sari-message-image-link,
         #adminThreadMessages .sari-message-file{
             border-color:var(--seller-border) !important;
             border-radius:13px !important;
-            box-shadow:0 1px 3px rgba(15,23,42,.035) !important;
+            box-shadow:0 1px 3px var(--sari-dark-7593018246, rgba(15,23,42,.035)) !important;
         }
 
         #adminThreadMessages .sari-reaction-toggle,
         #adminThreadMessages .sari-reaction-chip{
             border-color:var(--seller-border) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:none !important;
             transform:none !important;
         }
 
         #adminThreadMessages .sari-reaction-toggle:hover{
-            background:#F9FAFB !important;
+            background:var(--sari-dark-950baec030, #F9FAFB) !important;
             transform:none !important;
         }
 
         #adminThreadMessages .sari-reaction-picker{
             border:1px solid var(--seller-border) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:var(--seller-shadow-soft) !important;
         }
 
@@ -3239,7 +3239,7 @@
         }
 
         #adminThreadMessages .sari-message-time{
-            color:#98A2B3 !important;
+            color:var(--sari-dark-a63aa16d7c, #98A2B3) !important;
             font-size:9px !important;
         }
 
@@ -3247,21 +3247,21 @@
         #adminComposerWrap{
             padding:10px 12px 12px !important;
             border-top:1px solid var(--seller-divider) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminUniversalMessageForm{
             border:1px solid var(--seller-border) !important;
             border-radius:14px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             padding:7px 8px !important;
             box-shadow:none !important;
         }
 
         #adminUniversalMessageForm:focus-within{
             border-color:var(--seller-gold) !important;
-            background:#fff !important;
-            box-shadow:0 0 0 3px rgba(213,150,23,.08) !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213,150,23,.08)) !important;
         }
 
         .sari-composer-row{
@@ -3275,8 +3275,8 @@
             height:34px !important;
             border:1px solid var(--seller-border) !important;
             border-radius:10px !important;
-            background:#F8F9FA !important;
-            color:#667085 !important;
+            background:var(--sari-dark-950baec030, #F8F9FA) !important;
+            color:var(--sari-dark-a63aa16d7c, #667085) !important;
             box-shadow:none !important;
             transform:none !important;
         }
@@ -3284,7 +3284,7 @@
         #adminAttachmentButton:hover,
         #adminAttachmentButton:focus-visible{
             border-color:#E2C98F !important;
-            background:#FFFAF0 !important;
+            background:var(--sari-dark-950baec030, #FFFAF0) !important;
             color:var(--seller-gold-strong) !important;
             transform:none !important;
         }
@@ -3298,7 +3298,7 @@
         }
 
         #adminUniversalMessageInput::placeholder{
-            color:#98A2B3 !important;
+            color:var(--sari-dark-a63aa16d7c, #98A2B3) !important;
         }
 
         #adminUniversalSendButton{
@@ -3308,7 +3308,7 @@
             border:1px solid var(--seller-gold) !important;
             border-radius:10px !important;
             background:var(--seller-gold) !important;
-            box-shadow:0 4px 10px rgba(194,132,10,.12) !important;
+            box-shadow:0 4px 10px var(--sari-dark-3b2338cbf0, rgba(194,132,10,.12)) !important;
             transform:none !important;
         }
 
@@ -3320,29 +3320,29 @@
 
         #adminAttachmentPreview{
             border-color:var(--seller-border) !important;
-            background:#F9FAFB !important;
+            background:var(--sari-dark-950baec030, #F9FAFB) !important;
             box-shadow:none !important;
         }
 
         #adminComposerWrap.is-dragging{
-            background:#FFFCF5 !important;
+            background:var(--sari-dark-950baec030, #FFFCF5) !important;
         }
 
         #adminComposerWrap.is-dragging #adminUniversalMessageForm{
             border-color:var(--seller-gold) !important;
-            box-shadow:0 0 0 3px rgba(213,150,23,.08) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213,150,23,.08)) !important;
         }
 
         /* ---------------- CONTEXT RAIL ---------------- */
         #sariUniversalAdminMessages .sari-context-panel{
             border-left:1px solid var(--seller-divider) !important;
-            background:#F8F9FA !important;
+            background:var(--sari-dark-950baec030, #F8F9FA) !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:first-child{
             padding:14px !important;
             border-bottom:1px solid var(--seller-divider) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
         }
 
         #adminConversationContext{
@@ -3354,13 +3354,13 @@
         .sari-account-card{
             border-color:var(--seller-border) !important;
             border-radius:10px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:none !important;
         }
 
         .sari-account-menu-trigger{
             border-color:var(--seller-border) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:none !important;
             transform:none !important;
         }
@@ -3369,7 +3369,7 @@
         .sari-account-menu-trigger:focus-visible,
         .sari-account-menu-trigger[aria-expanded="true"]{
             border-color:#E2C98F !important;
-            background:#FFFAF0 !important;
+            background:var(--sari-dark-950baec030, #FFFAF0) !important;
             color:var(--seller-gold-strong) !important;
             transform:none !important;
         }
@@ -3387,25 +3387,25 @@
 
         .sari-account-action-menu .sari-admin-action:hover,
         .sari-account-action-menu .sari-admin-action:focus-visible{
-            background:#F8F9FA !important;
+            background:var(--sari-dark-950baec030, #F8F9FA) !important;
             transform:none !important;
         }
 
         #sariUniversalAdminMessages .sari-context-panel > div:last-child{
             border-top:1px solid var(--seller-divider) !important;
-            background:#F8F9FA !important;
+            background:var(--sari-dark-950baec030, #F8F9FA) !important;
         }
 
         .sari-ai-cover-card{
-            border-color:#E9DDBD !important;
+            border-color:var(--sari-dark-d8c2716225, #E9DDBD) !important;
             border-radius:10px !important;
-            background:#FFFCF5 !important;
+            background:var(--sari-dark-950baec030, #FFFCF5) !important;
             box-shadow:none !important;
         }
 
         /* ---------------- MODERATION MODAL ---------------- */
         .sari-moderation-modal{
-            background:rgba(15,23,42,.48) !important;
+            background:var(--sari-dark-0aceb62107, rgba(15,23,42,.48)) !important;
             backdrop-filter:none !important;
         }
 
@@ -3413,7 +3413,7 @@
             width:min(440px,100%) !important;
             border:1px solid var(--seller-border) !important;
             border-radius:18px !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:var(--seller-shadow-focal) !important;
         }
 
@@ -3435,24 +3435,24 @@
 
         #adminModerationReason{
             border-color:var(--seller-border) !important;
-            background:#fff !important;
+            background:var(--sari-dark-950baec030, #fff) !important;
             box-shadow:none !important;
         }
 
         #adminModerationReason:focus{
             border-color:var(--seller-gold) !important;
-            box-shadow:0 0 0 3px rgba(213,150,23,.08) !important;
+            box-shadow:0 0 0 3px var(--sari-dark-c33e3d1bb4, rgba(213,150,23,.08)) !important;
         }
 
         .sari-moderation-dialog__footer{
             border-top:1px solid var(--seller-divider) !important;
-            background:#F9FAFB !important;
+            background:var(--sari-dark-950baec030, #F9FAFB) !important;
         }
 
         #adminModerationConfirm:not(.is-danger){
             border-color:var(--seller-gold) !important;
             background:var(--seller-gold) !important;
-            box-shadow:0 4px 10px rgba(194,132,10,.12) !important;
+            box-shadow:0 4px 10px var(--sari-dark-3b2338cbf0, rgba(194,132,10,.12)) !important;
         }
 
         #adminModerationConfirm:not(.is-danger):hover{
@@ -3497,8 +3497,8 @@
             #sariUniversalAdminMessages > section.sari-shadow{
                 border-radius:13px !important;
                 box-shadow:
-                    0 2px 5px rgba(15,23,42,.04),
-                    0 10px 24px rgba(15,23,42,.07) !important;
+                    0 2px 5px var(--sari-dark-25b2da5e49, rgba(15,23,42,.04)),
+                    0 10px 24px var(--sari-dark-7c935c8886, rgba(15,23,42,.07)) !important;
             }
 
             #sariUniversalAdminMessages .sari-thread-panel > header{
