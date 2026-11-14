@@ -115,6 +115,20 @@
         }
     </style>
     <link rel="stylesheet" href="{{ asset('css/logistics/buyer-parity.css') }}?v=20261029-1">
+<style>
+/* Consistent Logistics UI proportions; presentation only. */
+
+body.sari-logistics-branch-select {font-weight:400;}
+body.sari-logistics-branch-select .selector-card {max-width:640px;border-radius:22px;background:var(--sari-dark-950baec030,#fff);border-color:var(--sari-dark-d8c2716225,#e5eaf0);box-shadow:0 12px 28px rgba(25,42,65,.07),0 30px 75px rgba(25,42,65,.10);}
+body.sari-logistics-branch-select #branchSelectTitle {font-size:clamp(25px,2.3vw,31px);font-weight:650;line-height:1.15;letter-spacing:-.04em;}
+body.sari-logistics-branch-select .branch-option {padding:16px;border-radius:14px;box-shadow:0 3px 10px rgba(25,42,65,.035);}
+body.sari-logistics-branch-select .branch-option h2 {font-size:13px;font-weight:600;}
+body.sari-logistics-branch-select .branch-option p {font-size:11px;line-height:1.7;}
+body.sari-logistics-branch-select .primary-action {min-height:48px;border-radius:14px;font-size:12px;font-weight:650;background:#c88912;}
+body.sari-logistics-branch-select .primary-action:not(:disabled):hover {background:#b47b0e;transform:none;}
+body.sari-logistics-branch-select .branch-radio:checked + .branch-option {border-color:#c88912;box-shadow:0 0 0 3px rgba(200,137,18,.08),0 3px 12px rgba(25,42,65,.04);}
+
+</style>
 </head>
 <body class="sari-logistics-branch-select min-h-screen antialiased">
     <div class="page-backdrop" aria-hidden="true"></div>

@@ -262,6 +262,55 @@
   #logisticsContent .sari-logistics-scanner #sariQrStartButton,#logisticsContent .sari-logistics-scanner #sariQrStopButton {flex:1;}
 }
 @media(prefers-reduced-motion:reduce){#logisticsContent .sari-logistics-scanner * {transition:none !important;}}
+/* Seller Orders typography and controls; scoped to the Logistics scanner only. */
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner { --qr-gold:#C88912; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] { max-width:1520px!important; gap:20px!important; padding-bottom:28px; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > .qr-compact-header .qr-compact-eyebrow { font-size:10.5px!important; font-weight:800!important; letter-spacing:.14em!important; line-height:1.4!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > .qr-compact-header .qr-compact-title { font-size:clamp(27px,2.3vw,31px)!important; font-weight:760!important; line-height:1.08!important; letter-spacing:-.04em!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > .qr-compact-header .qr-compact-summary { font-size:11.5px!important; line-height:1.5!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section:nth-of-type(2) { gap:20px!important; grid-template-columns:minmax(0,1.45fr) minmax(310px,.85fr); }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child { border-radius:18px!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child > div:first-child { padding:21px 23px!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child > div:first-child p:first-child { font-size:18px!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child > div:first-child p:nth-child(2) { font-size:11.5px!important; line-height:1.5!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner :is(#sariQrStartButton,#sariQrStopButton,#sariQrScanAnotherButton,.qr-manual-toggle,#sariQrManualForm button,#sariQrNextLink) { min-height:48px!important; border-radius:14px!important; padding:0 18px!important; font-size:12px!important; font-weight:700!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner #sariQrStartButton { background:#C88912!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner #sariQrStartButton:hover { background:#B47B0E!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section:nth-of-type(2) > div:nth-child(2) > section:not(:last-child) { border-radius:18px!important; padding:21px 23px!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section:nth-of-type(2) > div:nth-child(2) > section:first-child > p:first-child { font-size:18px!important; font-weight:780!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner #sariQrResult { border-radius:14px!important; padding:16px!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner #sariQrResultTitle { font-size:14px!important; line-height:1.4!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner #sariQrResultMessage { font-size:11.5px!important; line-height:1.65!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner #sariQrManualPayload { min-height:120px; border-radius:14px!important; padding:14px!important; font-size:11.5px!important; }
+#logisticsContent .sari-logistics-ui.sari-logistics-scanner :is(button,a,textarea):focus-visible { outline:2px solid #C88912!important; outline-offset:3px!important; }
+/* Native notification dialog: terminal scan results only; status stays available inline. */
+#sariQrNotificationModal { box-sizing:border-box; position:fixed; inset:0; width:min(520px,calc(100vw - 32px)); max-height:calc(100dvh - 32px); margin:auto; padding:0; overflow-y:auto; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB); border-radius:20px; background:var(--sari-dark-950baec030,#FFF); color:var(--sari-dark-e23e64dd1e,#2F3742); font-family:Poppins,ui-sans-serif,system-ui,sans-serif; box-shadow:0 24px 80px rgba(15,23,42,.22); }
+#sariQrNotificationModal::backdrop { background:rgba(15,23,42,.48); backdrop-filter:blur(4px); }
+#sariQrNotificationModal .qr-note-head { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border-bottom:1px solid var(--sari-dark-d8c2716225,#E9EDF1); }
+#sariQrNotificationModal .qr-note-kicker { margin:0; font-size:10px; line-height:1.4; letter-spacing:.12em; font-weight:800; color:var(--sari-dark-a63aa16d7c,#8793A1); text-transform:uppercase; }
+#sariQrNotificationModal .qr-note-close { display:grid; place-items:center; width:34px; height:34px; flex:0 0 34px; padding:0; border:1px solid var(--sari-dark-d8c2716225,#DCE2E8); border-radius:10px; background:var(--sari-dark-950baec030,#FFF); color:var(--sari-dark-e23e64dd1e,#59636E); cursor:pointer; }
+#sariQrNotificationModal .qr-note-close svg { width:17px; height:17px; }
+#sariQrNotificationModal .qr-note-body { padding:24px 22px; }
+#sariQrNotificationModal .qr-note-icon { display:grid; place-items:center; width:48px; height:48px; margin-bottom:16px; border-radius:14px; background:var(--sari-dark-4d21eb669b,#ECFDF3); color:var(--sari-dark-e23e64dd1e,#166534); }
+#sariQrNotificationModal[data-tone="error"] .qr-note-icon { background:var(--sari-dark-950baec030,#FEF2F2); color:var(--sari-dark-5300031fd1,#B91C1C); }
+#sariQrNotificationModal .qr-note-icon svg { width:25px; height:25px; }
+#sariQrNotificationModal h2 { margin:0; font-size:22px; font-weight:750; line-height:1.25; letter-spacing:-.025em; overflow-wrap:anywhere; }
+#sariQrNotificationModal .qr-note-message { margin:10px 0 0; font-size:12px; line-height:1.7; color:var(--sari-dark-a63aa16d7c,#667383); overflow-wrap:anywhere; white-space:pre-line; }
+#sariQrNotificationModal .qr-note-order { margin-top:20px; padding:14px 16px; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB); border-radius:14px; background:var(--sari-dark-4d21eb669b,#F8FAFC); }
+#sariQrNotificationModal .qr-note-order small { font-size:10px; color:var(--sari-dark-a63aa16d7c,#8793A1); }
+#sariQrNotificationModal .qr-note-order strong { display:block; margin-top:4px; font-size:13px; overflow-wrap:anywhere; }
+#sariQrNotificationModal .qr-note-order p { margin:4px 0 0; font-size:11.5px; color:var(--sari-dark-a63aa16d7c,#667383); }
+#sariQrNotificationModal .qr-note-actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:10px; padding:16px 22px; border-top:1px solid var(--sari-dark-d8c2716225,#E9EDF1); }
+#sariQrNotificationModal .qr-note-actions :is(button,a) { box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:0 16px; border:1px solid var(--sari-dark-d8c2716225,#DCE2E8); border-radius:12px; background:var(--sari-dark-950baec030,#FFF); color:var(--sari-dark-e23e64dd1e,#59636E); font:700 11.5px/1.4 Poppins,sans-serif; text-decoration:none; cursor:pointer; }
+#sariQrNotificationModal .qr-note-actions .is-primary { background:#C88912; border-color:#C88912; color:#FFF; }
+#sariQrNotificationModal .qr-note-actions .is-primary:hover { background:#B47B0E; border-color:#B47B0E; }
+#sariQrNotificationModal :is(button,a):focus-visible { outline:2px solid #C88912; outline-offset:3px; }
+#sariQrNotificationModal [hidden] { display:none!important; }
+@media(max-width:1150px) { #logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > section:nth-of-type(2) { grid-template-columns:minmax(0,1fr)!important; } }
+@media(max-width:767px) { #logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > .qr-compact-header .qr-compact-title { font-size:25px!important; } #logisticsContent .sari-logistics-ui.sari-logistics-scanner > [data-sari-qr-scanner] > .qr-compact-header .qr-compact-eyebrow { font-size:9.5px!important; } }
+@media(max-width:540px) { #sariQrNotificationModal .qr-note-head { padding:16px; } #sariQrNotificationModal .qr-note-body { padding:20px 16px; } #sariQrNotificationModal .qr-note-actions { padding:16px; } #sariQrNotificationModal .qr-note-actions :is(button,a) { flex:1 1 auto; } #sariQrNotificationModal h2 { font-size:20px; } }
+@media(prefers-reduced-motion:reduce) { #sariQrNotificationModal *, #logisticsContent .sari-logistics-scanner * { animation:none!important; transition:none!important; } }
+
 </style>
 @endpush
 
@@ -275,6 +324,32 @@
         'compactHeader' => true,
         'description' => 'Scan the printed parcel QR to record an authorized Logistics checkpoint.',
     ])
+    <dialog id="sariQrNotificationModal" aria-labelledby="sariQrNotificationTitle" aria-describedby="sariQrNotificationMessage">
+        <header class="qr-note-head">
+            <p class="qr-note-kicker">Parcel scan notification</p>
+            <button type="button" class="qr-note-close" data-qr-note-close aria-label="Close scan notification" autofocus>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+            </button>
+        </header>
+        <div class="qr-note-body">
+            <span class="qr-note-icon" aria-hidden="true">
+                <svg data-qr-note-success viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 4 4L19 6"/></svg>
+                <svg data-qr-note-error viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" hidden><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16v1"/></svg>
+            </span>
+            <h2 id="sariQrNotificationTitle" data-qr-note-title>Parcel scan update</h2>
+            <p id="sariQrNotificationMessage" class="qr-note-message" data-qr-note-message></p>
+            <div class="qr-note-order" data-qr-note-order hidden>
+                <small>Order / checkpoint</small>
+                <strong data-qr-note-number></strong>
+                <p data-qr-note-stage></p>
+            </div>
+        </div>
+        <footer class="qr-note-actions">
+            <button type="button" data-qr-note-close>Close</button>
+            <button type="button" data-qr-note-again hidden>Scan another parcel</button>
+            <a class="is-primary" data-qr-note-next hidden></a>
+        </footer>
+    </dialog>
 </div>
 @endsection
 
@@ -308,5 +383,79 @@ document.addEventListener('DOMContentLoaded', () => {
         if (open) panel.querySelector('#sariQrManualPayload')?.focus();
     });
 });
+</script>
+<script>
+(function () {
+    function initScannerNotification() {
+        const root = document.querySelector('.sari-logistics-scanner [data-sari-qr-scanner]');
+        const dialog = document.getElementById('sariQrNotificationModal');
+        if (!root || !dialog || typeof dialog.showModal !== 'function') return;
+        const result = root.querySelector('#sariQrResult');
+        if (!result) return;
+        window.__SARI_QR_NOTE_OBSERVER__?.disconnect();
+        window.__SARI_QR_NOTE_ABORT__?.abort();
+        const controller = new AbortController();
+        window.__SARI_QR_NOTE_ABORT__ = controller;
+        const { signal } = controller;
+        const title = dialog.querySelector('[data-qr-note-title]');
+        const message = dialog.querySelector('[data-qr-note-message]');
+        const order = dialog.querySelector('[data-qr-note-order]');
+        const number = dialog.querySelector('[data-qr-note-number]');
+        const stage = dialog.querySelector('[data-qr-note-stage]');
+        const next = dialog.querySelector('[data-qr-note-next]');
+        const again = dialog.querySelector('[data-qr-note-again]');
+        const successIcon = dialog.querySelector('[data-qr-note-success]');
+        const errorIcon = dialog.querySelector('[data-qr-note-error]');
+        const scanAnother = root.querySelector('#sariQrScanAnotherButton');
+
+        function closeNotification() { if (dialog.open) dialog.close(); }
+        function syncNotification() {
+            const tone = result.classList.contains('bg-rose-50') ? 'error'
+                : result.classList.contains('bg-emerald-50') ? 'success' : null;
+            if (!tone) return;
+            dialog.dataset.tone = tone;
+            title.textContent = root.querySelector('#sariQrResultTitle')?.textContent || 'Parcel scan update';
+            message.textContent = root.querySelector('#sariQrResultMessage')?.textContent || '';
+            successIcon.hidden = tone !== 'success';
+            errorIcon.hidden = tone !== 'error';
+            const originalOrder = root.querySelector('#sariQrOrderBlock');
+            order.hidden = !originalOrder || originalOrder.classList.contains('hidden');
+            number.textContent = order.hidden ? '' : root.querySelector('#sariQrOrderNumber')?.textContent || '';
+            stage.textContent = order.hidden ? '' : root.querySelector('#sariQrStage')?.textContent || '';
+            const originalNext = root.querySelector('#sariQrNextLink');
+            next.hidden = true;
+            next.removeAttribute('href');
+            // Only mirror the existing server-provided, same-origin next action.
+            if (originalNext && !originalNext.classList.contains('hidden')) {
+                try {
+                    const url = new URL(originalNext.href, window.location.href);
+                    if (url.origin === window.location.origin && ['http:', 'https:'].includes(url.protocol)) {
+                        next.href = url.href;
+                        next.textContent = originalNext.textContent;
+                        next.hidden = false;
+                    }
+                } catch (error) { /* Keep a malformed next action hidden. */ }
+            }
+            again.hidden = !scanAnother || scanAnother.classList.contains('hidden') || scanAnother.disabled;
+            if (!dialog.open) dialog.showModal();
+        }
+        dialog.querySelectorAll('[data-qr-note-close]').forEach(button => button.addEventListener('click', closeNotification, { signal }));
+        dialog.addEventListener('click', event => {
+            if (event.target !== dialog) return;
+            const box = dialog.getBoundingClientRect();
+            if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) closeNotification();
+        }, { signal });
+        again.addEventListener('click', () => {
+            closeNotification();
+            if (scanAnother && !scanAnother.disabled && !scanAnother.classList.contains('hidden')) scanAnother.click();
+        }, { signal });
+        const observer = new MutationObserver(syncNotification);
+        observer.observe(result, { subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:['class','href'] });
+        window.__SARI_QR_NOTE_OBSERVER__ = observer;
+        syncNotification();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initScannerNotification, { once:true });
+    else initScannerNotification();
+})();
 </script>
 @endpush

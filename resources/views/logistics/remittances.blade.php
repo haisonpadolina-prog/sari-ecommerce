@@ -321,13 +321,42 @@
     #sariCodRemittances .cod-help-panel,
     #sariCodRemittances #startRemittanceScanner { transition: none !important; }
 }
+/* Seller Orders scale for COD cards; monetary and signed-QR behavior is unchanged. */
+#sariCodRemittances {max-width:1520px!important;padding-bottom:28px;font-family:Poppins,ui-sans-serif,system-ui,sans-serif;}
+#sariCodRemittances > .cod-page-heading {padding:0 0 14px!important;margin-bottom:20px!important;border-bottom:1px solid var(--sari-dark-d8c2716225,#E9EDF1)!important;}
+#sariCodRemittances .cod-heading-eyebrow {font-size:10.5px!important;font-weight:800!important;letter-spacing:.14em!important;line-height:1.4!important;}
+#sariCodRemittances .cod-heading-title {margin-top:6px!important;font-size:clamp(27px,2.3vw,31px)!important;font-weight:760!important;line-height:1.08!important;letter-spacing:-.04em!important;}
+#sariCodRemittances .cod-kpi-stats {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px!important;}
+#sariCodRemittances .cod-kpi-stats > article {min-height:110px!important;padding:14px 16px!important;border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important;border-radius:18px!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important;}
+#sariCodRemittances .cod-kpi-stats > article > p:first-child {font-size:13px!important;font-weight:650!important;line-height:1.4!important;text-transform:none!important;letter-spacing:normal!important;}
+#sariCodRemittances .cod-kpi-stats > article > p:nth-child(2) {font-size:clamp(22px,1.9vw,30px)!important;font-weight:650!important;line-height:1.12!important;margin-top:7px!important;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;}
+#sariCodRemittances :is(#startRemittanceScanner,#stopRemittanceScanner) {min-height:48px!important;border-radius:14px!important;padding:0 18px!important;font:700 12px/1.4 Poppins,sans-serif!important;}
+#sariCodRemittances #startRemittanceScanner {background:#C88912!important;border-color:#C88912!important;color:#FFF!important;}
+#sariCodRemittances #startRemittanceScanner:hover {background:#B47B0E!important;}
+#sariCodRemittances .cod-remittance-list > article {border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important;border-radius:18px!important;padding:21px 23px!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important;}
+#sariCodRemittances .cod-remittance-list > article h3 {font-size:18px!important;font-weight:750!important;line-height:1.4;}
+#sariCodRemittances .cod-remittance-list > article p {font-size:11.5px!important;line-height:1.6!important;}
+#sariCodRemittances .cod-remittance-list > article > div:first-child strong {font-size:22px!important;font-variant-numeric:tabular-nums;}
+#sariCodRemittances .cod-remittance-list > article > div:first-child .text-right > span {font-size:10.5px!important;}
+#sariCodRemittances .cod-remittance-list > article > div:nth-child(2) > span {font-size:11px!important;border-radius:10px!important;}
+#sariCodRemittances .cod-remittance-list > article a {display:inline-flex;align-items:center;min-height:44px!important;padding:0 16px!important;border-radius:12px!important;background:#C88912!important;color:#FFF!important;font-size:11.5px!important;font-weight:700!important;}
+#sariCodRemittances .cod-remittance-list > article a:hover {background:#B47B0E!important;}
+#sariCodRemittances .cod-help-panel {width:min(460px,calc(100vw - 32px))!important;max-height:calc(100dvh - 48px);overflow-y:auto;border-radius:18px!important;}
+#sariCodRemittances .cod-help-panel-head {padding:18px 20px!important;}
+#sariCodRemittances .cod-help-panel-title {font-size:18px!important;line-height:1.3!important;}
+#sariCodRemittances .cod-help-copy {font-size:11.5px!important;line-height:1.7!important;padding:0 20px 20px!important;}
+#sariCodRemittances .cod-help-close {width:34px;height:34px;border-radius:10px;}
+#sariCodRemittances .cod-server-pagination {padding:13px 20px;border:1px solid var(--sari-dark-d8c2716225,#E5E7EB);border-radius:18px;background:var(--sari-dark-950baec030,#FFF);font-size:11.5px;}
+#sariCodRemittances :is(button,a):focus-visible {outline:2px solid #C88912!important;outline-offset:3px!important;}
+@media(max-width:1180px){#sariCodRemittances .cod-kpi-stats {grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
+@media(max-width:767px){#sariCodRemittances .cod-heading-title {font-size:25px!important;}}
+@media(max-width:540px){#sariCodRemittances .cod-kpi-stats {grid-template-columns:1fr!important;}#sariCodRemittances .cod-remittance-list > article {padding:17px 16px!important;}}
+
 </style>
 @endpush
 
 @section('content')
 <div id="sariCodRemittances" class="sari-logistics-ui sari-logistics-remittances mx-auto max-w-[1600px] space-y-5">
-    {{-- SARI_COD_CUSTODY_POLICY_V1 --}}
-    @include('finance.partials.cod-overdue-banner')
     @if(session('success'))
         <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-[10px] font-semibold text-emerald-700">{{ session('success') }}</div>
     @endif
@@ -468,7 +497,7 @@
         @endforelse
     </section>
 
-    {{ $batches->links() }}
+    @if($batches->hasPages())<div class="cod-server-pagination">{{ $batches->links() }}</div>@endif
 </div>
 @endsection
 

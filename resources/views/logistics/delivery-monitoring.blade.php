@@ -134,6 +134,40 @@
 #lgDeliveryMonitoring .dm-modal-dialog{width:min(720px,100%)}
 @media(max-width:1080px){#lgDeliveryMonitoring .dm-filters-unified{flex-wrap:wrap}#lgDeliveryMonitoring .dm-filters-unified .dm-search-wrap{flex:1 1 100%}}
 @media(max-width:640px){#lgDeliveryMonitoring .dm-filters-unified .dm-view-select{flex:1 1 100%;width:100%;max-width:none}#lgDeliveryMonitoring .dm-filters-unified .dm-stage-select{flex:1 1 100%;width:100%;max-width:none}#lgDeliveryMonitoring .dm-journey-panel{padding:14px 13px 4px}#lgDeliveryMonitoring .dm-journey-overview strong{font-size:14px}#lgDeliveryMonitoring .dm-journey li{grid-template-columns:32px minmax(0,1fr);gap:9px}#lgDeliveryMonitoring .dm-journey-state{grid-column:2;justify-self:start;margin:-10px 0 8px}}
+
+/* Consistent Logistics UI proportions; presentation only. */
+
+#logisticsContent #lgDeliveryMonitoring {max-width:1520px;font-family:'Poppins',sans-serif;--dm-gold:#c88912;--dm-shadow:0 4px 8px rgba(25,42,65,.025),0 12px 32px rgba(25,42,65,.065);}
+#logisticsContent #lgDeliveryMonitoring .dm-eyebrow {font-size:10.5px;font-weight:800;letter-spacing:.14em;}
+#logisticsContent #lgDeliveryMonitoring .dm-head h1 {font-size:clamp(27px,2.3vw,31px);font-weight:760;line-height:1.08;letter-spacing:-.04em;}
+#logisticsContent #lgDeliveryMonitoring .dm-head-actions {margin-left:auto;gap:24px;}
+#logisticsContent #lgDeliveryMonitoring .dm-head-actions .dm-btn {padding:0;border:0;background:transparent;color:var(--dm-muted);box-shadow:none;border-radius:0;font-size:12px;gap:8px;}
+#logisticsContent #lgDeliveryMonitoring .dm-head-actions .dm-btn::after {content:'›';font-size:25px;}
+#logisticsContent #lgDeliveryMonitoring .dm-kpis {gap:14px;}
+#logisticsContent #lgDeliveryMonitoring .dm-kpi {min-height:110px;padding:14px 16px;border-radius:18px;}
+#logisticsContent #lgDeliveryMonitoring .dm-kpi-label {font-size:13px;font-weight:600;}
+#logisticsContent #lgDeliveryMonitoring .dm-kpi strong {font-size:clamp(25px,1.9vw,30px);font-weight:650;}
+#logisticsContent #lgDeliveryMonitoring .dm-kpi small {font-size:11px;}
+#logisticsContent #lgDeliveryMonitoring .dm-filter-select,#logisticsContent #lgDeliveryMonitoring .dm-search-wrap,#logisticsContent #lgDeliveryMonitoring .dm-apply,#logisticsContent #lgDeliveryMonitoring .dm-reset {border-radius:14px;height:48px;font-size:11.5px;}
+#logisticsContent #lgDeliveryMonitoring .dm-search-wrap input {font-size:11.5px;}
+#logisticsContent #lgDeliveryMonitoring .dm-apply {background:#c88912;border-color:#c88912;box-shadow:none;}
+#logisticsContent #lgDeliveryMonitoring .dm-apply:hover {background:#b47b0e;}
+#logisticsContent #lgDeliveryMonitoring .dm-table-head {padding:19px 20px;min-height:78px;}
+#logisticsContent #lgDeliveryMonitoring .dm-table-head h2 {font-size:16px;font-weight:700;}
+#logisticsContent #lgDeliveryMonitoring .dm-table th {padding:15px 16px;font-size:11px;}
+#logisticsContent #lgDeliveryMonitoring .dm-table td {padding:17px 16px;font-size:12px;}
+#logisticsContent #lgDeliveryMonitoring .dm-secondary {font-size:11px;}
+#logisticsContent #lgDeliveryMonitoring .dm-primary {font-weight:650;}
+#logisticsContent #lgDeliveryMonitoring .dm-table-foot {min-height:64px;padding:13px 20px;font-size:11.5px;}
+#logisticsContent #lgDeliveryMonitoring .dm-pager {justify-content:flex-end;}
+#logisticsContent #lgDeliveryMonitoring .dm-pager button {height:34px;min-width:34px;border-radius:10px;font-size:11px;}
+#logisticsContent #lgDeliveryMonitoring .dm-pager button.is-active {background:#c88912;box-shadow:none;}
+#logisticsContent #lgDeliveryMonitoring .dm-modal-head,#logisticsContent #lgDeliveryMonitoring .dm-modal-body {padding:22px 24px;}
+#logisticsContent #lgDeliveryMonitoring .dm-modal-head h2 {font-size:22px;font-weight:700;}
+#logisticsContent #lgDeliveryMonitoring .dm-detail-box {padding:14px 16px;border-radius:14px;background:var(--sari-dark-4d21eb669b,#f8f9fb);}
+#logisticsContent #lgDeliveryMonitoring .dm-status-amber {background:var(--sari-dark-4d21eb669b,#f4f6f9);color:var(--dm-muted);border-color:var(--dm-border);}
+@media(max-width:750px){#logisticsContent #lgDeliveryMonitoring .dm-head h1{font-size:25px;}#logisticsContent #lgDeliveryMonitoring .dm-head-actions .dm-btn{flex:none;}#logisticsContent #lgDeliveryMonitoring .dm-modal-head,#logisticsContent #lgDeliveryMonitoring .dm-modal-body{padding:16px;}}
+
 </style>
 @endpush
 

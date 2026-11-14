@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Logistics;
 
 use App\Http\Controllers\Controller;
 use App\Models\Delivery\LogisticsParcel;
+use App\Models\Finance\LogisticsEarning;
 use App\Models\Orders\MarketplaceOrder;
 use App\Support\CurrentLogisticsHub;
 use App\Support\LogisticsOrderAccess;
+use App\Support\Pdf\LogisticsReportPdf;
+use Illuminate\Http\Response;
 use Carbon\CarbonImmutable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -27,7 +30,7 @@ class LogisticsReportsController extends Controller
         private readonly LogisticsOrderAccess $orderAccess,
     ) {}
 
-    public function index(Request $request): View
+    public function index(Request $request): View|Response
     {
         $logistics = $this->orderAccess->prepare($request);
         $isHubOperator = CurrentLogisticsHub::isHubOperator($request);
@@ -50,10 +53,14 @@ class LogisticsReportsController extends Controller
         $now = CarbonImmutable::now('Asia/Manila');
 
         $input = $request->validate([
+            'print' => ['nullable', 'boolean'],
             'from' => ['nullable', 'date_format:Y-m-d'],
             'to' => ['nullable', 'date_format:Y-m-d'],
             'type' => ['nullable', 'in:all,deliveries,pipeline,riders,fees'],
         ]);
+
+        $printReport = $request->boolean('print');
+        $reportGeneratedAt = $now;
 
         $from = $input['from'] ?? $now->subDays(29)->toDateString();
         $to = $input['to'] ?? $now->toDateString();
@@ -214,13 +221,20 @@ class LogisticsReportsController extends Controller
         |
         */
 
-        $trendStart = $dateTo->subDays(6);
+        $trendStart = $printReport ? $dateFrom : $dateTo->subDays(6);
 
         if ($trendStart->lessThan($dateFrom)) {
             $trendStart = $dateFrom;
         }
 
         $deliveryTrend = collect();
+        $printDailyTotals = $printReport
+            ? $completedInRange()
+                ->selectRaw('DATE(delivered_at) as report_date, COUNT(*) as delivered_count, COALESCE(SUM(delivery_fee), 0) as delivery_fees')
+                ->groupByRaw('DATE(delivered_at)')
+                ->get()
+                ->keyBy('report_date')
+            : collect();
 
         for (
             $day = $trendStart;
@@ -236,9 +250,12 @@ class LogisticsReportsController extends Controller
                 'date' => $day,
                 'label' => $day->format('D'),
                 'short_date' => $day->format('M d'),
-                'count' => (clone $daily)->count(),
-                'fees' => (float) (clone $daily)
-                    ->sum('delivery_fee'),
+                'count' => $printReport
+                    ? (int) ($printDailyTotals->get($key)?->delivered_count ?? 0)
+                    : (clone $daily)->count(),
+                'fees' => $printReport
+                    ? (float) ($printDailyTotals->get($key)?->delivery_fees ?? 0)
+                    : (float) (clone $daily)->sum('delivery_fee'),
             ]);
         }
 
@@ -384,7 +401,7 @@ class LogisticsReportsController extends Controller
             )
             ->orderByDesc('delivered_count')
             ->orderBy('rider.first_name')
-            ->limit(5)
+            ->when(! $printReport, fn (QueryBuilder $query) => $query->limit(5))
             ->get();
 
         /*
@@ -399,8 +416,120 @@ class LogisticsReportsController extends Controller
                 'deliveryRouteStops.facility',
             ])
             ->latest('delivered_at')
-            ->limit(15)
+            ->when(! $printReport, fn (Builder $query) => $query->limit(15))
             ->get();
+
+        // Company earnings follow the Finance page's manager-only visibility.
+        // All totals use the complete delivered-order scope, never the display page.
+        $earningsSummary = null;
+        $reportEarnings = null;
+
+        if (! $isHubOperator) {
+            $earningsQuery = LogisticsEarning::query()
+                ->where('logistics_account_id', $logistics->id)
+                ->whereIn('marketplace_order_id', $completedInRange()->select('marketplace_orders.id'));
+
+            $earningsSummary = (clone $earningsQuery)
+                ->selectRaw('COUNT(*) as recorded_orders')
+                ->selectRaw('COALESCE(SUM(gross_shipping_revenue), 0) as gross_shipping')
+                ->selectRaw('COALESCE(SUM(pickup_rider_cost), 0) as pickup_cost')
+                ->selectRaw('COALESCE(SUM(last_mile_rider_cost), 0) as last_mile_cost')
+                ->selectRaw('COALESCE(SUM(net_logistics_amount), 0) as net_logistics')
+                ->selectRaw("COALESCE(SUM(CASE WHEN status = 'pending_remittance' THEN net_logistics_amount ELSE 0 END), 0) as pending_earnings")
+                ->selectRaw("COALESCE(SUM(CASE WHEN status = 'available' THEN net_logistics_amount ELSE 0 END), 0) as available_earnings")
+                ->first();
+
+            $earningRows = (clone $earningsQuery)
+                ->with('order')
+                ->latest('eligible_at')
+                ->orderByDesc('id');
+
+            $reportEarnings = $printReport
+                ? $earningRows->get()
+                : $earningRows->paginate(15, ['*'], 'earnings_page')->withQueryString();
+        }
+
+        if ($printReport) {
+            $money = static fn ($amount): string => 'PHP '.number_format((float) $amount, 2);
+            $sections = [[
+                'title' => '01  Delivery Summary',
+                'columns' => ['METRIC', 'VALUE', 'BASIS'],
+                'widths' => [280, 140, 341.89],
+                'rows' => [
+                    ['Delivered in period', number_format($periodDelivered), 'Selected dates and operating branch'],
+                    ['Delivery fees in period', $money($periodFees), 'Recorded order delivery fees'],
+                    ['Active deliveries', number_format($stats['active_deliveries']), 'Current snapshot at generation time'],
+                    ['Delivered today', number_format($stats['delivered_today']), 'Today in Asia/Manila'],
+                ],
+            ]];
+            if (! $isHubOperator && $earningsSummary) {
+                $sections[] = [
+                    'title' => '02  Earnings & Commissions',
+                    'columns' => ['METRIC', 'AMOUNT', 'BASIS'],
+                    'widths' => [280, 140, 341.89],
+                    'rows' => [
+                        ['Gross shipping earnings', $money($earningsSummary->gross_shipping), 'Recorded shipping revenue before Rider shares'],
+                        ['Pickup Rider share', $money($earningsSummary->pickup_cost), 'Recorded pickup allocation'],
+                        ['Last-mile Rider share', $money($earningsSummary->last_mile_cost), 'Recorded final-mile allocation'],
+                        ['Net Logistics commission', $money($earningsSummary->net_logistics), 'Shipping margin after Rider shares, not platform product commission'],
+                        ['Pending COD earnings', $money($earningsSummary->pending_earnings), 'Awaiting reconciliation / Admin receipt'],
+                        ['Available earnings', $money($earningsSummary->available_earnings), 'Period earnings, not current withdrawable wallet balance'],
+                        ['Recorded earning orders', (string) $earningsSummary->recorded_orders, 'All matching records, independent of screen pagination'],
+                        ['Delivered without earning record', (string) max(0, $periodDelivered - (int) $earningsSummary->recorded_orders), 'Missing earnings are not estimated'],
+                    ],
+                ];
+                $allocationTotal = max(0, (float) $earningsSummary->pickup_cost) + max(0, (float) $earningsSummary->last_mile_cost) + max(0, (float) $earningsSummary->net_logistics);
+                $allocation = [];
+                foreach ([['Pickup Rider share', $earningsSummary->pickup_cost], ['Last-mile Rider share', $earningsSummary->last_mile_cost], ['Logistics commission', $earningsSummary->net_logistics]] as [$label, $amount]) {
+                    $allocation[] = [$label, $money($amount), number_format($allocationTotal > 0 ? max(0, (float) $amount) / $allocationTotal * 100 : 0, 1).'%'];
+                }
+                $sections[] = ['title' => 'Shipping Allocation', 'columns' => ['COMPONENT', 'AMOUNT', 'ALLOCATION'], 'widths' => [350, 210, 201.89], 'rows' => $allocation, 'bars' => true];
+            }
+            $sections[] = [
+                'title' => 'Daily Delivery Totals - Full Selected Period',
+                'columns' => ['DATE', 'DELIVERED ORDERS', 'DELIVERY FEES'],
+                'widths' => [280, 240, 241.89],
+                'rows' => $deliveryTrend->map(fn ($day) => [$day['date']->format('M d, Y'), (string) $day['count'], $money($day['fees'])])->all(),
+            ];
+            $sections[] = [
+                'title' => 'Operational Pipeline - Current Snapshot',
+                'columns' => ['STAGE', 'COUNT', 'DESCRIPTION'],
+                'widths' => [230, 100, 431.89],
+                'rows' => $pipeline->map(fn ($entry) => [$entry['label'], (string) $entry['count'], $entry['description']])->all(),
+            ];
+            $sections[] = [
+                'title' => 'Last-Mile Rider Performance - All Ranked Riders',
+                'columns' => ['RIDER', 'DELIVERED ORDERS', 'DELIVERY FEES'],
+                'widths' => [340, 180, 241.89],
+                'rows' => $topLastMileRiders->map(fn ($rider) => [trim($rider->first_name.' '.$rider->last_name), (string) $rider->delivered_count, $money($rider->delivered_fees)])->all(),
+            ];
+            $sections[] = [
+                'title' => 'Completed Deliveries - All Matching Orders',
+                'columns' => ['ORDER', 'SELLER', 'BUYER', 'PICKUP RIDER', 'DELIVERY FEE', 'DELIVERED (PHT)'],
+                'widths' => [130, 150, 130, 130, 100, 121.89],
+                'rows' => $recentDelivered->map(fn ($order) => [$order->order_number, $order->seller?->store_name ?: 'SARI Seller', $order->buyer_name ?: '-', $order->courier_name ?: '-', $money($order->delivery_fee), $order->delivered_at?->copy()->timezone('Asia/Manila')->format('M d, Y g:i A') ?: '-'])->all(),
+            ];
+            if (! $isHubOperator && $reportEarnings) {
+                $sections[] = [
+                    'title' => 'Per-Order Earnings - All Matching Records',
+                    'columns' => ['ORDER', 'GROSS SHIPPING', 'PICKUP SHARE', 'LAST-MILE SHARE', 'NET COMMISSION', 'STATUS'],
+                    'widths' => [150, 120, 115, 120, 125, 131.89],
+                    'rows' => $reportEarnings->map(fn ($earning) => [$earning->order?->order_number ?: 'Order', $money($earning->gross_shipping_revenue), $money($earning->pickup_rider_cost), $money($earning->last_mile_rider_cost), $money($earning->net_logistics_amount), ucwords(str_replace('_', ' ', $earning->status))])->all(),
+                ];
+            }
+            $pdf = LogisticsReportPdf::render(
+                $hubFacility?->name ?: 'Current operating scope',
+                $dateFrom->format('M d, Y').' - '.$dateTo->format('M d, Y'),
+                $reportGeneratedAt->format('M d, Y g:i A'),
+                $sections
+            );
+            return response($pdf, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="SARI-Logistics-Report-'.$from.'-to-'.$to.'.pdf"',
+                'Cache-Control' => 'private, no-store, max-age=0',
+                'X-Content-Type-Options' => 'nosniff',
+            ]);
+        }
 
         return view(
             'logistics.reports',
@@ -416,7 +545,11 @@ class LogisticsReportsController extends Controller
                 'to',
                 'reportType',
                 'periodDelivered',
-                'periodFees'
+                'periodFees',
+                'earningsSummary',
+                'reportEarnings',
+                'printReport',
+                'reportGeneratedAt'
             )
         );
     }

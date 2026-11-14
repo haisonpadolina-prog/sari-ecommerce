@@ -2408,6 +2408,85 @@
         animation: none !important;
     }
 }
+/* Seller Orders visual scale, limited to Pickup Assignment. */
+#lgPickupAssignment.pickup-page { max-width:1520px!important; margin-inline:auto; padding-bottom:28px!important; container-type:inline-size; }
+#lgPickupAssignment .pickup-page-header { min-height:0!important; margin:0 0 20px!important; padding:0 0 14px!important; border-bottom:1px solid var(--sari-dark-d8c2716225,#E9EDF1)!important; }
+#lgPickupAssignment .pickup-eyebrow { font-size:10.5px!important; font-weight:800!important; line-height:1.4!important; letter-spacing:.14em!important; }
+#lgPickupAssignment .pickup-page-header h1 { margin-top:6px!important; font-size:clamp(27px,2.3vw,31px)!important; font-weight:760!important; line-height:1.08!important; letter-spacing:-.04em!important; }
+#lgPickupAssignment .pickup-page-header h1 span { color:var(--sari-dark-19b301f69a,#C88912)!important; }
+#lgPickupAssignment .pickup-page-header .pickup-button { min-height:32px!important; padding:0!important; border:0!important; background:transparent!important; box-shadow:none!important; font-size:11.5px!important; font-weight:750!important; }
+#lgPickupAssignment .pickup-stats { grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:14px!important; margin:0!important; }
+#lgPickupAssignment .pickup-stat { min-height:110px!important; padding:14px 16px!important; border-radius:18px!important; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; transform:none!important; }
+#lgPickupAssignment .pickup-stat p { margin:0!important; font-size:13px!important; font-weight:650!important; line-height:1.4!important; }
+#lgPickupAssignment .pickup-stat strong { margin-top:7px!important; font-size:clamp(25px,1.9vw,30px)!important; font-weight:650!important; line-height:1.12!important; font-variant-numeric:tabular-nums; }
+#lgPickupAssignment .pickup-stat div > span { margin-top:6px!important; font-size:11.5px!important; line-height:1.5!important; white-space:normal!important; }
+#lgPickupAssignment .pickup-stat .pickup-stat-icon, #lgPickupAssignment .pickup-stat-icon svg { width:27px!important; height:27px!important; flex-basis:27px!important; }
+#lgPickupAssignment .pa-directory-filters { position:relative; z-index:15; grid-template-columns:minmax(0,1fr) minmax(185px,210px) auto auto!important; gap:12px!important; margin:20px 0 0!important; padding:0!important; }
+#lgPickupAssignment .pa-directory-filters :is(input,select,button) { height:48px!important; min-height:48px!important; border-radius:14px!important; font-size:11.5px!important; box-shadow:none!important; transform:none!important; translate:none!important; }
+#lgPickupAssignment .pa-directory-search input { padding:0 14px 0 46px!important; }
+#lgPickupAssignment .pa-directory-search > svg { left:16px!important; width:21px!important; height:21px!important; }
+#lgPickupAssignment .pa-directory-search input::placeholder { font-size:11.5px!important; }
+#lgPickupAssignment .pa-directory-filters :is(.pa-directory-apply,.pa-directory-reset) { padding:0 18px!important; min-width:86px!important; font-size:12px!important; font-weight:700!important; }
+#lgPickupAssignment .pa-directory-apply { background:#C88912!important; border-color:#C88912!important; }
+#lgPickupAssignment .pa-directory-apply:hover { background:#B47B0E!important; border-color:#B47B0E!important; }
+#lgPickupAssignment .pa-directory-select { position:relative; z-index:50; }
+#lgPickupAssignment .pa-directory-select[data-enhanced] > select { position:absolute!important; width:1px!important; height:1px!important; min-height:0!important; margin:0!important; padding:0!important; border:0!important; clip-path:inset(50%); opacity:0; pointer-events:none; overflow:hidden; }
+#lgPickupAssignment .pa-directory-select[data-enhanced] > svg { display:none!important; }
+#lgPickupAssignment .pa-filter-trigger { display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%; padding:0 16px; border:1px solid var(--sari-dark-d8c2716225,#DCE2E8); background:var(--sari-dark-950baec030,#FFF); color:var(--sari-dark-e23e64dd1e,#3F4B59); font-family:inherit; font-weight:600; text-align:left; cursor:pointer; }
+#lgPickupAssignment .pa-filter-trigger svg { width:17px; height:17px; flex-shrink:0; }
+#lgPickupAssignment .pa-filter-trigger[aria-expanded="true"] svg { transform:rotate(180deg); }
+#lgPickupAssignment .pa-filter-menu { position:absolute; top:calc(100% + 8px); left:0; right:0; z-index:100; padding:8px; border:1px solid var(--sari-dark-d8c2716225,#E2E8F0); border-radius:14px; background:var(--sari-dark-950baec030,#FFF); box-shadow:0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05); }
+#lgPickupAssignment .pa-directory-filters .pa-filter-option { display:flex; align-items:center; width:100%; height:auto!important; min-height:38px!important; padding:0 12px!important; border:0; border-radius:10px!important; background:transparent; color:var(--sari-dark-e23e64dd1e,#475569); font-family:inherit; font-weight:600; text-align:left; cursor:pointer; }
+#lgPickupAssignment .pa-filter-option:hover, #lgPickupAssignment .pa-filter-option[aria-selected="true"] { background:var(--sari-dark-4d21eb669b,#F8FAFC); color:var(--sari-dark-af18afcaa4,#A56D0A); }
+#lgPickupAssignment .pa-directory { margin-top:20px!important; border-radius:18px!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; }
+#lgPickupAssignment .pa-directory-head { padding:21px 23px!important; }
+#lgPickupAssignment .pa-directory-head h2 { margin:0; font-size:18px!important; font-weight:780!important; }
+#lgPickupAssignment .pa-directory-description { margin:4px 0 0; color:var(--sari-dark-a63aa16d7c,#8793A1); font-size:11.5px; line-height:1.5; }
+#lgPickupAssignment .pa-directory-count { border:0!important; padding:0!important; background:transparent!important; font-size:12px!important; }
+#lgPickupAssignment .pa-table-scroll { width:100%; overflow-x:auto; scrollbar-width:thin; }
+#lgPickupAssignment .pa-table-header, #lgPickupAssignment .pa-table-row { display:grid!important; grid-template-columns:minmax(165px,1.1fr) minmax(220px,1.5fr) minmax(155px,1.1fr) 112px 125px 125px!important; min-width:1060px!important; gap:12px!important; align-items:center!important; padding:17px 16px!important; }
+#lgPickupAssignment .pa-table-header { min-height:48px!important; padding-top:13px!important; padding-bottom:13px!important; }
+#lgPickupAssignment .pa-table-header > span { font-size:11px!important; font-weight:750!important; letter-spacing:.075em!important; }
+#lgPickupAssignment .pa-table-row .pa-table-cell { grid-column:auto!important; padding:0!important; }
+#lgPickupAssignment .pa-table-cell::before { display:none!important; }
+#lgPickupAssignment .pa-cell-actions { flex-direction:column!important; grid-column:auto!important; }
+#lgPickupAssignment .pa-row-primary { font-size:12.5px!important; line-height:1.5!important; }
+#lgPickupAssignment .pa-row-muted, #lgPickupAssignment .pa-cell-volume .pa-row-muted { font-size:11px!important; line-height:1.5!important; }
+#lgPickupAssignment .pa-seller-avatar { width:44px!important; height:44px!important; flex:0 0 44px!important; border-radius:9px!important; }
+#lgPickupAssignment .pa-ready-status { padding:5px 10px!important; min-height:27px!important; font-size:10.5px!important; font-weight:700!important; }
+#lgPickupAssignment .pa-cell-actions .pa-btn { min-height:32px!important; width:100%!important; min-width:0!important; padding:6px 10px!important; font-size:11px!important; border-radius:10px!important; }
+#lgPickupAssignment .pa-btn-gold { background:#C88912!important; border-color:#C88912!important; }
+#lgPickupAssignment .pa-directory-footer { min-height:64px!important; padding:13px 20px!important; gap:12px; flex-wrap:wrap; }
+#lgPickupAssignment .pa-footer-controls { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:16px; margin-left:auto; }
+#lgPickupAssignment .pa-pagination, #lgPickupAssignment .pa-page-numbers { gap:6px!important; margin:0!important; }
+#lgPickupAssignment .pa-page-number, #lgPickupAssignment .pa-page-arrow { width:34px!important; height:34px!important; flex:0 0 34px!important; border-radius:10px!important; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important; background:var(--sari-dark-950baec030,#FFF)!important; font-size:11.5px!important; box-shadow:none!important; }
+#lgPickupAssignment .pa-page-number.is-current { background:#C88912!important; border-color:#C88912!important; color:#FFF!important; }
+#lgPickupAssignment :is(button,input,select,.pa-table-scroll):focus-visible { outline:2px solid #C88912!important; outline-offset:2px!important; }
+/* Modals are portaled to body; a page-specific attribute preserves their visual scope. */
+.pa-modal[data-pa-orders-theme] .pa-modal-panel { width:min(900px,100%); border-radius:20px!important; font-family:Poppins,ui-sans-serif,system-ui,sans-serif; }
+.pa-modal[data-pa-orders-theme] .pa-modal-header { padding:20px 24px!important; }
+.pa-modal[data-pa-orders-theme] .pa-modal-header h2 { font-size:22px!important; line-height:1.25!important; }
+.pa-modal[data-pa-orders-theme] .pa-overline { font-size:10px!important; font-weight:800; letter-spacing:.12em; }
+.pa-modal[data-pa-orders-theme] .pa-modal-header p { font-size:11.5px!important; line-height:1.5; }
+.pa-modal[data-pa-orders-theme] .pa-modal-body { padding:22px 24px!important; }
+.pa-modal[data-pa-orders-theme] .pa-modal-footer { padding:16px 24px!important; gap:10px!important; }
+.pa-modal[data-pa-orders-theme] .pa-btn { min-height:44px!important; padding:0 16px!important; border-radius:12px!important; font-size:11.5px!important; }
+.pa-modal[data-pa-orders-theme] .pa-btn-gold, .pa-modal[data-pa-orders-theme] .pa-assign-panel [data-pa-submit], .pa-modal[data-pa-orders-theme] .pa-assign-panel [data-pa-submit]:disabled { background:#C88912!important; border-color:#C88912!important; }
+.pa-modal[data-pa-orders-theme] .pa-assign-panel [data-pa-submit]:hover:not(:disabled) { background:#B47B0E!important; border-color:#B47B0E!important; }
+.pa-modal[data-pa-orders-theme] .pa-rider-search-wrap input { min-height:48px!important; border-radius:14px!important; font-size:11.5px!important; }
+.pa-modal[data-pa-orders-theme] .pa-rider-name { font-size:12.5px!important; line-height:1.5; }
+.pa-modal[data-pa-orders-theme] :is(.pa-rider-area,.pa-rider-vehicle,.pa-area-disclaimer) { font-size:11px!important; line-height:1.5; }
+.pa-modal[data-pa-orders-theme] .pa-rider-option { padding:14px 16px!important; border-radius:14px!important; }
+.pa-modal[data-pa-orders-theme] .pa-assign-panel .pa-rider-option.is-selected { border-color:#C88912!important; }
+.pa-modal[data-pa-orders-theme] .pa-modal-x { width:34px!important; height:34px!important; border-radius:10px!important; }
+.pa-modal[data-pa-orders-theme] :is(button,input):focus-visible { outline:2px solid #C88912!important; outline-offset:2px!important; }
+@media(max-width:1180px) { #lgPickupAssignment .pickup-stats { grid-template-columns:repeat(2,minmax(0,1fr))!important; } }
+@media(max-width:900px) { #lgPickupAssignment .pa-directory-filters { grid-template-columns:repeat(2,minmax(0,1fr))!important; } #lgPickupAssignment .pa-directory-search, #lgPickupAssignment .pa-directory-select { grid-column:1 / -1!important; } }
+@container(max-width:900px) { #lgPickupAssignment .pa-directory-filters { grid-template-columns:repeat(2,minmax(0,1fr))!important; } #lgPickupAssignment .pa-directory-search, #lgPickupAssignment .pa-directory-select { grid-column:1 / -1!important; } }
+@media(max-width:767px) { #lgPickupAssignment .pickup-page-header h1 { font-size:25px!important; } #lgPickupAssignment .pickup-eyebrow { font-size:9.5px!important; } }
+@media(max-width:540px) { #lgPickupAssignment .pickup-stats { grid-template-columns:1fr!important; gap:11px!important; } #lgPickupAssignment .pa-directory-head { align-items:flex-start!important; flex-direction:column!important; padding:17px 16px!important; gap:6px; } .pa-modal[data-pa-orders-theme] .pa-modal-header,.pa-modal[data-pa-orders-theme] .pa-modal-body,.pa-modal[data-pa-orders-theme] .pa-modal-footer { padding:16px!important; } }
+
+#lgPickupAssignment .pa-table-scroll:has([data-assignment-batch]) .pickup-batches { min-width:1060px; }
 </style>
 
 <style>
@@ -4099,6 +4178,30 @@ body.pa-modal-open { overflow:hidden; }
 }
 
 </style>
+<style>
+/* Header navigation matches the Seller Orders text links. */
+#lgPickupAssignment .pickup-page-header .pickup-button.pickup-header-link,
+#lgPickupAssignment .pickup-page-header .pickup-button.pickup-header-link:not(.pickup-button-primary) {
+    display:inline-flex!important; align-items:center!important; justify-content:flex-start!important;
+    gap:8px!important; width:auto!important; min-width:0!important; min-height:0!important; height:auto!important;
+    margin:0!important; padding:0!important; border:0!important; border-radius:0!important;
+    background:transparent!important; background-image:none!important; box-shadow:none!important;
+    color:var(--sari-dark-a63aa16d7c,#59636E)!important; font-family:Poppins,ui-sans-serif,system-ui,sans-serif!important;
+    font-size:11.5px!important; font-weight:750!important; line-height:1.35!important;
+    text-decoration:none!important; white-space:nowrap!important; transform:none!important; backdrop-filter:none!important;
+}
+#lgPickupAssignment .pickup-page-header .pickup-button.pickup-header-link:hover,
+#lgPickupAssignment .pickup-page-header .pickup-button.pickup-header-link:focus-visible {
+    background:transparent!important; color:var(--sari-dark-19b301f69a,#C88912)!important;
+    box-shadow:none!important; transform:none!important;
+}
+#lgPickupAssignment .pickup-page-header .pickup-button.pickup-header-link:focus-visible { outline:2px solid #C88912!important; outline-offset:4px!important; }
+#lgPickupAssignment .pickup-header-link .pickup-header-chevron { font-size:18px!important; font-weight:800!important; line-height:.8!important; transform:translateY(-1px); }
+@media(max-width:767px) {
+    #lgPickupAssignment .pickup-page-header .pickup-button.pickup-header-link { font-size:10.5px!important; align-self:flex-start!important; }
+    #lgPickupAssignment .pickup-header-link .pickup-header-chevron { font-size:16px!important; }
+}
+</style>
 @endpush
 
 @section('content')
@@ -4128,9 +4231,10 @@ body.pa-modal-open { overflow:hidden; }
 
         <a
             href="{{ route('logistics.pickup-requests') }}"
-            class="pickup-button"
+            class="pickup-button pickup-header-link"
         >
-            ← Pickup Requests
+            <span>Pickup Requests</span>
+            <span class="pickup-header-chevron" aria-hidden="true">&gt;</span>
         </a>
 
     </header>
@@ -4293,7 +4397,7 @@ body.pa-modal-open { overflow:hidden; }
             <span class="sr-only">Search pickup batches</span>
             <input type="search" data-assignment-search autocomplete="off" placeholder="Search Seller, order, Buyer, or hub...">
         </label>
-        <label class="pa-directory-select">
+        <div class="pa-directory-select" data-pa-filter-dropdown>
             <span class="sr-only">Filter batch type</span>
             <select data-assignment-type aria-label="Filter pickup batch type">
                 <option value="all">All Batches</option>
@@ -4301,7 +4405,17 @@ body.pa-modal-open { overflow:hidden; }
                 <option value="single">Single parcel</option>
             </select>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
-        </label>
+        
+            <button type="button" class="pa-filter-trigger" data-pa-filter-status-trigger aria-label="Filter pickup batch type" aria-haspopup="listbox" aria-expanded="false" aria-controls="pickupBatchTypeMenu" hidden>
+                <span data-pa-filter-status-label>All Batches</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div id="pickupBatchTypeMenu" class="pa-filter-menu" role="listbox" aria-label="Filter pickup batch type" data-pa-filter-status-menu hidden>
+                <button type="button" class="pa-filter-option" role="option" tabindex="-1" data-pa-filter-status-option data-value="all" aria-selected="true">All Batches</button>
+                <button type="button" class="pa-filter-option" role="option" tabindex="-1" data-pa-filter-status-option data-value="batch" aria-selected="false">Multi-parcel</button>
+                <button type="button" class="pa-filter-option" role="option" tabindex="-1" data-pa-filter-status-option data-value="single" aria-selected="false">Single parcel</button>
+            </div>
+        </div>
         <button type="button" class="pa-directory-apply" data-assignment-apply>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
             Apply Filter
@@ -4312,12 +4426,13 @@ body.pa-modal-open { overflow:hidden; }
     {{-- Dispatch workspace stays as functional per-Seller batch cards. --}}
     <section class="pickup-workspace pa-directory" aria-labelledby="pickup-assignment-title">
         <header class="pa-directory-head">
-            <h2 id="pickup-assignment-title">Verified Pickup Batches</h2>
+            <div><h2 id="pickup-assignment-title">Verified Pickup Batches</h2><p class="pa-directory-description">Review verified Seller collections and assign an eligible Pickup Rider.</p></div>
             <span class="pa-directory-count">{{ $pickupGroups->count() }} {{ $pickupGroups->count() === 1 ? 'BATCH' : 'BATCHES' }}</span>
         </header>
 
         {{-- BATCH LIST --}}
 
+        <div class="pa-table-scroll" tabindex="0" aria-label="Pickup batch directory, scroll horizontally to see all columns">
         {{-- Compact, table-like directory header; mobile switches to readable stacked rows. --}}
         @if($pickupGroups->isNotEmpty())
             <div class="pa-table-header" role="row" aria-hidden="true">
@@ -4464,7 +4579,7 @@ body.pa-modal-open { overflow:hidden; }
                 </article>
 
                 {{-- Modal shells are moved to <body> on initialization, outside clipped workspace cards. --}}
-                <div class="pa-modal" data-pa-modal="{{ $modalKey }}-details" role="dialog" aria-modal="true" aria-labelledby="{{ $modalKey }}-details-title" hidden>
+                <div class="pa-modal" data-pa-orders-theme data-pa-modal="{{ $modalKey }}-details" role="dialog" aria-modal="true" aria-labelledby="{{ $modalKey }}-details-title" hidden>
                     <div class="pa-modal-scrim" data-pa-close-modal></div>
                     <div class="pa-modal-panel pa-details-panel" role="document">
                         <div class="pa-modal-header">
@@ -4515,7 +4630,7 @@ body.pa-modal-open { overflow:hidden; }
                     </div>
                 </div>
 
-                <div class="pa-modal" data-pa-modal="{{ $modalKey }}-assign" role="dialog" aria-modal="true" aria-labelledby="{{ $modalKey }}-assign-title" hidden>
+                <div class="pa-modal" data-pa-orders-theme data-pa-modal="{{ $modalKey }}-assign" role="dialog" aria-modal="true" aria-labelledby="{{ $modalKey }}-assign-title" hidden>
                     <div class="pa-modal-scrim" data-pa-close-modal></div>
                     <div class="pa-modal-panel pa-assign-panel" role="document">
                         <div class="pa-modal-header">
@@ -4569,6 +4684,8 @@ body.pa-modal-open { overflow:hidden; }
             @endforeach
 
         </div>
+
+        </div>{{-- /pa-table-scroll --}}
 
         {{-- EMPTY ASSIGNMENT QUEUE --}}
 
@@ -4649,6 +4766,7 @@ body.pa-modal-open { overflow:hidden; }
         {{-- Result count and page size. --}}
         <footer class="pickup-list-footer pa-directory-footer">
             <span data-assignment-visible-count aria-live="polite">{{ $pickupGroups->count() }} pickup batches shown</span>
+            <div class="pa-footer-controls">
             <label class="pa-page-size">Rows per page
                 <select data-assignment-page-size aria-label="Batches per page">
                     <option value="10" selected>10</option>
@@ -4656,10 +4774,7 @@ body.pa-modal-open { overflow:hidden; }
                     <option value="50">50</option>
                 </select>
             </label>
-        </footer>
-
-    </section>
-
+        
     <nav class="pa-pagination" aria-label="Pickup assignment pages" data-assignment-pagination>
         <button class="pa-page-arrow" type="button" data-assignment-prev aria-label="Previous page" disabled>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
@@ -4669,6 +4784,12 @@ body.pa-modal-open { overflow:hidden; }
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
         </button>
     </nav>
+            </div>
+        </footer>
+
+    </section>
+
+
 
 </div>
 
@@ -4999,4 +5120,76 @@ body.pa-modal-open { overflow:hidden; }
 })();
 </script>
 
+<script>
+(function () {
+    function enhancePickupBatchFilter() {
+        if (!document.getElementById('lgPickupAssignment')) return;
+        window.__SARI_PICKUP_FILTER_ABORT__?.abort();
+        const controller = new AbortController();
+        window.__SARI_PICKUP_FILTER_ABORT__ = controller;
+        const signal = controller.signal;
+        function listen(node, name, handler) { node?.addEventListener(name, handler, { signal }); }
+        document.querySelectorAll('[data-pa-filter-dropdown]').forEach(dropdown => {
+            const select = dropdown.querySelector('select');
+            const trigger = dropdown.querySelector('[data-pa-filter-status-trigger]');
+            const label = dropdown.querySelector('[data-pa-filter-status-label]');
+            const menu = dropdown.querySelector('[data-pa-filter-status-menu]');
+            const options = Array.from(dropdown.querySelectorAll('[data-pa-filter-status-option]'));
+            if (!select || !trigger || !menu || !options.length) return;
+
+            function syncStatus() {
+                if (label) label.textContent = select.options[select.selectedIndex]?.text || '';
+                options.forEach(option => option.setAttribute('aria-selected', String(option.dataset.value === select.value)));
+            }
+            function closeStatus({ restoreFocus = false } = {}) {
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                if (restoreFocus) trigger.focus({ preventScroll: true });
+            }
+            function openStatus() {
+                menu.hidden = false;
+                trigger.setAttribute('aria-expanded', 'true');
+                (options.find(option => option.getAttribute('aria-selected') === 'true') || options[0])?.focus({ preventScroll: true });
+            }
+            dropdown.dataset.enhanced = 'true';
+            select.tabIndex = -1;
+            select.setAttribute('aria-hidden', 'true');
+            trigger.hidden = false;
+            syncStatus();
+            closeStatus();
+            listen(select, 'change', syncStatus);
+            document.querySelectorAll('[data-assignment-clear]').forEach(button => listen(button, 'click', () => { closeStatus(); syncStatus(); }));
+            listen(trigger, 'click', () => menu.hidden ? openStatus() : closeStatus());
+            listen(trigger, 'keydown', event => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); openStatus(); }
+            });
+            listen(menu, 'click', event => {
+                const option = event.target.closest('[data-pa-filter-status-option]');
+                if (!option) return;
+                select.value = option.dataset.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                closeStatus({ restoreFocus: true });
+            });
+            listen(dropdown, 'keydown', event => {
+                if (menu.hidden) return;
+                if (event.key === 'Escape') { event.preventDefault(); closeStatus({ restoreFocus: true }); }
+                else if (event.key === 'Tab') closeStatus({ restoreFocus: true });
+                else if (['ArrowDown','ArrowUp','Home','End'].includes(event.key) && menu.contains(event.target)) {
+                    event.preventDefault();
+                    const index = options.indexOf(document.activeElement);
+                    const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1
+                        : (index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+                    options[nextIndex]?.focus();
+                }
+            });
+            listen(document, 'click', event => { if (!dropdown.contains(event.target)) closeStatus(); });
+            listen(dropdown, 'focusout', event => { if (!dropdown.contains(event.relatedTarget)) closeStatus(); });
+        });
+
+
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enhancePickupBatchFilter, { once: true });
+    else enhancePickupBatchFilter();
+})();
+</script>
 @endpush

@@ -5,377 +5,180 @@
 
 @push('styles')
 <style>
-    .rider-applications-page,
-    .rider-applications-page * {
-        font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-
-    .ra-panel {
-        border: 1px solid var(--sari-dark-d8c2716225, #e4e7eb);
-        border-radius: 18px;
-        background: var(--sari-dark-950baec030, #fff);
-        box-shadow: 0 12px 28px var(--sari-dark-fbd3b3b9f6, rgba(26, 31, 38, .055));
-    }
-
-    .ra-kpi {
-        border: 1px solid var(--sari-dark-d8c2716225, #e1e5e9);
-        border-radius: 16px;
-        background: var(--sari-dark-950baec030, #fff);
-        box-shadow: 0 6px 18px var(--sari-dark-7593018246, rgba(26, 31, 38, .035));
-    }
-
-    .ra-focus:focus-visible {
-        outline: 3px solid rgba(213, 151, 19, .18);
-        outline-offset: 2px;
-        border-color: #d59713 !important;
-    }
-
-    .ra-dialog {
-        width: min(760px, calc(100vw - 28px));
-        max-height: min(860px, calc(100dvh - 40px));
-        margin: auto;
-        padding: 0;
-        border: 1px solid var(--sari-dark-d8c2716225, #dde2e7);
-        border-radius: 20px;
-        background: var(--sari-dark-950baec030, #fff);
-        color: var(--sari-dark-e23e64dd1e, #1b1f24);
-        box-shadow: 0 30px 80px var(--sari-dark-7edf1b5a37, rgba(20, 24, 30, .24));
-    }
-
-    .ra-dialog::backdrop {
-        background: var(--sari-dark-13762c5eae, rgba(23, 27, 33, .44));
-        backdrop-filter: blur(5px);
-    }
-
-    .ra-dialog-body {
-        max-height: calc(100dvh - 42px);
-        overflow-y: auto;
-    }
-
-    .ra-table-row[hidden] { display: none !important; }
-
-    @media (prefers-reduced-motion: reduce) {
-        .ra-kpi,
-        .ra-focus { transition: none !important; }
-    }
-
-    /* ============================================================
-       ADMIN REGISTRATIONS SCALE MATCH — FINAL VISUAL OVERRIDE
-       Keeps Logistics functionality unchanged; matches the Admin
-       page width, KPI height, toolbar density, and queue sizing.
-       ============================================================ */
+    /* Seller Orders visual scale, scoped to the Rider Applications workspace. */
     .rider-applications-page {
-        width: 100% !important;
-        max-width: 1800px !important;
-        padding-bottom: 24px !important;
+        --ra-gold: #C88912;
+        --ra-gold-hover: #B47B0E;
+        --ra-ink: var(--sari-dark-e23e64dd1e, #2F3742);
+        --ra-muted: var(--sari-dark-a63aa16d7c, #8793A1);
+        --ra-border: var(--sari-dark-d8c2716225, #E5E7EB);
+        --ra-surface: var(--sari-dark-950baec030, #FFFFFF);
+        --ra-soft: var(--sari-dark-4d21eb669b, #F8FAFC);
+        width: 100%; max-width: 1520px !important; margin: 0 auto; padding-bottom: 28px;
+        color: var(--ra-ink);
+        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
     }
-
-    .ra-page-header {
-        min-height: 66px !important;
-        margin: 0 0 12px !important;
-        padding: 2px 2px 13px !important;
-        border-bottom-color: var(--sari-dark-d8c2716225, #eceff2) !important;
+    .rider-applications-page *, .ra-dialog { font-family: inherit; }
+    .rider-applications-page [hidden] { display: none !important; }
+    .rider-applications-page .ra-page-header {
+        min-height: 0; margin: 0 0 20px; padding: 0 0 14px;
+        border-bottom: 1px solid var(--ra-border);
     }
-
     .ra-page-header > p:first-child {
-        margin: 0 0 5px !important;
-        font-size: 8px !important;
-        font-weight: 700 !important;
-        line-height: 1.15 !important;
-        letter-spacing: .16em !important;
+        margin: 0; font-size: 10.5px !important; font-weight: 800;
+        line-height: 1.4; letter-spacing: .14em; color: var(--sari-dark-685eb4fc40, #A87316);
     }
-
     .ra-page-header h1 {
-        margin: 0 !important;
-        font-size: clamp(29px, 2.2vw, 36px) !important;
-        font-weight: 700 !important;
-        line-height: 1 !important;
-        letter-spacing: -.035em !important;
+        margin: 6px 0 0; font-size: clamp(27px, 2.3vw, 31px) !important;
+        font-weight: 760; line-height: 1.08; letter-spacing: -.04em; color: var(--ra-ink);
     }
-
-    .ra-page-header h1 + p {
-        max-width: 760px !important;
-        margin: 7px 0 0 !important;
-        font-size: 10px !important;
-        font-weight: 400 !important;
-        line-height: 1.55 !important;
+    .ra-page-header h1 span { color: var(--sari-dark-19b301f69a, #C88912); }
+    .rider-applications-page .ra-summary-grid {
+        display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 0;
     }
-
-    .ra-summary-grid {
-        gap: 12px !important;
-        margin-top: 12px !important;
+    .ra-kpi, .ra-panel {
+        border: 1px solid var(--ra-border); border-radius: 18px; background: var(--ra-surface);
+        box-shadow: 0 3px 10px var(--sari-dark-7593018246, rgba(15,23,42,.035)),
+                    0 12px 30px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055));
     }
-
-    .ra-kpi {
-        min-height: 104px !important;
-        padding: 18px !important;
-        border-color: var(--sari-dark-d8c2716225, #e4e7ec) !important;
-        border-radius: 12px !important;
-        box-shadow: 0 2px 6px var(--sari-dark-25b2da5e49, rgba(16,24,40,.04)) !important;
+    .rider-applications-page .ra-kpi {
+        display: flex; align-items: flex-start; justify-content: space-between;
+        gap: 12px; min-height: 110px; padding: 14px 16px;
     }
-
     .ra-kpi > div > p:first-child {
-        font-size: 12px !important;
-        font-weight: 500 !important;
-        line-height: 20px !important;
-        color: var(--sari-dark-a63aa16d7c, #667085) !important;
+        margin: 0; font-size: 13px !important; font-weight: 650; line-height: 1.4;
+        color: var(--sari-dark-a63aa16d7c, #637081);
     }
-
     .ra-kpi > div > p:nth-child(2) {
-        margin-top: 10px !important;
-        font-size: 28px !important;
-        font-weight: 700 !important;
-        line-height: 1 !important;
-        color: var(--sari-dark-e23e64dd1e, #101828) !important;
+        margin: 7px 0 0; font-size: clamp(25px, 1.9vw, 30px) !important;
+        font-weight: 650; line-height: 1.12; letter-spacing: -.02em;
+        font-variant-numeric: tabular-nums; color: var(--ra-ink);
     }
-
-    .ra-kpi > span {
-        width: 24px !important;
-        height: 24px !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex: 0 0 24px !important;
+    .ra-kpi > span, .ra-kpi > span svg { width: 27px; height: 27px; flex: 0 0 27px; }
+    .ra-kpi > span svg { stroke-width: 1.8; }
+    .rider-applications-page .ra-filter-bar {
+        display: grid; grid-template-columns: minmax(0,1fr) minmax(185px,210px) auto auto;
+        align-items: center; gap: 12px; position: relative; z-index: 15;
+        margin: 20px 0 0; padding: 0; border: 0; background: transparent; box-shadow: none;
     }
-
-    .ra-kpi > span svg {
-        width: 24px !important;
-        height: 24px !important;
-        stroke-width: 1.8 !important;
+    .ra-filter-bar > *, .ra-filter-bar form > * { min-width: 0; }
+    .ra-filter-bar input, .ra-status-trigger, .ra-filter-apply, .ra-filter-reset {
+        width: 100%; height: 48px !important; min-height: 48px; border-radius: 14px !important;
+        font-family: inherit; box-shadow: none; transform: none !important; translate: none !important;
     }
-
-    .ra-filter-bar {
-        margin-top: 12px !important;
-        grid-template-columns: minmax(320px,1fr) 160px 155px 108px 68px !important;
-        gap: 9px !important;
-        align-items: center !important;
+    .ra-filter-bar input, .ra-status-trigger, .ra-filter-reset {
+        border: 1px solid var(--sari-dark-d8c2716225, #DCE2E8);
+        background: var(--ra-surface); color: var(--ra-ink);
+        font-size: 11.5px !important; font-weight: 600;
     }
-
-    .ra-filter-bar input,
-    .ra-filter-bar select,
-    .ra-filter-bar > div,
-    .ra-filter-bar button,
-    .ra-filter-bar a {
-        height: 40px !important;
-        border-radius: 10px !important;
-        font-size: 10px !important;
-        box-shadow: none !important;
+    .ra-filter-bar input { padding: 0 14px 0 46px; }
+    .ra-filter-bar input::placeholder { color: var(--ra-muted); font-size: 11.5px; font-weight: 400; }
+    .ra-search-icon { position: absolute; top: 0; bottom: 0; left: 16px; display: grid; place-items: center; width: 21px; pointer-events: none; color: var(--ra-muted); }
+    .ra-search-icon svg { width: 21px; height: 21px; }
+    .ra-filter-form { display: contents; }
+    .ra-status-dropdown { position: relative; z-index: 50; }
+    .ra-status-dropdown[data-enhanced] .ra-native-status {
+        position: absolute !important; width: 1px !important; height: 1px !important;
+        margin: 0 !important; padding: 0 !important; clip-path: inset(50%);
+        overflow: hidden; opacity: 0; pointer-events: none;
     }
-
-    .ra-filter-bar > div {
-        padding-inline: 11px !important;
+    .ra-status-trigger { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 16px; text-align: left; cursor: pointer; }
+    .ra-status-trigger svg { width: 17px; height: 17px; flex-shrink: 0; transition: transform .15s ease; }
+    .ra-status-trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+    .ra-status-menu {
+        position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 100;
+        width: 100%; margin: 0; padding: 8px; border: 1px solid var(--ra-border);
+        border-radius: 14px; background: var(--ra-surface);
+        box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05);
     }
-
-    .ra-filter-bar input {
-        padding-left: 38px !important;
-        padding-right: 12px !important;
+    .ra-status-option {
+        display: flex; align-items: center; width: 100%; min-height: 38px;
+        padding: 0 12px; border: 0; border-radius: 10px; background: transparent;
+        color: var(--ra-ink); font-size: 11.5px; font-weight: 600; text-align: left; cursor: pointer;
     }
-
-    .ra-filter-bar label > span.pointer-events-none.absolute.inset-y-0 {
-        width: 38px !important;
+    .ra-status-option:hover, .ra-status-option:focus-visible, .ra-status-option[aria-selected="true"] { background: var(--ra-soft); color: var(--sari-dark-af18afcaa4, #A56D0A); }
+    .ra-status-option[aria-selected="true"] { font-weight: 700; }
+    .ra-filter-apply, .ra-filter-reset { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; font-size: 12px !important; font-weight: 700; white-space: nowrap; cursor: pointer; text-decoration: none; }
+    .ra-filter-apply { border: 1px solid var(--ra-gold); background: var(--ra-gold); color: #FFF; }
+    .ra-filter-apply:hover { background: var(--ra-gold-hover); border-color: var(--ra-gold-hover); }
+    .ra-filter-apply svg { width: 15px; height: 15px; }
+    .ra-filter-reset { min-width: 86px; }
+    .ra-filter-reset:hover, .ra-filter-bar input:hover, .ra-status-trigger:hover { background: var(--ra-soft); border-color: var(--sari-dark-d8c2716225, #CFD6DE); }
+    .rider-applications-page .ra-focus:focus-visible,
+    .rider-applications-page .ra-status-trigger[aria-expanded="true"] {
+        outline: 2px solid var(--ra-gold); outline-offset: 2px; border-color: var(--ra-gold);
     }
-
-    .ra-filter-bar select {
-        padding-left: 30px !important;
-        padding-right: 34px !important;
+    .ra-filter-bar input:focus { outline: 2px solid var(--ra-gold); outline-offset: 2px; }
+    .rider-applications-page .ra-queue-card { margin-top: 20px; overflow: hidden; }
+    .ra-table-titlebar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 21px 23px; border-bottom: 1px solid var(--ra-border); }
+    .ra-table-titlebar h2 { margin: 0; color: var(--ra-ink); font-size: 18px; font-weight: 780; }
+    .ra-table-titlebar p { margin: 4px 0 0; color: var(--ra-muted); font-size: 11.5px; line-height: 1.5; }
+    .ra-table-counter { flex-shrink: 0; color: var(--ra-muted); font-size: 12px; font-weight: 600; }
+    .ra-table-scroll { overflow-x: auto; width: 100%; scrollbar-width: thin; }
+    .ra-table-scroll:focus-visible { outline: 2px solid var(--ra-gold); outline-offset: -2px; }
+    .rider-applications-page .ra-queue-card table { min-width: 1060px; }
+    .ra-queue-card thead { background: var(--ra-soft); }
+    .ra-queue-card th { height: 48px; padding: 13px 16px; font-size: 11px; font-weight: 750; line-height: 1.4; letter-spacing: .075em; text-transform: uppercase; color: var(--ra-muted); border-bottom: 1px solid var(--ra-border); }
+    .ra-queue-card tbody { background: var(--ra-surface); }
+    .ra-queue-card td { padding: 17px 16px; font-size: 11.5px; border-bottom: 1px solid var(--ra-border); }
+    .ra-table-row { background: var(--ra-surface); color: var(--ra-ink); transition: background-color .18s ease; }
+    .ra-table-row:hover { background: var(--ra-soft); }
+    .ra-queue-card td p { margin: 0; color: var(--ra-ink); font-size: 11.5px; line-height: 1.5; }
+    .ra-queue-card td p + p { margin-top: 3px; color: var(--ra-muted); font-size: 11px; }
+    .ra-queue-card td:first-child p:first-child { font-size: 12.5px; font-weight: 750; text-transform: none; letter-spacing: normal; }
+    .ra-queue-card td:nth-child(2) p:first-child, .ra-queue-card td:nth-child(6) p:first-child { font-weight: 650; }
+    .ra-queue-card tbody td:first-child img, .ra-queue-card tbody td:first-child span.grid { width: 44px; height: 44px; flex: 0 0 44px; border-radius: 9px; }
+    .ra-queue-card td:nth-child(3) > span, .ra-queue-card td:nth-child(4) > span { min-height: 27px; padding: 5px 10px; font-size: 10.5px; font-weight: 700; line-height: 1.3; letter-spacing: normal; }
+    .ra-queue-card [data-open-review] { display: inline-grid; place-items: center; width: 32px; height: 32px; min-width: 32px; padding: 0; border: 1px solid var(--ra-border); border-radius: 10px; background: var(--ra-surface); color: var(--ra-muted); box-shadow: none; cursor: pointer; }
+    .ra-queue-card [data-open-review] svg { width: 17px; height: 17px; }
+    .ra-queue-card [data-open-review]:hover { border-color: var(--ra-gold); color: var(--ra-gold); background: var(--ra-soft); }
+    .ra-table-footer { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 20px; border-top: 1px solid var(--ra-border); background: var(--ra-surface); }
+    .ra-result-count { margin: 0; font-size: 11px; font-weight: 550; color: var(--ra-muted); }
+    .ra-pagination, .ra-page-numbers { display: flex; align-items: center; gap: 6px; }
+    .ra-pagination button { display: grid; place-items: center; width: 34px; min-width: 34px; height: 34px; padding: 0; border: 1px solid var(--ra-border); border-radius: 10px; background: var(--ra-surface); color: var(--ra-muted); font: 700 11.5px/1 'Poppins',sans-serif; cursor: pointer; }
+    .ra-pagination svg { width: 15px; height: 15px; }
+    .ra-pagination button[aria-current="page"] { background: var(--ra-gold); border-color: var(--ra-gold); color: #FFF; }
+    .ra-pagination button:hover:not(:disabled) { border-color: var(--ra-gold); }
+    .ra-pagination button:disabled { opacity: .42; cursor: not-allowed; }
+    .ra-empty-cell, #riderSearchEmpty { padding: 72px 20px !important; text-align: center; }
+    .ra-queue-card table.ra-table-empty { min-width: 0 !important; table-layout: auto; }
+    .ra-queue-card table.ra-table-empty thead { display: none; }
+    .ra-empty-icon { display: grid; width: 92px; height: 92px; margin: 0 auto; place-items: center; color: var(--ra-muted); }
+    .ra-empty-icon svg { width: 58px; height: 58px; stroke-width: 1.6; }
+    .ra-queue-card td .ra-empty-title, #riderSearchEmpty > p:first-child { margin: 10px 0 0; font-size: 22px; font-weight: 700; color: var(--ra-muted); }
+    .ra-queue-card td .ra-empty-copy, #riderSearchEmpty > p:nth-child(2) { max-width: 480px; margin: 8px auto 0; font-size: 12px; line-height: 1.6; color: var(--ra-muted); }
+    /* Keep the existing protected-document and approval/rejection dialogs. */
+    .ra-dialog { width: min(760px, calc(100vw - 28px)); max-height: min(860px, calc(100dvh - 40px)); margin: auto; padding: 0; border: 1px solid var(--ra-border); border-radius: 20px; background: var(--ra-surface); color: var(--ra-ink); box-shadow: 0 30px 80px rgba(20,24,30,.24); }
+    .ra-dialog::backdrop { background: rgba(23,27,33,.44); backdrop-filter: blur(5px); }
+    .ra-dialog-body { max-height: calc(100dvh - 42px); overflow-y: auto; }
+    @media (max-width: 1180px) { .rider-applications-page .ra-summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+    @media (max-width: 900px) {
+        .rider-applications-page .ra-filter-bar { grid-template-columns: repeat(2,minmax(0,1fr)); }
+        .ra-search-field, .ra-status-dropdown { grid-column: 1 / -1; }
     }
-
-    .ra-filter-bar button {
-        padding-inline: 13px !important;
-        font-size: 9.5px !important;
-        font-weight: 650 !important;
-        box-shadow: 0 5px 12px var(--sari-dark-b5c2a2270e, rgba(213,150,23,.16)) !important;
-    }
-
-    .ra-filter-bar a {
-        padding-inline: 13px !important;
-        font-size: 9.5px !important;
-        font-weight: 600 !important;
-    }
-
-    .ra-queue-card {
-        margin-top: 14px !important;
-        border-radius: 14px !important;
-        border-color: var(--sari-dark-d8c2716225, #e5e7eb) !important;
-        box-shadow: 0 2px 5px var(--sari-dark-1190f58155, rgba(15,23,42,.045)), 0 10px 24px var(--sari-dark-e07575a086, rgba(15,23,42,.075)) !important;
-    }
-
-    .ra-queue-card > div:first-child {
-        padding: 15px 18px !important;
-        border-bottom-color: var(--sari-dark-d8c2716225, #eceff2) !important;
-    }
-
-    .ra-queue-card > div:first-child h2 {
-        font-size: 14px !important;
-        font-weight: 700 !important;
-        letter-spacing: -.02em !important;
-    }
-
-    .ra-queue-card > div:first-child h2 + span {
-        font-size: 8px !important;
-    }
-
-    .ra-queue-card > div:first-child p {
-        margin-top: 3px !important;
-        font-size: 9.5px !important;
-        line-height: 1.5 !important;
-    }
-
-    .ra-queue-card table {
-        min-width: 820px !important;
-    }
-
-    .ra-queue-card thead tr {
-        background: var(--sari-dark-950baec030, #f9fafb) !important;
-    }
-
-    .ra-queue-card th {
-        padding-top: 10px !important;
-        padding-bottom: 10px !important;
-        font-size: 8px !important;
-        font-weight: 700 !important;
-        letter-spacing: .075em !important;
-        color: var(--sari-dark-a63aa16d7c, #667085) !important;
-    }
-
-    .ra-queue-card td {
-        padding-top: 11px !important;
-        padding-bottom: 11px !important;
-        font-size: 9.5px !important;
-    }
-
-    .ra-queue-card th:first-child,
-    .ra-queue-card td:first-child { padding-left: 18px !important; }
-    .ra-queue-card th:last-child,
-    .ra-queue-card td:last-child { padding-right: 18px !important; }
-
-    .ra-queue-card tbody img,
-    .ra-queue-card tbody td:first-child span.grid {
-        width: 36px !important;
-        height: 36px !important;
-    }
-
-    .ra-queue-card tbody td p {
-        font-size: 9px !important;
-    }
-
-    .ra-queue-card tbody td:first-child p:first-child {
-        font-size: 10px !important;
-    }
-
-    .ra-queue-card [data-open-review] {
-        height: 31px !important;
-        border-radius: 8px !important;
-        padding-inline: 10px !important;
-        font-size: 8.5px !important;
-        box-shadow: none !important;
-    }
-
-    @media (max-width: 1279px) {
-        .ra-filter-bar {
-            grid-template-columns: minmax(260px,1fr) 150px 145px auto auto !important;
-        }
-    }
-
-    @media (max-width: 1023px) {
-        .ra-filter-bar {
-            grid-template-columns: minmax(0,1fr) minmax(150px,.42fr) !important;
-        }
-        .ra-filter-bar > label:first-child { grid-column: 1 / -1 !important; }
-        .ra-filter-bar button,
-        .ra-filter-bar a { width: 100% !important; }
-    }
-
     @media (max-width: 767px) {
-        .ra-page-header h1 { font-size: clamp(28px,8vw,34px) !important; }
-        .ra-summary-grid { gap: 9px !important; }
-        .ra-kpi { min-height: 86px !important; padding: 13px !important; }
-        .ra-kpi > div > p:nth-child(2) { font-size: 22px !important; }
-        .ra-filter-bar { grid-template-columns: 1fr !important; }
-        .ra-filter-bar > label:first-child { grid-column: auto !important; }
-        .ra-filter-bar input,
-        .ra-filter-bar select,
-        .ra-filter-bar > div,
-        .ra-filter-bar button,
-        .ra-filter-bar a { height: 42px !important; font-size: 10px !important; }
+        .ra-page-header h1 { font-size: 25px !important; }
+        .ra-page-header > p:first-child { font-size: 9.5px !important; }
+        .ra-kpi > div > p:first-child { font-size: 12.5px !important; }
+        .ra-empty-cell, #riderSearchEmpty { padding: 56px 16px !important; }
+        .ra-empty-icon { width: 64px; height: 64px; }
+        .ra-empty-icon svg { width: 40px; height: 40px; }
     }
+    @media (max-width: 540px) {
+        .rider-applications-page .ra-summary-grid { grid-template-columns: 1fr; gap: 11px; }
+        .rider-applications-page .ra-kpi { min-height: 100px; }
+        .ra-table-titlebar { align-items: flex-start; flex-direction: column; padding: 17px 16px; gap: 6px; }
+        .ra-table-footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+        .ra-pagination { align-self: flex-end; }
+    }
+    @media (prefers-reduced-motion: reduce) { .rider-applications-page * { transition: none !important; animation: none !important; } }
 
-    /* Do not force a wide empty table: center the empty state on mobile too. */
-    .rider-applications-page .ra-queue-card table.ra-table-empty {
-        min-width: 0 !important;
-        table-layout: auto;
-    }
-
-    .rider-applications-page .ra-queue-card table.ra-table-empty thead {
-        display: none;
-    }
-
-    /* Buyer Cart empty-state sizing parity (cart.blade.php), scoped to this queue only. */
-    .rider-applications-page .ra-queue-card td.ra-empty-cell {
-        padding: 72px 24px !important;
-    }
-
-    .rider-applications-page .ra-queue-card .ra-empty-icon {
-        display: grid;
-        width: 92px;
-        height: 92px;
-        margin-inline: auto;
-        place-items: center;
-        color: var(--sari-dark-a63aa16d7c, #b4bbc3);
-        background: transparent;
-        border: 0;
-        box-shadow: none;
-    }
-
-    .rider-applications-page .ra-queue-card .ra-empty-icon svg {
-        width: 58px;
-        height: 58px;
-        stroke: currentColor;
-        stroke-width: 1.45;
-    }
-
-    .rider-applications-page .ra-queue-card tbody td .ra-empty-title {
-        margin-top: 18px !important;
-        color: var(--sari-dark-a63aa16d7c, #9ca4ad) !important;
-        font-size: 22px !important;
-        font-weight: 750 !important;
-        line-height: 1.2 !important;
-        letter-spacing: -.025em !important;
-    }
-
-    .rider-applications-page .ra-queue-card tbody td .ra-empty-copy {
-        max-width: 520px;
-        margin: 7px auto 0 !important;
-        color: var(--sari-dark-a63aa16d7c, #b0b7bf) !important;
-        font-size: 12px !important;
-        font-weight: 500 !important;
-        line-height: 1.55 !important;
-    }
-
-    @media (max-width: 640px) {
-        .rider-applications-page .ra-queue-card td.ra-empty-cell {
-            padding: 56px 18px !important;
-        }
-        .rider-applications-page .ra-queue-card .ra-empty-icon {
-            width: 64px;
-            height: 64px;
-        }
-        .rider-applications-page .ra-queue-card .ra-empty-icon svg {
-            width: 40px;
-            height: 40px;
-        }
-        .rider-applications-page .ra-queue-card tbody td .ra-empty-title {
-            font-size: 20px !important;
-        }
-        .rider-applications-page .ra-queue-card tbody td .ra-empty-copy {
-            font-size: 11px !important;
-        }
-    }
+    .ra-status-dropdown:not([data-enhanced]) .ra-native-status { width: 100%; height: 48px; padding: 0 16px; border: 1px solid var(--ra-border); border-radius: 14px; background: var(--ra-surface); color: var(--ra-ink); font-size: 11.5px; }
 </style>
 @endpush
 
 @section('content')
-<div class="sari-logistics-ui rider-applications-page mx-auto w-full max-w-[1900px] text-[#171b20]">
+<div class="sari-logistics-ui rider-applications-page mx-auto w-full max-w-[1520px] text-[#171b20]">
 
     @if (session('success'))
         <div class="mb-4 rounded-[14px] border border-[#cfe3d6] bg-[#f4faf6] px-4 py-3 text-[12px] font-medium text-[#4f725d]" role="status">
@@ -466,70 +269,74 @@
 
     {{-- SEARCH + FILTER BAR --}}
     <section class="ra-filter-bar mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_200px_190px_136px_86px]">
-        <label class="relative block">
-            <span class="pointer-events-none absolute inset-y-0 left-0 grid w-12 place-items-center text-[#8b95a1]" aria-hidden="true">
+        <label class="ra-search-field relative block">
+            <span class="ra-search-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 4 4"></path></svg>
             </span>
             <span class="sr-only">Search applications</span>
             <input
                 id="riderApplicationSearch"
+                name="search"
+                form="riderStatusForm"
+                value="{{ request()->query('search', '') }}"
                 type="search"
                 placeholder="Search name, email, contact, plate, or municipality..."
                 class="ra-focus h-[50px] w-full rounded-[13px] border border-[#dde2e7] bg-white pl-12 pr-4 text-[12px] font-normal text-[#28303a] placeholder:text-[#a2a9b1]"
             >
         </label>
 
-        <div class="flex h-[50px] items-center rounded-[13px] border border-[#dde2e7] bg-white px-4 text-[12px] font-medium text-[#313843]">
-            Rider Applications
-        </div>
 
-        <form id="riderStatusForm" method="GET" class="contents">
-            <label class="relative block">
-                <span class="sr-only">Application status</span>
-                <span class="pointer-events-none absolute left-4 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full
-                    {{ $status === 'approved' ? 'bg-[#36a27d]' : ($status === 'rejected' ? 'bg-[#dc6262]' : 'bg-[#d79a18]') }}"></span>
-                <select name="status" class="ra-focus h-[50px] w-full appearance-none rounded-[13px] border border-[#dde2e7] bg-white pl-9 pr-10 text-[12px] font-medium text-[#313843]">
+        <form id="riderStatusForm" method="GET" class="ra-filter-form">
+            <div class="ra-status-dropdown" data-ra-status-dropdown>
+                <label class="sr-only" for="riderApplicationStatus">Application status</label>
+                <select id="riderApplicationStatus" name="status" class="ra-native-status ra-focus">
                     @foreach(['pending' => 'Pending', 'approved' => 'Approved', 'rejected' => 'Rejected'] as $value => $label)
                         <option value="{{ $value }}" {{ $status === $value ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
-                <svg viewBox="0 0 24 24" class="pointer-events-none absolute right-4 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#8a929d]" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 10 4 4 4-4"></path></svg>
-            </label>
-
-            <button type="submit" class="ra-focus inline-flex h-[50px] items-center justify-center gap-2 rounded-[13px] bg-[#dd9809] px-5 text-[12px] font-semibold text-white shadow-[0_8px_20px_rgba(221,152,9,.18)] transition hover:bg-[#c98908]">
-                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M7 12h10M10 19h4"></path></svg>
+                <button type="button" class="ra-status-trigger ra-focus" data-ra-status-trigger
+                    aria-haspopup="listbox" aria-expanded="false" aria-controls="riderApplicationStatusMenu"
+                    aria-label="Application status" hidden>
+                    <span data-ra-status-label>{{ ucfirst($status) }}</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+                </button>
+                <div id="riderApplicationStatusMenu" class="ra-status-menu" role="listbox"
+                    aria-label="Application status" data-ra-status-menu hidden>
+                    @foreach(['pending' => 'Pending', 'approved' => 'Approved', 'rejected' => 'Rejected'] as $value => $label)
+                        <button type="button" role="option" class="ra-status-option ra-focus" tabindex="-1"
+                            data-ra-status-option data-value="{{ $value }}" aria-selected="{{ $status === $value ? 'true' : 'false' }}">{{ $label }}</button>
+                    @endforeach
+                </div>
+            </div>
+            <button type="submit" class="ra-filter-apply ra-focus">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16M7 10h10M10 15h4"></path></svg>
                 Apply Filter
             </button>
         </form>
-
-        <a href="{{ route('logistics.rider-applications', [], false) }}" class="ra-focus inline-flex h-[50px] items-center justify-center rounded-[13px] border border-[#dde2e7] bg-white px-4 text-[11px] font-medium text-[#66707d] transition hover:bg-[#f7f8f9]">
-            Reset
-        </a>
+        <a href="{{ route('logistics.rider-applications', [], false) }}" class="ra-filter-reset ra-focus">Reset</a>
     </section>
 
     {{-- APPLICATION QUEUE --}}
     <section class="ra-panel ra-queue-card mt-4 overflow-hidden">
-        <div class="flex flex-col gap-2 border-b border-[#e7eaee] px-5 py-5 sm:flex-row sm:items-start sm:justify-between">
+        <div class="ra-table-titlebar">
             <div>
-                <div class="flex flex-wrap items-center gap-2">
-                    <h2 class="text-[17px] font-semibold tracking-[-.02em] text-[#171b20]">Application queue</h2>
-                    <span id="riderShowingCount" class="rounded-full bg-[#f2f4f6] px-2.5 py-1 text-[9px] font-medium text-[#68727e]">Showing {{ $applications->count() }}</span>
-                </div>
-                <p class="mt-1 text-[11px] font-normal text-[#7f8894]">Open a registration to review the complete Rider profile and protected documents.</p>
+                <h2>Application queue</h2>
+                <p>Open a registration to review the complete Rider profile and protected documents.</p>
             </div>
+            <span id="riderShowingCount" class="ra-table-counter" aria-live="polite">Showing {{ $applications->count() }} of {{ $applications->count() }}</span>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full min-w-[1120px] table-fixed text-left {{ $applications->isEmpty() ? 'ra-table-empty' : '' }}">
+        <div class="ra-table-scroll" tabindex="0" aria-label="Rider applications table, scroll horizontally to see all columns">
+            <table aria-label="Rider application records" class="w-full min-w-[1060px] table-fixed text-left {{ $applications->isEmpty() ? 'ra-table-empty' : '' }}">
                 <thead class="border-b border-[#dde2e7] bg-[#f7f8f9]">
                     <tr class="text-[9px] font-semibold uppercase tracking-[.08em] text-[#657080]">
-                        <th class="w-[23%] px-5 py-3.5">Applicant</th>
-                        <th class="w-[20%] px-5 py-3.5">Contact</th>
-                        <th class="w-[10%] px-5 py-3.5">Role</th>
-                        <th class="w-[12%] px-5 py-3.5">Status</th>
-                        <th class="w-[13%] px-5 py-3.5">Documents</th>
-                        <th class="w-[14%] px-5 py-3.5">Submitted</th>
-                        <th class="w-[8%] px-5 py-3.5 text-right">Action</th>
+                        <th scope="col" class="w-[23%] px-5 py-3.5">Applicant</th>
+                        <th scope="col" class="w-[20%] px-5 py-3.5">Contact</th>
+                        <th scope="col" class="w-[10%] px-5 py-3.5">Role</th>
+                        <th scope="col" class="w-[12%] px-5 py-3.5">Status</th>
+                        <th scope="col" class="w-[13%] px-5 py-3.5">Documents</th>
+                        <th scope="col" class="w-[14%] px-5 py-3.5">Submitted</th>
+                        <th scope="col" class="w-[8%] px-5 py-3.5 text-right">Action</th>
                     </tr>
                 </thead>
                 <tbody id="riderApplicationsBody" class="divide-y divide-[#edf0f2] bg-white">
@@ -597,10 +404,12 @@
                                 <button
                                     type="button"
                                     class="ra-focus inline-flex h-9 items-center justify-center gap-2 rounded-[10px] border border-[#dfe3e7] bg-white px-3 text-[9px] font-medium text-[#535d68] transition hover:border-[#d3b36f] hover:bg-[#fffaf0] hover:text-[#8f6417]"
+                                    data-open-review
+                                    aria-label="Review application for {{ $application->fullName() }}"
                                     onclick="document.getElementById('rider-review-{{ $application->id }}').showModal()"
                                     aria-haspopup="dialog"
                                 >
-                                    Review
+                                    <span class="sr-only">Review</span>
                                     <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 6 6 6-6 6"></path></svg>
                                 </button>
                             </td>
@@ -625,9 +434,21 @@
             </table>
         </div>
 
-        <div id="riderSearchEmpty" class="hidden border-t border-[#edf0f2] px-5 py-12 text-center">
+        <div id="riderSearchEmpty" hidden role="status">
             <p class="text-[12px] font-medium text-[#56606c]">No matching application</p>
             <p class="mt-1 text-[10px] text-[#929aa4]">Try a different name, email, contact number, plate, or location.</p>
+        </div>
+        <div class="ra-table-footer">
+            <p id="riderResultCount" class="ra-result-count" aria-live="polite">Showing {{ $applications->count() ? 1 : 0 }}–{{ $applications->count() }} of {{ $applications->count() }} applications</p>
+            <nav class="ra-pagination" aria-label="Rider application pagination" data-ra-pagination hidden>
+                <button type="button" class="ra-focus" data-ra-page-prev aria-label="Previous page" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                </button>
+                <div class="ra-page-numbers" data-ra-page-numbers></div>
+                <button type="button" class="ra-focus" data-ra-page-next aria-label="Next page" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                </button>
+            </nav>
         </div>
     </section>
 
@@ -758,34 +579,152 @@
 @push('scripts')
 <script>
 (() => {
-    const input = document.getElementById('riderApplicationSearch');
-    const rows = Array.from(document.querySelectorAll('.ra-table-row'));
-    const count = document.getElementById('riderShowingCount');
-    const empty = document.getElementById('riderSearchEmpty');
+    const root = document.querySelector('.rider-applications-page');
+    if (!root) return;
 
-    if (input && rows.length) {
-        const filterRows = () => {
-            const term = input.value.trim().toLowerCase();
-            let visible = 0;
+    window.__SARI_RIDER_APPLICATIONS_ABORT__?.abort();
+    const controller = new AbortController();
+    window.__SARI_RIDER_APPLICATIONS_ABORT__ = controller;
+    const { signal } = controller;
+    const input = root.querySelector('#riderApplicationSearch');
+    const rows = Array.from(root.querySelectorAll('.ra-table-row'));
+    const count = root.querySelector('#riderShowingCount');
+    const resultCount = root.querySelector('#riderResultCount');
+    const empty = root.querySelector('#riderSearchEmpty');
+    const pagination = root.querySelector('[data-ra-pagination]');
+    const numbers = root.querySelector('[data-ra-page-numbers]');
+    const previous = root.querySelector('[data-ra-page-prev]');
+    const next = root.querySelector('[data-ra-page-next]');
+    const pageSize = 10;
+    let currentPage = 1;
+    let pageCount = 1;
 
-            rows.forEach(row => {
-                const matches = !term || (row.dataset.search || '').includes(term);
-                row.hidden = !matches;
-                if (matches) visible += 1;
-            });
+    function renderApplications({ resetPage = false } = {}) {
+        const term = (input?.value || '').trim().toLowerCase();
+        const matches = rows.filter(row => !term || (row.dataset.search || '').includes(term));
+        pageCount = Math.max(1, Math.ceil(matches.length / pageSize));
+        currentPage = resetPage ? 1 : Math.min(Math.max(1, currentPage), pageCount);
+        const offset = (currentPage - 1) * pageSize;
+        const visibleRows = new Set(matches.slice(offset, offset + pageSize));
+        rows.forEach(row => { row.hidden = !visibleRows.has(row); });
 
-            if (count) count.textContent = `Showing ${visible}`;
-            if (empty) empty.classList.toggle('hidden', visible !== 0);
-        };
-
-        input.addEventListener('input', filterRows);
+        if (count) count.textContent = `Showing ${matches.length} of ${rows.length}`;
+        if (resultCount) {
+            const from = matches.length ? offset + 1 : 0;
+            const to = Math.min(offset + pageSize, matches.length);
+            resultCount.textContent = `Showing ${from}–${to} of ${matches.length} applications`;
+        }
+        if (empty) empty.hidden = rows.length === 0 || matches.length > 0;
+        if (pagination) pagination.hidden = pageCount <= 1;
+        if (previous) previous.disabled = currentPage <= 1;
+        if (next) next.disabled = currentPage >= pageCount;
+        if (!numbers) return;
+        numbers.replaceChildren();
+        const start = Math.max(1, Math.min(currentPage - 2, pageCount - 4));
+        const end = Math.min(pageCount, start + 4);
+        for (let page = start; page <= end; page += 1) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'ra-focus';
+            button.dataset.raPage = String(page);
+            button.textContent = String(page);
+            button.setAttribute('aria-label', `Page ${page}`);
+            if (page === currentPage) button.setAttribute('aria-current', 'page');
+            numbers.append(button);
+        }
     }
 
-    document.querySelectorAll('.ra-dialog').forEach(dialog => {
+    input?.addEventListener('input', () => renderApplications({ resetPage: true }), { signal });
+    pagination?.addEventListener('click', event => {
+        const button = event.target.closest('button');
+        if (!button || button.disabled) return;
+        if (button.hasAttribute('data-ra-page-prev')) currentPage -= 1;
+        else if (button.hasAttribute('data-ra-page-next')) currentPage += 1;
+        else if (button.dataset.raPage) currentPage = Number(button.dataset.raPage);
+        else return;
+        renderApplications();
+        if (button.dataset.raPage) numbers?.querySelector('[aria-current="page"]')?.focus();
+        else if (button.disabled) numbers?.querySelector('[aria-current="page"]')?.focus();
+    }, { signal });
+
+    const dropdown = root.querySelector('[data-ra-status-dropdown]');
+    const select = root.querySelector('#riderApplicationStatus');
+    const trigger = root.querySelector('[data-ra-status-trigger]');
+    const label = root.querySelector('[data-ra-status-label]');
+    const menu = root.querySelector('[data-ra-status-menu]');
+    const options = Array.from(root.querySelectorAll('[data-ra-status-option]'));
+
+    function syncStatus() {
+        if (!select) return;
+        if (label) label.textContent = select.options[select.selectedIndex]?.text || 'Pending';
+        options.forEach(option => option.setAttribute('aria-selected', String(option.dataset.value === select.value)));
+    }
+
+    function closeStatus({ restoreFocus = false } = {}) {
+        if (!menu || !trigger) return;
+        menu.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+        if (restoreFocus) trigger.focus({ preventScroll: true });
+    }
+
+    function openStatus() {
+        if (!menu || !trigger) return;
+        menu.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+        (options.find(option => option.getAttribute('aria-selected') === 'true') || options[0])?.focus({ preventScroll: true });
+    }
+
+    if (dropdown && select && trigger && menu && options.length) {
+        dropdown.dataset.enhanced = 'true';
+        select.tabIndex = -1;
+        select.setAttribute('aria-hidden', 'true');
+        trigger.hidden = false;
+        syncStatus();
+        trigger.addEventListener('click', () => menu.hidden ? openStatus() : closeStatus(), { signal });
+        trigger.addEventListener('keydown', event => {
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                openStatus();
+            }
+        }, { signal });
+        menu.addEventListener('click', event => {
+            const option = event.target.closest('[data-ra-status-option]');
+            if (!option) return;
+            select.value = option.dataset.value;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            closeStatus({ restoreFocus: true });
+        }, { signal });
+        select.addEventListener('change', syncStatus, { signal });
+        dropdown.addEventListener('keydown', event => {
+            if (menu.hidden) return;
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeStatus({ restoreFocus: true });
+            } else if (event.key === 'Tab') {
+                closeStatus({ restoreFocus: true });
+            } else if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key) && menu.contains(event.target)) {
+                event.preventDefault();
+                const index = options.indexOf(document.activeElement);
+                const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1
+                    : (index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+                options[nextIndex]?.focus();
+            }
+        }, { signal });
+        document.addEventListener('click', event => {
+            if (!dropdown.contains(event.target)) closeStatus();
+        }, { signal });
+        dropdown.addEventListener('focusout', event => {
+            if (!dropdown.contains(event.relatedTarget)) closeStatus();
+        }, { signal });
+    }
+
+    root.querySelectorAll('.ra-dialog').forEach(dialog => {
         dialog.addEventListener('click', event => {
             if (event.target === dialog) dialog.close();
-        });
+        }, { signal });
     });
+
+    renderApplications();
 })();
 </script>
 @endpush

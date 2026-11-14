@@ -163,6 +163,55 @@
         margin-bottom: 23px !important;
     }
 }
+
+/* Seller Orders proportions. Existing camera, QR and filtering logic is preserved. */
+@media screen {
+#logisticsContent #sariBranchTreasury {max-width:1520px;font-family:'Poppins',sans-serif;--bt-gold:#c88912;}
+#logisticsContent #sariBranchTreasury .bt-eyebrow {font-size:10.5px;font-weight:800;letter-spacing:.14em;}
+#logisticsContent #sariBranchTreasury .bt-page-title {font-size:clamp(27px,2.3vw,31px);line-height:1.08;letter-spacing:-.04em;}
+#logisticsContent #sariBranchTreasury .bt-header {margin-bottom:20px;padding-bottom:8px;}
+#logisticsContent #sariBranchTreasury > .bt-stats {gap:14px!important;margin-bottom:20px!important;}
+#logisticsContent #sariBranchTreasury .bt-stat {min-height:110px;padding:14px 16px;border-radius:18px;}
+#logisticsContent #sariBranchTreasury .bt-stat-label {font-size:13px;}
+#logisticsContent #sariBranchTreasury .bt-stat-value {font-size:clamp(22px,2vw,28px);font-weight:650;}
+#logisticsContent #sariBranchTreasury .bt-card {border-radius:18px;}
+#logisticsContent #sariBranchTreasury .bt-card-head {min-height:78px;padding:19px 20px;}
+#logisticsContent #sariBranchTreasury .bt-section-title {font-size:16px;font-weight:700;}
+#logisticsContent #sariBranchTreasury :is(.bt-input,.bt-select,.bt-button) {min-height:48px;border-radius:14px;font-size:11.5px;}
+#logisticsContent #sariBranchTreasury .bt-button {font-size:12px;}
+#logisticsContent #sariBranchTreasury .bt-button-gold {background:#c88912;border-color:#c88912;}
+#logisticsContent #sariBranchTreasury .bt-button-gold:hover {background:#b47b0e;border-color:#b47b0e;}
+#logisticsContent #sariBranchTreasury .bt-search-wrap svg {top:15px;}
+#logisticsContent #sariBranchTreasury .bt-filter-bar {gap:12px;margin:20px 0;}
+#logisticsContent #sariBranchTreasury .bt-table {display:table;min-width:1060px;}
+#logisticsContent #sariBranchTreasury .bt-table thead {display:table-header-group;}
+#logisticsContent #sariBranchTreasury .bt-table tbody {display:table-row-group;}
+#logisticsContent #sariBranchTreasury .bt-table tbody tr {display:table-row;padding:0;}
+#logisticsContent #sariBranchTreasury .bt-table th {padding:15px 16px;font-size:11px;}
+#logisticsContent #sariBranchTreasury .bt-table td {display:table-cell;padding:17px 16px;font-size:12px;border-top:1px solid var(--bt-line);}
+#logisticsContent #sariBranchTreasury .bt-table td::before {display:none;}
+#logisticsContent #sariBranchTreasury .bt-history-footer {min-height:64px;padding:13px 20px;font-size:11.5px;}
+#logisticsContent #sariBranchTreasury .bt-pagination {justify-content:flex-end;padding:13px 20px;}
+#logisticsContent #sariBranchTreasury .bt-pagination nav a {min-height:34px;border-radius:10px;}
+#logisticsContent #sariBranchTreasury .bt-help-panel {border-radius:18px;}
+#logisticsContent #sariBranchTreasury .bt-help-copy {font-size:11.5px;line-height:1.8;}
+#logisticsContent #sariBranchTreasury .bt-qr-dialog {border-radius:20px;padding:24px;}
+#logisticsContent #sariBranchTreasury .bt-qr-box {background:#fff;}
+@media(max-width:640px){#logisticsContent #sariBranchTreasury .bt-page-title{font-size:25px;}#logisticsContent #sariBranchTreasury .bt-stats{grid-template-columns:1fr!important;}#logisticsContent #sariBranchTreasury .bt-filter-bar{grid-template-columns:1fr 1fr;}#logisticsContent #sariBranchTreasury .bt-search-wrap{grid-column:1/-1;}}
+}
+
+
+/* Plain next-step text: no cream container. */
+#logisticsContent #sariBranchTreasury .bt-next-custody-step {
+    margin:0 0 20px; padding:0; border:0; border-radius:0;
+    background:transparent; background-image:none; box-shadow:none;
+    color:var(--sari-dark-a63aa16d7c,#657387); font-size:11.5px; line-height:1.8;
+}
+#logisticsContent #sariBranchTreasury .bt-next-custody-step a {
+    color:var(--sari-dark-a63aa16d7c,#59636e); font-weight:750;
+}
+#logisticsContent #sariBranchTreasury .bt-next-custody-step a:hover { color:#c88912; }
+
 </style>
 @endpush
 
@@ -206,10 +255,7 @@
     </header>
 
     @if($facility->is_main_branch)
-        <div class="mb-4 rounded-xl border border-[#e9d6b2] bg-[#fff8e8] p-4 text-[12px] text-[#6e5422]">
-            <strong>Next cash custody step:</strong> Once Rider/Branch cash is centrally reconciled, prepare the full physical handover to SARI Admin.
-            <a href="{{ route('logistics.admin-turnovers.index') }}" class="ml-2 font-bold underline">Open SARI Admin Cash Turnover</a>
-        </div>
+       
     @endif
 
     <div class="bt-stats" role="group" aria-label="Treasury overview">

@@ -633,13 +633,132 @@
         font-weight: 400 !important;
     }
 
+    /* Seller Orders reference: workspace, typography, controls and table density. */
+    .rm-page {
+        --rm-gold: #C88912; --rm-gold-strong: #B47B0E;
+        --rm-text: var(--sari-dark-e23e64dd1e, #2F3742);
+        --rm-muted: var(--sari-dark-a63aa16d7c, #8793A1);
+        --rm-soft: var(--sari-dark-4d21eb669b, #F8FAFC);
+        max-width: 1520px; padding-bottom: 28px;
+    }
+    .rm-page [hidden] { display: none !important; }
+    .rm-header { min-height: 0; margin-bottom: 20px; padding: 0 0 14px; }
+    .rm-eyebrow { margin: 0; font-size: 10.5px; font-weight: 800; line-height: 1.4; letter-spacing: .14em; color: var(--sari-dark-685eb4fc40, #A87316); }
+    .rm-title { margin-top: 6px; font-size: clamp(27px,2.3vw,31px); font-weight: 760; line-height: 1.08; letter-spacing: -.04em; }
+    .rm-summary-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
+    .rm-summary-card, .rm-table-card { border-radius: 18px; box-shadow: 0 3px 10px var(--sari-dark-7593018246, rgba(15,23,42,.035)), 0 12px 30px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055)); }
+    .rm-summary-card { min-height: 110px; padding: 14px 16px; }
+    .rm-summary-label { margin: 0; padding-right: 32px; font-size: 13px; font-weight: 650; line-height: 1.4; }
+    .rm-summary-value { margin-top: 7px; font-size: clamp(25px,1.9vw,30px); font-weight: 650; line-height: 1.12; font-variant-numeric: tabular-nums; }
+    .rm-summary-icon { top: 14px; right: 16px; width: 27px; height: 27px; }
+    .rm-summary-icon svg { width: 27px; height: 27px; }
+    .rm-toolbar { position: relative; z-index: 15; margin-top: 20px; gap: 12px; grid-template-columns: minmax(230px,1fr) minmax(160px,185px) minmax(160px,185px) auto auto auto; }
+    .rm-page .rm-search .rm-control, .rm-page .rm-search .rm-control::placeholder,
+    .rm-page .rm-control-wrap select.rm-control { font-size: 11.5px !important; }
+    .rm-page .rm-control-wrap select.rm-control option { font-size: 11.5px !important; }
+    .rm-page .rm-control, .rm-page .rm-add-button, .rm-filter-apply, .rm-filter-reset, .rm-status-trigger {
+        height: 48px; min-height: 48px; border-radius: 14px; transform: none !important; translate: none !important;
+    }
+    .rm-page .rm-control { font-weight: 600; background: var(--sari-dark-950baec030, #FFF); }
+    .rm-page .rm-search .rm-control { padding-left: 46px; padding-right: 14px; }
+    .rm-search svg { left: 16px; width: 21px; height: 21px; }
+    .rm-page .rm-add-button, .rm-filter-apply, .rm-filter-reset { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: auto; grid-column: auto; padding: 0 18px; font-size: 12px !important; font-weight: 700 !important; white-space: nowrap; cursor: pointer; box-shadow: none; border: 1px solid var(--rm-gold); }
+    .rm-page .rm-add-button svg, .rm-filter-apply svg { width: 15px; height: 15px; flex: 0 0 15px; }
+    .rm-filter-apply { color: #FFF; background: var(--rm-gold); }
+    .rm-filter-apply:hover, .rm-page .rm-add-button:hover { background: var(--rm-gold-strong); border-color: var(--rm-gold-strong); box-shadow: none; }
+    .rm-filter-reset { min-width: 86px; border-color: var(--rm-line); background: var(--sari-dark-950baec030, #FFF); color: var(--rm-muted); }
+    .rm-filter-reset:hover, .rm-control:hover { background: var(--rm-soft); }
+    .rm-page button:focus-visible, .rm-control:focus-visible, .rm-status-trigger[aria-expanded="true"] { outline: 2px solid var(--rm-gold); outline-offset: 2px; }
+    .rm-control-wrap { z-index: 50; }
+    .rm-control-wrap[data-enhanced] > select { position: absolute; width: 1px; height: 1px; min-height: 0; padding: 0; margin: 0; border: 0; clip-path: inset(50%); opacity: 0; pointer-events: none; overflow: hidden; }
+    .rm-control-wrap[data-enhanced] > svg { display: none; }
+    .rm-status-trigger { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 8px; padding: 0 16px; border: 1px solid var(--rm-line); background: var(--sari-dark-950baec030, #FFF); color: var(--rm-text-2); text-align: left; cursor: pointer; }
+    .rm-page .rm-status-trigger { font-size: 11.5px; font-weight: 600; }
+    .rm-status-trigger span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rm-status-trigger svg { width: 17px; height: 17px; flex: 0 0 17px; transition: transform .15s ease; }
+    .rm-status-trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+    .rm-status-trigger:hover { background: var(--rm-soft); }
+    .rm-status-menu { position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 100; padding: 8px; border: 1px solid var(--rm-line); border-radius: 14px; background: var(--sari-dark-950baec030, #FFF); box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05); }
+    .rm-status-option { display: flex; align-items: center; width: 100%; min-height: 38px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: var(--rm-text-2); text-align: left; cursor: pointer; }
+    .rm-page .rm-status-option { font-size: 11.5px; font-weight: 600; }
+    .rm-status-option:hover, .rm-status-option:focus-visible, .rm-status-option[aria-selected="true"] { background: var(--rm-soft); color: var(--sari-dark-af18afcaa4, #A56D0A); }
+    .rm-status-option[aria-selected="true"] { font-weight: 700; }
+    .rm-table-card { margin-top: 20px; }
+    .rm-table-header { padding: 21px 23px; gap: 20px; }
+    .rm-table-title { font-size: 18px; font-weight: 780; }
+    .rm-table-copy { margin-top: 4px; font-size: 11.5px; }
+    .rm-count { min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; font-size: 12px; font-weight: 600; color: var(--rm-muted); }
+    .rm-table-wrap { scrollbar-width: thin; }
+    .rm-table-wrap:focus-visible { outline: 2px solid var(--rm-gold); outline-offset: -2px; }
+    .rm-table { min-width: 1060px; }
+    .rm-table thead tr { background: var(--rm-soft); }
+    .rm-table th { height: 48px; padding: 13px 16px; font-size: 11px; font-weight: 750; line-height: 1.4; }
+    .rm-table td { padding: 17px 16px; font-size: 11.5px; line-height: 1.5; }
+    .rm-table th:first-child, .rm-table td:first-child { padding-left: 16px; }
+    .rm-table th:last-child, .rm-table td:last-child { padding-right: 16px; }
+    .rm-table tbody tr:hover { background: var(--rm-soft); box-shadow: none; }
+    .rm-table tbody tr[hidden] { display: none !important; }
+    .rm-rider-name { margin: 0; font-size: 12.5px; font-weight: 750; line-height: 1.5; }
+    .rm-rider-email { margin-top: 3px; font-size: 11px; line-height: 1.5; }
+    .rm-table td > p { margin: 0; font-size: 11.5px; }
+    .rm-table td > p + p { margin-top: 3px; font-size: 11px; color: var(--rm-muted); }
+    .rm-table td:first-child img { border: 1px solid var(--rm-line); border-radius: 9px !important; }
+    .rm-badge { min-height: 27px; padding: 5px 10px; font-size: 10.5px; font-weight: 700; line-height: 1.3; }
+    .rm-resend { font-size: 10.5px; }
+    .rm-table-footer { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 20px; border-top: 1px solid var(--rm-line-soft); }
+    .rm-result-count { margin: 0; color: var(--rm-muted); font-size: 11px; font-weight: 550; }
+    .rm-pagination, .rm-page-numbers { display: flex; align-items: center; gap: 6px; }
+    .rm-pagination button { display: grid; place-items: center; width: 34px; min-width: 34px; height: 34px; padding: 0; border: 1px solid var(--rm-line); border-radius: 10px; background: var(--sari-dark-950baec030, #FFF); color: var(--rm-muted); cursor: pointer; }
+    .rm-page .rm-pagination button { font-size: 11.5px; font-weight: 700; }
+    .rm-pagination button[aria-current="page"] { color: #FFF; background: var(--rm-gold); border-color: var(--rm-gold); }
+    .rm-pagination button:disabled { opacity: .42; cursor: not-allowed; }
+    .rm-pagination button:hover:not(:disabled) { border-color: var(--rm-gold); }
+    .rm-pagination svg { width: 15px; height: 15px; }
+    @media (max-width: 1180px) {
+        .rm-toolbar { grid-template-columns: repeat(6,minmax(0,1fr)); }
+        .rm-search { grid-column: 1 / -1; }
+        .rm-control-wrap { grid-column: span 3; }
+        .rm-page .rm-toolbar > button { grid-column: span 2; width: 100%; }
+    }
+    @media (max-width: 767px) {
+        .rm-title { font-size: 25px; }
+        .rm-eyebrow { font-size: 9.5px; }
+        .rm-summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width: 640px) {
+        .rm-toolbar { grid-template-columns: repeat(2,minmax(0,1fr)); }
+        .rm-control-wrap { grid-column: 1 / -1; }
+        .rm-page .rm-toolbar > button { grid-column: auto; }
+        .rm-page .rm-toolbar > .rm-add-button { grid-column: 1 / -1; }
+    }
+    @media (max-width: 540px) {
+        .rm-summary-grid { grid-template-columns: 1fr; gap: 11px; }
+        .rm-summary-card { min-height: 100px; }
+        .rm-table-header { flex-direction: column; align-items: flex-start; padding: 17px 16px; gap: 6px; }
+        .rm-table-footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+        .rm-pagination { align-self: flex-end; }
+    }
+    @media (prefers-reduced-motion: reduce) { .rm-page * { transition: none !important; animation: none !important; } }
+    /* Fit the toolbar to its workspace when the Logistics sidebar is open. */
+    .rm-page { container-type: inline-size; }
+    @container (max-width: 1100px) {
+        .rm-toolbar { grid-template-columns: repeat(6,minmax(0,1fr)); }
+        .rm-search { grid-column: 1 / -1; }
+        .rm-control-wrap { grid-column: span 3; }
+        .rm-page .rm-toolbar > button { grid-column: span 2; width: 100%; }
+    }
+    @container (max-width: 640px) {
+        .rm-toolbar { grid-template-columns: repeat(2,minmax(0,1fr)); }
+        .rm-control-wrap { grid-column: 1 / -1; }
+        .rm-page .rm-toolbar > button { grid-column: auto; }
+        .rm-page .rm-toolbar > .rm-add-button { grid-column: 1 / -1; }
+    }
+
 </style>
 @endpush
 
 @section('content')
 <div class="rm-page sari-logistics-ui">
-    {{-- SARI_COD_CUSTODY_POLICY_V1 --}}
-    @include('finance.partials.cod-overdue-banner')
     <section class="rm-header">
         <p class="rm-eyebrow">Rider Operations</p>
         <h1 class="rm-title">Manage <span class="rm-title-accent">Riders</span></h1>
@@ -680,10 +799,10 @@
     <section class="rm-toolbar" aria-label="Rider filters">
         <div class="rm-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path></svg>
-            <input id="riderSearch" type="search" autocomplete="off" class="rm-control" placeholder="Search Rider, email, contact, vehicle, or plate...">
+            <input id="riderSearch" aria-label="Search riders" type="search" autocomplete="off" class="rm-control" placeholder="Search Rider, email, contact, vehicle, or plate...">
         </div>
 
-        <div class="rm-control-wrap">
+        <div class="rm-control-wrap" data-rm-dropdown>
             <select id="riderAccountFilter" class="rm-control" aria-label="Filter by account status">
                 <option value="all">All Accounts</option>
                 <option value="active">Active</option>
@@ -692,9 +811,20 @@
                 <option value="suspended">Suspended</option>
             </select>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+            <button type="button" class="rm-status-trigger" data-rm-status-trigger aria-label="Filter by account status" aria-haspopup="listbox" aria-expanded="false" aria-controls="riderAccountFilterMenu" hidden>
+                <span data-rm-status-label>All Accounts</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+            </button>
+            <div id="riderAccountFilterMenu" class="rm-status-menu" role="listbox" aria-label="Filter by account status" data-rm-status-menu hidden>
+                <button type="button" class="rm-status-option" role="option" tabindex="-1" data-rm-status-option data-value="all" aria-selected="true">All Accounts</button>
+                <button type="button" class="rm-status-option" role="option" tabindex="-1" data-rm-status-option data-value="active" aria-selected="false">Active</button>
+                <button type="button" class="rm-status-option" role="option" tabindex="-1" data-rm-status-option data-value="pending_activation" aria-selected="false">Pending Activation</button>
+                <button type="button" class="rm-status-option" role="option" tabindex="-1" data-rm-status-option data-value="inactive" aria-selected="false">Inactive</button>
+                <button type="button" class="rm-status-option" role="option" tabindex="-1" data-rm-status-option data-value="suspended" aria-selected="false">Suspended</button>
+            </div>
         </div>
 
-        <div class="rm-control-wrap">
+        <div class="rm-control-wrap" data-rm-dropdown>
             <select id="riderAvailabilityFilter" class="rm-control" aria-label="Filter by availability">
                 <option value="all">All Availability</option>
                 <option value="online">Online</option>
@@ -702,8 +832,23 @@
                 <option value="busy">Busy</option>
             </select>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+            <button type="button" class="rm-status-trigger" data-rm-status-trigger aria-label="Filter by availability" aria-haspopup="listbox" aria-expanded="false" aria-controls="riderAvailabilityFilterMenu" hidden>
+                <span data-rm-status-label>All Availability</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+            </button>
+            <div id="riderAvailabilityFilterMenu" class="rm-status-menu" role="listbox" aria-label="Filter by availability" data-rm-status-menu hidden>
+                <button type="button" class="rm-status-option" role="option" tabindex="-1" data-rm-status-option data-value="all" aria-selected="true">All Availability</button>
+                <button type="button" class="rm-status-option" role="option" tabindex="-1" data-rm-status-option data-value="online" aria-selected="false">Online</button>
+                <button type="button" class="rm-status-option" role="option" tabindex="-1" data-rm-status-option data-value="offline" aria-selected="false">Offline</button>
+                <button type="button" class="rm-status-option" role="option" tabindex="-1" data-rm-status-option data-value="busy" aria-selected="false">Busy</button>
+            </div>
         </div>
 
+        <button id="applyRiderFilters" type="button" class="rm-filter-apply">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16M7 10h10M10 15h4"></path></svg>
+            Apply Filter
+        </button>
+        <button id="resetRiderFilters" type="button" class="rm-filter-reset">Reset</button>
         <button id="openAddRiderModal" type="button" class="rm-add-button">
             <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
             Add Rider
@@ -715,22 +860,22 @@
             <div>
                 <div class="rm-table-title-row">
                     <h2 class="rm-table-title">Rider directory</h2>
-                    <span id="riderVisibleCount" class="rm-count">Showing {{ $riders->count() }}</span>
                 </div>
                 <p class="rm-table-copy">Review Rider account status, availability, assigned vehicle, and active delivery work.</p>
             </div>
+            <span id="riderVisibleCount" class="rm-count" aria-live="polite">Showing {{ $riders->count() }} of {{ $riders->count() }}</span>
         </div>
 
-        <div class="rm-table-wrap">
-            <table class="rm-table {{ $riders->isEmpty() ? 'is-empty' : '' }}">
+        <div class="rm-table-wrap" tabindex="0" aria-label="Rider directory, scroll horizontally to see all columns">
+            <table aria-label="Rider directory records" class="rm-table {{ $riders->isEmpty() ? 'is-empty' : '' }}">
                 <thead>
                     <tr>
-                        <th>Rider</th>
-                        <th>Vehicle</th>
-                        <th>Contact</th>
-                        <th>Account</th>
-                        <th>Availability</th>
-                        <th>Current Work</th>
+                        <th scope="col">Rider</th>
+                        <th scope="col">Vehicle</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Account</th>
+                        <th scope="col">Availability</th>
+                        <th scope="col">Current Work</th>
                     </tr>
                 </thead>
                 <tbody id="riderTableBody">
@@ -816,6 +961,14 @@
                 <p class="rm-empty-title">No matching Riders</p>
                 <p class="rm-empty-copy">Try another search or adjust your account and availability filters.</p>
             </div>
+        </div>
+        <div class="rm-table-footer">
+            <p id="riderResultCount" class="rm-result-count" aria-live="polite">Showing {{ $riders->count() ? 1 : 0 }}–{{ $riders->count() }} of {{ $riders->count() }} riders</p>
+            <nav class="rm-pagination" aria-label="Rider directory pagination" data-rm-pagination hidden>
+                <button type="button" data-rm-page-prev aria-label="Previous page" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+                <div class="rm-page-numbers" data-rm-page-numbers></div>
+                <button type="button" data-rm-page-next aria-label="Next page" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+            </nav>
         </div>
     </section>
 </div>
@@ -913,24 +1066,125 @@
             node.addEventListener(eventName, handler, Object.assign({}, options || {}, { signal }));
         }
 
-        function filterRows() {
+        const pageSize = 10;
+        let currentPage = 1;
+        let pageCount = 1;
+        const pagination = document.querySelector('[data-rm-pagination]');
+        const numbers = document.querySelector('[data-rm-page-numbers]');
+        const previous = document.querySelector('[data-rm-page-prev]');
+        const next = document.querySelector('[data-rm-page-next]');
+        const resultCount = document.getElementById('riderResultCount');
+
+        function filterRows({ resetPage = true } = {}) {
             const query = (search?.value || '').trim().toLowerCase();
             const account = accountFilter?.value || 'all';
             const availability = availabilityFilter?.value || 'all';
-            let visible = 0;
-
-            rows.forEach(function (row) {
-                const matchesSearch = !query || (row.dataset.search || '').includes(query);
-                const matchesAccount = account === 'all' || row.dataset.account === account;
-                const matchesAvailability = availability === 'all' || row.dataset.availability === availability;
-                const matches = matchesSearch && matchesAccount && matchesAvailability;
-                row.hidden = !matches;
-                if (matches) visible++;
-            });
-
-            if (count) count.textContent = 'Showing ' + visible;
-            if (empty) empty.hidden = visible !== 0 || rows.length === 0;
+            const matches = rows.filter(row =>
+                (!query || (row.dataset.search || '').includes(query)) &&
+                (account === 'all' || row.dataset.account === account) &&
+                (availability === 'all' || row.dataset.availability === availability)
+            );
+            pageCount = Math.max(1, Math.ceil(matches.length / pageSize));
+            currentPage = resetPage ? 1 : Math.min(Math.max(1, currentPage), pageCount);
+            const offset = (currentPage - 1) * pageSize;
+            const visible = new Set(matches.slice(offset, offset + pageSize));
+            rows.forEach(row => { row.hidden = !visible.has(row); });
+            if (count) count.textContent = `Showing ${matches.length} of ${rows.length}`;
+            if (empty) empty.hidden = matches.length > 0 || rows.length === 0;
+            if (resultCount) resultCount.textContent = `Showing ${matches.length ? offset + 1 : 0}–${Math.min(offset + pageSize, matches.length)} of ${matches.length} riders`;
+            if (pagination) pagination.hidden = pageCount <= 1;
+            if (previous) previous.disabled = currentPage <= 1;
+            if (next) next.disabled = currentPage >= pageCount;
+            if (!numbers) return;
+            numbers.replaceChildren();
+            const start = Math.max(1, Math.min(currentPage - 2, pageCount - 4));
+            const end = Math.min(pageCount, start + 4);
+            for (let page = start; page <= end; page += 1) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.dataset.rmPage = String(page);
+                button.textContent = String(page);
+                button.setAttribute('aria-label', `Page ${page}`);
+                if (page === currentPage) button.setAttribute('aria-current', 'page');
+                numbers.append(button);
+            }
         }
+
+        listen(pagination, 'click', event => {
+            const button = event.target.closest('button');
+            if (!button || button.disabled) return;
+            if (button.hasAttribute('data-rm-page-prev')) currentPage -= 1;
+            else if (button.hasAttribute('data-rm-page-next')) currentPage += 1;
+            else if (button.dataset.rmPage) currentPage = Number(button.dataset.rmPage);
+            else return;
+            filterRows({ resetPage: false });
+            if (button.dataset.rmPage || button.disabled) numbers?.querySelector('[aria-current="page"]')?.focus();
+        });
+        listen(document.getElementById('applyRiderFilters'), 'click', () => filterRows());
+        listen(document.getElementById('resetRiderFilters'), 'click', () => {
+            if (search) search.value = '';
+            if (accountFilter) accountFilter.value = 'all';
+            if (availabilityFilter) availabilityFilter.value = 'all';
+            accountFilter?.dispatchEvent(new Event('change', { bubbles: true }));
+            availabilityFilter?.dispatchEvent(new Event('change', { bubbles: true }));
+            filterRows();
+        });
+
+        document.querySelectorAll('[data-rm-dropdown]').forEach(dropdown => {
+            const select = dropdown.querySelector('select');
+            const trigger = dropdown.querySelector('[data-rm-status-trigger]');
+            const label = dropdown.querySelector('[data-rm-status-label]');
+            const menu = dropdown.querySelector('[data-rm-status-menu]');
+            const options = Array.from(dropdown.querySelectorAll('[data-rm-status-option]'));
+            if (!select || !trigger || !menu || !options.length) return;
+
+            function syncStatus() {
+                if (label) label.textContent = select.options[select.selectedIndex]?.text || '';
+                options.forEach(option => option.setAttribute('aria-selected', String(option.dataset.value === select.value)));
+            }
+            function closeStatus({ restoreFocus = false } = {}) {
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                if (restoreFocus) trigger.focus({ preventScroll: true });
+            }
+            function openStatus() {
+                menu.hidden = false;
+                trigger.setAttribute('aria-expanded', 'true');
+                (options.find(option => option.getAttribute('aria-selected') === 'true') || options[0])?.focus({ preventScroll: true });
+            }
+            dropdown.dataset.enhanced = 'true';
+            select.tabIndex = -1;
+            select.setAttribute('aria-hidden', 'true');
+            trigger.hidden = false;
+            syncStatus();
+            closeStatus();
+            listen(select, 'change', syncStatus);
+            listen(trigger, 'click', () => menu.hidden ? openStatus() : closeStatus());
+            listen(trigger, 'keydown', event => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); openStatus(); }
+            });
+            listen(menu, 'click', event => {
+                const option = event.target.closest('[data-rm-status-option]');
+                if (!option) return;
+                select.value = option.dataset.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                closeStatus({ restoreFocus: true });
+            });
+            listen(dropdown, 'keydown', event => {
+                if (menu.hidden) return;
+                if (event.key === 'Escape') { event.preventDefault(); closeStatus({ restoreFocus: true }); }
+                else if (event.key === 'Tab') closeStatus({ restoreFocus: true });
+                else if (['ArrowDown','ArrowUp','Home','End'].includes(event.key) && menu.contains(event.target)) {
+                    event.preventDefault();
+                    const index = options.indexOf(document.activeElement);
+                    const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1
+                        : (index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+                    options[nextIndex]?.focus();
+                }
+            });
+            listen(document, 'click', event => { if (!dropdown.contains(event.target)) closeStatus(); });
+            listen(dropdown, 'focusout', event => { if (!dropdown.contains(event.relatedTarget)) closeStatus(); });
+        });
 
         function openAddModal() {
             if (!modal) return;

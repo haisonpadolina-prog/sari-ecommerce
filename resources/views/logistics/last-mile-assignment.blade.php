@@ -122,6 +122,73 @@ body.lm2-modal-open {overflow:hidden;}
 @media(max-width:850px) {#lgLastMile .lm2-filterbar {grid-template-columns:minmax(0,1fr) minmax(145px,190px)!important;} #lgLastMile .lm2-filterbar .lm2-btn{width:100%;} #lgLastMile .lm2-table-wrap{display:none;} #lgLastMile .lm2-mobile-list{display:block;}}
 @media(max-width:560px) {#lgLastMile .lm2-page-header{gap:15px;} #lgLastMile .lm2-page-title{font-size:25px;} #lgLastMile .lm2-header-actions{width:100%;} #lgLastMile .lm2-header-actions .lm2-btn{flex:1;} #lgLastMile .lm2-stats{gap:10px!important;} #lgLastMile .lm2-stat{padding:13px;min-height:111px;border-radius:14px;} #lgLastMile .lm2-stat-label{font-size:11px;} #lgLastMile .lm2-stat-value{font-size:24px;} #lgLastMile .lm2-stat-icon svg{width:27px;height:27px;} #lgLastMile .lm2-filterbar{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;} #lgLastMile .lm2-search-field{grid-column:1/-1;} #lgLastMile .lm2-filterbar>.lm2-select{grid-column:1/-1;} #lgLastMile .lm2-tab{font-size:12px;} #lgLastMile .lm2-tabs{gap:17px;} #lgLastMile .lm2-card-head{padding:15px 16px;} #lgLastMile .lm2-empty-title{font-size:20px;} #lgLastMile .lm2-table-footer{padding:12px 15px;} #lgLastMile .lm2-dialog{border-radius:17px;} #lgLastMile .lm2-dialog-head{padding:17px;} #lgLastMile .lm2-dialog-body{padding:16px;} #lgLastMile .lm2-info-grid{grid-template-columns:1fr;} #lgLastMile .lm2-dialog-actions .lm2-btn{flex:1;} }
 @media(prefers-reduced-motion:reduce){#lgLastMile *{scroll-behavior:auto!important;transition:none!important;animation:none!important;}}
+/* Seller Orders visual proportions; page-scoped Last Mile UI. */
+#logisticsContent #lgLastMile {max-width:1520px!important;font-family:'Poppins',sans-serif;--lm-gold:#c88912;--lm-gold-hover:#b47b0e;--lm-shadow:0 4px 8px rgba(25,42,65,.025),0 12px 32px rgba(25,42,65,.065);}
+#logisticsContent #lgLastMile .lm2-page-header {align-items:flex-start;margin-bottom:20px;padding:0 0 14px;border-bottom:0;}
+#logisticsContent #lgLastMile .lm2-eyebrow {font-size:10.5px;font-weight:800;letter-spacing:.14em;}
+#logisticsContent #lgLastMile .lm2-page-title {font-size:clamp(27px,2.3vw,31px);font-weight:760;line-height:1.08;letter-spacing:-.04em;}
+#logisticsContent #lgLastMile .lm2-header-actions {margin-left:auto;gap:24px;}
+#logisticsContent #lgLastMile .lm2-header-actions .lm2-btn {min-height:36px;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--lm-muted)!important;font-size:12px;font-weight:750;gap:8px;}
+#logisticsContent #lgLastMile .lm2-header-actions .lm2-btn:hover {color:var(--lm-gold)!important;}
+#logisticsContent #lgLastMile .lm2-header-actions .lm2-btn span {display:none;}
+#logisticsContent #lgLastMile .lm2-header-actions .lm2-btn::after {content:'›';font-size:25px;font-weight:800;line-height:1;}
+#logisticsContent #lgLastMile .lm2-stat {min-height:110px;padding:14px 16px;border-radius:18px;box-shadow:var(--lm-shadow)!important;}
+#logisticsContent #lgLastMile .lm2-stat-label {font-size:13px;font-weight:600;}
+#logisticsContent #lgLastMile .lm2-stat-value {font-size:clamp(25px,1.9vw,30px);font-weight:650;margin-top:7px;}
+#logisticsContent #lgLastMile .lm2-stat-note {font-size:11.5px;}
+#logisticsContent #lgLastMile .lm2-stat-icon,#logisticsContent #lgLastMile .lm2-stat-icon svg {width:27px;height:27px;flex-basis:27px;}
+#logisticsContent #lgLastMile .lm2-tabs {gap:24px;margin-bottom:20px;padding-bottom:12px;}
+#logisticsContent #lgLastMile .lm2-tab {font-size:12.5px;font-weight:650;}
+#logisticsContent #lgLastMile .lm2-filterbar {grid-template-columns:minmax(0,1fr) minmax(185px,210px) auto auto;gap:12px!important;margin-bottom:20px;}
+#logisticsContent #lgLastMile .lm2-search-field,#logisticsContent #lgLastMile .lm2-select {height:48px;min-height:48px;border-radius:14px;}
+#logisticsContent #lgLastMile .lm2-search-input,#logisticsContent #lgLastMile .lm2-select {font-size:11.5px;}
+#logisticsContent #lgLastMile .lm2-filterbar .lm2-btn {min-height:48px;padding:0 18px;font-size:12px;border-radius:14px;}
+#logisticsContent #lgLastMile .lm2-card {border-radius:18px;box-shadow:var(--lm-shadow)!important;}
+#logisticsContent #lgLastMile .lm2-card-head {min-height:78px;padding:19px 20px;}
+#logisticsContent #lgLastMile .lm2-card-title {font-size:16px;font-weight:700;}
+#logisticsContent #lgLastMile .lm2-count {font-size:10.5px;font-weight:650;background:var(--lm-surface);}
+#logisticsContent #lgLastMile .lm2-table-wrap {display:block;overflow-x:auto;}
+#logisticsContent #lgLastMile .lm2-table {min-width:1060px;}
+#logisticsContent #lgLastMile .lm2-table th {padding:15px 16px;font-size:11px;font-weight:700;background:var(--sari-dark-4d21eb669b,#f8f9fb);}
+#logisticsContent #lgLastMile .lm2-table td {padding:17px 16px;font-size:12px;line-height:1.55;}
+#logisticsContent #lgLastMile .lm2-strong {font-size:12px;font-weight:650;}
+#logisticsContent #lgLastMile .lm2-sub {font-size:11px;}
+#logisticsContent #lgLastMile .lm2-status {font-size:10.5px;border-radius:9px;padding:6px 9px;}
+#logisticsContent #lgLastMile .lm2-status.warn {background:var(--sari-dark-4d21eb669b,#f4f6f9);border-color:var(--lm-border);color:var(--lm-muted);}
+#logisticsContent #lgLastMile .lm2-table-footer {min-height:64px;padding:13px 20px;font-size:11.5px;}
+#logisticsContent #lgLastMile .lm2-pager {gap:6px;justify-content:flex-end;margin:14px 0 20px;}
+#logisticsContent #lgLastMile .lm2-page-btn {width:34px;height:34px;font-size:11px;border-radius:10px;}
+#logisticsContent #lgLastMile .lm2-page-btn.is-active {background:#c88912;box-shadow:none;}
+#logisticsContent #lgLastMile .lm2-dialog {width:min(640px,100%);border-radius:20px;box-shadow:0 24px 70px rgba(15,23,42,.22);}
+#logisticsContent #lgLastMile .lm2-dialog-head {padding:20px 24px;}
+#logisticsContent #lgLastMile .lm2-dialog-title {font-size:22px;font-weight:700;line-height:1.25;}
+#logisticsContent #lgLastMile .lm2-dialog-subtitle {font-size:11.5px;line-height:1.6;}
+#logisticsContent #lgLastMile .lm2-dialog-body {padding:22px 24px;gap:14px;}
+#logisticsContent #lgLastMile .lm2-info {padding:14px 16px;border-radius:14px;background:var(--sari-dark-4d21eb669b,#f8f9fb);}
+#logisticsContent #lgLastMile .lm2-info-value {font-size:12px;font-weight:600;}
+#logisticsContent #lgLastMile .lm2-info-label {font-size:10px;font-weight:700;}
+#logisticsContent #lgLastMile .lm2-info-desc {font-size:11px;}
+#logisticsContent #lgLastMile .lm2-form-label {font-size:11.5px;}
+#logisticsContent #lgLastMile .lm2-form-select {min-height:48px;border-radius:14px;font-size:11.5px;}
+#logisticsContent #lgLastMile .lm2-dialog-actions {padding-top:16px;gap:10px;}
+#logisticsContent #lgLastMile .lm2-dialog-actions .lm2-btn {min-height:44px;padding:0 16px;border-radius:12px;font-size:11.5px;}
+#logisticsContent #lgLastMile .lm2-modal-warning {background:var(--sari-dark-4d21eb669b,#f7f9fc);border-color:var(--lm-border);color:var(--lm-muted);font-size:11px;line-height:1.75;}
+#logisticsContent #lgLastMile :is(button,input,select,a):focus-visible {outline:2px solid #c88912;outline-offset:3px;}
+@media(max-width:850px){
+ #logisticsContent #lgLastMile .lm2-table-wrap {display:none;}
+ #logisticsContent #lgLastMile .lm2-filterbar {grid-template-columns:1fr 1fr!important;}
+ #logisticsContent #lgLastMile .lm2-search-field {grid-column:1 / -1;}
+ #logisticsContent #lgLastMile .lm2-select {grid-column:1 / -1;}
+}
+@media(max-width:560px){
+ #logisticsContent #lgLastMile .lm2-page-title {font-size:25px;}
+ #logisticsContent #lgLastMile .lm2-header-actions {justify-content:flex-end;gap:18px;}
+ #logisticsContent #lgLastMile .lm2-header-actions .lm2-btn {flex:none;}
+ #logisticsContent #lgLastMile .lm2-stats {grid-template-columns:1fr!important;}
+ #logisticsContent #lgLastMile .lm2-dialog-head,#logisticsContent #lgLastMile .lm2-dialog-body {padding:16px;}
+ #logisticsContent #lgLastMile .lm2-card-head {padding:17px 16px;}
+}
+
 </style>
 @endpush
 

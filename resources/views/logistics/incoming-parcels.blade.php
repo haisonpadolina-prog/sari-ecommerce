@@ -1124,6 +1124,94 @@
   #lgIncomingParcels .intake-row-actions {gap:10px;}
 }
 
+/* Seller Orders visual scale, limited to Pickup Assignment. */
+#lgIncomingParcels.intake-page { max-width:1520px!important; margin-inline:auto; padding-bottom:28px!important; }
+#lgIncomingParcels .intake-page-header { min-height:0!important; margin:0 0 20px!important; padding:0 0 14px!important; border-bottom:1px solid var(--sari-dark-d8c2716225,#E9EDF1)!important; }
+#lgIncomingParcels .intake-eyebrow { font-size:10.5px!important; font-weight:800!important; line-height:1.4!important; letter-spacing:.14em!important; }
+#lgIncomingParcels .intake-page-header h1 { margin-top:6px!important; font-size:clamp(27px,2.3vw,31px)!important; font-weight:760!important; line-height:1.08!important; letter-spacing:-.04em!important; }
+#lgIncomingParcels .intake-page-header h1 span { color:var(--sari-dark-19b301f69a,#C88912)!important; }
+#lgIncomingParcels .intake-page-header .intake-button { min-height:32px!important; padding:0!important; border:0!important; background:transparent!important; box-shadow:none!important; font-size:11.5px!important; font-weight:750!important; }
+#lgIncomingParcels .intake-stats { grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:14px!important; margin:0!important; }
+#lgIncomingParcels .intake-stat { min-height:110px!important; padding:14px 16px!important; border-radius:18px!important; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; transform:none!important; }
+#lgIncomingParcels .intake-stat p { margin:0!important; font-size:13px!important; font-weight:650!important; line-height:1.4!important; }
+#lgIncomingParcels .intake-stat strong { margin-top:7px!important; font-size:clamp(25px,1.9vw,30px)!important; font-weight:650!important; line-height:1.12!important; font-variant-numeric:tabular-nums; }
+#lgIncomingParcels .intake-stat div > span { margin-top:6px!important; font-size:11.5px!important; line-height:1.5!important; white-space:normal!important; }
+#lgIncomingParcels .intake-stat .intake-stat-icon, #lgIncomingParcels .intake-stat-icon svg { width:27px!important; height:27px!important; flex-basis:27px!important; }
+#lgIncomingParcels .intake-header-actions { display:flex!important; flex-wrap:wrap; justify-content:flex-end; gap:10px 24px!important; }
+#lgIncomingParcels .intake-page-header .intake-header-actions .intake-button { display:inline-flex!important; align-items:center; justify-content:flex-start!important; gap:8px!important; width:auto!important; min-height:0!important; height:auto!important; padding:0!important; border:0!important; border-radius:0!important; background:transparent!important; box-shadow:none!important; color:var(--sari-dark-a63aa16d7c,#59636E)!important; font-size:11.5px!important; font-weight:750!important; line-height:1.35!important; text-decoration:none!important; transform:none!important; }
+#lgIncomingParcels .intake-page-header .intake-header-actions .intake-button:hover { color:var(--sari-dark-19b301f69a,#C88912)!important; background:transparent!important; }
+#lgIncomingParcels .intake-header-chevron { font-size:18px; font-weight:800; line-height:.8; }
+#lgIncomingParcels .intake-directory-controls { position:relative; z-index:15; display:grid!important; grid-template-columns:minmax(0,1fr) minmax(185px,210px) auto auto!important; gap:12px!important; margin:20px 0 0!important; padding:0!important; }
+#lgIncomingParcels .intake-directory-controls :is(input,select,button) { height:48px!important; min-height:48px!important; border-radius:14px!important; font-size:11.5px!important; box-shadow:none!important; transform:none!important; translate:none!important; }
+#lgIncomingParcels .intake-directory-search input { padding:0 14px 0 46px!important; }
+#lgIncomingParcels .intake-directory-search > svg { left:16px!important; width:21px!important; height:21px!important; }
+#lgIncomingParcels .intake-directory-search input::placeholder { font-size:11.5px!important; }
+#lgIncomingParcels .intake-directory-controls :is(.intake-apply-filter,.intake-reset-filter) { width:auto!important; min-width:86px; padding:0 18px!important; font-size:12px!important; font-weight:700!important; }
+#lgIncomingParcels .intake-apply-filter { background:#C88912!important; border-color:#C88912!important; }
+#lgIncomingParcels .intake-apply-filter:hover { background:#B47B0E!important; border-color:#B47B0E!important; }
+#lgIncomingParcels .intake-status-select { position:relative; display:block; min-width:0; z-index:50; }
+#lgIncomingParcels .intake-status-select[data-enhanced] > select { position:absolute!important; width:1px!important; height:1px!important; min-height:0!important; margin:0!important; padding:0!important; border:0!important; clip-path:inset(50%); opacity:0; pointer-events:none; overflow:hidden; }
+#lgIncomingParcels .intake-filter-trigger { display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%; padding:0 16px; border:1px solid var(--sari-dark-d8c2716225,#DCE2E8); background:var(--sari-dark-950baec030,#FFF); color:var(--sari-dark-e23e64dd1e,#3F4B59); font-family:inherit; font-weight:600; text-align:left; cursor:pointer; }
+#lgIncomingParcels .intake-filter-trigger svg { width:17px; height:17px; flex-shrink:0; }
+#lgIncomingParcels .intake-filter-trigger[aria-expanded="true"] svg { transform:rotate(180deg); }
+#lgIncomingParcels .intake-filter-menu { position:absolute; top:calc(100% + 8px); left:0; right:0; z-index:100; padding:8px; border:1px solid var(--sari-dark-d8c2716225,#E2E8F0); border-radius:14px; background:var(--sari-dark-950baec030,#FFF); box-shadow:0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05); }
+#lgIncomingParcels .intake-directory-controls .intake-filter-option { display:flex; align-items:center; width:100%; height:auto!important; min-height:38px!important; padding:0 12px!important; border:0; border-radius:10px!important; background:transparent; color:var(--sari-dark-e23e64dd1e,#475569); font-family:inherit; font-weight:600; text-align:left; cursor:pointer; }
+#lgIncomingParcels .intake-filter-option:hover, #lgIncomingParcels .intake-filter-option[aria-selected="true"] { background:var(--sari-dark-4d21eb669b,#F8FAFC); color:var(--sari-dark-af18afcaa4,#A56D0A); }
+#lgIncomingParcels .intake-workspace { margin-top:20px!important; border-radius:18px!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; }
+#lgIncomingParcels .intake-directory-heading { padding:21px 23px!important; gap:20px!important; }
+#lgIncomingParcels .intake-directory-heading h2 { margin:0; font-size:18px!important; font-weight:780!important; }
+#lgIncomingParcels .intake-directory-description { margin:4px 0 0; color:var(--sari-dark-a63aa16d7c,#8793A1); font-size:11.5px; line-height:1.5; }
+#lgIncomingParcels .intake-directory-count { padding:0!important; border:0!important; background:transparent!important; font-size:12px!important; }
+#lgIncomingParcels .intake-table-scroll { width:100%; overflow-x:auto!important; scrollbar-width:thin; }
+#lgIncomingParcels .intake-table { display:table!important; min-width:1060px!important; table-layout:fixed; }
+#lgIncomingParcels .intake-table thead { display:table-header-group!important; }
+#lgIncomingParcels .intake-table tbody { display:table-row-group!important; padding:0!important; }
+#lgIncomingParcels .intake-table tbody tr { display:table-row!important; margin:0!important; padding:0!important; border:0!important; border-radius:0!important; }
+#lgIncomingParcels .intake-table tbody tr[hidden] { display:none!important; }
+#lgIncomingParcels .intake-table th { padding:13px 16px!important; height:48px; font-size:11px!important; font-weight:750!important; letter-spacing:.075em; }
+#lgIncomingParcels .intake-table th:nth-child(1) { width:29%!important; }
+#lgIncomingParcels .intake-table th:nth-child(2) { width:36%!important; }
+#lgIncomingParcels .intake-table th:nth-child(3) { width:18%!important; }
+#lgIncomingParcels .intake-table th:nth-child(4) { width:17%!important; }
+#lgIncomingParcels .intake-table td { display:table-cell!important; width:auto!important; padding:17px 16px!important; font-size:11.5px!important; vertical-align:middle!important; }
+#lgIncomingParcels .intake-table td::before { display:none!important; }
+#lgIncomingParcels .intake-table td .intake-order-number { font-size:12.5px!important; font-weight:750!important; }
+#lgIncomingParcels .intake-table td .intake-primary-text, #lgIncomingParcels .intake-route-point { font-size:11.5px!important; }
+#lgIncomingParcels .intake-table td .intake-small-detail { font-size:11px!important; margin-top:3px!important; }
+#lgIncomingParcels .intake-badge { min-height:27px; padding:5px 10px!important; border-radius:999px!important; font-size:10.5px!important; font-weight:700!important; }
+#lgIncomingParcels .intake-view-icon { width:32px!important; height:32px!important; border-radius:10px!important; border:1px solid var(--sari-dark-d8c2716225,#DCE2E8)!important; background:var(--sari-dark-950baec030,#FFF)!important; }
+#lgIncomingParcels .intake-view-icon svg { width:17px!important; height:17px!important; }
+#lgIncomingParcels :is(.intake-row-receive,.intake-view-text) { min-height:32px!important; border-radius:10px!important; padding:0 12px!important; font-size:11px!important; }
+#lgIncomingParcels .intake-row-receive { background:#C88912!important; border-color:#C88912!important; color:#FFF!important; }
+#lgIncomingParcels .intake-list-footer { min-height:64px!important; padding:13px 20px!important; gap:12px; flex-wrap:wrap; }
+#lgIncomingParcels .intake-footer-controls { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:16px; margin-left:auto; }
+#lgIncomingParcels .intake-pagination { display:flex; gap:6px!important; margin:0!important; justify-content:flex-end!important; }
+#lgIncomingParcels .intake-pagination:empty { display:none; }
+#lgIncomingParcels .intake-pagination button { width:34px!important; height:34px!important; min-width:34px; padding:0!important; border-radius:10px!important; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important; background:var(--sari-dark-950baec030,#FFF)!important; font-size:11.5px!important; box-shadow:none!important; }
+#lgIncomingParcels .intake-pagination button[aria-current="page"] { background:#C88912!important; border-color:#C88912!important; color:#FFF!important; }
+#lgIncomingParcels .intake-modal-panel { width:min(720px,100%); border-radius:20px!important; max-height:calc(100dvh - 32px); }
+#lgIncomingParcels .intake-modal-panel-small { width:min(540px,100%); }
+#lgIncomingParcels .intake-modal-heading { padding:20px 24px!important; }
+#lgIncomingParcels .intake-modal-heading h2 { font-size:22px!important; line-height:1.25; }
+#lgIncomingParcels .intake-modal-eyebrow { font-size:10px!important; letter-spacing:.12em; font-weight:800; }
+#lgIncomingParcels .intake-modal-heading p { font-size:11.5px!important; line-height:1.5; }
+#lgIncomingParcels .intake-modal-content { padding:22px 24px!important; scrollbar-width:thin; }
+#lgIncomingParcels .intake-modal-content::-webkit-scrollbar { display:block; width:6px; }
+#lgIncomingParcels .intake-modal-panel > form { display:flex; flex:1; min-height:0; flex-direction:column; overflow:hidden; }
+#lgIncomingParcels .intake-modal-info { padding:14px 16px; border-radius:14px; }
+#lgIncomingParcels .intake-modal-info strong { font-size:12.5px!important; }
+#lgIncomingParcels .intake-modal-info p { font-size:11.5px!important; line-height:1.6; }
+#lgIncomingParcels .intake-modal-content textarea { border-radius:14px!important; font-size:11.5px!important; min-height:100px; }
+#lgIncomingParcels .intake-modal-footer { flex-shrink:0; padding:16px 24px!important; gap:10px; }
+#lgIncomingParcels :is(.intake-modal-secondary,.intake-modal-confirm) { min-height:44px!important; padding:0 16px!important; border-radius:12px!important; font-size:11.5px!important; }
+#lgIncomingParcels .intake-modal-confirm { background:#C88912!important; border-color:#C88912!important; }
+#lgIncomingParcels .intake-modal-confirm:hover:not(:disabled) { background:#B47B0E!important; border-color:#B47B0E!important; }
+#lgIncomingParcels :is(button,input,select,textarea,a,.intake-table-scroll):focus-visible { outline:2px solid #C88912!important; outline-offset:2px!important; }
+@media(max-width:1180px) { #lgIncomingParcels .intake-stats { grid-template-columns:repeat(2,minmax(0,1fr))!important; } }
+@media(max-width:900px) { #lgIncomingParcels .intake-directory-controls { grid-template-columns:repeat(2,minmax(0,1fr))!important; } #lgIncomingParcels .intake-directory-search, #lgIncomingParcels .intake-status-select { grid-column:1 / -1!important; } }
+@media(max-width:767px) { #lgIncomingParcels .intake-page-header h1 { font-size:25px!important; } #lgIncomingParcels .intake-eyebrow { font-size:9.5px!important; } #lgIncomingParcels .intake-page-header .intake-header-actions .intake-button { font-size:10.5px!important; } }
+@media(max-width:540px) { #lgIncomingParcels .intake-stats { grid-template-columns:1fr!important; gap:11px!important; } #lgIncomingParcels .intake-directory-heading { flex-direction:column!important; align-items:flex-start!important; padding:17px 16px!important; gap:6px!important; } #lgIncomingParcels .intake-modal-heading,#lgIncomingParcels .intake-modal-content,#lgIncomingParcels .intake-modal-footer { padding:16px!important; } }
+
 </style>
 @endpush
 
@@ -1158,16 +1246,16 @@
                 href="{{ route('logistics.delivery-assignment') }}"
                 class="intake-button"
             >
-                <span aria-hidden="true">←</span>
-                Pickup Assignment
+                <span>Pickup Assignment</span>
+                <span class="intake-header-chevron" aria-hidden="true">&gt;</span>
             </a>
 
             <a
                 href="{{ route('logistics.parcel-sorting') }}"
                 class="intake-button intake-button-primary"
             >
-                Parcel Sorting
-                <span aria-hidden="true">→</span>
+                <span>Parcel Sorting</span>
+                <span class="intake-header-chevron" aria-hidden="true">&gt;</span>
             </a>
 
         </div>
@@ -1378,15 +1466,26 @@
             <span class="sr-only">Search incoming parcels</span>
             <input type="search" data-intake-search autocomplete="off" placeholder="Search order, Seller, Rider, or hub...">
         </label>
-        <label class="intake-status-select">
+        <div class="intake-status-select" data-intake-filter-dropdown>
             <span class="sr-only">Intake status filter</span>
-            <select data-intake-status>
+            <select data-intake-status aria-label="Filter intake status">
                 <option value="all">All Status</option>
                 <option value="waiting">Awaiting Intake</option>
                 <option value="received">Received</option>
                 <option value="advanced">In Process</option>
             </select>
-        </label>
+        
+            <button type="button" class="intake-filter-trigger" data-intake-filter-status-trigger aria-label="Filter intake status" aria-haspopup="listbox" aria-expanded="false" aria-controls="incomingIntakeStatusMenu" hidden>
+                <span data-intake-filter-status-label>All Status</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div id="incomingIntakeStatusMenu" class="intake-filter-menu" role="listbox" aria-label="Filter intake status" data-intake-filter-status-menu hidden>
+                <button type="button" class="intake-filter-option" role="option" tabindex="-1" data-intake-filter-status-option data-value="all" aria-selected="true">All Status</button>
+                <button type="button" class="intake-filter-option" role="option" tabindex="-1" data-intake-filter-status-option data-value="waiting" aria-selected="false">Awaiting Intake</button>
+                <button type="button" class="intake-filter-option" role="option" tabindex="-1" data-intake-filter-status-option data-value="received" aria-selected="false">Received</button>
+                <button type="button" class="intake-filter-option" role="option" tabindex="-1" data-intake-filter-status-option data-value="advanced" aria-selected="false">In Process</button>
+            </div>
+        </div>
         <button type="button" class="intake-button intake-button-primary intake-apply-filter" data-intake-apply>
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
             Apply Filter
@@ -1400,14 +1499,14 @@
     >
 
         <header class="intake-toolbar intake-directory-heading">
-            <h2 id="incoming-parcels-heading">Origin Facility Intake</h2>
+            <div><h2 id="incoming-parcels-heading">Origin Facility Intake</h2><p class="intake-directory-description">Review incoming parcels and confirm physical receipt at the origin hub.</p></div>
             <span class="intake-directory-count">{{ $orders->count() }} PARCELS</span>
         </header>
 
         {{-- PARCEL TABLE --}}
 
         <div
-            class="intake-table-scroll"
+            class="intake-table-scroll" tabindex="0" aria-label="Incoming parcels table, scroll horizontally to see all columns"
             @if($orders->isEmpty()) hidden @endif
         >
 
@@ -1614,6 +1713,7 @@
 
         <footer class="intake-list-footer">
             <span data-intake-visible-count aria-live="polite">{{ $orders->count() }} parcels shown</span>
+            <div class="intake-footer-controls">
             <label class="intake-page-size-label">Rows per page
                 <select data-intake-page-size aria-label="Rows per page">
                     <option value="10" selected>10</option>
@@ -1621,11 +1721,14 @@
                     <option value="50">50</option>
                 </select>
             </label>
+        
+    <nav class="intake-pagination" data-intake-pagination aria-label="Incoming parcel pages"></nav>
+            </div>
         </footer>
 
     </section>
 
-    <nav class="intake-pagination" data-intake-pagination aria-label="Incoming parcel pages"></nav>
+
 
     {{-- Reusable parcel detail dialog. Data is safely populated from each row's Blade template. --}}
     <div class="intake-modal-overlay" data-intake-details-modal hidden>
@@ -1954,4 +2057,76 @@
 })();
 </script>
 
+<script>
+(function () {
+    function enhanceIncomingStatusFilter() {
+        if (!document.getElementById('lgIncomingParcels')) return;
+        window.__SARI_INTAKE_FILTER_ABORT__?.abort();
+        const controller = new AbortController();
+        window.__SARI_INTAKE_FILTER_ABORT__ = controller;
+        const signal = controller.signal;
+        function listen(node, name, handler) { node?.addEventListener(name, handler, { signal }); }
+        document.querySelectorAll('[data-intake-filter-dropdown]').forEach(dropdown => {
+            const select = dropdown.querySelector('select');
+            const trigger = dropdown.querySelector('[data-intake-filter-status-trigger]');
+            const label = dropdown.querySelector('[data-intake-filter-status-label]');
+            const menu = dropdown.querySelector('[data-intake-filter-status-menu]');
+            const options = Array.from(dropdown.querySelectorAll('[data-intake-filter-status-option]'));
+            if (!select || !trigger || !menu || !options.length) return;
+
+            function syncStatus() {
+                if (label) label.textContent = select.options[select.selectedIndex]?.text || '';
+                options.forEach(option => option.setAttribute('aria-selected', String(option.dataset.value === select.value)));
+            }
+            function closeStatus({ restoreFocus = false } = {}) {
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                if (restoreFocus) trigger.focus({ preventScroll: true });
+            }
+            function openStatus() {
+                menu.hidden = false;
+                trigger.setAttribute('aria-expanded', 'true');
+                (options.find(option => option.getAttribute('aria-selected') === 'true') || options[0])?.focus({ preventScroll: true });
+            }
+            dropdown.dataset.enhanced = 'true';
+            select.tabIndex = -1;
+            select.setAttribute('aria-hidden', 'true');
+            trigger.hidden = false;
+            syncStatus();
+            closeStatus();
+            listen(select, 'change', syncStatus);
+            document.querySelectorAll('[data-intake-clear]').forEach(button => listen(button, 'click', () => { closeStatus(); syncStatus(); }));
+            listen(trigger, 'click', () => menu.hidden ? openStatus() : closeStatus());
+            listen(trigger, 'keydown', event => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); openStatus(); }
+            });
+            listen(menu, 'click', event => {
+                const option = event.target.closest('[data-intake-filter-status-option]');
+                if (!option) return;
+                select.value = option.dataset.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                closeStatus({ restoreFocus: true });
+            });
+            listen(dropdown, 'keydown', event => {
+                if (menu.hidden) return;
+                if (event.key === 'Escape') { event.preventDefault(); closeStatus({ restoreFocus: true }); }
+                else if (event.key === 'Tab') closeStatus({ restoreFocus: true });
+                else if (['ArrowDown','ArrowUp','Home','End'].includes(event.key) && menu.contains(event.target)) {
+                    event.preventDefault();
+                    const index = options.indexOf(document.activeElement);
+                    const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1
+                        : (index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+                    options[nextIndex]?.focus();
+                }
+            });
+            listen(document, 'click', event => { if (!dropdown.contains(event.target)) closeStatus(); });
+            listen(dropdown, 'focusout', event => { if (!dropdown.contains(event.relatedTarget)) closeStatus(); });
+        });
+
+
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enhanceIncomingStatusFilter, { once: true });
+    else enhanceIncomingStatusFilter();
+})();
+</script>
 @endpush

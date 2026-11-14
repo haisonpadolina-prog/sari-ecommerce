@@ -269,6 +269,78 @@
  #lgHubTransfers .htv-unified .htv-panel>.htv-empty{padding:24px 12px!important}
 }
 
+/* Seller Orders visual scale, limited to Hub Transfers. */
+#lgHubTransfers.htv-page { max-width:1520px!important; margin-inline:auto; padding-bottom:28px!important; }
+#lgHubTransfers .htv-page-head { min-height:0!important; margin:0 0 20px!important; padding:0 0 14px!important; border-bottom:1px solid var(--sari-dark-d8c2716225,#E9EDF1)!important; }
+#lgHubTransfers .htv-eyebrow { font-size:10.5px!important; font-weight:800!important; line-height:1.4!important; letter-spacing:.14em!important; }
+#lgHubTransfers .htv-page-head h1 { margin-top:6px!important; font-size:clamp(27px,2.3vw,31px)!important; font-weight:760!important; line-height:1.08!important; letter-spacing:-.04em!important; }
+#lgHubTransfers .htv-page-head h1 span { color:var(--sari-dark-19b301f69a,#C88912)!important; }
+#lgHubTransfers .htv-page-head .htv-link { min-height:32px!important; padding:0!important; border:0!important; background:transparent!important; box-shadow:none!important; font-size:11.5px!important; font-weight:750!important; }
+#lgHubTransfers .htv-stats { grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:14px!important; margin:0!important; }
+#lgHubTransfers .htv-stat { min-height:110px!important; padding:14px 16px!important; border-radius:18px!important; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; transform:none!important; }
+#lgHubTransfers .htv-stat p { margin:0!important; font-size:13px!important; font-weight:650!important; line-height:1.4!important; }
+#lgHubTransfers .htv-stat strong { margin-top:7px!important; font-size:clamp(25px,1.9vw,30px)!important; font-weight:650!important; line-height:1.12!important; font-variant-numeric:tabular-nums; }
+#lgHubTransfers .htv-stat div > span { margin-top:6px!important; font-size:11.5px!important; line-height:1.5!important; white-space:normal!important; }
+#lgHubTransfers .htv-stat .htv-stat-icon, #lgHubTransfers .htv-stat-icon svg { width:27px!important; height:27px!important; flex-basis:27px!important; }
+#lgHubTransfers .htv-head-actions {gap:10px 24px!important;}
+#lgHubTransfers .htv-head-actions a.htv-btn.htv-btn-primary, #lgHubTransfers .htv-head-actions .htv-link {display:inline-flex!important;align-items:center!important;gap:8px!important;width:auto!important;min-height:0!important;height:auto!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--sari-dark-a63aa16d7c,#59636E)!important;font-size:11.5px!important;font-weight:750!important;line-height:1.35!important;}
+#lgHubTransfers .htv-head-actions a.htv-btn.htv-btn-primary:hover,#lgHubTransfers .htv-head-actions .htv-link:hover {background:transparent!important;color:#C88912!important;}
+#lgHubTransfers .htv-head-chevron {font-size:18px;font-weight:800;line-height:.8;}
+#lgHubTransfers .htv-controls {position:relative;z-index:15;gap:12px!important;margin:20px 0!important;}
+#lgHubTransfers .htv-controls-manifests {grid-template-columns:minmax(0,1fr) minmax(185px,210px) auto auto!important;}
+#lgHubTransfers .htv-controls-ready {grid-template-columns:minmax(0,1fr) 86px!important;}
+#lgHubTransfers .htv-controls :is(.htv-search,select,.htv-btn) {min-height:48px!important;height:48px!important;border-radius:14px!important;box-shadow:none!important;}
+#lgHubTransfers .htv-search input {font-size:11.5px!important;padding-left:46px!important;}
+#lgHubTransfers .htv-search svg {width:21px;height:21px;left:16px;}
+#lgHubTransfers .htv-btn-primary {background:#C88912!important;border-color:#C88912!important;}
+#lgHubTransfers .htv-controls>.htv-btn {padding:0 18px!important;font-size:12px!important;}
+#lgHubTransfers .htv-unified .htv-surface {border-radius:18px!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important;}
+#lgHubTransfers .htv-unified .htv-surface-heading {padding:21px 23px!important;}
+#lgHubTransfers .htv-unified .htv-surface-heading h2 {font-size:18px!important;}
+#lgHubTransfers .htv-count {border:0!important;background:transparent!important;padding:0!important;font-size:12px!important;}
+#lgHubTransfers .htv-table-shell {overflow-x:auto!important;scrollbar-width:thin;}
+#lgHubTransfers .htv-table {display:table!important;min-width:1060px!important;}
+#lgHubTransfers .htv-table thead {display:table-header-group!important;}
+#lgHubTransfers .htv-table tbody {display:table-row-group!important;padding:0!important;}
+#lgHubTransfers .htv-table tbody tr {display:table-row!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;}
+#lgHubTransfers .htv-table tbody tr[hidden] {display:none!important;}
+#lgHubTransfers .htv-table th {padding:13px 16px!important;font-size:11px!important;font-weight:750!important;}
+#lgHubTransfers .htv-table td {display:table-cell!important;padding:17px 16px!important;font-size:11.5px!important;width:auto!important;}
+#lgHubTransfers .htv-table td::before {display:none!important;}
+#lgHubTransfers .htv-table td strong {font-size:12.5px!important;}
+#lgHubTransfers .htv-table td p {font-size:11px!important;}
+#lgHubTransfers .htv-eye {width:32px;height:32px;border:1px solid var(--htv-line);border-radius:10px;}
+#lgHubTransfers .htv-eye svg {width:17px;height:17px;}
+#lgHubTransfers .htv-footer {display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;min-height:64px;padding:13px 20px!important;}
+#lgHubTransfers .htv-footer-controls {display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-left:auto;}
+#lgHubTransfers .htv-unified .htv-pagination {padding:0!important;margin:0!important;gap:6px!important;}
+#lgHubTransfers .htv-pagination button {width:34px!important;min-width:34px!important;height:34px!important;padding:0!important;border:1px solid var(--htv-line)!important;border-radius:10px!important;font-size:11.5px!important;box-shadow:none!important;}
+#lgHubTransfers .htv-pagination button[aria-current="page"] {background:#C88912!important;border-color:#C88912!important;color:#FFF!important;}
+#lgHubTransfers .htv-dialog {width:min(720px,100%);border-radius:20px!important;max-height:calc(100dvh - 32px);}
+#lgHubTransfers .htv-dialog-small {width:min(540px,100%);}
+#lgHubTransfers .htv-dialog-header {padding:20px 24px!important;}
+#lgHubTransfers .htv-dialog-header h2 {font-size:22px!important;}
+#lgHubTransfers .htv-dialog-body {padding:22px 24px!important;scrollbar-width:thin;}
+#lgHubTransfers .htv-dialog-footer {padding:16px 24px!important;flex-shrink:0;}
+#lgHubTransfers .htv-dialog-footer .htv-btn {min-height:44px;border-radius:12px;padding:0 16px;font-size:11.5px;}
+#lgHubTransfers .htv-form-grid :is(input,select) {height:48px!important;border-radius:14px!important;font-size:11.5px!important;}
+#lgHubTransfers :is(button,input,select,textarea,a):focus-visible {outline:2px solid #C88912!important;outline-offset:2px;}
+@media(max-width:1180px){#lgHubTransfers .htv-stats {grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
+@media(max-width:900px){#lgHubTransfers .htv-controls-manifests {grid-template-columns:repeat(2,minmax(0,1fr))!important;}#lgHubTransfers .htv-controls-manifests :is(.htv-search,.htv-select) {grid-column:1 / -1!important;}}
+@media(max-width:767px){#lgHubTransfers .htv-page-head h1 {font-size:25px!important;}}
+@media(max-width:540px){#lgHubTransfers .htv-stats {grid-template-columns:1fr!important;}#lgHubTransfers .htv-dialog-header,#lgHubTransfers .htv-dialog-body,#lgHubTransfers .htv-dialog-footer {padding:16px!important;}}
+
+#lgHubTransfers [data-transfer-select-ui-dropdown] {position:relative;z-index:50;display:block;min-width:0;}
+#lgHubTransfers [data-transfer-select-ui-dropdown][data-enhanced] > select {position:absolute!important;width:1px!important;height:1px!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;clip-path:inset(50%);opacity:0;pointer-events:none;overflow:hidden;}
+#lgHubTransfers [data-transfer-select-ui-dropdown][data-enhanced] > svg {display:none!important;}
+#lgHubTransfers .transfer-select-ui-trigger {display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px!important;min-height:48px!important;padding:0 16px;border:1px solid var(--sari-dark-d8c2716225,#DCE2E8);border-radius:14px!important;background:var(--sari-dark-950baec030,#FFF);color:var(--sari-dark-e23e64dd1e,#3F4B59);font:600 11.5px/1.4 Poppins,sans-serif;text-align:left;cursor:pointer;}
+#lgHubTransfers .transfer-select-ui-trigger svg {width:17px;height:17px;flex-shrink:0;}
+#lgHubTransfers .transfer-select-ui-trigger[aria-expanded="true"] svg {transform:rotate(180deg);}
+#lgHubTransfers .transfer-select-ui-menu {position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:100;padding:8px;border:1px solid var(--sari-dark-d8c2716225,#E2E8F0);border-radius:14px;background:var(--sari-dark-950baec030,#FFF);box-shadow:0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05);}
+#lgHubTransfers .transfer-select-ui-option {display:flex;align-items:center;width:100%;height:auto!important;min-height:38px!important;padding:0 12px!important;border:0;border-radius:10px!important;background:transparent;color:var(--sari-dark-e23e64dd1e,#475569);font:600 11.5px/1.4 Poppins,sans-serif;text-align:left;cursor:pointer;}
+#lgHubTransfers .transfer-select-ui-option:hover,#lgHubTransfers .transfer-select-ui-option[aria-selected="true"] {background:var(--sari-dark-4d21eb669b,#F8FAFC);color:var(--sari-dark-af18afcaa4,#A56D0A);}
+#lgHubTransfers :is(.transfer-select-ui-trigger,.transfer-select-ui-option):focus-visible {outline:2px solid #C88912;outline-offset:2px;}
+
 </style>
 @endpush
 
@@ -277,9 +349,9 @@
     <header class="htv-page-head">
         <div><p class="htv-eyebrow">LINEHAUL OPERATIONS</p><h1>Hub <span>Transfers</span></h1></div>
         <nav class="htv-head-actions" aria-label="Related Logistics pages">
-            <a href="{{ route('logistics.parcel-scanner') }}" class="htv-link">Scan Parcel QR</a>
-            <a href="{{ route('logistics.parcel-sorting') }}" class="htv-link">&lt; Parcel Sorting</a>
-            <a href="{{ route('logistics.last-mile-assignment') }}" class="htv-btn htv-btn-primary">Last Mile &gt;</a>
+            <a href="{{ route('logistics.parcel-scanner') }}" class="htv-link"><span>Scan Parcel QR</span><span class="htv-head-chevron" aria-hidden="true">&gt;</span></a>
+            <a href="{{ route('logistics.parcel-sorting') }}" class="htv-link"><span>Parcel Sorting</span><span class="htv-head-chevron" aria-hidden="true">&gt;</span></a>
+            <a href="{{ route('logistics.last-mile-assignment') }}" class="htv-btn htv-btn-primary"><span>Last Mile</span><span class="htv-head-chevron" aria-hidden="true">&gt;</span></a>
         </nav>
     </header>
 
@@ -378,9 +450,9 @@
                 </table>
             </div>
             <div class="htv-empty" data-ready-empty hidden><h3>No Matching Route Groups</h3><p>Try another order, Seller, or hub.</p><button type="button" class="htv-text-button" data-ready-clear>Clear search</button></div>
-            <footer class="htv-footer"><span data-ready-visible-count aria-live="polite">{{ count($readyGroups) }} route groups</span><label>Rows per page <select data-ready-page-size><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label></footer>
+            <footer class="htv-footer"><span data-ready-visible-count aria-live="polite">{{ count($readyGroups) }} route groups</span><div class="htv-footer-controls"><div class="htv-footer-controls"><label>Rows per page <select data-ready-page-size><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label><nav class="htv-pagination" data-ready-pagination aria-label="Ready routes pages"></nav></div></footer>
         </div>
-        <nav class="htv-pagination" data-ready-pagination aria-label="Ready routes pages"></nav>
+        
         @else
             <div class="htv-empty htv-ready-zero">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 7 9-5 9 5v10l-9 5-9-5zM3 7l9 5 9-5m-9 5v10"/></svg>
@@ -396,7 +468,10 @@
         @if($transfers->isNotEmpty())
         <div class="htv-controls htv-controls-manifests">
             <label class="htv-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="sr-only">Search transfers</span><input data-transfer-search type="search" autocomplete="off" placeholder="Search transfer, driver, hub, vehicle…"></label>
-            <label class="htv-select"><span class="sr-only">Filter transfer status</span><select data-transfer-status><option value="all">All Status</option><option value="preparing">Preparing</option><option value="in_transit">In Transit</option><option value="received">Received</option></select></label>
+            <div class="htv-select" data-transfer-select-ui-dropdown><span class="sr-only">Filter transfer status</span><select aria-label="Filter transfer status" data-transfer-status><option value="all">All Status</option><option value="preparing">Preparing</option><option value="in_transit">In Transit</option><option value="received">Received</option></select><button type="button" class="transfer-select-ui-trigger" data-transfer-select-ui-status-trigger aria-haspopup="listbox" aria-expanded="false" aria-controls="transferStatusMenu" aria-label="Filter transfer status" hidden><span data-transfer-select-ui-status-label>All Status</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button><div id="transferStatusMenu" class="transfer-select-ui-menu" data-transfer-select-ui-status-menu role="listbox" aria-label="Filter transfer status" hidden><button type="button" class="transfer-select-ui-option" role="option" tabindex="-1" data-transfer-select-ui-status-option data-value="all" aria-selected="true">All Status</button>
+<button type="button" class="transfer-select-ui-option" role="option" tabindex="-1" data-transfer-select-ui-status-option data-value="preparing" aria-selected="false">Preparing</button>
+<button type="button" class="transfer-select-ui-option" role="option" tabindex="-1" data-transfer-select-ui-status-option data-value="in_transit" aria-selected="false">In Transit</button>
+<button type="button" class="transfer-select-ui-option" role="option" tabindex="-1" data-transfer-select-ui-status-option data-value="received" aria-selected="false">Received</button></div></div>
             <button class="htv-btn htv-btn-primary" type="button" data-transfer-apply>Apply Filter</button>
             <button class="htv-btn htv-btn-reset" type="button" data-transfer-clear>Reset</button>
         </div>
@@ -445,9 +520,9 @@
                 </table>
             </div>
             <div class="htv-empty" data-transfer-empty hidden><h3>No Matching Transfer Manifests</h3><p>Try another code, hub, vehicle, driver, or status.</p><button type="button" class="htv-text-button" data-transfer-clear>Clear filters</button></div>
-            <footer class="htv-footer"><span data-transfer-visible-count aria-live="polite">{{ $transfers->count() }} transfers</span><label>Rows per page <select data-transfer-page-size><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label></footer>
+            <footer class="htv-footer"><span data-transfer-visible-count aria-live="polite">{{ $transfers->count() }} transfers</span><label>Rows per page <select data-transfer-page-size><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label><nav class="htv-pagination" data-transfer-pagination aria-label="Transfer manifest pages"></nav></div></footer>
         </div>
-        <nav class="htv-pagination" data-transfer-pagination aria-label="Transfer manifest pages"></nav>
+        
         @else
             <div class="htv-empty htv-transfers-zero">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 7 9-5 9 5v10l-9 5-9-5zM3 7l9 5 9-5m-9 5v10"/></svg>
@@ -697,6 +772,78 @@
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeHubTransfers);
     else initializeHubTransfers();
     window.addEventListener('pageshow', event => {if (event.persisted) window.location.reload();});
+})();
+</script>
+<script>
+(function () {
+    function enhance_transfer_select_ui() {
+        if (!document.getElementById('lgHubTransfers')) return;
+        window.__SARI_TRANSFER_SELECT_UI_ABORT__?.abort();
+        const controller = new AbortController();
+        window.__SARI_TRANSFER_SELECT_UI_ABORT__ = controller;
+        const signal = controller.signal;
+        function listen(node, name, handler) { node?.addEventListener(name, handler, { signal }); }
+        document.querySelectorAll('[data-transfer-select-ui-dropdown]').forEach(dropdown => {
+            const select = dropdown.querySelector('select');
+            const trigger = dropdown.querySelector('[data-transfer-select-ui-status-trigger]');
+            const label = dropdown.querySelector('[data-transfer-select-ui-status-label]');
+            const menu = dropdown.querySelector('[data-transfer-select-ui-status-menu]');
+            const options = Array.from(dropdown.querySelectorAll('[data-transfer-select-ui-status-option]'));
+            if (!select || !trigger || !menu || !options.length) return;
+
+            function syncStatus() {
+                if (label) label.textContent = select.options[select.selectedIndex]?.text || '';
+                options.forEach(option => option.setAttribute('aria-selected', String(option.dataset.value === select.value)));
+            }
+            function closeStatus({ restoreFocus = false } = {}) {
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                if (restoreFocus) trigger.focus({ preventScroll: true });
+            }
+            function openStatus() {
+                menu.hidden = false;
+                trigger.setAttribute('aria-expanded', 'true');
+                (options.find(option => option.getAttribute('aria-selected') === 'true') || options[0])?.focus({ preventScroll: true });
+            }
+            dropdown.dataset.enhanced = 'true';
+            select.tabIndex = -1;
+            select.setAttribute('aria-hidden', 'true');
+            trigger.hidden = false;
+            syncStatus();
+            closeStatus();
+            listen(select, 'change', syncStatus);
+            document.querySelectorAll('[data-transfer-clear]').forEach(button => listen(button, 'click', () => { closeStatus(); syncStatus(); }));
+            listen(trigger, 'click', () => menu.hidden ? openStatus() : closeStatus());
+            listen(trigger, 'keydown', event => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); openStatus(); }
+            });
+            listen(menu, 'click', event => {
+                const option = event.target.closest('[data-transfer-select-ui-status-option]');
+                if (!option) return;
+                select.value = option.dataset.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                closeStatus({ restoreFocus: true });
+            });
+            listen(dropdown, 'keydown', event => {
+                if (menu.hidden) return;
+                if (event.key === 'Escape') { event.preventDefault(); closeStatus({ restoreFocus: true }); }
+                else if (event.key === 'Tab') closeStatus({ restoreFocus: true });
+                else if (['ArrowDown','ArrowUp','Home','End'].includes(event.key) && menu.contains(event.target)) {
+                    event.preventDefault();
+                    const index = options.indexOf(document.activeElement);
+                    const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1
+                        : (index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+                    options[nextIndex]?.focus();
+                }
+            });
+            listen(document, 'click', event => { if (!dropdown.contains(event.target)) closeStatus(); });
+            listen(dropdown, 'focusout', event => { if (!dropdown.contains(event.relatedTarget)) closeStatus(); });
+        });
+
+
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enhance_transfer_select_ui, { once: true });
+    else enhance_transfer_select_ui();
 })();
 </script>
 @endpush

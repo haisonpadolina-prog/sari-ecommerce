@@ -1036,6 +1036,103 @@
 @media(max-width:900px) {#logisticsContent #lgParcelSorting .sorting-stats,#lgParcelSorting .sorting-stats {grid-template-columns:repeat(2,minmax(0,1fr));} #lgParcelSorting .sorting-directory-controls {grid-template-columns:minmax(0,1fr) minmax(140px,180px);} #lgParcelSorting .sorting-apply-filter,#lgParcelSorting .sorting-reset-filter {width:100%;} #lgParcelSorting .sorting-table thead {display:none;} #lgParcelSorting .sorting-table,#lgParcelSorting .sorting-table tbody {display:block;width:100%;} #lgParcelSorting .sorting-table tbody {padding:12px;display:grid;gap:12px;} #lgParcelSorting .sorting-table tbody tr {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:14px;border:1px solid var(--sari-dark-d8c2716225, #e5eaf0);border-radius:13px;background:var(--sari-dark-950baec030, #fff);box-shadow:0 4px 12px var(--sari-dark-7593018246, rgba(15,23,42,.035));} #lgParcelSorting .sorting-table tbody tr[hidden] {display:none!important;} #lgParcelSorting .sorting-table td {display:block;width:auto!important;min-width:0!important;padding:0;border:0;} #lgParcelSorting .sorting-table td::before {content:attr(data-label);display:block;margin-bottom:5px;color:var(--sari-dark-a63aa16d7c, #93a0af);font-size:10px;font-weight:700;letter-spacing:.055em;text-transform:uppercase;} #lgParcelSorting .sorting-table td:first-child,#lgParcelSorting .sorting-table td:last-child {grid-column:1/-1;} }
 @media(max-width:600px) {#lgParcelSorting .sorting-page-header {align-items:stretch;} #lgParcelSorting .sorting-header-actions {width:100%;justify-content:flex-start;} #lgParcelSorting .sorting-header-actions .sorting-button {flex:1;} #lgParcelSorting .sorting-stat {min-height:109px;padding:12px;} #lgParcelSorting .sorting-stat p {font-size:11px;} #lgParcelSorting .sorting-stat strong,#lgParcelSorting .sorting-stat-amber strong,#lgParcelSorting .sorting-stat-green strong,#lgParcelSorting .sorting-stat-blue strong {font-size:23px;} #lgParcelSorting .sorting-stat span:not(.sorting-stat-icon) {font-size:9px;} #lgParcelSorting .sorting-stat .sorting-stat-icon {flex-basis:27px;width:27px;height:27px;} #lgParcelSorting .sorting-stat .sorting-stat-icon svg {width:26px;height:26px;} #lgParcelSorting .sorting-directory-controls {grid-template-columns:minmax(0,1fr) minmax(80px,120px);gap:9px;} #lgParcelSorting .sorting-directory-search,#lgParcelSorting .sorting-status-select {grid-column:1/-1;} #lgParcelSorting .sorting-table tbody tr {grid-template-columns:1fr;} #lgParcelSorting .sorting-table td:first-child,#lgParcelSorting .sorting-table td:last-child {grid-column:1;} #lgParcelSorting .sorting-toolbar.sorting-directory-heading {padding:15px 14px;} #lgParcelSorting .sorting-toolbar h2 {font-size:16px;} #lgParcelSorting .sorting-list-footer {padding:12px 14px;flex-wrap:wrap;} #lgParcelSorting .sorting-empty-icon {width:64px;height:64px;} #lgParcelSorting .sorting-empty-icon svg {width:40px;height:40px;} #lgParcelSorting .sorting-empty h3 {font-size:20px;} #lgParcelSorting .sorting-modal-heading {padding:17px 16px 14px;} #lgParcelSorting .sorting-modal-heading h2 {font-size:21px;} #lgParcelSorting .sorting-modal-content {padding:16px;} #lgParcelSorting .sorting-modal-info-grid {grid-template-columns:1fr;} #lgParcelSorting .sorting-modal-footer {padding:14px 16px 16px;} }
 @media(prefers-reduced-motion:reduce) {#lgParcelSorting *,#lgParcelSorting *::before,#lgParcelSorting *::after {animation:none!important;transition:none!important;}}
+/* Seller Orders visual scale, limited to Pickup Assignment. */
+#lgParcelSorting.sorting-page { max-width:1520px!important; margin-inline:auto; padding-bottom:28px!important; }
+#lgParcelSorting .sorting-page-header { min-height:0!important; margin:0 0 20px!important; padding:0 0 14px!important; border-bottom:1px solid var(--sari-dark-d8c2716225,#E9EDF1)!important; }
+#lgParcelSorting .sorting-eyebrow { font-size:10.5px!important; font-weight:800!important; line-height:1.4!important; letter-spacing:.14em!important; }
+#lgParcelSorting .sorting-page-header h1 { margin-top:6px!important; font-size:clamp(27px,2.3vw,31px)!important; font-weight:760!important; line-height:1.08!important; letter-spacing:-.04em!important; }
+#lgParcelSorting .sorting-page-header h1 span { color:var(--sari-dark-19b301f69a,#C88912)!important; }
+#lgParcelSorting .sorting-page-header .sorting-button { min-height:32px!important; padding:0!important; border:0!important; background:transparent!important; box-shadow:none!important; font-size:11.5px!important; font-weight:750!important; }
+#lgParcelSorting .sorting-stats { grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:14px!important; margin:0!important; }
+#lgParcelSorting .sorting-stat { min-height:110px!important; padding:14px 16px!important; border-radius:18px!important; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; transform:none!important; }
+#lgParcelSorting .sorting-stat p { margin:0!important; font-size:13px!important; font-weight:650!important; line-height:1.4!important; }
+#lgParcelSorting .sorting-stat strong { margin-top:7px!important; font-size:clamp(25px,1.9vw,30px)!important; font-weight:650!important; line-height:1.12!important; font-variant-numeric:tabular-nums; }
+#lgParcelSorting .sorting-stat div > span { margin-top:6px!important; font-size:11.5px!important; line-height:1.5!important; white-space:normal!important; }
+#lgParcelSorting .sorting-stat .sorting-stat-icon, #lgParcelSorting .sorting-stat-icon svg { width:27px!important; height:27px!important; flex-basis:27px!important; }
+#lgParcelSorting .sorting-header-actions { display:flex!important; flex-wrap:wrap; justify-content:flex-end; gap:10px 24px!important; }
+#lgParcelSorting .sorting-page-header .sorting-header-actions .sorting-button { display:inline-flex!important; align-items:center; justify-content:flex-start!important; gap:8px!important; width:auto!important; min-height:0!important; height:auto!important; padding:0!important; border:0!important; border-radius:0!important; background:transparent!important; box-shadow:none!important; color:var(--sari-dark-a63aa16d7c,#59636E)!important; font-size:11.5px!important; font-weight:750!important; line-height:1.35!important; text-decoration:none!important; transform:none!important; }
+#lgParcelSorting .sorting-page-header .sorting-header-actions .sorting-button:hover { color:var(--sari-dark-19b301f69a,#C88912)!important; background:transparent!important; }
+#lgParcelSorting .sorting-header-chevron { font-size:18px; font-weight:800; line-height:.8; }
+#lgParcelSorting .sorting-directory-controls { position:relative; z-index:15; display:grid!important; grid-template-columns:minmax(0,1fr) minmax(185px,210px) auto auto!important; gap:12px!important; margin:20px 0 0!important; padding:0!important; }
+#lgParcelSorting .sorting-directory-controls :is(input,select,button) { height:48px!important; min-height:48px!important; border-radius:14px!important; font-size:11.5px!important; box-shadow:none!important; transform:none!important; translate:none!important; }
+#lgParcelSorting .sorting-directory-search input { padding:0 14px 0 46px!important; }
+#lgParcelSorting .sorting-directory-search > svg { left:16px!important; width:21px!important; height:21px!important; }
+#lgParcelSorting .sorting-directory-search input::placeholder { font-size:11.5px!important; }
+#lgParcelSorting .sorting-directory-controls :is(.sorting-apply-filter,.sorting-reset-filter) { width:auto!important; min-width:86px; padding:0 18px!important; font-size:12px!important; font-weight:700!important; }
+#lgParcelSorting .sorting-apply-filter { background:#C88912!important; border-color:#C88912!important; }
+#lgParcelSorting .sorting-apply-filter:hover { background:#B47B0E!important; border-color:#B47B0E!important; }
+#lgParcelSorting .sorting-status-select { position:relative; display:block; min-width:0; z-index:50; }
+#lgParcelSorting .sorting-workspace { margin-top:20px!important; border-radius:18px!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; }
+#lgParcelSorting .sorting-directory-heading { padding:21px 23px!important; gap:20px!important; }
+#lgParcelSorting .sorting-directory-heading h2 { margin:0; font-size:18px!important; font-weight:780!important; }
+#lgParcelSorting .sorting-directory-description { margin:4px 0 0; color:var(--sari-dark-a63aa16d7c,#8793A1); font-size:11.5px; line-height:1.5; }
+#lgParcelSorting .sorting-directory-count { padding:0!important; border:0!important; background:transparent!important; font-size:12px!important; }
+#lgParcelSorting .sorting-table-scroll { width:100%; overflow-x:auto!important; scrollbar-width:thin; }
+#lgParcelSorting .sorting-table { display:table!important; min-width:1060px!important; table-layout:fixed; }
+#lgParcelSorting .sorting-table thead { display:table-header-group!important; }
+#lgParcelSorting .sorting-table tbody { display:table-row-group!important; padding:0!important; }
+#lgParcelSorting .sorting-table tbody tr { display:table-row!important; margin:0!important; padding:0!important; border:0!important; border-radius:0!important; }
+#lgParcelSorting .sorting-table tbody tr[hidden] { display:none!important; }
+#lgParcelSorting .sorting-table th { padding:13px 16px!important; height:48px; font-size:11px!important; font-weight:750!important; letter-spacing:.075em; }
+#lgParcelSorting .sorting-table th:nth-child(1) { width:29%!important; }
+#lgParcelSorting .sorting-table th:nth-child(2) { width:36%!important; }
+#lgParcelSorting .sorting-table th:nth-child(3) { width:18%!important; }
+#lgParcelSorting .sorting-table th:nth-child(4) { width:17%!important; }
+#lgParcelSorting .sorting-table td { display:table-cell!important; width:auto!important; padding:17px 16px!important; font-size:11.5px!important; vertical-align:middle!important; }
+#lgParcelSorting .sorting-table td::before { display:none!important; }
+#lgParcelSorting .sorting-table td .sorting-order-number { font-size:12.5px!important; font-weight:750!important; }
+#lgParcelSorting .sorting-table td .sorting-primary-text, #lgParcelSorting .sorting-route-point { font-size:11.5px!important; }
+#lgParcelSorting .sorting-table td .sorting-small-detail { font-size:11px!important; margin-top:3px!important; }
+#lgParcelSorting .sorting-badge { min-height:27px; padding:5px 10px!important; border-radius:999px!important; font-size:10.5px!important; font-weight:700!important; }
+#lgParcelSorting .sorting-view-icon { width:32px!important; height:32px!important; border-radius:10px!important; border:1px solid var(--sari-dark-d8c2716225,#DCE2E8)!important; background:var(--sari-dark-950baec030,#FFF)!important; }
+#lgParcelSorting .sorting-view-icon svg { width:17px!important; height:17px!important; }
+#lgParcelSorting :is(.sorting-row-receive,.sorting-view-text) { min-height:32px!important; border-radius:10px!important; padding:0 12px!important; font-size:11px!important; }
+#lgParcelSorting .sorting-row-receive { background:#C88912!important; border-color:#C88912!important; color:#FFF!important; }
+#lgParcelSorting .sorting-list-footer { min-height:64px!important; padding:13px 20px!important; gap:12px; flex-wrap:wrap; }
+#lgParcelSorting .sorting-footer-controls { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:16px; margin-left:auto; }
+#lgParcelSorting .sorting-pagination { display:flex; gap:6px!important; margin:0!important; justify-content:flex-end!important; }
+#lgParcelSorting .sorting-pagination:empty { display:none; }
+#lgParcelSorting .sorting-pagination button { width:34px!important; height:34px!important; min-width:34px; padding:0!important; border-radius:10px!important; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important; background:var(--sari-dark-950baec030,#FFF)!important; font-size:11.5px!important; box-shadow:none!important; }
+#lgParcelSorting .sorting-pagination button[aria-current="page"] { background:#C88912!important; border-color:#C88912!important; color:#FFF!important; }
+#lgParcelSorting .sorting-modal-panel { width:min(720px,100%); border-radius:20px!important; max-height:calc(100dvh - 32px); }
+#lgParcelSorting .sorting-modal-panel-small { width:min(540px,100%); }
+#lgParcelSorting .sorting-modal-heading { padding:20px 24px!important; }
+#lgParcelSorting .sorting-modal-heading h2 { font-size:22px!important; line-height:1.25; }
+#lgParcelSorting .sorting-modal-eyebrow { font-size:10px!important; letter-spacing:.12em; font-weight:800; }
+#lgParcelSorting .sorting-modal-heading p { font-size:11.5px!important; line-height:1.5; }
+#lgParcelSorting .sorting-modal-content { padding:22px 24px!important; scrollbar-width:thin; }
+#lgParcelSorting .sorting-modal-content::-webkit-scrollbar { display:block; width:6px; }
+#lgParcelSorting .sorting-modal-panel > form { display:flex; flex:1; min-height:0; flex-direction:column; overflow:hidden; }
+#lgParcelSorting .sorting-modal-info { padding:14px 16px; border-radius:14px; }
+#lgParcelSorting .sorting-modal-info strong { font-size:12.5px!important; }
+#lgParcelSorting .sorting-modal-info p { font-size:11.5px!important; line-height:1.6; }
+#lgParcelSorting .sorting-modal-content textarea { border-radius:14px!important; font-size:11.5px!important; min-height:100px; }
+#lgParcelSorting .sorting-modal-footer { flex-shrink:0; padding:16px 24px!important; gap:10px; }
+#lgParcelSorting :is(.sorting-modal-secondary,.sorting-modal-confirm) { min-height:44px!important; padding:0 16px!important; border-radius:12px!important; font-size:11.5px!important; }
+#lgParcelSorting .sorting-modal-confirm { background:#C88912!important; border-color:#C88912!important; }
+#lgParcelSorting .sorting-modal-confirm:hover:not(:disabled) { background:#B47B0E!important; border-color:#B47B0E!important; }
+#lgParcelSorting :is(button,input,select,textarea,a,.sorting-table-scroll):focus-visible { outline:2px solid #C88912!important; outline-offset:2px!important; }
+@media(max-width:1180px) { #lgParcelSorting .sorting-stats { grid-template-columns:repeat(2,minmax(0,1fr))!important; } }
+@media(max-width:900px) { #lgParcelSorting .sorting-directory-controls { grid-template-columns:repeat(2,minmax(0,1fr))!important; } #lgParcelSorting .sorting-directory-search, #lgParcelSorting .sorting-status-select { grid-column:1 / -1!important; } }
+@media(max-width:767px) { #lgParcelSorting .sorting-page-header h1 { font-size:25px!important; } #lgParcelSorting .sorting-eyebrow { font-size:9.5px!important; } #lgParcelSorting .sorting-page-header .sorting-header-actions .sorting-button { font-size:10.5px!important; } }
+@media(max-width:540px) { #lgParcelSorting .sorting-stats { grid-template-columns:1fr!important; gap:11px!important; } #lgParcelSorting .sorting-directory-heading { flex-direction:column!important; align-items:flex-start!important; padding:17px 16px!important; gap:6px!important; } #lgParcelSorting .sorting-modal-heading,#lgParcelSorting .sorting-modal-content,#lgParcelSorting .sorting-modal-footer { padding:16px!important; } }
+#lgParcelSorting [data-sorting-select-ui-dropdown] {position:relative;z-index:50;display:block;min-width:0;}
+#lgParcelSorting [data-sorting-select-ui-dropdown][data-enhanced] > select {position:absolute!important;width:1px!important;height:1px!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;clip-path:inset(50%);opacity:0;pointer-events:none;overflow:hidden;}
+#lgParcelSorting [data-sorting-select-ui-dropdown][data-enhanced] > svg {display:none!important;}
+#lgParcelSorting .sorting-select-ui-trigger {display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px!important;min-height:48px!important;padding:0 16px;border:1px solid var(--sari-dark-d8c2716225,#DCE2E8);border-radius:14px!important;background:var(--sari-dark-950baec030,#FFF);color:var(--sari-dark-e23e64dd1e,#3F4B59);font:600 11.5px/1.4 Poppins,sans-serif;text-align:left;cursor:pointer;}
+#lgParcelSorting .sorting-select-ui-trigger svg {width:17px;height:17px;flex-shrink:0;}
+#lgParcelSorting .sorting-select-ui-trigger[aria-expanded="true"] svg {transform:rotate(180deg);}
+#lgParcelSorting .sorting-select-ui-menu {position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:100;padding:8px;border:1px solid var(--sari-dark-d8c2716225,#E2E8F0);border-radius:14px;background:var(--sari-dark-950baec030,#FFF);box-shadow:0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05);}
+#lgParcelSorting .sorting-select-ui-option {display:flex;align-items:center;width:100%;height:auto!important;min-height:38px!important;padding:0 12px!important;border:0;border-radius:10px!important;background:transparent;color:var(--sari-dark-e23e64dd1e,#475569);font:600 11.5px/1.4 Poppins,sans-serif;text-align:left;cursor:pointer;}
+#lgParcelSorting .sorting-select-ui-option:hover,#lgParcelSorting .sorting-select-ui-option[aria-selected="true"] {background:var(--sari-dark-4d21eb669b,#F8FAFC);color:var(--sari-dark-af18afcaa4,#A56D0A);}
+#lgParcelSorting :is(.sorting-select-ui-trigger,.sorting-select-ui-option):focus-visible {outline:2px solid #C88912;outline-offset:2px;}
+
+#lgParcelSorting .sorting-directory-search {height:48px!important;border-radius:14px!important;}
+#lgParcelSorting .sorting-stats .sorting-stat {min-height:110px!important;}
+
+
+#lgParcelSorting .sorting-row-sort {min-height:32px!important;padding:0 12px!important;border-radius:10px!important;background:#C88912!important;border-color:#C88912!important;color:#FFF!important;font-size:11px!important;}
+#lgParcelSorting .sorting-table td p {font-size:11px!important;line-height:1.5!important;}
 </style>
 @endpush
 
@@ -1071,16 +1168,16 @@
                 href="{{ route('logistics.incoming-parcels') }}"
                 class="sorting-button"
             >
-                <span aria-hidden="true">←</span>
-                Incoming Parcels
+                <span>Incoming Parcels</span>
+                <span class="sorting-header-chevron" aria-hidden="true">&gt;</span>
             </a>
 
             <a
                 href="{{ route('logistics.hub-transfers') }}"
                 class="sorting-button sorting-button-primary"
             >
-                Hub Transfers
-                <span aria-hidden="true">→</span>
+                <span>Hub Transfers</span>
+                <span class="sorting-header-chevron" aria-hidden="true">&gt;</span>
             </a>
 
         </div>
@@ -1316,14 +1413,16 @@
             <span class="sr-only">Search parcels by order, Seller, Buyer, hub, or zone</span>
             <input type="search" data-sorting-search autocomplete="off" placeholder="Search order, Seller, hub, or zone...">
         </label>
-        <label class="sorting-status-select">
+        <div class="sorting-status-select" data-sorting-select-ui-dropdown>
             <span class="sr-only">Filter sorting status</span>
-            <select data-sorting-status-select>
+            <select aria-label="Filter sorting status" data-sorting-status-select>
                 <option value="all">All Status</option>
                 <option value="received">Needs Sorting</option>
                 <option value="sorted">Sorted</option>
             </select>
-        </label>
+        <button type="button" class="sorting-select-ui-trigger" data-sorting-select-ui-status-trigger aria-haspopup="listbox" aria-expanded="false" aria-controls="sortingStatusMenu" aria-label="Filter sorting status" hidden><span data-sorting-select-ui-status-label>All Status</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button><div id="sortingStatusMenu" class="sorting-select-ui-menu" data-sorting-select-ui-status-menu role="listbox" aria-label="Filter sorting status" hidden><button type="button" class="sorting-select-ui-option" role="option" tabindex="-1" data-sorting-select-ui-status-option data-value="all" aria-selected="true">All Status</button>
+<button type="button" class="sorting-select-ui-option" role="option" tabindex="-1" data-sorting-select-ui-status-option data-value="received" aria-selected="false">Needs Sorting</button>
+<button type="button" class="sorting-select-ui-option" role="option" tabindex="-1" data-sorting-select-ui-status-option data-value="sorted" aria-selected="false">Sorted</button></div></div>
         <button type="button" class="sorting-apply-filter" data-sorting-apply>
             <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
             Apply Filter
@@ -1527,16 +1626,16 @@
 
         <footer class="sorting-list-footer">
             <span data-sorting-visible-count aria-live="polite">Showing 0 of {{ $parcels->count() }} parcels</span>
-            <label class="sorting-page-size-label">Rows per page
+            <div class="sorting-footer-controls"><label class="sorting-page-size-label">Rows per page
                 <select data-sorting-page-size aria-label="Rows per page">
                     <option value="10">10</option><option value="20">20</option><option value="50">50</option>
                 </select>
             </label>
-        </footer>
+            <nav class="sorting-pagination" data-sorting-pagination aria-label="Sorting queue pages"></nav></div></footer>
 
     </section>
 
-    <nav class="sorting-pagination" data-sorting-pagination aria-label="Sorting queue pages"></nav>
+
 
     <div class="sorting-modal-overlay" data-sorting-details-modal hidden>
         <div class="sorting-modal-panel" role="dialog" aria-modal="true" aria-labelledby="sorting-details-heading" tabindex="-1">
@@ -1777,6 +1876,78 @@
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeSorting);
     else initializeSorting();
     window.addEventListener('pageshow', event => {if(event.persisted) window.location.reload();});
+})();
+</script>
+<script>
+(function () {
+    function enhance_sorting_select_ui() {
+        if (!document.getElementById('lgParcelSorting')) return;
+        window.__SARI_SORTING_SELECT_UI_ABORT__?.abort();
+        const controller = new AbortController();
+        window.__SARI_SORTING_SELECT_UI_ABORT__ = controller;
+        const signal = controller.signal;
+        function listen(node, name, handler) { node?.addEventListener(name, handler, { signal }); }
+        document.querySelectorAll('[data-sorting-select-ui-dropdown]').forEach(dropdown => {
+            const select = dropdown.querySelector('select');
+            const trigger = dropdown.querySelector('[data-sorting-select-ui-status-trigger]');
+            const label = dropdown.querySelector('[data-sorting-select-ui-status-label]');
+            const menu = dropdown.querySelector('[data-sorting-select-ui-status-menu]');
+            const options = Array.from(dropdown.querySelectorAll('[data-sorting-select-ui-status-option]'));
+            if (!select || !trigger || !menu || !options.length) return;
+
+            function syncStatus() {
+                if (label) label.textContent = select.options[select.selectedIndex]?.text || '';
+                options.forEach(option => option.setAttribute('aria-selected', String(option.dataset.value === select.value)));
+            }
+            function closeStatus({ restoreFocus = false } = {}) {
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                if (restoreFocus) trigger.focus({ preventScroll: true });
+            }
+            function openStatus() {
+                menu.hidden = false;
+                trigger.setAttribute('aria-expanded', 'true');
+                (options.find(option => option.getAttribute('aria-selected') === 'true') || options[0])?.focus({ preventScroll: true });
+            }
+            dropdown.dataset.enhanced = 'true';
+            select.tabIndex = -1;
+            select.setAttribute('aria-hidden', 'true');
+            trigger.hidden = false;
+            syncStatus();
+            closeStatus();
+            listen(select, 'change', syncStatus);
+            document.querySelectorAll('[data-sorting-clear]').forEach(button => listen(button, 'click', () => { closeStatus(); syncStatus(); }));
+            listen(trigger, 'click', () => menu.hidden ? openStatus() : closeStatus());
+            listen(trigger, 'keydown', event => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); openStatus(); }
+            });
+            listen(menu, 'click', event => {
+                const option = event.target.closest('[data-sorting-select-ui-status-option]');
+                if (!option) return;
+                select.value = option.dataset.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                closeStatus({ restoreFocus: true });
+            });
+            listen(dropdown, 'keydown', event => {
+                if (menu.hidden) return;
+                if (event.key === 'Escape') { event.preventDefault(); closeStatus({ restoreFocus: true }); }
+                else if (event.key === 'Tab') closeStatus({ restoreFocus: true });
+                else if (['ArrowDown','ArrowUp','Home','End'].includes(event.key) && menu.contains(event.target)) {
+                    event.preventDefault();
+                    const index = options.indexOf(document.activeElement);
+                    const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1
+                        : (index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+                    options[nextIndex]?.focus();
+                }
+            });
+            listen(document, 'click', event => { if (!dropdown.contains(event.target)) closeStatus(); });
+            listen(dropdown, 'focusout', event => { if (!dropdown.contains(event.relatedTarget)) closeStatus(); });
+        });
+
+
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enhance_sorting_select_ui, { once: true });
+    else enhance_sorting_select_ui();
 })();
 </script>
 @endpush

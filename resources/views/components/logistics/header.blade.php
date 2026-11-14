@@ -77,7 +77,7 @@
     id="logisticsHeader"
     class="sticky top-0 z-40 border-b border-[#eee4d3] bg-[#fffdf9]/95 backdrop-blur-md"
 >
-    <div class="flex min-h-[72px] w-full items-center justify-between gap-[10px] px-[18px]">
+    <div class="logistics-shell-header-main flex min-h-[72px] w-full items-center justify-between gap-[10px] px-[18px]">
 
         {{-- LEFT: EXISTING HEADER / SIDEBAR CONTROLS --}}
 
@@ -126,7 +126,7 @@
                     @yield('page-title', 'Dashboard Overview')
                 </h1>
 
-                <div class="mt-[3px] hidden items-center gap-[5px] text-[9px] text-[#978d7d] sm:flex">
+                <div class="logistics-shell-breadcrumb mt-[3px] hidden items-center gap-[5px] text-[9px] text-[#978d7d] sm:flex">
                     <a
                         href="{{ route('logistics.dashboard') }}"
                         class="transition hover:text-[#b97805]"
@@ -154,16 +154,17 @@
 
         {{-- RIGHT: SEARCH, PERSISTENT NOTIFICATIONS, PROFILE --}}
 
-        <div class="flex shrink-0 items-center gap-2">
+        <div class="logistics-shell-header-actions flex shrink-0 items-center gap-2">
             @include('components.shared.theme-toggle')
 
             @if(! $headerIsHub && $headerOperatingFacility)
-                <form method="POST" action="{{ route('logistics.branch.change', [], false) }}" class="hidden lg:block">
+                <form method="POST" action="{{ route('logistics.branch.change', [], false) }}" class="logistics-shell-branch hidden lg:block">
                     @csrf
                     <button
                         type="submit"
-                        class="group flex h-[38px] max-w-[220px] items-center gap-2 rounded-[11px] border border-[#e6ddcf] bg-white px-3 text-left transition hover:border-[#d9be8c] hover:bg-[#fffaf1]"
-                        title="Switch operating branch"
+                        class="logistics-branch-button group flex h-[38px] max-w-[220px] items-center gap-2 rounded-[11px] border border-[#e6ddcf] bg-white px-3 text-left transition hover:border-[#d9be8c] hover:bg-[#fffaf1]"
+                        title="Switch operating branch: {{ $headerOperatingFacility->name }}"
+                        aria-label="Switch operating branch: {{ $headerOperatingFacility->name }}"
                     >
                         <span class="grid h-6 w-6 shrink-0 place-items-center rounded-[8px] bg-[#fbf4e8] text-[#b97805]">
                             <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V8l7-4 7 4v13M8 12h3m2 0h3M8 16h8"/></svg>
@@ -177,28 +178,6 @@
                 </form>
             @endif
 
-            <form method="GET" action="{{ route('logistics.delivery-monitoring') }}" class="relative hidden md:block" role="search">
-                <svg
-                    viewBox="0 0 24 24"
-                    class="pointer-events-none absolute left-[13px] top-1/2 h-[15px] w-[15px] -translate-y-1/2 text-[#9a9184]"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    aria-hidden="true"
-                >
-                    <circle cx="11" cy="11" r="7"/>
-                    <path d="m20 20-4-4"/>
-                </svg>
-
-                <input
-                    type="search"
-                    name="q"
-                    aria-label="Search logistics deliveries"
-                    value="{{ is_string(request()->query('q')) ? request()->query('q') : '' }}"
-                    placeholder="Search logistics..."
-                    class="h-[38px] w-[220px] rounded-[11px] border border-[#e6ddcf] bg-white pl-[38px] pr-3 text-[10px] text-[#302a22] outline-none placeholder:text-[#a89f92] focus:border-[#d89a25] focus:ring-4 focus:ring-[#d89a25]/10 lg:w-[235px] xl:w-[260px]"
-                >
-            </form>
 
             {{-- SELLER-STYLE PERSISTENT NOTIFICATION CENTER --}}
 
@@ -445,7 +424,7 @@
 
             <a
                 href="{{ route($headerProfileRoute) }}"
-                class="hidden items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-[#fff7e9] xl:flex"
+                class="logistics-shell-profile hidden items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-[#fff7e9] xl:flex"
             >
                 <span class="grid h-[35px] w-[35px] shrink-0 place-items-center rounded-full bg-[#d9930a] text-[10px] font-bold text-white">
                     @if(!$headerIsHub && filled($headerProvider->profile_image_path))

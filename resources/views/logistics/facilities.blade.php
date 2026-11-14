@@ -2446,6 +2446,86 @@
         }
     }
 
+/* Seller Orders UI parity: directory only; maps/editor/dialogs retain their original behavior. */
+#logisticsContent #logisticsFacilitiesWorkspace { max-width:1520px!important; padding-bottom:28px!important; --fh-gold:#C88912; --fh-gold-dark:#B47B0E; container-type:inline-size; }
+#logisticsContent #logisticsFacilitiesWorkspace > .fh-heading { min-height:0!important; margin:0 0 20px!important; padding:0 0 14px!important; border-bottom:1px solid var(--sari-dark-d8c2716225,#E9EDF1)!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-eyebrow { margin:0!important; font-size:10.5px!important; font-weight:800!important; line-height:1.4!important; letter-spacing:.14em!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-title { margin-top:6px!important; font-size:clamp(27px,2.3vw,31px)!important; font-weight:760!important; line-height:1.08!important; letter-spacing:-.04em!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-title span { color:var(--sari-dark-19b301f69a,#C88912)!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-heading .fh-primary { min-height:48px!important; height:48px!important; border-radius:14px!important; font-size:12px!important; font-weight:700!important; background:#C88912!important; border-color:#C88912!important; box-shadow:none!important; }
+#logisticsContent #logisticsFacilitiesWorkspace > .fh-kpis { grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:14px!important; margin:0!important; }
+#logisticsContent #logisticsFacilitiesWorkspace > .fh-kpis .fh-kpi { min-height:110px!important; padding:14px 16px!important; border-radius:18px!important; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-kpi-label { font-size:13px!important; font-weight:650!important; line-height:1.4!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-kpi-value { margin-top:7px!important; font-size:clamp(25px,1.9vw,30px)!important; font-weight:650!important; line-height:1.12!important; font-variant-numeric:tabular-nums; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-kpi-sub { margin-top:6px!important; font-size:11.5px!important; line-height:1.5!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-kpi-icon, #logisticsContent #logisticsFacilitiesWorkspace .fh-kpi-icon svg { width:27px!important; height:27px!important; min-width:27px!important; border:0!important; border-radius:0!important; background:transparent!important; box-shadow:none!important; }
+#logisticsContent #logisticsFacilitiesWorkspace > .fh-directory-filter-strip { position:relative!important; z-index:15; margin:20px 0 0!important; padding:0!important; border:0!important; background:transparent!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip > .fh-admin-filters { grid-template-columns:minmax(230px,1fr) minmax(160px,185px) minmax(160px,185px) auto auto!important; gap:12px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip :is(.fh-admin-search input,.fh-admin-select-wrap select,.fh-admin-apply,.fh-admin-reset,.fh-status-trigger) { height:48px!important; min-height:48px!important; border-radius:14px!important; font-size:11.5px!important; transform:none!important; translate:none!important; box-shadow:none!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-search input { padding:0 14px 0 46px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-search > svg { left:16px!important; width:21px!important; height:21px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-search input::placeholder { font-size:11.5px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip :is(.fh-admin-apply,.fh-admin-reset) { grid-row:auto!important; min-width:86px!important; padding:0 18px!important; font-size:12px!important; font-weight:700!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-apply { color:#FFF!important; background:#C88912!important; border-color:#C88912!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-apply:hover { background:#B47B0E!important; border-color:#B47B0E!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-select-wrap { position:relative; z-index:50; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip .fh-admin-select-wrap[data-enhanced] > select { position:absolute!important; width:1px!important; height:1px!important; min-height:0!important; margin:0!important; padding:0!important; border:0!important; clip-path:inset(50%); opacity:0; pointer-events:none; overflow:hidden; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-select-wrap[data-enhanced] > svg { display:none!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-status-trigger { display:flex; width:100%; align-items:center; justify-content:space-between; gap:8px; padding:0 16px; border:1px solid var(--sari-dark-d8c2716225,#DCE2E8); background:var(--sari-dark-950baec030,#FFF); color:var(--sari-dark-e23e64dd1e,#3F4B59); font-family:inherit; font-weight:600; text-align:left; cursor:pointer; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-status-trigger span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-status-trigger svg { width:17px; height:17px; flex-shrink:0; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-status-trigger[aria-expanded="true"] svg { transform:rotate(180deg); }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-status-menu { position:absolute; top:calc(100% + 8px); left:0; right:0; z-index:100; padding:8px; border:1px solid var(--sari-dark-d8c2716225,#E2E8F0); border-radius:14px; background:var(--sari-dark-950baec030,#FFF); box-shadow:0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05); }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-status-option { display:flex; width:100%; min-height:38px; align-items:center; padding:0 12px; border:0; border-radius:10px; background:transparent; color:var(--sari-dark-e23e64dd1e,#475569); font-family:inherit; font-size:11.5px; font-weight:600; text-align:left; cursor:pointer; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-status-option:hover, #logisticsContent #logisticsFacilitiesWorkspace .fh-status-option[aria-selected="true"] { background:var(--sari-dark-4d21eb669b,#F8FAFC); color:var(--sari-dark-af18afcaa4,#A56D0A); }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-status-option[aria-selected="true"] { font-weight:700; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-status-trigger:focus-visible, #logisticsContent #logisticsFacilitiesWorkspace .fh-status-option:focus-visible { outline:2px solid #C88912; outline-offset:2px; }
+#logisticsContent #logisticsFacilitiesWorkspace > .fh-admin-directory { margin-top:20px!important; border-radius:18px!important; box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory > .fh-panel-head { padding:21px 23px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-panel-title { font-size:18px!important; font-weight:780!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-directory-description { margin-top:4px; color:var(--sari-dark-a63aa16d7c,#8793A1); font-size:11.5px; line-height:1.5; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-counter { padding:0!important; min-height:0!important; border:0!important; background:transparent!important; font-size:12px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table-wrap { display:block!important; width:100%!important; max-width:100%!important; overflow-x:auto!important; scrollbar-width:thin; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table { display:table!important; min-width:1060px!important; width:100%!important; table-layout:fixed!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table thead { display:table-header-group!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table tbody { display:table-row-group!important; margin:0!important; padding:0!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table tbody[hidden] { display:none!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row { display:table-row!important; margin:0!important; padding:0!important; border-radius:0!important; box-shadow:none!important; transform:none!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row td { display:table-cell!important; padding:17px 16px!important; font-size:11.5px!important; line-height:1.5!important; text-align:left!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row td:last-child { text-align:right!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row td::before { display:none!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table thead th { height:48px!important; padding:13px 16px!important; font-size:11px!important; font-weight:750!important; letter-spacing:.075em!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-identity { gap:12px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row-icon { width:44px!important; height:44px!important; flex:0 0 44px!important; border-radius:9px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row-name { font-size:12.5px!important; font-weight:750!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row-sub { margin-top:3px!important; font-size:11px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row td > p { font-size:11.5px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row td > p + p { margin-top:3px!important; font-size:11px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row td:nth-child(6) .font-mono { font-size:11px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-view-hub { width:32px!important; height:32px!important; border:1px solid var(--sari-dark-d8c2716225,#DCE2E8)!important; border-radius:10px!important; background:var(--sari-dark-950baec030,#FFF)!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-view-hub svg { width:17px!important; height:17px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-route-badge, #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-role-badge { min-height:27px!important; padding:5px 10px!important; border-radius:999px!important; font-size:10.5px!important; font-weight:700!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory > .fh-admin-footer { display:flex!important; flex-wrap:wrap; min-height:64px!important; justify-content:space-between!important; align-items:center!important; gap:12px!important; padding:13px 20px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace #facilityResultCount { font-size:11px!important; font-weight:550; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-footer-controls { display:flex; align-items:center; flex-wrap:wrap; gap:16px; margin-left:auto; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-page-size-label { font-size:11px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-pagination-nav { width:auto!important; margin:0!important; justify-content:flex-end!important; gap:6px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-page-buttons { gap:6px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-pagination-nav :is(.fh-page-arrow,.fh-page-number) { width:34px!important; height:34px!important; flex:0 0 34px!important; border-radius:10px!important; border:1px solid var(--sari-dark-d8c2716225,#E5E7EB)!important; background:var(--sari-dark-950baec030,#FFF)!important; font-size:11.5px!important; box-shadow:none!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-pagination-nav .fh-page-number.is-current { background:#C88912!important; border-color:#C88912!important; color:#FFF!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-pagination-nav .fh-page-arrow svg { width:15px!important; height:15px!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table:is(.is-empty,.is-filter-empty) { min-width:0!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table:is(.is-empty,.is-filter-empty) thead { display:none!important; }
+@media(max-width:1180px) { #logisticsContent #logisticsFacilitiesWorkspace > .fh-kpis { grid-template-columns:repeat(2,minmax(0,1fr))!important; } }
+@media(max-width:767px) { #logisticsContent #logisticsFacilitiesWorkspace .fh-title { font-size:25px!important; } #logisticsContent #logisticsFacilitiesWorkspace .fh-eyebrow { font-size:9.5px!important; } }
+@container(max-width:1050px) { #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip > .fh-admin-filters { grid-template-columns:repeat(2,minmax(0,1fr))!important; } #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-search, #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-select-wrap { grid-column:1 / -1!important; } }
+@media(max-width:900px) { #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip > .fh-admin-filters { grid-template-columns:repeat(2,minmax(0,1fr))!important; } #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-search, #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-select-wrap { grid-column:1 / -1!important; } }
+@media(max-width:540px) { #logisticsContent #logisticsFacilitiesWorkspace > .fh-kpis { grid-template-columns:1fr!important; gap:11px!important; } #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory > .fh-panel-head { flex-direction:column!important; align-items:flex-start!important; padding:17px 16px!important; gap:6px!important; } #logisticsContent #logisticsFacilitiesWorkspace .fh-footer-controls { justify-content:flex-end; } }
+@media(prefers-reduced-motion:reduce) { #logisticsContent #logisticsFacilitiesWorkspace .fh-directory-filter-strip *, #logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row { transition:none!important; animation:none!important; } }
+
+
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-table thead tr { background:var(--sari-dark-4d21eb669b,#F8FAFC)!important; }
+#logisticsContent #logisticsFacilitiesWorkspace .fh-admin-directory .fh-hub-row:hover { background:var(--sari-dark-4d21eb669b,#F8FAFC)!important; box-shadow:none!important; }
 </style>
 @endpush
 
@@ -2672,7 +2752,7 @@
             <span class="sr-only">Search hub, city, or code</span>
             <input id="facilitySearchInput" type="search" placeholder="Search hub, city, or code..." autocomplete="off">
         </label>
-        <label class="fh-admin-select-wrap">
+        <div class="fh-admin-select-wrap" data-fh-dropdown>
             <span class="sr-only">Filter by hub status</span>
             <select id="facilityStatusFilter" aria-label="Filter by hub status">
                 <option value="all">All Status</option>
@@ -2680,8 +2760,18 @@
                 <option value="inactive">Inactive</option>
             </select>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
-        </label>
-        <label class="fh-admin-select-wrap">
+        
+            <button type="button" class="fh-status-trigger" data-fh-status-trigger aria-label="Filter by hub status" aria-haspopup="listbox" aria-controls="facilityStatusFilterMenu" aria-expanded="false" hidden>
+                <span data-fh-status-label>All Status</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div id="facilityStatusFilterMenu" class="fh-status-menu" role="listbox" aria-label="Filter by hub status" data-fh-status-menu hidden>
+                <button type="button" class="fh-status-option" role="option" tabindex="-1" data-fh-status-option data-value="all" aria-selected="true">All Status</button>
+                <button type="button" class="fh-status-option" role="option" tabindex="-1" data-fh-status-option data-value="active" aria-selected="false">Active</button>
+                <button type="button" class="fh-status-option" role="option" tabindex="-1" data-fh-status-option data-value="inactive" aria-selected="false">Inactive</button>
+            </div>
+        </div>
+        <div class="fh-admin-select-wrap" data-fh-dropdown>
             <span class="sr-only">Filter by branch role</span>
             <select id="facilityRoleFilter" aria-label="Filter by branch role">
                 <option value="all">All Branch Roles</option>
@@ -2689,7 +2779,17 @@
                 <option value="branch">Regular Branch</option>
             </select>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
-        </label>
+        
+            <button type="button" class="fh-status-trigger" data-fh-status-trigger aria-label="Filter by branch role" aria-haspopup="listbox" aria-controls="facilityRoleFilterMenu" aria-expanded="false" hidden>
+                <span data-fh-status-label>All Branch Roles</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div id="facilityRoleFilterMenu" class="fh-status-menu" role="listbox" aria-label="Filter by branch role" data-fh-status-menu hidden>
+                <button type="button" class="fh-status-option" role="option" tabindex="-1" data-fh-status-option data-value="all" aria-selected="true">All Branch Roles</button>
+                <button type="button" class="fh-status-option" role="option" tabindex="-1" data-fh-status-option data-value="main" aria-selected="false">Main Branch</button>
+                <button type="button" class="fh-status-option" role="option" tabindex="-1" data-fh-status-option data-value="branch" aria-selected="false">Regular Branch</button>
+            </div>
+        </div>
         <button id="facilityApplyFilter" type="button" class="fh-admin-apply">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
             Apply Filter
@@ -2713,6 +2813,7 @@
                 >
                     Registered operational hubs
                 </h3>
+                <p class="fh-directory-description">Review municipal hub locations, status, branch roles, and routing activity.</p>
 
             </div>
 
@@ -2722,17 +2823,17 @@
 
         </header>
 
-        <div id="facilityNetworkList" class="fh-hub-table-wrap">
+        <div id="facilityNetworkList" class="fh-hub-table-wrap" tabindex="0" aria-label="Municipal hub directory, scroll horizontally to see all columns">
             <table class="fh-hub-table {{ $facilities->count() === 0 ? 'is-empty' : '' }}" aria-label="Registered municipal hubs">
                 <thead>
                     <tr>
-                        <th class="w-[27%] text-left">Hub</th>
-                        <th class="w-[19%] text-left">Location</th>
-                        <th class="w-[10%] text-left">Status</th>
-                        <th class="w-[12%] text-left">Branch Role</th>
-                        <th class="w-[10%] text-left">Route Uses</th>
-                        <th class="w-[15%] text-left">Code</th>
-                        <th class="w-[7%] text-right">View</th>
+                        <th scope="col" class="w-[27%] text-left">Hub</th>
+                        <th scope="col" class="w-[19%] text-left">Location</th>
+                        <th scope="col" class="w-[10%] text-left">Status</th>
+                        <th scope="col" class="w-[12%] text-left">Branch Role</th>
+                        <th scope="col" class="w-[10%] text-left">Route Uses</th>
+                        <th scope="col" class="w-[15%] text-left">Code</th>
+                        <th scope="col" class="w-[7%] text-right">View</th>
                     </tr>
                 </thead>
 
@@ -2949,6 +3050,7 @@
 
         <footer class="fh-admin-footer">
             <p id="facilityResultCount" aria-live="polite">Showing {{ $facilities->count() }} results</p>
+            <div class="fh-footer-controls">
             <label class="fh-page-size-label" for="facilityPageSize">Rows per page
                 <select id="facilityPageSize" aria-label="Rows per page">
                     <option value="10" selected>10</option>
@@ -2956,10 +3058,7 @@
                     <option value="50">50</option>
                 </select>
             </label>
-        </footer>
-
-    </section>
-
+        
     <nav class="fh-pagination-nav" aria-label="Municipal hub pages">
         <button type="button" id="facilityPreviousPage" class="fh-page-arrow" aria-label="Previous page" disabled>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
@@ -2971,6 +3070,12 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
         </button>
     </nav>
+            </div>
+        </footer>
+
+    </section>
+
+
 
     {{-- Hub editor kept in its own Blade partial; collapsed until requested. --}}
     @include('logistics.partials.facility-editor')
@@ -4304,6 +4409,79 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+</script>
+
+<script>
+(function () {
+    function enhanceMunicipalHubFilters() {
+        if (!document.getElementById('logisticsFacilitiesWorkspace')) return;
+        window.__SARI_HUB_FILTER_ABORT__?.abort();
+        const controller = new AbortController();
+        window.__SARI_HUB_FILTER_ABORT__ = controller;
+        const signal = controller.signal;
+        function listen(node, name, handler) { node?.addEventListener(name, handler, { signal }); }
+        document.querySelectorAll('[data-fh-dropdown]').forEach(dropdown => {
+            const select = dropdown.querySelector('select');
+            const trigger = dropdown.querySelector('[data-fh-status-trigger]');
+            const label = dropdown.querySelector('[data-fh-status-label]');
+            const menu = dropdown.querySelector('[data-fh-status-menu]');
+            const options = Array.from(dropdown.querySelectorAll('[data-fh-status-option]'));
+            if (!select || !trigger || !menu || !options.length) return;
+
+            function syncStatus() {
+                if (label) label.textContent = select.options[select.selectedIndex]?.text || '';
+                options.forEach(option => option.setAttribute('aria-selected', String(option.dataset.value === select.value)));
+            }
+            function closeStatus({ restoreFocus = false } = {}) {
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                if (restoreFocus) trigger.focus({ preventScroll: true });
+            }
+            function openStatus() {
+                menu.hidden = false;
+                trigger.setAttribute('aria-expanded', 'true');
+                (options.find(option => option.getAttribute('aria-selected') === 'true') || options[0])?.focus({ preventScroll: true });
+            }
+            dropdown.dataset.enhanced = 'true';
+            select.tabIndex = -1;
+            select.setAttribute('aria-hidden', 'true');
+            trigger.hidden = false;
+            syncStatus();
+            closeStatus();
+            listen(select, 'change', syncStatus);
+            listen(document.getElementById('facilityResetFilter'), 'click', () => { closeStatus(); syncStatus(); });
+            listen(trigger, 'click', () => menu.hidden ? openStatus() : closeStatus());
+            listen(trigger, 'keydown', event => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); openStatus(); }
+            });
+            listen(menu, 'click', event => {
+                const option = event.target.closest('[data-fh-status-option]');
+                if (!option) return;
+                select.value = option.dataset.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                closeStatus({ restoreFocus: true });
+            });
+            listen(dropdown, 'keydown', event => {
+                if (menu.hidden) return;
+                if (event.key === 'Escape') { event.preventDefault(); closeStatus({ restoreFocus: true }); }
+                else if (event.key === 'Tab') closeStatus({ restoreFocus: true });
+                else if (['ArrowDown','ArrowUp','Home','End'].includes(event.key) && menu.contains(event.target)) {
+                    event.preventDefault();
+                    const index = options.indexOf(document.activeElement);
+                    const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1
+                        : (index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+                    options[nextIndex]?.focus();
+                }
+            });
+            listen(document, 'click', event => { if (!dropdown.contains(event.target)) closeStatus(); });
+            listen(dropdown, 'focusout', event => { if (!dropdown.contains(event.relatedTarget)) closeStatus(); });
+        });
+
+
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enhanceMunicipalHubFilters, { once: true });
+    else enhanceMunicipalHubFilters();
+})();
 </script>
 
 @endpush

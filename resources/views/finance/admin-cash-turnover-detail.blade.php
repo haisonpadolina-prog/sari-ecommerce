@@ -4,7 +4,7 @@
     @if(session('warning'))<div class="print:hidden rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-[11px] text-rose-800">{{ session('warning') }}</div>@endif
     @if($errors->any())<div class="print:hidden rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-[11px] text-rose-800">{{ $errors->first() }}</div>@endif
 
-    <section class="rounded-2xl border border-[#e5e0d8] bg-white p-6 shadow-sm">
+    <section class="turnover-overview rounded-2xl border border-[#e5e0d8] bg-white p-6 shadow-sm">
         <div class="flex flex-wrap justify-between gap-4">
             <div>
                 <p class="text-[10px] font-bold uppercase tracking-[.12em] text-[#a06b0b]">SARI · Physical COD Cash Turnover</p>
@@ -16,7 +16,7 @@
                 <a href="{{ $isAdminView ? route('admin.finance.cash-turnovers.index') : route('logistics.admin-turnovers.index') }}" class="rounded-xl bg-[#211d17] px-4 py-2 text-[11px] font-semibold text-white">Back to queue</a>
             </div>
         </div>
-        <div class="mt-5 grid gap-3 sm:grid-cols-3">
+        <div class="turnover-totals mt-5 grid gap-3 sm:grid-cols-3">
             <div class="rounded-xl bg-[#f7f4ee] p-4"><p class="text-[9px] uppercase text-[#8a8175]">Expected physical cash</p><p class="mt-2 text-xl font-bold">₱{{ number_format((float) $turnover->expected_amount, 2) }}</p></div>
             <div class="rounded-xl bg-[#f7f4ee] p-4"><p class="text-[9px] uppercase text-[#8a8175]">Admin counted</p><p class="mt-2 text-xl font-bold">{{ $turnover->confirmed_amount === null ? 'Not yet counted' : '₱'.number_format((float) $turnover->confirmed_amount, 2) }}</p></div>
             <div class="rounded-xl p-4 {{ $turnover->status === 'received' ? 'bg-emerald-50' : ($turnover->status === 'discrepancy' ? 'bg-rose-50' : 'bg-amber-50') }}"><p class="text-[9px] uppercase text-[#8a8175]">Turnover state</p><p class="mt-2 text-lg font-bold">{{ strtoupper($turnover->status) }}</p></div>
@@ -36,7 +36,7 @@
         @endif
     </section>
 
-    <section class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
+    <section class="sari-turnover-signatures rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
         <h3 class="text-[13px] font-bold">Physical Handover Signatures</h3>
         <p class="mt-2 text-[10px] text-[#817769]">For printed physical evidence only. The system's Admin receipt is recorded separately after an independent cash count.</p>
         <div class="mt-8 grid gap-8 sm:grid-cols-2">
@@ -45,7 +45,7 @@
         </div>
     </section>
 
-    <section class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
+    <section class="turnover-batches rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
         <h3 class="text-[14px] font-bold">Included Verified Rider COD Batches</h3>
         <div class="mt-4 overflow-x-auto">
             <table class="w-full min-w-[500px] text-left text-[11px]">
@@ -77,7 +77,7 @@
         </section>
     @endif
 
-    <section class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
+    <section class="turnover-count-history {{ $turnover->counts->isEmpty() ? 'turnover-history-empty' : '' }} rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
         <h3 class="text-[14px] font-bold">Immutable Admin Count History</h3>
         <p class="mt-1 text-[10px] text-[#7e756a]">Previous shortages, overages and successful counts remain recorded for accountability.</p>
         <div class="mt-4 space-y-3">

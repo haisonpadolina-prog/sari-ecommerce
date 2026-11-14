@@ -1,0 +1,114 @@
+/* Buyer sidebar + professional header visual system, mapped to Logistics IDs.
+   Existing Logistics state classes, permissions and notification handlers remain authoritative. */
+@media screen {
+:root {--logistics-sidebar-width:238px;--lg-shell-gold:#D9950B;--lg-shell-border:var(--sari-dark-d8c2716225,#ECE5DA);--lg-shell-surface:var(--sari-dark-950baec030,#fff);--lg-shell-ink:var(--sari-dark-e23e64dd1e,#28231C);--lg-shell-muted:var(--sari-dark-a63aa16d7c,#758092);}
+body #logisticsSidebar {overflow-x:hidden;background:var(--lg-shell-surface)!important;background-image:none!important;border-right-color:var(--lg-shell-border)!important;box-shadow:none!important;}
+body #logisticsSidebarBrand {min-height:74px!important;padding-inline:12px!important;border-bottom-color:var(--sari-dark-d8c2716225,#EEE7DC)!important;background:var(--lg-shell-surface)!important;}
+body #logisticsSidebarLogo {width:100%;height:44px;}
+body #logisticsSidebarLogoStage {height:44px!important;width:100%;}
+body #logisticsSidebarLogoFull {width:102px!important;height:auto!important;filter:brightness(0);}
+body #logisticsSidebarLogoCompact {width:38px!important;height:38px!important;filter:none;}
+html[data-sari-theme="dark"] body #logisticsSidebarLogoFull {filter:brightness(0) invert(1)!important;}
+body #logisticsSidebarNav {min-height:0;padding:14px 10px 16px!important;scrollbar-width:thin;scrollbar-color:#DDD4C7 transparent!important;}
+body #logisticsSidebarNav::-webkit-scrollbar {width:4px;}
+body #logisticsSidebarNav .logistics-sidebar-section-label {margin:13px 9px 8px!important;padding:0!important;font-size:9.5px!important;line-height:1.3!important;font-weight:750!important;letter-spacing:.12em!important;color:var(--sari-dark-a63aa16d7c,#94713C)!important;text-transform:uppercase;white-space:nowrap;}
+body #logisticsSidebarNav .logistics-sidebar-section-label:first-child {margin-top:4px!important;}
+body #logisticsSidebarNav > div.border-t {margin:11px 6px 9px!important;border-color:var(--sari-dark-d8c2716225,#EEE7DD)!important;}
+body #logisticsSidebarNav [data-logistics-sidebar-item] {width:100%!important;min-height:43px!important;gap:11px!important;margin:0 0 2px!important;padding:9px 11px!important;border:1px solid transparent!important;border-radius:10px!important;font-size:12.5px!important;line-height:1.3!important;font-weight:600!important;letter-spacing:-.008em!important;color:var(--sari-dark-e23e64dd1e,#514B42)!important;background:transparent!important;box-shadow:none!important;transform:none!important;transition:background-color .12s ease,border-color .12s ease,color .12s ease!important;}
+body #logisticsSidebarNav [data-logistics-sidebar-item] > span[aria-hidden] {width:18px!important;height:18px!important;flex:0 0 18px;}
+body #logisticsSidebarNav [data-logistics-sidebar-item] svg {width:18px!important;height:18px!important;stroke-width:1.8!important;flex-shrink:0;}
+body #logisticsSidebarNav .logistics-sidebar-label {min-width:0;overflow:hidden;text-overflow:ellipsis;}
+body #logisticsSidebarNav [data-logistics-sidebar-item]:not([aria-current="page"]):hover {border-color:var(--sari-dark-d8c2716225,#EADFCF)!important;background:var(--sari-dark-950baec030,#FFF9EF)!important;color:var(--sari-dark-c8bdcce6ab,#9A680B)!important;}
+body #logisticsSidebarNav [data-logistics-sidebar-item][aria-current="page"] {border-color:var(--lg-shell-gold)!important;background:var(--lg-shell-gold)!important;color:#fff!important;box-shadow:0 5px 12px rgba(194,132,10,.12)!important;}
+body #logisticsSidebarNav [aria-current="page"] :is(svg,.logistics-sidebar-label) {color:#fff!important;stroke:currentColor!important;}
+body #logisticsSidebarNav #logisticsLogoutButton,body #logisticsSidebarNav #logisticsLogoutButton :is(svg,.logistics-sidebar-label) {color:var(--sari-dark-65ed380fe4,#ef4444)!important;}
+body #logisticsSidebarNav #logisticsLogoutButton:hover {background:var(--sari-dark-950baec030,#fef2f2)!important;border-color:transparent!important;}
+body #logisticsSidebarProfile {padding:9px 10px!important;background:var(--lg-shell-surface)!important;border-top-color:var(--lg-shell-border)!important;}
+body #logisticsSidebarProfile > a {min-height:54px!important;gap:8px;border:1px solid var(--sari-dark-d8c2716225,#EBE2D4)!important;border-radius:11px!important;padding:8px 9px!important;background:var(--lg-shell-surface)!important;box-shadow:0 3px 10px rgba(40,31,21,.02)!important;}
+body #logisticsSidebarProfile > a > div:first-child {width:32px;height:32px;flex-shrink:0;}
+body #logisticsSidebarProfileText p:first-child {font-size:9.5px!important;}
+body #logisticsSidebarProfileText p:last-child {font-size:7.5px!important;}
+body #logisticsHeader {background:var(--lg-shell-surface)!important;border-bottom:1px solid var(--sari-dark-d8c2716225,#E9EDF2)!important;box-shadow:none!important;backdrop-filter:none!important;}
+body #logisticsHeader > .logistics-shell-header-main {min-height:82px!important;gap:16px!important;padding-inline:24px!important;}
+body #logisticsHeader h1 {font-size:clamp(21px,1.85vw,27px)!important;font-weight:700!important;line-height:1.22!important;letter-spacing:-.035em!important;color:var(--sari-dark-e23e64dd1e,#17212F)!important;}
+body #logisticsHeader .logistics-shell-breadcrumb {display:flex;gap:8px!important;font-size:11.5px!important;line-height:1.4!important;color:var(--lg-shell-muted)!important;}
+body #logisticsHeader .logistics-shell-breadcrumb svg {width:13px!important;height:13px!important;flex-shrink:0;}
+body #logisticsHeader :is(#logisticsMenuButton,#logisticsSidebarToggle) {width:38px!important;height:38px!important;border-radius:10px!important;border-color:var(--sari-dark-d8c2716225,#E5EAF0)!important;background:var(--lg-shell-surface)!important;color:var(--sari-dark-e23e64dd1e,#344054)!important;box-shadow:none!important;}
+body #logisticsHeader :is(#logisticsMenuButton,#logisticsSidebarToggle) svg {width:17px!important;height:17px!important;}
+body #logisticsHeader .logistics-shell-header-actions {gap:8px;min-width:0;}
+body #logisticsHeader #logisticsNotificationButton {width:38px!important;height:38px!important;border:0!important;border-radius:10px!important;background:transparent!important;box-shadow:none!important;}
+body #logisticsNotificationButton > svg {width:17px!important;height:17px!important;}
+body #logisticsNotificationBadge {right:-5px!important;top:-5px!important;height:18px!important;min-width:18px!important;font-size:8px!important;}
+body #logisticsHeader .logistics-shell-profile {display:flex;gap:11px!important;padding:6px 9px!important;border:1px solid transparent;border-radius:13px!important;text-decoration:none!important;}
+body #logisticsHeader .logistics-shell-profile:hover {border-color:var(--sari-dark-d8c2716225,#E5EAF0);background:var(--sari-dark-4d21eb669b,#F6F8FB)!important;}
+body #logisticsHeader .logistics-shell-profile > span:first-child {width:39px!important;height:39px!important;font-size:12px!important;box-shadow:0 0 0 2px var(--lg-shell-surface),0 0 0 3px var(--sari-dark-d8c2716225,#F0E5CD);}
+body #logisticsHeader .logistics-shell-profile > span:last-child > span:first-child {font-size:12px!important;font-weight:650!important;line-height:1.3!important;}
+body #logisticsHeader .logistics-shell-profile > span:last-child > span:last-child {font-size:10px!important;line-height:1.4!important;}
+body #logisticsHeader .logistics-shell-branch button {height:38px;max-width:200px;border-radius:11px;}
+body #logisticsHeader .logistics-shell-branch button > span:first-child {background:var(--sari-dark-4d21eb669b,#F4F6F9);color:var(--lg-shell-muted);}
+body :is(#logisticsSidebar,#logisticsHeader) :is(button,a,input):focus-visible {outline:2px solid #C99128!important;outline-offset:3px;}
+@media(min-width:1024px){
+ body:not(.logistics-sidebar-collapsed){--logistics-sidebar-width:238px;}
+ body.logistics-sidebar-collapsed{--logistics-sidebar-width:76px;}
+ body #logisticsSidebar{width:var(--logistics-sidebar-width)!important;transition:width 220ms cubic-bezier(.22,1,.36,1)!important;}
+ body #logisticsContent{padding-left:var(--logistics-sidebar-width)!important;transition:padding-left 220ms cubic-bezier(.22,1,.36,1)!important;}
+ body:not(.logistics-sidebar-collapsed) #logisticsSidebarLogoFull{opacity:1!important;visibility:visible!important;}
+ body:not(.logistics-sidebar-collapsed) #logisticsSidebarLogoCompact{opacity:0!important;visibility:hidden!important;}
+ body.logistics-sidebar-collapsed #logisticsSidebarLogoFull{opacity:0!important;visibility:hidden!important;}
+ body.logistics-sidebar-collapsed #logisticsSidebarLogoCompact{opacity:1!important;visibility:visible!important;}
+ body.logistics-sidebar-collapsed #logisticsSidebarBrand{padding-inline:8px!important;}
+ body.logistics-sidebar-collapsed #logisticsSidebarNav{padding:12px 9px!important;}
+ body.logistics-sidebar-collapsed #logisticsSidebarNav [data-logistics-sidebar-item]{justify-content:center!important;gap:0!important;padding-inline:0!important;}
+ body.logistics-sidebar-collapsed #logisticsSidebarNav .logistics-sidebar-label,body.logistics-sidebar-collapsed #logisticsSidebarNav .logistics-sidebar-section-label,body.logistics-sidebar-collapsed #logisticsSidebarNav > div.border-t{display:none!important;}
+ body.logistics-sidebar-collapsed #logisticsSidebarProfile{padding:9px!important;}
+ body.logistics-sidebar-collapsed #logisticsSidebarProfile > a{justify-content:center!important;padding:8px!important;}
+}
+@media(max-width:1279px){body #logisticsHeader .logistics-shell-profile{padding:5px!important;}body #logisticsHeader .logistics-shell-profile > span:last-child{display:none;}}
+@media(max-width:1023px){
+ body #logisticsSidebar{width:min(238px,86vw)!important;}
+ body #logisticsContent{padding-left:0!important;}
+ body #logisticsSidebarLogoFull{opacity:1!important;visibility:visible!important;}
+ body #logisticsSidebarLogoCompact{opacity:0!important;visibility:hidden!important;}
+ body #logisticsSidebar .logistics-sidebar-label{display:inline!important;}
+}
+@media(max-height:820px) and (min-width:1024px){
+ body #logisticsSidebarNav{padding-block:10px!important;}
+ body #logisticsSidebarNav .logistics-sidebar-section-label{margin-top:8px!important;margin-bottom:6px!important;}
+ body #logisticsSidebarNav > div.border-t{margin:8px 6px 7px!important;}
+ body #logisticsSidebarNav [data-logistics-sidebar-item]{min-height:40px!important;padding-block:7px!important;font-size:12px!important;}
+}
+@media(max-width:767px){
+ body #logisticsHeader > .logistics-shell-header-main{min-height:74px!important;padding-inline:12px!important;gap:10px!important;}
+ body #logisticsHeader h1{font-size:21px!important;}
+ body #logisticsHeader .logistics-shell-breadcrumb{font-size:10px!important;}
+ body #logisticsHeader :is(#logisticsMenuButton,#logisticsSidebarToggle,#logisticsNotificationButton){width:40px!important;height:40px!important;}
+ body #logisticsHeader .logistics-shell-profile > span:first-child{width:35px!important;height:35px!important;}
+}
+@media(max-width:420px){
+ body #logisticsHeader > .logistics-shell-header-main{gap:6px!important;}
+ body #logisticsHeader .logistics-shell-header-actions{gap:3px!important;}
+ body #logisticsHeader h1{font-size:18px!important;}
+ body #logisticsHeader #logisticsNotificationButton{width:34px!important;}
+}
+@media(prefers-reduced-motion:reduce){body #logisticsSidebar,body #logisticsContent,body #logisticsHeader *,body #logisticsSidebar *{transition:none!important;animation:none!important;}}
+}
+
+/* Header correction: readable branch selector and explicit theme logo colors. */
+@media screen {
+body #logisticsSidebarLogoFull {filter:brightness(0)!important;-webkit-filter:brightness(0)!important;}
+html[data-sari-theme="dark"] body #logisticsSidebarLogoFull {filter:brightness(0) invert(1)!important;-webkit-filter:brightness(0) invert(1)!important;}
+body #logisticsHeader .logistics-shell-branch {flex:0 1 auto;min-width:0;}
+body #logisticsHeader .logistics-shell-branch .logistics-branch-button {
+    height:auto!important;min-height:46px!important;max-width:340px!important;
+    padding:8px 12px!important;gap:10px!important;border-radius:12px!important;
+    border:1px solid var(--sari-dark-d8c2716225,#E5EAF0)!important;
+    background:var(--lg-shell-surface)!important;box-shadow:none!important;
+}
+body #logisticsHeader .logistics-branch-button > span:first-child {width:28px;height:28px;border-radius:8px;background:var(--sari-dark-4d21eb669b,#F4F6F9)!important;color:var(--lg-shell-muted)!important;}
+body #logisticsHeader .logistics-branch-button > span:nth-child(2) {display:flex;flex-direction:column;gap:4px;min-width:0;}
+body #logisticsHeader .logistics-branch-button > span:nth-child(2) > span:first-child {font-size:8px!important;line-height:1.2!important;font-weight:600;letter-spacing:.09em;color:var(--lg-shell-muted)!important;}
+body #logisticsHeader .logistics-branch-button > span:nth-child(2) > span:last-child {font-size:11px!important;font-weight:600;line-height:1.4!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;color:var(--lg-shell-ink)!important;overflow-wrap:anywhere;}
+body #logisticsHeader .logistics-branch-button:hover {border-color:#C99128!important;background:var(--sari-dark-4d21eb669b,#F8FAFC)!important;}
+body #logisticsHeader .logistics-branch-button > svg {width:15px;height:15px;flex-shrink:0;color:var(--lg-shell-muted);}
+@media(min-width:1024px) and (max-width:1279px){body #logisticsHeader .logistics-shell-branch .logistics-branch-button{max-width:270px!important;}}
+}
